@@ -95,6 +95,7 @@ var query_choices: ApplicationQueryChoices = ApplicationQueryChoices.new(self)
 var route_edits: ApplicationRouteEdits = ApplicationRouteEdits.new(self)
 var debug: ApplicationDebug = ApplicationDebug.new(self)
 var debug_tools: ApplicationDebugTools = ApplicationDebugTools.new(self)
+var coop := ApplicationMultiplayer.new(self)
 var updates := ApplicationUpdates.new(preferences)
 
 

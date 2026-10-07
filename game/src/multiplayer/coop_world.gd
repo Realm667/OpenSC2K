@@ -1,0 +1,329 @@
+class_name CoopWorld
+extends RefCounted
+## Only the host owns this model. Every command is checked against its current city.
+
+@warning_ignore_start("integer_division")
+
+const STRUCTURAL := {"ALTM": 2, "XTER": 1, "XBLD": 1, "XZON": 1, "XUND": 1, "XTXT": 1}
+var city: CityState
+var engine: SimulationEngine
+var controller: GameSpeedController
+var revision := 0
+var policy_revision := 0
+var tile_versions := PackedInt64Array()
+var undo_document: Sc2File
+var undo_actor := ""
+var undo_revision := -1
+var dispatch_cycles := PackedInt32Array([0, 0, 0])
+var dispatch_initialized := false
+var undo_dispatch_cycles := PackedInt32Array()
+var undo_dispatch_initialized := false
+var undo_damage_class := -1
+var error := ""
+
+
+func open(document: Sc2File) -> bool:
+	if document == null or not document.is_valid() or not document.is_sc2x() or document.map_size > 128:
+		error = "Koop currently requires an SC2X city of at most 128 tiles per side."
+		return false
+	error = document.compatibility_error()
+	if not error.is_empty():
+		return false
+	city = CityState.from_document(document.duplicate_document())
+	if not city.is_valid():
+		error = city.load_error
+		return false
+	engine = SimulationEngine.new(city)
+	controller = GameSpeedController.new(engine)
+	Sc2xCheckpoint.restore_random(engine, city.document.sc2x_metadata)
+	if Sc2xCheckpoint.has_saved_state(city.document.sc2x_metadata):
+		error = Sc2xCheckpoint.restore(controller, city.document.sc2x_metadata)
+	elif not engine.initialize_loaded_city():
+		error = "Cannot initialize the city simulation."
+	if not error.is_empty():
+		return false
+	controller.set_speed(GameSpeedController.Speed.PAUSED)
+	tile_versions.resize(city.map_size * city.map_size)
+	tile_versions.fill(0)
+	return true
+
+
+func advance(delta: float) -> void:
+	if controller.speed == GameSpeedController.Speed.PAUSED:
+		return
+	var before := city.document.duplicate_document(true)
+	var pending := engine.pending_interaction
+	var blocked := controller.interaction_blocked
+	var result := controller.advance_time(minf(delta, 0.25) * 1000.0, Time.get_ticks_msec())
+	if not result.ok:
+		error = result.error
+		controller.set_speed(GameSpeedController.Speed.PAUSED)
+	if result.base_ticks > 0 or not result.day_results.is_empty() or not result.launch_results.is_empty():
+		revision += 1
+		undo_document = null
+		mark_changes(before, city.document)
+	if pending != engine.pending_interaction or blocked != controller.interaction_blocked:
+		policy_revision += 1
+
+
+func snapshot() -> Dictionary:
+	Sc2xCheckpoint.capture(controller, city.document.sc2x_metadata)
+	var encoded := Sc2xDocument.encode(city.document)
+	if not encoded.ok:
+		return {"error": encoded.error}
+	return {"type": "state", "revision": revision, "policy": policy_revision,
+		"city": Marshalls.raw_to_base64(encoded.data), "speed": controller.speed,
+		"pending": engine.pending_interaction, "terminal": controller.terminal_blocked,
+		"blocked": controller.interaction_blocked,
+		"error": error}
+
+
+func command(actor: String, request: Dictionary) -> Dictionary:
+	if not whole_number(request.get("revision"), 0, revision):
+		return rejected("The city view is out of date. Wait for synchronization.")
+	var kind: Variant = request.get("kind")
+	if not kind is String:
+		return rejected("Invalid command.")
+	if kind == "undo":
+		if undo_document == null or undo_actor != actor or undo_revision != revision:
+			return rejected("Undo expired: another edit or simulation step occurred.")
+		city = CityState.from_document(undo_document)
+		city.disaster_damage_class = undo_damage_class
+		dispatch_cycles = undo_dispatch_cycles
+		dispatch_initialized = undo_dispatch_initialized
+		engine.city = city
+		Sc2xCheckpoint.restore(controller, city.document.sc2x_metadata)
+		undo_document = null
+		revision += 1
+		tile_versions.fill(revision)
+		return accepted("Your last edit was undone.")
+	if kind != "build" and kind != "sign":
+		return policy_command(request)
+	return build(actor, request)
+
+
+func build(actor: String, request: Dictionary) -> Dictionary:
+	if not point_valid(request.get("start")) or not point_valid(request.get("finish")):
+		return rejected("Invalid map position.")
+	var start := point(request.start)
+	var finish := point(request.finish)
+	var seen := int(request.revision)
+	# Protect the selected area even when the tool would produce no payload diff.
+	for x in range(mini(start.x, finish.x), maxi(start.x, finish.x) + 1):
+		for y in range(mini(start.y, finish.y), maxi(start.y, finish.y) + 1):
+			if tile_versions[city.index_of(x, y)] > seen:
+				return rejected("This area changed. Review it and try again.")
+	Sc2xCheckpoint.capture(controller, city.document.sc2x_metadata)
+	var candidate := CityState.copy_for_edit(city)
+	candidate.disaster_damage_class = city.disaster_damage_class
+	var random := SimRandom.new(engine.random.state)
+	var lfsr := SimLfsrRandom.new(engine.lfsr_random.state)
+	var edit: EditCommandResult
+	if request.kind == "sign":
+		if not request.get("text") is String or request.text.length() > 120:
+			return rejected("A sign can contain at most 120 characters.")
+		edit = SignCommand.set_sign(candidate, finish, request.text)
+	else:
+		for option in ["bridge", "connection", "confirmation", "team", "limit"]:
+			if request.has(option) and not whole_number(request[option], 0, 2147483647):
+				return rejected("Invalid construction choice.")
+		if not whole_number(request.get("group"), 0, 14) or not whole_number(request.get("tool"), 0, 31):
+			return rejected("Invalid tool.")
+		var group := int(request.group)
+		var tool := int(request.tool)
+		if ToolCatalog.tool(group, tool) == null or not ToolAvailability.is_available(city, group, tool):
+			return rejected("This tool is not available in the city.")
+		if not request.get("path") is Array or request.path.size() > 512:
+			return rejected("The tool path is too long.")
+		var path: Array[Vector2i] = []
+		for item in request.path:
+			if not point_valid(item):
+				return rejected("Invalid tool path.")
+			var target := point(item)
+			if tile_versions[city.index_of(target.x, target.y)] > seen:
+				return rejected("This path changed. Review it and try again.")
+			path.append(target)
+		if path.is_empty():
+			path.append(finish)
+		var simple := SimpleEditFlow.apply_supported(candidate, group, tool, start, finish,
+			path, random, request.get("underground") == true, false)
+		if simple.handled:
+			edit = simple.command
+		elif BuildingCommand.supports_tool(group, tool):
+			edit = BuildingCommand.apply(candidate, group, tool, finish, lfsr, random)
+		elif NetworkCommand.supports_tool(group, tool):
+			edit = NetworkCommand.apply(candidate, group, tool, start, finish,
+				int(request.get("bridge", -1)), int(request.get("connection", -1)))
+		elif HighwayCommand.supports_tool(group, tool):
+			edit = HighwayCommand.apply(candidate, group, tool, start, finish,
+				int(request.get("connection", -1)), int(request.get("bridge", -1)))
+		elif TunnelCommand.supports_tool(group, tool):
+			edit = TunnelCommand.apply(candidate, group, tool, start, int(request.get("confirmation", -1)))
+		elif group in [8, 9, 10, 11]:
+			edit = SimpleEditFlow.apply_zone(candidate, group, tool, start, finish,
+				request.get("dragged") == true, false, -1).command
+		elif DispatchCommand.supports_tool(group, tool):
+			edit = DispatchCommand.apply(candidate, group, tool, finish, dispatch_cycles[tool], not dispatch_initialized)
+		else:
+			return rejected("This tool is not yet available in Koop.")
+	if edit is RouteEditResult and edit.bridge_selection_required:
+		var choices: Array = []
+		for bridge in edit.bridge_choices:
+			choices.append({"label": bridge.name, "fields": {"bridge": bridge.type}})
+		return choice_result("Choose a bridge. The host will check the site and cost again.", request, choices)
+	if edit is RouteEditResult and edit.connection_selection_required:
+		return choice_result("Connect to the neighboring city?", request,
+			[{"label": "Connect and review total cost", "fields": {"connection": 1}},
+			{"label": "Build without connection", "fields": {"connection": 0}}])
+	if edit is TunnelEditResult and edit.confirmation_required:
+		return choice_result("Build this tunnel?", request,
+			[{"label": "Build — $%d" % edit.cost, "fields": {"confirmation": 1, "limit": edit.cost}}])
+	if edit is BuildingEditResult and edit.stadium_team_selection_required:
+		if not request.has("team"):
+			var choices: Array = []
+			for team in BuildingFacilities.stadium_team_choices(candidate):
+				choices.append({"label": BuildingFacilities.stadium_team_name(candidate, team), "fields": {"team": team}})
+			return choice_result("Choose the stadium team.", request, choices)
+		edit = BuildingFacilities.assign_stadium_team(candidate, edit, int(request.team),
+			BuildingFacilities.stadium_team_name(candidate, int(request.team)))
+	if edit == null or not edit.ok:
+		return rejected(edit.error if edit != null else "The edit could not be applied.")
+	# A route proposal can stop at its first bridge. Quote the completed route,
+	# including later dry segments and connections, only after all choices exist.
+	if (request.has("bridge") or request.get("connection") == 1) and not request.has("limit"):
+		return choice_result("Confirm the complete route cost.", request,
+			[{"label": "Build — $%d" % edit.cost, "fields": {"limit": edit.cost}}])
+	if request.has("limit") and edit.cost > int(request.limit):
+		return rejected("The construction price changed. Select the site again to review it.")
+	var changed := changed_tiles(city.document, candidate.document)
+	for tile in changed:
+		if tile_versions[tile] > seen:
+			return rejected("Another player changed part of this building or terrain. Try again.")
+	undo_document = city.document
+	undo_actor = actor
+	undo_dispatch_cycles = dispatch_cycles.duplicate()
+	undo_dispatch_initialized = dispatch_initialized
+	undo_damage_class = city.disaster_damage_class
+	city = candidate
+	engine.city = city
+	engine.random.state = random.state
+	engine.lfsr_random.state = lfsr.state
+	if edit.power_usage_percent >= 0:
+		engine.power_usage_percent = edit.power_usage_percent
+	if edit.water_usage_percent >= 0:
+		engine.water_usage_percent = edit.water_usage_percent
+	if edit is RouteEditResult and edit.connection_built:
+		engine.change_connection_count(edit.connection_kind(), 1)
+	if edit is DispatchEditResult:
+		dispatch_initialized = true
+		dispatch_cycles[int(request.tool)] = edit.slot_index
+	revision += 1
+	undo_revision = revision
+	for tile in changed:
+		tile_versions[tile] = revision
+	# Signs and dispatch can change object tables without a structural byte.
+	tile_versions[city.index_of(finish.x, finish.y)] = revision
+	return accepted("Applied by the host. Cost: $%d." % edit.cost)
+
+
+func policy_command(request: Dictionary) -> Dictionary:
+	if not whole_number(request.get("policy"), policy_revision, policy_revision):
+		return rejected("City settings changed. Reopen Multiplayer and try again.")
+	var result_error := ""
+	var before := city.document.duplicate_document(true)
+	match request.kind:
+		"budget":
+			if not request.get("values") is Array or request.values.size() != BudgetPhase.BUDGET_COUNT:
+				return rejected("Invalid budget.")
+			var values := PackedInt32Array()
+			var current := BudgetPhase.funding_values(city)
+			for index in request.values.size():
+				var value: Variant = request.values[index]
+				var maximum := 22 if index < 3 else 100
+				if index in [3, 4]:
+					values.append(current[index])
+					continue
+				if not whole_number(value, 0, maximum):
+					return rejected("Invalid budget percentage.")
+				values.append(int(value))
+			if engine.pending_interaction == "annual_budget":
+				result_error = controller.resolve_annual_budget(values, request.get("auto") == true).error
+			else:
+				result_error = BudgetPhase.set_funding(city, values, request.get("auto") == true).error
+		"ordinance":
+			if not whole_number(request.get("ordinance"), 0, OrdinanceCommand.NAMES.size() - 1):
+				return rejected("Invalid ordinance.")
+			result_error = OrdinanceCommand.set_enabled(city, int(request.ordinance), request.get("enabled") == true).error
+		"bond":
+			result_error = BondCommand.issue(city, 1).error
+		"repay":
+			result_error = BondCommand.repay(city, 1).error
+		"decision":
+			match engine.pending_interaction:
+				"military_proposal":
+					result_error = controller.resolve_military_proposal(request.get("accept") == true).error
+				"military_notice":
+					result_error = controller.resolve_military_notice().error
+				_:
+					if controller.interaction_blocked:
+						controller.acknowledge_game_over()
+					else:
+						return rejected("There is no decision to resolve.")
+		"recall":
+			result_error = DispatchCommand.recall_all(city).error
+			dispatch_cycles.fill(0)
+			dispatch_initialized = false
+		_:
+			return rejected("Unknown command.")
+	if not result_error.is_empty():
+		return rejected(result_error)
+	policy_revision += 1
+	revision += 1
+	undo_document = null
+	mark_changes(before, city.document)
+	return accepted("City settings updated.")
+
+
+func mark_changes(before: Sc2File, after: Sc2File) -> void:
+	for tile in changed_tiles(before, after):
+		tile_versions[tile] = revision
+
+
+static func changed_tiles(before: Sc2File, after: Sc2File) -> PackedInt32Array:
+	var changed: Dictionary[int, bool] = {}
+	for id: String in STRUCTURAL:
+		var old := before.find_chunk(id).decoded_payload
+		var current := after.find_chunk(id).decoded_payload
+		if old == current:
+			continue
+		var stride: int = STRUCTURAL[id]
+		for index in mini(old.size(), current.size()):
+			if old[index] != current[index]:
+				# SC2X overlays store the low and high bytes in separate planes.
+				var tile: int = index % (before.map_size * before.map_size) if id == "XTXT" else index / stride
+				changed[tile] = true
+	return PackedInt32Array(changed.keys())
+
+
+func point_valid(value: Variant) -> bool:
+	return value is Array and value.size() == 2 and whole_number(value[0], 0, city.map_size - 1) and whole_number(value[1], 0, city.map_size - 1)
+
+
+static func point(value: Array) -> Vector2i:
+	return Vector2i(int(value[0]), int(value[1]))
+
+
+static func whole_number(value: Variant, low: int, high: int) -> bool:
+	return (value is int or value is float) and is_finite(float(value)) and value >= low and value <= high and float(value) == floorf(float(value))
+
+
+static func rejected(message: String) -> Dictionary:
+	return {"type": "result", "ok": false, "message": message}
+
+
+static func accepted(message: String) -> Dictionary:
+	return {"type": "result", "ok": true, "message": message}
+
+
+static func choice_result(message: String, request: Dictionary, choices: Array) -> Dictionary:
+	return {"type": "result", "ok": false, "message": message, "request": request, "choices": choices}

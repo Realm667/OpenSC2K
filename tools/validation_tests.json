@@ -1,4 +1,6 @@
 [
+  {"id": "coop_multiplayer_test", "script": "tests/coop_multiplayer_test.gd", "domain": "simulation", "lane": "product"},
+  {"id": "coop_ui_test", "script": "tests/coop_ui_test.gd", "domain": "ui", "lane": "product", "requires": ["ext/graphics/pack.json", "ext/data/pack.json"]},
   {
     "id": "disaster_visual_test",
     "script": "tests/disaster_visual_test.gd",

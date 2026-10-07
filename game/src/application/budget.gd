@@ -34,6 +34,9 @@ func reset_pending_state() -> void:
 
 
 func open_manual_budget() -> void:
+	if app.coop.active():
+		app.coop.open()
+		return
 	if app.tool_state.landscape_editor:
 		return
 

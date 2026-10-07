@@ -44,6 +44,12 @@ func sync_asset_menu_actions() -> void:
 
 
 func on_file_menu(id: int) -> void:
+	if app.coop.active():
+		if id in [2, CityMenuBar.MENU_SAVE_CITY]:
+			app.coop.save()
+		else:
+			app.coop.open()
+		return
 	if not app.asset_state.assets_ready and id not in [5, 6]:
 		return
 
@@ -83,6 +89,9 @@ func on_speed_menu(id: int) -> void:
 
 
 func on_options_menu(id: int) -> void:
+	if app.coop.active() and id != CityMenuBar.MENU_SETTINGS:
+		app.coop.open()
+		return
 	if id == CityMenuBar.MENU_UPGRADE_SC2X:
 		app.city_files.upgrade_city_to_sc2x()
 

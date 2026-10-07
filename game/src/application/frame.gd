@@ -39,6 +39,11 @@ func process(delta: float) -> void:
 	app.static_render.start_pending_static_render()
 	app.city_png_export.poll_export()
 
+	if app.coop.active():
+		if app.simulation_state.speed_controller != null:
+			_advance_palette_animation(delta, false)
+		return
+
 	if app.simulation_state.speed_controller == null or app.document_state.city == null:
 		return
 
@@ -210,6 +215,9 @@ func _update_fps(delta: float) -> void:
 
 
 func select_speed(speed_value: int) -> void:
+	if app.coop.active():
+		app.coop.request_speed(speed_value)
+		return
 	if app.simulation_state.speed_controller == null:
 		return
 

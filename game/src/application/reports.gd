@@ -35,6 +35,9 @@ func _init(application: CityApplication) -> void:
 
 
 func on_disaster_menu(id: int) -> void:
+	if app.coop.active():
+		app.coop.show_message("Manual disaster triggers are not available in this Koop version.")
+		return
 	if app.tool_state.landscape_editor:
 		return
 
@@ -131,6 +134,9 @@ func start_disaster_at_view_center(id: int) -> DisasterReportResult:
 
 
 func on_windows_menu(id: int) -> void:
+	if app.coop.active() and id in [0, 1, 3]:
+		app.coop.open()
+		return
 	if id == 0:
 		app.budget.open_manual_budget()
 	elif id == 1:

@@ -109,6 +109,9 @@ func _auto_select_underground() -> void:
 
 
 func select_subtool(index: int) -> void:
+	if app.coop.active() and app.tool_state.selected_group == CityToolIds.Group.DISPATCH and index == CityToolIds.Dispatch.RECALL:
+		app.coop.session.request({"kind": "recall"})
+		return
 	if app.tool_state.terrain_stretch.active:
 		app.map_view.cancel_active_selection()
 
