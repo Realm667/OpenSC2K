@@ -10,6 +10,7 @@ var output := PackedByteArray()
 var limit := MAX_FRAME
 var failed := false
 var last_received := Time.get_ticks_msec()
+var low_latency := false
 
 
 func _init(peer: StreamPeerTCP, receive_limit := MAX_FRAME) -> void:
@@ -40,12 +41,10 @@ func poll() -> Array[Dictionary]:
 	if socket.get_status() != StreamPeerTCP.STATUS_CONNECTED:
 		failed = true
 		return messages
-	if not output.is_empty():
-		var sent := socket.put_partial_data(output.slice(0, IO_BUDGET))
-		if sent[0] != OK:
-			failed = true
-			return messages
-		output = output.slice(int(sent[1]))
+	if not low_latency:
+		socket.set_no_delay(true)
+		low_latency = true
+	flush()
 	var available := mini(socket.get_available_bytes(), IO_BUDGET)
 	if available > 0:
 		var received := socket.get_partial_data(available)
@@ -80,3 +79,13 @@ func poll() -> Array[Dictionary]:
 func close() -> void:
 	socket.disconnect_from_host()
 	failed = true
+
+
+func flush() -> void:
+	if failed or output.is_empty() or socket.get_status() != StreamPeerTCP.STATUS_CONNECTED:
+		return
+	var sent := socket.put_partial_data(output.slice(0, IO_BUDGET))
+	if sent[0] != OK:
+		failed = true
+		return
+	output = output.slice(int(sent[1]))

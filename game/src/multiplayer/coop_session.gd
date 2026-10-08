@@ -6,9 +6,11 @@ signal state_received(state: Dictionary)
 signal feedback(message: String)
 signal connection_changed
 signal choice_requested(result: Dictionary)
+signal environment_received(state: Dictionary)
 
 const PROTOCOL := 1
 const BUILD := "opensc2k-coop-1"
+const NETWORK_BUILD := "opensc2k-coop-2"
 const MAX_PLAYERS := 8
 var world: CoopWorld
 var active := false
@@ -32,6 +34,8 @@ var disconnected_pause := false
 var requested_speed: Dictionary = {}
 var handshake_started: Dictionary[int, int] = {}
 var command_rates: Dictionary[int, Array] = {}
+var environment_source: Callable
+var environment_elapsed := 0.0
 
 
 func host(document: Sc2File, port: int, join_code: String, player_name: String) -> String:
@@ -73,7 +77,7 @@ func join(address: String, port: int, join_code: String, player_name: String) ->
 	code = join_code
 	var channel := CityTcpChannel.new(peer)
 	channels[0] = channel
-	channel.send({"type": "hello", "protocol": PROTOCOL, "build": BUILD, "code": code,
+	channel.send({"type": "hello", "protocol": PROTOCOL, "build": NETWORK_BUILD, "code": code,
 		"token": token, "name": player_name.left(32), "session": session_id})
 	connection_changed.emit()
 	return ""
@@ -135,6 +139,15 @@ func _process(delta: float) -> void:
 		if snapshot_elapsed >= 0.25:
 			snapshot_elapsed = 0.0
 			publish()
+		environment_elapsed += delta
+		if environment_elapsed >= 0.05 and environment_source.is_valid():
+			environment_elapsed = 0.0
+			var atmosphere: Dictionary = environment_source.call()
+			for id: int in identities:
+				if channels[id].output.is_empty():
+					channels[id].send({"type": "environment", "weather": atmosphere})
+	for channel in channels.values():
+		channel.flush()
 
 
 func receive_host(id: int, message: Dictionary) -> void:
@@ -151,7 +164,7 @@ func receive_host(id: int, message: Dictionary) -> void:
 		return
 	if not identities.has(id):
 		if (message.get("type") != "hello" or message.get("protocol") != PROTOCOL
-				or message.get("build") != BUILD or message.get("code") != code
+				or message.get("build") != NETWORK_BUILD or message.get("code") != code
 				or not message.get("token") is String or message.token.length() != 48
 				or not message.get("name") is String or message.name.is_empty()
 				or message.name.length() > 32 or identities.values().has(message.token)
@@ -173,6 +186,8 @@ func receive_host(id: int, message: Dictionary) -> void:
 		channels[id].failed = true
 		return
 	channels[id].send(execute(identities[id], message))
+	# Confirmed edits must not wait for the periodic simulation snapshot.
+	publish()
 
 
 func execute(actor: String, message: Dictionary) -> Dictionary:
@@ -229,6 +244,7 @@ func request(command: Dictionary) -> void:
 		publish()
 	else:
 		channels[0].send(command)
+		channels[0].flush()
 
 
 func receive_client(message: Dictionary) -> void:
@@ -245,6 +261,9 @@ func receive_client(message: Dictionary) -> void:
 				return
 			connected = true
 			accept_state(message)
+		"environment":
+			if message.get("weather") is Dictionary:
+				environment_received.emit(message.weather)
 		"result":
 			feedback.emit(str(message.get("message", "")))
 			if message.get("choices") is Array and message.get("request") is Dictionary:
@@ -262,6 +281,8 @@ func make_state() -> Dictionary:
 		players.append("%s (%s)" % [members[actor].name, "paused" if requested_speed[actor] == 1 else "playing"])
 	state["players"] = players
 	state["disconnect_pause"] = disconnected_pause
+	if environment_source.is_valid():
+		state["weather"] = environment_source.call()
 	return state
 
 
@@ -282,6 +303,8 @@ func accept_state(state: Dictionary) -> void:
 	local_revision = int(state.revision)
 	local_policy = int(state.get("policy", 0))
 	state_received.emit(state)
+	if not hosting and state.get("weather") is Dictionary:
+		environment_received.emit(state.weather)
 
 
 func drop(id: int) -> void:

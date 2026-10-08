@@ -22,6 +22,7 @@ var field: Texture2D
 var parameters: Dictionary = {"cloud_enabled": false}
 var _initialized := false
 var _fog_enabled := false
+var remote_state: Array = []
 
 
 func _init(application: CityApplication) -> void:
@@ -88,6 +89,11 @@ func process(delta: float, phase_elapsed: float, active: bool, light: Color, dar
 		fog = move_toward(fog, target_fog, minf(maxf(delta, 0.0), phase_elapsed) * 0.004)
 	_initialized = true
 	_fog_enabled = fog_enabled
+	if not remote_state.is_empty():
+		drift = Vector2(remote_state[0], remote_state[1])
+		density = float(remote_state[2])
+		fog = float(remote_state[3]) if fog_enabled else 0.0
+		weather_clock = float(remote_state[4])
 	parameters.merge({
 		"cloud_field": field,
 		"cloud_span": FIELD_SPAN,

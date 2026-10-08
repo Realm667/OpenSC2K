@@ -36,7 +36,8 @@ Use **Gespeicherte Sitzung hosten** to resume. A restored session starts paused;
 - Camera movement and zoom are independent. Rotation is disabled because the current engine rotates city data; independent rotated views need a separate coordinate mapping.
 - Manual disaster triggers, facility query actions and the industry tax detail window are not available in Koop. Ordinary simulation disasters remain active according to the hosted city's rules. Read-only city queries and data views remain available.
 - The custom budget panel supports the existing residential, commercial and industrial tax percentages, service funding, Auto-Budget, ordinances and bonds. It does not yet reproduce the full singleplayer budget reporting interface.
-- Snapshots are sent four times per second; the host simulates continuously. Bandwidth and rendering performance need testing on real LAN hardware and developed cities before raising the map or participant limits.
+- Confirmed commands publish immediately; periodic simulation snapshots follow at four per second. TCP uses no-delay mode. The host simulates continuously. Bandwidth and rendering performance need testing on real LAN hardware and developed cities before raising the map or participant limits.
+- The host controls the shared weather progression. Weather transitions, precipitation, clouds, flashes and thunder events are sent separately at up to 20 updates per second, including the current state for late joiners. Guests can still disable effects or mute audio locally. Cosmetic weather starts afresh when a saved session is hosted again; the simulation weather remains in the saved city. Both players must update to this build; older session save files remain readable.
 
 ## Architecture and tests
 

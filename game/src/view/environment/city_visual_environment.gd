@@ -17,6 +17,7 @@ var clouds: CityVisualClouds
 var night_lighting: CityNightLighting
 var _whole_mask_signature: Array = []
 var _whole_water_signature: Array = []
+var remote_weather: Dictionary = {}
 
 
 func _init(application: CityApplication) -> void:
@@ -124,6 +125,8 @@ func process(delta: float) -> void:
 	if app.map_view == null:
 		return
 	var city := app.document_state.city
+	if not app.coop.active() or app.coop.session.hosting:
+		remote_weather.clear()
 	var active := city != null and app.view_state.overlay_mode == CityViewMode.Mode.CITY and not app.tool_state.landscape_editor
 	if city != null and city.document.get_instance_id() != _city_id:
 		_city_id = city.document.get_instance_id()
@@ -150,6 +153,8 @@ func process(delta: float) -> void:
 		season = fposmod(float(city.age_in_days() % CityCalendar.DAYS_PER_YEAR) / CityCalendar.DAYS_PER_YEAR * 4.0 - 2.0 / 3.0, 4.0)
 	elif options.season_mode == 2:
 		season = float(options.season_fixed)
+	weather.remote_state = remote_weather.get("weather", [])
+	clouds.remote_state = remote_weather.get("clouds", [])
 	weather.process(delta, elapsed * factor, active, season)
 	if profiles.atlases.is_empty():
 		profiles.reload(options.lut_folder)
@@ -190,6 +195,26 @@ func process(delta: float) -> void:
 	night_lighting.process(active, night, options, elapsed * factor)
 	if clouds.layer != null and clouds.layer.visible:
 		app.map_view.layers._apply_environment(clouds.material)
+
+
+func network_snapshot() -> Dictionary:
+	return {"weather": [weather.kind, weather.tint.r, weather.tint.g, weather.tint.b,
+		weather.frost, weather.rain, weather.snow, weather.clock, weather.flash,
+		weather.lightning.origin.x, weather.lightning.origin.y, weather.lightning.spread,
+		weather.lightning.color.r, weather.lightning.color.g, weather.lightning.color.b,
+		weather.lightning.sound_index, weather.lightning.pitch, weather.lightning.gain, weather.thunder_sequence],
+		"clouds": [clouds.drift.x, clouds.drift.y, clouds.density, clouds.fog, clouds.weather_clock]}
+
+
+func receive_network_weather(state: Dictionary) -> void:
+	if not state.get("weather") is Array or state.weather.size() != 19 or not state.get("clouds") is Array or state.clouds.size() != 5:
+		return
+	for value: Variant in state.weather + state.clouds:
+		if not (value is int or value is float) or not is_finite(float(value)) or absf(float(value)) > 2147483647:
+			return
+	if not CoopWorld.whole_number(state.weather[0], 0, 6) or not CoopWorld.whole_number(state.weather[15], -1, 4):
+		return
+	remote_weather = state.duplicate(true)
 
 
 func _sync_whole_water() -> void:

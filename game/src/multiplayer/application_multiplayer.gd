@@ -46,6 +46,8 @@ func active() -> bool:
 
 func setup() -> void:
 	session = CoopSession.new()
+	session.environment_source = app.visual_environment.network_snapshot
+	session.environment_received.connect(app.visual_environment.receive_network_weather)
 	app.add_child(session)
 	session.state_received.connect(receive_state)
 	session.feedback.connect(show_message)
@@ -255,6 +257,8 @@ func receive_state(state: Dictionary) -> void:
 	if not str(state.get("error", "")).is_empty():
 		show_message(str(state.error))
 	if last_city_bytes == state.city:
+		app.simulation_state.speed_controller.speed = int(state.get("speed", 1))
+		app.frame.sync_speed_ui()
 		return
 	var document := Sc2File.new()
 	if not document.parse(Marshalls.base64_to_raw(state.city)) or not document.is_sc2x() or document.map_size > 128:
@@ -275,19 +279,31 @@ func receive_state(state: Dictionary) -> void:
 		edit.ok = true
 		var previous := app.document_state.current_document
 		var map_changed := false
-		for chunk in document.chunks:
+		for index in document.chunks.size():
+			var chunk := document.chunks[index]
 			var old := previous.find_chunk(chunk.chunk_id)
-			if old != null and old.decoded_payload != chunk.decoded_payload:
+			if old != null:
+				chunk.mutation_revision = old.mutation_revision
+			if old == null or old.decoded_payload != chunk.decoded_payload:
+				chunk.mark_mutated()
 				edit.changed_ids.append(chunk.chunk_id)
-				edit.old_payloads[chunk.chunk_id] = old.decoded_payload
+				edit.old_payloads[chunk.chunk_id] = old.decoded_payload if old != null else PackedByteArray()
 				edit.new_payloads[chunk.chunk_id] = chunk.decoded_payload
 				if chunk.chunk_id not in ["MISC", "XTHG", "XGRP", "CNAM"]:
 					map_changed = true
-		app.document_state.current_document = document
-		app.document_state.city = CityState.from_document(document)
-		app.simulation_state.simulation_engine.city = app.document_state.city
+			elif old != null:
+				document.chunks[index] = old
+		# Keep the display city's identity. Render caches and cosmetic clocks use it
+		# to distinguish an edit from opening a different city.
+		for field_name in ["chunks", "source_bytes", "sc2x_metadata", "sc2x_compat_labels",
+				"sc2x_object_ids", "sc2x_object_kinds", "sc2x_object_names", "sc2x_extensions",
+				"sc2x_text_orders", "sc2x_preserved", "sc2x_extra_entries", "sc2x_unsupported_features",
+				"sc2x_converted_from", "large_version"]:
+			previous.set(field_name, document.get(field_name))
+		previous.rebuild_chunk_cache()
+		app.document_state.city.resync_mirrors(edit.changed_ids)
 		app.simulation_state.simulation_engine.clock.city_days = app.document_state.city.age_in_days()
-		Sc2xCheckpoint.restore(app.simulation_state.speed_controller, document.sc2x_metadata)
+		Sc2xCheckpoint.restore(app.simulation_state.speed_controller, previous.sc2x_metadata)
 		if map_changed:
 			app.static_render.refresh_after_city_edit(edit)
 		app.moving_sprites.refresh_moving_things()

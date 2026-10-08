@@ -148,12 +148,15 @@ func network_cases(source: Sc2File) -> void:
 		if guest.connected:
 			break
 	check(guest.connected, "TCP handshake and initial city received")
+	# Suppress the timer: a successful command must publish in its receive turn.
+	host.snapshot_elapsed = -100.0
 	guest.request(build_at(Vector2i(12, 12), guest.local_revision))
 	for _frame in 60:
 		await create_timer(0.01).timeout
 		if host.world.revision > 0 and guest.local_revision == host.world.revision:
 			break
 	check(host.world.revision > 0, "remote command applied on host")
+	check(guest.local_revision == host.world.revision, "remote edit published without periodic timer")
 	check(guest.latest.get("city") == host.latest.get("city"), "remote snapshot converges")
 	var duplicate := build_at(Vector2i(13, 13), host.world.revision)
 	duplicate["id"] = 1
