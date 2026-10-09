@@ -36,6 +36,7 @@ func configure() -> void:
 	if profiles.atlases.is_empty() or _options.get("lut_folder", "") != options.lut_folder:
 		profiles.reload(options.lut_folder)
 	_configure_water(options)
+	_configure_nature(options)
 	_options = options.duplicate()
 	process(0.0)
 
@@ -104,8 +105,12 @@ func reload_brightmaps(refresh := true) -> void:
 			if app.asset_state.palette != null:
 				CityDispatchLights.prepare(archive, app.asset_state.palette)
 				CitySeasonColors.prepare(archive, app.asset_state.palette)
+				if app.preferences.visual_enhancements.nature_forests_enabled or app.preferences.visual_enhancements.nature_terrain_enabled:
+					CityNatureArtwork.prepare(archive, app.asset_state.palette)
+					archive.visual_seasons.merge(archive.visual_nature_masks)
 			archive.visual_revision += 1
 	_configure_water(app.preferences.visual_enhancements, refresh)
+	_configure_nature(app.preferences.visual_enhancements, refresh)
 	if not refresh:
 		return
 	if app.map_view != null:
@@ -119,6 +124,34 @@ func export_brightmaps() -> void:
 	var folder: String = app.preferences.visual_enhancements.brightmap_folder
 	var error := CityBrightmaps.export_originals(app.asset_state.asset_source.assets, folder)
 	app.assets.show_graphics_source_error(error if not error.is_empty() else "Original PNGs and transparent Brightmap templates exported to:\n" + folder, "Visual Enhancements")
+
+
+func _configure_nature(options: Dictionary, refresh := true) -> void:
+	var changed := false
+	for archive: Sc2SpriteArchive in [app.asset_state.large_sprites, app.asset_state.small_medium_sprites]:
+		if archive == null or app.asset_state.palette == null:
+			continue
+		if options.nature_forests_enabled or options.nature_terrain_enabled:
+			CityNatureArtwork.prepare(archive, app.asset_state.palette)
+			archive.visual_seasons.merge(archive.visual_nature_masks)
+		if archive.visual_nature_enabled != options.nature_forests_enabled or archive.visual_terrain_enabled != options.nature_terrain_enabled:
+			archive.visual_nature_enabled = options.nature_forests_enabled
+			archive.visual_terrain_enabled = options.nature_terrain_enabled
+			archive.visual_revision += 1
+			changed = true
+	if changed and refresh and app.document_state.city != null:
+		app.static_render.invalidate_rendered_city()
+		app.map_render.refresh_map()
+
+
+func _nature_projection() -> Basis:
+	var city := app.document_state.city
+	if city == null:
+		return Basis.IDENTITY
+	var scale := app.map_view.camera._view_scale()
+	var offset := app.map_view.camera._draw_offset(scale)
+	var canvas := app.map_view.get_global_transform() * Transform2D(Vector2(scale, 0), Vector2(0, scale), offset)
+	return CityVisualClouds.shader_basis(CityVisualClouds.source_to_grid(city.map_size, city.compass_rotation()) * canvas.affine_inverse())
 
 
 func process(delta: float) -> void:
@@ -139,8 +172,10 @@ func process(delta: float) -> void:
 	var options := app.preferences.visual_enhancements
 	var speed := app.simulation_state.speed_controller.speed if app.simulation_state.speed_controller != null else 1
 	var elapsed := maxf(delta, 0.0)
-	if options.pause_freezes and (speed == 1 or app.frame._simulation_suspended()):
+	var paused := speed == GameSpeedController.Speed.PAUSED or app.frame._simulation_suspended()
+	if options.pause_freezes and paused:
 		elapsed = 0.0
+	var weather_delta := 0.0 if paused else maxf(delta, 0.0)
 	var factor := VisualEnhancementOptions.speed_factor(speed) if options.speed_link and speed > 1 else 1.0
 	if active and options.day_enabled and options.day_mode == 0:
 		phase = fposmod(phase + elapsed * factor / float(options.day_seconds), 1.0)
@@ -155,12 +190,16 @@ func process(delta: float) -> void:
 		season = float(options.season_fixed)
 	weather.remote_state = remote_weather.get("weather", [])
 	clouds.remote_state = remote_weather.get("clouds", [])
-	weather.process(delta, elapsed * factor, active, season)
+	var previous_weather := weather.kind
+	weather.process(delta, weather_delta * factor, active, season, paused)
 	if profiles.atlases.is_empty():
 		profiles.reload(options.lut_folder)
-	profiles.advance_weather(weather.kind, delta, options.weather_transition, active and options.weather_enabled)
+	var grading_delta: float = options.weather_transition if paused and weather.kind != previous_weather else weather_delta
+	profiles.advance_weather(weather.kind, grading_delta, options.weather_transition, active and options.weather_enabled)
 	var daytime_lights: bool = options.brightmaps and options.night_daytime_enabled
-	if active and (options.day_enabled or options.season_enabled or options.weather_enabled or daytime_lights):
+	# The auxiliary mask also identifies fullbright warning icons, even with
+	# all environment effects disabled.
+	if active:
 		_sync_whole_masks()
 	if active and VisualEnhancementOptions.water_pass_enabled(options):
 		_sync_whole_water()
@@ -169,14 +208,20 @@ func process(delta: float) -> void:
 	# Artificial lights can stay on without changing daylight, grading or cloud shadows.
 	var light_level := 1.0 if daytime_lights else ambient_night
 	night = light_level * float(options.night_light_strength) / 100.0 if options.brightmaps else 0.0
-	clouds.process(delta, elapsed * factor, active, tint * weather.tint, lighting.night if options.day_enabled else 0.0, weather.kind)
+	clouds.process(delta, weather_delta * factor, active, tint * weather.tint, lighting.night if options.day_enabled else 0.0, weather.kind)
+	weather.set_cloud_cover(clouds.precipitation_readiness)
 	var parameters := {
+		"nature_terrain_enabled": active and options.nature_terrain_enabled,
+		"nature_terrain_strength": options.nature_terrain_strength,
+		"nature_forests_enabled": active and options.nature_forests_enabled,
+		"nature_ground": CityNatureArtwork.ground_texture(),
+		"nature_canvas_to_grid": _nature_projection(),
 		"water_enabled": active and VisualEnhancementOptions.water_pass_enabled(options),
 		"water_reflections_enabled": active and options.water_reflections == 1,
 		"water_topography": options.water_topography,
 		"water_waves_enabled": options.water_waves_enabled,
 		"water_season_strength": options.season_water_strength if active and options.season_enabled else 0.0,
-		"water_rain": weather.rain,
+		"water_rain": weather.rain * clouds.precipitation_readiness,
 		"water_frozen": options.pause_freezes and (speed == 1 or app.frame._simulation_suspended()),
 		"environment_enabled": active and (options.day_enabled or options.season_enabled or options.weather_enabled or daytime_lights),
 		"environment_weather": Vector3(weather.tint.r, weather.tint.g, weather.tint.b),
@@ -192,27 +237,51 @@ func process(delta: float) -> void:
 	parameters.merge(clouds.parameters)
 	parameters.merge(profiles.parameters(options, hour, parameters.environment_seasons, app.map_view.get_viewport().use_hdr_2d))
 	app.map_view.layers.set_environment(parameters)
-	night_lighting.process(active, night, options, elapsed * factor)
+	if app.map_view.layers.dynamic_canvas != null:
+		var detail := VisualEnhancementOptions.detail_lights_visible(options, app.map_view.zoom_factor)
+		var changed := detail != app.map_view.layers.dynamic_canvas.detail_lights_visible
+		app.map_view.layers.dynamic_canvas.set_detail_lights_visible(detail)
+		if changed and active:
+			# Restore or remove moving emission masks even when simulation is paused.
+			app.moving_sprites.refresh_moving_things()
+	# Appearance fades finish in real time, also when the simulation is paused.
+	night_lighting.process(active, night, options, elapsed * factor, maxf(delta, 0.0))
 	if clouds.layer != null and clouds.layer.visible:
 		app.map_view.layers._apply_environment(clouds.material)
 
 
 func network_snapshot() -> Dictionary:
+	var paused := app.simulation_state.speed_controller == null or app.simulation_state.speed_controller.speed == GameSpeedController.Speed.PAUSED or app.frame._simulation_suspended()
 	return {"weather": [weather.kind, weather.tint.r, weather.tint.g, weather.tint.b,
 		weather.frost, weather.rain, weather.snow, weather.clock, weather.flash,
 		weather.lightning.origin.x, weather.lightning.origin.y, weather.lightning.spread,
 		weather.lightning.color.r, weather.lightning.color.g, weather.lightning.color.b,
-		weather.lightning.sound_index, weather.lightning.pitch, weather.lightning.gain, weather.thunder_sequence],
-		"clouds": [clouds.drift.x, clouds.drift.y, clouds.density, clouds.fog, clouds.weather_clock]}
+		weather.lightning.sound_index, weather.lightning.pitch, weather.lightning.gain, weather.thunder_sequence,
+		app.preferences.visual_enhancements.weather_strength, int(paused)],
+		"clouds": [clouds.drift.x, clouds.drift.y, clouds.density, clouds.fog, clouds.weather_clock,
+		clouds.situations.current, clouds.situations.target, clouds.situations.blend, clouds.situations.hold_clock,
+		clouds.situations.duration, clouds.storminess, clouds.precipitation_readiness,
+		clouds.fog_overlay.drift.x, clouds.fog_overlay.drift.y]}
 
 
 func receive_network_weather(state: Dictionary) -> void:
-	if not state.get("weather") is Array or state.weather.size() != 19 or not state.get("clouds") is Array or state.clouds.size() != 5:
+	if not state.get("weather") is Array or state.weather.size() != 21 or not state.get("clouds") is Array or state.clouds.size() != 14:
 		return
 	for value: Variant in state.weather + state.clouds:
 		if not (value is int or value is float) or not is_finite(float(value)) or absf(float(value)) > 2147483647:
 			return
 	if not CoopWorld.whole_number(state.weather[0], 0, 6) or not CoopWorld.whole_number(state.weather[15], -1, 4):
+		return
+	if not CoopWorld.whole_number(state.weather[18], 0, 2147483647) or not CoopWorld.whole_number(state.weather[20], 0, 1):
+		return
+	if float(state.weather[19]) < 0.0 or float(state.weather[19]) > 1.0:
+		return
+	if not CoopWorld.whole_number(state.clouds[5], 0, CityCloudSituations.Type.FOG) or not CoopWorld.whole_number(state.clouds[6], 0, CityCloudSituations.Type.FOG):
+		return
+	for index in [7, 10, 11]:
+		if float(state.clouds[index]) < 0.0 or float(state.clouds[index]) > 1.0:
+			return
+	if float(state.clouds[9]) <= 0.0:
 		return
 	remote_weather = state.duplicate(true)
 

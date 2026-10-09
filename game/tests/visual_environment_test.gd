@@ -9,8 +9,14 @@ func _initialize() -> void:
 func _run() -> void:
 	var defaults := VisualEnhancementOptions.normalize({})
 	assert(defaults.day_seconds == 600.0)
+	assert(defaults.nature_terrain_strength == 0.5)
+	assert(VisualEnhancementOptions.normalize({"nature_terrain_strength": NAN}).nature_terrain_strength == 0.5)
+	assert(VisualEnhancementOptions.normalize({"nature_terrain_strength": -1.0}).nature_terrain_strength == 0.0)
+	assert(VisualEnhancementOptions.normalize({"nature_terrain_strength": 2.0}).nature_terrain_strength == 1.0)
 	assert(defaults.night_light_strength == 100.0)
 	assert(not defaults.night_daytime_enabled)
+	assert(defaults.disaster_blending)
+	assert(VisualEnhancementOptions.normalize({"disaster_blending": "invalid"}).disaster_blending)
 	assert(VisualEnhancementOptions.normalize({"night_light_strength": NAN}).night_light_strength == 100.0)
 	assert(VisualEnhancementOptions.normalize({"night_light_strength": -10}).night_light_strength == 0.0)
 	assert(VisualEnhancementOptions.normalize({"night_light_strength": 150}).night_light_strength == 100.0)
@@ -19,10 +25,12 @@ func _run() -> void:
 	var save := AppSettingsStore.SaveOptions.new()
 	save.visual_enhancements = VisualEnhancementOptions.normalize({"day_mode": 1, "day_hour": 7.0, "weather_fixed": 6})
 	save.visual_enhancements.day_lut_strength = 0.25
+	save.visual_enhancements.nature_terrain_strength = 0.3
 	save.visual_enhancements.season_lut_strength = 0.75
 	save.visual_enhancements.weather_lut_strength = 0.0
 	save.visual_enhancements.night_light_strength = 35.0
 	save.visual_enhancements.night_daytime_enabled = true
+	save.visual_enhancements.disaster_blending = false
 	assert(AppSettingsStore.save_values(0.5, 0.5, false, path, save) == OK)
 	assert(AppSettingsStore.load_values(path).visual_enhancements == save.visual_enhancements)
 	assert(AppSettingsStore.save_values(0.4, 0.4, false, path) == OK)
@@ -39,6 +47,7 @@ func _run() -> void:
 	assert(CityVisualWeather.from_game(7, true) == 2)
 	_check_brightmaps()
 	_check_standard_brightmaps()
+	_check_zone_soil_masks()
 	var main := (load("res://main.tscn") as PackedScene).instantiate() as CityApplication
 	root.add_child(main)
 	await process_frame
@@ -48,6 +57,7 @@ func _run() -> void:
 	var before := DocumentState.capture(main.document_state.city.document)
 	var engine := main.simulation_state.simulation_engine
 	var random_before := [engine.random.state, engine.lfsr_random.state, engine.game_random.state]
+	_check_power_warning_clock(main)
 	main.preferences.visual_enhancements = defaults.duplicate()
 	main.preferences.visual_enhancements.pause_freezes = false
 	main.visual_environment.process(0.0)
@@ -61,6 +71,7 @@ func _run() -> void:
 	var paused_phase := main.visual_environment.phase
 	main.visual_environment.process(60.0)
 	assert(main.visual_environment.phase == paused_phase)
+	_check_weather_pause(main)
 	main.preferences.visual_enhancements.day_mode = 1
 	main.preferences.visual_enhancements.day_hour = 7.0
 	main.preferences.visual_enhancements.weather_mode = 2
@@ -79,7 +90,16 @@ func _run() -> void:
 	main.preferences.visual_enhancements.weather_mode = 0
 	main.settings.open_settings_dialog()
 	var tab := main.main_overlays.settings_dialog.visual_tab
+	tab.terrain_strength_slider.value = 25.0
+	assert(main.preferences.visual_enhancements.nature_terrain_strength == 0.25)
+	main.visual_environment.process(0.0)
+	assert(main.map_view.layers.environment_parameters.nature_terrain_strength == 0.25)
 	_check_menu_dependencies(tab)
+	await _check_visual_save(main, tab)
+	(tab.controls.disaster_blending as CheckBox).button_pressed = false
+	assert(not main.preferences.visual_enhancements.disaster_blending)
+	(tab.controls.disaster_blending as CheckBox).button_pressed = true
+	assert(main.preferences.visual_enhancements.disaster_blending)
 	(tab.controls.weather_enabled as CheckBox).button_pressed = true
 	var weather_source := tab.controls.weather_mode as OptionButton
 	weather_source.select(2)
@@ -277,7 +297,49 @@ func _run() -> void:
 	quit()
 
 
+func _check_weather_pause(main: CityApplication) -> void:
+	var saved := main.preferences.visual_enhancements.duplicate()
+	var environment := main.visual_environment
+	var weather := environment.weather
+	for freeze_cycles in [true, false]:
+		main.preferences.visual_enhancements = VisualEnhancementOptions.normalize({
+			"weather_mode": 2, "weather_fixed": CityVisualWeather.Kind.RAIN_STORM,
+			"season_mode": 2, "season_fixed": 3, "pause_freezes": freeze_cycles})
+		for kind in [CityVisualWeather.Kind.RAIN_STORM, CityVisualWeather.Kind.HEAVY_SNOW]:
+			main.simulation_state.speed_controller.speed = GameSpeedController.Speed.TURTLE
+			main.preferences.visual_enhancements.weather_fixed = kind
+			environment.process(0.25)
+			var frozen := _weather_snapshot(environment)
+			main.simulation_state.speed_controller.speed = GameSpeedController.Speed.PAUSED
+			for frame in 3:
+				environment.process(20.0)
+			assert(_weather_snapshot(environment) == frozen, "Pause advanced weather particles, a front, lightning, clouds or fog")
+			assert(weather.material.get_shader_parameter("clock") == weather.clock)
+			main.simulation_state.speed_controller.speed = GameSpeedController.Speed.TURTLE
+			environment.process(0.1)
+			assert(is_equal_approx(weather.clock, float(frozen[0]) + 0.1), "Weather caught up paused time")
+		main.simulation_state.speed_controller.speed = GameSpeedController.Speed.PAUSED
+		main.preferences.visual_enhancements.weather_mode = 1
+		environment.process(0.0)
+		var selection := [weather.selected_kind, weather.interval, weather.random.state]
+		environment.process(600.0)
+		assert([weather.selected_kind, weather.interval, weather.random.state] == selection, "Paused automation chose new weather")
+	main.preferences.visual_enhancements = saved
+	environment.process(0.0)
+
+
+func _weather_snapshot(environment: CityVisualEnvironment) -> Array:
+	var weather := environment.weather
+	var clouds := environment.clouds
+	return [weather.clock, weather.rain, weather.snow, weather.frost, weather.tint, weather.flash,
+		weather.lightning.wait, weather.lightning.age, weather.lightning.thunder_wait,
+		weather.lightning.random.state, environment.profiles.weather_weights.duplicate(),
+		clouds.drift, clouds.density, clouds.fog, clouds.weather_clock, clouds.opacity]
+
+
 func _check_ground_lighting(main: CityApplication) -> void:
+	# This cache regression explicitly exercises lights at every zoom level.
+	main.preferences.visual_enhancements.detail_lights_min_zoom = 0
 	var city := load("res://tests/city_life_test.gd").fixture() as CityState
 	assert(main.city_session.activate_document(city.document))
 	var ground := CityNightGround.new()
@@ -370,6 +432,7 @@ func _check_ground_lighting(main: CityApplication) -> void:
 			var expected := Vector2i(CityLifeLights._project(junctions, tile, offset, height).round())
 			assert(CityNightFixtures._foot(junctions, tile, offset, high) == expected, "Lamp foot floats above its onramp")
 	await _check_ground_buffer(main, ground)
+	load("res://tests/support/night_template_checks.gd").run(main)
 	ground.queue_free()
 	await process_frame
 
@@ -382,6 +445,13 @@ func _check_ground_buffer(main: CityApplication, ground: CityNightGround) -> voi
 	map.set_city_view(main.document_state.city, CityMapTexture.create(Image.create(4160, 2944, false, Image.FORMAT_RGBA8)))
 	ground.reset()
 	map.center_on_tile(Vector2i(64, 64))
+	for frame in 160:
+		ground.sync(main, 0.0, 0.0, true)
+	assert(not ground.visible and not ground.cache.is_empty(), "Daytime failed to prepare hidden night receivers")
+	var daytime := ground.cache.duplicate()
+	ground.sync(main, 0.45)
+	for tile in daytime:
+		assert(ground.cache[tile].texture == daytime[tile].texture, "Night discarded a prepared GPU texture")
 	for i in 160:
 		ground.sync(main, 0.45)
 	assert(ground.cache.size() > 10)
@@ -421,10 +491,208 @@ func _check_ground_buffer(main: CityApplication, ground: CityNightGround) -> voi
 	assert(ground.dirty.has(tile) and ground.cache[tile].texture == saved[tile].texture, "Refresh blanked a complete receiver")
 	for i in 160:
 		ground.sync(main, 0.45)
-	assert(ground.cache[tile].texture != saved[tile].texture and not ground.dirty.has(tile), "Changed foreground never refreshed")
+	assert(is_same(ground.cache[tile], saved[tile]) and not ground.dirty.has(tile), "Unchanged foreground rebuilt completed lighting")
+	ground.invalidate_all()
+	for i in 160:
+		ground.sync(main, 0.45)
+	assert(not is_same(ground.cache[tile], saved[tile]), "Forced geometry refresh reused an incompatible receiver")
+	assert(ground.pending.is_empty() and ground.queued.is_empty(), "Stable receivers kept pending work")
+	for frame in 8:
+		ground.sync(main, 0.45, 1.0)
+	assert(ground.pending.is_empty() and ground.queued.is_empty(), "Signal phases scheduled static rebuilds")
+	# Demolition and rebuilding change the visible fixtures while an unrelated
+	# cached street retains its complete entry.
+	var demolished := Vector2i(64, 64)
+	var city := main.document_state.city
+	var road := city.building_id(demolished.x, demolished.y)
+	var distant := Vector2i(64, 60)
+	var retained: Dictionary = ground.cache[distant]
+	city.set_building_id(demolished.x, demolished.y, 0)
+	ground.sync(main, 0.45)
+	assert(not ground.visible_keys.has(demolished), "Demolished road retained its lamp")
+	assert(is_same(ground.cache[distant], retained), "Local road edit discarded distant lighting")
+	city.set_building_id(demolished.x, demolished.y, road)
+	for frame in 160:
+		ground.sync(main, 0.45)
+	assert(ground.visible_keys.has(demolished) and not ground.dirty.has(demolished), "Rebuilt road never regained its lighting")
+	_check_changed_light_occlusion(main, ground, demolished)
 	map.city_source = old_source
 	main.render_caches.region_cache = regions
+	_check_resident_lights()
+	_check_light_graphics_caches(main)
 	print("PASS: street light buffer survives source publications and panning; dirty receivers replace atomically")
+
+
+func _check_changed_light_occlusion(main: CityApplication, ground: CityNightGround, tile: Vector2i) -> void:
+	var old_large := main.asset_state.large_sprites
+	var old_small := main.asset_state.small_medium_sprites
+	var old_commands := main.render_caches.static_occlusion_commands.duplicate()
+	var old_grid := main.render_caches.static_occlusion_grid
+	var archive := Sc2SpriteArchive.new()
+	main.asset_state.large_sprites = archive
+	main.asset_state.small_medium_sprites = archive
+	for frame in 160:
+		ground.sync(main, 0.45)
+	var original: Dictionary = ground.cache[tile]
+	var pixels: PackedByteArray = original.texture.get_image().get_data()
+	var divisor := CityIsometricRenderer.view_configuration(main.static_render.city_view_size()).divisor
+	var cover := CityStaticCommand.new()
+	cover.sprite_id = 42
+	cover.position = (original.origin - Vector2i(32, 32)) / divisor
+	cover.size = Vector2i(128, 128) / divisor
+	cover.depth_order = 10000000
+	var resource := CitySpriteResource.new()
+	resource.image = Image.create(128, 128, false, Image.FORMAT_RGBA8)
+	resource.image.fill(Color.WHITE)
+	var resource_key := "42:0:%d:1:%d" % [divisor, archive.get_instance_id()]
+	main.render_caches.dynamic_sprite_cache[resource_key] = resource
+	var changed: Array[Rect2i] = [Rect2i(original.origin, Vector2i(64, 64))]
+	# Streamed publications report possible changes. A new actual silhouette
+	# must replace the complete receiver, while repeat publications retain it.
+	main.render_caches.static_occlusion_commands.assign([cover])
+	main.render_caches.static_occlusion_grid = CityIsometricRenderer.build_occlusion_grid(main.render_caches.static_occlusion_commands, divisor)
+	ground.invalidate_regions(changed)
+	for frame in 160:
+		ground.sync(main, 0.45)
+	var hidden: Dictionary = ground.cache[tile]
+	assert(not is_same(hidden, original) and hidden.texture.get_image().get_data() != pixels)
+	assert(hidden.fixtures.get_image().is_invisible(), "Reused lights leaked through a new foreground building")
+	ground.invalidate_regions(changed)
+	for frame in 160:
+		ground.sync(main, 0.45)
+	assert(is_same(ground.cache[tile], hidden), "Identical silhouettes rebuilt their mask")
+	main.render_caches.static_occlusion_commands.assign(old_commands)
+	main.render_caches.static_occlusion_grid = old_grid
+	ground.invalidate_regions(changed)
+	for frame in 160:
+		ground.sync(main, 0.45)
+	assert(ground.cache[tile].texture.get_image().get_data() == pixels, "Removed building left stale light occlusion")
+	main.render_caches.dynamic_sprite_cache.erase(resource_key)
+	main.asset_state.large_sprites = old_large
+	main.asset_state.small_medium_sprites = old_small
+
+
+func _check_resident_lights() -> void:
+	var ground := CityNightGround.new()
+	var pixels := Image.create(64, 64, false, Image.FORMAT_RGBA8)
+	pixels.fill(Color.WHITE)
+	var texture := ImageTexture.create_from_image(pixels)
+	var entry := {"texture": texture, "fixtures": texture, "signals": [], "origin": Vector2i.ZERO}
+	for i in 5000:
+		ground._store(Vector2i(i, 0), entry)
+	ground._trim_cache()
+	assert(ground.cache.size() == 5000, "Cheap shared light textures were evicted at the old tile limit")
+	assert(ground.texture_bytes == 64 * 64 * 4, "Shared GPU textures were counted repeatedly")
+	ground._release(Vector2i.ZERO)
+	assert(ground.texture_bytes == 64 * 64 * 4)
+	ground.reset()
+	assert(ground.texture_bytes == 0 and ground.texture_users.is_empty())
+	# The real byte cap removes oldest offscreen output, protecting the visible light.
+	for i in 25:
+		var large := ImageTexture.create_from_image(Image.create(1024, 1024, false, Image.FORMAT_RGBA8))
+		ground._store(Vector2i(i, 0), {"texture": large, "fixtures": large, "signals": [], "origin": Vector2i.ZERO})
+		ground.last_used[Vector2i(i, 0)] = i
+	ground.visible_keys[Vector2i.ZERO] = true
+	ground._trim_cache()
+	assert(ground.texture_bytes <= CityNightGround.MAX_TEXTURE_BYTES)
+	assert(ground.cache.has(Vector2i.ZERO) and not ground.cache.has(Vector2i(1, 0)))
+	ground.free()
+
+
+func _check_light_graphics_caches(main: CityApplication) -> void:
+	var lights := main.visual_environment.night_lighting
+	var pixels := Image.create(64, 64, false, Image.FORMAT_RGBA8)
+	pixels.fill(Color.WHITE)
+	var texture := ImageTexture.create_from_image(pixels)
+	var tile := Vector2i(64, 64)
+	var original_view := main.static_render.city_view_size()
+	for view in 3:
+		lights._select_ground(view)
+		lights.ground._store(tile, {"texture": texture, "fixtures": texture, "signals": [], "origin": Vector2i.ZERO})
+		lights.ground.visible_keys[tile] = true
+		lights.ground.show()
+	var large := lights.ground_views[2]
+	var entry: Dictionary = large.cache[tile]
+	for view in [1, 2, 0, 2, 1, 2]:
+		var previous := lights.ground
+		lights._select_ground(view)
+		assert(not previous.visible, "An inactive graphics-size light layer stayed visible")
+		assert(lights.ground.cache[tile].texture == texture)
+		assert(is_same(large.cache[tile], entry), "Graphics-size switching discarded a completed light entry")
+	assert(lights.ground_views.size() == 3)
+	lights.invalidate_regions([Rect2i(0, 0, 64, 64)])
+	for receiver in lights.ground_views.values():
+		assert(receiver.dirty.has(tile), "A hidden graphics-size variant missed a local edit")
+	lights.reset()
+	for receiver in lights.ground_views.values():
+		assert(receiver.cache.is_empty() and receiver.texture_bytes == 0)
+	lights._select_ground(original_view)
+	var old_source := main.map_view.city_source
+	main.map_view.set_city_view(main.document_state.city, CityMapTexture.create(Image.create(4160, 2944, false, Image.FORMAT_RGBA8)))
+	var options := main.preferences.visual_enhancements.duplicate()
+	options.night_ground = 45.0
+	var old_sizes := main.preferences.zoom_graphics.duplicate()
+	var old_zoom := main.map_view.zoom_factor
+	var regions := main.render_caches.region_cache
+	main.render_caches.region_cache = null
+	main.preferences.zoom_graphics = [1, 2, 2, 2, 2, 2]
+	var snapshots := {}
+	var old_large := main.asset_state.large_sprites
+	var old_small := main.asset_state.small_medium_sprites
+	main.asset_state.large_sprites = Sc2SpriteArchive.new()
+	main.asset_state.small_medium_sprites = Sc2SpriteArchive.new()
+	var old_traffic := main.asset_state.large_sprites.visual_city_life_traffic
+	for zoom in [0.5, 0.25, 0.5, 1.0, 2.0, 0.25, 0.5]:
+		main.map_view.zoom_factor = zoom
+		main.map_view.center_on_tile(tile)
+		# The real frame switches decorative traffic at 50%, increasing both
+		# archive revisions. A bare lighting call misses this reset regression.
+		main.city_life._sync_traffic(zoom >= 0.5)
+		main.render_caches.region_cache = null
+		var view := main.static_render.city_view_size()
+		assert(view == (1 if zoom == 0.25 else 2))
+		lights.process(true, 0.45, options)
+		if snapshots.has(view):
+			assert(is_same(lights.ground.cache[tile], snapshots[view]), "25/50 zoom transition rebuilt an unchanged receiver")
+		else:
+			for frame in 160:
+				lights.process(true, 0.45, options)
+			assert(lights.ground.cache.has(tile))
+			snapshots[view] = lights.ground.cache[tile]
+	main.city_life._sync_traffic(old_traffic)
+	main.asset_state.large_sprites = old_large
+	main.asset_state.small_medium_sprites = old_small
+	main.map_view.city_source = old_source
+	main.preferences.zoom_graphics = old_sizes
+	main.map_view.zoom_factor = old_zoom
+	main.render_caches.region_cache = regions
+	lights.reset()
+	lights._select_ground(original_view)
+
+
+func _check_power_warning_clock(main: CityApplication) -> void:
+	var clock := main.palette_clock
+	clock.cycle_ticks = 0
+	clock.elapsed_msec = 0.0
+	main.static_render.update_palette_cycle_texture()
+	main.simulation_state.speed_controller.speed = GameSpeedController.Speed.TURTLE
+	main.preferences.visual_enhancements.disaster_enabled = false
+	main.preferences.visual_enhancements.disaster_blending = true
+	main.frame._advance_palette_animation(GameSpeedController.BASE_TICK_MSEC / 2000.0, false)
+	assert(is_equal_approx(main.map_view.layers._power_warning_blend, 0.5))
+	var ticks := clock.cycle_ticks
+	var elapsed := clock.elapsed_msec
+	main.frame._advance_palette_animation(1.0, true)
+	assert(clock.cycle_ticks == ticks and clock.elapsed_msec == elapsed)
+	main.simulation_state.speed_controller.speed = GameSpeedController.Speed.PAUSED
+	main.frame._advance_palette_animation(1.0, false)
+	assert(clock.cycle_ticks == ticks and clock.elapsed_msec == elapsed)
+	main.preferences.visual_enhancements.disaster_blending = false
+	main.frame._advance_palette_animation(0.0, true)
+	assert(main.map_view.layers._power_warning_blend == 0.0)
+	main.preferences.visual_enhancements.disaster_blending = true
+	main.frame._advance_palette_animation(0.0, true)
+	assert(is_equal_approx(main.map_view.layers._power_warning_blend, 0.5))
 
 
 func _check_menu_dependencies(tab: VisualEnhancementsTab) -> void:
@@ -458,6 +726,7 @@ func _check_menu_dependencies(tab: VisualEnhancementsTab) -> void:
 	(tab.controls.disaster_strength as SpinBox).value = 70.0
 	assert((tab.controls.disaster_lights as SpinBox).editable)
 	(tab.controls.disaster_enabled as CheckBox).button_pressed = false
+	assert(not (tab.controls.disaster_blending as CheckBox).disabled, "Power-warning blending must remain available without disaster effects")
 	assert(not (tab.controls.disaster_strength as SpinBox).editable)
 	assert(not (tab.controls.disaster_shake as SpinBox).editable)
 	assert((tab.controls.disaster_motion as CheckBox).disabled)
@@ -493,10 +762,10 @@ func _check_menu_dependencies(tab: VisualEnhancementsTab) -> void:
 	(tab.controls.weather_enabled as CheckBox).button_pressed = false
 	assert((tab.controls.weather_fixed as OptionButton).disabled and weather_source.disabled)
 	var day_source := tab.controls.day_mode as OptionButton
-	assert(not (tab.controls.day_hour as SpinBox).editable and (tab.controls.day_seconds as SpinBox).editable)
+	assert(not (tab.controls.day_hour as VisualTimeEdit).editable and (tab.controls.day_seconds as SpinBox).editable)
 	day_source.select(1)
 	day_source.item_selected.emit(1)
-	assert((tab.controls.day_hour as SpinBox).editable and not (tab.controls.day_seconds as SpinBox).editable)
+	assert((tab.controls.day_hour as VisualTimeEdit).editable and not (tab.controls.day_seconds as SpinBox).editable)
 	(tab.controls.brightmaps as CheckBox).button_pressed = false
 	assert(not (tab.controls.brightmap_folder as LineEdit).editable)
 	assert(not (tab.controls.night_light_strength as SpinBox).editable)
@@ -528,6 +797,29 @@ func _check_menu_dependencies(tab: VisualEnhancementsTab) -> void:
 	assert(not (tab.controls.life_people_amount as SpinBox).editable)
 	tab.show_values(original)
 	tab.changed.emit()
+
+
+func _check_zone_soil_masks() -> void:
+	var pack := FixtureGraphics.pack()
+	for archive: Sc2SpriteArchive in [pack.large_sprites, pack.small_medium_sprites]:
+		CitySeasonColors.prepare(archive, pack.palette)
+		for id: int in archive.entries_by_id:
+			if id % 500 < 291 or id % 500 > 299:
+				continue
+			assert(archive.visual_seasons.has(id), "Zoned soil has no seasonal mask: %d" % id)
+			var entry := archive.find_sprite(id)
+			var indices: PackedInt32Array = entry.decode_indices().pixels
+			var flat: PackedInt32Array = archive.find_sprite(id - id % 500 + 256).decode_indices().pixels
+			var mask: Image = archive.visual_seasons[id]
+			var markings := 0
+			for at in indices.size():
+				# Original zoning uses soil shade124 for its darker tile borders.
+				if indices[at] == 124:
+					assert(mask.get_pixel(at % entry.width, int(at / entry.width)).g == 1.0, "Zoned soil border stayed brown")
+				elif indices[at] >= 0 and not flat.has(indices[at]):
+					markings += 1
+					assert(mask.get_pixel(at % entry.width, int(at / entry.width)).a == 0.0, "Season mask recolors a zoning mark")
+			assert(markings > 0, "Zone fixture lacks distinctive markings")
 
 
 func _check_brightmaps() -> void:
@@ -623,3 +915,35 @@ func _check_standard_brightmaps() -> void:
 	custom.entries_by_id[1112] = different
 	CityBrightmaps.load_archive(custom, "", "large")
 	assert(custom.visual_emission.is_empty(), "Default masks must not attach to changed custom artwork")
+
+
+func _check_visual_save(main: CityApplication, tab: VisualEnhancementsTab) -> void:
+	var original := tab.selected_values()
+	var dialog := main.main_overlays.settings_dialog
+	main.settings.flush_visual_save()
+	var saved := FileAccess.get_file_as_bytes(main.preferences.settings_path)
+	var strength := tab.controls.day_lut_strength as SpinBox
+	strength.value = 15.0
+	strength.value = 25.0
+	strength.value = 35.0
+	assert(main.preferences.visual_enhancements.day_lut_strength == 0.35)
+	assert(main.settings._visual_save_pending)
+	assert(FileAccess.get_file_as_bytes(main.preferences.settings_path) == saved)
+	await create_timer(0.4).timeout
+	assert(not main.settings._visual_save_pending)
+	assert(AppSettingsStore.load_values(main.preferences.settings_path).visual_enhancements.day_lut_strength == 0.35)
+	strength.value = 45.0
+	dialog.hide()
+	assert(not main.settings._visual_save_pending)
+	assert(AppSettingsStore.load_values(main.preferences.settings_path).visual_enhancements.day_lut_strength == 0.45)
+	main.settings.open_settings_dialog()
+	# No-op/non-visual changes must not rerun visual configuration.
+	var configured := main.visual_environment._options
+	main.settings.apply_settings()
+	assert(is_same(configured, main.visual_environment._options))
+	dialog.default_mayor_edit.text = "UI regression mayor"
+	dialog.default_mayor_edit.text_submitted.emit(dialog.default_mayor_edit.text)
+	assert(is_same(configured, main.visual_environment._options))
+	tab.show_values(original)
+	tab.changed.emit()
+	main.settings.flush_visual_save()

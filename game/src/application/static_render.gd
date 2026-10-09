@@ -515,6 +515,12 @@ func update_palette_cycle_texture() -> void:
 	else:
 		palette_clock.cycle_texture.update(image)
 
+	var next_image := app.asset_state.palette.animation_image(palette_clock.cycle_ticks + 1)
+	if palette_clock.next_cycle_texture == null:
+		palette_clock.next_cycle_texture = ImageTexture.create_from_image(next_image)
+	else:
+		palette_clock.next_cycle_texture.update(next_image)
+
 	var underground_image := app.asset_state.palette.underground_animation_image(palette_clock.cycle_ticks)
 
 	if palette_clock.underground_cycle_texture == null:
@@ -536,10 +542,17 @@ func _city_graphics_size() -> int:
 
 
 func city_view_size() -> int:
+	if app.visual_preparation.preparing_view >= 0:
+		return app.visual_preparation.preparing_view
 	return mini(_city_graphics_size(), IsometricRenderer.VIEW_LARGE)
 
 
 func sprite_archive_for_view(view_size: int) -> Sc2SpriteArchive:
+	var prepared := app.visual_preparation.archive_for_view(view_size)
+	return prepared if prepared != null else original_archive_for_view(view_size)
+
+
+func original_archive_for_view(view_size: int) -> Sc2SpriteArchive:
 	return app.asset_state.small_medium_sprites if view_size < IsometricRenderer.VIEW_LARGE else app.asset_state.large_sprites
 
 
@@ -561,6 +574,7 @@ func restart_static_render() -> void:
 
 # discards every rendered image of the city after an artwork or document change
 func invalidate_rendered_city() -> void:
+	app.visual_preparation.reset()
 	app.map_render.close_region_cache()
 	state.epoch += 1
 	caches.static_city_image = null

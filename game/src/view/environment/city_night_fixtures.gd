@@ -19,10 +19,35 @@ static func street_layout(city: CityState, tile: Vector2i, spacing: int) -> Arra
 	var ports := CityLifePaths.ports(city, tile)
 	if id >= TILES.ROAD_JUNCTION_1 and id <= TILES.ROAD_CROSSROADS:
 		return [{"offset": Vector2(0.34, 0.34), "enter": 0}, {"offset": Vector2(-0.34, -0.34), "enter": 0}]
-	if posmod(tile.x + tile.y, maxi(1, spacing)) != 0:
+	var diagonal := CityLifePaths.diagonal(city, tile)
+	var coordinate := tile.x + tile.y
+	var period := maxi(1, spacing)
+	if diagonal:
+		# A diagonal crosses two alternating half-tiles per full street step.
+		# Follow its longitudinal axis, including the x-y diagonals.
+		var rotation := id - (TILES.HIGHWAY_CURVE_1 if highway else TILES.ROAD_CURVE_1)
+		coordinate = tile.x + tile.y if rotation % 2 == 0 else tile.x - tile.y
+		period *= 2
+	if posmod(coordinate, period) != 0:
 		return []
 	if id in [TILES.HIGHWAY_ROAD_CROSSING_1, TILES.HIGHWAY_ROAD_CROSSING_2]:
 		return [{"offset": Vector2(0.32, 0), "enter": 0}, {"offset": Vector2(0, 0.32), "enter": 1}]
+	if diagonal:
+		var result: Array[Dictionary] = []
+		for enter in 4:
+			if not ports & (1 << enter):
+				continue
+			var exit := CityLifePaths.paired_exit(city, tile, enter)
+			if enter > exit:
+				continue
+			var a := Vector2(CityLifePaths.DIRECTIONS[enter]) * 0.5
+			var b := Vector2(CityLifePaths.DIRECTIONS[exit]) * 0.5
+			var center := (a + b) * 0.5
+			var side := Vector2(a.y - b.y, b.x - a.x).normalized()
+			if side.dot(center) < 0:
+				side = -side
+			result.append({"offset": center + side * 0.32, "center": center, "enter": enter})
+		return result
 	for direction in 4:
 		if ports & (1 << direction):
 			var forward := Vector2(CityLifePaths.DIRECTIONS[direction])
@@ -51,7 +76,8 @@ static func signal_lens(tile: Vector2i, axis: int, seconds: float) -> int:
 	return 1 if phase < 6.0 else 0
 
 
-static func build(app: CityApplication, tile: Vector2i, origin: Vector2i, layout: Array[Dictionary], masker: CityLifeCanvas) -> Dictionary:
+static func build(app: CityApplication, tile: Vector2i, origin: Vector2i, layout: Array[Dictionary], masker: CityLifeCanvas,
+		texture_lookup := Callable()) -> Dictionary:
 	var city := app.document_state.city
 	var art := Image.create(64, 64, false, Image.FORMAT_RGBA8)
 	for fixture in layout:
@@ -61,7 +87,7 @@ static func build(app: CityApplication, tile: Vector2i, origin: Vector2i, layout
 		for y in range(head.y, foot.y + 1):
 			_pixel(art, origin, Vector2i(foot.x, y), Color("6d7378"), occluders)
 		# A short arm bends toward the carriageway.
-		var inward := -Vector2(fixture.offset).normalized() * 0.12
+		var inward := (Vector2(fixture.get("center", Vector2.ZERO)) - Vector2(fixture.offset)).normalized() * 0.12
 		var arm := Vector2i(roundi((inward.x - inward.y) * 16.0), roundi((inward.x + inward.y) * 8.0))
 		for step in 4:
 			_pixel(art, origin, head + Vector2i(Vector2(arm) * step / 3.0), Color("8c8d80"), occluders)
@@ -88,12 +114,23 @@ static func build(app: CityApplication, tile: Vector2i, origin: Vector2i, layout
 			var point := head + Vector2i(0, lens)
 			_halo(image, lamp_origin, point, SIGNAL_COLORS[lens], 2.5, occluders)
 			_pixel(image, lamp_origin, point, SIGNAL_COLORS[lens], occluders)
-			lenses.append(ImageTexture.create_from_image(image))
+			lenses.append(_texture(image, texture_lookup))
 		signals.append({"origin": lamp_origin, "lenses": lenses, "axis": direction % 2})
-	return {"fixtures": ImageTexture.create_from_image(art), "signals": signals}
+	return {"fixtures": _texture(art, texture_lookup), "signals": signals}
+
+
+static func _texture(image: Image, lookup: Callable) -> Texture2D:
+	return lookup.call(image) if lookup.is_valid() else ImageTexture.create_from_image(image)
 
 
 static func _foot(city: CityState, tile: Vector2i, offset: Vector2, enter: int) -> Vector2i:
+	if CityLifePaths.diagonal(city, tile):
+		var exit := CityLifePaths.paired_exit(city, tile, enter)
+		var a := Vector2(CityLifePaths.DIRECTIONS[enter]) * 0.5
+		var b := Vector2(CityLifePaths.DIRECTIONS[exit]) * 0.5
+		var progress := clampf((offset - a).dot(b - a) / a.distance_squared_to(b), 0, 1)
+		var height := lerpf(CityLifePaths.edge_height(city, tile, enter), CityLifePaths.edge_height(city, tile, exit), progress)
+		return Vector2i(CityLifeLights._project(city, tile, offset, height).round())
 	var ports := CityLifePaths.ports(city, tile)
 	var exit := (enter + 2) % 4
 	if not ports & (1 << exit):

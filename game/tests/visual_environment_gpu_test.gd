@@ -6,6 +6,7 @@ func _initialize() -> void:
 
 func _run() -> void:
 	await _check_dispatch_lights()
+	await _check_power_warnings()
 	var viewport := SubViewport.new()
 	viewport.size = Vector2i(16, 16)
 	viewport.transparent_bg = true
@@ -76,6 +77,8 @@ func _run() -> void:
 	viewport.queue_free()
 	await process_frame
 	await _check_weather_layer()
+	await _check_rain_depth()
+	await _check_zone_seasons()
 	await _check_night_glow(false)
 	await _check_night_glow(true)
 	await _check_city_life_glow(false)
@@ -84,6 +87,63 @@ func _run() -> void:
 	await _check_street_fixtures(true)
 	print("PASS: GPU uniform morning/evening tint, colored graded brightmaps and original pixels when disabled")
 	quit()
+
+
+func _check_power_warnings() -> void:
+	var pack := GraphicsPack.load_root("res://../ext/graphics")
+	assert(pack.error.is_empty(), pack.error)
+	var viewport := SubViewport.new()
+	viewport.size = Vector2i(64, 32)
+	viewport.transparent_bg = true
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	root.add_child(viewport)
+	var sprite := Sprite2D.new()
+	sprite.centered = false
+	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	viewport.add_child(sprite)
+	var material := ShaderMaterial.new()
+	material.shader = preload("res://src/view/map/palette_cycle.gdshader")
+	sprite.material = material
+	material.set_shader_parameter("palette_lookup_all", true)
+	material.set_shader_parameter("palette_cycle_enabled", true)
+	material.set_shader_parameter("environment_enabled", true)
+	material.set_shader_parameter("environment_tint", Vector3(0.1, 0.2, 0.3))
+	material.set_shader_parameter("environment_has_seasons", true)
+	material.set_shader_parameter("environment_seasons", Vector4(0, 0, 0, 1))
+	for archive: Sc2SpriteArchive in [pack.large_sprites, pack.small_medium_sprites]:
+		CitySeasonColors.prepare(archive, pack.palette)
+		for id in [386, 886, 1386]:
+			var entry := archive.find_sprite(id)
+			if entry == null:
+				continue
+			var mask: Image = archive.visual_seasons[id]
+			var indices := entry.decode_indices().pixels
+			sprite.texture = ImageTexture.create_from_image(entry.create_image(Sc2Palette.index_encoding()).image)
+			material.set_shader_parameter("environment_season_mask", ImageTexture.create_from_image(mask))
+			for tick in 8:
+				var first := pack.palette.animation_image(tick)
+				var next := pack.palette.animation_image(tick + 1)
+				material.set_shader_parameter("animated_palette", ImageTexture.create_from_image(first))
+				material.set_shader_parameter("power_warning_palette", ImageTexture.create_from_image(next))
+				for blend in [0.0, 0.5, 1.0]:
+					material.set_shader_parameter("power_warning_blend", blend)
+					await process_frame
+					await RenderingServer.frame_post_draw
+					var actual := viewport.get_texture().get_image()
+					for y in entry.height:
+						for x in entry.width:
+							var index: int = indices[y * entry.width + x]
+							var pixel := actual.get_pixel(x, y)
+							if index < 0:
+								assert(pixel.a == 0.0 and mask.get_pixel(x, y).a == 0.0, "Warning silhouette changed")
+								continue
+							var expected := first.get_pixel(index, 0).lerp(next.get_pixel(index, 0), blend)
+							assert(abs(pixel.r8 - expected.r8) <= 2 and abs(pixel.g8 - expected.g8) <= 2
+								and abs(pixel.b8 - expected.b8) <= 2 and pixel.a8 == 255,
+								"Power warning %d lost its fullbright palette blend at tick %d" % [id, tick])
+	viewport.queue_free()
+	await process_frame
+	print("PASS: all power-warning sizes blend resolved palette colors and stay fullbright at night with lighting disabled")
 
 
 func _check_dispatch_lights() -> void:
@@ -205,7 +265,28 @@ func _check_night_glow(hdr: bool) -> void:
 			await RenderingServer.frame_post_draw
 			assert(viewport.get_texture().get_image().get_pixel(58, 48).is_equal_approx(marker_pixel), "Night glow covered weather or tool overlays")
 		marker.get_parent().remove_child(marker)
+	# Clouds can appear after the lights, and each artwork size adds a new
+	# receiver node. An opaque cloud patch must cover emission in SDR and HDR.
+	var cloud := ColorRect.new()
+	cloud.color = Color.TRANSPARENT
+	cloud.size = map.size
+	map.add_child(cloud)
+	app.visual_environment.clouds.layer = cloud
+	cloud.add_child(marker)
+	map.move_child(cloud, lighting.output.get_index())
+	for zoom in [0.25, 0.1, 0.25]:
+		map.zoom_factor = zoom
+		lighting.process(true, 1.0, options)
+		for frame in 4:
+			await RenderingServer.frame_post_draw
+		assert(viewport.get_texture().get_image().get_pixel(64, 48).is_equal_approx(Color.GREEN),
+			"Night lights painted over cloud cover at zoom %s, HDR=%s" % [zoom, hdr])
+		assert(lighting.ground.get_index() < cloud.get_index())
+	cloud.remove_child(marker)
 	marker.free()
+	cloud.free()
+	app.visual_environment.clouds.layer = null
+	map.zoom_factor = 1.0
 	app.visual_environment.weather.layer.hide()
 	lighting.process(true, 1.0, options)
 	var cover := Image.create(16, 16, false, Image.FORMAT_RGBA8)
@@ -371,6 +452,7 @@ func _check_street_fixtures(hdr: bool) -> void:
 	(ground.material as ShaderMaterial).set_shader_parameter("strength", 0.45)
 	ground.queue_redraw()
 	ground.fixtures.queue_redraw()
+	ground._refresh_signals()
 	await RenderingServer.frame_post_draw
 	var after := viewport.get_texture().get_image()
 	var red := 0
@@ -384,10 +466,15 @@ func _check_street_fixtures(hdr: bool) -> void:
 			warm += int(pixel.r > before.get_pixel(x, y).r + 0.08 and pixel.r > pixel.b * 1.3)
 	assert(red >= 2 and green >= 2, "Junction lamps are missing red or green output on the GPU")
 	assert(warm > 50, "Street light pools remain too small or dim to read: hdr=%s warm=%d red=%d green=%d" % [hdr, warm, red, green])
+	var redraws := {"ground": 0, "fixtures": 0, "signals": 0}
+	ground.draw.connect(func(): redraws.ground += 1)
+	ground.fixtures.draw.connect(func(): redraws.fixtures += 1)
+	ground.signals.draw.connect(func(): redraws.signals += 1)
 	ground.clock = 6.0
-	ground.fixtures.queue_redraw()
+	ground.signals.queue_redraw()
 	await RenderingServer.frame_post_draw
 	assert(viewport.get_texture().get_image().get_data() != after.get_data(), "Cosmetic signal phase failed to change visible lenses")
+	assert(redraws.ground == 0 and redraws.fixtures == 0 and redraws.signals == 1, "Signal animation rebuilt static drawing commands")
 	ground.hide()
 	await RenderingServer.frame_post_draw
 	assert(viewport.get_texture().get_image().get_data() == before.get_data(), "Disabled street lighting left fixtures behind")
@@ -462,6 +549,9 @@ func _check_weather_layer() -> void:
 		weather.process(5.0, 0.0, true, 1.0)
 		await RenderingServer.frame_post_draw
 		var stationary := viewport.get_texture().get_image().get_data()
+		weather.process(60.0, 60.0, true, 1.0, true)
+		await RenderingServer.frame_post_draw
+		assert(viewport.get_texture().get_image().get_data() == stationary, "Paused precipitation changed GPU pixels")
 		map.source_center += Vector2(120, 80)
 		weather._sync_layer(true)
 		await RenderingServer.frame_post_draw
@@ -491,6 +581,12 @@ func _check_weather_layer() -> void:
 	assert(discharge.get_pixel(30, 30).r > sunny.get_pixel(30, 30).r, "Lightning was hidden behind the city")
 	assert(discharge.get_pixel(30, 30).r > discharge.get_pixel(220, 160).r, "Lightning lost its spatial origin")
 	assert(discharge.get_pixel(104, 84).is_equal_approx(sunny.get_pixel(104, 84)), "Lightning covered the tool overlay")
+	# With fixed illumination, a dry storm has no moving particle pixels.
+	for time in [0.37, 5.9, 28.1]:
+		weather.clock = time
+		weather._sync_layer(true)
+		await RenderingServer.frame_post_draw
+		assert(viewport.get_texture().get_image().get_data() == discharge.get_data(), "Dry lightning revealed moving precipitation")
 	weather.flash = 0.0
 	app.preferences.visual_enhancements.weather_fixed = CityVisualWeather.Kind.SUNNY
 	weather.process(5.0, 0.0, true, 1.0)
@@ -498,6 +594,90 @@ func _check_weather_layer() -> void:
 	assert(viewport.get_texture().get_image().get_data() == sunny.get_data(), "Sunny changed original city pixels")
 	viewport.queue_free()
 	app.free()
+	await process_frame
+
+
+func _check_zone_seasons() -> void:
+	var pack := FixtureGraphics.pack()
+	var archive := pack.large_sprites
+	CitySeasonColors.prepare(archive, pack.palette)
+	var viewport := SubViewport.new()
+	viewport.transparent_bg = true
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	root.add_child(viewport)
+	var sprite := Sprite2D.new()
+	sprite.centered = false
+	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	var material := ShaderMaterial.new()
+	material.shader = preload("res://src/view/map/palette_cycle.gdshader")
+	material.set_shader_parameter("environment_has_seasons", true)
+	sprite.material = material
+	viewport.add_child(sprite)
+	for id in range(1291, 1300):
+		var entry := archive.find_sprite(id)
+		var pixels: Image = entry.create_image(pack.palette).image
+		viewport.size = pixels.get_size()
+		sprite.texture = ImageTexture.create_from_image(pixels)
+		var mask: Image = archive.visual_seasons[id]
+		material.set_shader_parameter("environment_season_mask", ImageTexture.create_from_image(mask))
+		material.set_shader_parameter("environment_enabled", false)
+		await RenderingServer.frame_post_draw
+		var original := viewport.get_texture().get_image()
+		material.set_shader_parameter("environment_enabled", true)
+		for season in 4:
+			var weights := Vector4.ZERO
+			weights[season] = 1.0
+			material.set_shader_parameter("environment_seasons", weights)
+			await RenderingServer.frame_post_draw
+			var colored := viewport.get_texture().get_image()
+			var changed := 0
+			for y in pixels.get_height():
+				for x in pixels.get_width():
+					if pixels.get_pixel(x, y).a <= 0.0:
+						continue
+					var different := not colored.get_pixel(x, y).is_equal_approx(original.get_pixel(x, y))
+					if mask.get_pixel(x, y).g > 0.0 and season != 1:
+						changed += int(different)
+					else:
+						assert(not different, "Season changed zone markings or original summer colors")
+			assert(season == 1 or changed > 20, "Zoned ground retained brown soil in a seasonal view")
+	viewport.queue_free()
+	await process_frame
+
+
+func _check_rain_depth() -> void:
+	var viewport := SubViewport.new()
+	viewport.size = Vector2i(256, 192)
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	root.add_child(viewport)
+	var background := ColorRect.new()
+	background.size = Vector2(viewport.size)
+	background.color = Color.BLACK
+	viewport.add_child(background)
+	await RenderingServer.frame_post_draw
+	var empty := viewport.get_texture().get_image()
+	# Isolate each production rain plane to measure its visible footprint.
+	var source: String = CityVisualWeather.PARTICLES.code
+	var shader := Shader.new()
+	shader.code = source.substr(0, source.find("void fragment()")) + \
+		"uniform float test_depth; void fragment() { COLOR = vec4(vec3(1.0), rain_layer(UV * extent, test_depth)); }"
+	var material := ShaderMaterial.new()
+	material.shader = shader
+	material.set_shader_parameter("extent", Vector2(viewport.size))
+	material.set_shader_parameter("rain", 1.0)
+	material.set_shader_parameter("clock", 9.25)
+	var rain := ColorRect.new()
+	rain.size = Vector2(viewport.size)
+	rain.material = material
+	viewport.add_child(rain)
+	var widths: Array[float] = []
+	for depth in 3:
+		material.set_shader_parameter("test_depth", float(depth))
+		await RenderingServer.frame_post_draw
+		widths.append(_particle_width(viewport.get_texture().get_image(), empty))
+	assert(widths[1] > widths[0] + 0.1 and widths[2] > widths[1] + 0.1,
+		"Rain planes lack distinct distant, middle and soft foreground footprints: %s" % [widths])
+	viewport.queue_free()
 	await process_frame
 
 

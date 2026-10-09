@@ -86,6 +86,7 @@ func run() -> void:
 	main.coop.leave()
 	await process_frame
 	check(not main.coop.active() and main.main_menu.visible, "leave returns to singleplayer menu")
+	check(not main.visual_preparation.busy and main.visual_preparation.banks.is_empty(), "leave releases pending visual banks before clearing the city")
 	main.queue_free()
 	await process_frame
 	print("Koop UI checks: %d failures" % failures)
@@ -142,11 +143,88 @@ func weather_cases(main: CityApplication, guest: CoopSession) -> void:
 	check(remote.kind == CityVisualWeather.Kind.HEAVY_SNOW and remote.snow == float(state.weather[6]), "remote weather overrides local choice and season")
 	check(remote.clock == float(state.weather[7]), "late join receives weather phase")
 	remote.remote_state[18] = 5
+	remote.remote_state[20] = 0
 	remote.process(0.1, 0.0, true, 1.0)
 	remote.process(0.1, 0.0, true, 1.0)
 	check(is_equal_approx(remote.clock, float(state.weather[7]) + 0.2), "particle animation runs smoothly between packets")
 	check(remote.received_thunder == 5, "duplicate weather frames do not replay thunder")
+	remote.process(0.1, 0.0, true, 1.0, true)
+	check(is_equal_approx(remote.clock, float(state.weather[7]) + 0.2), "paused remote particles retain their phase")
+	remote.remote_state[20] = 1
+	remote.process(0.1, 0.0, true, 1.0)
+	check(is_equal_approx(remote.clock, float(state.weather[7]) + 0.2), "host pause freezes guests even with local running speed")
+	await cloud_front_cases(main)
 	remote.reset()
 	if remote.layer != null:
 		remote.layer.queue_free()
 	check(weather.clock >= 123.0, "weather keeps advancing across edits")
+
+
+func cloud_front_cases(main: CityApplication) -> void:
+	var environment := main.visual_environment
+	var options := main.preferences.visual_enhancements
+	options.cloud_enabled = true
+	options.cloud_mode = CityCloudSituations.Type.CIRRUS + 1
+	options.weather_fixed = CityVisualWeather.Kind.DRY_STORM
+	options.weather_strength = 0.6
+	environment.process(1.0)
+	var clouds := environment.clouds
+	clouds.situations.current = CityCloudSituations.Type.STRATUS
+	clouds.situations.target = CityCloudSituations.Type.FOG
+	clouds.situations.blend = 0.4
+	clouds.situations.hold_clock = 730.0
+	clouds.situations.duration = 90.0
+	clouds.fog = 0.15
+	clouds.fog_overlay.drift = Vector2(23, 41)
+	clouds.storminess = 0.7
+	clouds.precipitation_readiness = 0.25
+	var state := environment.network_snapshot()
+	environment.receive_network_weather(state)
+	check(environment.remote_weather == state, "complete host atmosphere passes packet validation")
+	var invalid := state.duplicate(true)
+	invalid.clouds[5] = 99
+	environment.receive_network_weather(invalid)
+	check(environment.remote_weather == state, "invalid cloud type cannot enter the renderer")
+	invalid = state.duplicate(true)
+	invalid.weather[20] = 2
+	environment.receive_network_weather(invalid)
+	check(environment.remote_weather == state, "invalid pause flag rejected")
+	invalid = state.duplicate(true)
+	invalid.clouds[7] = NAN
+	environment.receive_network_weather(invalid)
+	check(environment.remote_weather == state, "nonfinite cloud transition rejected")
+	environment.remote_weather.clear()
+	var remote_clouds := CityVisualClouds.new(main)
+	remote_clouds.remote_state = state.clouds
+	remote_clouds.process(0.1, 0.1, true, Color.WHITE, 0.0, CityVisualWeather.Kind.DRY_STORM)
+	check(remote_clouds.situations.current == CityCloudSituations.Type.STRATUS and remote_clouds.situations.target == CityCloudSituations.Type.FOG, "host cloud types override guest fixed type")
+	check(is_equal_approx(remote_clouds.situations.blend, 0.4), "late join receives cloud atlas transition")
+	check(remote_clouds.field == CityCloudSituations.ATLASES[CityCloudSituations.Type.STRATUS], "guest uses host atlas")
+	check(is_equal_approx(float(remote_clouds.parameters.cloud_type_blend), smoothstep(0.0, 1.0, 0.4)), "shader receives synchronized blend")
+	check(is_equal_approx(remote_clouds.precipitation_readiness, 0.25), "host cloud cover controls guest precipitation")
+	check(remote_clouds.fog_overlay.drift == Vector2(23, 41), "low mist receives host world phase")
+	var remote := CityVisualWeather.new(main)
+	remote.remote_state = state.weather
+	remote.process(1.0, 1.0, true, 1.0)
+	check(remote.kind == CityVisualWeather.Kind.DRY_STORM and remote.rain == 0.0 and remote.snow == 0.0, "synchronized dry storm has no residual precipitation")
+	var audio := main.audio_controller
+	var background := audio.background_audio
+	audio.set_background_audio(true)
+	var sound_enabled := main.document_state.city.sound_enabled()
+	main.document_state.city.set_sound_enabled(true)
+	remote.remote_state[20] = 0
+	remote.process(1.0, 1.0, true, 1.0)
+	check(remote.audio.wind_gain > 0.0 and remote.audio.rain_gains == Vector2.ZERO, "guest dry storm uses wind without rain audio")
+	var wind_gain := remote.audio.wind_gain
+	remote.process(1.0, 1.0, true, 1.0, true)
+	check(remote.audio.wind_gain == wind_gain and is_instance_valid(remote.audio.wind_player) and remote.audio.wind_player.stream_paused, "guest pause freezes existing wind ambience")
+	remote.process(0.1, 0.1, false, 1.0)
+	check(remote.rain == 0.0 and remote.snow == 0.0 and remote.tint == Color.WHITE, "guest can disable local weather effects")
+	remote.reset()
+	if remote.layer != null:
+		remote.layer.queue_free()
+	audio.set_background_audio(background)
+	main.document_state.city.set_sound_enabled(sound_enabled)
+	for layer in [remote_clouds.layer, remote_clouds.fog_overlay.layer, remote_clouds.fog_overlay.height_viewport]:
+		if layer != null:
+			layer.queue_free()

@@ -10,7 +10,7 @@ signal environment_received(state: Dictionary)
 
 const PROTOCOL := 1
 const BUILD := "opensc2k-coop-1"
-const NETWORK_BUILD := "opensc2k-coop-2"
+const NETWORK_BUILD := "opensc2k-coop-3"
 const MAX_PLAYERS := 8
 var world: CoopWorld
 var active := false

@@ -31,6 +31,7 @@ var remote_state: Array = []
 var thunder_sequence := 0
 var received_thunder := -1
 var remote_clock := -1.0
+var _preview_signature: Array = []
 
 
 func _init(application: CityApplication) -> void:
@@ -67,13 +68,14 @@ func reset() -> void:
 	flash = 0.0
 	camera_pan = Vector2.ZERO
 	last_camera_zoom = 0.0
+	_preview_signature.clear()
 
 
-func process(delta: float, phase_elapsed: float, active: bool, season: float) -> void:
+func process(delta: float, phase_elapsed: float, active: bool, season: float, paused := false) -> void:
 	var options := app.preferences.visual_enhancements
 	var enabled: bool = active and options.weather_enabled
 	if not remote_state.is_empty():
-		_process_remote(delta, enabled)
+		_process_remote(delta, enabled, paused)
 		return
 	var snow_allowed: bool = options.weather_mode == 2 or int(fposmod(season, 4.0)) == 3
 	if enabled:
@@ -87,8 +89,8 @@ func process(delta: float, phase_elapsed: float, active: bool, season: float) ->
 				last_game_weather = game_weather
 				selected_kind = from_game(game_weather, random.randf() < 0.5)
 		elif options.weather_mode == 1:
-			interval += phase_elapsed
-			if interval >= float(options.weather_seconds):
+			interval += phase_elapsed if not paused else 0.0
+			if not paused and interval >= float(options.weather_seconds):
 				interval = fposmod(interval, float(options.weather_seconds))
 				var choices := [Kind.SUNNY, Kind.SUNNY, Kind.LIGHT_RAIN, Kind.HEAVY_RAIN, Kind.RAIN_STORM, Kind.DRY_STORM]
 				if int(season) == 3:
@@ -105,21 +107,33 @@ func process(delta: float, phase_elapsed: float, active: bool, season: float) ->
 	else:
 		kind = Kind.SUNNY
 		flash = 0.0
-	var weight := minf(1.0, maxf(delta, 0.0) / float(options.weather_transition)) if enabled else 1.0
 	var strength := float(options.weather_strength)
+	var elapsed := 0.0 if paused else maxf(delta, 0.0)
+	var preview := [enabled, kind, strength, options.weather_mode, snow_allowed]
+	# Explicit menu changes remain visible while paused; existing fronts stay frozen.
+	var weight := minf(1.0, elapsed / float(options.weather_transition)) if enabled else 1.0
+	if paused and preview != _preview_signature:
+		weight = 1.0
+	_preview_signature = preview
 	var target_tint := Color.WHITE.lerp(TINTS[kind], strength)
 	tint = Color(move_toward(tint.r, target_tint.r, weight), move_toward(tint.g, target_tint.g, weight), move_toward(tint.b, target_tint.b, weight))
 	frost = move_toward(frost, (0.18 if kind == Kind.LIGHT_SNOW else (0.85 if kind == Kind.HEAVY_SNOW else 0.0)) * strength, weight)
 	rain = move_toward(rain, (0.28 if kind == Kind.LIGHT_RAIN else (1.0 if kind in [Kind.HEAVY_RAIN, Kind.RAIN_STORM] else 0.0)) * strength, weight)
 	snow = move_toward(snow, (0.24 if kind == Kind.LIGHT_SNOW else (1.0 if kind == Kind.HEAVY_SNOW else 0.0)) * strength, weight)
+	if kind == Kind.DRY_STORM:
+		# A dry discharge must never reveal a residual precipitation front.
+		rain = 0.0
+		snow = 0.0
 	if not snow_allowed:
 		# Automatic weather clears out-of-season flakes even while paused.
 		snow = 0.0
 		frost = 0.0
-	clock = fposmod(clock + maxf(delta, 0.0), 3600.0)
+	clock = fposmod(clock + elapsed, 3600.0)
 	var storm := enabled and kind in [Kind.RAIN_STORM, Kind.DRY_STORM]
-	audio.update(delta, enabled and strength > 0.0, rain, storm)
-	var thunder_due := lightning.advance(delta, storm, strength)
+	audio.update(elapsed, enabled and strength > 0.0, rain, storm, paused, strength if kind == Kind.DRY_STORM else 0.0)
+	var thunder_due := false
+	if not paused or not storm or strength <= 0.0:
+		thunder_due = lightning.advance(elapsed, storm, strength)
 	if thunder_due:
 		thunder_sequence += 1
 	flash = lightning.flash
@@ -131,8 +145,11 @@ func process(delta: float, phase_elapsed: float, active: bool, season: float) ->
 	_sync_layer(enabled)
 
 
-func _process_remote(delta: float, enabled: bool) -> void:
+func _process_remote(delta: float, enabled: bool, paused: bool) -> void:
 	var state := remote_state
+	paused = paused or bool(state[20])
+	var elapsed := 0.0 if paused else maxf(delta, 0.0)
+	var strength := float(state[19])
 	kind = int(state[0]) as Kind
 	selected_kind = kind
 	tint = Color(state[1], state[2], state[3]) if enabled else Color.WHITE
@@ -145,7 +162,7 @@ func _process_remote(delta: float, enabled: bool) -> void:
 		remote_clock = float(state[7])
 		clock = remote_clock
 	else:
-		clock = fposmod(clock + maxf(delta, 0.0), 3600.0)
+		clock = fposmod(clock + elapsed, 3600.0)
 	flash = float(state[8]) if enabled else 0.0
 	lightning.origin = Vector2(state[9], state[10])
 	lightning.spread = float(state[11])
@@ -154,9 +171,10 @@ func _process_remote(delta: float, enabled: bool) -> void:
 	lightning.pitch = float(state[16])
 	lightning.gain = float(state[17])
 	var sequence := int(state[18])
-	audio.update(delta, enabled, rain, kind in [Kind.RAIN_STORM, Kind.DRY_STORM])
-	if enabled and received_thunder >= 0 and sequence > received_thunder:
-		audio.play_thunder(lightning, 1.0)
+	audio.update(elapsed, enabled and strength > 0.0, rain, kind in [Kind.RAIN_STORM, Kind.DRY_STORM],
+		paused, strength if kind == Kind.DRY_STORM else 0.0)
+	if enabled and not paused and received_thunder >= 0 and sequence > received_thunder:
+		audio.play_thunder(lightning, strength)
 	received_thunder = sequence
 	_sync_layer(enabled)
 
@@ -204,3 +222,12 @@ func _sync_layer(enabled: bool) -> void:
 	material.set_shader_parameter("flash_origin", lightning.origin)
 	material.set_shader_parameter("flash_spread", lightning.spread)
 	material.set_shader_parameter("flash_color", Vector3(lightning.color.r, lightning.color.g, lightning.color.b))
+
+
+func set_cloud_cover(readiness: float) -> void:
+	# Called after the cloud front advances; wet effects cannot lead its cover.
+	if material == null or layer == null or not layer.visible:
+		return
+	material.set_shader_parameter("rain", rain * readiness)
+	material.set_shader_parameter("snow", snow * readiness)
+	material.set_shader_parameter("flash", flash * readiness)

@@ -413,6 +413,7 @@ func leave() -> void:
 		app.document_state.saved_city_snapshot = original_saved_snapshot
 		app.document_state.current_city_saved_once = original_saved_once
 	else:
+		app.visual_preparation.reset()
 		app.document_state.city = null
 		app.document_state.current_document = null
 		app.simulation_state.speed_controller = null

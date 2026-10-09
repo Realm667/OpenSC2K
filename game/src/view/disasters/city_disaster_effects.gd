@@ -43,6 +43,8 @@ var _trails: Dictionary[int, Vector2] = {}
 var _shake_remaining := 0.0
 var lighting := CityDisasterLighting.new()
 var earthquake_blur := CityEarthquakeBlur.new()
+var _cloud_styles: Dictionary[Vector2i, int] = {}
+var _cloud_context := 0
 var _tornado_sites: Dictionary[Vector2i, int] = {}
 
 
@@ -63,7 +65,7 @@ func process(delta: float) -> void:
 	_sync_city()
 	app.moving_sprites.tornado_renderer.sync_transform()
 	var options := app.preferences.visual_enhancements
-	var settings := [enabled(), options.disaster_crowds, options.disaster_dust, options.disaster_motion]
+	var settings := [enabled(), options.disaster_crowds, options.disaster_dust, options.disaster_motion, options.disaster_blending]
 	if settings != _settings_signature:
 		_settings_signature = settings
 		if app.document_state.city != null and app.map_view != null:
@@ -96,12 +98,21 @@ func process(delta: float) -> void:
 			pulses[i].sprite.queue_free()
 			pulses.remove_at(i)
 	_elapsed += elapsed
-	if _elapsed >= FRAME_SECONDS:
+	var update_all := _elapsed >= FRAME_SECONDS
+	if update_all:
 		_elapsed = 0.0
-		for visual in markers.values():
+	for key in markers.keys():
+		var visual := markers[key]
+		if visual.retired >= 0.0 and (not options.disaster_blending or clock - visual.retired >= CityHazardAnimation.FADE_OUT):
+			visual.sprite.queue_free()
+			markers.erase(key)
+			continue
+		if update_all or options.disaster_blending:
 			_update_material(visual)
-		for pulse in pulses:
+	for pulse in pulses:
+		if update_all or options.disaster_blending:
 			_update_material(pulse)
+	if update_all:
 		_sync_storm()
 	if canvas != null:
 		var scale_value := app.map_view.camera._view_scale()
@@ -116,6 +127,9 @@ func _sync_city() -> void:
 	var signature: Array = [] if city == null else [city.document.get_instance_id(), city.compass_rotation(), city.visible_altitude_levels]
 	if signature != _city_signature:
 		_clear()
+		_cloud_styles.clear()
+		if signature.is_empty() or _city_signature.is_empty() or signature[0] != _city_signature[0]:
+			_cloud_context = 0
 		_city_signature = signature
 		clock = 0.0
 
@@ -188,6 +202,32 @@ func begin_commands() -> void:
 	_sync_city()
 	_seen.clear()
 	_tornado_sites.clear()
+	for tile in _cloud_styles.keys():
+		if app.document_state.city.marker_overlay_id(tile.x, tile.y) != 0xfb:
+			_cloud_styles.erase(tile)
+
+
+static func cloud_style_for_disaster(disaster: int) -> int:
+	if disaster in [DisasterStartConstants.DISASTER_TOXIC_SPILL, DisasterStartConstants.DISASTER_POLLUTION]:
+		return 1
+	return 2 if disaster == DisasterStartConstants.DISASTER_VOLCANO else 0
+
+
+func cloud_style(tile: Vector2i) -> int:
+	# The simulation shares one marker for toxic and volcanic clouds. Remember
+	# observed provenance only in this presentation; unknown origins stay neutral.
+	if int(_cloud_styles.get(tile, 0)) > 0:
+		return _cloud_styles[tile]
+	var engine := app.simulation_state.simulation_engine
+	var style := cloud_style_for_disaster(engine.active_disaster_type) if engine != null and engine.active_disaster_type != 0 else _cloud_context
+	_cloud_styles[tile] = style
+	return style
+
+
+static func cloud_light_color(style: int) -> Color:
+	if style == 1:
+		return Color(0.28, 1.0, 0.035)
+	return Color(1.0, 0.52, 0.055) if style == 2 else Color(0.55, 0.52, 0.46)
 
 
 ## Return true only when a visible replacement was actually installed.
@@ -247,6 +287,8 @@ func observe_command(command: CityDynamicCommand) -> bool:
 		if kind == TORNADO:
 			_tornado_sites[tile] = city.building_id(tile.x, tile.y)
 		var visual := _marker("thing:%d" % command.record, kind, tile, location, command.record if kind == TORNADO else -1)
+		if visual != null:
+			visual.source_record = command.record
 		if visual != null and kind == EXPLOSION:
 			visual.material.set_shader_parameter("impact_phase", clampf(thing.direction / 2.0, 0.0, 1.0))
 		if kind == TRAIL and _trails.get(command.record, Vector2.INF).distance_to(location) > 5.0:
@@ -259,11 +301,41 @@ func observe_command(command: CityDynamicCommand) -> bool:
 func end_commands() -> void:
 	for key in markers.keys():
 		if not _seen.has(key):
-			markers[key].sprite.queue_free()
+			var visual := markers[key]
+			if _can_retire(visual):
+				if visual.retired < 0.0:
+					visual.retire_opacity = _opacity(visual)
+					visual.retired = clock
+				continue
+			visual.sprite.queue_free()
 			markers.erase(key)
 	for record in _trails.keys():
 		if not _seen.has("thing:%d" % record):
 			_trails.erase(record)
+
+
+func _can_retire(visual: Visual) -> bool:
+	if not active() or not app.preferences.visual_enhancements.disaster_blending \
+			or not _visible(visual.tile, visual.sprite.position + ANCHOR):
+		return false
+	if visual.kind == FIRE:
+		return app.document_state.city.marker_overlay_id(visual.tile.x, visual.tile.y) == 0
+	if visual.kind in [EXPLOSION, TRAIL] and visual.source_record >= 0:
+		var thing := app.document_state.city.thing(visual.source_record)
+		return thing == null or thing.type == 0
+	return false
+
+
+func _opacity(visual: Visual) -> float:
+	if not app.preferences.visual_enhancements.disaster_blending:
+		return 1.0
+	if visual.retired >= 0.0:
+		return visual.retire_opacity * (1.0 - smoothstep(0.0, CityHazardAnimation.FADE_OUT, clock - visual.retired))
+	if visual.kind == FIRE:
+		return lerpf(visual.start_opacity, 1.0, smoothstep(0.0, CityHazardAnimation.FADE_IN, clock - visual.born))
+	if visual.kind in [DUST, TRAIL]:
+		return smoothstep(0.0, 0.08, maxf(visual.age, 0.0) if visual.duration > 0.0 else clock - visual.born)
+	return 1.0
 
 
 func _riot_neighbours(city: CityState, tile: Vector2i) -> void:
@@ -311,15 +383,15 @@ func _sync_lighting(scale_value: float) -> void:
 		cells[cell] = true
 		var tint := Color(1.0, 0.24, 0.025)
 		if visual.kind == TOXIC:
-			tint = Color(0.28, 1.0, 0.035)
+			tint = cloud_light_color(cloud_style(visual.tile))
 		elif visual.kind == MICROWAVE:
 			tint = Color(0.025, 0.35, 1.0)
 		elif visual.kind == MONSTER:
 			# Red component of the original 1385/885/385 beam artwork.
 			tint = Color("ff0f11")
-		var fade := 1.0
+		var fade := _opacity(visual)
 		if visual.duration > 0.0:
-			fade = 1.0 - smoothstep(0.45, 1.0, visual.age / visual.duration)
+			fade *= 1.0 - smoothstep(0.45, 1.0, visual.age / visual.duration)
 		if visual.kind == EXPLOSION:
 			fade *= 1.0 - float(visual.material.get_shader_parameter("impact_phase")) * 0.55
 		sources.append({"position": visual.sprite.position + ANCHOR, "color": tint, "fade": fade,
@@ -337,6 +409,13 @@ func _marker(key: String, kind: int, tile: Vector2i, location: Vector2, record :
 			return null
 		visual = _create(kind, tile, location)
 		markers[key] = visual
+	if visual.kind != kind:
+		visual.born = clock
+		visual.start_opacity = 0.0
+	if visual.retired >= 0.0:
+		visual.start_opacity = _opacity(visual)
+		visual.born = clock
+		visual.retired = -1.0
 	visual.kind = kind
 	visual.tile = tile
 	visual.record = record
@@ -349,6 +428,7 @@ func _marker(key: String, kind: int, tile: Vector2i, location: Vector2, record :
 func _create(kind: int, tile: Vector2i, location: Vector2) -> Visual:
 	_ensure_canvas()
 	var visual := Visual.new()
+	visual.born = clock
 	visual.kind = kind
 	visual.tile = tile
 	visual.sprite = Sprite2D.new()
@@ -378,7 +458,10 @@ func _update_material(visual: Visual) -> void:
 		visual.sprite.position = (ground_point(app.document_state.city, visual.tile) - ANCHOR + offset + visual.anchor_offset).round()
 	material.set_shader_parameter("world_origin", visual.sprite.position + ANCHOR * visual.sprite.scale)
 	material.set_shader_parameter("effect_kind", visual.kind)
+	material.set_shader_parameter("cloud_style", cloud_style(visual.tile) if visual.kind == TOXIC else 0)
 	material.set_shader_parameter("effect_time", clock)
+	material.set_shader_parameter("frame_blending", app.preferences.visual_enhancements.disaster_blending)
+	material.set_shader_parameter("lifecycle_opacity", _opacity(visual))
 	material.set_shader_parameter("effect_strength", app.preferences.visual_enhancements.disaster_strength)
 	material.set_shader_parameter("light_strength", app.preferences.visual_enhancements.disaster_lights)
 	material.set_shader_parameter("progress", clampf(visual.age / visual.duration, 0.0, 1.0) if visual.duration > 0.0 else -1.0)
@@ -475,8 +558,14 @@ static func is_dust(event: EffectEvent) -> bool:
 
 func disaster_started(result: DisasterStartResult) -> void:
 	_sync_city()
-	if not active() or result == null or not result.ok or not result.started:
+	if result == null or not result.ok or not result.started:
 		return
+	_cloud_context = cloud_style_for_disaster(result.disaster_type)
+	if not active():
+		return
+	# Start results arrive after the map refresh; update neutral first-frame art
+	# immediately, including when the player has paused the simulation.
+	app.moving_sprites.refresh_moving_things()
 	var city := app.document_state.city
 	match result.disaster_type:
 		9:
@@ -527,6 +616,11 @@ static func flood_edges(city: CityState, tile: Vector2i) -> Vector4:
 
 
 class Visual extends RefCounted:
+	var source_record := -1
+	var born := 0.0
+	var retired := -1.0
+	var retire_opacity := 1.0
+	var start_opacity := 0.0
 	var sprite: Sprite2D
 	var material: ShaderMaterial
 	var tile := Vector2i.ZERO

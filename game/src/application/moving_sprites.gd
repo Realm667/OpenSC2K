@@ -13,6 +13,7 @@ var traffic_motion := CityTrafficMotion.new()
 var moving_lights := CityMovingLights.new()
 var tornado_renderer: CityTornadoRenderer
 var beam_glow: CityDisasterBeamGlow
+var hazard_animation: CityHazardAnimation
 
 
 func _init(application: CityApplication) -> void:
@@ -20,9 +21,12 @@ func _init(application: CityApplication) -> void:
 	caches = application.render_caches
 	tornado_renderer = CityTornadoRenderer.new(application)
 	beam_glow = CityDisasterBeamGlow.new(application)
+	hazard_animation = CityHazardAnimation.new(application)
 
 
 func process(delta: float) -> void:
+	hazard_animation.process(delta)
+	tornado_renderer.process(delta)
 	beam_glow.process()
 	if not _traffic_active():
 		traffic_motion.reset()
@@ -43,6 +47,7 @@ func _traffic_active() -> bool:
 
 
 func refresh_moving_things(view_size := -1) -> void:
+	hazard_animation.begin()
 	tornado_renderer.begin()
 	app.disaster_effects.begin_commands()
 	caches.trim_moving()
@@ -100,16 +105,27 @@ func refresh_moving_things(view_size := -1) -> void:
 		if not app.view_state.show_vehicles and command.record >= 0 and _is_vehicle(int(command.record)):
 			continue
 
-		var transparent_shadow: bool = command.shadow and app.preferences.visual_enhancements.traffic_shadows_enabled \
-			and command.record >= 0 and app.document_state.city.thing(command.record).type in [1, 2]
+		var aircraft_shadow: bool = command.shadow and command.record >= 0 \
+			and app.document_state.city.thing(command.record).type in [1, 2]
+		var transparent_shadow: bool = aircraft_shadow and app.preferences.visual_enhancements.traffic_shadows_enabled
+		var hazard := hazard_animation.observe(command, sprite_archive, view_size)
+		if hazard != null:
+			visuals.append(hazard)
+			continue
 		if command.record >= 0 and app.document_state.city.thing(command.record).type == 15 \
 				and app.disaster_effects.active():
 			var tornado_resource := dynamic_sprite_resource(sprite_archive, command.sprite_id, command.flip, divisor, factor)
 			if tornado_resource != null:
 				tornado_renderer.draw(command, source_command, tornado_resource, display_position, divisor)
 				continue
-		var toxic_cloud: bool = command.overlay == 0xfb and app.disaster_effects.active()
-		var visual_cache_key := var_to_str([view_size, factor, sprite_archive.visual_revision, transparent_shadow, toxic_cloud, position, command.value_signature()])
+		var cloud_style := 0
+		if command.overlay == 0xfb and app.disaster_effects.active():
+			cloud_style = app.disaster_effects.cloud_style(IsometricFloatingOcclusion.depth_tile(command.depth_order, app.document_state.city.map_size))
+		var toxic_cloud := cloud_style == 1
+		var warm_cloud := cloud_style == 2
+		var light_allowed := VisualEnhancementOptions.detail_lights_visible(app.preferences.visual_enhancements, app.map_view.zoom_factor) \
+			or not (command.record >= 0 and _is_vehicle(int(command.record)))
+		var visual_cache_key := var_to_str([view_size, factor, sprite_archive.visual_revision, transparent_shadow, toxic_cloud, warm_cloud, light_allowed, position, command.value_signature()])
 		# Include fully hidden shadows: a static change can make them visible.
 		caches.dynamic_active_keys[visual_cache_key] = true
 
@@ -137,7 +153,7 @@ func refresh_moving_things(view_size := -1) -> void:
 			occluder_mask = _dynamic_occluder_image(
 				sprite_archive, divisor, position, resource.native_size,
 				int(command.depth_order), bool(command.train), factor,
-				resource if command.floating_altitude >= 0 else null, int(command.floating_altitude), command.train_support_orders
+				resource if command.floating_altitude >= 0 else null, int(command.floating_altitude), command.train_support_orders, aircraft_shadow
 			)
 
 		var samples_static: bool = bool(command.shadow) and not transparent_shadow
@@ -177,6 +193,7 @@ func refresh_moving_things(view_size := -1) -> void:
 				index_texture = texture
 
 		var visual := CityDynamicVisual.new()
+		visual.vehicle_light = command.record >= 0 and _is_vehicle(int(command.record))
 		visual.samples_static = samples_static
 		visual.texture = texture
 		visual.index_texture = index_texture
@@ -185,7 +202,7 @@ func refresh_moving_things(view_size := -1) -> void:
 		visual.position = Vector2(position)
 		visual.size = Vector2(resource.native_size)
 		visual.image = visual_image
-		if not command.shadow:
+		if not command.shadow and light_allowed:
 			var emission := resource.light_mask(moving_lights.mask(sprite_archive, command.sprite_id), command.flip)
 			if visual_image == resource.image:
 				visual.emission_texture = resource.light_texture()
@@ -195,10 +212,11 @@ func refresh_moving_things(view_size := -1) -> void:
 				visual.emission_texture = ImageTexture.create_from_image(CityBrightmaps.transform_mask(
 					moving_lights.mask(sprite_archive, command.sprite_id), visual_image, command.flip))
 		if sprite_archive.water_reflections and command.floating_altitude >= 0 and not command.shadow:
-			visual.water_reflection = resource.reflection(position, int(command.floating_altitude), app.asset_state.palette)
+			visual.water_reflection = resource.reflection(position, int(command.floating_altitude), app.asset_state.palette, light_allowed)
 		visual.special_overlay = command.overlay >= 0
 		visual.fullbright = command.overlay == 0xff
 		visual.toxic_cloud = toxic_cloud
+		visual.warm_cloud = warm_cloud
 		visual.beam_glow = not command.shadow and command.sprite_id in [385, 885, 1385]
 		visual.batch_cache_key = visual_cache_key
 		visual.depth_order = int(command.depth_order)
@@ -210,6 +228,7 @@ func refresh_moving_things(view_size := -1) -> void:
 			caches.dynamic_visual_cache[visual_cache_key] = visual
 
 	app.disaster_effects.end_commands()
+	hazard_animation.finish(visuals)
 	tornado_renderer.finish()
 	if caches.dynamic_special_batch_cache.size() > 128:
 		caches.dynamic_special_batch_cache.clear()
@@ -281,7 +300,7 @@ func _dynamic_occluder_image(
 	draw_order: int,
 	is_train := false, texture_factor := 1,
 	floating: CitySpriteResource = null, floating_altitude := -1,
-	train_support_orders := PackedInt32Array()
+	train_support_orders := PackedInt32Array(), aircraft_shadow := false
 ) -> Image:
 	if draw_order < 0 or (caches.static_occlusion_commands.is_empty() and caches.region_cache == null):
 		return null
@@ -298,6 +317,7 @@ func _dynamic_occluder_image(
 		floating.get_instance_id() if floating != null else 0, floating_altitude,
 		divisor, sprite_archive.get_instance_id() if sprite_archive != null else 0,
 	]
+	cache_key += ":shadow" if aircraft_shadow else ""
 	if not train_support_orders.is_empty():
 		cache_key += ":" + str(train_support_orders)
 	if caches.dynamic_occluder_cache.has(cache_key):
@@ -321,7 +341,14 @@ func _dynamic_occluder_image(
 	# Bounding boxes include transparent pixels. Combine all later silhouettes
 	# to find the foreground that actually covers the sprite.
 	var train_height := _train_support_height(train_support_orders) if is_train else -1
+	var shadow_height := -1
+	if aircraft_shadow:
+		var city := app.document_state.city
+		var tile := IsometricFloatingOcclusion.depth_tile(draw_order, city.map_size)
+		shadow_height = city.object_altitude(tile.x, tile.y)
 	for command in static_occlusion_candidates(bounds):
+		if shadow_height >= 0 and _shadow_receiver(command, shadow_height):
+			continue
 		if is_train and bool(command.train_ignore):
 			continue
 		if is_train and train_support_orders.has(command.depth_order) and _train_support_surface(command.sprite_id):
@@ -414,6 +441,24 @@ func _ground_below_train(command: CityStaticCommand, height: int) -> bool:
 	return top <= height
 
 
+func _shadow_receiver(command: CityStaticCommand, height: int) -> bool:
+	var id := posmod(command.sprite_id, 500)
+	# Ground and surface transport receive the shadow across tile boundaries.
+	# Never remove trees, structures, raised decks or cliff faces from the mask.
+	var ground := id >= 256 and id <= 268
+	var water := IsometricFloatingOcclusion.is_water_surface(command.sprite_id)
+	var zone := id >= 291 and id <= 299
+	var road := id >= BuildingTileIds.ROAD_STRAIGHT_1 and id <= BuildingTileIds.RAIL_LAST
+	var crossing := id in [BuildingTileIds.ROAD_RAIL_CROSSING_1, BuildingTileIds.ROAD_RAIL_CROSSING_2]
+	if not (ground or water or zone or road or crossing):
+		return false
+	var city := app.document_state.city
+	var tile := IsometricFloatingOcclusion.depth_tile(command.depth_order, city.map_size)
+	var flat := id == 256 or city.terrain_id(tile.x, tile.y) == TerrainTileIds.FLAT
+	var top := city.object_altitude(tile.x, tile.y) if water else city.land_altitude(tile.x, tile.y) + (0 if flat else 1)
+	return top <= height
+
+
 static func _occluder_region(mask: RenderCaches.OccluderMask, bounds: Rect2i, factor: int) -> Image:
 	if mask.image == null or mask.bounds == bounds:
 		return mask.image
@@ -476,8 +521,8 @@ func _floating_occluder_image(
 
 
 func set_static_occlusion_commands(commands: Array[CityStaticCommand], view_size: int) -> void:
-	if app.visual_environment != null and app.visual_environment.night_lighting.ground != null:
-		app.visual_environment.night_lighting.ground.invalidate_all()
+	if app.visual_environment != null:
+		app.visual_environment.night_lighting.invalidate_all()
 	caches.static_occlusion_commands.assign(commands)
 	caches.dynamic_occluder_cache.clear()
 	caches.dynamic_visual_cache.clear()
@@ -602,7 +647,7 @@ func dynamic_sprite_resource(
 	if not indexed.ok:
 		return null
 
-	var image: Image = indexed.image
+	var image := CityTrainArtwork.clean(entry, indexed.image)
 
 	if flip or divisor > 1 or image.get_size() != native_size * texture_factor:
 		image = image.duplicate()

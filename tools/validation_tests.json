@@ -2,6 +2,19 @@
   {"id": "coop_multiplayer_test", "script": "tests/coop_multiplayer_test.gd", "domain": "simulation", "lane": "product"},
   {"id": "coop_ui_test", "script": "tests/coop_ui_test.gd", "domain": "ui", "lane": "product", "requires": ["ext/graphics/pack.json", "ext/data/pack.json"]},
   {
+    "id": "graded_network_lights_test",
+    "script": "tests/graded_network_lights_test.gd",
+    "domain": "rendering",
+    "lane": "product"
+  },
+  {
+    "id": "diagonal_network_test",
+    "script": "tests/diagonal_network_test.gd",
+    "domain": "rendering",
+    "lane": "product",
+    "requires": ["ext/graphics/pack.json"]
+  },
+  {
     "id": "disaster_visual_test",
     "script": "tests/disaster_visual_test.gd",
     "domain": "rendering",
@@ -64,6 +77,70 @@
     "script": "tests/visual_environment_test.gd",
     "domain": "rendering",
     "lane": "product"
+  },
+  {
+    "id": "nature_landscape_test",
+    "script": "tests/nature_landscape_test.gd",
+    "domain": "rendering",
+    "lane": "product",
+    "requires": ["ext/graphics/pack.json"]
+  },
+  {
+    "id": "water_edge_color_gpu_test",
+    "script": "tests/water_edge_color_gpu_test.gd",
+    "domain": "rendering",
+    "lane": "native",
+    "driver": "scene-batch",
+    "requires": ["ext/graphics/pack.json"]
+  },
+  {
+    "id": "seasonal_shore_gpu_test",
+    "script": "tests/seasonal_shore_gpu_test.gd",
+    "domain": "rendering",
+    "lane": "native",
+    "driver": "scene-batch",
+    "requires": ["ext/graphics/pack.json"]
+  },
+  {
+    "id": "nature_terrain_gpu_test",
+    "script": "tests/nature_terrain_gpu_test.gd",
+    "domain": "rendering",
+    "lane": "native",
+    "driver": "scene-batch"
+  },
+  {
+    "id": "visual_preparation_test",
+    "script": "tests/visual_preparation_test.gd",
+    "domain": "rendering",
+    "lane": "product",
+    "requires": ["ext/graphics/pack.json", "ext/data/pack.json"]
+  },
+  {
+    "id": "detail_light_zoom_test",
+    "script": "tests/detail_light_zoom_test.gd",
+    "domain": "rendering",
+    "lane": "product"
+  },
+  {
+    "id": "street_light_fade_gpu_test",
+    "script": "tests/street_light_fade_gpu_test.gd",
+    "domain": "rendering",
+    "lane": "native",
+    "driver": "scene-batch"
+  },
+  {
+    "id": "fog_height_gpu_test",
+    "script": "tests/fog_height_gpu_test.gd",
+    "domain": "rendering",
+    "lane": "native",
+    "driver": "scene-batch"
+  },
+  {
+    "id": "fog_visual_gpu_test",
+    "script": "tests/fog_visual_gpu_test.gd",
+    "domain": "rendering",
+    "lane": "native",
+    "driver": "scene-batch"
   },
   {
     "id": "visual_environment_gpu_test",
@@ -1746,6 +1823,14 @@
     "requires": ["ext/graphics/pack.json"]
   },
   {
+    "id": "train_artwork_gpu_test",
+    "script": "tests/train_artwork_gpu_test.gd",
+    "requires": ["ext/graphics/pack.json"],
+    "domain": "rendering",
+    "lane": "native",
+    "driver": "scene-batch"
+  },
+  {
     "id": "traffic_shadow_gpu_test",
     "script": "tests/traffic_shadow_gpu_test.gd",
     "domain": "rendering",
@@ -1772,5 +1857,11 @@
     "domain": "rendering",
     "lane": "native",
     "driver": "scene-batch"
+  },
+  {
+    "id": "visual_settings_usability_test",
+    "script": "tests/visual_settings_usability_test.gd",
+    "domain": "ui",
+    "lane": "product"
   }
 ]

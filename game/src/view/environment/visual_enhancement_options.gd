@@ -3,20 +3,25 @@ extends RefCounted
 ## Local presentation preferences. No value is written to a city document.
 
 const FIELDS := [
+	["nature_forests_enabled", "Connected forests and tree variants", "bool", true],
+	["nature_terrain_enabled", "Subtle terrain variation", "bool", true],
+	["nature_terrain_strength", "Terrain overlay strength", "number", 0.5, 0.0, 1.0, 0.05],
 	["disaster_enabled", "Disaster effects", "bool", true],
 	["disaster_strength", "Effect strength", "number", 0.7, 0.0, 1.0, 0.05],
 	["disaster_crowds", "Use city pedestrians for riots", "bool", true],
 	["disaster_dust", "Demolition and damage dust", "bool", true],
 	["disaster_motion", "Smooth tornado movement", "bool", true],
+	["disaster_blending", "Smooth effect transitions", "bool", true],
 	["disaster_lights", "Fire and impact light strength", "number", 0.4, 0.0, 1.0, 0.05],
 	["disaster_shake", "Earthquake shake strength", "number", 0.6, 0.0, 1.0, 0.05],
 	["water_reflections", "Water reflections", "choice", 1, ["Off", "Subtle"]],
 	["water_topography", "Underwater terrain", "bool", true],
 	["water_waves_enabled", "Waves and coastal surf", "bool", true],
-	["cloud_enabled", "Clouds and cloud shadows", "bool", true],
-	["cloud_density", "Cloud density", "number", 0.4, 0.0, 1.0, 0.05],
+	["cloud_enabled", "Clouds and fog", "bool", true],
+	["cloud_mode", "Cloud type", "choice", 0, ["Automatic (weather)", "Cumulus", "Stratus", "Altostratus", "Cirrus", "Cirrocumulus", "Fog"]],
+	["cloud_density", "Cloud and fog coverage", "number", 0.4, 0.0, 1.0, 0.05],
 	["cloud_shadow_strength", "Cloud shadow strength", "number", 0.4, 0.0, 0.5, 0.02],
-	["cloud_speed", "Cloud movement speed", "number", 1.0, 0.0, 3.0, 0.1],
+	["cloud_speed", "Cloud and fog movement", "number", 1.0, 0.0, 3.0, 0.1],
 	["life_cars_enabled", "Individual cars", "bool", true],
 	["life_car_amount", "Car amount", "number", 1.0, 0.25, 2.0, 0.05],
 	["life_people_enabled", "Pedestrians", "bool", true],
@@ -37,6 +42,7 @@ const FIELDS := [
 	["night_light_strength", "Night light strength", "number", 100.0, 0.0, 100.0, 5.0],
 	["night_glow", "Light glow strength", "number", 35.0, 0.0, 100.0, 5.0],
 	["night_ground", "Street and junction lighting", "number", 45.0, 0.0, 100.0, 5.0],
+	["detail_lights_min_zoom", "Detail lights from zoom", "choice", 2, ["10% (all zoom levels)", "25%", "50%", "100%", "200%", "400%"]],
 	["brightmap_folder", "Brightmap folder", "path", ""],
 	["lut_path", "Optional color LUT (PNG strip)", "path", ""],
 	["lut_folder", "Custom LUT profile folder (empty = built-in)", "path", ""],
@@ -48,7 +54,6 @@ const FIELDS := [
 	["season_lut_strength", "Season LUT strength", "number", 0.5, 0.0, 1.0, 0.05],
 	["season_water_strength", "Seasonal water color strength", "number", 0.35, 0.0, 1.0, 0.05],
 	["weather_enabled", "Weather", "bool", true],
-	["weather_fog_enabled", "Fog", "bool", true],
 	["weather_mode", "Weather source", "choice", 0, ["Game weather", "Visual automation", "Fixed weather"]],
 	["weather_fixed", "Fixed weather", "choice", 0, ["Sunny", "Light rain", "Heavy rain", "Rain and thunderstorm", "Dry thunderstorm", "Light snow", "Heavy snow"]],
 	["weather_seconds", "Weather interval (seconds at Turtle)", "number", 180.0, 30.0, 3600.0, 15.0],
@@ -60,6 +65,8 @@ const FIELDS := [
 
 static func normalize(source: Variant) -> Dictionary:
 	var input: Dictionary = source if source is Dictionary else {}
+	# The retired weather_fog_enabled flag is ignored. cloud_enabled remains
+	# authoritative, so migration never re-enables clouds the player disabled.
 	var result := {}
 	for field in FIELDS:
 		var value: Variant = input.get(field[0], field[3])
@@ -85,6 +92,10 @@ static func normalize(source: Variant) -> Dictionary:
 
 static func speed_factor(speed: int) -> float:
 	return [0.0, 0.0, 1.0, 1.5, 2.0, 3.0][clampi(speed, 0, 5)]
+
+
+static func detail_lights_visible(options: Dictionary, zoom: float) -> bool:
+	return zoom + 0.00001 >= [0.1, 0.25, 0.5, 1.0, 2.0, 4.0][clampi(int(options.get("detail_lights_min_zoom", 2)), 0, 5)]
 
 
 static func water_pass_enabled(options: Dictionary) -> bool:
