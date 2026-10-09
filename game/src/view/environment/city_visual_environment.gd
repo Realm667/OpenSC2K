@@ -175,7 +175,9 @@ func process(delta: float) -> void:
 	var paused := speed == GameSpeedController.Speed.PAUSED or app.frame._simulation_suspended()
 	if options.pause_freezes and paused:
 		elapsed = 0.0
-	var weather_delta := 0.0 if paused else maxf(delta, 0.0)
+	# Camera navigation does not interrupt precipitation or its ambience.
+	var weather_paused := speed == GameSpeedController.Speed.PAUSED or app.frame._simulation_suspended(false)
+	var weather_delta := 0.0 if weather_paused else maxf(delta, 0.0)
 	var factor := VisualEnhancementOptions.speed_factor(speed) if options.speed_link and speed > 1 else 1.0
 	if active and options.day_enabled and options.day_mode == 0:
 		phase = fposmod(phase + elapsed * factor / float(options.day_seconds), 1.0)
@@ -191,10 +193,10 @@ func process(delta: float) -> void:
 	weather.remote_state = remote_weather.get("weather", [])
 	clouds.remote_state = remote_weather.get("clouds", [])
 	var previous_weather := weather.kind
-	weather.process(delta, weather_delta * factor, active, season, paused)
+	weather.process(delta, weather_delta * factor, active, season, weather_paused)
 	if profiles.atlases.is_empty():
 		profiles.reload(options.lut_folder)
-	var grading_delta: float = options.weather_transition if paused and weather.kind != previous_weather else weather_delta
+	var grading_delta: float = options.weather_transition if weather_paused and weather.kind != previous_weather else weather_delta
 	profiles.advance_weather(weather.kind, grading_delta, options.weather_transition, active and options.weather_enabled)
 	var daytime_lights: bool = options.brightmaps and options.night_daytime_enabled
 	# The auxiliary mask also identifies fullbright warning icons, even with
@@ -251,7 +253,7 @@ func process(delta: float) -> void:
 
 
 func network_snapshot() -> Dictionary:
-	var paused := app.simulation_state.speed_controller == null or app.simulation_state.speed_controller.speed == GameSpeedController.Speed.PAUSED or app.frame._simulation_suspended()
+	var paused := app.simulation_state.speed_controller == null or app.simulation_state.speed_controller.speed == GameSpeedController.Speed.PAUSED or app.frame._simulation_suspended(false)
 	return {"weather": [weather.kind, weather.tint.r, weather.tint.g, weather.tint.b,
 		weather.frost, weather.rain, weather.snow, weather.clock, weather.flash,
 		weather.lightning.origin.x, weather.lightning.origin.y, weather.lightning.spread,

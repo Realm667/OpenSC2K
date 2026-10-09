@@ -124,7 +124,7 @@ func close() -> void:
 
 
 class MenuFrame extends ApplicationFrame:
-	func _simulation_suspended() -> bool:
+	func _simulation_suspended(_include_camera_pan := true) -> bool:
 		return app.simulation_state.speed_controller.interaction_blocked or app.simulation_state.speed_controller.terminal_blocked
 
 

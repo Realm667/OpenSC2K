@@ -310,12 +310,28 @@ func _check_weather_pause(main: CityApplication) -> void:
 			main.simulation_state.speed_controller.speed = GameSpeedController.Speed.TURTLE
 			main.preferences.visual_enhancements.weather_fixed = kind
 			environment.process(0.25)
+			main.map_view.interaction.panning = true
+			assert(main.frame._simulation_suspended(), "Camera drag must still suspend simulation")
+			var before_pan := weather.clock
+			environment.process(0.1)
+			assert(is_equal_approx(weather.clock, before_pan + 0.1), "Camera drag paused weather")
 			var frozen := _weather_snapshot(environment)
 			main.simulation_state.speed_controller.speed = GameSpeedController.Speed.PAUSED
 			for frame in 3:
 				environment.process(20.0)
 			assert(_weather_snapshot(environment) == frozen, "Pause advanced weather particles, a front, lightning, clouds or fog")
 			assert(weather.material.get_shader_parameter("clock") == weather.clock)
+			# Pausing during a camera drag still freezes weather; so do dialogs and tool drags.
+			main.simulation_state.speed_controller.speed = GameSpeedController.Speed.TURTLE
+			main.city_dialogs.notice_dialog.show()
+			environment.process(1.0)
+			assert(_weather_snapshot(environment) == frozen, "Camera drag bypassed a blocking dialog")
+			main.city_dialogs.notice_dialog.hide()
+			main.map_view.selection_start = Vector2i(1, 1)
+			environment.process(1.0)
+			assert(_weather_snapshot(environment) == frozen, "Camera drag bypassed a tool drag")
+			main.map_view.selection_start = Vector2i(-1, -1)
+			main.map_view.interaction.panning = false
 			main.simulation_state.speed_controller.speed = GameSpeedController.Speed.TURTLE
 			environment.process(0.1)
 			assert(is_equal_approx(weather.clock, float(frozen[0]) + 0.1), "Weather caught up paused time")

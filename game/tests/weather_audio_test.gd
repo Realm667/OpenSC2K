@@ -126,6 +126,7 @@ func _run() -> void:
 	app.preferences.visual_enhancements.weather_fixed = CityVisualWeather.Kind.SUNNY
 	weather.process(5.0, 0.0, true, 1.0)
 	assert(audio.rain_players.is_empty() and audio.thunder_players.is_empty())
+	_check_pan_audio(app)
 	assert(DocumentState.capture(app.document_state.city.document) == before)
 	assert([engine.random.state, engine.lfsr_random.state, engine.game_random.state] == random_before)
 	app.document_state.city.set_sound_enabled(false)
@@ -169,3 +170,27 @@ func _check_discharges() -> void:
 	assert(not discharge.advance(30.0, true, 0.0))
 	for stream in CityWeatherAudio.THUNDER:
 		assert(stream.get_length() > 5.0 and not stream.loop)
+
+
+func _check_pan_audio(app: CityApplication) -> void:
+	var environment := app.visual_environment
+	var weather := environment.weather
+	app.simulation_state.speed_controller.speed = GameSpeedController.Speed.TURTLE
+	app.preferences.visual_enhancements.weather_fixed = CityVisualWeather.Kind.RAIN_STORM
+	environment.process(1.0)
+	weather.audio.play_thunder(weather.lightning, 1.0)
+	var rain := weather.audio.rain_players[0]
+	var thunder: AudioStreamPlayer = weather.audio.thunder_players.back()
+	app.map_view.interaction.panning = true
+	environment.process(0.1)
+	assert(weather.audio.rain_players[0] == rain and rain.playing and not rain.stream_paused)
+	assert(weather.audio.thunder_players.has(thunder) and thunder.playing and not thunder.stream_paused)
+	app.simulation_state.speed_controller.speed = GameSpeedController.Speed.PAUSED
+	environment.process(0.1)
+	assert(rain.stream_paused and thunder.stream_paused, "Camera drag bypassed real audio pause")
+	app.simulation_state.speed_controller.speed = GameSpeedController.Speed.TURTLE
+	environment.process(0.1)
+	assert(not rain.stream_paused and not thunder.stream_paused)
+	app.map_view.interaction.panning = false
+	environment.process(0.1)
+	assert(weather.audio.rain_players[0] == rain and not rain.stream_paused, "Ending pan restarted rain")

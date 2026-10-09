@@ -162,6 +162,15 @@ func weather_cases(main: CityApplication, guest: CoopSession) -> void:
 
 func cloud_front_cases(main: CityApplication) -> void:
 	var environment := main.visual_environment
+	var speed := main.simulation_state.speed_controller.speed
+	main.simulation_state.speed_controller.speed = GameSpeedController.Speed.TURTLE
+	main.map_view.interaction.panning = true
+	check(main.frame._simulation_suspended(), "camera drag still suspends local simulation")
+	check(environment.network_snapshot().weather[20] == 0, "camera drag must not broadcast a weather pause")
+	main.simulation_state.speed_controller.speed = GameSpeedController.Speed.PAUSED
+	check(environment.network_snapshot().weather[20] == 1, "real pause is still sent during camera drag")
+	main.map_view.interaction.panning = false
+	main.simulation_state.speed_controller.speed = speed
 	var options := main.preferences.visual_enhancements
 	options.cloud_enabled = true
 	options.cloud_mode = CityCloudSituations.Type.CIRRUS + 1
