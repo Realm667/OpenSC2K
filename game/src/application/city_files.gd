@@ -28,6 +28,9 @@ func _init(application: CityApplication) -> void:
 
 
 func open_city_dialog() -> void:
+	if app.coop.active():
+		app.coop.open()
+		return
 	if not app.asset_state.assets_ready:
 		return
 
@@ -42,6 +45,9 @@ func open_city_dialog() -> void:
 
 
 func open_scenario_dialog() -> void:
+	if app.coop.active():
+		app.coop.open()
+		return
 	if not app.asset_state.assets_ready:
 		return
 
@@ -235,6 +241,10 @@ func _city_has_unsaved_changes() -> bool:
 
 
 func request_city_exit(action: String, path := "") -> void:
+	if app.coop.active():
+		app.coop.open()
+		app.coop.show_message("Save and leave the Multiplayer session before closing the game.")
+		return
 	if not _city_has_unsaved_changes():
 		_perform_city_exit(action, path)
 

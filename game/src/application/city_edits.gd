@@ -35,6 +35,10 @@ func apply_map_selection(
 	path: Array[Vector2i],
 	dragged: bool
 ) -> Dictionary:
+	if app.coop.active():
+		app.coop.apply_selection(start, finish, path, dragged)
+		return {}
+
 	var city := app.document_state.city
 
 	if city == null:
@@ -137,6 +141,9 @@ func _apply_selected_tool(
 # the map menu bulldozes one tile as the Bulldozer tool does. the selected tool
 # does not change. a tile with nothing to bulldoze is not reported
 func bulldoze_tile(point: Vector2i) -> void:
+	if app.coop.active():
+		app.coop.bulldoze(point)
+		return
 	if app.document_state.city == null:
 		return
 
@@ -616,6 +623,9 @@ func _finish_simple_edit(
 
 
 func undo_last_edit() -> void:
+	if app.coop.active():
+		app.coop.session.request({"kind": "undo"})
+		return
 	if app.document_state.city == null or app.tool_state.last_edit_command == null:
 		return
 

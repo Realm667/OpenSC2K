@@ -21,6 +21,7 @@ var material: ShaderMaterial
 var field: Texture2D
 var parameters: Dictionary = {"cloud_enabled": false}
 var _initialized := false
+var remote_state: Array = []
 var situations := CityCloudSituations.new()
 var fog_overlay: CityVisualFog
 var precipitation_readiness := 1.0
@@ -123,6 +124,24 @@ func process(delta: float, phase_elapsed: float, active: bool, light: Color, dar
 	# high-cloud or fog choice must never suppress the chosen weather effects.
 	precipitation_readiness = smoothstep(0.08, 0.3, density) * situations.rain_cover() if int(options.get("cloud_mode", 0)) == 0 and CityCloudSituations.wet(kind) else 1.0
 	_initialized = true
+	if not remote_state.is_empty():
+		# The host owns the complete front, including atlas transitions and low mist.
+		drift = Vector2(remote_state[0], remote_state[1])
+		density = float(remote_state[2])
+		fog = float(remote_state[3])
+		weather_clock = float(remote_state[4])
+		situations.current = int(remote_state[5]) as CityCloudSituations.Type
+		situations.target = int(remote_state[6]) as CityCloudSituations.Type
+		situations.blend = float(remote_state[7])
+		situations.hold_clock = float(remote_state[8])
+		situations.duration = float(remote_state[9])
+		situations.initialized = true
+		storminess = float(remote_state[10])
+		precipitation_readiness = float(remote_state[11])
+		fog_overlay.drift = Vector2(remote_state[12], remote_state[13])
+		field = CityCloudSituations.ATLASES[situations.current]
+		appearance = situations.appearance()
+		appearance.x = lerpf(appearance.x, maxf(appearance.x, 0.7), storminess)
 	parameters.merge({
 		"cloud_field": field,
 		"cloud_field_next": CityCloudSituations.ATLASES[situations.target],
@@ -145,7 +164,7 @@ func process(delta: float, phase_elapsed: float, active: bool, light: Color, dar
 		"cloud_light": Vector3(light.r, light.g, light.b),
 	})
 	_sync_layer(source_to_canvas, edge, rotation)
-	fog_overlay.process(phase_elapsed * speed, enabled, fog, light)
+	fog_overlay.process(phase_elapsed * speed if remote_state.is_empty() else 0.0, enabled, fog, light)
 
 
 func _sync_layer(source_to_canvas: Transform2D, edge: int, rotation: int) -> void:

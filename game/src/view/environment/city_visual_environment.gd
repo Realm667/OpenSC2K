@@ -17,6 +17,7 @@ var clouds: CityVisualClouds
 var night_lighting: CityNightLighting
 var _whole_mask_signature: Array = []
 var _whole_water_signature: Array = []
+var remote_weather: Dictionary = {}
 
 
 func _init(application: CityApplication) -> void:
@@ -157,6 +158,8 @@ func process(delta: float) -> void:
 	if app.map_view == null:
 		return
 	var city := app.document_state.city
+	if not app.coop.active() or app.coop.session.hosting:
+		remote_weather.clear()
 	var active := city != null and app.view_state.overlay_mode == CityViewMode.Mode.CITY and not app.tool_state.landscape_editor
 	if city != null and city.document.get_instance_id() != _city_id:
 		_city_id = city.document.get_instance_id()
@@ -185,6 +188,8 @@ func process(delta: float) -> void:
 		season = fposmod(float(city.age_in_days() % CityCalendar.DAYS_PER_YEAR) / CityCalendar.DAYS_PER_YEAR * 4.0 - 2.0 / 3.0, 4.0)
 	elif options.season_mode == 2:
 		season = float(options.season_fixed)
+	weather.remote_state = remote_weather.get("weather", [])
+	clouds.remote_state = remote_weather.get("clouds", [])
 	var previous_weather := weather.kind
 	weather.process(delta, weather_delta * factor, active, season, paused)
 	if profiles.atlases.is_empty():
@@ -243,6 +248,42 @@ func process(delta: float) -> void:
 	night_lighting.process(active, night, options, elapsed * factor, maxf(delta, 0.0))
 	if clouds.layer != null and clouds.layer.visible:
 		app.map_view.layers._apply_environment(clouds.material)
+
+
+func network_snapshot() -> Dictionary:
+	var paused := app.simulation_state.speed_controller == null or app.simulation_state.speed_controller.speed == GameSpeedController.Speed.PAUSED or app.frame._simulation_suspended()
+	return {"weather": [weather.kind, weather.tint.r, weather.tint.g, weather.tint.b,
+		weather.frost, weather.rain, weather.snow, weather.clock, weather.flash,
+		weather.lightning.origin.x, weather.lightning.origin.y, weather.lightning.spread,
+		weather.lightning.color.r, weather.lightning.color.g, weather.lightning.color.b,
+		weather.lightning.sound_index, weather.lightning.pitch, weather.lightning.gain, weather.thunder_sequence,
+		app.preferences.visual_enhancements.weather_strength, int(paused)],
+		"clouds": [clouds.drift.x, clouds.drift.y, clouds.density, clouds.fog, clouds.weather_clock,
+		clouds.situations.current, clouds.situations.target, clouds.situations.blend, clouds.situations.hold_clock,
+		clouds.situations.duration, clouds.storminess, clouds.precipitation_readiness,
+		clouds.fog_overlay.drift.x, clouds.fog_overlay.drift.y]}
+
+
+func receive_network_weather(state: Dictionary) -> void:
+	if not state.get("weather") is Array or state.weather.size() != 21 or not state.get("clouds") is Array or state.clouds.size() != 14:
+		return
+	for value: Variant in state.weather + state.clouds:
+		if not (value is int or value is float) or not is_finite(float(value)) or absf(float(value)) > 2147483647:
+			return
+	if not CoopWorld.whole_number(state.weather[0], 0, 6) or not CoopWorld.whole_number(state.weather[15], -1, 4):
+		return
+	if not CoopWorld.whole_number(state.weather[18], 0, 2147483647) or not CoopWorld.whole_number(state.weather[20], 0, 1):
+		return
+	if float(state.weather[19]) < 0.0 or float(state.weather[19]) > 1.0:
+		return
+	if not CoopWorld.whole_number(state.clouds[5], 0, CityCloudSituations.Type.FOG) or not CoopWorld.whole_number(state.clouds[6], 0, CityCloudSituations.Type.FOG):
+		return
+	for index in [7, 10, 11]:
+		if float(state.clouds[index]) < 0.0 or float(state.clouds[index]) > 1.0:
+			return
+	if float(state.clouds[9]) <= 0.0:
+		return
+	remote_weather = state.duplicate(true)
 
 
 func _sync_whole_water() -> void:

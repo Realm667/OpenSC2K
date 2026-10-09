@@ -10,6 +10,7 @@ signal scenario_requested
 signal settings_requested
 signal scurk_requested
 signal about_requested
+signal multiplayer_requested
 signal exit_requested
 
 const BUTTON_LABELS := [
@@ -21,6 +22,7 @@ const BUTTON_LABELS := [
 	"Settings",
 	"About OpenSC2K",
 	"Exit",
+	"Multiplayer",
 ]
 
 var assets_ready := true
@@ -52,7 +54,7 @@ func _ready() -> void:
 		button.pressed.connect(button_clicked.emit)
 		button.pressed.connect(_emit_action.bind(index))
 
-		if index < 5:
+		if index < 5 or index == 8:
 			game_buttons.append(button)
 
 		if index == 0:
@@ -87,7 +89,7 @@ func show_menu(can_continue: bool) -> void:
 
 
 func _emit_action(index: int) -> void:
-	if index < 5 and not assets_ready:
+	if (index < 5 or index == 8) and not assets_ready:
 		return
 
 	match index:
@@ -107,6 +109,8 @@ func _emit_action(index: int) -> void:
 			about_requested.emit()
 		7:
 			exit_requested.emit()
+		8:
+			multiplayer_requested.emit()
 
 
 func set_assets_ready(value: bool) -> void:

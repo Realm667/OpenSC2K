@@ -281,6 +281,9 @@ func zoom_out() -> void:
 
 
 func rotate_city(counter_clockwise: bool) -> void:
+	if app.coop.active():
+		app.coop.show_message("Map rotation is not available in this Koop version. Pan and zoom remain independent.")
+		return
 	var map_edge: int = app.document_state.city.map_size if app.document_state.city != null else 128
 
 	if app.document_state.city == null:
@@ -366,6 +369,8 @@ func on_map_selection_canceled() -> void:
 
 
 func on_map_selection_started() -> void:
+	if app.coop.active():
+		app.coop.selection_revision = app.coop.session.local_revision
 	app.tool_state.landscape_brush_command = null
 	app.scurk_state.brush_stroke = null
 	app.tool_state.level_brush_altitude = -1

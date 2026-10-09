@@ -202,7 +202,7 @@ func open_query(point: Vector2i) -> void:
 
 		return
 
-	if result.overlay_id == 111 and app.simulation_state.simulation_engine != null:
+	if not app.coop.active() and result.overlay_id == 111 and app.simulation_state.simulation_engine != null:
 		var approval := app.simulation_state.simulation_engine.recalculate_mayor_house()
 
 		if not approval.ok:
@@ -221,8 +221,8 @@ func open_query(point: Vector2i) -> void:
 		result.title = app.asset_state.active_scurk_tile_set.names[int(result.tile_id)]
 
 	app.tool_state.active_query_result = result
-	var is_specific: bool = result.kind == "specific"
-	var action := str(result.action)
+	var is_specific: bool = result.kind == "specific" and not app.coop.active()
+	var action := "" if app.coop.active() else str(result.action)
 	var action_text := ""
 
 	if not action.is_empty():
@@ -269,6 +269,8 @@ func open_query(point: Vector2i) -> void:
 
 
 func close_query(commit_rename := false) -> bool:
+	if app.coop.active():
+		commit_rename = false
 	if app.city_dialogs.query_dialog == null or not app.city_dialogs.query_dialog.visible:
 		return true
 
@@ -296,6 +298,9 @@ func close_query(commit_rename := false) -> bool:
 
 # the original keeps Query open below the action window
 func run_query_action() -> void:
+	if app.coop.active():
+		app.coop.show_message("Facility actions are not available in this Koop version.")
+		return
 	if app.document_state.city == null or app.tool_state.active_query_result == null:
 		return
 

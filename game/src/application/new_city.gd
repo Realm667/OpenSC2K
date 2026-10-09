@@ -17,6 +17,9 @@ func sync_new_city_workspace() -> void:
 
 
 func open_new_city_dialog() -> void:
+	if app.coop.active():
+		app.coop.open()
+		return
 	if not app.asset_state.assets_ready:
 		return
 

@@ -27,6 +27,10 @@ var material: ShaderMaterial
 var camera_pan := Vector2.ZERO
 var last_camera_center := Vector2.ZERO
 var last_camera_zoom := 0.0
+var remote_state: Array = []
+var thunder_sequence := 0
+var received_thunder := -1
+var remote_clock := -1.0
 var _preview_signature: Array = []
 
 
@@ -47,6 +51,8 @@ static func from_game(value: int, heavy_rain: bool) -> Kind:
 
 
 func reset() -> void:
+	received_thunder = -1
+	remote_clock = -1.0
 	interval = 0.0
 	last_game_weather = -1
 	last_mode = -1
@@ -68,6 +74,9 @@ func reset() -> void:
 func process(delta: float, phase_elapsed: float, active: bool, season: float, paused := false) -> void:
 	var options := app.preferences.visual_enhancements
 	var enabled: bool = active and options.weather_enabled
+	if not remote_state.is_empty():
+		_process_remote(delta, enabled, paused)
+		return
 	var snow_allowed: bool = options.weather_mode == 2 or int(fposmod(season, 4.0)) == 3
 	if enabled:
 		if options.weather_mode != last_mode:
@@ -125,12 +134,48 @@ func process(delta: float, phase_elapsed: float, active: bool, season: float, pa
 	var thunder_due := false
 	if not paused or not storm or strength <= 0.0:
 		thunder_due = lightning.advance(elapsed, storm, strength)
+	if thunder_due:
+		thunder_sequence += 1
 	flash = lightning.flash
-	if not audio.allowed():
+	if not audio.allowed() and not (app.coop.active() and app.coop.session.hosting):
 		# Muting or losing focus discards pending thunder, without a catch-up burst.
 		lightning.thunder_wait = -1.0
 	elif thunder_due:
 		audio.play_thunder(lightning, strength)
+	_sync_layer(enabled)
+
+
+func _process_remote(delta: float, enabled: bool, paused: bool) -> void:
+	var state := remote_state
+	paused = paused or bool(state[20])
+	var elapsed := 0.0 if paused else maxf(delta, 0.0)
+	var strength := float(state[19])
+	kind = int(state[0]) as Kind
+	selected_kind = kind
+	tint = Color(state[1], state[2], state[3]) if enabled else Color.WHITE
+	frost = float(state[4]) if enabled else 0.0
+	rain = float(state[5]) if enabled else 0.0
+	snow = float(state[6]) if enabled else 0.0
+	# Draw particles every frame; network packets correct the phase instead of
+	# limiting the animation itself to the weather update rate.
+	if remote_clock != float(state[7]):
+		remote_clock = float(state[7])
+		clock = remote_clock
+	else:
+		clock = fposmod(clock + elapsed, 3600.0)
+	flash = float(state[8]) if enabled else 0.0
+	lightning.origin = Vector2(state[9], state[10])
+	lightning.spread = float(state[11])
+	lightning.color = Color(state[12], state[13], state[14])
+	lightning.sound_index = int(state[15])
+	lightning.pitch = float(state[16])
+	lightning.gain = float(state[17])
+	var sequence := int(state[18])
+	audio.update(elapsed, enabled and strength > 0.0, rain, kind in [Kind.RAIN_STORM, Kind.DRY_STORM],
+		paused, strength if kind == Kind.DRY_STORM else 0.0)
+	if enabled and not paused and received_thunder >= 0 and sequence > received_thunder:
+		audio.play_thunder(lightning, strength)
+	received_thunder = sequence
 	_sync_layer(enabled)
 
 
