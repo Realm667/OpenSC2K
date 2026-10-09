@@ -69,9 +69,9 @@ func process(delta: float) -> void:
 
 
 # registered windows declare whether they block. other conditions stay listed here
-func _simulation_suspended() -> bool:
+func _simulation_suspended(include_camera_pan := true) -> bool:
 	return (
-		(app.map_view != null and (app.map_view.is_left_drag_active() or app.map_view.is_panning()))
+		(app.map_view != null and (app.map_view.is_left_drag_active() or (include_camera_pan and app.map_view.is_panning())))
 		or (app.city_dialogs != null and app.city_dialogs.blocks_simulation())
 		or (app.main_overlays != null and app.main_overlays.blocks_simulation())
 		# workflows create these file prompts outside the registries
