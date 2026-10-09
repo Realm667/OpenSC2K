@@ -1,64 +1,132 @@
-# OpenSC2K
+# OpenSC2K — Multiplayer Koop
 
-An open-source remake of SimCity 2000, built with Godot.
+OpenSC2K is an open-source remake of SimCity 2000, built with Godot. This fork's
+**`feature/multiplayer`** branch adds experimental, playable real-time cooperative
+city building on a Visual Enhancements base.
 
-Join our [Discord community](https://discord.gg/k9S6c3AqcX).
+**Coop is playable. Competitive Shared and Competitive Region are planned and
+are not implemented.** All participants must use the same multiplayer build.
 
-[![OpenSC2K main menu over a waterfront city](.github/screenshots/image1-preview.png)](.github/screenshots/image1.png)
+## What works now
+
+- Up to eight participants, including the host, build one city simultaneously.
+  They share one treasury, budget and simulation; the city is at most 128 × 128 tiles.
+- The host runs the authoritative simulation and validates construction costs,
+  changed tiles and shared funds. Clients send actions and receive city updates.
+- Each participant has an independent camera and zoom. Everyone can request a
+  pause or speed; the slowest request applies to the shared city.
+- Shared administration supports tax percentages, service funding, ordinances,
+  bonds, Auto-Budget and pending simulation decisions.
+- The host can save and resume a `.sc2mp` session. Reconnecting with the same local
+  profile retains the participant identity.
+- Host weather progression is synchronized, including precipitation, clouds,
+  flashes and thunder. Guests can disable effects or mute audio locally.
+
+## Host or join
+
+1. Build or install the **same revision of this branch** on every computer and
+   import the required original-game assets on each one.
+2. Open **Multiplayer** from the main menu. Enter a player name, TCP port and a
+   session code. The default port is **20000**.
+3. Select **Koop hosten** to create an empty 128 × 128 city. To host a copy of an
+   existing city, open it first, then select **Kopie der geöffneten Stadt verwenden**.
+   It must be SC2X, no larger than 128 tiles per side, and have no unresolved
+   simulation decision. The original city file is not overwritten.
+4. Other players enter the host's LAN address, matching port and code, then
+   select **Beitreten / Wiederverbinden**. On one computer, use `127.0.0.1` and
+   separate data profiles for each instance.
+5. Choose a running speed. The in-game **Multiplayer** button opens the participant
+   list, shared budget, decisions, save and leave controls.
+
+The current multiplayer panel contains German labels alongside English game UI.
+It is not the standalone German Translation feature. This branch incorporates a
+Visual Enhancements revision; later changes to that separate branch are not
+automatically included here.
+
+## Save, reconnect and handle conflicts
+
+Only the host saves the session, using the `.sc2mp` path in the Multiplayer panel.
+The default is `multiplayer/session.sc2mp` inside the installation's data folder.
+A previous save is retained as `.bak`. Resolve pending simulation decisions
+before saving. Resume with **Gespeicherte Sitzung hosten**; restored sessions start
+paused and need a session code for joining participants.
+
+A disconnected participant pauses the shared city. The host can explicitly
+release that pause. Keep each participant's local profile, including
+`multiplayer-client.cfg`, to reconnect with the same identity. Session files and
+profiles contain reconnect identities and should not be published.
+
+The host rejects conflicting or stale edits. Reload current budget values before
+submitting a policy change. Undo is limited to your immediately preceding edit,
+with no intervening edit or simulation step. Leaving returns you to your local
+singleplayer city.
+
+## Current limits
+
+- LAN and direct IP are supported. The host must be reachable on the selected TCP
+  port. There is no automatic discovery, NAT traversal, encryption or automatic
+  host migration. Use trusted participants on a private network; the session code
+  controls admission but does not encrypt traffic.
+- Map rotation is disabled in Coop. Manual disaster triggers, facility query
+  actions and industry tax detail controls are unavailable. Ordinary simulation
+  disasters still follow the hosted city's rules.
+- The shared budget panel does not reproduce every singleplayer budget report.
+- There are no separate player economies, land ownership or regional trade yet.
+- Automated loopback checks cover synchronization, conflicts, reconnection,
+  persistence and the UI. They do not establish eight-player performance or
+  reachability between separate computers. Developed cities need real LAN testing.
+
+See [the multiplayer guide](docs/multiplayer.md) for protocol behavior, save and
+recovery details, test coverage and the proposed Shared/Region modes. Larger city
+sizes listed in the base-game features below apply to singleplayer, not Coop.
 
 ## Screenshots
 
-Click a thumbnail to view the full screenshot.
+Real application captures. Click an image to open it at full size.
 
-<p>
-  <a href=".github/screenshots/image1.png"><img src=".github/screenshots/thumbnails/image1.png" width="260" alt="Main menu" /></a>
-  <a href=".github/screenshots/image2.png"><img src=".github/screenshots/thumbnails/image2.png" width="260" alt="City and terrain overview" /></a>
-  <a href=".github/screenshots/image3.png"><img src=".github/screenshots/thumbnails/image3.png" width="260" alt="Waterfront city with bridges and a seaport" /></a>
-  <br />
-  <a href=".github/screenshots/image4.png"><img src=".github/screenshots/thumbnails/image4.png" width="260" alt="Water supply data view" /></a>
-  <a href=".github/screenshots/image5.png"><img src=".github/screenshots/thumbnails/image5.png" width="260" alt="Transport routes in the trip query view" /></a>
-  <a href=".github/screenshots/image6.png"><img src=".github/screenshots/thumbnails/image6.png" width="260" alt="SCURK sprite editor" /></a>
-</p>
+**Coop lobby with host, join and saved-session controls**
 
-## Run
+[![Coop lobby with host, join and saved-session controls](.github/screenshots/multiplayer/lobby.png)](.github/screenshots/multiplayer/lobby.png)
 
-Download a package from [GitHub Releases](https://github.com/nicholas-ochoa/OpenSC2K/releases).
-See the [installation instructions](docs/install.md) for Windows, Linux, and macOS.
-The packages include the engine. You do not need to install Godot.
+**Two connected test participants and the shared budget panel**
 
-To run from source:
+[![Two connected test participants and the shared budget panel](.github/screenshots/multiplayer/session.png)](.github/screenshots/multiplayer/session.png)
 
-Use Godot 4.7 and provide your own copy of SimCity 2000 Special Edition for Windows 95 (1996).
-The simulation is a native library written in Rust. Install Rust with [rustup](https://rustup.rs).
-`rust-toolchain.toml` selects the Rust version.
+## Run this branch
 
-Before the first run of a fresh checkout, build the native simulation from the repository root:
+Build this branch from source, or use a package explicitly built from it. The
+[upstream releases](https://github.com/nicholas-ochoa/OpenSC2K/releases) are the
+base game; they do not include this fork's branch-specific additions.
+
+Use **Godot 4.7**, Python 3, and Rust installed through [rustup](https://rustup.rs).
+The repository's `rust-toolchain.toml` selects the Rust version. Native audio also
+requires CMake. See [installation](docs/install.md) and
+[native build details](docs/native-simulation.md) for platform requirements.
 
 ```sh
+git clone --branch feature/multiplayer --single-branch https://github.com/Realm667/OpenSC2K.git OpenSC2K-multiplayer
+cd OpenSC2K-multiplayer
 python3 tools/build_native.py
-```
-
-Then run this command:
-
-```sh
 godot --headless --audio-driver Dummy --path game --editor --import
-```
-
-Wait for the command to finish. It builds the local `game/.godot` cache, including the script class index
-and imported resources. Git excludes this generated folder. Without this step, a fresh checkout can show
-a black screen with script errors. Opening `game/project.godot` in the Godot editor also builds the cache.
-
-Then start the game:
-
-```sh
 godot --path game
 ```
 
-At the import prompt, navigate to the location where your copy of SimCity 2000 is stored, then select `SIMCITY.EXE`.
-The app checks the supported version and imports the game files. These files supply the original graphics, text,
-sound, and music.
+On Windows, use `python` if that is the name of your Python executable, and the
+path to your Godot executable if `godot` is not on PATH. Wait for the native build
+and resource import to finish before starting the game. Opening
+`game/project.godot` in the Godot editor also imports resources.
 
-## Extensions
+You must provide your own **SimCity 2000 Special Edition for Windows 95 (1996)**.
+At the import prompt, select that copy's `SIMCITY.EXE`. The importer checks the
+supported version and imports the graphics, text, sound and music locally.
+Original game data is not included in the source checkout.
+
+## Upstream project
+
+Based on [nicholas-ochoa/OpenSC2K](https://github.com/nicholas-ochoa/OpenSC2K).
+Join the upstream [Discord community](https://discord.gg/k9S6c3AqcX).
+
+## Base-game features
 
 - Larger cities: 256, 384, and 512 tiles per side, alongside the original 128
 - Smaller cities: 16, 32 and 64 tiles per side
