@@ -67,6 +67,7 @@ const GROUP_ICON_REGIONS := [
 
 var start_city_button: Button
 var landscape_editor := false
+var land_mode := false
 var brush_controls: VBoxContainer
 var brush_size_input: SpinBox
 var brush_shape_input: OptionButton
@@ -246,6 +247,9 @@ func show_tool_group(
 
 	_current_city = city
 	_icon_provider = icon_provider
+	if land_mode:
+		child_palette.hide()
+		return 0
 
 	for button_index in toolbar_buttons.size():
 		toolbar_buttons[button_index].button_pressed = button_index == group_index

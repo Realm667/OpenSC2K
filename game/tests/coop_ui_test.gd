@@ -107,6 +107,30 @@ func run() -> void:
 	await process_frame
 	check(not main.coop.active() and main.main_menu.visible, "leave returns to singleplayer menu")
 	check(not main.visual_preparation.busy and main.visual_preparation.banks.is_empty(), "leave releases pending visual banks before clearing the city")
+	main.coop.mode_picker.select(1)
+	main.coop.port.value = 0
+	main.coop.host_document(Sc2xDocument.create_empty(128, "Land UI").document)
+	main.coop.windows.select_land("land_buy")
+	check(main.city_toolbar.land_mode and main.coop.windows.land_button.button_pressed, "dedicated land mode")
+	check(not main.city_toolbar.toolbar_buttons[9].button_pressed and not main.city_toolbar.child_palette.visible, "land buying never activates Residential")
+	check(main.map_view.selection_mode == "rectangle", "land mode enables rectangle input")
+	main.coop.windows.land_offer_price = 40
+	main.coop.apply_selection(Vector2i(4, 4), Vector2i(5, 5), [], true)
+	check(main.coop.session.world.owners[4 * 128 + 4] == 1, "land input reaches authoritative purchase")
+	main.coop.windows.open_scoreboard()
+	check(main.coop.windows.scores.table.columns == 10, "Shared scoreboard table")
+	main.coop.windows.scoreboard.hide()
+	main.coop.windows.open_chat()
+	main.coop.windows.tick()
+	check(main.coop.windows.chat.position.x >= main.map_view.camera_view_rect.position.x, "chat clear of sidebar")
+	var entry := {"id": "test-message", "name": "Guest", "sender": "other", "text": "unique chat"}
+	main.coop.windows.receive_chat(entry)
+	main.coop.windows.receive_chat(entry)
+	check(main.coop.windows.chat_log.get_parsed_text().count("unique chat") == 1, "chat de-duplicates deliveries")
+	main.current_tool.select_tool_group(9)
+	check(not main.city_toolbar.land_mode and not main.coop.windows.land_button.button_pressed, "normal tool exits land mode")
+	main.coop.leave()
+	await process_frame
 	main.queue_free()
 	await process_frame
 	print("Koop UI checks: %d failures" % failures)

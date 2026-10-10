@@ -1,0 +1,331 @@
+msgid ""
+msgstr ""
+"Language: de\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Scoreboard"
+msgstr "Statistikübersicht"
+
+msgid "Chat"
+msgstr "Chat"
+
+msgid "Host / Join game"
+msgstr "Spiel erstellen / Beitreten"
+
+msgid "Release disconnect pause"
+msgstr "Verbindungspause aufheben"
+
+msgid "Leave game"
+msgstr "Partie verlassen"
+
+msgid "Buy land"
+msgstr "Land kaufen"
+
+msgid "Offer land"
+msgstr "Land anbieten"
+
+msgid "Land offers"
+msgstr "Landangebote"
+
+msgid "Multiplayer chat"
+msgstr "Multiplayer-Chat"
+
+msgid "Hide chat"
+msgstr "Chat ausblenden"
+
+msgid "Message all players…"
+msgstr "Nachricht an alle Spieler …"
+
+msgid "%s joined the game."
+msgstr "%s ist dem Spiel beigetreten."
+
+msgid "%s left the game."
+msgstr "%s hat das Spiel verlassen."
+
+msgid "%s lost the connection. The game is paused."
+msgstr "%s hat die Verbindung verloren. Das Spiel ist pausiert."
+
+msgid "The host ended the session."
+msgstr "Der Host hat die Sitzung beendet."
+
+msgid "Overview"
+msgstr "Übersicht"
+
+msgid "Finances"
+msgstr "Finanzen"
+
+msgid "Land & building"
+msgstr "Fläche & Bau"
+
+msgid "Emergency services"
+msgstr "Einsätze"
+
+msgid "Player"
+msgstr "Spieler"
+
+msgid "City"
+msgstr "Stadt"
+
+msgid "Connection"
+msgstr "Verbindung"
+
+msgid "Population"
+msgstr "Einwohner"
+
+msgid "Funds"
+msgstr "Kasse"
+
+msgid "Year-to-date balance"
+msgstr "Jahressaldo bisher"
+
+msgid "Debt"
+msgstr "Schulden"
+
+msgid "Owned tiles"
+msgstr "Landbesitz"
+
+msgid "Build actions"
+msgstr "Bauaktionen"
+
+msgid "Build spending"
+msgstr "Bauausgaben"
+
+msgid "Developed tiles"
+msgstr "Bebaute Felder"
+
+msgid "Residential tiles"
+msgstr "Wohnfelder"
+
+msgid "Commercial tiles"
+msgstr "Gewerbefelder"
+
+msgid "Industrial tiles"
+msgstr "Industriefelder"
+
+msgid "Land purchases"
+msgstr "Landkäufe"
+
+msgid "Land sales"
+msgstr "Landverkäufe"
+
+msgid "Active units"
+msgstr "Aktive Einsätze"
+
+msgid "Helping neighbours"
+msgstr "Nachbarschaftshilfe"
+
+msgid "Not available"
+msgstr "Nicht verfügbar"
+
+msgid "You"
+msgstr "Du"
+
+msgid "Host"
+msgstr "Host"
+
+msgid "Connected"
+msgstr "Verbunden"
+
+msgid "Disconnected"
+msgstr "Getrennt"
+
+msgid "Statistics are host-confirmed. Select a column heading to sort."
+msgstr "Vom Host bestätigte Werte. Zum Sortieren einen Spaltenkopf auswählen."
+
+msgid "Shared city: %s · Population %s · Funds %s · Year-to-date balance %s · Debt %s"
+msgstr "Gemeinsame Stadt: %s · Einwohner %s · Kasse %s · Jahressaldo bisher %s · Schulden %s"
+
+msgid "Recorded budget balance in the current city year; excludes construction and land transactions."
+msgstr "Erfasster Haushaltssaldo im laufenden Stadtjahr; ohne Bauausgaben und Landhandel."
+
+msgid "Personal confirmed construction contributions recorded by this multiplayer session."
+msgstr "Persönliche bestätigte Baubeiträge, die diese Multiplayer-Sitzung erfasst hat."
+
+msgid "Cumulative confirmed land transactions since tracking began. Older untracked totals are unavailable."
+msgstr "Summe bestätigter Landgeschäfte seit Beginn der Erfassung. Frühere, nicht erfasste Summen sind nicht verfügbar."
+
+msgid "Number of map tiles in this municipality; developed tiles include infrastructure."
+msgstr "Anzahl der Kartenfelder dieser Gemeinde; bebaute Felder schließen Infrastruktur ein."
+
+msgid "Own active emergency units deployed in another municipality."
+msgstr "Eigene aktive Einsatzkräfte in einer anderen Gemeinde."
+
+msgid "Current host-confirmed value."
+msgstr "Aktueller, vom Host bestätigter Wert."
+
+msgid "Land offers & requests"
+msgstr "Landangebote & Kaufanfragen"
+
+msgid "Land offers updated: %s — %s"
+msgstr "Landangebote aktualisiert: %s — %s"
+
+msgid "Inspect the highlighted tiles before buying. Foreign land requires its owner's approval."
+msgstr "Prüfe vor dem Kauf die markierten Felder. Fremdes Land erfordert die Zustimmung des Eigentümers."
+
+msgid "Offers"
+msgstr "Angebote"
+
+msgid "Purchase requests"
+msgstr "Kaufanfragen"
+
+msgid "Recent activity"
+msgstr "Letzte Aktivitäten"
+
+msgid "%s → %s"
+msgstr "%s → %s"
+
+msgid "%s · %s tiles · %s · %s"
+msgstr "%s · %s Felder · %s · %s"
+
+msgid "Area: (%d, %d) to (%d, %d)"
+msgstr "Gebiet: (%d, %d) bis (%d, %d)"
+
+msgid "Show on map"
+msgstr "Auf Karte zeigen"
+
+msgid "Approve request"
+msgstr "Anfrage annehmen"
+
+msgid "Buy"
+msgstr "Kaufen"
+
+msgid "Withdraw request"
+msgstr "Anfrage zurückziehen"
+
+msgid "Withdraw offer"
+msgstr "Angebot zurückziehen"
+
+msgid "Decline"
+msgstr "Ablehnen"
+
+msgid "No entries."
+msgstr "Keine Einträge."
+
+msgid "Transfer %d tiles for %s between %s and %s?"
+msgstr "%d Felder für %s zwischen %s und %s übertragen?"
+
+msgid "Open"
+msgstr "Offen"
+
+msgid "Withdrawn"
+msgstr "Zurückgezogen"
+
+msgid "Declined"
+msgstr "Abgelehnt"
+
+msgid "Sold"
+msgstr "Verkauft"
+
+msgid "Ownership changed"
+msgstr "Eigentümer geändert"
+
+msgid "Only the responsible player can change this land entry."
+msgstr "Nur der zuständige Spieler kann diesen Landeintrag ändern."
+
+msgid "Land entry updated. No money was charged."
+msgstr "Landeintrag aktualisiert. Es wurde kein Geld berechnet."
+
+msgid "Only the owner can approve this purchase request."
+msgstr "Nur der Eigentümer kann diese Kaufanfrage annehmen."
+
+msgid "Send a purchase request for %d tiles at $%d? The owner must approve before any transfer."
+msgstr "Kaufanfrage für %d Felder zu $%d senden? Vor der Übertragung muss der Eigentümer zustimmen."
+
+msgid "Send request"
+msgstr "Anfrage senden"
+
+msgid "This purchase request is already open."
+msgstr "Diese Kaufanfrage ist bereits offen."
+
+msgid "Close an existing land entry before creating another."
+msgstr "Schließe einen vorhandenen Landeintrag, bevor du einen weiteren erstellst."
+
+msgid "Purchase request sent. The owner can review it in Land offers."
+msgstr "Kaufanfrage gesendet. Der Eigentümer kann sie unter Landangebote prüfen."
+
+msgid "This offer is no longer available."
+msgstr "Dieses Angebot ist nicht mehr verfügbar."
+
+msgid "You already own this land."
+msgstr "Dieses Land gehört dir bereits."
+
+msgid "Land ownership changed; nothing was charged."
+msgstr "Der Eigentümer hat sich geändert; es wurde nichts berechnet."
+
+msgid "Insufficient funds."
+msgstr "Nicht genügend Geld."
+
+msgid "The seller's balance would exceed the supported limit."
+msgstr "Das Guthaben des Verkäufers würde den unterstützten Höchstwert überschreiten."
+
+msgid "Finish disaster response before transferring a municipality's land."
+msgstr "Beende die Katastrophenbekämpfung vor der Übertragung von Gemeindeland."
+
+msgid "Land purchased from its owner."
+msgstr "Land vom Eigentümer gekauft."
+
+msgid "Invalid land selection."
+msgstr "Ungültige Landauswahl."
+
+msgid "The entire selection must have the same owner. Nothing was charged."
+msgstr "Die gesamte Auswahl muss demselben Eigentümer gehören. Es wurde nichts berechnet."
+
+msgid "Invalid offer price."
+msgstr "Ungültiger Angebotspreis."
+
+msgid "Land offer published. Another player can accept it."
+msgstr "Landangebot veröffentlicht. Ein anderer Spieler kann es annehmen."
+
+msgid "Buy %d tiles for $%d? Balance afterwards: $%d."
+msgstr "%d Felder für $%d kaufen? Guthaben danach: $%d."
+
+msgid "Buy — $%d"
+msgstr "Kaufen — $%d"
+
+msgid "Land purchased."
+msgstr "Land gekauft."
+
+msgid "Drag to select land. Purchases require confirmation; foreign land requires the owner's consent."
+msgstr "Ziehe ein Rechteck zur Landauswahl. Käufe müssen bestätigt werden; bei fremdem Land muss der Eigentümer zustimmen."
+
+msgid "Land trading is available in Shared mode."
+msgstr "Landhandel ist im Shared-Modus verfügbar."
+
+msgid "Select an area. Confirm the price before buying or sending a purchase request."
+msgstr "Markiere ein Gebiet. Bestätige den Preis vor dem Kauf oder dem Senden einer Kaufanfrage."
+
+msgid "Sale price"
+msgstr "Verkaufspreis"
+
+msgid "Set price and select area"
+msgstr "Preis festlegen und Gebiet markieren"
+
+msgid "Disaster in your city: deploy emergency services from the normal toolbar."
+msgstr "Katastrophe in deiner Stadt: Einsatzkräfte über die normale Werkzeugleiste entsenden."
+
+msgid "The annual budget awaits confirmation under Windows → Budget."
+msgstr "Der Jahreshaushalt wartet auf Bestätigung unter Fenster → Haushalt."
+
+msgid "Acknowledge the military administration notice to continue."
+msgstr "Die Mitteilung der Militärverwaltung bestätigen und fortsetzen."
+
+msgid "The simulation has a final notice. Acknowledge it to continue viewing the city."
+msgstr "Die Simulation hat eine abschließende Meldung. Bestätigen, um die Stadt weiter zu betrachten."
+
+msgid "Neighbouring city"
+msgstr "Nachbarstadt"
+
+msgid "Disaster at %s — area (%d, %d). Your emergency services can help."
+msgstr "Katastrophe bei %s — Gebiet (%d, %d). Eigene Einsatzkräfte können helfen."
+
+msgid "Invalid land history."
+msgstr "Ungültiger Landhandelsverlauf."
+
+msgid "Invalid land statistics."
+msgstr "Ungültige Landhandelsstatistik."
+
+msgid "Invalid land request buyer."
+msgstr "Ungültiger Käufer der Landanfrage."
+
+msgid "Open land entry"
+msgstr "Offen"

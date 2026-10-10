@@ -11,6 +11,8 @@ var owners := PackedInt32Array()
 var template: Sc2File
 var offers: Dictionary = {}
 var next_offer := 1
+var land_history: Array = []
+var land_statistics: Dictionary = {}
 var host_actor := ""
 var snapshot_cache: Dictionary = {}
 
@@ -57,6 +59,7 @@ func add_player(actor: String) -> String:
 	child.controller.accumulator_msec = controller.accumulator_msec
 	child.controller.subtick_counter = controller.subtick_counter
 	municipalities[actor] = child
+	land_statistics[actor] = {"bought": 0, "sold": 0}
 	actors.append(actor)
 	revision += 1
 	snapshot_cache.clear()
@@ -108,7 +111,7 @@ func command(actor: String, request: Dictionary) -> Dictionary:
 		return rejected("No municipality is assigned to this player.")
 	if not whole_number(request.get("revision"), 0, revision):
 		return rejected("Invalid map revision.")
-	if request.get("kind") in ["land_buy", "land_offer", "land_accept"]:
+	if request.get("kind") in ["land_buy", "land_offer", "land_accept", "land_withdraw", "land_decline"]:
 		return land_command(actor, request)
 	if request.get("kind") == "recall":
 		for municipality: CoopWorld in municipalities.values():
@@ -240,11 +243,27 @@ func selected_tiles(request: Dictionary) -> PackedInt32Array:
 
 func land_command(actor: String, request: Dictionary) -> Dictionary:
 	var child: CoopWorld = municipalities[actor]
+	if request.kind in ["land_withdraw", "land_decline"]:
+		var key := str(request.get("offer", ""))
+		if not offers.has(key):
+			return rejected("This offer is no longer available.")
+		var record: Dictionary = offers[key]
+		var initiator: String = record.get("buyer", record.seller)
+		if (request.kind == "land_withdraw" and actor != initiator) or (request.kind == "land_decline" and (not record.has("buyer") or actor != record.seller)):
+			return rejected("Only the responsible player can change this land entry.")
+		finish_land_entry(key, "Withdrawn" if request.kind == "land_withdraw" else "Declined")
+		revision += 1
+		return accepted("Land entry updated. No money was charged.")
 	if request.kind == "land_accept":
 		var key := str(request.get("offer", ""))
 		if not offers.has(key):
 			return rejected("This offer is no longer available.")
 		var offer: Dictionary = offers[key]
+		if offer.has("buyer"):
+			if actor != offer.seller:
+				return rejected("Only the owner can approve this purchase request.")
+			actor = offer.buyer
+			child = municipalities[actor]
 		if offer.seller == actor:
 			return rejected("You already own this land.")
 		for tile: int in offer.tiles:
@@ -274,18 +293,40 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 		child.revision += 1
 		seller.revision += 1
 		city = municipalities[host_actor].city
-		offers.erase(key)
+		record_land_spending(actor, "bought", int(offer.price))
+		record_land_spending(offer.seller, "sold", int(offer.price))
+		finish_land_entry(key, "Sold", actor)
 		revision += 1
 		return accepted("Land purchased from its owner.")
 	if not point_valid(request.get("start")) or not point_valid(request.get("finish")):
 		return rejected("Invalid land selection.")
 	var tiles := selected_tiles(request)
-	var expected_owner := 0 if request.kind == "land_buy" else actors.find(actor) + 1
+	var expected_owner := int(owners[tiles[0]]) if request.kind == "land_buy" else actors.find(actor) + 1
+	if request.kind == "land_buy" and expected_owner == actors.find(actor) + 1:
+		return rejected("You already own this land.")
 	for tile: int in tiles:
 		if owners[tile] != expected_owner:
 			return rejected("The entire selection must have the same owner. Nothing was charged.")
 	var price := tiles.size() * LAND_PRICE
+	if request.kind == "land_buy" and expected_owner > 0:
+		var seller: String = actors[expected_owner - 1]
+		if request.get("price") != price:
+			return choice_result("Send a purchase request for %d tiles at $%d? The owner must approve before any transfer." % [tiles.size(), price], request,
+				[{"label": "Send request", "fields": {"price": price}}])
+		if child.city.funds() < price:
+			return rejected("Insufficient funds.")
+		for record: Dictionary in offers.values():
+			if record.get("buyer") == actor and record.tiles == Array(tiles):
+				return rejected("This purchase request is already open.")
+		if offers.size() >= 256:
+			return rejected("Close an existing land entry before creating another.")
+		offers[str(next_offer)] = {"seller": seller, "buyer": actor, "tiles": Array(tiles), "price": price}
+		next_offer += 1
+		revision += 1
+		return accepted("Purchase request sent. The owner can review it in Land offers.")
 	if request.kind == "land_offer":
+		if offers.size() >= 256:
+			return rejected("Close an existing land entry before creating another.")
 		if not whole_number(request.get("price"), 0, 2147483647):
 			return rejected("Invalid offer price.")
 		price = int(request.price)
@@ -298,6 +339,7 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 			[{"label": "Buy — $%d" % price, "fields": {"price": price}}])
 	if child.city.funds() < price:
 		return rejected("Insufficient funds.")
+	record_land_spending(actor, "bought", price)
 	child.city.set_funds(child.city.funds() - price)
 	for tile: int in tiles:
 		owners[tile] = actors.find(actor) + 1
@@ -427,6 +469,7 @@ func saved_shared() -> Dictionary:
 			"dispatch_initialized": child.dispatch_initialized, "dispatch_points": child.saved_dispatch_points()}
 	return {"owners": Array(owners), "actors": actors, "host": host_actor,
 		"cities": cities, "offers": offers, "next_offer": next_offer,
+		"land_history": land_history, "land_statistics": land_statistics,
 		"template": Marshalls.raw_to_base64(Sc2xDocument.encode(template).data)}
 
 
@@ -472,11 +515,32 @@ func restore_shared(data: Dictionary) -> String:
 		var offer: Variant = data.offers[key]
 		if not key is String or not offer is Dictionary or not restored.has(offer.get("seller")) or not whole_number(offer.get("price"), 0, 2147483647) or not offer.get("tiles") is Array or offer.tiles.is_empty() or offer.tiles.size() > owners.size():
 			return "Invalid land offer."
+		if offer.has("buyer") and (not restored.has(offer.buyer) or offer.buyer == offer.seller):
+			return "Invalid land request buyer."
 		var unique := {}
 		for tile: Variant in offer.tiles:
 			if not whole_number(tile, 0, owners.size() - 1) or unique.has(int(tile)):
 				return "Invalid land offer area."
 			unique[int(tile)] = true
+	if not data.get("land_history", []) is Array or data.get("land_history", []).size() > 128 or not data.get("land_statistics", {}) is Dictionary:
+		return "Invalid land history."
+	for entry: Variant in data.get("land_history", []):
+		if not entry is Dictionary or not entry.get("id") is String or not restored.has(entry.get("seller")) or not entry.get("status") in ["Sold", "Withdrawn", "Declined", "Ownership changed"] or not whole_number(entry.get("price"), 0, 2147483647) or not entry.get("tiles") is Array or entry.tiles.is_empty() or entry.tiles.size() > owners.size():
+			return "Invalid land history."
+		if entry.has("buyer") and not restored.has(entry.buyer):
+			return "Invalid land request buyer."
+		for tile: Variant in entry.tiles:
+			if not whole_number(tile, 0, owners.size() - 1):
+				return "Invalid land history."
+	for actor: Variant in data.get("land_statistics", {}):
+		var counters: Variant = data.land_statistics[actor]
+		if not restored.has(actor) or not counters is Dictionary:
+			return "Invalid land statistics."
+		for field in ["bought", "sold"]:
+			if counters.get(field) != null and not whole_number(counters[field], 0, 9007199254740991):
+				return "Invalid land statistics."
+	land_history = data.get("land_history", []).duplicate(true)
+	land_statistics = data.get("land_statistics", {}).duplicate(true)
 	municipalities = restored
 	actors.assign(data.actors)
 	owners = PackedInt32Array(data.owners)
@@ -517,3 +581,28 @@ func military_land_error(actor: String) -> String:
 		if owners[tile] != actors.find(actor) + 1:
 			return "The proposed military base extends outside your land. Buy its land first or decline the proposal."
 	return ""
+
+
+func record_land_spending(actor: String, field: String, amount: int) -> void:
+	# Missing old counters remain unavailable: do not invent earlier spending.
+	if land_statistics.get(actor, {}).get(field) != null:
+		land_statistics[actor][field] += amount
+
+
+func finish_land_entry(key: String, status: String, buyer := "") -> void:
+	var record: Dictionary = offers[key].duplicate(true)
+	record["id"] = key
+	record["status"] = status
+	if not buyer.is_empty():
+		record["buyer"] = buyer
+	land_history.append(record)
+	if land_history.size() > 128:
+		land_history.pop_front()
+	offers.erase(key)
+	# Overlapping offers must never survive a transfer with obsolete ownership.
+	if status == "Sold":
+		for other: String in offers.keys():
+			for tile: int in offers[other].tiles:
+				if owners[tile] != actors.find(offers[other].seller) + 1:
+					finish_land_entry(other, "Ownership changed")
+					break
