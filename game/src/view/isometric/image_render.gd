@@ -132,7 +132,7 @@ static func missing_sprite_errors(city: CityState, sprites: Sc2SpriteArchive, vi
 # paint a prepared native painter over the whole output in bands, so a long
 # export reports its progress. index images convert to LA8 or L8. a
 # `reduction` above one shrinks each band by that factor before it is copied,
-# so the full-size image is never held. do not reduce index images
+# so the full-size image is never held. Index numbers must never be blended.
 static func paint_whole_city(context: CityGpuBuildContext, size: Vector2i, background: Color, index_alpha: bool,
 		index_opaque: bool, progress := Callable(), reduction := 1) -> AssetImageResult:
 	var output_size := Vector2i(ceili(float(size.x) / reduction), ceili(float(size.y) / reduction))
@@ -156,7 +156,8 @@ static func paint_whole_city(context: CityGpuBuildContext, size: Vector2i, backg
 		var image: Image = painted.image
 
 		if reduction > 1:
-			image.resize(output_size.x, ceili(float(band.size.y) / reduction), Image.INTERPOLATE_TRILINEAR)
+			image.resize(output_size.x, ceili(float(band.size.y) / reduction),
+				Image.INTERPOLATE_NEAREST if index_alpha or index_opaque else Image.INTERPOLATE_TRILINEAR)
 
 		output.blit_rect(image, Rect2i(Vector2i.ZERO, image.get_size()), Vector2i(0, top / reduction))
 

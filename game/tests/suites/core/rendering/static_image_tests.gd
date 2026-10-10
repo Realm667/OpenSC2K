@@ -128,6 +128,14 @@ func run(small_medium: Sc2SpriteArchive) -> void:
 		!= reduced_rgb.image.get_pixel(0, 0),
 		"A city image with a maximum size paints a whole-factor reduction",
 	)
+	var full_indexed := IsometricRenderer.create_image(render_fixture, Palette.index_encoding(), small_medium,
+		IsometricRenderer.VIEW_SMALL, 0, false, true, false, false)
+	var reduced_indexed := IsometricRenderer.create_image(render_fixture, Palette.index_encoding(), small_medium,
+		IsometricRenderer.VIEW_SMALL, 0, false, true, false, false, Callable(), full_indexed.image.get_size() / 2)
+	var expected_indexed := full_indexed.image.duplicate()
+	expected_indexed.resize(reduced_indexed.image.get_width(), reduced_indexed.image.get_height(), Image.INTERPOLATE_NEAREST)
+	_check(reduced_indexed.ok and reduced_indexed.image.get_data() == expected_indexed.get_data(),
+		"Reduced indexed previews preserve exact palette numbers and transparency instead of mixing false colors")
 	var huge_small_view := IsometricRenderer.output_size_for_view(IsometricRenderer.VIEW_SMALL, 4096)
 	var preview_reduction := IsometricImageRender.reduction_to_fit(
 		huge_small_view, NewCityPreviewJob.preview_maximum_size(Vector2(1920, 1080))
