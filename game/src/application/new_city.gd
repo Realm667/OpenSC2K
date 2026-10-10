@@ -34,6 +34,12 @@ func open_new_city_dialog() -> void:
 	app.city_dialogs.new_city_dialog.preview_timer.stop()
 	app.new_city_state.session.begin(app.tool_state.tool_random.state, app.simulation_state.nuisance_random.state)
 	app.city_dialogs.new_city_dialog.reset_fields(app.preferences.default_mayor_name)
+	var sizes := app.city_dialogs.new_city_dialog.size_input
+	for index in sizes.item_count:
+		sizes.set_item_disabled(index, app.coop.pending_new_city and sizes.get_item_id(index) > 128)
+	if app.coop.pending_new_city and sizes.get_selected_id() > 128:
+		sizes.select(sizes.get_item_index(128))
+	sizes.tooltip_text = "Multiplayer: derzeit höchstens 128 × 128 Felder." if app.coop.pending_new_city else ""
 	app.city_dialogs.new_city_dialog.show()
 	app.city_dialogs.new_city_dialog.invalidate()
 	app.city_dialogs.new_city_dialog.focus_city_name()
@@ -121,6 +127,7 @@ func poll_new_city_preview() -> void:
 
 
 func cancel_new_city() -> void:
+	app.coop.pending_new_city = false
 	app.city_dialogs.new_city_dialog.invalidate()
 	app.city_dialogs.new_city_dialog.preview_timer.stop()
 	app.city_dialogs.new_city_dialog.hide()
@@ -192,6 +199,10 @@ func create_new_city_unchecked() -> void:
 		],
 	)
 
+	if app.coop.pending_new_city:
+		app.city_dialogs.new_city_dialog.hide()
+		app.coop.host_document(document)
+		return
 	_enter_landscape_editor()
 
 

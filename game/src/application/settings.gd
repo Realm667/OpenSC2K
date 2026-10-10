@@ -59,6 +59,17 @@ func open_settings_dialog() -> void:
 		preferences.zoom_graphics,
 	)
 	app.main_overlays.settings_dialog.loading_values = false
+	for key: String in CityVisualEnvironment.SHARED_OPTIONS:
+		var control: Control = app.main_overlays.settings_dialog.visual_tab.controls.get(key)
+		if control == null:
+			continue
+		var locked := app.coop.active() and not app.coop.session.hosting
+		if control is BaseButton:
+			control.disabled = locked
+		elif control is Range:
+			control.set("editable", not locked)
+		control.tooltip_text = "Wird vom Host gesteuert" if locked else ""
+
 	_refresh_settings_pack_names()
 
 
@@ -218,6 +229,11 @@ func apply_settings() -> void:
 
 
 func _apply_visual_options(values: Dictionary) -> bool:
+	if app.coop.active() and not app.coop.session.hosting:
+		values = values.duplicate(true)
+		for key: String in CityVisualEnvironment.SHARED_OPTIONS:
+			if preferences.visual_enhancements.has(key):
+				values[key] = preferences.visual_enhancements[key]
 	if preferences.visual_enhancements == values:
 		return false
 	preferences.visual_enhancements = values

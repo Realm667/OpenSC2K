@@ -57,6 +57,9 @@ func open_scenario_dialog() -> void:
 
 
 func save_city() -> void:
+	if app.coop.active():
+		app.coop.save()
+		return
 	if document_state.current_document == null:
 		return
 
@@ -291,6 +294,17 @@ func _continue_pending_city_exit() -> void:
 
 
 func load_city(path: String) -> void:
+	if not app.coop.active():
+		var multiplayer_document := Sc2File.new()
+		if path.to_lower().ends_with(".sc2mp") or (multiplayer_document.parse(FileAccess.get_file_as_bytes(path)) and multiplayer_document.sc2x_extra_entries.has("multiplayer.json")):
+			app.coop.open()
+			app.coop.city_picker.select(1)
+			app.coop.use_current.show()
+			app.coop.use_current.button_pressed = false
+			app.coop.selected_city_path = path
+			app.coop.city_file.current_path = path
+			app.coop.show_message("Multiplayer-Spielstand ausgewählt. Mit Spiel erstellen fortsetzen.")
+			return
 	request_city_exit("load_city", path)
 
 
@@ -351,6 +365,9 @@ func _loaded_scenario(document: Sc2File) -> ScenarioState:
 
 
 func on_save_path_selected(path: String) -> void:
+	if app.coop.active():
+		app.coop.save_to(path)
+		return
 	_save_copy(path, _continue_pending_city_exit if pending_city_exit_waiting_for_save else Callable())
 
 

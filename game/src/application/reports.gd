@@ -36,7 +36,11 @@ func _init(application: CityApplication) -> void:
 
 func on_disaster_menu(id: int) -> void:
 	if app.coop.active():
-		app.coop.show_message("Manual disaster triggers are not available in this Koop version.")
+		if id == MENU_NO_DISASTERS:
+			app.coop.session.request({"kind": "no_disasters", "enabled": not app.document_state.city.no_disasters_enabled()})
+		else:
+			var target := app.map_view.center_tile()
+			app.coop.session.request({"kind": "disaster", "disaster": id, "point": [target.x, target.y]})
 		return
 	if app.tool_state.landscape_editor:
 		return
@@ -134,9 +138,6 @@ func start_disaster_at_view_center(id: int) -> DisasterReportResult:
 
 
 func on_windows_menu(id: int) -> void:
-	if app.coop.active() and id in [0, 1, 3]:
-		app.coop.open()
-		return
 	if id == 0:
 		app.budget.open_manual_budget()
 	elif id == 1:
@@ -163,6 +164,13 @@ func _open_ordinance_window() -> void:
 	if app.document_state.city == null or app.city_dialogs.ordinance_window == null:
 		return
 
+	var control := app.city_dialogs.ordinance_window.ordinance_control
+	control.command_sink = Callable()
+	if app.coop.active():
+		var policy := app.coop.session.local_policy
+		control.command_sink = func(index: int, enabled: bool) -> void:
+			app.coop.session.request({"kind": "ordinance", "ordinance": index, "enabled": enabled, "policy": policy})
+			app.city_dialogs.ordinance_window.hide()
 	var result: OrdinanceCommand.Result = app.city_dialogs.ordinance_window.open_city(app.document_state.city)
 
 	if not result.ok:
@@ -193,6 +201,11 @@ func _open_industry_window() -> void:
 	if app.document_state.city == null or app.city_dialogs.industry_window == null:
 		return
 
+	var control := app.city_dialogs.industry_window.industry_control
+	control.command_sink = Callable()
+	if app.coop.active():
+		control.command_sink = func(index: int, rate: int, all_industries: bool) -> void:
+			app.coop.session.request({"kind": "industry_tax", "industry": index, "rate": rate, "all": all_industries})
 	app.city_dialogs.industry_window.show_city(app.document_state.city)
 
 

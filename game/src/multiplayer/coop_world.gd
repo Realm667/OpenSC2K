@@ -20,6 +20,10 @@ var undo_dispatch_cycles := PackedInt32Array()
 var undo_dispatch_initialized := false
 var undo_damage_class := -1
 var error := ""
+var statistics: Dictionary = {}
+var dispatch_owners: Dictionary = {}
+var undo_statistics: Dictionary = {}
+var undo_dispatch_owners: Dictionary = {}
 
 
 func open(document: Sc2File) -> bool:
@@ -30,6 +34,9 @@ func open(document: Sc2File) -> bool:
 	if not error.is_empty():
 		return false
 	city = CityState.from_document(document.duplicate_document())
+	# Saved authentication/municipality data is restored by the session, never
+	# sent to guests as an extra entry in the public display city.
+	city.document.sc2x_extra_entries.erase("multiplayer.json")
 	if not city.is_valid():
 		error = city.load_error
 		return false
@@ -61,6 +68,7 @@ func advance(delta: float) -> void:
 	if result.base_ticks > 0 or not result.day_results.is_empty() or not result.launch_results.is_empty():
 		revision += 1
 		undo_document = null
+		prune_dispatch()
 		mark_changes(before, city.document)
 	if pending != engine.pending_interaction or blocked != controller.interaction_blocked:
 		policy_revision += 1
@@ -75,7 +83,7 @@ func snapshot() -> Dictionary:
 		"city": Marshalls.raw_to_base64(encoded.data), "speed": controller.speed,
 		"pending": engine.pending_interaction, "terminal": controller.terminal_blocked,
 		"blocked": controller.interaction_blocked,
-		"error": error}
+		"error": error, "dispatch_owners": dispatch_owners, "disaster": engine.active_disaster_type}
 
 
 func command(actor: String, request: Dictionary) -> Dictionary:
@@ -91,6 +99,8 @@ func command(actor: String, request: Dictionary) -> Dictionary:
 		city.disaster_damage_class = undo_damage_class
 		dispatch_cycles = undo_dispatch_cycles
 		dispatch_initialized = undo_dispatch_initialized
+		statistics = undo_statistics
+		dispatch_owners = undo_dispatch_owners
 		engine.city = city
 		Sc2xCheckpoint.restore(controller, city.document.sc2x_metadata)
 		undo_document = null
@@ -203,6 +213,8 @@ func build(actor: String, request: Dictionary) -> Dictionary:
 	undo_actor = actor
 	undo_dispatch_cycles = dispatch_cycles.duplicate()
 	undo_dispatch_initialized = dispatch_initialized
+	undo_statistics = statistics.duplicate(true)
+	undo_dispatch_owners = dispatch_owners.duplicate(true)
 	undo_damage_class = city.disaster_damage_class
 	city = candidate
 	engine.city = city
@@ -223,6 +235,12 @@ func build(actor: String, request: Dictionary) -> Dictionary:
 		tile_versions[tile] = revision
 	# Signs and dispatch can change object tables without a structural byte.
 	tile_versions[city.index_of(finish.x, finish.y)] = revision
+	var stats: Dictionary = statistics.get(actor, {"builds": 0, "spent": 0})
+	stats.builds += 1
+	stats.spent += edit.cost
+	statistics[actor] = stats
+	if edit is DispatchEditResult:
+		dispatch_owners[str(edit.thing_index)] = {"actor": actor.sha256_text(), "position": [finish.x, finish.y], "type": int(request.tool)}
 	return accepted("Applied by the host. Cost: $%d." % edit.cost)
 
 
@@ -232,6 +250,19 @@ func policy_command(request: Dictionary) -> Dictionary:
 	var result_error := ""
 	var before := city.document.duplicate_document(true)
 	match request.kind:
+		"city_option":
+			match request.get("option"):
+				"auto_goto": city.set_auto_goto_enabled(request.get("enabled") == true)
+				"sound": city.set_sound_enabled(request.get("enabled") == true)
+				"music": city.set_music_enabled(request.get("enabled") == true)
+				_: return rejected("Invalid city option.")
+		"disaster":
+			if not whole_number(request.get("disaster"), 1, 18) or not point_valid(request.get("point")):
+				return rejected("Invalid disaster request.")
+			result_error = engine.start_disaster(int(request.disaster), point(request.point)).error
+		"no_disasters":
+			if not city.set_no_disasters_enabled(request.get("enabled") == true):
+				return rejected("Cannot change disaster settings.")
 		"budget":
 			if not request.get("values") is Array or request.values.size() != BudgetPhase.BUDGET_COUNT:
 				return rejected("Invalid budget.")
@@ -250,6 +281,10 @@ func policy_command(request: Dictionary) -> Dictionary:
 				result_error = controller.resolve_annual_budget(values, request.get("auto") == true).error
 			else:
 				result_error = BudgetPhase.set_funding(city, values, request.get("auto") == true).error
+		"industry_tax":
+			if not whole_number(request.get("industry"), 0, IndustryTaxCommand.INDUSTRY_COUNT - 1) or not whole_number(request.get("rate"), 0, IndustryTaxCommand.MAXIMUM_INDUSTRY_TAX):
+				return rejected("Invalid industry tax rate.")
+			result_error = IndustryTaxCommand.set_tax_rate(city, int(request.industry), int(request.rate), request.get("all") == true).error
 		"ordinance":
 			if not whole_number(request.get("ordinance"), 0, OrdinanceCommand.NAMES.size() - 1):
 				return rejected("Invalid ordinance.")
@@ -271,6 +306,7 @@ func policy_command(request: Dictionary) -> Dictionary:
 						return rejected("There is no decision to resolve.")
 		"recall":
 			result_error = DispatchCommand.recall_all(city).error
+			dispatch_owners.clear()
 			dispatch_cycles.fill(0)
 			dispatch_initialized = false
 		_:
@@ -327,3 +363,15 @@ static func accepted(message: String) -> Dictionary:
 
 static func choice_result(message: String, request: Dictionary, choices: Array) -> Dictionary:
 	return {"type": "result", "ok": false, "message": message, "request": request, "choices": choices}
+
+
+func prune_dispatch() -> void:
+	var things := city.document.find_chunk("XTHG").decoded_payload
+	for key: String in dispatch_owners.keys():
+		var index := int(key)
+		var unit: Dictionary = dispatch_owners[key]
+		if index >= ThingData.count(things) or ThingData.read(things, index * ThingData.RECORD_SIZE) != DispatchCommand.TYPE_BY_SUBTOOL[int(unit.type)]:
+			dispatch_owners.erase(key)
+			continue
+		if ThingData.read(things, index * ThingData.RECORD_SIZE + 3) != int(unit.position[0]) or ThingData.read(things, index * ThingData.RECORD_SIZE + 4) != int(unit.position[1]):
+			dispatch_owners.erase(key)
