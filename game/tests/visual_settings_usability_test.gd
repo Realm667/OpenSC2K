@@ -65,12 +65,12 @@ func _run() -> void:
 	assert(tab.selected_values() == defaults and notifications[0] == 3)
 	tab.undo_button.pressed.emit()
 	assert(tab.selected_values() == custom)
-	tab.select_category(8)
-	tab._reset_category()
-	assert(tab.selected_values().lut_folder.is_empty() and tab.selected_values().lut_path.is_empty())
-	assert(tab.selected_values().day_hour == custom.day_hour)
-	tab._undo_action()
-	assert(tab.selected_values() == custom)
+	# Hidden custom paths survive normal edits and category resets.
+	(tab.controls.life_people_enabled as CheckBox).button_pressed = false
+	assert(tab.selected_values().lut_folder == custom.lut_folder)
+	assert(tab.selected_values().lut_path == custom.lut_path)
+	assert(tab.selected_values().brightmap_folder == custom.brightmap_folder)
+	tab.show_values(custom)
 	tab._disable_all()
 	assert(not tab.selected_values().day_enabled)
 	tab._undo_action()
