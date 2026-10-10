@@ -9,10 +9,11 @@ signal choice_requested(result: Dictionary)
 signal environment_received(state: Dictionary)
 signal chat_received(message: Dictionary)
 signal presence_received(players: Array)
+signal player_event(event: Dictionary)
 
 const PROTOCOL := 1
 const BUILD := "opensc2k-coop-1"
-const NETWORK_BUILD := "opensc2k-multiplayer-5"
+const NETWORK_BUILD := "opensc2k-multiplayer-7"
 const MAX_PLAYERS := 8
 var world: CoopWorld
 var active := false
@@ -44,6 +45,10 @@ var chat_history: Array = []
 var presence_elapsed := 0.0
 var cursor_source: Callable
 var chat_last_sent: Dictionary = {}
+var event_sequence := 0
+var graceful_peers: Dictionary = {}
+var statistics_cache: Dictionary = {}
+var statistics_revision := -1
 
 
 
@@ -98,6 +103,13 @@ func join(address: String, port: int, join_code: String, player_name: String) ->
 
 
 func stop() -> void:
+	if active and connected:
+		for channel in channels.values():
+			channel.send({"type": "leave"})
+			channel.flush()
+	graceful_peers.clear()
+	statistics_cache.clear()
+	statistics_revision = -1
 	for channel in channels.values():
 		channel.close()
 	channels.clear()
@@ -167,7 +179,7 @@ func _process(delta: float) -> void:
 	if presence_elapsed >= 0.1:
 		presence_elapsed = 0.0
 		if cursor_source.is_valid():
-			var position: Vector2i = cursor_source.call()
+			var position: Vector2 = cursor_source.call()
 			if hosting:
 				cursors[token] = [position.x, position.y]
 			elif connected:
@@ -217,13 +229,17 @@ func receive_host(id: int, message: Dictionary) -> void:
 		channels[id].send({"type": "welcome", "session": session_id, "next": int(members[message.token].sequence) + 1})
 		channels[id].send(make_state(message.token))
 		for item: Dictionary in chat_history:
-			channels[id].send({"type": "chat", "message": item})
-		feedback.emit("%s joined Koop." % message.name)
+			channels[id].send({"type": "chat", "message": item.merged({"history": true}, true)})
+		emit_player_event(message.token, "joined", id)
 		return
 	var actor: String = identities[id]
+	if message.get("type") == "leave":
+		graceful_peers[id] = true
+		channels[id].failed = true
+		return
 	if message.get("type") == "cursor":
 		var position: Variant = message.get("position")
-		if position is Array and position.size() == 2 and CoopWorld.whole_number(position[0], -1, world.city.map_size - 1) and CoopWorld.whole_number(position[1], -1, world.city.map_size - 1):
+		if position is Array and position.size() == 2 and valid_cursor_number(position[0]) and valid_cursor_number(position[1]):
 			cursors[actor] = position
 		return
 	if message.get("type") == "chat":
@@ -320,6 +336,12 @@ func receive_client(message: Dictionary) -> void:
 		"chat":
 			if message.get("message") is Dictionary:
 				chat_received.emit(message.message)
+		"player_event":
+			if message.get("event") is Dictionary:
+				player_event.emit(message.event)
+		"leave":
+			graceful_peers[0] = true
+			channels[0].failed = true
 		"presence":
 			if message.get("players") is Array:
 				presence_received.emit(message.players)
@@ -339,8 +361,8 @@ func make_state(recipient := "") -> Dictionary:
 	if world is SharedWorld:
 		state["offers"] = []
 		for key: String in world.offers:
-			var offer: Dictionary = world.offers[key]
-			state.offers.append({"id": key, "name": members[offer.seller].name, "count": offer.tiles.size(), "price": offer.price})
+			state.offers.append(public_land_entry(world.offers[key].merged({"id": key, "status": "Open"}, true)))
+		state["land_history"] = world.land_history.map(public_land_entry)
 	state["disconnect_pause"] = disconnected_pause
 	if environment_source.is_valid():
 		state["weather"] = environment_source.call()
@@ -383,10 +405,11 @@ func drop(id: int) -> void:
 			world.controller.set_speed(1)
 			if world is SharedWorld:
 				world.set_shared_speed(1)
-			feedback.emit("%s disconnected. The host can release the disconnect pause." % members[actor].name)
+			emit_player_event(actor, "left" if graceful_peers.has(id) else "disconnected")
 	else:
 		connected = false
-		feedback.emit("Connection lost or refused. Check host, port and password, then reconnect. The view is frozen.")
+		feedback.emit("The host ended the session." if graceful_peers.has(id) else "Connection lost or refused. Check host, port and password, then reconnect. The view is frozen.")
+	graceful_peers.erase(id)
 	connection_changed.emit()
 
 
@@ -492,15 +515,18 @@ func available_color(value: Variant) -> String:
 
 func roster() -> Array:
 	var result: Array = []
+	if statistics_revision != world.revision:
+		statistics_cache.clear()
+		statistics_revision = world.revision
 	for actor: String in members:
 		var member: Dictionary = members[actor]
-		result.append({"id": actor.sha256_text(), "name": member.name,
+		if not statistics_cache.has(actor):
+			statistics_cache[actor] = MultiplayerStatistics.capture(world, actor)
+		var row: Dictionary = statistics_cache[actor].duplicate()
+		row.merge({"id": actor.sha256_text(), "name": member.name, "host": actor == token,
 			"color": valid_color(member.get("color")), "online": requested_speed.has(actor),
-			"cursor": cursors.get(actor, [-1, -1]),
-			"builds": world.statistics.get(actor, {}).get("builds", 0),
-			"spent": world.statistics.get(actor, {}).get("spent", 0),
-			"funds": world.municipalities[actor].city.funds() if world is SharedWorld and world.municipalities.has(actor) else world.city.funds(),
-			"population": world.municipalities[actor].city.population() if world is SharedWorld and world.municipalities.has(actor) else world.city.population()})
+			"cursor": cursors.get(actor, [-1, -1])})
+		result.append(row)
 	return result
 
 
@@ -527,13 +553,15 @@ func accept_chat(actor: String, value: Variant) -> void:
 	if now - int(chat_last_sent.get(actor, -1000)) < 500:
 		return
 	chat_last_sent[actor] = now
-	var entry := {"name": members[actor].name, "color": valid_color(members[actor].get("color")),
+	event_sequence += 1
+	var entry := {"id": session_id + ":" + str(event_sequence), "sender": actor.sha256_text(), "name": members[actor].name, "color": valid_color(members[actor].get("color")),
 		"text": value.strip_edges(), "time": Time.get_datetime_string_from_system()}
 	chat_history.append(entry)
 	if chat_history.size() > 100:
 		chat_history.pop_front()
 	chat_received.emit(entry)
-	broadcast({"type": "chat", "message": entry})
+	for id: int in identities:
+		channels[id].send({"type": "chat", "message": entry})
 
 
 func city_checkpoint() -> Dictionary:
@@ -629,3 +657,26 @@ func restore_embedded(document: Sc2File) -> String:
 	world.dispatch_initialized = data.get("dispatch_initialized") == true
 	publish()
 	return ""
+
+
+func valid_cursor_number(value: Variant) -> bool:
+	return (value is int or value is float) and is_finite(float(value)) and float(value) >= -1.0 and float(value) < world.city.map_size
+
+
+func emit_player_event(actor: String, kind: String, excluded := -1) -> void:
+	event_sequence += 1
+	var event := {"id": session_id + ":" + str(event_sequence), "name": members[actor].name, "kind": kind}
+	player_event.emit(event)
+	for id: int in identities:
+		if id != excluded:
+			channels[id].send({"type": "player_event", "event": event})
+
+
+func public_land_entry(record: Dictionary) -> Dictionary:
+	var result := record.duplicate(true)
+	result["name"] = members.get(record.get("seller", ""), {}).get("name", "")
+	result["buyer_name"] = members.get(record.get("buyer", ""), {}).get("name", "")
+	result["seller"] = str(record.get("seller", "")).sha256_text()
+	result["buyer"] = str(record.buyer).sha256_text() if record.has("buyer") else ""
+	result["count"] = record.get("tiles", []).size()
+	return result

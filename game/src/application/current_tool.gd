@@ -61,6 +61,8 @@ func reset_prompts() -> void:
 
 
 func select_tool_group(index: int) -> void:
+	if app.coop != null and app.coop.windows != null:
+		app.coop.windows.cancel_land()
 	if app.tool_state.terrain_stretch.active:
 		app.map_view.cancel_active_selection()
 
@@ -271,6 +273,20 @@ func update_edit_state() -> void:
 
 	app.debug_tools.sync_tool(app.tool_state.selected_group, app.tool_state.selected_subtool)
 
+	if app.city_toolbar.land_mode:
+		state.enabled = true
+		state.available = true
+		state.selection = "rectangle"
+		state.area = 1
+		state.landscape = false
+		state.show_status = true
+		state.status_text = tr("Buy land") if app.coop.windows.land_action == "land_buy" else tr("Offer land")
+		state.status_detail = tr("Drag to select land. Purchases require confirmation; foreign land requires the owner's consent.")
+		app.map_view.query_footprint_preview = false
+		app.map_view.repeat_placement = false
+		app.map_view.placement_validator = Callable()
+		app.map_view.placement_error_provider = Callable()
+		app.city_toolbar.child_palette.hide()
 	app.map_view.query_city = app.document_state.city
 	app.map_view.set_edit_enabled(
 		bool(state.enabled),

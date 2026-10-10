@@ -95,6 +95,8 @@ func _handle_map_key(event: InputEventKey) -> bool:
 
 
 func unhandled_key_input(event: InputEvent) -> void:
+	if app.coop != null and app.coop.windows != null and app.coop.windows.chat_input.has_focus():
+		return
 	if not event is InputEventKey or not event.pressed or event.echo or app.map_view == null:
 		return
 

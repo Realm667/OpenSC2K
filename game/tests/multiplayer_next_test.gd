@@ -35,7 +35,7 @@ func run() -> void:
 	var initial: int = world.municipalities[b].city.funds()
 	check(buy(world, a, [2, 2], [12, 12]).ok, "neutral land purchase")
 	check(world.municipalities[b].city.funds() == initial, "land cost charged only to buyer")
-	check(not buy(world, b, [2, 2], [12, 12]).ok, "conflicting land purchase rejected")
+	check(buy(world, b, [2, 2], [12, 12]).ok, "foreign land creates purchase request")
 	check(world.municipalities[b].city.funds() == initial, "failed purchase charges nothing")
 	check(buy(world, a, [25, 25], [25, 25]).ok, "disconnected land allowed")
 	var build := {"kind": "build", "revision": world.revision, "group": 9, "tool": 0,
@@ -51,13 +51,14 @@ func run() -> void:
 	rates[0] = 19
 	check(world.command(a, {"kind": "budget", "revision": world.revision, "policy": 0, "values": rates, "auto": true}).ok, "municipal tax policy")
 	check(BudgetPhase.funding_values(world.municipalities[b].city)[0] != 19, "other municipal taxes unaffected")
+	var offer_id := str(world.next_offer)
 	var funds_a: int = world.municipalities[a].city.funds()
 	var funds_b: int = world.municipalities[b].city.funds()
 	check(world.command(a, {"kind": "land_offer", "start": [5, 5], "finish": [5, 5], "price": 100, "revision": world.revision}).ok, "owner offers developed parcel")
-	check(world.command(b, {"kind": "land_accept", "offer": "1", "revision": world.revision}).ok, "consensual developed parcel transfer")
+	check(world.command(b, {"kind": "land_accept", "offer": offer_id, "revision": world.revision}).ok, "consensual developed parcel transfer")
 	check(world.municipalities[a].city.funds() == funds_a + 100 and world.municipalities[b].city.funds() == funds_b - 100, "atomic purchase accounts")
 	check(world.municipalities[a].city.zones[world.city.index_of(5, 5)] == 0 and world.municipalities[b].city.zones[world.city.index_of(5, 5)] != 0, "zone belongs only to buyer's simulation")
-	check(not world.command(b, {"kind": "land_accept", "offer": "1", "revision": world.revision}).ok, "offer cannot be paid twice")
+	check(not world.command(b, {"kind": "land_accept", "offer": offer_id, "revision": world.revision}).ok, "offer cannot be paid twice")
 	check(buy(world, b, [20, 20], [24, 24]).ok, "second municipality territory")
 	var fire_request := {"kind": "disaster", "disaster": 7, "point": [5, 5], "revision": world.revision, "policy": world.municipalities[b].policy_revision}
 	check(world.command(b, fire_request).ok, "start own disaster")

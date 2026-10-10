@@ -51,8 +51,8 @@ func setup() -> void:
 	session.environment_received.connect(app.visual_environment.receive_network_weather)
 	app.add_child(session)
 	session.state_received.connect(receive_state)
-	session.cursor_source = func() -> Vector2i:
-		return app.map_view.hover_tile if mirrored and app.map_view.visible else Vector2i(-1, -1)
+	session.cursor_source = func() -> Vector2:
+		return MultiplayerMapOverlay.local_cursor(app) if mirrored and app.map_view.visible else Vector2(-1, -1)
 	session.feedback.connect(show_message)
 	session.choice_requested.connect(show_choices)
 	panel = Window.new()
@@ -313,7 +313,6 @@ func receive_state(state: Dictionary) -> void:
 func apply_selection(start: Vector2i, finish: Vector2i, path: Array[Vector2i], dragged: bool) -> void:
 	if windows.land_action != "":
 		session.request({"kind": windows.land_action, "start": [start.x, start.y], "finish": [finish.x, finish.y], "price": windows.land_offer_price})
-		windows.land_action = ""
 		return
 	var group := app.tool_state.selected_group
 	if group == CityToolIds.Group.QUERY:
@@ -406,6 +405,7 @@ func leave() -> void:
 
 
 func show_message(text: String) -> void:
+	text = MultiplayerText.message(text)
 	message.text = text
 	app.interface.show_status(text)
 
@@ -413,7 +413,7 @@ func show_message(text: String) -> void:
 func show_choices(result: Dictionary) -> void:
 	var dialog := AcceptDialog.new()
 	dialog.theme = AppUiTheme.current()
-	dialog.title = str(result.message)
+	dialog.title = MultiplayerText.message(str(result.message))
 	dialog.get_ok_button().text = "Cancel"
 	var list := VBoxContainer.new()
 	dialog.add_child(list)
@@ -423,7 +423,7 @@ func show_choices(result: Dictionary) -> void:
 			continue
 		var command: Dictionary = result.request.duplicate(true)
 		command.merge(choice.fields, true)
-		button(list, str(choice.get("label", "Choose")), func() -> void:
+		button(list, MultiplayerText.message(str(choice.get("label", "Choose"))), func() -> void:
 			session.request(command)
 			dialog.queue_free())
 	dialog.confirmed.connect(dialog.queue_free)

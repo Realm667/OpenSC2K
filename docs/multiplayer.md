@@ -88,3 +88,36 @@ edits, conflicts/costs, budgets, city setup controls, saves, reconnect, separate
 Shared accounts, land transactions, disaster aid, chat, colors, presence and
 atmosphere. Run the release suite plus GPU/two-process checks before distribution.
 Loopback tests do not establish reachability/performance on physical LAN computers.
+
+## Land market and multiplayer interface
+
+The dedicated Buy land toolbar button sits immediately before Signs. It selects
+rectangles without activating Residential. Selecting foreign land sends a priced
+purchase request after confirmation; the owner must explicitly approve it.
+Land offers & requests lists open offers, incoming/outgoing requests and the last
+128 completed/withdrawn/declined entries. Show on map highlights the exact tiles
+for 12 seconds. Preview never buys. Sellers can withdraw offers, requesters can
+withdraw requests, and owners can decline requests. All decisions are serialized
+by the host and revalidate balances and ownership before transferring anything.
+Overlapping offers expire after ownership changes.
+
+Ownership is drawn as an exterior ground outline, with foreground sprite alpha
+and painter depth masking it. Remote map cursors use sub-tile positions and
+frame-independent interpolation; large jumps snap and stale cursors disappear.
+
+Scoreboard provides sortable Overview, Finances, Land & building, and Emergency
+services tables. Koop city totals are separate from personal contributions.
+Year-to-date balance is the recorded budget balance, excluding construction and
+land transactions. Land purchase/sale totals are persisted from the introduction
+of tracking; older unknown totals remain unavailable.
+
+Chat is docked at the lower left of the map, beside the toolbar, with an inline
+reply field. Typing does not trigger game shortcuts. New incoming messages and
+actual player joins/leaves have distinct quiet cues respecting local sound/volume.
+Chat replay and duplicate events are silent. Status text distinguishes voluntary
+leave from connection loss. New interface text ships in English and German via
+the feature-local PO catalog and the integrated AppLocalization locale.
+
+multiplayer_polish_test covers ownership consent, failed/raced transactions,
+withdrawal, saved counters, exterior boundaries, interpolation, localization,
+stable table sorting and real TCP chat/status events.
