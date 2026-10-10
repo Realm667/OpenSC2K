@@ -22,8 +22,11 @@ func _init(parent: Control, city: CityState, controller: GameSpeedController,
 	app.map_render = rendering
 	app.asset_state.palette = palette
 	app.asset_state.palette_index_encoding = Sc2Palette.index_encoding()
-	app.asset_state.large_sprites = copy_graphics(sprites)
-	app.asset_state.small_medium_sprites = app.asset_state.large_sprites
+	var graphics := copy_graphics(sprites)
+	if view_size == CityIsometricRenderer.VIEW_LARGE:
+		app.asset_state.large_sprites = graphics
+	else:
+		app.asset_state.small_medium_sprites = graphics
 	app.preferences.visual_enhancements = options.duplicate()
 	app.visual_environment.reload_brightmaps(false)
 	map = CityMapControl.new()
@@ -42,7 +45,7 @@ func _init(parent: Control, city: CityState, controller: GameSpeedController,
 	app.simulation_state.simulation_engine = controller.engine
 	# The background keeps its existing private simulation controller. Rendering
 	# consumes it without changing its speed, document, random state or save path.
-	app.asset_state.large_sprites.visual_city_life_traffic = bool(options.life_cars_enabled)
+	graphics.visual_city_life_traffic = bool(options.life_cars_enabled)
 	app.visual_environment.configure()
 
 
