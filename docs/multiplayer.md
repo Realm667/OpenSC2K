@@ -200,4 +200,5 @@ viewed city once per revision. Two recent views are cached for delta reuse, subj
 a 64 MiB multi-view cache budget. Every Region city still simulates by its ordinary
 rules; only the viewed city is rendered. The loopback load test measures 2/4/8 peers
 with increasing zoned areas, transfer bytes, command convergence, simulation work and
-combined process memory. It does not establish real Internet latency or GPU FPS.
+combined GDScript static memory (not complete native/process RSS). It does not
+establish real Internet latency or GPU FPS.
