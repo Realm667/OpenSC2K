@@ -14,6 +14,16 @@ func settle() -> void:
 	for frame in 20:
 		await create_timer(0.01).timeout
 
+func await_lobby_view(host: CoopSession, guest: CoopSession) -> void:
+	# Ready refers to the displayed roster generation. A fixed sleep can race
+	# the next state broadcast under parallel CPU/GPU validation load.
+	var deadline := Time.get_ticks_msec() + 5000
+	while Time.get_ticks_msec() < deadline:
+		if guest.connected and int(guest.latest.get("lobby", {}).get("generation", -1)) == host.lobby_generation:
+			return
+		await create_timer(0.02).timeout
+	check(false, "client received the current lobby generation")
+
 func run() -> void:
 	for mode in ["coop", "shared", "region"]:
 		await lobby_case(mode)
@@ -43,6 +53,7 @@ func lobby_case(mode: String) -> void:
 	check(guest.connected and guest.latest.get("lobby", {}).get("waiting", false), "guest receives lobby")
 	check(host.members[guest.token].color == "c7a0ff", "exact guest colour retained")
 	check(not host.lobby_ready.get(host.token, false), "new participant resets host readiness")
+	await await_lobby_view(host, guest)
 	host.request({"kind": "lobby_ready", "ready": true})
 	guest.request({"kind": "lobby_ready", "ready": true})
 	await settle()
@@ -62,6 +73,7 @@ func lobby_case(mode: String) -> void:
 	check(host.waiting_for_start and host.lobby_ready.is_empty(), "save does not persist stale readiness")
 	guest.join("127.0.0.1", host.server.get_local_port(), "", "Guest")
 	await settle()
+	await await_lobby_view(host, guest)
 	host.request({"kind": "lobby_ready", "ready": true})
 	guest.request({"kind": "lobby_ready", "ready": true})
 	await settle()
@@ -100,6 +112,7 @@ func lobby_case(mode: String) -> void:
 		host.request({"kind": "rematch"})
 		await settle()
 		check(host.waiting_for_start and guest.latest.lobby.waiting and host.lobby_ready.is_empty(), "rematch returns everyone to unready lobby")
+		await await_lobby_view(host, guest)
 		host.request({"kind": "lobby_ready", "ready": true})
 		guest.request({"kind": "lobby_ready", "ready": true})
 		await settle()
