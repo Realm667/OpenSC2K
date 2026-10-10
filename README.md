@@ -20,7 +20,6 @@ Open **Settings > Visual Enhancements**. The settings are grouped as follows:
 | Traffic & Movement | Decorative individual cars and pedestrians, smoother existing vehicles and transparent aircraft shadows. |
 | Disaster Effects | Extra fire and impact light, dust, crowds, tornado motion and earthquake shake. Volcanic clouds use warm colors; pollution and toxic effects use green. |
 | Animation | Transition blending, linkage to game speed and pause behavior for environment cycles. |
-| Custom Graphics | Optional color LUT and brightmap overrides. Standard effects use the included resources. |
 
 The scrolling city in the main menu also uses the visual settings. Each launch
 starts its preview with a randomized time, season and weather, without replacing
@@ -44,8 +43,8 @@ the user's stored choices for a playable city.
 
 Standard brightmaps are included in
 [game/assets/brightmaps/standard](game/assets/brightmaps/standard).
-Leave the custom graphics paths empty to use the built-in resources. The custom
-brightmap folder is an override, not a required external download.
+No external brightmap download is required. Custom graphics controls are hidden;
+previously saved overrides remain available internally.
 Building brightmaps follow the city's power state: unpowered buildings do not
 emit window light. This reads existing power information without changing supply.
 
