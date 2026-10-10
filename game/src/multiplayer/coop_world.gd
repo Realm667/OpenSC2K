@@ -24,11 +24,14 @@ var statistics: Dictionary = {}
 var dispatch_owners: Dictionary = {}
 var undo_statistics: Dictionary = {}
 var undo_dispatch_owners: Dictionary = {}
+var encoded_city := ""
+var encoded_revision := -1
+var encoded_policy := -1
 
 
 func open(document: Sc2File) -> bool:
-	if document == null or not document.is_valid() or not document.is_sc2x() or document.map_size > 128:
-		error = "Koop currently requires an SC2X city of at most 128 tiles per side."
+	if document == null or not document.is_valid() or not document.is_sc2x() or document.map_size not in Sc2File.MAP_SIZES:
+		error = "Multiplayer requires a valid SC2X city with a supported map size."
 		return false
 	error = document.compatibility_error()
 	if not error.is_empty():
@@ -74,13 +77,21 @@ func advance(delta: float) -> void:
 		policy_revision += 1
 
 
-func snapshot() -> Dictionary:
-	Sc2xCheckpoint.capture(controller, city.document.sc2x_metadata)
-	var encoded := Sc2xDocument.encode(city.document)
-	if not encoded.ok:
-		return {"error": encoded.error}
+func snapshot(force_checkpoint := false) -> Dictionary:
+	if force_checkpoint or encoded_city.is_empty() or encoded_revision != revision or encoded_policy != policy_revision:
+		Sc2xCheckpoint.capture(controller, city.document.sc2x_metadata)
+		var encoded := Sc2xDocument.encode(city.document)
+		if not encoded.ok:
+			return {"error": encoded.error}
+		encoded_city = Marshalls.raw_to_base64(encoded.data)
+		encoded_revision = revision
+		encoded_policy = policy_revision
+	return snapshot_status().merged({"city": encoded_city})
+
+
+func snapshot_status() -> Dictionary:
 	return {"type": "state", "revision": revision, "policy": policy_revision,
-		"city": Marshalls.raw_to_base64(encoded.data), "speed": controller.speed,
+		"speed": controller.speed,
 		"pending": engine.pending_interaction, "terminal": controller.terminal_blocked,
 		"blocked": controller.interaction_blocked,
 		"error": error, "dispatch_owners": dispatch_owners, "disaster": engine.active_disaster_type}

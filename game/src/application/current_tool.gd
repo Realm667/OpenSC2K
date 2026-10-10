@@ -273,7 +273,19 @@ func update_edit_state() -> void:
 
 	app.debug_tools.sync_tool(app.tool_state.selected_group, app.tool_state.selected_subtool)
 
+	if app.coop != null and app.coop.active() and app.coop.session.latest.get("visiting", false):
+		var dispatch := app.tool_state.selected_group == CityToolIds.Group.DISPATCH
+		var query := app.tool_state.selected_group == CityToolIds.Group.QUERY
+		state.enabled = dispatch or query
+		if dispatch:
+			var available: Array = app.coop.session.latest.get("assistance_available", [0, 0, 0])
+			state.available = app.tool_state.selected_subtool < available.size() and int(available[app.tool_state.selected_subtool]) > 0
+		elif not query:
+			state.available = false
+		state.show_status = true
+		state.status_detail = tr("Visiting another city: watch or deploy your own emergency services.")
 	if app.city_toolbar.land_mode:
+		app.map_view.desktop_cursor_role = 100
 		state.enabled = true
 		state.available = true
 		state.selection = "rectangle"

@@ -1,7 +1,7 @@
 class_name MultiplayerScoreboard
 extends RefCounted
 
-const VIEWS := ["Overview", "Finances", "Land & building", "Emergency services"]
+const VIEWS := ["Overview", "Finances", "Land ownership", "Zoning", "Construction", "Emergency services", "History"]
 const COLUMNS := {
 	"name": "Player", "city": "City", "online": "Connection", "population": "Population",
 	"funds": "Funds", "balance": "Year-to-date balance", "debt": "Debt", "land": "Owned tiles",
@@ -9,9 +9,11 @@ const COLUMNS := {
 	"residential": "Residential tiles", "commercial": "Commercial tiles", "industrial": "Industrial tiles",
 	"bought": "Land purchases", "sold": "Land sales", "units": "Active units", "aid": "Helping neighbours"}
 const GROUPS := [
-	["name", "city", "online", "population", "funds", "balance", "debt", "land", "builds", "spent"],
-	["name", "funds", "balance", "debt", "spent", "bought", "sold"],
-	["name", "land", "built", "residential", "commercial", "industrial", "builds", "spent"],
+	["name", "city", "online", "population", "funds"],
+	["name", "funds", "balance", "debt"],
+	["name", "land", "built", "bought", "sold"],
+	["name", "residential", "commercial", "industrial"],
+	["name", "builds", "spent"],
 	["name", "online", "units", "aid"]]
 const PERSONAL := ["name", "online", "builds", "spent", "units", "aid"]
 var table: Tree
@@ -22,6 +24,10 @@ var columns: Array = []
 var sort_key := "name"
 var descending := false
 var self_id := ""
+var chart: MultiplayerHistoryChart
+var metric_picker: OptionButton
+var legend: RichTextLabel
+var history: Dictionary = {}
 
 func setup(body: VBoxContainer) -> void:
 	picker = OptionButton.new()
@@ -35,10 +41,27 @@ func setup(body: VBoxContainer) -> void:
 	table.hide_root = true
 	table.column_titles_visible = true
 	table.select_mode = Tree.SELECT_ROW
-	table.custom_minimum_size = Vector2(600, 260)
+	table.custom_minimum_size = Vector2(400, 260)
+	table.scroll_horizontal_enabled = false
 	table.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	table.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	body.add_child(table)
+	metric_picker = OptionButton.new()
+	for metric: String in MultiplayerHistory.METRICS:
+		metric_picker.add_item(tr(COLUMNS[metric]))
+	body.add_child(metric_picker)
+	chart = MultiplayerHistoryChart.new()
+	chart.custom_minimum_size = Vector2(400, 240)
+	chart.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	body.add_child(chart)
+	legend = RichTextLabel.new()
+	legend.fit_content = true
+	legend.custom_minimum_size.y = 42
+	legend.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	body.add_child(legend)
+	metric_picker.item_selected.connect(func(index: int) -> void:
+		chart.metric = MultiplayerHistory.METRICS[index]
+		chart.queue_redraw())
 	picker.item_selected.connect(func(_index: int) -> void: rebuild())
 	table.column_title_clicked.connect(func(index: int, _button: int) -> void:
 		var key: String = columns[index]
@@ -46,10 +69,11 @@ func setup(body: VBoxContainer) -> void:
 		sort_key = key
 		rebuild())
 
-func update(players: Array, shared: bool, identity: String) -> void:
+func update(players: Array, shared: bool, identity: String, samples: Dictionary = {}) -> void:
 	rows = players.duplicate(true)
+	history = samples
 	self_id = identity
-	picker.visible = shared
+	picker.visible = true
 	picker.set_meta("shared", shared)
 	summary.text = tr("Statistics are host-confirmed. Select a column heading to sort.")
 	if not shared and not rows.is_empty():
@@ -58,6 +82,22 @@ func update(players: Array, shared: bool, identity: String) -> void:
 	rebuild()
 
 func rebuild() -> void:
+	var show_history := picker.selected == VIEWS.size() - 1
+	table.visible = not show_history
+	chart.visible = show_history
+	metric_picker.visible = show_history
+	legend.visible = show_history
+	if show_history:
+		chart.series = history
+		chart.players = rows if picker.get_meta("shared", false) else rows.slice(0, 1)
+		chart.queue_redraw()
+		legend.clear()
+		legend.add_text(tr("Player colours · hover over a line for exact values") + "\n")
+		for row: Dictionary in chart.players:
+			legend.push_color(Color(CoopSession.valid_color(row.get("color"))) if row.get("ranked", true) else Color(0.6, 0.6, 0.6))
+			legend.add_text("● " + str(row.name) + (" · " + tr("Unranked") if not row.get("ranked", true) else "") + "   ")
+			legend.pop()
+		return
 	var selected := str(table.get_selected().get_metadata(0)) if table.get_selected() != null else ""
 	var scroll := table.get_scroll()
 	columns = GROUPS[picker.selected] if picker.get_meta("shared", false) else PERSONAL
@@ -69,8 +109,11 @@ func rebuild() -> void:
 	for index in columns.size():
 		var key: String = columns[index]
 		table.set_column_title(index, tr(COLUMNS[key]) + ((" ▼" if descending else " ▲") if key == sort_key else ""))
-		table.set_column_custom_minimum_width(index, 170 if key == "name" else 125)
-		table.set_column_expand(index, key in ["name", "city"])
+		table.set_column_custom_minimum_width(index, 0)
+		table.set_column_clip_content(index, true)
+		table.set_column_expand(index, true)
+		table.set_column_expand_ratio(index, 2 if key in ["name", "city"] else 1)
+		table.set_column_title_tooltip_text(index, tr(COLUMNS[key]))
 	var ordered := rows.duplicate()
 	ordered.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 		var av: Variant = a.get(sort_key)
@@ -100,9 +143,13 @@ func rebuild() -> void:
 			elif value != null and key != "city":
 				text = money(value) if key in ["funds", "balance", "debt", "spent", "bought", "sold"] else number(value)
 				item.set_text_alignment(index, HORIZONTAL_ALIGNMENT_RIGHT)
+			if not row.get("ranked", true):
+				item.set_custom_color(index, Color(0.6, 0.6, 0.6))
+				if key == "name":
+					text += " · " + tr("Unranked")
 			item.set_text(index, text)
 			item.set_custom_bg_color(index, Color(1, 1, 1, 0.035) if row_index % 2 else Color(0, 0, 0, 0.08))
-			item.set_tooltip_text(index, tr(COLUMNS[key]) + "\n" + tooltip(key))
+			item.set_tooltip_text(index, tr(COLUMNS[key]) + ": " + text + "\n" + tooltip(key))
 		if row.id == selected:
 			item.select(0)
 	for child in table.get_children(true):

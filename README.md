@@ -1,7 +1,7 @@
 # OpenSC2K — Multiplayer
 
-Playable real-time **Koop** and **Competitive Shared** on a Visual Enhancements base.
-Competitive Region remains a later mode. Up to eight players use the same build,
+Playable real-time **Koop**, **Competitive Shared** and **Competitive Region** on a
+Visual Enhancements base. Up to eight players use the same build,
 with an optional host password over LAN or direct TCP/IP.
 
 Create a city through the full New City dialog or continue a saved city (optionally

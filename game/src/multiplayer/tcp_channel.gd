@@ -11,6 +11,15 @@ var limit := MAX_FRAME
 var failed := false
 var last_received := Time.get_ticks_msec()
 var low_latency := false
+var bytes_sent := 0
+var bytes_received := 0
+var ephemeral: Dictionary = {}
+
+
+func send_latest(message: Dictionary) -> void:
+	# Cursor/environment updates supersede older unsent values. Reliable commands
+	# retain their order; never splice a new frame into a partially sent frame.
+	ephemeral[str(message.type)] = message
 
 
 func _init(peer: StreamPeerTCP, receive_limit := MAX_FRAME) -> void:
@@ -52,6 +61,7 @@ func poll() -> Array[Dictionary]:
 			failed = true
 			return messages
 		input.append_array(received[1])
+		bytes_received += received[1].size()
 		last_received = Time.get_ticks_msec()
 	if input.size() > limit + IO_BUDGET:
 		failed = true
@@ -82,6 +92,11 @@ func close() -> void:
 
 
 func flush() -> void:
+	if not failed and output.is_empty() and not ephemeral.is_empty():
+		var messages := ephemeral.values()
+		ephemeral.clear()
+		for message: Dictionary in messages:
+			send(message)
 	if failed or output.is_empty() or socket.get_status() != StreamPeerTCP.STATUS_CONNECTED:
 		return
 	var sent := socket.put_partial_data(output.slice(0, IO_BUDGET))
@@ -89,3 +104,4 @@ func flush() -> void:
 		failed = true
 		return
 	output = output.slice(int(sent[1]))
+	bytes_sent += int(sent[1])

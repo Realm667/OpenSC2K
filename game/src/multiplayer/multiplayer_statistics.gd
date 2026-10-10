@@ -13,7 +13,7 @@ static func capture(world: CoopWorld, actor: String) -> Dictionary:
 		"land": 0, "built": 0, "residential": 0, "commercial": 0, "industrial": 0,
 		"bought": null, "sold": null, "units": 0, "aid": 0}
 	for tile in city.buildings.size():
-		if world is SharedWorld and world.owners[tile] != world.actors.find(actor) + 1:
+		if world is SharedWorld and not world is RegionWorld and world.owners[tile] != world.actors.find(actor) + 1:
 			continue
 		result.land += 1
 		if city.buildings[tile] > 13:

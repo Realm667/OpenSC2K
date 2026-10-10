@@ -23,7 +23,7 @@ func refresh(state: Dictionary) -> void:
 	for record: Dictionary in entries:
 		var key := str(record.id) + str(record.status)
 		if initialized and not known.has(key) and identity in [record.seller, record.buyer]:
-			windows.menu.get_popup().set_item_text(7, tr("Land offers") + " •")
+			windows.menu.get_popup().set_item_text(windows.menu.get_popup().get_item_index(7), tr("Land offers") + " •")
 			windows.coop.show_message(tr("Land offers updated: %s — %s") % [record.name, (tr("Open land entry") if record.status == "Open" else tr(record.status))])
 		known[key] = true
 	initialized = true
@@ -36,7 +36,7 @@ func open() -> void:
 		window = windows.make_window(tr("Land offers & requests"))
 		window.size = Vector2i(850, 560)
 		body = windows.content(window)
-	windows.menu.get_popup().set_item_text(7, tr("Land offers"))
+	windows.menu.get_popup().set_item_text(windows.menu.get_popup().get_item_index(7), tr("Land offers"))
 	rebuild()
 	window.popup_centered()
 
@@ -51,7 +51,9 @@ func rebuild() -> void:
 	entries.append_array(state.get("land_history", []))
 	ApplicationMultiplayer.label(body, tr("Inspect the highlighted tiles before buying. Foreign land requires its owner's approval."))
 	for section in ["Offers", "Purchase requests", "Recent activity"]:
-		ApplicationMultiplayer.label(body, tr(section))
+		body.add_child(HSeparator.new())
+		var heading := ApplicationMultiplayer.label(body, ("▣  " if section == "Offers" else "↔  " if section == "Purchase requests" else "◷  ") + tr(section))
+		heading.add_theme_font_size_override("font_size", 20)
 		var count := 0
 		for record: Dictionary in entries:
 			var closed: bool = record.status != "Open"
@@ -62,10 +64,20 @@ func rebuild() -> void:
 				continue
 			count += 1
 			var panel := PanelContainer.new()
+			var style := StyleBoxFlat.new()
+			var accent := Color("e6ae59") if request else Color("69b6db")
+			style.bg_color = Color(accent, 0.09)
+			style.border_color = Color(accent, 0.8)
+			style.border_width_left = 4
+			style.content_margin_left = 12
+			style.content_margin_top = 8
+			style.content_margin_bottom = 8
+			panel.add_theme_stylebox_override("panel", style)
 			body.add_child(panel)
 			var box := VBoxContainer.new()
 			panel.add_child(box)
 			var parties := str(record.name)
+			ApplicationMultiplayer.label(box, tr("Purchase request") if request else tr("Land sale offer"))
 			if request:
 				parties = tr("%s → %s") % [record.buyer_name, record.name]
 			ApplicationMultiplayer.label(box, tr("%s · %s tiles · %s · %s") % [parties, MultiplayerScoreboard.number(record.count), MultiplayerScoreboard.money(record.price), (tr("Open land entry") if record.status == "Open" else tr(record.status))])

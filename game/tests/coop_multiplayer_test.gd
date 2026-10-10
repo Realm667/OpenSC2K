@@ -137,7 +137,7 @@ func network_cases(source: Sc2File) -> void:
 	var guest := CoopSession.new()
 	root.add_child(host)
 	root.add_child(guest)
-	var listen_error := host.host(source, 0, "test-code", "Alice")
+	var listen_error := host.host(source, 0, "test-code", "Alice", "coop", false)
 	check(listen_error.is_empty(), "listen on loopback: " + listen_error)
 	if not listen_error.is_empty():
 		return

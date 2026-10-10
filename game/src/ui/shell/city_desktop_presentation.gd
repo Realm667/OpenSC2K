@@ -79,6 +79,8 @@ func cursor_selection(hovered: Control, display_width: int) -> CursorSelection:
 			return null
 
 		var app := map_view.desktop_cursor_app
+		if role == 100:
+			return CursorSelection.new("multiplayer", 1)
 
 		return CursorSelection.new(app, (31000 if app == "scurk" else DesktopCursorRules.city_family(display_width)) + role)
 

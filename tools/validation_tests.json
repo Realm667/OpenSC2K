@@ -1,8 +1,50 @@
 [
-  {"id": "multiplayer_polish_test", "script": "tests/multiplayer_polish_test.gd", "domain": "simulation", "lane": "product"},
-  {"id": "multiplayer_next_test", "script": "tests/multiplayer_next_test.gd", "domain": "simulation", "lane": "product"},
-  {"id": "coop_multiplayer_test", "script": "tests/coop_multiplayer_test.gd", "domain": "simulation", "lane": "product"},
-  {"id": "coop_ui_test", "script": "tests/coop_ui_test.gd", "domain": "ui", "lane": "product", "requires": ["ext/graphics/pack.json", "ext/data/pack.json"]},
+  {
+    "id": "multiplayer_region_test",
+    "script": "tests/multiplayer_region_test.gd",
+    "domain": "simulation",
+    "lane": "product"
+  },
+  {
+    "id": "multiplayer_large_map_test",
+    "script": "tests/multiplayer_large_map_test.gd",
+    "domain": "simulation",
+    "lane": "product"
+  },
+  {
+    "id": "multiplayer_seats_test",
+    "script": "tests/multiplayer_seats_test.gd",
+    "domain": "simulation",
+    "lane": "product"
+  },
+  {
+    "id": "multiplayer_polish_test",
+    "script": "tests/multiplayer_polish_test.gd",
+    "domain": "simulation",
+    "lane": "product"
+  },
+  {
+    "id": "multiplayer_next_test",
+    "script": "tests/multiplayer_next_test.gd",
+    "domain": "simulation",
+    "lane": "product"
+  },
+  {
+    "id": "coop_multiplayer_test",
+    "script": "tests/coop_multiplayer_test.gd",
+    "domain": "simulation",
+    "lane": "product"
+  },
+  {
+    "id": "coop_ui_test",
+    "script": "tests/coop_ui_test.gd",
+    "domain": "ui",
+    "lane": "product",
+    "requires": [
+      "ext/graphics/pack.json",
+      "ext/data/pack.json"
+    ]
+  },
   {
     "id": "graded_network_lights_test",
     "script": "tests/graded_network_lights_test.gd",
@@ -14,14 +56,18 @@
     "script": "tests/diagonal_network_test.gd",
     "domain": "rendering",
     "lane": "product",
-    "requires": ["ext/graphics/pack.json"]
+    "requires": [
+      "ext/graphics/pack.json"
+    ]
   },
   {
     "id": "disaster_visual_test",
     "script": "tests/disaster_visual_test.gd",
     "domain": "rendering",
     "lane": "product",
-    "requires": ["ext/graphics/pack.json"]
+    "requires": [
+      "ext/graphics/pack.json"
+    ]
   },
   {
     "id": "disaster_visual_gpu_test",
@@ -85,7 +131,9 @@
     "script": "tests/nature_landscape_test.gd",
     "domain": "rendering",
     "lane": "product",
-    "requires": ["ext/graphics/pack.json"]
+    "requires": [
+      "ext/graphics/pack.json"
+    ]
   },
   {
     "id": "water_edge_color_gpu_test",
@@ -93,7 +141,9 @@
     "domain": "rendering",
     "lane": "native",
     "driver": "scene-batch",
-    "requires": ["ext/graphics/pack.json"]
+    "requires": [
+      "ext/graphics/pack.json"
+    ]
   },
   {
     "id": "seasonal_shore_gpu_test",
@@ -101,7 +151,9 @@
     "domain": "rendering",
     "lane": "native",
     "driver": "scene-batch",
-    "requires": ["ext/graphics/pack.json"]
+    "requires": [
+      "ext/graphics/pack.json"
+    ]
   },
   {
     "id": "nature_terrain_gpu_test",
@@ -115,7 +167,10 @@
     "script": "tests/visual_preparation_test.gd",
     "domain": "rendering",
     "lane": "product",
-    "requires": ["ext/graphics/pack.json", "ext/data/pack.json"]
+    "requires": [
+      "ext/graphics/pack.json",
+      "ext/data/pack.json"
+    ]
   },
   {
     "id": "detail_light_zoom_test",
@@ -149,7 +204,9 @@
     "script": "tests/visual_environment_gpu_test.gd",
     "domain": "rendering",
     "lane": "native",
-    "requires": ["ext/graphics/pack.json"],
+    "requires": [
+      "ext/graphics/pack.json"
+    ],
     "driver": "scene-batch"
   },
   {
@@ -157,7 +214,9 @@
     "script": "tests/sc2x_edge_render_test.gd",
     "domain": "rendering",
     "lane": "native",
-    "requires": ["ext/graphics/pack.json"],
+    "requires": [
+      "ext/graphics/pack.json"
+    ],
     "driver": "scene-batch"
   },
   {
@@ -688,7 +747,9 @@
     "args": [
       "{references}"
     ],
-    "requires": ["references/SIMCITY2000"]
+    "requires": [
+      "references/SIMCITY2000"
+    ]
   },
   {
     "id": "sc2x_limits_test",
@@ -1780,7 +1841,9 @@
     "script": "tests/city_native_region_test.gd",
     "domain": "rendering",
     "lane": "product",
-    "requires": ["ext/graphics/pack.json"],
+    "requires": [
+      "ext/graphics/pack.json"
+    ],
     "driver": "scene-batch"
   },
   {
@@ -1788,7 +1851,9 @@
     "script": "tests/city_native_region_test.gd",
     "domain": "rendering",
     "lane": "native",
-    "requires": ["ext/graphics/pack.json"],
+    "requires": [
+      "ext/graphics/pack.json"
+    ],
     "driver": "scene-batch"
   },
   {
@@ -1815,19 +1880,25 @@
     "script": "tests/city_life_test.gd",
     "domain": "rendering",
     "lane": "product",
-    "requires": ["ext/graphics/pack.json"]
+    "requires": [
+      "ext/graphics/pack.json"
+    ]
   },
   {
     "id": "traffic_motion_test",
     "script": "tests/traffic_motion_test.gd",
     "domain": "rendering",
     "lane": "product",
-    "requires": ["ext/graphics/pack.json"]
+    "requires": [
+      "ext/graphics/pack.json"
+    ]
   },
   {
     "id": "train_artwork_gpu_test",
     "script": "tests/train_artwork_gpu_test.gd",
-    "requires": ["ext/graphics/pack.json"],
+    "requires": [
+      "ext/graphics/pack.json"
+    ],
     "domain": "rendering",
     "lane": "native",
     "driver": "scene-batch"
@@ -1851,7 +1922,9 @@
     "script": "tests/vehicle_lights_test.gd",
     "domain": "rendering",
     "lane": "product",
-    "requires": ["ext/graphics/pack.json"]
+    "requires": [
+      "ext/graphics/pack.json"
+    ]
   },
   {
     "id": "vehicle_lights_gpu_test",
@@ -1864,6 +1937,24 @@
     "id": "visual_settings_usability_test",
     "script": "tests/visual_settings_usability_test.gd",
     "domain": "ui",
+    "lane": "product"
+  },
+  {
+    "id": "multiplayer_lobby_test",
+    "script": "tests/multiplayer_lobby_test.gd",
+    "domain": "ui",
+    "lane": "product"
+  },
+  {
+    "id": "multiplayer_competition_test",
+    "script": "tests/multiplayer_competition_test.gd",
+    "domain": "simulation",
+    "lane": "product"
+  },
+  {
+    "id": "multiplayer_load_test",
+    "script": "tests/multiplayer_load_test.gd",
+    "domain": "simulation",
     "lane": "product"
   }
 ]

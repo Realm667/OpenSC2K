@@ -329,3 +329,414 @@ msgstr "Ungültiger Käufer der Landanfrage."
 
 msgid "Open land entry"
 msgstr "Offen"
+
+msgid "Player seats"
+msgstr "Spielerplätze"
+
+msgid "Disconnected seats remain reserved until you approve a replacement."
+msgstr "Getrennte Spielerplätze bleiben reserviert, bis du eine Übernahme freigibst."
+
+msgid "%s requests the seat of %s."
+msgstr "%s beantragt den Spielerplatz von %s."
+
+msgid "Approve takeover"
+msgstr "Übernahme freigeben"
+
+msgid "Decline takeover"
+msgstr "Übernahme ablehnen"
+
+msgid "Choose a new player seat or request an unoccupied seat. The host must approve takeovers."
+msgstr "Erstelle einen neuen Spielerplatz oder beantrage einen unbesetzten Platz. Übernahmen muss der Host freigeben."
+
+msgid "Waiting for the host to approve your seat request."
+msgstr "Warte auf die Freigabe deiner Platzanfrage durch den Host."
+
+msgid "Create new player seat"
+msgstr "Neuen Spielerplatz erstellen"
+
+msgid "Request seat: %s"
+msgstr "Platz beantragen: %s"
+
+msgid "Cancel joining"
+msgstr "Beitritt abbrechen"
+
+msgid "Unoccupied"
+msgstr "Unbesetzt"
+
+msgid "Reserved for reconnection"
+msgstr "Für Wiederverbindung reserviert"
+
+msgid "%s took over an unoccupied player seat."
+msgstr "%s hat einen unbesetzten Spielerplatz übernommen."
+
+msgid "This player seat is already connected."
+msgstr "Dieser Spielerplatz ist bereits verbunden."
+
+msgid "This identity is already waiting to join."
+msgstr "Diese Spieleridentität wartet bereits auf den Beitritt."
+
+msgid "All player seats are occupied. Request an unoccupied seat instead."
+msgstr "Alle Spielerplätze sind vergeben. Beantrage stattdessen einen unbesetzten Platz."
+
+msgid "This seat is no longer available."
+msgstr "Dieser Spielerplatz ist nicht mehr verfügbar."
+
+msgid "The host declined the seat request."
+msgstr "Der Host hat die Platzanfrage abgelehnt."
+
+msgid "Invalid saved player seats."
+msgstr "Die gespeicherten Spielerplätze sind ungültig."
+
+msgid "Land ownership"
+msgstr "Landbesitz"
+
+msgid "Zoning"
+msgstr "Zonen"
+
+msgid "Construction"
+msgstr "Bauaktivität"
+
+msgid "Multiplayer requires a valid SC2X city with a supported map size."
+msgstr "Multiplayer benötigt eine gültige SC2X-Stadt mit einer unterstützten Kartengröße."
+
+msgid "LAN / direct IP · up to 8 players · matching game versions required."
+msgstr "LAN / direkte IP · bis zu 8 Spieler · gleiche Spielversion erforderlich."
+
+msgid "Host game"
+msgstr "Spiel hosten"
+
+msgid "Join / Reconnect"
+msgstr "Beitreten / Wiederverbinden"
+
+msgid "Player name"
+msgstr "Spielername"
+
+msgid "Player colour"
+msgstr "Spielerfarbe"
+
+msgid "Custom colour…"
+msgstr "Eigene Farbe …"
+
+msgid "Game mode"
+msgstr "Spielmodus"
+
+msgid "Co-op"
+msgstr "Koop"
+
+msgid "Competitive Shared"
+msgstr "Competitive Shared"
+
+msgid "Competitive Region (coming later)"
+msgstr "Competitive Region (folgt später)"
+
+msgid "New city"
+msgstr "Neue Stadt"
+
+msgid "Saved city"
+msgstr "Gespeicherte Stadt"
+
+msgid "Create a copy"
+msgstr "Kopie erstellen"
+
+msgid "Keep the selected save unchanged and save this game separately."
+msgstr "Die ausgewählte Stadt bleibt unverändert. Die Partie erhält einen eigenen Spielstand."
+
+msgid "Neutral land price per tile"
+msgstr "Preis je neutralem Landfeld"
+
+msgid "Each city receives a separate starter land allowance for up to 1,024 tiles (at most a quarter of the map). City funds stay intact. Saved games retain their rules."
+msgstr "Jede Stadt erhält ein eigenes Start-Landbudget für bis zu 1.024 Felder (höchstens ein Viertel der Karte). Die Stadtkasse bleibt erhalten. Gespeicherte Partien behalten ihre Regeln."
+
+msgid "Host address"
+msgstr "Host-Adresse"
+
+msgid "TCP port"
+msgstr "TCP-Port"
+
+msgid "Password (optional)"
+msgstr "Passwort (optional)"
+
+msgid "Password"
+msgstr "Passwort"
+
+msgid "Create game"
+msgstr "Spiel erstellen"
+
+msgid "Land only"
+msgstr "Nur Landfläche"
+
+msgid "Include water"
+msgstr "Auch Gewässer"
+
+msgid "No land tiles in this selection. Choose Include water to buy water tiles."
+msgstr "Die Auswahl enthält nur Wasser. Wähle „Auch Gewässer“, um Wasserfelder zu kaufen."
+
+msgid "This land purchase exceeds the supported transaction limit. Select a smaller area."
+msgstr "Dieser Landkauf überschreitet die zulässige Transaktionssumme. Wähle ein kleineres Gebiet."
+
+msgid "Buy %d tiles: $%d from land allowance and $%d from city funds?"
+msgstr "%d Felder kaufen: $%d aus dem Landbudget und $%d aus der Stadtkasse?"
+
+msgid "Invalid saved land purchase rules."
+msgstr "Ungültige gespeicherte Landkauf-Regeln."
+
+msgid "Name of your new city"
+msgstr "Name deiner neuen Stadt"
+
+msgid "Invalid city name."
+msgstr "Ungültiger Stadtname."
+
+msgid "Purchase request"
+msgstr "Kaufanfrage"
+
+msgid "Land sale offer"
+msgstr "Verkaufsangebot"
+
+msgid "The city snapshot could not be prepared for transfer."
+msgstr "Der Stadtzustand konnte nicht für die Übertragung vorbereitet werden."
+
+msgid "Remaining land allowance: %s · Price per tile: %s"
+msgstr "Verbleibendes Landbudget: %s · Preis je Feld: %s"
+
+msgid "Competitive Region"
+msgstr "Competitive Region"
+
+msgid "Victory goal"
+msgstr "Siegziel"
+
+msgid "Endless game"
+msgstr "Endlosspiel"
+
+msgid "Wealth (funds minus debt)"
+msgstr "Vermögen (Kasse abzüglich Schulden)"
+
+msgid "Invalid saved victory goal."
+msgstr "Ungültiges gespeichertes Siegziel."
+
+msgid "Only the host can continue the completed game without scoring."
+msgstr "Nur der Host kann die abgeschlossene Partie ohne Wertung fortsetzen."
+
+msgid "The game continues without scoring."
+msgstr "Die Partie wird ohne Wertung fortgesetzt."
+
+msgid "The victory target was reached. The host can continue without scoring."
+msgstr "Das Siegziel wurde erreicht. Der Host kann ohne Wertung fortsetzen."
+
+msgid "This city is not available."
+msgstr "Diese Stadt ist nicht verfügbar."
+
+msgid "City view changed."
+msgstr "Stadtansicht gewechselt."
+
+msgid "Your city view changed. Review the target before acting."
+msgstr "Deine Stadtansicht hat sich geändert. Prüfe das Ziel vor der nächsten Aktion."
+
+msgid "Invalid region command."
+msgstr "Ungültiger Regionsauftrag."
+
+msgid "You are visiting another city. Only your emergency services may assist here."
+msgstr "Du besuchst eine andere Stadt. Hier dürfen nur deine Einsatzkräfte helfen."
+
+msgid "Region cities own their entire map. Land trading is available in Shared mode."
+msgstr "Regionsstädte besitzen ihre gesamte Karte. Landhandel gibt es im Shared-Modus."
+
+msgid "Neighbouring cities"
+msgstr "Nachbarstädte"
+
+msgid "Victory"
+msgstr "Sieg"
+
+msgid "Continue without scoring (endless)"
+msgstr "Ohne Wertung weiterspielen (Endlos)"
+
+msgid "Neighbouring cities are available in Region mode."
+msgstr "Nachbarstädte sind im Region-Modus verfügbar."
+
+msgid "Visit any city to watch. During disasters you may deploy your own emergency services; other changes remain with its owner."
+msgstr "Besuche jede Stadt zum Zuschauen. Bei Katastrophen kannst du eigene Einsatzkräfte entsenden; andere Änderungen bleiben dem Besitzer vorbehalten."
+
+msgid "Return to your city"
+msgstr "Zur eigenen Stadt"
+
+msgid "Visit city"
+msgstr "Stadt besuchen"
+
+msgid "Victory: %s. The game is paused. Leave or let the host continue without scoring."
+msgstr "Sieg: %s. Die Partie ist pausiert. Verlasse sie oder lass den Host ohne Wertung fortsetzen."
+
+msgid "Visiting another city: watch or deploy your own emergency services."
+msgstr "Zu Besuch in einer anderen Stadt: Zuschauen oder eigene Einsatzkräfte entsenden."
+
+msgid "Readiness can only be changed in the lobby."
+msgstr "Die Bereitschaft kann nur in der aktuellen Lobby geändert werden."
+
+msgid "Readiness updated."
+msgstr "Bereitschaft aktualisiert."
+
+msgid "Only the host can start when all connected players are ready."
+msgstr "Nur der Host kann starten, wenn alle verbundenen Spieler bereit sind."
+
+msgid "The game has started."
+msgstr "Das Spiel wurde gestartet."
+
+msgid "Wait until the host starts the game."
+msgstr "Warte, bis der Host das Spiel startet."
+
+msgid "Game lobby"
+msgstr "Spiellobby"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Ready"
+msgstr "Bereit"
+
+msgid "Not ready"
+msgstr "Nicht bereit"
+
+msgid "Offline"
+msgstr "Offline"
+
+msgid "Start game"
+msgstr "Spiel starten"
+
+msgid "At least two players must join. Everyone confirms Ready; the host then starts the game. Changes to the player list reset readiness."
+msgstr "Mindestens zwei Spieler müssen beitreten. Alle bestätigen „Bereit“, danach startet der Host. Bei Änderungen an der Spielerliste wird die Bereitschaft zurückgesetzt."
+
+msgid "Simulation and construction begin together after the host starts."
+msgstr "Simulation und Bauen beginnen gemeinsam, sobald der Host startet."
+
+msgid "Net wealth"
+msgstr "Nettovermögen"
+
+msgid "Open scoreboard"
+msgstr "Statistikübersicht öffnen"
+
+msgid "Endless game · no scoring"
+msgstr "Endlosspiel · ohne Wertung"
+
+msgid "Victory target: %s"
+msgstr "Siegziel: %s"
+
+msgid "You: %s / %s"
+msgstr "Du: %s / %s"
+
+msgid "Leading: %s · %s"
+msgstr "Führend: %s · %s"
+
+msgid "Net wealth = city funds minus outstanding debt."
+msgstr "Nettovermögen = Stadtkasse abzüglich ausstehender Schulden."
+
+msgid "Population of your own city."
+msgstr "Einwohnerzahl deiner eigenen Stadt."
+
+msgid "History"
+msgstr "Verlauf"
+
+msgid "Unranked"
+msgstr "Außer Wertung"
+
+msgid "History begins when the game starts; a new sample is recorded each month."
+msgstr "Der Verlauf beginnt beim Spielstart; jeden Monat wird ein neuer Wert erfasst."
+
+msgid "Month %d"
+msgstr "Monat %d"
+
+msgid "Player colours · hover over a line for exact values"
+msgstr "Spielerfarben · Für genaue Werte auf eine Linie zeigen"
+
+msgid "Rematch · rotate starts"
+msgstr "Revanche · Startplätze wechseln"
+
+msgid "No unused fair starting positions remain. Create a new game with new terrain."
+msgstr "Es gibt keine unbenutzten geeigneten Startplätze mehr. Erstelle eine neue Partie mit neuem Terrain."
+
+msgid "Only the host can propose a rematch after the result."
+msgstr "Nur der Host kann nach dem Ergebnis eine Revanche vorschlagen."
+
+msgid "Rematch prepared with new starting positions. Everyone must confirm Ready again."
+msgstr "Revanche mit neuen Startplätzen vorbereitet. Alle müssen erneut ihre Bereitschaft bestätigen."
+
+msgid "Target held: %d / %d game days"
+msgstr "Ziel gehalten: %d / %d Spieltage"
+
+msgid "Unranked · city founded after the start"
+msgstr "Außer Wertung · Stadt nach Spielstart gegründet"
+
+msgid "Stay at or above the target for one full game year. Dropping below resets the timer."
+msgstr "Halte das Ziel ein volles Spieljahr lang. Beim Unterschreiten beginnt die Frist erneut."
+
+msgid "Rules are fixed at start: hold the target for one game year; late-founded cities are unranked. Shared starts receive equal land grants."
+msgstr "Regeln ab Spielstart: Ziel ein Spieljahr halten; später gegründete Städte bleiben außer Wertung. Shared-Städte erhalten gleich große Startflächen."
+
+msgid "Player loans"
+msgstr "Spielerkredite"
+
+msgid "Both players confirm the terms. Interest is paid each year; principal is due at maturity. Unpaid amounts remain debt; interest does not compound."
+msgstr "Beide Spieler bestätigen die Konditionen. Zinsen werden jährlich gezahlt, der Kredit am Laufzeitende getilgt. Unbezahlte Beträge bleiben Schulden; es gibt keinen Zinseszins."
+
+msgid "Proposal"
+msgstr "Vorschlag"
+
+msgid "Request a loan"
+msgstr "Kredit anfragen"
+
+msgid "Offer a loan"
+msgstr "Kredit anbieten"
+
+msgid "Principal"
+msgstr "Kreditbetrag"
+
+msgid "Fixed annual interest (%)"
+msgstr "Fester Jahreszins (%)"
+
+msgid "Term (game years)"
+msgstr "Laufzeit (Spieljahre)"
+
+msgid "Confirm and send proposal"
+msgstr "Bestätigen und Vorschlag senden"
+
+msgid "%s → %s · %s · %d%% annually · %d years"
+msgstr "%s → %s · %s · %d%% jährlich · %d Jahre"
+
+msgid "Accept fixed terms"
+msgstr "Feste Konditionen annehmen"
+
+msgid "Outstanding: %s · Unpaid interest: %s · Maturity: game day %d"
+msgstr "Restschuld: %s · Offene Zinsen: %s · Fällig am Spieltag %d"
+
+msgid "Invalid loan terms or contract limit reached."
+msgstr "Ungültige Kreditkonditionen oder Vertragslimit erreicht."
+
+msgid "Loan proposal sent. The other player must confirm the fixed terms."
+msgstr "Kreditvorschlag gesendet. Der andere Spieler muss die festen Konditionen bestätigen."
+
+msgid "Loan proposal withdrawn or declined."
+msgstr "Kreditvorschlag zurückgezogen oder abgelehnt."
+
+msgid "The lender cannot fund this loan or the receiving treasury is full."
+msgstr "Der Kreditgeber kann den Betrag nicht aufbringen oder die empfangende Stadtkasse ist voll."
+
+msgid "Loan accepted. Annual interest and the maturity date are fixed."
+msgstr "Kredit angenommen. Jahreszins und Fälligkeitsdatum sind festgelegt."
+
+msgid "This loan action is no longer available."
+msgstr "Diese Kreditaktion ist nicht mehr verfügbar."
+
+msgid "Player loans require separate city finances."
+msgstr "Spielerkredite erfordern getrennte Stadtfinanzen."
+
+msgid "Invalid saved competition data."
+msgstr "Ungültige gespeicherte Wettbewerbsdaten."
+
+msgid "Awaiting host confirmation…"
+msgstr "Warte auf Bestätigung des Hosts…"
+
+msgid "Region %d"
+msgstr "Region %d"
+
+msgid "Scored competitions require undeveloped starting terrain. Create a new city."
+msgstr "Gewertete Wettbewerbe erfordern unbebautes Startgelände. Erstelle eine neue Stadt."
+
+msgid "Withdraw"
+msgstr "Zurückziehen"
