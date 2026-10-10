@@ -23,8 +23,6 @@ const SECTIONS := [
 		["disaster_enabled", "disaster_strength", "disaster_crowds", "disaster_dust", "disaster_lights", "disaster_motion", "disaster_shake"]],
 	["Animation", "Cycle durations use Turtle speed when linked; otherwise they use real time. Weather and clouds always pause with the game. The pause option below controls the other environment cycles.",
 		["disaster_blending", "speed_link", "pause_freezes"]],
-	["Custom Graphics", "Optional files for custom colors and lights. Standard effects work without these fields.",
-		["lut_path", "brightmap_folder"]],
 ]
 const PERCENT_FIELDS := ["nature_terrain_strength", "day_lut_strength", "night_strength", "season_transition", "season_lut_strength",
 	"season_water_strength", "weather_strength", "weather_lut_strength", "cloud_density", "cloud_shadow_strength",
@@ -87,7 +85,6 @@ const HINTS := {
 var controls: Dictionary = {}
 var terrain_strength_slider: HSlider
 var filling := false
-var profile_folder := ""
 var pages: Array[VBoxContainer] = []
 var category_buttons: Array[Button] = []
 var page_scroll: ScrollContainer
@@ -98,6 +95,8 @@ var undo_values: Dictionary = {}
 var undo_button: Button
 var action_message: Label
 var last_values: Dictionary = {}
+var action_source := ""
+var action_category := ""
 
 
 func _ready() -> void:
@@ -157,15 +156,6 @@ func _ready() -> void:
 		button.pressed.connect(select_category.bind(pages.size() - 1))
 		navigation.add_child(button)
 		category_buttons.append(button)
-	var asset_buttons := HFlowContainer.new()
-	pages[-1].add_child(asset_buttons)
-	_add_button(asset_buttons, "Reload brightmaps", func() -> void:
-		_changed()
-		reload_requested.emit())
-	_add_button(asset_buttons, "Export PNG templates", func() -> void:
-		_changed()
-		export_requested.emit())
-	pages[-1].add_child(_help("Reload after editing light masks. Export creates PNG templates for painting your own lights."))
 	add_child(HSeparator.new())
 	var actions := HFlowContainer.new()
 	add_child(actions)
@@ -176,7 +166,7 @@ func _ready() -> void:
 	undo_button = actions.get_child(3)
 	undo_button.disabled = true
 	actions.get_child(0).tooltip_text = "Turn off all visual enhancements. Keep effect strengths and custom file paths."
-	actions.get_child(1).tooltip_text = "Reset only the open category. Custom Graphics also resets custom file paths."
+	actions.get_child(1).tooltip_text = "Reset only the open category."
 	actions.get_child(2).tooltip_text = "Reset every category, including custom file paths. Undo restores the previous values."
 	undo_button.tooltip_text = "Undo the last reset or Disable all, before making another edit."
 	action_message = _help("Undo restores the last reset or Disable all.")
@@ -186,6 +176,12 @@ func _ready() -> void:
 	add_child(action_message)
 	select_category(0)
 	show_values({})
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+		_update_availability()
+		_refresh_action_message()
 
 
 func _help(text: String) -> Label:
@@ -329,21 +325,21 @@ func _reset_category() -> void:
 		values[key] = defaults[key]
 	if "lut_path" in SECTIONS[selected_category][2]:
 		values.lut_folder = defaults.lut_folder
-	_apply_bulk(values, "%s reset. Other categories unchanged." % SECTIONS[selected_category][0])
+	_apply_bulk(values, "%s reset. Other categories unchanged.", SECTIONS[selected_category][0])
 
 
 func _reset_all() -> void:
 	_apply_bulk(VisualEnhancementOptions.normalize({}), "All settings reset, including custom paths. Undo is available.")
 
 
-func _apply_bulk(values: Dictionary, message: String) -> void:
+func _apply_bulk(values: Dictionary, message: String, category := "") -> void:
 	var previous := selected_values()
 	if values == previous:
 		return
 	show_values(values)
 	undo_values = previous
 	undo_button.disabled = false
-	action_message.text = message
+	_set_action_message(message, category)
 	changed.emit()
 
 
@@ -352,7 +348,7 @@ func _undo_action() -> void:
 		return
 	var previous := undo_values.duplicate(true)
 	show_values(previous)
-	action_message.text = "Previous visual settings restored."
+	_set_action_message("Previous visual settings restored.")
 	changed.emit()
 
 
@@ -370,7 +366,17 @@ func _changed() -> void:
 func _clear_undo() -> void:
 	undo_values.clear()
 	undo_button.disabled = true
-	action_message.text = "Undo restores the last reset or Disable all."
+	_set_action_message("Undo restores the last reset or Disable all.")
+
+
+func _set_action_message(source: String, category := "") -> void:
+	action_source = source
+	action_category = category
+	_refresh_action_message()
+
+
+func _refresh_action_message() -> void:
+	action_message.text = tr(action_source) if action_category.is_empty() else tr(action_source) % tr(action_category)
 
 
 func _update_availability() -> void:
@@ -439,7 +445,8 @@ func _update_availability() -> void:
 		control.get_parent().visible = relevant
 		if control is OptionButton:
 			var selection := (control as OptionButton).get_item_text((control as OptionButton).selected)
-			var hint: String = HINTS.get(key, "")
+			selection = tr(selection)
+			var hint: String = tr(HINTS.get(key, ""))
 			control.tooltip_text = selection if hint.is_empty() else selection + "\n" + hint
 		if control is BaseButton:
 			(control as BaseButton).disabled = not available
@@ -496,7 +503,6 @@ func show_values(source: Dictionary) -> void:
 	filling = true
 	_clear_undo()
 	var values := VisualEnhancementOptions.normalize(source)
-	profile_folder = str(values.lut_folder)
 	for key in controls:
 		var control: Control = controls[key]
 		if control is VisualTimeEdit:
@@ -515,8 +521,8 @@ func show_values(source: Dictionary) -> void:
 
 
 func selected_values() -> Dictionary:
-	# Retain the hidden profile path when editing unrelated settings.
-	var values := {"lut_folder": profile_folder}
+	# Retain settings with no visible control, including custom graphics paths.
+	var values := last_values.duplicate(true)
 	for key in controls:
 		var control: Control = controls[key]
 		if control is VisualTimeEdit:

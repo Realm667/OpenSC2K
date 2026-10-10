@@ -110,12 +110,53 @@ func _run() -> void:
 	await _check_object_replacements(app)
 	_check_debris(app)
 	_check_tornado_retention(app)
+	_check_dispatch_occlusion(app)
 	_check_hazard_transitions(app)
 	_check_cloud_styles(app)
 	app.queue_free()
 	await process_frame
 	print("PASS: disaster marker replacement, dispatch layering, retained nodes, event deduplication, pause, fallback and unchanged city/RNG")
 	quit()
+
+
+func _check_dispatch_occlusion(app: CityApplication) -> void:
+	# Raised emergency symbols stay readable over hazards from later tiles.
+	var caches := app.render_caches
+	var region := caches.region_cache
+	var commands := caches.static_occlusion_commands
+	var grid := caches.static_occlusion_grid
+	caches.region_cache = null
+	var origin := Vector2i(64, 64)
+	for view in [CityIsometricRenderer.VIEW_SMALL, CityIsometricRenderer.VIEW_MEDIUM, CityIsometricRenderer.VIEW_LARGE]:
+		var config := CityIsometricRenderer.view_configuration(view)
+		var archive := app.static_render.sprite_archive_for_view(view)
+		for offset in [382, 383, 384]:
+			var resource := app.moving_sprites.dynamic_sprite_resource(archive, config.sprite_base + offset, false, config.divisor)
+			assert(resource != null)
+			var command := CityStaticCommand.new()
+			command.sprite_id = config.sprite_base + offset
+			command.position = origin / config.divisor
+			command.size = resource.native_size / config.divisor
+			command.depth_order = 1
+			caches.static_occlusion_commands = [command]
+			caches.static_occlusion_grid = null
+			caches.dynamic_occluder_cache.clear()
+			var original := app.moving_sprites._dynamic_occluder_image(archive, config.divisor, origin, resource.native_size, 2)
+			assert(original == null, "Ordinary moving sprites retain their existing painter order")
+			var mask := app.moving_sprites._dynamic_occluder_image(archive, config.divisor, origin, resource.native_size, 2,
+				false, 1, null, -1, PackedInt32Array(), false, true)
+			assert(mask != null, "Effects must retain earlier dispatch silhouettes")
+			for y in resource.native_size.y:
+				for x in resource.native_size.x:
+					assert(is_equal_approx(mask.get_pixel(x, y).a, resource.image.get_pixel(x, y).a),
+						"Dispatch heads and posts need exact alpha, not a rectangular cutout")
+			var cached := app.moving_sprites._dynamic_occluder_image(archive, config.divisor, origin, resource.native_size, 2,
+				false, 1, null, -1, PackedInt32Array(), false, true)
+			assert(cached.get_data() == mask.get_data(), "Retained masks must preserve dispatch occlusion")
+	caches.region_cache = region
+	caches.static_occlusion_commands = commands
+	caches.static_occlusion_grid = grid
+	caches.dynamic_occluder_cache.clear()
 
 
 func _check_hazard_transitions(app: CityApplication) -> void:

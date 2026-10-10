@@ -160,7 +160,7 @@ func refresh_moving_things(view_size := -1) -> void:
 			occluder_mask = _dynamic_occluder_image(
 				sprite_archive, divisor, position, resource.native_size,
 				int(command.depth_order), bool(command.train), factor,
-				resource if command.floating_altitude >= 0 else null, int(command.floating_altitude), command.train_support_orders, aircraft_shadow
+				resource if command.floating_altitude >= 0 else null, int(command.floating_altitude), command.train_support_orders, aircraft_shadow, command.overlay >= 0
 			)
 
 		var samples_static: bool = bool(command.shadow) and not transparent_shadow
@@ -285,7 +285,8 @@ func effect_occluder_mask(position: Vector2i, size: Vector2i, depth_tile: Vector
 	var divisor := IsometricRenderer.view_configuration(view_size).divisor
 	var order := (depth_tile.x + depth_tile.y) * city.map_size + depth_tile.y
 
-	return _dynamic_occluder_image(app.static_render.sprite_archive_for_view(view_size), divisor, position, size, order)
+	return _dynamic_occluder_image(app.static_render.sprite_archive_for_view(view_size), divisor, position, size, order,
+		false, 1, null, -1, PackedInt32Array(), false, true)
 
 
 func static_occlusion_candidates(bounds: Rect2i) -> Array[CityStaticCommand]:
@@ -308,7 +309,7 @@ func _dynamic_occluder_image(
 	draw_order: int,
 	is_train := false, texture_factor := 1,
 	floating: CitySpriteResource = null, floating_altitude := -1,
-	train_support_orders := PackedInt32Array(), aircraft_shadow := false
+	train_support_orders := PackedInt32Array(), aircraft_shadow := false, preserve_dispatch := false
 ) -> Image:
 	if draw_order < 0 or (caches.static_occlusion_commands.is_empty() and caches.region_cache == null):
 		return null
@@ -326,6 +327,7 @@ func _dynamic_occluder_image(
 		divisor, sprite_archive.get_instance_id() if sprite_archive != null else 0,
 	]
 	cache_key += ":shadow" if aircraft_shadow else ""
+	cache_key += ":dispatch" if preserve_dispatch else ""
 	if not train_support_orders.is_empty():
 		cache_key += ":" + str(train_support_orders)
 	if caches.dynamic_occluder_cache.has(cache_key):
@@ -364,7 +366,10 @@ func _dynamic_occluder_image(
 		if train_height >= 0 and _ground_below_train(command, train_height):
 			continue
 
-		var later_static := int(command.depth_order) > draw_order
+		# Raised emergency markers are UI symbols. Effects must not paint over
+		# their heads or posts, even when their ground tile is behind the effect.
+		var dispatch := preserve_dispatch and posmod(command.sprite_id, 500) in [382, 383, 384]
+		var later_static := int(command.depth_order) > draw_order or dispatch
 		var train_foreground := (
 			is_train and (command.train_foreground_reference_sprite_id != 0 or command.train_deck_thickness != 0)
 			and (not (bool(command.train_foreground_requires_depth) or command.train_deck_thickness != 0)
