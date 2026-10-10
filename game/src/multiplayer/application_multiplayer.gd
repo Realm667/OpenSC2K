@@ -26,6 +26,7 @@ var pending_sign: Dictionary = {}
 var leave_dialog: ConfirmationDialog
 var menu_button: MenuButton
 var windows: MultiplayerWindows
+var launch: MultiplayerLaunchMenu
 var color_picker: ColorPickerButton
 var mode_picker: OptionButton
 var city_picker: OptionButton
@@ -59,7 +60,7 @@ func setup() -> void:
 	panel.theme = AppUiTheme.current()
 	panel.title = "Multiplayer"
 	panel.size = Vector2i(650, 650)
-	panel.min_size = Vector2i(480, 360)
+	panel.min_size = Vector2i(480, 240)
 	panel.close_requested.connect(panel.hide)
 	panel.hide()
 	app.add_child(panel)
@@ -76,47 +77,8 @@ func setup() -> void:
 	var body := VBoxContainer.new()
 	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(body)
-	label(body, "LAN / direkte IP · bis zu 8 Spieler · gleiche Spielversion erforderlich.")
-	lobby = VBoxContainer.new()
-	body.add_child(lobby)
-	player = field(lobby, "Spielername", "Mayor")
-	color_picker = ColorPickerButton.new()
-	color_picker.color = Color("46b4ff")
-	color_picker.edit_alpha = false
-	lobby.add_child(color_picker)
-	label(lobby, "Spielmodus")
-	mode_picker = OptionButton.new()
-	for title in ["Koop", "Competetive Shared", "Competetive Region (folgt später)"]:
-		mode_picker.add_item(title)
-	mode_picker.set_item_disabled(2, true)
-	lobby.add_child(mode_picker)
-	address = field(lobby, "Host-Adresse (für Beitreten)", "127.0.0.1")
-	port = SpinBox.new()
-	port.min_value = 1024
-	port.max_value = 65535
-	port.value = 20000
-	label(lobby, "TCP-Port")
-	lobby.add_child(port)
-	join_code = field(lobby, "Passwort (optional; vom Host vergeben)", "")
-	join_code.secret = true
-	label(lobby, "Stadt")
-	city_picker = OptionButton.new()
-	city_picker.add_item("Neue Stadt")
-	city_picker.add_item("Gespeicherte Stadt")
-	lobby.add_child(city_picker)
-	use_current = CheckBox.new()
-	use_current.text = "Kopie erstellen"
-	use_current.tooltip_text = "Die ausgewählte Stadt bleibt unverändert. Die Partie erhält einen eigenen Spielstand."
-	use_current.button_pressed = true
-	use_current.visible = false
-	lobby.add_child(use_current)
-	city_picker.item_selected.connect(func(index: int) -> void:
-		use_current.visible = index == 1
-		selected_city_path = "")
-	var row := HBoxContainer.new()
-	lobby.add_child(row)
-	button(row, "Spiel erstellen", start_host)
-	button(row, "Beitreten / Wiederverbinden", start_join)
+	launch = MultiplayerLaunchMenu.new(self)
+	launch.setup(body)
 	city_file = FileDialog.new()
 	city_file.access = FileDialog.ACCESS_FILESYSTEM
 	city_file.file_mode = FileDialog.FILE_MODE_OPEN_FILE
@@ -154,6 +116,7 @@ func open() -> void:
 		windows.open_scoreboard()
 		return
 	lobby.show()
+	launch.update()
 	panel.popup_centered()
 
 
@@ -195,7 +158,11 @@ func host_document(document: Sc2File) -> void:
 			return
 		document = converted.document
 	session.player_color = color_picker.color.to_html(false)
-	var result := session.host(document, int(port.value), join_code.text, player.text, "shared" if mode_picker.selected == 1 else "coop")
+	session.host_land_price = int(launch.land_price.value)
+	session.host_starter_tiles = 1024
+	session.host_goal_kind = ["endless", "population", "wealth"][launch.goal_picker.selected]
+	session.host_goal_target = int(launch.goal_target.value)
+	var result := session.host(document, int(port.value), join_code.text, player.text, ["coop", "shared", "region"][mode_picker.selected])
 	if not result.is_empty():
 		show_message(result)
 		return
@@ -231,7 +198,7 @@ func start_join() -> void:
 		return
 	remember_city()
 	session.player_color = color_picker.color.to_html(false)
-	var result := session.join(address.text.strip_edges(), int(port.value), join_code.text, player.text)
+	var result := session.join(address.text.strip_edges(), int(port.value), join_code.text, player.text, "choose")
 	show_message(result if not result.is_empty() else "Verbinde mit dem Host …")
 	save_identity()
 
@@ -252,7 +219,7 @@ func receive_state(state: Dictionary) -> void:
 		app.frame.sync_speed_ui()
 		return
 	var document := Sc2File.new()
-	if not document.parse(Marshalls.base64_to_raw(state.city)) or not document.is_sc2x() or document.map_size > 128:
+	if not document.parse(Marshalls.base64_to_raw(state.city)) or not document.is_sc2x() or document.map_size not in Sc2File.MAP_SIZES:
 		show_message("Ungültiger Stadtzustand vom Host. Sitzung beenden und neu verbinden.")
 		return
 	last_city_bytes = state.city
@@ -312,7 +279,7 @@ func receive_state(state: Dictionary) -> void:
 
 func apply_selection(start: Vector2i, finish: Vector2i, path: Array[Vector2i], dragged: bool) -> void:
 	if windows.land_action != "":
-		session.request({"kind": windows.land_action, "start": [start.x, start.y], "finish": [finish.x, finish.y], "price": windows.land_offer_price})
+		session.request({"kind": windows.land_action, "start": [start.x, start.y], "finish": [finish.x, finish.y], "price": windows.land_offer_price, "include_water": windows.include_water})
 		return
 	var group := app.tool_state.selected_group
 	if group == CityToolIds.Group.QUERY:
@@ -438,10 +405,12 @@ func load_identity() -> void:
 	var stored: String = str(config.get_value("client", "token", ""))
 	if stored.length() == 48:
 		session.token = stored
+		session.credential = stored
 	player.text = str(config.get_value("client", "name", "Mayor"))
 	address.text = str(config.get_value("client", "address", "127.0.0.1"))
 	port.value = float(config.get_value("client", "port", 20000))
 	color_picker.color = Color(CoopSession.valid_color(config.get_value("client", "color", "46b4ff")))
+	color_picker.color_changed.emit(color_picker.color)
 
 
 func can_start() -> bool:
@@ -461,12 +430,12 @@ func can_start() -> bool:
 
 
 func save_identity() -> void:
-	var signature := str([session.token, player.text, address.text, port.value, color_picker.color])
+	var signature := str([session.credential, player.text, address.text, port.value, color_picker.color])
 	if signature == identity_signature:
 		return
 	identity_signature = signature
 	var config := ConfigFile.new()
-	config.set_value("client", "token", session.token)
+	config.set_value("client", "token", session.credential)
 	config.set_value("client", "name", player.text)
 	config.set_value("client", "address", address.text)
 	config.set_value("client", "port", int(port.value))

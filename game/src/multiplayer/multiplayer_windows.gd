@@ -11,9 +11,18 @@ var scoreboard: Window
 var score_rows: VBoxContainer
 var chat: PanelContainer
 var scores := MultiplayerScoreboard.new()
+var seats: MultiplayerSeatWindow
+var competition: MultiplayerCompetitionWindows
+var start_lobby: MultiplayerStartLobby
+var goal_hud: MultiplayerGoalHud
 var market: MultiplayerLandMarket
 var map_overlay := MultiplayerMapOverlay.new()
 var land_button: Button
+var land_options: VBoxContainer
+var allowance_label: Label
+var include_water := false
+var pending_builds: Dictionary = {}
+var displayed_round := 0
 var chat_seen: Dictionary = {}
 var event_seen: Dictionary = {}
 var tones: Dictionary = {}
@@ -38,14 +47,21 @@ func _init(owner: ApplicationMultiplayer) -> void:
 
 func setup() -> void:
 	MultiplayerText.setup()
+	coop.session.command_sent.connect(func(id: int, command: Dictionary) -> void:
+		if command.get("kind") in ["build", "land_buy"] and command.get("start") is Array and command.get("finish") is Array:
+			pending_builds[id] = {"start": command.start, "finish": command.finish, "until": Time.get_ticks_msec() + 10000})
+	coop.session.command_completed.connect(func(id: int) -> void: pending_builds.erase(id))
 	var row := coop.app.city_menu_bar.newspaper_menu.get_parent()
 	menu = MenuButton.new()
 	menu.text = "Multiplayer"
 	row.add_child(menu)
 	row.move_child(menu, coop.app.city_menu_bar.newspaper_menu.get_index() + 1)
 	var popup := menu.get_popup()
-	for title in ["Scoreboard", "Chat", "Host / Join game", "Release disconnect pause", "Leave game", "Buy land", "Offer land", "Land offers"]:
-		popup.add_item(tr(title))
+	var titles := ["Scoreboard", "Chat", "Host / Join game", "Release disconnect pause", "Leave game", "Buy land", "Offer land", "Land offers", "Player seats", "Neighbouring cities", "Rematch · rotate starts"]
+	for id in [0, 1, 8, 9, 10, 2, 3, 4, 5, 6, 7]:
+		if id in [2, 5]:
+			popup.add_separator()
+		popup.add_item(tr(titles[id]), id)
 	popup.id_pressed.connect(func(id: int) -> void:
 		match id:
 			0:
@@ -64,16 +80,28 @@ func setup() -> void:
 				select_land("land_offer")
 			7:
 				open_offers()
+			8:
+				seats.open()
+			9:
+				competition.open_regions()
+			10:
+				coop.session.request({"kind": "rematch"})
 	)
 	scoreboard = make_window("Scoreboard")
 	score_rows = content(scoreboard)
 	scoreboard.size = Vector2i(1080, 520)
 	scores.setup(score_rows)
 	market = MultiplayerLandMarket.new(self)
+	seats = MultiplayerSeatWindow.new(self)
+	competition = MultiplayerCompetitionWindows.new(self)
+	start_lobby = MultiplayerStartLobby.new(self)
+	goal_hud = MultiplayerGoalHud.new(self)
 	chat = PanelContainer.new()
 	chat.theme = AppUiTheme.current()
+	chat.theme_type_variation = "TooltipPanel"
 	chat.mouse_filter = Control.MOUSE_FILTER_STOP
 	coop.app.map_view.add_child(chat)
+	FrostedTooltipPanel.bind(chat)
 	chat.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
 	chat.offset_left = 8
 	chat.offset_right = 408
@@ -85,6 +113,7 @@ func setup() -> void:
 	var heading := HBoxContainer.new()
 	chat_body.add_child(heading)
 	var title := ApplicationMultiplayer.label(heading, tr("Multiplayer chat"))
+	title.theme_type_variation = "TooltipLabel"
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var hide_button := Button.new()
 	hide_button.text = "−"
@@ -96,6 +125,10 @@ func setup() -> void:
 	chat_log.selection_enabled = true
 	chat_log.scroll_following = true
 	chat_body.add_child(chat_log)
+	var chat_color := func() -> void:
+		chat_log.add_theme_color_override("default_color", AppUiTheme.current().get_color("font_color", "TooltipLabel"))
+	chat.theme_changed.connect(chat_color)
+	chat_color.call()
 	chat_input = LineEdit.new()
 	chat_input.max_length = 500
 	chat_input.placeholder_text = tr("Message all players…")
@@ -150,6 +183,24 @@ func setup() -> void:
 	signs.get_parent().add_child(land_button)
 	signs.get_parent().move_child(land_button, signs.get_index())
 	land_button.pressed.connect(func() -> void: select_land("land_buy"))
+	land_options = VBoxContainer.new()
+	var palette := coop.app.city_toolbar.child_palette
+	palette.get_parent().add_child(land_options)
+	palette.get_parent().move_child(land_options, palette.get_index() + 1)
+	ApplicationMultiplayer.label(land_options, tr("Buy land"))
+	allowance_label = ApplicationMultiplayer.label(land_options, "")
+	allowance_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	var land_group := ButtonGroup.new()
+	for index in 2:
+		var option := Button.new()
+		option.text = tr("Land only") if index == 0 else tr("Include water")
+		option.toggle_mode = true
+		option.button_group = land_group
+		option.button_pressed = index == 0
+		option.custom_minimum_size.y = 40
+		option.pressed.connect(func() -> void: include_water = index == 1)
+		land_options.add_child(option)
+	land_options.hide()
 	coop.app.get_tree().process_frame.connect(tick)
 
 
@@ -180,19 +231,35 @@ func content(window: Window) -> VBoxContainer:
 
 
 func open_scoreboard() -> void:
+	if state.get("lobby", {}).get("waiting", false):
+		start_lobby.update(state)
+		return
+	if not state.get("goal", {}).get("winners", []).is_empty() and not state.goal.get("unscored", false):
+		competition.ending.popup_centered()
+		return
 	refresh_scores()
 	scoreboard.popup_centered()
 
 
 func update_state(value: Dictionary) -> void:
+	if not coop.session.hosting:
+		seats.window.hide()
 	if state.is_empty():
 		chat.show()
 	state = value
+	allowance_label.text = tr("Remaining land allowance: %s · Price per tile: %s") % [MultiplayerScoreboard.money(value.get("land_allowance", 0)), MultiplayerScoreboard.money(value.get("land_price", 0))]
 	players = value.get("roster", players)
 	map_overlay.receive(players)
 	land_button.visible = value.get("mode") == "shared"
 	land_button.get_parent().columns = 3 if land_button.visible else 2
 	market.refresh(value)
+	competition.update(value)
+	start_lobby.update(value)
+	goal_hud.update(value, coop.session.token.sha256_text())
+	for id in [5, 6, 7]:
+		menu.get_popup().set_item_disabled(menu.get_popup().get_item_index(id), value.get("mode") != "shared")
+	menu.get_popup().set_item_disabled(menu.get_popup().get_item_index(9), value.get("mode") != "region")
+	menu.get_popup().set_item_disabled(menu.get_popup().get_item_index(10), not coop.session.hosting or value.get("goal", {}).get("winners", []).is_empty())
 	if scoreboard.visible:
 		refresh_scores()
 	overlay.queue_redraw()
@@ -224,8 +291,10 @@ func update_state(value: Dictionary) -> void:
 		if disaster.owner == coop.session.token.sha256_text() or known_disasters.has(disaster.owner):
 			continue
 		var name := tr("Neighbouring city")
+		if disaster.has("city"):
+			name = disaster.city
 		for item: Dictionary in players:
-			if item.get("id") == disaster.owner:
+			if item.get("id") == disaster.owner and not disaster.has("city"):
 				name = str(item.name)
 		coop.show_message(tr("Disaster at %s — area (%d, %d). Your emergency services can help.") % [name, int(disaster.point[0]), int(disaster.point[1])])
 		if coop.app.document_state.city != null and coop.app.document_state.city.sound_enabled():
@@ -237,7 +306,7 @@ func update_state(value: Dictionary) -> void:
 
 
 func refresh_scores() -> void:
-	scores.update(players, state.get("mode") == "shared", coop.session.token.sha256_text())
+	scores.update(players, state.get("mode") in ["shared", "region"], coop.session.token.sha256_text(), state.get("history", {}))
 
 
 func open_chat() -> void:
@@ -291,6 +360,8 @@ func draw_markers() -> void:
 	for item: Dictionary in players:
 		if item.get("id") == coop.session.token.sha256_text() or not map_overlay.cursors.has(item.id):
 			continue
+		if state.get("mode") == "region" and item.get("view_owner") != state.get("view_owner"):
+			continue
 		var center := MultiplayerMapOverlay.project(map.city, map_overlay.cursors[item.id].position) * scale + offset
 		var color := Color(CoopSession.valid_color(item.get("color")))
 		overlay.draw_circle(center, 5, color)
@@ -311,13 +382,33 @@ func draw_markers() -> void:
 				if target == map.hover_tile:
 					overlay.draw_string_outline(font, outline[0] + Vector2(8, -8), str(item.name), HORIZONTAL_ALIGNMENT_LEFT, -1, 16, 4, Color.BLACK)
 					overlay.draw_string(font, outline[0] + Vector2(8, -8), str(item.name), HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color(CoopSession.valid_color(item.get("color"))))
+	for id: int in pending_builds.keys():
+		var pending: Dictionary = pending_builds[id]
+		if not coop.session.connected or Time.get_ticks_msec() > int(pending.until):
+			pending_builds.erase(id)
+			continue
+		var a := Vector2i(int(pending.start[0]), int(pending.start[1]))
+		var b := Vector2i(int(pending.finish[0]), int(pending.finish[1]))
+		var polygon := PackedVector2Array()
+		for point: Vector2 in [Vector2(mini(a.x,b.x)-0.5,mini(a.y,b.y)-0.5), Vector2(maxi(a.x,b.x)+0.5,mini(a.y,b.y)-0.5), Vector2(maxi(a.x,b.x)+0.5,maxi(a.y,b.y)+0.5), Vector2(mini(a.x,b.x)-0.5,maxi(a.y,b.y)+0.5)]:
+			polygon.append(MultiplayerMapOverlay.project(map.city, point) * scale + offset)
+		polygon.append(polygon[0])
+		overlay.draw_polyline(polygon, Color(1.0, 0.9, 0.3, 0.65), 2.0, true)
+		overlay.draw_string(font, polygon[0], tr("Awaiting host confirmation…"), HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color.WHITE)
+	competition.draw_fireworks()
 
 
 func close() -> void:
+	start_lobby.window.hide()
+	goal_hud.panel.hide()
+	competition.close()
+	seats.window.hide()
 	chat.hide()
 	chat_log.clear()
 	chat_seen.clear()
 	event_seen.clear()
+	displayed_round = 0
+	pending_builds.clear()
 	map_overlay.cursors.clear()
 	map_overlay.cached_key.clear()
 	map_overlay.highlight.clear()
@@ -352,6 +443,7 @@ func select_land(action: String) -> void:
 	land_offer_price = -1
 	coop.app.city_toolbar.land_mode = true
 	coop.app.city_toolbar.child_palette.hide()
+	land_options.visible = action == "land_buy"
 	for button in coop.app.city_toolbar.toolbar_buttons:
 		button.set_pressed_no_signal(false)
 	land_button.set_pressed_no_signal(true)
@@ -375,6 +467,7 @@ func open_offers() -> void:
 
 func cancel_land() -> void:
 	land_action = ""
+	land_options.hide()
 	coop.app.city_toolbar.land_mode = false
 	coop.app.city_toolbar.child_palette.show()
 	if is_instance_valid(land_button):
@@ -384,10 +477,21 @@ func cancel_land() -> void:
 func tick() -> void:
 	if not coop.active() or not coop.mirrored:
 		return
+	var round_id := int(state.get("round", 1))
+	var own_start: Dictionary = state.get("starts", {}).get(coop.session.token.sha256_text(), {})
+	if round_id != displayed_round and not state.get("lobby", {}).get("waiting", false) and not own_start.is_empty():
+		displayed_round = round_id
+		coop.app.camera_input.center_map_on_tile(Vector2i(int(own_start.point[0]), int(own_start.point[1])))
 	map_overlay.step(coop.app.get_process_delta_time())
+	if state.get("visiting", false) and coop.app.tool_state.selected_group == CityToolIds.Group.DISPATCH:
+		var availability: Array = state.get("assistance_available", [0, 0, 0])
+		for key: int in coop.app.city_toolbar.child_tool_buttons:
+			if key >= 0 and key < availability.size():
+				coop.app.city_toolbar.child_tool_buttons[key].disabled = int(availability[key]) <= 0
 	var view: Rect2 = coop.app.map_view.camera_view_rect
 	if view.size == Vector2.ZERO:
 		view = Rect2(Vector2.ZERO, coop.app.map_view.size)
+	goal_hud.layout(view)
 	chat.offset_left = view.position.x + 8
 	chat.offset_right = minf(chat.offset_left + 400, view.end.x - 8)
 	chat.offset_top = view.end.y - coop.app.map_view.size.y - 184
@@ -404,6 +508,8 @@ func receive_player_event(event: Dictionary) -> void:
 		event_seen.erase(event_seen.keys()[0])
 	var kind := str(event.get("kind"))
 	var text := tr("%s joined the game.") if kind == "joined" else (tr("%s left the game.") if kind == "left" else tr("%s lost the connection. The game is paused."))
+	if kind == "taken_over":
+		text = tr("%s took over an unoccupied player seat.")
 	text = text % str(event.get("name", ""))
 	chat_log.add_text(text + "\n")
 	coop.show_message(text)

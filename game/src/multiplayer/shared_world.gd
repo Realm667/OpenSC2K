@@ -4,6 +4,9 @@ extends CoopWorld
 ## Each municipality simulates only its own infrastructure and zoned buildings.
 
 const LAND_PRICE := 10
+var land_price := LAND_PRICE
+var starter_tiles := 0
+var land_allowance: Dictionary = {}
 const TILE_CHUNKS := {"ALTM": 2, "XTER": 1, "XBLD": 1, "XZON": 1, "XUND": 1, "XBIT": 1}
 var municipalities: Dictionary = {}
 var actors: Array[String] = []
@@ -15,6 +18,10 @@ var land_history: Array = []
 var land_statistics: Dictionary = {}
 var host_actor := ""
 var snapshot_cache: Dictionary = {}
+var composed_revision := -1
+var composed_chunks: Dictionary = {}
+var record_cache: Dictionary = {}
+var record_signature: Array = []
 
 
 func open(document: Sc2File) -> bool:
@@ -60,6 +67,7 @@ func add_player(actor: String) -> String:
 	child.controller.subtick_counter = controller.subtick_counter
 	municipalities[actor] = child
 	land_statistics[actor] = {"bought": 0, "sold": 0}
+	land_allowance[actor] = mini(starter_tiles, city.map_size * city.map_size / 4) * land_price
 	actors.append(actor)
 	revision += 1
 	snapshot_cache.clear()
@@ -81,6 +89,8 @@ func set_shared_speed(value: int) -> void:
 
 
 func advance(delta: float) -> void:
+	if controller.speed == GameSpeedController.Speed.PAUSED:
+		return
 	for child: CoopWorld in municipalities.values():
 		if child.controller.interaction_blocked or child.controller.terminal_blocked:
 			return
@@ -193,6 +203,11 @@ func help_disaster(actor: String, request: Dictionary) -> Dictionary:
 	if owner == 0:
 		return rejected("This land has no municipality to assist.")
 	var receiver: CoopWorld = municipalities[actors[owner - 1]]
+	return deploy_help(actor, receiver, request)
+
+
+func deploy_help(actor: String, receiver: CoopWorld, request: Dictionary) -> Dictionary:
+	var target := point(request.finish)
 	var sender: CoopWorld = municipalities[actor]
 	if receiver != sender and receiver.engine.active_disaster_type == 0:
 		return rejected("Emergency assistance is available during a disaster.")
@@ -301,13 +316,28 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 	if not point_valid(request.get("start")) or not point_valid(request.get("finish")):
 		return rejected("Invalid land selection.")
 	var tiles := selected_tiles(request)
+	if request.kind == "land_buy":
+		if not request.get("include_water", false) is bool:
+			return rejected("Invalid land selection.")
+		if not request.get("include_water", false):
+			var dry := PackedInt32Array()
+			for tile: int in tiles:
+				var owner := int(owners[tile])
+				var terrain: CityState = municipalities[actors[owner - 1]].city if owner > 0 else city
+				if not terrain.is_water(tile / city.map_size, tile % city.map_size):
+					dry.append(tile)
+			tiles = dry
+		if tiles.is_empty():
+			return rejected("No land tiles in this selection. Choose Include water to buy water tiles.")
 	var expected_owner := int(owners[tiles[0]]) if request.kind == "land_buy" else actors.find(actor) + 1
 	if request.kind == "land_buy" and expected_owner == actors.find(actor) + 1:
 		return rejected("You already own this land.")
 	for tile: int in tiles:
 		if owners[tile] != expected_owner:
 			return rejected("The entire selection must have the same owner. Nothing was charged.")
-	var price := tiles.size() * LAND_PRICE
+	var price := tiles.size() * land_price
+	if price > 2147483647:
+		return rejected("This land purchase exceeds the supported transaction limit. Select a smaller area.")
 	if request.kind == "land_buy" and expected_owner > 0:
 		var seller: String = actors[expected_owner - 1]
 		if request.get("price") != price:
@@ -334,13 +364,19 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 		next_offer += 1
 		revision += 1
 		return accepted("Land offer published. Another player can accept it.")
+	var allowance := mini(int(land_allowance.get(actor, 0)), price)
+	var payment := price - allowance
 	if request.get("price") != price:
-		return choice_result("Buy %d tiles for $%d? Balance afterwards: $%d." % [tiles.size(), price, child.city.funds() - price], request,
+		var prompt := "Buy %d tiles for $%d? Balance afterwards: $%d." % [tiles.size(), price, child.city.funds() - payment]
+		if allowance > 0:
+			prompt = "Buy %d tiles: $%d from land allowance and $%d from city funds?" % [tiles.size(), allowance, payment]
+		return choice_result(prompt, request,
 			[{"label": "Buy — $%d" % price, "fields": {"price": price}}])
-	if child.city.funds() < price:
+	if child.city.funds() < payment:
 		return rejected("Insufficient funds.")
-	record_land_spending(actor, "bought", price)
-	child.city.set_funds(child.city.funds() - price)
+	record_land_spending(actor, "bought", payment)
+	land_allowance[actor] = int(land_allowance.get(actor, 0)) - allowance
+	child.city.set_funds(child.city.funds() - payment)
 	for tile: int in tiles:
 		owners[tile] = actors.find(actor) + 1
 		tile_versions[tile] = revision + 1
@@ -352,25 +388,52 @@ func snapshot_for(actor: String) -> Dictionary:
 	if snapshot_cache.get(actor, {}).get("revision", -1) == revision:
 		return snapshot_cache[actor].duplicate(true)
 	var child: CoopWorld = municipalities.get(actor, municipalities[host_actor])
-	var result := child.snapshot()
+	var result := child.snapshot_status()
+	Sc2xCheckpoint.capture(child.controller, child.city.document.sc2x_metadata)
 	var document := child.city.document.duplicate_document()
-	for id: String in TILE_CHUNKS:
-		var data := document.find_chunk(id).decoded_payload.duplicate()
-		var stride: int = TILE_CHUNKS[id]
-		for index in actors.size():
-			var source: PackedByteArray = municipalities[actors[index]].city.document.find_chunk(id).decoded_payload
+	if composed_revision != revision:
+		composed_chunks.clear()
+		for id: String in TILE_CHUNKS:
+			var data := template.find_chunk(id).decoded_payload.duplicate()
+			var stride: int = TILE_CHUNKS[id]
+			var sources: Array = []
+			for player: String in actors:
+				sources.append(municipalities[player].city.document.find_chunk(id).decoded_payload)
 			for tile in owners.size():
-				if owners[tile] == index + 1:
+				var owner := owners[tile] - 1
+				if owner >= 0:
 					for byte in stride:
-						data[tile * stride + byte] = source[tile * stride + byte]
-		document.find_chunk(id).set_decoded_payload(data)
-	compose_records(document, actor)
+						data[tile * stride + byte] = sources[owner][tile * stride + byte]
+			composed_chunks[id] = data
+		var signature: Array = [hash(owners)]
+		for player: String in actors:
+			for id in ["XTXT", "XTHG", "XMIC", "XLAB"]:
+				signature.append(hash(municipalities[player].city.document.find_chunk(id).decoded_payload))
+		if signature != record_signature:
+			record_signature = signature
+			record_cache.clear()
+		composed_revision = revision
+	for id: String in composed_chunks:
+		document.find_chunk(id).expected_decoded_size = composed_chunks[id].size()
+		document.find_chunk(id).set_decoded_payload(composed_chunks[id])
+	if not record_cache.has(actor):
+		compose_records(document, actor)
+		var records := {}
+		for id in ["XTXT", "XTHG", "XMIC", "XLAB"]:
+			records[id] = document.find_chunk(id).decoded_payload
+		record_cache[actor] = records
+	else:
+		for id: String in record_cache[actor]:
+			document.find_chunk(id).expected_decoded_size = record_cache[actor][id].size()
+			document.find_chunk(id).set_decoded_payload(record_cache[actor][id])
 	var encoded := Sc2xDocument.encode(document)
 	if not encoded.ok:
 		return {"error": encoded.error}
 	result.city = Marshalls.raw_to_base64(encoded.data)
 	result.revision = revision
 	result["mode"] = "shared"
+	result["land_price"] = land_price
+	result["land_allowance"] = int(land_allowance.get(actor, 0))
 	result["owners"] = Array(owners)
 	result["owner_ids"] = actors.map(func(value: String) -> String: return value.sha256_text())
 	result["dispatch_owners"] = {}
@@ -407,14 +470,17 @@ func compose_records(document: Sc2File, viewing_actor: String) -> void:
 		var source_labels := child.city.document.find_chunk("XLAB").decoded_payload
 		var thing_base := ThingData.count(things)
 		var facility_base := facilities.size() / Sc2MicrosimLayout.RECORD_SIZE
-		var expanded := PackedByteArray()
-		expanded.resize((thing_base + ThingData.count(source_things)) * Sc2ThingLayout.EXTENDED_RECORD_SIZE)
-		for record in thing_base:
-			for byte in ThingData.RECORD_SIZE:
-				ThingData.write(expanded, record * ThingData.RECORD_SIZE + byte, ThingData.read(things, record * ThingData.RECORD_SIZE + byte))
+		var existing_low := thing_base * ThingData.RECORD_SIZE
+		var source_low := ThingData.count(source_things) * ThingData.RECORD_SIZE
+		var expanded := things.slice(0, existing_low)
+		expanded.append_array(source_things.slice(0, source_low))
+		var high := things.slice(existing_low) if ThingData.split_planes(things) else PackedByteArray()
+		high.resize(existing_low)
+		expanded.append_array(high)
+		high = source_things.slice(source_low) if ThingData.split_planes(source_things) else PackedByteArray()
+		high.resize(source_low)
+		expanded.append_array(high)
 		for record in ThingData.count(source_things):
-			for byte in ThingData.RECORD_SIZE:
-				ThingData.write(expanded, (record + thing_base) * ThingData.RECORD_SIZE + byte, ThingData.read(source_things, record * ThingData.RECORD_SIZE + byte))
 			var label_offset := (record + thing_base) * ThingData.RECORD_SIZE + Sc2ThingLayout.Field.LABEL
 			var link := ThingData.read(expanded, label_offset)
 			if OverlayData.is_thing(link):
@@ -453,7 +519,7 @@ func compose_records(document: Sc2File, viewing_actor: String) -> void:
 		chunk.set_decoded_payload(pair[1])
 
 
-func snapshot() -> Dictionary:
+func snapshot(_force_checkpoint := false) -> Dictionary:
 	return snapshot_for(host_actor) if not host_actor.is_empty() else super.snapshot()
 
 
@@ -464,16 +530,24 @@ func saved_shared() -> Dictionary:
 		var checkpoint_error := Sc2xCheckpoint.save_error(child.controller)
 		if not checkpoint_error.is_empty():
 			return {"error": checkpoint_error}
-		cities[actor] = {"state": child.snapshot(), "statistics": child.statistics,
+		cities[actor] = {"state": child.snapshot(true), "statistics": child.statistics,
 			"dispatch": Array(child.dispatch_cycles), "dispatch_owners": child.dispatch_owners,
 			"dispatch_initialized": child.dispatch_initialized, "dispatch_points": child.saved_dispatch_points()}
 	return {"owners": Array(owners), "actors": actors, "host": host_actor,
+		"land_price": land_price, "starter_tiles": starter_tiles, "land_allowance": land_allowance,
 		"cities": cities, "offers": offers, "next_offer": next_offer,
 		"land_history": land_history, "land_statistics": land_statistics,
 		"template": Marshalls.raw_to_base64(Sc2xDocument.encode(template).data)}
 
 
 func restore_shared(data: Dictionary) -> String:
+	if not data.get("actors") is Array:
+		return "Invalid shared municipalities."
+	if not whole_number(data.get("land_price", LAND_PRICE), 0, 1000) or not whole_number(data.get("starter_tiles", 0), 0, 1024) or not data.get("land_allowance", {}) is Dictionary:
+		return "Invalid saved land purchase rules."
+	for actor: Variant in data.get("land_allowance", {}):
+		if not data.get("actors", []).has(actor) or not whole_number(data.land_allowance[actor], 0, 1024000):
+			return "Invalid saved land purchase rules."
 	if not data.get("actors") is Array or data.actors.is_empty() or data.actors.size() > 8 or not data.get("cities") is Dictionary or not data.get("owners") is Array or data.owners.size() != owners.size():
 		return "Invalid shared municipalities."
 	if not data.get("host") is String or not data.actors.has(data.host):
@@ -541,6 +615,9 @@ func restore_shared(data: Dictionary) -> String:
 				return "Invalid land statistics."
 	land_history = data.get("land_history", []).duplicate(true)
 	land_statistics = data.get("land_statistics", {}).duplicate(true)
+	land_price = int(data.get("land_price", LAND_PRICE))
+	starter_tiles = int(data.get("starter_tiles", 0))
+	land_allowance = data.get("land_allowance", {}).duplicate()
 	municipalities = restored
 	actors.assign(data.actors)
 	owners = PackedInt32Array(data.owners)

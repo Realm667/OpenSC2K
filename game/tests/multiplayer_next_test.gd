@@ -78,7 +78,7 @@ func run() -> void:
 	var host := CoopSession.new()
 	root.add_child(host)
 	host.token = a
-	check(host.host(Sc2xDocument.create_empty(32, "Save test").document, 24587, "", "Alice").is_empty(), "password optional")
+	check(host.host(Sc2xDocument.create_empty(32, "Save test").document, 24587, "", "Alice", "coop", false).is_empty(), "password optional")
 	host.requested_speed[b] = 5
 	host.requested_speed[a] = 4
 	host.apply_speed()
@@ -115,7 +115,7 @@ func shared_network() -> void:
 	guest.chat_received.connect(func(entry: Dictionary) -> void: messages.append(entry))
 	guest.presence_received.connect(func(value: Array) -> void: positions.assign(value))
 	host.cursor_source = func() -> Vector2i: return Vector2i(7, 8)
-	check(host.host(Sc2xDocument.create_empty(32, "TCP Shared").document, 0, "", "Alice", "shared").is_empty(), "Shared TCP host")
+	check(host.host(Sc2xDocument.create_empty(32, "TCP Shared").document, 0, "", "Alice", "shared", false).is_empty(), "Shared TCP host")
 	check(guest.join("127.0.0.1", host.server.get_local_port(), "", "Bob").is_empty(), "Shared TCP guest")
 	for frame in 100:
 		await create_timer(0.01).timeout
@@ -132,7 +132,7 @@ func shared_network() -> void:
 	check(messages.size() == 2 and messages[1].name == "Bob", "chat sender comes from authenticated member")
 	check(positions.any(func(item: Dictionary) -> bool: return item.name == "Alice" and int(item.cursor[0]) == 7 and int(item.cursor[1]) == 8), "remote cursor uses map coordinates: " + str(positions))
 	check(host.world.owners[8 * 32 + 8] == 2, "guest land purchase authoritative")
-	check(host.latest.roster[0].color != host.latest.roster[1].color, "duplicate colors assigned distinguishable alternative")
+	check(host.latest.roster[1].color == guest.player_color, "host preserves the client's selected colour")
 	var document := Sc2File.new()
 	document.parse(Marshalls.base64_to_raw(guest.latest.city))
 	check(not document.sc2x_extra_entries.has("multiplayer.json"), "private reconnect identities never sent inside public city")

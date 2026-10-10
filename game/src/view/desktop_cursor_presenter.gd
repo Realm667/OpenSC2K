@@ -18,6 +18,7 @@ var _layer: CanvasLayer
 var _copy: BackBufferCopy
 var _patch: TextureRect
 var _owns_hidden_mouse := false
+var _land_cursor := DesktopGraphics.Cursor.new(preload("res://assets/ui/buy_land_cursor.svg").get_image(), Vector2i(1, 1))
 
 
 func _ready() -> void:
@@ -58,6 +59,8 @@ func set_graphics(value: DesktopGraphics) -> void:
 
 func present(app: String, group: int, point: Vector2, shape: int) -> void:
 	var record := graphics.cursor(app, group) if graphics != null else null
+	if app == "multiplayer" and group == 1:
+		record = _land_cursor
 
 	if record == null:
 		clear_cursor()

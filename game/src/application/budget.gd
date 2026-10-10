@@ -74,6 +74,14 @@ func open_budget_dialog(values: PackedInt32Array, annual: bool) -> void:
 		app.document_state.city.document.misc_u32(Budget.MISC_AUTO_BUDGET) != 0,
 	)
 	_update_bond_controls()
+	var tabs := app.city_dialogs.budget_dialog.tabs
+	var loans := tabs.get_node_or_null("Player loans") as MultiplayerLoanPanel
+	if app.coop.active() and loans == null:
+		loans = MultiplayerLoanPanel.new()
+		tabs.add_child(loans)
+		loans.setup(app.coop)
+	if loans != null:
+		loans.update(app.coop.session.latest if app.coop.active() else {})
 
 
 func show_advisor(index: int) -> void:

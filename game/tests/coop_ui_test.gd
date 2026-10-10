@@ -38,6 +38,11 @@ func run() -> void:
 	check(not main.main_menu.visible and not main.coop.panel.visible, "city gets input ownership")
 	check(main.document_state.city != main.coop.session.world.city, "host display is isolated from authoritative model")
 	check(main.simulation_state.frame_simulation == null, "display has no independent simulation worker")
+	check(main.coop.session.waiting_for_start, "UI host waits in pre-game lobby")
+	# Running-game UI regressions; the two-peer lobby transition has its own test.
+	main.coop.session.waiting_for_start = false
+	main.coop.session.publish()
+	await process_frame
 	var display_document := main.document_state.current_document
 	main.visual_environment.process(0.0)
 	main.visual_environment.weather.clock = 123.0
@@ -110,15 +115,32 @@ func run() -> void:
 	main.coop.mode_picker.select(1)
 	main.coop.port.value = 0
 	main.coop.host_document(Sc2xDocument.create_empty(128, "Land UI").document)
+	main.coop.session.waiting_for_start = false
+	main.coop.session.publish()
 	main.coop.windows.select_land("land_buy")
 	check(main.city_toolbar.land_mode and main.coop.windows.land_button.button_pressed, "dedicated land mode")
 	check(not main.city_toolbar.toolbar_buttons[9].button_pressed and not main.city_toolbar.child_palette.visible, "land buying never activates Residential")
 	check(main.map_view.selection_mode == "rectangle", "land mode enables rectangle input")
-	main.coop.windows.land_offer_price = 40
+	main.coop.windows.land_offer_price = 20
 	main.coop.apply_selection(Vector2i(4, 4), Vector2i(5, 5), [], true)
 	check(main.coop.session.world.owners[4 * 128 + 4] == 1, "land input reaches authoritative purchase")
 	main.coop.windows.open_scoreboard()
-	check(main.coop.windows.scores.table.columns == 10, "Shared scoreboard table")
+	check(main.coop.windows.scores.table.columns == 5, "Shared overview fits without horizontal scrolling")
+	main.coop.session.goal.kind = "wealth"
+	main.coop.session.goal.target = 50000
+	main.coop.session.publish()
+	await process_frame
+	main.coop.windows.tick()
+	await process_frame
+	var hud := main.coop.windows.goal_hud
+	var visible_map := Rect2(main.map_view.global_position + main.map_view.camera_view_rect.position, main.map_view.camera_view_rect.size)
+	check(visible_map.encloses(hud.panel.get_global_rect()), "victory HUD fits inside the visible map below menu bar")
+	check(hud.panel.visible and hud.progress.value == 40, "live wealth progress displayed")
+	check(hud.hold.size.y > 0 and hud.own_label.size.y > 0, "goal values and holding duration remain visible")
+	hud.panel.custom_minimum_size.x = 400
+	main.coop.windows.tick()
+	check(visible_map.encloses(hud.panel.get_global_rect()), "goal HUD remains within map with larger theme minimum")
+	hud.panel.custom_minimum_size.x = 0
 	main.coop.windows.scoreboard.hide()
 	main.coop.windows.open_chat()
 	main.coop.windows.tick()

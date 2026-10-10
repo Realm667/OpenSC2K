@@ -2,7 +2,7 @@
 
 OpenSC2K is an open-source remake of SimCity 2000, built with Godot.
 This integration branch combines Visual Enhancements, German Translation and
-playable Koop/Competitive Shared multiplayer on the upstream 0.3.0 base.
+playable Koop/Competitive Shared/Competitive Region multiplayer on the upstream 0.3.0 base.
 Visual effects preserve simulation rules; multiplayer adds shared control and
 municipal ownership/account rules. See [the multiplayer guide](docs/multiplayer.md).
 
@@ -75,7 +75,7 @@ The underlying upstream SC2/SC2X compatibility rules still apply.
 
 Playable Koop and Competetive Shared are available from the main menu. See the
 [updated multiplayer guide](docs/multiplayer.md) for setup, normal city saves, land
-ownership, chat, scoreboard and disaster assistance. Region remains planned.
+ownership, chat, scoreboard and disaster assistance. Region supports independent cities, spectating and disaster assistance.
 
 ## Screenshots
 

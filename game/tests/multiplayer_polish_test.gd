@@ -102,7 +102,7 @@ func network_events() -> void:
 	var messages: Array = []
 	host.player_event.connect(func(event: Dictionary) -> void: events.append(event))
 	guest.chat_received.connect(func(entry: Dictionary) -> void: messages.append(entry))
-	host.host(Sc2xDocument.create_empty(32, "Events").document, 0, "", "Host")
+	host.host(Sc2xDocument.create_empty(32, "Events").document, 0, "", "Host", "coop", false)
 	host.send_chat("History")
 	guest.join("127.0.0.1", host.server.get_local_port(), "", "Guest")
 	for frame in 100:
