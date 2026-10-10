@@ -36,8 +36,8 @@ func _init(windows: MultiplayerWindows) -> void:
 
 func layout(view: Rect2) -> void:
 	var width := minf(320, maxf(0, view.size.x - 16))
-	panel.position = Vector2(view.end.x - width - 8, view.position.y + 8)
 	panel.size = Vector2(width, panel.get_combined_minimum_size().y)
+	panel.position = Vector2(view.end.x - panel.size.x - 8, view.position.y + 8)
 
 static func value(player: Dictionary, kind: String) -> int:
 	return int(player.get("population", 0)) if kind == "population" else int(player.get("funds", 0)) - int(player.get("debt", 0))
