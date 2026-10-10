@@ -24,6 +24,8 @@ var night_lighting: CityNightLighting
 var _whole_mask_signature: Array = []
 var _whole_water_signature: Array = []
 var remote_weather: Dictionary = {}
+# Detached previews can publish native-size sprites instead of enlarged map pixels.
+var source_coordinate_scale := 1
 
 
 func _init(application: CityApplication) -> void:
@@ -157,7 +159,7 @@ func _nature_projection() -> Basis:
 	var scale := app.map_view.camera._view_scale()
 	var offset := app.map_view.camera._draw_offset(scale)
 	var canvas := app.map_view.get_global_transform() * Transform2D(Vector2(scale, 0), Vector2(0, scale), offset)
-	return CityVisualClouds.shader_basis(CityVisualClouds.source_to_grid(city.map_size, city.compass_rotation()) * canvas.affine_inverse())
+	return CityVisualClouds.shader_basis(CityVisualClouds.source_to_grid(city.map_size, city.compass_rotation()) * Transform2D.IDENTITY.scaled(Vector2.ONE * source_coordinate_scale) * canvas.affine_inverse())
 
 
 func process(delta: float) -> void:
@@ -329,7 +331,7 @@ func _sync_whole_water() -> void:
 		view, CityViewMode.Mode.CITY, true, true, true, 0, false)
 	if not error.is_empty():
 		return
-	app.map_view.layers.water_layer.configure_whole(context, sprites, CityIsometricRenderer.view_configuration(view).divisor,
+	app.map_view.layers.water_layer.configure_whole(context, sprites, maxi(1, int(CityIsometricRenderer.view_configuration(view).divisor / float(source_coordinate_scale))),
 		source.get_instance_id())
 	app.map_view.layers._sync_base_layer()
 

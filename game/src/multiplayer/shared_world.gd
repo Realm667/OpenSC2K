@@ -103,12 +103,16 @@ func advance(delta: float) -> void:
 		if emergency and child.engine.active_disaster_type == 0:
 			continue
 		var before := child.revision
+		var before_policy := child.policy_revision
+		var before_error := child.error
 		var before_document := child.city.document.duplicate_document(true)
 		child.advance(delta)
 		if child.revision != before:
 			for tile: int in changed_tiles(before_document, child.city.document):
 				tile_versions[tile] = revision + 1
-		changed = changed or child.revision != before
+		# Decisions and errors must invalidate the shared snapshot even when the
+		# simulation produced no map edit during this advance.
+		changed = changed or child.revision != before or child.policy_revision != before_policy or child.error != before_error
 	city = municipalities[host_actor].city
 	engine = municipalities[host_actor].engine
 	controller = municipalities[host_actor].controller

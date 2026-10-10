@@ -66,12 +66,15 @@ func refresh() -> void:
 			field.placeholder_text = windows.coop.player.text
 			field.max_length = Sc2xMetadata.MAX_NAME_CODE_POINTS
 			field.text_changed.connect(func(value: String) -> void: city_name = value)
-		var create := ApplicationMultiplayer.button(body, tr("Create new player seat"), func() -> void: choose("new"))
+		var actions := HBoxContainer.new()
+		body.add_child(actions)
+		var create := ApplicationMultiplayer.button(actions, tr("Create new player seat"), func() -> void: choose("new"))
 		create.disabled = not lobby.get("new_allowed", false)
 		for seat: Dictionary in lobby.get("seats", []):
 			var text := "%s · %s · %s" % [seat.name, seat.city, status(seat.status)]
 			ApplicationMultiplayer.button(body, tr("Request seat: %s") % text, func() -> void: choose(seat.id))
-		ApplicationMultiplayer.button(body, tr("Cancel joining"), windows.coop.leave)
+		ApplicationMultiplayer.button(actions, tr("Cancel joining"), windows.coop.leave)
+	windows.fit_content.call_deferred(window, body)
 
 
 func choose(id: String) -> void:

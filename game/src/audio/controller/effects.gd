@@ -26,10 +26,12 @@ static func stop_sound_effects(audio: CityAudioController) -> void:
 static func play_sound_events(
 	audio: CityAudioController,
 	sound_events: Array[SoundEvent], sound_enabled: bool, overlay_mode: CityViewMode.Mode, view_size: int,
-	simulation := false
+	simulation := false, gain := 1.0, gate: WaveSoundGate = null
 ) -> void:
 	if not sound_enabled or not audio.audio_allowed():
 		return
+	if gate == null:
+		gate = audio.wave_sound_gate
 
 	for sound_event in sound_events:
 		if sound_event.sound_id == SoundEvent.STOP_LOOP:
@@ -51,14 +53,14 @@ static func play_sound_events(
 
 		var stream := audio.wave_stream_cache.get(sound_id) as AudioStreamWAV
 
-		if stream == null or not audio.wave_sound_gate.request(
+		if stream == null or not gate.request(
 			sound_id, sound_event.from_thing, simulation
 		):
 			continue
 
 		var player := AudioStreamPlayer.new()
 		player.stream = stream
-		player.volume_linear = audio.effects_volume
+		player.volume_linear = audio.effects_volume * clampf(gain, 0.0, 1.0)
 		player.finished.connect(player.queue_free)
 		audio.add_child(player)
 		player.add_to_group(CityAudioController.SOUND_EFFECT_GROUP)

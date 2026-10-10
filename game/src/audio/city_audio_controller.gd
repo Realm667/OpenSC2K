@@ -353,9 +353,9 @@ func play_sound_ids(
 # `simulation` paces sounds from simulation events. see `WaveSoundGate.request`
 func play_sound_events(
 	sound_events: Array[SoundEvent], sound_enabled: bool, overlay_mode: CityViewMode.Mode, view_size: int,
-	simulation := false
+	simulation := false, gain := 1.0, gate: WaveSoundGate = null
 ) -> void:
-	CityAudioEffects.play_sound_events(self, sound_events, sound_enabled, overlay_mode, view_size, simulation)
+	CityAudioEffects.play_sound_events(self, sound_events, sound_enabled, overlay_mode, view_size, simulation, gain, gate)
 
 
 func start_tool_loop_sound(sound_id: int, sound_enabled: bool) -> void:

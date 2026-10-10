@@ -47,7 +47,9 @@ func on_file_menu(id: int) -> void:
 	if app.coop.active():
 		if id in [2, CityMenuBar.MENU_SAVE_CITY]:
 			app.coop.save(id == 2)
-		elif id in [5, 6]:
+		elif id == 6:
+			app.coop.request_exit("quit")
+		elif id == 5:
 			app.coop.confirm_leave()
 		else:
 			app.coop.show_message("Verlasse zuerst die aktuelle Multiplayer-Partie.")

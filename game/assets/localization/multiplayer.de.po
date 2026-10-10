@@ -740,3 +740,111 @@ msgstr "Gewertete Wettbewerbe erfordern unbebautes Startgelände. Erstelle eine 
 
 msgid "Withdraw"
 msgstr "Zurückziehen"
+
+msgid "Quit multiplayer"
+msgstr "Multiplayer beenden"
+
+msgid "Save the multiplayer game before quitting? All connected players will be disconnected."
+msgstr "Multiplayer-Spielstand vor dem Beenden speichern? Die Verbindung aller Mitspieler wird getrennt."
+
+msgid "Save and quit"
+msgstr "Speichern und beenden"
+
+msgid "Quit without saving"
+msgstr "Ohne Speichern beenden"
+
+msgid "Only the host can change the game speed."
+msgstr "Nur der Host kann die Spielgeschwindigkeit ändern."
+
+msgid "Select a city to visit. You can watch every city and send emergency assistance during disasters."
+msgstr "Wähle eine Stadt zum Besuchen. Du kannst jede Stadt beobachten und bei Katastrophen Einsatzkräfte zur Unterstützung schicken."
+
+msgid "Apply colour"
+msgstr "Farbe übernehmen"
+
+msgid "Price for additional neutral land. At the shared start, every city receives an equal free starting area; its treasury stays intact. Saved games retain their rules."
+msgstr "Preis für zusätzliches neutrales Land. Beim gemeinsamen Start erhält jede Stadt ein gleich großes kostenloses Startgebiet; die Stadtkasse bleibt erhalten. Gespeicherte Partien behalten ihre Regeln."
+
+msgid "Host a game on this computer, or connect to an existing host."
+msgstr "Erstelle ein Spiel auf diesem Computer oder verbinde dich mit einem bestehenden Host."
+
+msgid "Your name in the lobby, chat and scoreboard."
+msgstr "Dein Name in der Lobby, im Chat und in der Statistikübersicht."
+
+msgid "Choose a custom colour for your cursor, territory and statistics, then Apply colour."
+msgstr "Wähle eine eigene Farbe für Mauszeiger, Gebiet und Statistiken und bestätige mit „Farbe übernehmen“."
+
+msgid "Enter the host computer's LAN address or reachable IP address."
+msgstr "Gib die LAN-Adresse oder erreichbare IP-Adresse des Host-Computers ein."
+
+msgid "The host and joining players must use the same TCP port."
+msgstr "Host und beitretende Spieler müssen denselben TCP-Port verwenden."
+
+msgid "Co-op: one shared city. Shared: separate cities on one map. Region: independent neighbouring city maps."
+msgstr "Koop: eine gemeinsame Stadt. Shared: getrennte Städte auf einer Karte. Region: unabhängige benachbarte Stadtkarten."
+
+msgid "Generate new terrain, or continue a saved multiplayer game. Saved games keep their rules and player seats."
+msgstr "Erzeuge neues Gelände oder setze eine gespeicherte Multiplayer-Partie fort. Gespeicherte Partien behalten Regeln und Spielerplätze."
+
+msgid "Leave empty to allow joining without a password."
+msgstr "Leer lassen, um einen Beitritt ohne Passwort zu erlauben."
+
+msgid "Enter the game's password if the host set one; otherwise leave empty."
+msgstr "Gib das Spielpasswort ein, falls eines vergeben wurde. Andernfalls leer lassen."
+
+msgid "Configure the city, then wait in the lobby until everyone is ready."
+msgstr "Richte die Stadt ein und warte in der Lobby, bis alle bereit sind."
+
+msgid "Connect and select a new or reserved player seat. The host controls the game rules."
+msgstr "Verbinde dich und wähle einen neuen oder reservierten Spielerplatz. Der Host legt die Spielregeln fest."
+
+msgid "Population: residents of your own city. Suggested targets: 2,000 for a short development goal, 10,000 for a medium goal, 50,000 for a long goal."
+msgstr "Bevölkerung: Einwohner deiner eigenen Stadt. Zielvorschläge: 2.000 für ein kurzes, 10.000 für ein mittleres und 50.000 für ein langes Aufbauziel."
+
+msgid "Net wealth: treasury minus bank bonds and outstanding player debt. Suggested targets: $50,000, $100,000 or $500,000 for increasingly long economic goals."
+msgstr "Vermögen: Stadtkasse abzüglich Bankanleihen und offener Spielerschulden. Zielvorschläge: $50.000, $100.000 oder $500.000 für zunehmend längere Wirtschaftsziele."
+
+msgid "Build without a victory target or time limit."
+msgstr "Baue ohne Siegziel oder Zeitlimit."
+
+msgid "The target must then be held for one full game year (300 game days). At uninterrupted simulation speed, that year takes about 4 minutes at Turtle, 2 at Llama or 1 at Cheetah. Swallow advances one day per processed frame (about 5 seconds per year at 60 simulation frames/s). Development time is additional and depends on difficulty, terrain, experience, pauses and computer performance; these are not match-duration guarantees."
+msgstr "Das Ziel muss anschließend ein volles Spieljahr (300 Spieltage) gehalten werden. Ohne Unterbrechungen dauert dieses Jahr etwa 4 Minuten bei Schildkröte, 2 bei Lama oder 1 bei Gepard. Schwalbe berechnet einen Tag pro Simulationsbild (etwa 5 Sekunden pro Jahr bei 60 Simulationsbildern/s). Die Aufbauzeit kommt hinzu und hängt von Schwierigkeit, Gelände, Erfahrung, Pausen und Rechnerleistung ab; dies sind keine garantierten Partiedauern."
+
+msgid "Choose the lender and principal. The game sets the bond rate. Interest settles with the annual budget; there is no maturity date. Repay when funds permit."
+msgstr "Wähle Kreditgeber und Nennbetrag. Das Spiel legt den Anleihezins fest. Zinsen werden mit dem Jahresbudget abgerechnet; es gibt keine feste Laufzeit. Zahle zurück, sobald deine Mittel es erlauben."
+
+msgid "Lender"
+msgstr "Kreditgeber"
+
+msgid "%s → %s · %s · %d%% annually"
+msgstr "%s → %s · %s · %d%% jährlich"
+
+msgid "Approve loan"
+msgstr "Kredit genehmigen"
+
+msgid "Outstanding: %s · Unpaid interest: %s"
+msgstr "Restschuld: %s · Offene Zinsen: %s"
+
+msgid "Repay principal"
+msgstr "Nennbetrag zurückzahlen"
+
+msgid "Choose a lender and a principal in $10,000 bond units."
+msgstr "Wähle einen Kreditgeber und einen Nennbetrag in Anleihen zu je $10.000."
+
+msgid "The normal bond credit limit does not permit this loan."
+msgstr "Die normale Anleihe-Kreditgrenze erlaubt diesen Kredit nicht."
+
+msgid "Loan requested. The lender must approve the game's bond rate."
+msgstr "Kredit angefragt. Der Kreditgeber muss den vom Spiel festgelegten Anleihezins bestätigen."
+
+msgid "The bond rate or credit limit changed. Send a new request."
+msgstr "Anleihezins oder Kreditgrenze haben sich geändert. Stelle eine neue Anfrage."
+
+msgid "Loan accepted. Interest follows the bond budget; repay the principal when funds permit."
+msgstr "Kredit angenommen. Zinsen werden mit dem Anleihebudget abgerechnet; zahle den Nennbetrag zurück, sobald deine Mittel es erlauben."
+
+msgid "Insufficient funds to repay this loan."
+msgstr "Nicht genügend Mittel zur Rückzahlung dieses Kredits."
+
+msgid "Loan principal repaid."
+msgstr "Kreditnennbetrag zurückgezahlt."

@@ -101,6 +101,7 @@ func rebuild() -> void:
 				add_action(actions, tr("Decline"), func() -> void: windows.coop.session.request({"kind": "land_decline", "offer": record.id}))
 		if count == 0:
 			ApplicationMultiplayer.label(body, tr("No entries."))
+	windows.fit_content.call_deferred(window, body, 850)
 
 func confirm(record: Dictionary) -> void:
 	var windows: MultiplayerWindows = windows_ref.get_ref()

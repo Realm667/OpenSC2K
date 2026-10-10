@@ -35,8 +35,8 @@ profiles and saves private: they contain reconnect identities.
 The Multiplayer menu between Newspaper and Help contains Scoreboard, Chat,
 connection recovery, leaving and Shared land transactions. Budgets, ordinances,
 industry taxes, bonds and speed use regular controls. Chat and camera movement do
-not pause the host. Everyone can request a pause; the slowest explicit speed
-request applies. New guests no longer cap speed at Turtle. A disconnect pauses
+not pause the host. Only the host can change speed or pause; clients have a disabled
+speed menu and the server rejects their speed commands. A disconnect pauses
 the world until the host releases it. Reconnection preserves identity and sequence.
 
 ## Koop
@@ -90,10 +90,12 @@ Cities continue under their normal simulation rules, including budget decisions.
 
 Competitive games default to Endless. The host may instead set a population target
 or net wealth target (city funds minus bank debt, player-loan principal and unpaid interest). A compact top-right
-panel shows the own city's progress and the leading player(s); click it for the
+panel shows one narrow progress bar per player; click its title for the
 scoreboard. New scored matches require undeveloped starting terrain. New matches require staying at or above the target for 300 game days
 (one full engine calendar year). Dropping below resets the timer; the HUD shows days
-held. Cities founded after the start are permanently unranked and grey in statistics;
+held. Target progress uses the player's colour at 60% opacity; holding progress
+fills the same bar at full opacity. Ownership lines stay behind the panel.
+Cities founded after the start are permanently unranked and grey in statistics;
 a player taking over a founder city inherits its eligibility. Holding the target for
 the full year pauses the game, shows winner fireworks and results,
 and allows leaving or host-authorized continuation without scoring. Goals, results
@@ -151,7 +153,9 @@ land transactions. Land purchase/sale totals are persisted from the introduction
 of tracking; older unknown totals remain unavailable.
 
 Chat is docked at the lower left of the map, beside the toolbar, with an inline
-reply field. Typing does not trigger game shortcuts. New incoming messages and
+reply field. In the lobby the same chat sits at its bottom; starting closes the
+lobby on every peer and returns the chat to the map without losing a draft.
+Typing does not trigger game shortcuts. New incoming messages and
 actual player joins/leaves have distinct quiet cues respecting local sound/volume.
 Chat replay and duplicate events are silent. Status text distinguishes voluntary
 leave from connection loss. New interface text ships in English and German via
@@ -163,16 +167,39 @@ stable table sorting and real TCP chat/status events.
 
 ## Player loans, history and rematches
 
-Budget > Player loans lets either party propose a principal, fixed annual rate
-(0–25%) and term (1–50 game years). The proposer confirms on sending and the other
-party accepts the displayed immutable terms. Only acceptance transfers funds;
-insufficient lender funds reject the transaction. Interest is transferred annually
-(rounded up to whole currency units); principal is due at maturity. Payments never
-create an overdraft. Unpaid sums remain visible debt and are settled as funds become
-available; there is no compound interest or hidden post-maturity penalty. Accepted
+Budget > Player loans lets the borrower select a lender and principal in $10,000
+bond units. The game uses the normal bank-bond issue rate and credit rules, also
+counting existing player-loan principal. The lender confirms the displayed rate.
+Only acceptance transfers funds; insufficient lender funds reject the transaction.
+Interest accrues monthly and settles with the annual budget in whole currency units.
+Like bank-budget expenses it can overdraw the borrower's treasury. There is no
+maturity date: the borrower repays when funds permit. Already accrued interest
+still settles at year end. Storage-limited transfers remain arrears. Accepted
 contracts remain with city seats on departure or takeover; unaccepted proposals are
 withdrawn on takeover. These transfers are shown in this Budget tab, separately from
 the original bank-bond reports.
+
+Legacy accepted loans retain their rate, outstanding principal and unpaid interest
+but lose their old maturity date. Unaccepted legacy offers are discarded because
+their terms have changed. The normal city save contains the migrated ledger.
+
+## Terrain preview, sound and dialogs
+
+New City renders forest, ground and water enhancements in fixed summer. Weather,
+clouds and day/night are disabled only for that detached preview; saved preferences
+and the generated simulation document remain unchanged.
+
+Own confirmed construction and demolition use the normal sound path once. Remote
+actions have full volume inside the visible map and fade smoothly outside it,
+reaching silence two viewport widths away. Region sounds only come from the viewed
+city. Remote throttling cannot suppress local feedback. Local mute and volume apply.
+
+Region's SimNation view shows the actual two to eight player cities in coloured
+region tiles with names, population and seat status. Select a tile to visit it.
+Player-seat, land-market and statistics windows fit their content. The custom colour
+picker has an explicit Apply colour button. Window-close uses quit/save confirmation
+instead of opening statistics. Annual budget decisions open the normal Budget window
+so the player can resolve a simulation stop.
 
 Scoreboard > History compares monthly population, treasury, debt, land, developed
 land and budget balance with shared axes, player colours and exact-value tooltips.

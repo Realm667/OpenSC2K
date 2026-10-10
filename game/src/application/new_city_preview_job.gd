@@ -8,6 +8,9 @@ var revision := 0
 var view_size := CityIsometricRenderer.VIEW_SMALL
 # the preview shrinks to fit this size. a large map is too big for one image
 var maximum_size := Vector2i.ZERO
+var visual_options: Dictionary = {}
+var visual_sprites: Sc2SpriteArchive
+var visual_image: Image
 
 
 func start(
@@ -22,7 +25,15 @@ func start(
 		source.preview_game_cursor if advance_seed else source.preview_game_start,
 	)
 
-	return thread.start(_generate.bind(options.copy(), palette, sprites))
+	visual_sprites = MainMenuPresentation.copy_graphics(sprites)
+	if not visual_options.is_empty():
+		CityNatureArtwork.prepare(visual_sprites, palette)
+		visual_sprites.visual_seasons.merge(visual_sprites.visual_nature_masks)
+		visual_sprites.visual_nature_enabled = true
+		visual_sprites.visual_terrain_enabled = true
+		visual_sprites.water_reflections = true
+		visual_sprites.water_indices = CityWaterLayer.blue_indices(palette)
+	return thread.start(_generate.bind(options.copy(), palette, visual_sprites))
 
 
 func _generate(
@@ -35,13 +46,18 @@ func _generate(
 	if not result.ok:
 		return result
 
-	# HD art at one pixel for each view pixel, when that fits; the indexed
-	# preview can shrink to fit instead
 	var size := CityIsometricRenderer.output_size_for_view(view_size, result.city.map_size)
 	result.landscape_artwork = (not sprites.high_resolution.is_empty()
 		and (maximum_size == Vector2i.ZERO or (size.x <= maximum_size.x and size.y <= maximum_size.y)))
-	var rendered := CityIsometricRenderer.create_image(result.city, palette, sprites, view_size, 0, false, false, false, false,
-		Callable(), maximum_size, 1 if result.landscape_artwork else 0)
+	var encoded := not visual_options.is_empty()
+	var rendered := CityIsometricRenderer.create_image(result.city,
+		Sc2Palette.index_encoding() if encoded else palette, sprites, view_size, 0, false, encoded, false, false,
+		Callable(), maximum_size, 0 if encoded else (1 if result.landscape_artwork else 0))
+	if rendered.ok and encoded:
+		visual_image = rendered.image
+		if result.landscape_artwork:
+			rendered = CityIsometricRenderer.create_image(result.city, palette, sprites, view_size, 0, false, true, false, false,
+				Callable(), maximum_size, 1)
 
 	if not rendered.ok:
 		return NewCityTerrainSession.PreviewResult.failure(rendered.error, "preview")

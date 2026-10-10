@@ -267,7 +267,17 @@ func build(actor: String, request: Dictionary) -> Dictionary:
 	statistics[actor] = stats
 	if edit is DispatchEditResult:
 		dispatch_owners[str(edit.thing_index)] = {"actor": actor.sha256_text(), "position": [finish.x, finish.y], "type": int(request.tool)}
-	return accepted("Applied by the host. Cost: $%d." % edit.cost)
+	var response := accepted("Applied by the host. Cost: $%d." % edit.cost)
+	var sounds: Array[int] = edit.sound_events.duplicate()
+	if not edit.changed_ids.is_empty() and request.kind == "build":
+		if int(request.group) == CityToolIds.Group.BULLDOZER and int(request.tool) in [1, 2, 3, 5, 6, 7]:
+			sounds.append(ToolSoundRules.SOUND_TRACTOR)
+		else:
+			for sound in ToolSoundRules.success_events(int(request.group), int(request.tool)):
+				if not sounds.has(sound):
+					sounds.append(sound)
+	response["sounds"] = sounds
+	return response
 
 
 func policy_command(request: Dictionary) -> Dictionary:

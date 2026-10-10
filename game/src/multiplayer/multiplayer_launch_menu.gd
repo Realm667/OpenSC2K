@@ -60,6 +60,18 @@ func setup(body: VBoxContainer) -> void:
 		coop.color_picker.color_changed.connect(func(color: Color) -> void:
 			button.set_pressed_no_signal(color.to_html(false) == value))
 	swatches.add_child(coop.color_picker)
+	var picker := coop.color_picker.get_picker()
+	picker.presets_visible = false
+	picker.color_modes_visible = false
+	var popup := coop.color_picker.get_popup()
+	var color_body := VBoxContainer.new()
+	popup.remove_child(picker)
+	popup.add_child(color_body)
+	color_body.add_child(picker)
+	ApplicationMultiplayer.button(color_body, tr("Apply colour"), func() -> void:
+		coop.color_picker.color = picker.color
+		coop.color_picker.color_changed.emit(picker.color)
+		popup.hide())
 	host_fields = VBoxContainer.new()
 	coop.lobby.add_child(host_fields)
 	ApplicationMultiplayer.label(host_fields, tr("Game mode"))
@@ -86,8 +98,7 @@ func setup(body: VBoxContainer) -> void:
 	land_price.value = 5
 	land_price.prefix = "$"
 	shared_fields.add_child(land_price)
-	var note := ApplicationMultiplayer.label(shared_fields, tr("Each city receives a separate starter land allowance for up to 1,024 tiles (at most a quarter of the map). City funds stay intact. Saved games retain their rules."))
-	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	land_price.tooltip_text = tr("Price for additional neutral land. At the shared start, every city receives an equal free starting area; its treasury stays intact. Saved games retain their rules.")
 	goal_fields = VBoxContainer.new()
 	host_fields.add_child(goal_fields)
 	ApplicationMultiplayer.label(goal_fields, tr("Victory goal"))
@@ -128,6 +139,13 @@ func setup(body: VBoxContainer) -> void:
 	coop.city_picker.item_selected.connect(func(_index: int) -> void:
 		coop.selected_city_path = ""
 		update())
+	role.tooltip_text = tr("Host a game on this computer, or connect to an existing host.")
+	coop.player.tooltip_text = tr("Your name in the lobby, chat and scoreboard.")
+	coop.color_picker.tooltip_text = tr("Choose a custom colour for your cursor, territory and statistics, then Apply colour.")
+	coop.address.tooltip_text = tr("Enter the host computer's LAN address or reachable IP address.")
+	coop.port.tooltip_text = tr("The host and joining players must use the same TCP port.")
+	coop.mode_picker.tooltip_text = tr("Co-op: one shared city. Shared: separate cities on one map. Region: independent neighbouring city maps.")
+	coop.city_picker.tooltip_text = tr("Generate new terrain, or continue a saved multiplayer game. Saved games keep their rules and player seats.")
 	update()
 
 func update() -> void:
@@ -140,13 +158,17 @@ func update() -> void:
 	shared_fields.visible = coop.mode_picker.selected == 1 and coop.city_picker.selected == 0
 	goal_fields.visible = coop.mode_picker.selected != 0 and coop.city_picker.selected == 0
 	goal_target.visible = goal_picker.selected != 0
+	goal_picker.tooltip_text = goal_help()
+	goal_target.tooltip_text = goal_help()
+	coop.join_code.tooltip_text = tr("Leave empty to allow joining without a password.") if hosting else tr("Enter the game's password if the host set one; otherwise leave empty.")
+	action.tooltip_text = tr("Configure the city, then wait in the lobby until everyone is ready.") if hosting else tr("Connect and select a new or reserved player seat. The host controls the game rules.")
 	fit.call_deferred()
 
 func fit() -> void:
 	if not is_instance_valid(coop.panel):
 		return
 	var available := coop.app.get_viewport().get_visible_rect().size
-	var height := int(coop.lobby.get_combined_minimum_size().y) + 115
+	var height := int(coop.lobby.get_parent().get_combined_minimum_size().y) + 28
 	coop.panel.size = Vector2i(mini(700, int(available.x) - 40), mini(height, int(available.y) - 70))
 
 static func column(parent: Control, ratio: float) -> VBoxContainer:
@@ -155,3 +177,9 @@ static func column(parent: Control, ratio: float) -> VBoxContainer:
 	box.size_flags_stretch_ratio = ratio
 	parent.add_child(box)
 	return box
+
+func goal_help() -> String:
+	var hint := tr("Population: residents of your own city. Suggested targets: 2,000 for a short development goal, 10,000 for a medium goal, 50,000 for a long goal.") if goal_picker.selected == 1 else tr("Net wealth: treasury minus bank bonds and outstanding player debt. Suggested targets: $50,000, $100,000 or $500,000 for increasingly long economic goals.")
+	if goal_picker.selected == 0:
+		return tr("Build without a victory target or time limit.")
+	return hint + "\n" + tr("The target must then be held for one full game year (300 game days). At uninterrupted simulation speed, that year takes about 4 minutes at Turtle, 2 at Llama or 1 at Cheetah. Swallow advances one day per processed frame (about 5 seconds per year at 60 simulation frames/s). Development time is additional and depends on difficulty, terrain, experience, pauses and computer performance; these are not match-duration guarantees.")

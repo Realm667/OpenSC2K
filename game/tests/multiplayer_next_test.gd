@@ -85,7 +85,7 @@ func run() -> void:
 	check(host.world.controller.speed == 4, "passive guest does not cap speed at Turtle")
 	host.requested_speed[b] = 1
 	host.apply_speed()
-	check(host.world.controller.speed == 1, "explicit guest pause respected")
+	check(host.world.controller.speed == 4, "guest pause cannot override host speed")
 	host.requested_speed[b] = 5
 	host.apply_speed()
 	check(host.world.controller.speed == 4, "resume restores requested running speed")

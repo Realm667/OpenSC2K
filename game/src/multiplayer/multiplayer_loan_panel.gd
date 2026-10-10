@@ -7,36 +7,27 @@ var coop: ApplicationMultiplayer:
 	get:
 		return coop_ref.get_ref()
 var counterpart: OptionButton
-var direction: OptionButton
 var amount: SpinBox
-var rate: SpinBox
-var years: SpinBox
 var rows: VBoxContainer
 var signature := ""
 
 func setup(owner: ApplicationMultiplayer) -> void:
 	coop_ref = weakref(owner)
 	name = "Player loans"
-	var help := ApplicationMultiplayer.label(self, tr("Both players confirm the terms. Interest is paid each year; principal is due at maturity. Unpaid amounts remain debt; interest does not compound."))
+	var help := ApplicationMultiplayer.label(self, tr("Choose the lender and principal. The game sets the bond rate. Interest settles with the annual budget; there is no maturity date. Repay when funds permit."))
 	help.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	var form := GridContainer.new()
 	form.columns = 2
 	add_child(form)
-	ApplicationMultiplayer.label(form, tr("Player"))
+	ApplicationMultiplayer.label(form, tr("Lender"))
 	counterpart = OptionButton.new()
 	form.add_child(counterpart)
-	ApplicationMultiplayer.label(form, tr("Proposal"))
-	direction = OptionButton.new()
-	direction.add_item(tr("Request a loan"))
-	direction.add_item(tr("Offer a loan"))
-	form.add_child(direction)
-	amount = field(form, tr("Principal"), 1, 10000000, 10000)
-	rate = field(form, tr("Fixed annual interest (%)"), 0, 25, 5)
-	years = field(form, tr("Term (game years)"), 1, 50, 5)
+	amount = field(form, tr("Principal"), 10000, 500000, 10000)
+	amount.step = 10000
 	ApplicationMultiplayer.button(self, tr("Confirm and send proposal"), func() -> void:
 		if counterpart.selected >= 0:
 			coop.session.request({"kind": "loan_offer", "seat": counterpart.get_item_metadata(counterpart.selected),
-				"lend": direction.selected == 1, "amount": int(amount.value), "rate": int(rate.value), "years": int(years.value)}))
+				"amount": int(amount.value)}))
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -92,15 +83,17 @@ func update(state: Dictionary) -> void:
 			continue
 		var panel := VBoxContainer.new()
 		rows.add_child(panel)
-		var terms := tr("%s → %s · %s · %d%% annually · %d years") % [names.get(loan.lender, ""), names.get(loan.borrower, ""), MultiplayerScoreboard.money(loan.amount), int(loan.rate), int(loan.years)]
+		var terms := tr("%s → %s · %s · %d%% annually") % [names.get(loan.lender, ""), names.get(loan.borrower, ""), MultiplayerScoreboard.money(loan.amount), int(loan.rate)]
 		var caption := ApplicationMultiplayer.label(panel, terms)
 		caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		if loan.status == "offered":
 			var actions := HBoxContainer.new()
 			panel.add_child(actions)
 			if own != loan.proposer:
-				ApplicationMultiplayer.button(actions, tr("Accept fixed terms"), func() -> void: coop.session.request({"kind": "loan_accept", "loan": loan.id}))
+				ApplicationMultiplayer.button(actions, tr("Approve loan"), func() -> void: coop.session.request({"kind": "loan_accept", "loan": loan.id}))
 			ApplicationMultiplayer.button(actions, tr("Withdraw") if own == loan.proposer else tr("Decline"), func() -> void: coop.session.request({"kind": "loan_cancel", "loan": loan.id}))
 		else:
-			ApplicationMultiplayer.label(panel, tr("Outstanding: %s · Unpaid interest: %s · Maturity: game day %d") % [MultiplayerScoreboard.money(loan.principal), MultiplayerScoreboard.money(loan.arrears), int(loan.maturity)])
+			ApplicationMultiplayer.label(panel, tr("Outstanding: %s · Unpaid interest: %s") % [MultiplayerScoreboard.money(loan.principal), MultiplayerScoreboard.money(loan.arrears)])
+			if own == loan.borrower and loan.status == "active":
+				ApplicationMultiplayer.button(panel, tr("Repay principal"), func() -> void: coop.session.request({"kind": "loan_repay", "loan": loan.id}))
 		panel.add_child(HSeparator.new())

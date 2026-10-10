@@ -36,6 +36,7 @@ var selected_city_path := ""
 var multiplayer_save_path := ""
 var identity_signature := ""
 var selection_revision := 0
+var exit_action := ""
 
 
 func _init(application: CityApplication) -> void:
@@ -55,6 +56,8 @@ func setup() -> void:
 	session.cursor_source = func() -> Vector2:
 		return MultiplayerMapOverlay.local_cursor(app) if mirrored and app.map_view.visible else Vector2(-1, -1)
 	session.feedback.connect(show_message)
+	session.action_sounds.connect(app.effects_audio.play_sound_ids)
+	session.remote_action_sound.connect(play_remote_action)
 	session.choice_requested.connect(show_choices)
 	panel = Window.new()
 	panel.theme = AppUiTheme.current()
@@ -86,8 +89,10 @@ func setup() -> void:
 	city_file.current_dir = AppPaths.path("cities")
 	city_file.file_selected.connect(host_saved_city)
 	app.add_child(city_file)
-	status = label(body, "Noch nicht verbunden.")
+	status = label(body, "")
+	status.hide()
 	message = label(body, "")
+	message.hide()
 	sign_dialog = ConfirmationDialog.new()
 	sign_dialog.theme = AppUiTheme.current()
 	sign_dialog.title = "Gemeinsames Schild"
@@ -102,10 +107,16 @@ func setup() -> void:
 	leave_dialog = ConfirmationDialog.new()
 	leave_dialog.theme = AppUiTheme.current()
 	leave_dialog.dialog_text = "Sitzung verlassen? Nicht gespeicherte Änderungen gehen beim Host verloren.\nAls Host trennst du dabei alle Mitspieler."
-	leave_dialog.confirmed.connect(leave)
+	leave_dialog.confirmed.connect(func() -> void:
+		var quitting := exit_action == "quit"
+		leave()
+		if quitting:
+			app.get_tree().quit())
+	leave_dialog.canceled.connect(func() -> void: exit_action = "")
 	app.add_child(leave_dialog)
 	windows = MultiplayerWindows.new(self)
 	windows.setup()
+	app.city_dialogs.city_save_dialog.canceled.connect(func() -> void: exit_action = "")
 	menu_button = windows.menu
 	app.main_menu.multiplayer_requested.connect(open)
 	load_identity()
@@ -204,13 +215,6 @@ func start_join() -> void:
 
 
 func receive_state(state: Dictionary) -> void:
-	status.text = "%s · %s\n%s%s" % ["Host" if session.hosting else "Verbunden", ", ".join(state.get("players", [])),
-		"Offene Entscheidung: " + str(state.get("pending")) if state.get("pending", "") != "" else "Keine offene Entscheidung.",
-		"\nPause nach Verbindungsabbruch." if state.get("disconnect_pause", false) else ""]
-	if state.get("blocked", false) and state.get("pending", "") == "":
-		status.text += "\nSimulationsmeldung: Bestätigen, um fortzusetzen."
-	if state.get("terminal", false):
-		status.text += "\nSpielende. Die Stadt kann weiter betrachtet und die Sitzung gespeichert werden."
 	windows.update_state(state)
 	if not str(state.get("error", "")).is_empty():
 		show_message(str(state.error))
@@ -313,6 +317,8 @@ func bulldoze(point: Vector2i) -> void:
 
 
 func request_speed(value: int) -> void:
+	if not session.hosting:
+		return
 	if value > GameSpeedController.Speed.PAUSED:
 		app.simulation_state.resume_speed = value
 	session.request({"kind": "speed", "speed": value})
@@ -340,12 +346,19 @@ func save_to(path: String) -> void:
 	if not path.to_lower().ends_with(".sc2x"):
 		path = path.get_basename() + ".sc2x"
 	var error := session.save_city(path)
+	if not error.is_empty():
+		exit_action = ""
+		app.interface.show_error(MultiplayerText.message(error))
 	if error.is_empty():
 		multiplayer_save_path = path
+		if exit_action == "quit":
+			session.stop()
+			app.get_tree().quit()
 	show_message(error if not error.is_empty() else "Multiplayer-Spielstand gespeichert: " + path)
 
 
 func confirm_leave() -> void:
+	exit_action = ""
 	leave_dialog.popup_centered()
 
 
@@ -466,3 +479,66 @@ static func field(parent: Node, title: String, value: String) -> LineEdit:
 	control.text = value
 	parent.add_child(control)
 	return control
+
+
+func request_exit(action: String) -> void:
+	if exit_action == "quit":
+		return
+	if action != "quit":
+		confirm_leave()
+		return
+	exit_action = "quit"
+	if not session.hosting:
+		leave_dialog.popup_centered()
+		return
+	var dialog := ConfirmationDialog.new()
+	dialog.title = tr("Quit multiplayer")
+	dialog.dialog_text = tr("Save the multiplayer game before quitting? All connected players will be disconnected.")
+	dialog.ok_button_text = tr("Save and quit")
+	dialog.add_button(tr("Quit without saving"), false, "discard")
+	app.add_child(dialog)
+	dialog.confirmed.connect(func() -> void:
+		dialog.queue_free()
+		save())
+	dialog.custom_action.connect(func(value: StringName) -> void:
+		if value == &"discard":
+			session.stop()
+			app.get_tree().quit())
+	dialog.canceled.connect(func() -> void:
+		exit_action = ""
+		dialog.queue_free())
+	dialog.popup_centered()
+
+var remote_audio_gate := WaveSoundGate.new()
+var remote_audio_time := 0
+
+func play_remote_action(event: Dictionary) -> void:
+	if not mirrored or app.document_state.city == null or not event.get("point") is Array or event.point.size() != 2 or not event.get("sounds") is Array:
+		return
+	if session.latest.get("mode") == "region" and event.get("view_owner") != session.latest.get("view_owner"):
+		return
+	for coordinate: Variant in event.point:
+		if not CoopWorld.whole_number(coordinate, 0, app.document_state.city.map_size - 1):
+			return
+	var map := app.map_view
+	var point := MultiplayerMapOverlay.project(map.city, Vector2(event.point[0], event.point[1])) * map.camera._view_scale() + map.camera._draw_offset(map.camera._view_scale())
+	var view := map.camera_view_rect
+	if view.size == Vector2.ZERO:
+		view = Rect2(Vector2.ZERO, map.size)
+	var gain := remote_gain(point, view)
+	if gain <= 0:
+		return
+	var sounds: Array[int] = []
+	for value: Variant in event.sounds.slice(0, 32):
+		if CoopWorld.whole_number(value, 500, 529):
+			sounds.append(int(value))
+	var now := Time.get_ticks_msec()
+	remote_audio_gate.advance(now - remote_audio_time)
+	remote_audio_time = now
+	# Remote construction must never suppress the local player's own feedback.
+	app.audio_controller.play_sound_events(SoundEvent.from_ids(sounds), app.document_state.city.sound_enabled(), app.view_state.overlay_mode, app.static_render.city_view_size(), false, gain, remote_audio_gate)
+
+static func remote_gain(point: Vector2, view: Rect2) -> float:
+	var nearest := point.clamp(view.position, view.end)
+	var distance := point.distance_to(nearest) / maxf(1.0, view.size.x)
+	return pow(maxf(0.0, 1.0 - distance / 2.0), 2)

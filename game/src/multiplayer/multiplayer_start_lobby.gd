@@ -14,13 +14,18 @@ var start: Button
 var own_ready := false
 var hint: Label
 var leave_button: Button
+var body: VBoxContainer
+var waiting := false
 
 func _init(owner: MultiplayerWindows) -> void:
 	owner_ref = weakref(owner)
 	window = windows.make_window(tr("Game lobby"))
 	window.size = Vector2i(660, 430)
 	window.min_size = Vector2i(400, 300)
-	var body := windows.content(window)
+	body = windows.content(window)
+	window.visibility_changed.connect(func() -> void:
+		if is_instance_valid(windows.chat):
+			windows.dock_chat(window.visible and waiting))
 	summary = ApplicationMultiplayer.label(body, "")
 	summary.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	roster = Tree.new()
@@ -28,7 +33,7 @@ func _init(owner: MultiplayerWindows) -> void:
 	roster.columns = 3
 	roster.column_titles_visible = true
 	roster.scroll_horizontal_enabled = false
-	roster.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	roster.size_flags_vertical = Control.SIZE_FILL
 	roster.set_column_title(0, tr("Player"))
 	roster.set_column_title(1, tr("City"))
 	roster.set_column_title(2, tr("Status"))
@@ -47,7 +52,8 @@ func _init(owner: MultiplayerWindows) -> void:
 
 func update(state: Dictionary) -> void:
 	var lobby: Dictionary = state.get("lobby", {})
-	if not lobby.get("waiting", false):
+	waiting = lobby.get("waiting", false)
+	if not waiting:
 		window.hide()
 		return
 	var session := windows.coop.session
@@ -71,6 +77,7 @@ func update(state: Dictionary) -> void:
 		row.set_custom_color(0, Color.from_string(player.color, Color.WHITE))
 		row.set_text(1, player.city)
 		row.set_text(2, tr("Offline") if not player.online else tr("Ready") if player.get("ready", false) else tr("Not ready"))
+		row.set_custom_color(2, Color("66cf79") if player.get("ready", false) and player.online else Color("ff9c40"))
 		for column in 3:
 			row.set_tooltip_text(column, row.get_text(column))
 		if player.id == session.token.sha256_text():
@@ -78,5 +85,14 @@ func update(state: Dictionary) -> void:
 	ready.text = tr("Not ready") if own_ready else tr("Ready")
 	start.visible = session.hosting
 	start.disabled = not lobby.get("can_start", false)
+	roster.custom_minimum_size.y = maxi(80, root.get_child_count() * 28 + 32)
+	if window.visible:
+		windows.fit_content.call_deferred(window, body, 760)
 	if not window.visible:
-		window.popup_centered.call_deferred()
+		show_if_waiting.call_deferred()
+
+func show_if_waiting() -> void:
+	if waiting and windows.coop.active():
+		roster.custom_minimum_size.y = maxi(80, roster.get_root().get_child_count() * 28 + 32)
+		window.popup_centered()
+		windows.fit_content.call_deferred(window, body, 760)

@@ -57,6 +57,7 @@ var _busy_overlay: BusyOverlay
 var _busy_spinner: Control
 var done_button: Button
 var candidate_valid := false
+var visual_preview: NewCityPreviewPresentation
 var landscape_background: TextureRect
 var ocean_input: CheckBox
 var river_input: CheckBox
@@ -199,6 +200,9 @@ func _input(event: InputEvent) -> void:
 func reset_fields(default_mayor: String) -> void:
 	preview_view.texture = null
 	landscape_background.texture = null
+	if is_instance_valid(visual_preview):
+		visual_preview.queue_free()
+		visual_preview = null
 	compatibility_input.set_pressed_no_signal(false)
 	compatibility_changed(false)
 	city_name_input.text = "New City"
@@ -241,8 +245,9 @@ func terrain_options() -> NewCityTerrain.Options:
 
 
 func show_preview(landscape: Image, minimap: Image, status: String, artwork := false) -> void:
-	landscape_background.texture = (HdArtworkTexture.create(landscape, landscape.get_size()) if artwork
-		else PixelArtTexture.wrap(ImageTexture.create_from_image(landscape)))
+	if visual_preview == null:
+		landscape_background.texture = (HdArtworkTexture.create(landscape, landscape.get_size()) if artwork
+			else PixelArtTexture.wrap(ImageTexture.create_from_image(landscape)))
 	preview_view.texture = PixelArtTexture.wrap(ImageTexture.create_from_image(minimap))
 	candidate_valid = true
 	done_button.disabled = false
@@ -436,3 +441,13 @@ class SetupOptions extends RefCounted:
 	var mayor_name := ""
 	var difficulty := 0
 	var starting_year := 0
+
+func set_visual_preview(result: NewCityTerrainSession.PreviewResult, palette: Sc2Palette, sprites: Sc2SpriteArchive, view_size: int, options: Dictionary, indexed: Image = null) -> void:
+	if is_instance_valid(visual_preview):
+		remove_child(visual_preview)
+		visual_preview.queue_free()
+	landscape_background.texture = null
+	visual_preview = NewCityPreviewPresentation.new()
+	add_child(visual_preview)
+	move_child(visual_preview, 1)
+	visual_preview.setup(result, palette, sprites, view_size, options, indexed)
