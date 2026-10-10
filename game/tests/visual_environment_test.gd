@@ -735,12 +735,13 @@ func _check_menu_dependencies(tab: VisualEnhancementsTab) -> void:
 	assert(notifications[0] == 0, "Category navigation changed settings")
 	tab.changed.disconnect(count_change)
 	for field in VisualEnhancementOptions.FIELDS:
-		if field[0] == "lut_folder":
+		if field[0] in ["lut_folder", "lut_path", "brightmap_folder"]:
+			assert(not tab.controls.has(field[0]), "Custom graphics controls should stay hidden")
 			continue
 		assert(tab.controls.has(field[0]), "An option is missing from the settings pages")
 		if field[0] in VisualEnhancementsTab.PERCENT_FIELDS:
 			assert(is_equal_approx((tab.controls[field[0]] as SpinBox).value, float(original[field[0]]) * 100.0))
-	assert(tab.controls.size() == VisualEnhancementOptions.FIELDS.size() - 1)
+	assert(tab.controls.size() == VisualEnhancementOptions.FIELDS.size() - 3)
 	var saved := VisualEnhancementOptions.normalize({"lut_folder": "user://authored_luts", "disaster_strength": 0.35, "disaster_lights": 0.25, "disaster_shake": 0.0})
 	tab.show_values(saved)
 	assert(tab.selected_values() == saved, "Settings pages lost stored values")

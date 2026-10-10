@@ -95,7 +95,7 @@ func _run() -> void:
 	var snapshots := {}
 	for view in 3:
 		var ground := lights.ground_views[view]
-		assert(ground.cache.has(Vector2i(12, 16)), "Offscreen streets were not prepared")
+		assert(ground.cache.has(Vector2i(12, 18)), "Offscreen streets were not prepared")
 		assert(ground.cache.has(Vector2i(64, 64)))
 		snapshots[view] = ground.cache.duplicate()
 	for index in prepare.banks.size():
@@ -107,7 +107,7 @@ func _run() -> void:
 	for zoom in [0.25, 0.1, 0.5, 0.25]:
 		main.map_view.zoom_factor = zoom
 		main.camera_input.on_city_zoom_changed(roundi(zoom * 100))
-		main.map_view.center_on_tile(Vector2i(12, 16))
+		main.map_view.center_on_tile(Vector2i(12, 18))
 		main.frame.process(0.016)
 		var view := main.static_render.city_view_size()
 		assert(main.render_caches.region_cache.ready(), "Zoom exposed a cold region")
@@ -150,7 +150,7 @@ func _run() -> void:
 		var ground := lights.ground_views[view]
 		assert(ground.cache[Vector2i(64, 64)].texture.get_image().is_invisible(), "Removed street retained its light")
 		assert(ground.cache.has(added) and not ground.cache[added].texture.get_image().is_invisible(), "New offscreen street was not prepared")
-		assert(is_same(snapshots[view][Vector2i(12, 16)], ground.cache[Vector2i(12, 16)]), "Local edit rebuilt a distant light")
+		assert(is_same(snapshots[view][Vector2i(12, 18)], ground.cache[Vector2i(12, 18)]), "Local edit rebuilt a distant light")
 	var old_layout := prepare._layout()
 	main.asset_state.large_sprites.visual_nature_enabled = false
 	assert(prepare._layout() != old_layout, "Nature switch retained stale prepared views")
