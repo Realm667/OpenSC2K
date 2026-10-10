@@ -522,7 +522,7 @@ func _check_ground_buffer(main: CityApplication, ground: CityNightGround) -> voi
 	var demolished := Vector2i(64, 64)
 	var city := main.document_state.city
 	var road := city.building_id(demolished.x, demolished.y)
-	var distant := Vector2i(64, 60)
+	var distant := Vector2i(64, 58)
 	var retained: Dictionary = ground.cache[distant]
 	city.set_building_id(demolished.x, demolished.y, 0)
 	ground.sync(main, 0.45)
