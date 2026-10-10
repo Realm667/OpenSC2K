@@ -127,6 +127,11 @@ func run() -> void:
 	var visible_map := Rect2(main.map_view.global_position + main.map_view.camera_view_rect.position, main.map_view.camera_view_rect.size)
 	check(visible_map.encloses(hud.panel.get_global_rect()), "victory HUD fits inside the visible map below menu bar")
 	check(hud.panel.visible and hud.progress.value == 40, "live wealth progress displayed")
+	check(hud.hold.size.y > 0 and hud.own_label.size.y > 0, "goal values and holding duration remain visible")
+	hud.panel.custom_minimum_size.x = 400
+	main.coop.windows.tick()
+	check(visible_map.encloses(hud.panel.get_global_rect()), "goal HUD remains within map with larger theme minimum")
+	hud.panel.custom_minimum_size.x = 0
 	main.coop.windows.scoreboard.hide()
 	main.coop.windows.open_chat()
 	main.coop.windows.tick()
