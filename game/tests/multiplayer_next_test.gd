@@ -96,6 +96,7 @@ func run() -> void:
 	check(host.restore_embedded(saved).is_empty(), "embedded session restored")
 	host.stop()
 	host.queue_free()
+	atmosphere_choices()
 	military_ownership()
 	transfer_building()
 	await shared_network()
@@ -184,3 +185,12 @@ func military_ownership() -> void:
 	check(child.engine.game_random.state == seed, "military ownership preview preserves randomness")
 	world.owners.fill(1)
 	check(world.military_land_error(actor).is_empty(), "military base allowed on owned terrain")
+
+
+func atmosphere_choices() -> void:
+	var encoded := JSON.stringify({"day_enabled": true, "day_mode": 1, "day_hour": 22,
+		"season_mode": 2, "season_fixed": 3, "weather_mode": 2, "weather_fixed": 6, "cloud_mode": 4})
+	var options := CityVisualEnvironment.normalized_network_options(JSON.parse_string(encoded))
+	check(options.day_mode == 1 and options.day_hour == 22, "wire-format fixed time remains fixed")
+	check(options.season_mode == 2 and options.season_fixed == 3, "wire-format fixed season retained")
+	check(options.weather_mode == 2 and options.weather_fixed == 6 and options.cloud_mode == 4, "wire-format weather/cloud choices retained")
