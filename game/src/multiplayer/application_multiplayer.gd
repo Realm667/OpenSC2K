@@ -2,24 +2,17 @@ class_name ApplicationMultiplayer
 extends RefCounted
 ## Connects the ordinary city tools to the shared host, while retaining a private view.
 
-const BUDGET_NAMES := ["Residential tax", "Commercial tax", "Industrial tax", "Ordinances", "Bonds",
-	"Police", "Fire", "Health", "Schools", "College", "Roads", "Highways", "Bridges", "Rail", "Subway", "Tunnels"]
 var app: CityApplication
 var session: CoopSession
 var panel: Window
 var lobby: VBoxContainer
-var controls: VBoxContainer
 var player: LineEdit
 var address: LineEdit
 var port: SpinBox
 var join_code: LineEdit
 var use_current: CheckBox
-var save_path: LineEdit
 var status: Label
 var message: Label
-var budget_values: Array[SpinBox] = []
-var auto_budget: CheckBox
-var ordinance: OptionButton
 var policy_at_open := 0
 var original_document: Sc2File
 var original_save_path := ""
@@ -31,7 +24,15 @@ var sign_dialog: ConfirmationDialog
 var sign_text: LineEdit
 var pending_sign: Dictionary = {}
 var leave_dialog: ConfirmationDialog
-var menu_button: Button
+var menu_button: MenuButton
+var windows: MultiplayerWindows
+var color_picker: ColorPickerButton
+var mode_picker: OptionButton
+var city_picker: OptionButton
+var city_file: FileDialog
+var pending_new_city := false
+var selected_city_path := ""
+var multiplayer_save_path := ""
 var identity_signature := ""
 var selection_revision := 0
 
@@ -50,11 +51,13 @@ func setup() -> void:
 	session.environment_received.connect(app.visual_environment.receive_network_weather)
 	app.add_child(session)
 	session.state_received.connect(receive_state)
+	session.cursor_source = func() -> Vector2i:
+		return app.map_view.hover_tile if mirrored and app.map_view.visible else Vector2i(-1, -1)
 	session.feedback.connect(show_message)
 	session.choice_requested.connect(show_choices)
 	panel = Window.new()
 	panel.theme = AppUiTheme.current()
-	panel.title = "Multiplayer — Echtzeit-Koop"
+	panel.title = "Multiplayer"
 	panel.size = Vector2i(650, 650)
 	panel.min_size = Vector2i(480, 360)
 	panel.close_requested.connect(panel.hide)
@@ -73,10 +76,20 @@ func setup() -> void:
 	var body := VBoxContainer.new()
 	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(body)
-	label(body, "Koop: gleichzeitig bauen, eine Stadt und eine gemeinsame Kasse.\nLAN / direkte IP · bis zu 8 Spieler · gleiche Spielversion erforderlich.\nRegion und Shared sind noch nicht spielbar.")
+	label(body, "LAN / direkte IP · bis zu 8 Spieler · gleiche Spielversion erforderlich.")
 	lobby = VBoxContainer.new()
 	body.add_child(lobby)
 	player = field(lobby, "Spielername", "Mayor")
+	color_picker = ColorPickerButton.new()
+	color_picker.color = Color("46b4ff")
+	color_picker.edit_alpha = false
+	lobby.add_child(color_picker)
+	label(lobby, "Spielmodus")
+	mode_picker = OptionButton.new()
+	for title in ["Koop", "Competetive Shared", "Competetive Region (folgt später)"]:
+		mode_picker.add_item(title)
+	mode_picker.set_item_disabled(2, true)
+	lobby.add_child(mode_picker)
 	address = field(lobby, "Host-Adresse (für Beitreten)", "127.0.0.1")
 	port = SpinBox.new()
 	port.min_value = 1024
@@ -84,68 +97,35 @@ func setup() -> void:
 	port.value = 20000
 	label(lobby, "TCP-Port")
 	lobby.add_child(port)
-	join_code = field(lobby, "Sitzungscode (auf allen Rechnern gleich)", Crypto.new().generate_random_bytes(4).hex_encode())
+	join_code = field(lobby, "Passwort (optional; vom Host vergeben)", "")
+	join_code.secret = true
+	label(lobby, "Stadt")
+	city_picker = OptionButton.new()
+	city_picker.add_item("Neue Stadt")
+	city_picker.add_item("Gespeicherte Stadt")
+	lobby.add_child(city_picker)
 	use_current = CheckBox.new()
-	use_current.text = "Kopie der geöffneten Stadt verwenden (max. 128 × 128, SC2X)"
+	use_current.text = "Kopie erstellen"
+	use_current.tooltip_text = "Die ausgewählte Stadt bleibt unverändert. Die Partie erhält einen eigenen Spielstand."
+	use_current.button_pressed = true
+	use_current.visible = false
 	lobby.add_child(use_current)
+	city_picker.item_selected.connect(func(index: int) -> void:
+		use_current.visible = index == 1
+		selected_city_path = "")
 	var row := HBoxContainer.new()
 	lobby.add_child(row)
-	button(row, "Koop hosten", start_host)
+	button(row, "Spiel erstellen", start_host)
 	button(row, "Beitreten / Wiederverbinden", start_join)
-	save_path = field(body, "Sitzungsdatei (.sc2mp; nur der Host speichert)", AppPaths.path("multiplayer/session.sc2mp"))
-	button(lobby, "Gespeicherte Sitzung hosten", resume_host)
+	city_file = FileDialog.new()
+	city_file.access = FileDialog.ACCESS_FILESYSTEM
+	city_file.file_mode = FileDialog.FILE_MODE_OPEN_FILE
+	city_file.filters = PackedStringArray(["*.sc2x, *.sc2, *.SC2, *.sc2mp ; Städte"])
+	city_file.current_dir = AppPaths.path("cities")
+	city_file.file_selected.connect(host_saved_city)
+	app.add_child(city_file)
 	status = label(body, "Noch nicht verbunden.")
 	message = label(body, "")
-	controls = VBoxContainer.new()
-	body.add_child(controls)
-	var speeds := HBoxContainer.new()
-	controls.add_child(speeds)
-	for index in 5:
-		button(speeds, ["Pause", "Turtle", "Llama", "Cheetah", "Swallow"][index], request_speed.bind(index + 1))
-	label(controls, "Jeder kann pausieren. Die langsamste angeforderte Geschwindigkeit gilt.")
-	button(controls, "Host: Pause nach Verbindungsabbruch aufheben", session.release_disconnect_pause)
-	var actions := HBoxContainer.new()
-	controls.add_child(actions)
-	button(actions, "Sitzung speichern", save)
-	button(actions, "Eigene letzte Änderung zurücknehmen", func() -> void: session.request({"kind": "undo"}))
-	button(actions, "Verlassen", confirm_leave)
-	label(controls, "Haushalt — Werte laden, bearbeiten, gemeinsam übernehmen")
-	button(controls, "Aktuelle Haushaltswerte laden", refresh_budget)
-	var grid := GridContainer.new()
-	grid.columns = 4
-	controls.add_child(grid)
-	for index in BudgetPhase.BUDGET_COUNT:
-		label(grid, BUDGET_NAMES[index])
-		var amount := SpinBox.new()
-		amount.min_value = 0
-		amount.max_value = 22 if index < 3 else 100
-		if index in [3, 4]:
-			amount.max_value = 2147483647
-		amount.editable = index not in [3, 4]
-		amount.suffix = "%"
-		grid.add_child(amount)
-		budget_values.append(amount)
-	auto_budget = CheckBox.new()
-	auto_budget.text = "Auto-Budget"
-	controls.add_child(auto_budget)
-	button(controls, "Haushalt übernehmen / Jahreshaushalt bestätigen", send_budget)
-	var bonds := HBoxContainer.new()
-	controls.add_child(bonds)
-	button(bonds, "Kredit aufnehmen ($10.000)", confirm_bond.bind("bond"))
-	button(bonds, "Kredit zurückzahlen", confirm_bond.bind("repay"))
-	ordinance = OptionButton.new()
-	for title: String in OrdinanceCommand.NAMES:
-		ordinance.add_item(title)
-	controls.add_child(ordinance)
-	var laws := HBoxContainer.new()
-	controls.add_child(laws)
-	button(laws, "Verordnung aktivieren", send_ordinance.bind(true))
-	button(laws, "Verordnung deaktivieren", send_ordinance.bind(false))
-	var decisions := HBoxContainer.new()
-	controls.add_child(decisions)
-	button(decisions, "Offene Entscheidung: Ja / Bestätigen", send_decision.bind(true))
-	button(decisions, "Offene Entscheidung: Nein", send_decision.bind(false))
-	button(body, "Zur Stadt", panel.hide)
 	sign_dialog = ConfirmationDialog.new()
 	sign_dialog.theme = AppUiTheme.current()
 	sign_dialog.title = "Gemeinsames Schild"
@@ -162,17 +142,18 @@ func setup() -> void:
 	leave_dialog.dialog_text = "Sitzung verlassen? Nicht gespeicherte Änderungen gehen beim Host verloren.\nAls Host trennst du dabei alle Mitspieler."
 	leave_dialog.confirmed.connect(leave)
 	app.add_child(leave_dialog)
-	menu_button = button(app.city_menu_bar.get_child(0), "Multiplayer", open)
+	windows = MultiplayerWindows.new(self)
+	windows.setup()
+	menu_button = windows.menu
 	app.main_menu.multiplayer_requested.connect(open)
-	controls.hide()
 	load_identity()
 
 
 func open() -> void:
-	lobby.visible = not active() or not session.connected
-	controls.visible = active()
-	if active():
-		refresh_budget()
+	if active() and session.connected:
+		windows.open_scoreboard()
+		return
+	lobby.show()
 	panel.popup_centered()
 
 
@@ -192,57 +173,67 @@ func remember_city() -> void:
 
 
 func start_host() -> void:
-	if active():
+	if active() or not can_start():
 		return
-	if not can_start():
+	if city_picker.selected == 1:
+		if not selected_city_path.is_empty():
+			host_saved_city(selected_city_path)
+			return
+		city_file.popup_centered_ratio(0.8)
 		return
-	var document: Sc2File
-	if use_current.button_pressed:
-		if app.document_state.current_document == null:
-			show_message("Öffne oder erstelle zuerst eine Stadt.")
+	remember_city()
+	pending_new_city = true
+	panel.hide()
+	app.new_city.open_new_city_dialog()
+
+
+func host_document(document: Sc2File) -> void:
+	if not document.is_sc2x():
+		var converted := Sc2xDocument.from_legacy(document)
+		if not converted.ok:
+			show_message(converted.error)
 			return
-		if not Sc2xCheckpoint.save_error(app.simulation_state.speed_controller).is_empty():
-			show_message("Beende zuerst die offene Simulationsentscheidung.")
-			return
-		remember_city()
-		document = original_document
-	else:
-		var created := Sc2xDocument.create_empty(128, "Koop City")
-		if not created.ok:
-			show_message(created.error)
-			return
-		document = created.document
-		remember_city()
-	var result := session.host(document, int(port.value), join_code.text, player.text)
+		document = converted.document
+	session.player_color = color_picker.color.to_html(false)
+	var result := session.host(document, int(port.value), join_code.text, player.text, "shared" if mode_picker.selected == 1 else "coop")
 	if not result.is_empty():
 		show_message(result)
 		return
+	pending_new_city = false
 	save_identity()
 	panel.hide()
-	show_message("Koop läuft. Mitspieler verbinden sich mit deiner LAN-IP, Port %d und Code %s. Wähle eine Geschwindigkeit." % [port.value, join_code.text])
+	show_message("Partie läuft auf Port %d. Wähle eine Spielgeschwindigkeit." % int(port.value))
+
+
+func host_saved_city(path: String) -> void:
+	remember_city()
+	selected_city_path = path
+	multiplayer_save_path = "" if use_current.button_pressed else path
+	if path.get_extension().to_lower() == "sc2mp":
+		var error := session.resume_session(path, int(port.value), join_code.text, player.text)
+		if not error.is_empty():
+			show_message(error)
+		return
+	var document := Sc2File.new()
+	if not document.parse(FileAccess.get_file_as_bytes(path)):
+		show_message(document.parse_error)
+		return
+	host_document(document)
+	if session.hosting and document.sc2x_extra_entries.has("multiplayer.json"):
+		var error := session.restore_embedded(document)
+		if not error.is_empty():
+			leave()
+			show_message(error)
 
 
 func start_join() -> void:
 	if not can_start():
 		return
 	remember_city()
+	session.player_color = color_picker.color.to_html(false)
 	var result := session.join(address.text.strip_edges(), int(port.value), join_code.text, player.text)
 	show_message(result if not result.is_empty() else "Verbinde mit dem Host …")
 	save_identity()
-
-
-func resume_host() -> void:
-	if active():
-		return
-	if not can_start():
-		return
-	remember_city()
-	var result := session.resume_session(save_path.text, int(port.value), join_code.text, player.text)
-	if not result.is_empty():
-		show_message(result)
-	else:
-		save_identity()
-		panel.hide()
 
 
 func receive_state(state: Dictionary) -> void:
@@ -253,7 +244,7 @@ func receive_state(state: Dictionary) -> void:
 		status.text += "\nSimulationsmeldung: Bestätigen, um fortzusetzen."
 	if state.get("terminal", false):
 		status.text += "\nSpielende. Die Stadt kann weiter betrachtet und die Sitzung gespeichert werden."
-	menu_button.text = "Multiplayer !" if state.get("blocked", false) else "Multiplayer"
+	windows.update_state(state)
 	if not str(state.get("error", "")).is_empty():
 		show_message(str(state.error))
 	if last_city_bytes == state.city:
@@ -265,8 +256,14 @@ func receive_state(state: Dictionary) -> void:
 		show_message("Ungültiger Stadtzustand vom Host. Sitzung beenden und neu verbinden.")
 		return
 	last_city_bytes = state.city
+	if mirrored:
+		# Camera-follow and audio choices belong to this player.
+		var local_city := CityState.from_document(document)
+		local_city.set_auto_goto_enabled(app.document_state.city.auto_goto_enabled())
+		local_city.set_sound_enabled(app.document_state.city.sound_enabled())
+		local_city.set_music_enabled(app.document_state.city.music_enabled())
 	if not mirrored:
-		if not app.city_session.activate_document(document, null, "Koop verbunden", true):
+		if not app.city_session.activate_document(document, null, "Multiplayer verbunden", true):
 			return
 		if app.simulation_state.frame_simulation != null:
 			app.simulation_state.frame_simulation.close()
@@ -314,6 +311,10 @@ func receive_state(state: Dictionary) -> void:
 
 
 func apply_selection(start: Vector2i, finish: Vector2i, path: Array[Vector2i], dragged: bool) -> void:
+	if windows.land_action != "":
+		session.request({"kind": windows.land_action, "start": [start.x, start.y], "finish": [finish.x, finish.y], "price": windows.land_offer_price})
+		windows.land_action = ""
+		return
 	var group := app.tool_state.selected_group
 	if group == CityToolIds.Group.QUERY:
 		app.query_choices.open_query(finish)
@@ -352,50 +353,30 @@ func request_speed(value: int) -> void:
 
 
 func refresh_budget() -> void:
-	if not mirrored:
-		return
-	var values := BudgetPhase.funding_values(app.document_state.city)
-	for index in mini(values.size(), budget_values.size()):
-		budget_values[index].value = values[index]
-	auto_budget.button_pressed = app.document_state.city.auto_budget_enabled()
 	policy_at_open = session.local_policy
-
-
-func send_budget() -> void:
-	var values: Array[int] = []
-	for field_value in budget_values:
-		values.append(int(field_value.value))
-	session.request({"kind": "budget", "values": values, "auto": auto_budget.button_pressed, "policy": policy_at_open})
-
-
-func send_ordinance(enabled: bool) -> void:
-	session.request({"kind": "ordinance", "ordinance": ordinance.selected, "enabled": enabled, "policy": policy_at_open})
 
 
 func send_decision(accepted: bool) -> void:
 	session.request({"kind": "decision", "accept": accepted, "policy": policy_at_open})
 
 
-func confirm_bond(kind: String) -> void:
-	var dialog := ConfirmationDialog.new()
-	dialog.theme = AppUiTheme.current()
-	dialog.dialog_text = "Gemeinsamen Kredit aufnehmen?" if kind == "bond" else "Gemeinsamen Kredit zurückzahlen?"
-	app.add_child(dialog)
-	var policy := policy_at_open
-	dialog.confirmed.connect(func() -> void:
-		session.request({"kind": kind, "policy": policy})
-		dialog.queue_free())
-	dialog.canceled.connect(dialog.queue_free)
-	dialog.popup_centered()
-
-
-func save() -> void:
-	if not save_path.text.ends_with(".sc2mp"):
-		show_message("Verwende eine eigene Sitzungsdatei mit der Endung .sc2mp.")
+func save(as_copy := false) -> void:
+	if not session.hosting:
+		show_message("Der Host speichert die gemeinsame Partie.")
 		return
-	DirAccess.make_dir_recursive_absolute(save_path.text.get_base_dir())
-	var result := session.save_session(save_path.text)
-	show_message(result if not result.is_empty() else "Sitzung gespeichert: " + save_path.text)
+	if as_copy or multiplayer_save_path.is_empty() or not multiplayer_save_path.ends_with(".sc2x"):
+		app.city_files.open_save_dialog()
+	else:
+		save_to(multiplayer_save_path)
+
+
+func save_to(path: String) -> void:
+	if not path.to_lower().ends_with(".sc2x"):
+		path = path.get_basename() + ".sc2x"
+	var error := session.save_city(path)
+	if error.is_empty():
+		multiplayer_save_path = path
+	show_message(error if not error.is_empty() else "Multiplayer-Spielstand gespeichert: " + path)
 
 
 func confirm_leave() -> void:
@@ -407,6 +388,8 @@ func leave() -> void:
 	mirrored = false
 	last_city_bytes = ""
 	panel.hide()
+	multiplayer_save_path = ""
+	windows.close()
 	if original_document != null:
 		app.city_session.activate_document(original_document, null, "Multiplayer verlassen", true)
 		app.document_state.current_save_path = original_save_path
@@ -458,7 +441,7 @@ func load_identity() -> void:
 	player.text = str(config.get_value("client", "name", "Mayor"))
 	address.text = str(config.get_value("client", "address", "127.0.0.1"))
 	port.value = float(config.get_value("client", "port", 20000))
-	join_code.text = str(config.get_value("client", "code", join_code.text))
+	color_picker.color = Color(CoopSession.valid_color(config.get_value("client", "color", "46b4ff")))
 
 
 func can_start() -> bool:
@@ -471,14 +454,14 @@ func can_start() -> bool:
 	if not error.is_empty():
 		show_message(error)
 		return false
-	if player.text.strip_edges().is_empty() or player.text.length() > 32 or join_code.text.length() < 4 or join_code.text.length() > 64:
-		show_message("Verwende einen Spielernamen mit 1–32 und einen Sitzungscode mit 4–64 Zeichen.")
+	if player.text.strip_edges().is_empty() or player.text.length() > 32 or join_code.text.length() > 64:
+		show_message("Verwende einen Spielernamen mit 1–32 Zeichen und ein optionales Passwort mit höchstens 64 Zeichen.")
 		return false
 	return true
 
 
 func save_identity() -> void:
-	var signature := str([session.token, player.text, address.text, port.value, join_code.text])
+	var signature := str([session.token, player.text, address.text, port.value, color_picker.color])
 	if signature == identity_signature:
 		return
 	identity_signature = signature
@@ -487,7 +470,7 @@ func save_identity() -> void:
 	config.set_value("client", "name", player.text)
 	config.set_value("client", "address", address.text)
 	config.set_value("client", "port", int(port.value))
-	config.set_value("client", "code", join_code.text)
+	config.set_value("client", "color", color_picker.color.to_html(false))
 	config.save(AppPaths.path("multiplayer-client.cfg"))
 
 

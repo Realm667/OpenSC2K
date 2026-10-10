@@ -2,6 +2,7 @@ class_name IndustryWindowControl
 extends Control
 
 signal tax_rates_changed
+var command_sink: Callable
 
 enum Mode {
 	RATIOS,
@@ -250,6 +251,9 @@ func _apply_tax_pointer(pointer: Vector2, apply_all: bool) -> void:
 	var data := snapshot(city)
 	var maximum := maximum_for_mode(data, Mode.TAX_RATES)
 	var value := int((pointer.x - plot.position.x) * maximum / plot.size.x)
+	if command_sink.is_valid():
+		command_sink.call(industry, value, apply_all)
+		return
 	var result := IndustryTaxCommand.set_tax_rate(city, industry, value, apply_all)
 
 	if result.ok and result.changed:

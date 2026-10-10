@@ -1,10 +1,10 @@
-# OpenSC2K — Visual Enhancements
+# OpenSC2K — Integrated Runtime
 
-OpenSC2K is an open-source remake of SimCity 2000, built with Godot. This fork's
-**`feature/visual-enhancements-package`** branch adds configurable lighting,
-weather, seasons, water rendering and city animation on the upstream 0.3.0 base.
-These additions affect presentation; they do not change simulation rules,
-traffic calculations, disaster damage or city finances.
+OpenSC2K is an open-source remake of SimCity 2000, built with Godot.
+This integration branch combines Visual Enhancements, German Translation and
+playable Koop/Competitive Shared multiplayer on the upstream 0.3.0 base.
+Visual effects preserve simulation rules; multiplayer adds shared control and
+municipal ownership/account rules. See [the multiplayer guide](docs/multiplayer.md).
 
 ## Included features
 
@@ -66,10 +66,16 @@ this branch does not promise a fixed frame rate.
 
 Preferences are local presentation settings, not changes to city documents.
 The package includes the water-surface/depth work and its related rendering fixes.
-This standalone branch does not include
+This integration branch includes
 [German Translation](https://github.com/Realm667/OpenSC2K/tree/feature/german-translation)
-or [Multiplayer](https://github.com/Realm667/OpenSC2K/tree/feature/multiplayer).
+and [Multiplayer](https://github.com/Realm667/OpenSC2K/tree/feature/multiplayer).
 The underlying upstream SC2/SC2X compatibility rules still apply.
+
+## Multiplayer
+
+Playable Koop and Competetive Shared are available from the main menu. See the
+[updated multiplayer guide](docs/multiplayer.md) for setup, normal city saves, land
+ownership, chat, scoreboard and disaster assistance. Region remains planned.
 
 ## Screenshots
 
@@ -99,7 +105,7 @@ requires CMake. See [installation](docs/install.md) and
 [native build details](docs/native-simulation.md) for platform requirements.
 
 ```sh
-git clone --branch feature/visual-enhancements-package --single-branch https://github.com/Realm667/OpenSC2K.git OpenSC2K-visual-enhancements-package
+git clone --branch integration/runtime --single-branch https://github.com/Realm667/OpenSC2K.git OpenSC2K-visual-enhancements-package
 cd OpenSC2K-visual-enhancements-package
 python3 tools/build_native.py
 godot --headless --audio-driver Dummy --path game --editor --import

@@ -52,6 +52,9 @@ func save_now() -> bool:
 	if _job != null:
 		return false
 
+	if app.coop.active():
+		return _save_multiplayer()
+
 	var document := app.document_state.current_document
 
 	if document == null or app.document_state.city == null:
@@ -93,8 +96,8 @@ func save_now() -> bool:
 func close() -> void:
 	if _task >= 0:
 		WorkerThreadPool.wait_for_task_completion(_task)
-
-	_collect()
+		_task = -1
+		_finish_job()
 
 
 func _collect() -> void:
@@ -103,6 +106,10 @@ func _collect() -> void:
 
 	WorkerThreadPool.wait_for_task_completion(_task)
 	_task = -1
+	_finish_job()
+
+
+func _finish_job() -> void:
 	last_path = _job.saved_path
 	last_error = _job.error
 
@@ -164,3 +171,25 @@ class Job extends RefCounted:
 
 			if FileAccess.get_modified_time(file_path) < limit:
 				DirAccess.remove_absolute(file_path)
+
+
+func _save_multiplayer() -> bool:
+	var session := app.coop.session
+	if not session.hosting:
+		return false
+	var signature: Array = [session.session_id, session.world.revision]
+	if signature == _signature:
+		return false
+	var checkpoint := session.city_checkpoint()
+	if not checkpoint.error.is_empty():
+		last_error = checkpoint.error
+		return false
+	var name := session.world.city.city_name().validate_filename().strip_edges()
+	var stamp := Time.get_datetime_string_from_system(false, true).replace(":", "-").replace(" ", "_")
+	_job = Job.new()
+	_job.document = checkpoint.document
+	_job.path = directory.path_join("%s Multiplayer %s.sc2x" % [name, stamp])
+	_job.reference_root = app.asset_state.reference_root
+	_task = WorkerThreadPool.add_task(_job.run, false, "Multiplayer autosave")
+	_signature = signature
+	return true

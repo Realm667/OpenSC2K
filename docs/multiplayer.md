@@ -1,54 +1,91 @@
-# Multiplayer Koop
+# Multiplayer
 
-The multiplayer branch adds an experimental, playable real-time cooperative city to the Visual Enhancements package. Up to eight participants share one city, treasury, budget and simulation. Competitive Shared and Competitive Region are planned extensions and are not implemented in this version.
+Experimental LAN/direct-IP multiplayer supports simultaneous **Koop** and
+**Competetive Shared**, up to eight players on SC2X maps up to 128 × 128.
+**Competetive Region** is displayed as unavailable and remains a subsequent release.
+All participants need the same network build.
 
-## Start a session
+## Start and continue
 
-1. Install the same multiplayer build and import the required game assets on each computer.
-2. Open **Multiplayer** from the main menu. Enter a player name, TCP port and session code.
-3. The host selects **Koop hosten**. This creates an empty 128 by 128 city. To use generated terrain or an existing city, open that city first and select the option to host a copy. The city must be SC2X, no larger than 128 tiles per side, with no unresolved simulation decision.
-4. Other players enter the host's LAN address, the same port and code, then select **Beitreten / Wiederverbinden**. Port 20000 is the default. For two instances on one computer, use separate data profiles and address `127.0.0.1`.
-5. The host chooses a running speed. Each participant can request a pause or a speed; the slowest request applies. The city tools work simultaneously, without turns.
+Open Multiplayer from the main menu. Choose a name, color and mode. The host may
+set an optional password. Guests enter the host's address and port (default 20000).
+For two local installations use separate profiles and 127.0.0.1. Duplicate colors
+receive an alternative; names remain visible too.
 
-The top menu's **Multiplayer** button opens shared administration, save and leave actions. Budget, ordinance and bond actions use this panel. Load current budget values before editing; another participant's intervening policy change rejects an obsolete proposal. An exclamation mark indicates a simulation decision. The annual budget must be confirmed there; military decisions and other blocking notices have explicit confirmation actions.
+**Neue Stadt** opens the regular terrain preview and complete city setup.
+**Gespeicherte Stadt** opens a city file. **Kopie erstellen** keeps the original
+and asks for a new save destination; otherwise continue the selected save.
+Legacy SC2 cities are converted to SC2X. Old .sc2mp sessions can still be imported.
 
-Direct IP uses the same TCP connection as LAN. The host must be reachable on the selected port. Automatic LAN discovery, NAT traversal, encryption and automatic host migration are not provided. Use the prototype with trusted participants on a private network; a session code is admission control, not encrypted transport.
+Use normal File > Save / Save As. Only the host saves. Session identities,
+municipalities, ownership, statistics and simulation checkpoints travel inside
+SC2X automatically; no separate session path is needed. The previous save is
+retained as .bak. Enabled recent autosaves also include the complete session on
+the host; guests do not autosave the display replica. Resolve pending simulation decisions before saving. Keep client
+profiles and saves private: they contain reconnect identities.
 
-## Conflicts and recovery
+The Multiplayer menu between Newspaper and Help contains Scoreboard, Chat,
+connection recovery, leaving and Shared land transactions. Budgets, ordinances,
+industry taxes, bonds and speed use regular controls. Chat and camera movement do
+not pause the host. Everyone can request a pause; the slowest explicit speed
+request applies. New guests no longer cap speed at Turtle. A disconnect pauses
+the world until the host releases it. Reconnection preserves identity and sequence.
 
-Only the host runs the authoritative simulation. Even the host's visible city is a separate display copy. Clients send tool intentions; the host calculates costs and executes the existing tools on a candidate city. It rejects stale selected tiles and stale tiles anywhere in the resulting structural change, including indirect terrain effects and complete building footprints. Independent changes from the same observed revision remain valid. Shared funds are checked against the latest accepted city.
+## Koop
 
-Bridge, connection, tunnel and stadium choices are returned to the requesting player. The host rechecks the command after the choice. Confirmed construction prices are limits, so a more expensive result cannot be accepted silently. A rejected candidate does not alter the authoritative city's payloads or random generators.
+All players administer one city, treasury and budget concurrently. The host checks
+costs and the full affected area, including indirect terrain edits and building
+footprints. Stale conflicts are rejected without payment. Existing limited Undo
+only applies to your immediately preceding edit before another change or tick.
+Everyone can dispatch shared emergency services. Colored marker outlines identify
+the last dispatcher without creating exclusive ownership.
 
-Undo is available only for the same participant's immediately preceding edit, while no other edit or simulation step has intervened. This version rejects expired Undo requests instead of reversing later work.
+## Competetive Shared
 
-A lost participant causes a shared pause. The host can release that pause explicitly. Disconnected clients display their last snapshot and cannot edit. Reconnecting with the same local profile retains the participant identity and command sequence, preventing an already handled request from being charged twice. After leaving a session, the local singleplayer city is restored.
+Each participant has a separate municipal simulation and account on the shared
+visible terrain. Budgets, taxes, loans, population and services are independent.
+Imported development belongs to the host. Guests receive fresh accounts using the
+session difficulty. Undeveloped land is neutral. Use Multiplayer > Land kaufen,
+drag a rectangle and confirm the quote. The initial price is $10 per tile.
+Disconnected parcels are allowed. Buildings and indirect terrain changes must
+stay on your land. Colored boundaries identify ownership.
 
-## Save a session
+Owners may offer rectangles at explicit prices. Buyers accept through Landangebote.
+The host transfers payment, ownership, zones and complete buildings together;
+partial-building sales are rejected. Loans stay with the seller. Active emergency
+or moving objects must leave a transferred parcel first, and transfers wait while
+either city handles a disaster. Raced or expired purchases charge nothing.
 
-The host saves a versioned `.sc2mp` file using the path in the Multiplayer panel. The default is `multiplayer/session.sc2mp` within that installation's data folder. A previous save is retained as `.bak`. Saving includes the SC2X city, random generators and phase checkpoint, participant identities, command sequences and session identity. Resolve pending simulation decisions before saving. Imported cities are copied and their source files are not overwritten.
+Each city uses its own infrastructure; adjacent foreign networks do not provide
+free services. Intermunicipal supply contracts and cross-border environmental
+propagation are not implemented in this first Shared version. City rotation and
+Shared Undo remain unavailable.
 
-Use **Gespeicherte Sitzung hosten** to resume. A restored session starts paused; choose a session code and share it with the participants. The local client identity is in `multiplayer-client.cfg`. Keep each participant's profile separate, including when testing two instances on one computer. Do not publish session files or client profiles: they contain reconnect identities.
+Players may assist an active disaster with their own available fire, police or
+military units without entering disaster mode themselves. A distinct two-tone
+alarm and bottom-toolbar location identify the affected player. Markers retain
+dispatcher colors and show names on hover. Recall includes your foreign deployments.
 
-## Prototype boundaries
+## Presentation and communication
 
-- One cooperative city, at most 128 by 128 tiles. No separate municipal economies, ownership or regional trade yet.
-- Camera movement and zoom are independent. Rotation is disabled because the current engine rotates city data; independent rotated views need a separate coordinate mapping.
-- Manual disaster triggers, facility query actions and the industry tax detail window are not available in Koop. Ordinary simulation disasters remain active according to the hosted city's rules. Read-only city queries and data views remain available.
-- The custom budget panel supports the existing residential, commercial and industrial tax percentages, service funding, Auto-Budget, ordinances and bonds. It does not yet reproduce the full singleplayer budget reporting interface.
-- Confirmed commands publish immediately; periodic simulation snapshots follow at four per second. TCP uses no-delay mode. The host simulates continuously. Bandwidth and rendering performance need testing on real LAN hardware and developed cities before raising the map or participant limits.
-- The host controls the shared weather progression. Weather transitions, precipitation, cloud types and atlas transitions, low mist, flashes and thunder events are sent separately at up to 20 updates per second, including the current state for late joiners. Host pause freezes precipitation and storm audio on guests. Dry storms use wind without rain. Guests can still disable effects or mute audio locally. Cosmetic weather starts afresh when a saved session is hosted again; the simulation weather remains in the saved city. All participants in the integrated 0.3.0 runtime must use network build `opensc2k-coop-4`; the integrated 0.3.0 runtime records native dispatch positions in session saves. Sessions without that position record are rejected rather than restoring incomplete deployment state. The previous dedicated Multiplayer runtime remains available for its older saves.
+Remote cursors use map coordinates with names and colors. Scoreboard shows
+construction counts/spending, common city totals in Koop, and individual municipal
+totals in Shared. The session chat has colored names, literal text and unread counts.
 
-## Architecture and tests
+The host controls day/night, seasons, weather and clouds. Guests receive the phase
+and settings on joining; corresponding environmental controls are locked. Local
+audio levels remain available. Visual effects restart when hosting a saved city;
+simulation weather is saved.
 
-`CoopWorld` owns the city, simulation and command validation. `CoopSession` owns TCP admission, participant identities, sequencing, speed requests and session files. `CityTcpChannel` uses bounded, length-prefixed UTF-8 JSON with partial nonblocking reads and writes. Incoming commands have frame and rate limits; a slow peer cannot accumulate unbounded snapshots. `ApplicationMultiplayer` connects existing menus and tools to the session and maintains the display copy.
+Confirmed edits publish immediately. Simulation snapshots run at four updates per
+second, atmosphere up to twenty and cursors up to ten. TCP uses no-delay and bounded
+queues. Only the host simulates; clients send intentions, never city files or
+balances. Discovery, NAT traversal, encryption and host migration are not provided.
 
-`coop_multiplayer_test` covers simultaneous independent edits, stale demolition, Undo ownership, invalid coordinates, shared funds, stale budgets, simulation advancement, TCP synchronization, duplicate requests, reconnect and session persistence. `coop_ui_test` covers main-menu entry, host activation, ordinary map tools, a remote edit, shared budget, save and return to singleplayer. Run these with the project validator; run the full release suite before distributing a build. Loopback checks do not establish reachability or performance between separate computers.
+## Validation
 
-## Subsequent modes
-
-Competitive Region requires separate authoritative city contexts on a shared calendar, with all participants able to inspect every other city through a read-only live view. Contracts must commit deliveries and payments together.
-
-Competitive Shared requires ownership and municipality-aware simulation on one physical map. Separate bank balances alone are insufficient: taxes, demand, upkeep, public services and network supply need municipal attribution. Neutral land may be purchased anywhere, including disconnected parcels; another player's land requires an explicit sale offer. Full maps leave voluntary trade, rebuilding and densification.
-
-The historical design references are [SimCity 2000 Network Edition's online help](https://nightfirepc.com/maps/sc2knefiles/2KNET/DOCS/basics.htm), its [server and client model](https://nightfirepc.com/maps/sc2knefiles/2KNET/DOCS/servclin.htm), and [SimCity 2013's regional and spectator features](https://eaassets-a.akamaihd.net/eahelp/manuals/simcity-manuals_PC.pdf). These inform the future modes; they do not imply that this prototype implements their municipal economy or regional trading systems.
+coop_multiplayer_test, multiplayer_next_test and coop_ui_test cover concurrent
+edits, conflicts/costs, budgets, city setup controls, saves, reconnect, separate
+Shared accounts, land transactions, disaster aid, chat, colors, presence and
+atmosphere. Run the release suite plus GPU/two-process checks before distribution.
+Loopback tests do not establish reachability/performance on physical LAN computers.

@@ -35,8 +35,7 @@ func reset_pending_state() -> void:
 
 func open_manual_budget() -> void:
 	if app.coop.active():
-		app.coop.open()
-		return
+		app.coop.refresh_budget()
 	if app.tool_state.landscape_editor:
 		return
 
@@ -62,6 +61,12 @@ func open_budget_dialog(values: PackedInt32Array, annual: bool) -> void:
 		app.city_dialogs.budget_dialog.update_failed.connect(app.interface.show_error)
 
 	app.city_dialogs.budget_dialog.set_city(app.document_state.city)
+	var ordinance_control := app.city_dialogs.budget_dialog.ordinance_control
+	ordinance_control.command_sink = Callable()
+	if app.coop.active():
+		ordinance_control.command_sink = func(index: int, enabled: bool) -> void:
+			app.coop.session.request({"kind": "ordinance", "ordinance": index, "enabled": enabled, "policy": app.coop.policy_at_open})
+			app.city_dialogs.budget_dialog.hide()
 	app.simulation_state.annual_budget_pending = annual
 	app.city_dialogs.budget_dialog.open_budget(
 		values,
@@ -140,6 +145,10 @@ func request_repay_bond() -> void:
 
 
 func resolve_bond_action(action: String, confirmed: bool) -> void:
+	if app.coop.active():
+		if confirmed:
+			app.coop.session.request({"kind": "bond" if action == "issue" else "repay", "policy": app.coop.policy_at_open})
+		return
 	if app.document_state.city == null or action.is_empty():
 		return
 
@@ -197,6 +206,9 @@ func _update_bond_controls() -> void:
 
 
 func commit_budget() -> void:
+	if app.coop.active():
+		app.coop.session.request({"kind": "budget", "values": Array(app.city_dialogs.budget_dialog.funding_values()), "auto": app.city_dialogs.budget_dialog.auto_budget_enabled(), "policy": app.coop.policy_at_open})
+		return
 	if app.document_state.city == null:
 		return
 
@@ -257,6 +269,10 @@ func decline_military_proposal() -> void:
 
 
 func _resolve_military_proposal(accepted: bool) -> void:
+	if app.coop.active():
+		app.coop.send_decision(accepted)
+		app.simulation_state.military_proposal_pending = false
+		return
 	if not app.simulation_state.military_proposal_pending or app.simulation_state.speed_controller == null:
 		return
 

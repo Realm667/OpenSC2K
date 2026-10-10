@@ -46,9 +46,11 @@ func sync_asset_menu_actions() -> void:
 func on_file_menu(id: int) -> void:
 	if app.coop.active():
 		if id in [2, CityMenuBar.MENU_SAVE_CITY]:
-			app.coop.save()
+			app.coop.save(id == 2)
+		elif id in [5, 6]:
+			app.coop.confirm_leave()
 		else:
-			app.coop.open()
+			app.coop.show_message("Verlasse zuerst die aktuelle Multiplayer-Partie.")
 		return
 	if not app.asset_state.assets_ready and id not in [5, 6]:
 		return
@@ -92,8 +94,15 @@ func on_speed_menu(id: int) -> void:
 
 
 func on_options_menu(id: int) -> void:
-	if app.coop.active() and id != CityMenuBar.MENU_SETTINGS:
-		app.coop.open()
+	if app.coop.active() and id not in [CityMenuBar.MENU_SETTINGS, MENU_AUTO_GOTO, MENU_SOUND_EFFECTS, MENU_MUSIC]:
+		if id == MENU_AUTO_BUDGET:
+			app.coop.session.request({"kind": "budget", "values": Array(BudgetPhase.funding_values(app.document_state.city)), "auto": not app.document_state.city.auto_budget_enabled()})
+		elif id in [MENU_AUTO_GOTO, MENU_SOUND_EFFECTS, MENU_MUSIC]:
+			var option := {MENU_AUTO_GOTO: "auto_goto", MENU_SOUND_EFFECTS: "sound", MENU_MUSIC: "music"}
+			var enabled := {MENU_AUTO_GOTO: app.document_state.city.auto_goto_enabled(), MENU_SOUND_EFFECTS: app.document_state.city.sound_enabled(), MENU_MUSIC: app.document_state.city.music_enabled()}
+			app.coop.session.request({"kind": "city_option", "option": option[id], "enabled": not enabled[id]})
+		else:
+			app.coop.show_message("Diese Aktion ist während einer Multiplayer-Partie nicht verfügbar.")
 		return
 	if id == CityMenuBar.MENU_UPGRADE_SC2X:
 		app.city_files.upgrade_city_to_sc2x()

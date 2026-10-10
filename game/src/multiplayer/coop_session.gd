@@ -7,10 +7,12 @@ signal feedback(message: String)
 signal connection_changed
 signal choice_requested(result: Dictionary)
 signal environment_received(state: Dictionary)
+signal chat_received(message: Dictionary)
+signal presence_received(players: Array)
 
 const PROTOCOL := 1
 const BUILD := "opensc2k-coop-1"
-const NETWORK_BUILD := "opensc2k-coop-4"
+const NETWORK_BUILD := "opensc2k-multiplayer-6"
 const MAX_PLAYERS := 8
 var world: CoopWorld
 var active := false
@@ -36,10 +38,17 @@ var handshake_started: Dictionary[int, int] = {}
 var command_rates: Dictionary[int, Array] = {}
 var environment_source: Callable
 var environment_elapsed := 0.0
+var player_color := "46b4ff"
+var cursors: Dictionary = {}
+var chat_history: Array = []
+var presence_elapsed := 0.0
+var cursor_source: Callable
+var chat_last_sent: Dictionary = {}
 
 
-func host(document: Sc2File, port: int, join_code: String, player_name: String) -> String:
-	var candidate := CoopWorld.new()
+
+func host(document: Sc2File, port: int, join_code: String, player_name: String, mode := "coop") -> String:
+	var candidate: CoopWorld = SharedWorld.new() if mode == "shared" else CoopWorld.new()
 	if not candidate.open(document):
 		return candidate.error
 	var listener := TCPServer.new()
@@ -48,10 +57,15 @@ func host(document: Sc2File, port: int, join_code: String, player_name: String) 
 		return "Cannot listen on TCP port %d: %s" % [port, error_string(result)]
 	stop()
 	world = candidate
+	if world is SharedWorld:
+		var shared_error: String = world.add_player(token)
+		if not shared_error.is_empty():
+			listener.stop()
+			return shared_error
 	server = listener
 	code = join_code
 	session_id = Crypto.new().generate_random_bytes(16).hex_encode()
-	members[token] = {"name": player_name.left(32), "sequence": 0}
+	members[token] = {"name": player_name.left(32), "sequence": 0, "color": player_color}
 	requested_speed[token] = 1
 	active = true
 	hosting = true
@@ -78,7 +92,7 @@ func join(address: String, port: int, join_code: String, player_name: String) ->
 	var channel := CityTcpChannel.new(peer)
 	channels[0] = channel
 	channel.send({"type": "hello", "protocol": PROTOCOL, "build": NETWORK_BUILD, "code": code,
-		"token": token, "name": player_name.left(32), "session": session_id})
+		"token": token, "name": player_name.left(32), "session": session_id, "color": player_color})
 	connection_changed.emit()
 	return ""
 
@@ -95,6 +109,9 @@ func stop() -> void:
 	server = null
 	world = null
 	members.clear()
+	cursors.clear()
+	chat_history.clear()
+	chat_last_sent.clear()
 	requested_speed.clear()
 	active = false
 	connected = false
@@ -146,6 +163,19 @@ func _process(delta: float) -> void:
 			for id: int in identities:
 				if channels[id].output.is_empty():
 					channels[id].send({"type": "environment", "weather": atmosphere})
+	presence_elapsed += delta
+	if presence_elapsed >= 0.1:
+		presence_elapsed = 0.0
+		if cursor_source.is_valid():
+			var position: Vector2i = cursor_source.call()
+			if hosting:
+				cursors[token] = [position.x, position.y]
+			elif connected:
+				channels[0].send({"type": "cursor", "position": [position.x, position.y]})
+		if hosting:
+			var players := roster()
+			presence_received.emit(players)
+			broadcast({"type": "presence", "players": players})
 	for channel in channels.values():
 		channel.flush()
 
@@ -174,13 +204,30 @@ func receive_host(id: int, message: Dictionary) -> void:
 		if message.get("session", "") != "" and message.session != session_id:
 			channels[id].send({"type": "result", "ok": false, "message": "This is a different session. Leave before joining it."})
 			return
+		if world is SharedWorld:
+			var shared_error: String = world.add_player(message.token)
+			if not shared_error.is_empty():
+				channels[id].failed = true
+				return
 		identities[id] = message.token
 		if not members.has(message.token):
-			members[message.token] = {"name": message.name, "sequence": 0}
-		requested_speed[message.token] = 2
+			members[message.token] = {"name": message.name, "sequence": 0, "color": available_color(message.get("color"))}
+		requested_speed[message.token] = 5
+		apply_speed()
 		channels[id].send({"type": "welcome", "session": session_id, "next": int(members[message.token].sequence) + 1})
-		channels[id].send(make_state())
+		channels[id].send(make_state(message.token))
+		for item: Dictionary in chat_history:
+			channels[id].send({"type": "chat", "message": item})
 		feedback.emit("%s joined Koop." % message.name)
+		return
+	var actor: String = identities[id]
+	if message.get("type") == "cursor":
+		var position: Variant = message.get("position")
+		if position is Array and position.size() == 2 and CoopWorld.whole_number(position[0], -1, world.city.map_size - 1) and CoopWorld.whole_number(position[1], -1, world.city.map_size - 1):
+			cursors[actor] = position
+		return
+	if message.get("type") == "chat":
+		accept_chat(actor, message.get("text"))
 		return
 	if message.get("type") != "command":
 		channels[id].failed = true
@@ -218,6 +265,8 @@ func apply_speed() -> void:
 	for value: int in requested_speed.values():
 		speed = mini(speed, value)
 	world.controller.set_speed(1 if disconnected_pause else speed)
+	if world is SharedWorld:
+		world.set_shared_speed(1 if disconnected_pause else speed)
 
 
 func release_disconnect_pause() -> void:
@@ -268,18 +317,30 @@ func receive_client(message: Dictionary) -> void:
 			feedback.emit(str(message.get("message", "")))
 			if message.get("choices") is Array and message.get("request") is Dictionary:
 				choice_requested.emit(message)
+		"chat":
+			if message.get("message") is Dictionary:
+				chat_received.emit(message.message)
+		"presence":
+			if message.get("players") is Array:
+				presence_received.emit(message.players)
 		"ping":
 			pass
 		_:
 			channels[0].failed = true
 
 
-func make_state() -> Dictionary:
-	var state := world.snapshot()
+func make_state(recipient := "") -> Dictionary:
+	var state: Dictionary = world.snapshot_for(recipient if not recipient.is_empty() else token) if world is SharedWorld else world.snapshot()
 	var players: Array[String] = []
 	for actor: String in requested_speed:
 		players.append("%s (%s)" % [members[actor].name, "paused" if requested_speed[actor] == 1 else "playing"])
 	state["players"] = players
+	state["roster"] = roster()
+	if world is SharedWorld:
+		state["offers"] = []
+		for key: String in world.offers:
+			var offer: Dictionary = world.offers[key]
+			state.offers.append({"id": key, "name": members[offer.seller].name, "count": offer.tiles.size(), "price": offer.price})
 	state["disconnect_pause"] = disconnected_pause
 	if environment_source.is_valid():
 		state["weather"] = environment_source.call()
@@ -295,7 +356,7 @@ func publish() -> void:
 	for id: int in identities:
 		# Do not accumulate stale snapshots behind a slow client.
 		if channels[id].output.size() < CityTcpChannel.IO_BUDGET:
-			channels[id].send(state)
+			channels[id].send(make_state(identities[id]) if world is SharedWorld else state)
 
 
 func accept_state(state: Dictionary) -> void:
@@ -316,13 +377,16 @@ func drop(id: int) -> void:
 		if identities.has(id):
 			var actor: String = identities[id]
 			requested_speed.erase(actor)
+			cursors.erase(actor)
 			identities.erase(id)
 			disconnected_pause = true
 			world.controller.set_speed(1)
+			if world is SharedWorld:
+				world.set_shared_speed(1)
 			feedback.emit("%s disconnected. The host can release the disconnect pause." % members[actor].name)
 	else:
 		connected = false
-		feedback.emit("Connection lost or refused. Check host, port and code, then reconnect. The view is frozen.")
+		feedback.emit("Connection lost or refused. Check host, port and password, then reconnect. The view is frozen.")
 	connection_changed.emit()
 
 
@@ -335,7 +399,8 @@ func save_session(path: String) -> String:
 		return checkpoint_error
 	var data := {"format": "OpenSC2K Koop", "version": PROTOCOL, "build": BUILD,
 		"session": session_id, "host": token, "members": members, "state": world.snapshot(),
-		"dispatch": Array(world.dispatch_cycles), "dispatch_initialized": world.dispatch_initialized, "dispatch_points": world.saved_dispatch_points()}
+		"dispatch": Array(world.dispatch_cycles), "dispatch_initialized": world.dispatch_initialized,
+		"dispatch_points": world.saved_dispatch_points(), "statistics": world.statistics, "dispatch_owners": world.dispatch_owners}
 	if not data.state.has("city"):
 		return str(data.state.get("error", "Cannot encode city."))
 	var temporary := path + ".tmp"
@@ -404,5 +469,171 @@ func resume_session(path: String, port: int, join_code: String, player_name: Str
 	world.dispatch_cycles = PackedInt32Array(data.dispatch)
 	world.dispatch_initialized = data.dispatch_initialized
 	world.dispatch_slot_points = dispatch.points
+	world.statistics = data.get("statistics", {})
+	world.dispatch_owners = data.get("dispatch_owners", {})
+	publish()
+	return ""
+
+
+static func valid_color(value: Variant) -> String:
+	if value is String and value.length() == 6 and value.is_valid_hex_number(false):
+		return value.to_lower()
+	return "46b4ff"
+
+
+func available_color(value: Variant) -> String:
+	var wanted := valid_color(value)
+	var used: Array = []
+	for member: Dictionary in members.values():
+		used.append(valid_color(member.get("color")))
+	if not used.has(wanted):
+		return wanted
+	for color in ["ff9c40", "66cf79", "e77ba8", "c7a0ff", "ffe173", "62dbd4", "eeeeee", "b0bf5b"]:
+		if not used.has(color):
+			return color
+	return wanted
+
+
+func roster() -> Array:
+	var result: Array = []
+	for actor: String in members:
+		var member: Dictionary = members[actor]
+		result.append({"id": actor.sha256_text(), "name": member.name,
+			"color": valid_color(member.get("color")), "online": requested_speed.has(actor),
+			"cursor": cursors.get(actor, [-1, -1]),
+			"builds": world.statistics.get(actor, {}).get("builds", 0),
+			"spent": world.statistics.get(actor, {}).get("spent", 0),
+			"funds": world.municipalities[actor].city.funds() if world is SharedWorld and world.municipalities.has(actor) else world.city.funds(),
+			"population": world.municipalities[actor].city.population() if world is SharedWorld and world.municipalities.has(actor) else world.city.population()})
+	return result
+
+
+func broadcast(message: Dictionary) -> void:
+	for id: int in identities:
+		if channels[id].output.size() < CityTcpChannel.IO_BUDGET:
+			channels[id].send(message)
+
+
+func send_chat(text: String) -> void:
+	if not connected:
+		return
+	if hosting:
+		accept_chat(token, text)
+	else:
+		channels[0].send({"type": "chat", "text": text})
+		channels[0].flush()
+
+
+func accept_chat(actor: String, value: Variant) -> void:
+	if not value is String or value.strip_edges().is_empty() or value.length() > 500:
+		return
+	var now := Time.get_ticks_msec()
+	if now - int(chat_last_sent.get(actor, -1000)) < 500:
+		return
+	chat_last_sent[actor] = now
+	var entry := {"name": members[actor].name, "color": valid_color(members[actor].get("color")),
+		"text": value.strip_edges(), "time": Time.get_datetime_string_from_system()}
+	chat_history.append(entry)
+	if chat_history.size() > 100:
+		chat_history.pop_front()
+	chat_received.emit(entry)
+	broadcast({"type": "chat", "message": entry})
+
+
+func city_checkpoint() -> Dictionary:
+	if not hosting:
+		return {"error": "Only the host saves the game."}
+	var error := Sc2xCheckpoint.save_error(world.controller)
+	if not error.is_empty():
+		return {"error": error}
+	Sc2xCheckpoint.capture(world.controller, world.city.document.sc2x_metadata)
+	var document := world.city.document.duplicate_document()
+	var data := {"version": 1, "host": token, "session": session_id, "members": members,
+		"statistics": world.statistics, "dispatch_owners": world.dispatch_owners,
+		"dispatch": Array(world.dispatch_cycles), "dispatch_initialized": world.dispatch_initialized, "dispatch_points": world.saved_dispatch_points()}
+	if world is SharedWorld:
+		data["shared"] = world.saved_shared()
+		if data.shared.has("error"):
+			return {"error": data.shared.error}
+	document.sc2x_extra_entries["multiplayer.json"] = JSON.stringify(data).to_utf8_buffer()
+	return {"error": "", "document": document}
+
+
+func save_city(path: String) -> String:
+	var checkpoint := city_checkpoint()
+	if not checkpoint.error.is_empty():
+		return checkpoint.error
+	var document: Sc2File = checkpoint.document
+	var encoded := Sc2xDocument.encode(document)
+	if not encoded.ok:
+		return encoded.error
+	var temporary := path + ".tmp"
+	var file := FileAccess.open(temporary, FileAccess.WRITE)
+	if file == null:
+		return "Cannot write the city."
+	file.store_buffer(encoded.data)
+	file.flush()
+	var result := file.get_error()
+	file.close()
+	var check := Sc2File.new()
+	if result != OK or not check.parse(FileAccess.get_file_as_bytes(temporary)):
+		return "Cannot verify the saved city."
+	var backup := path + ".bak"
+	if FileAccess.file_exists(path):
+		if FileAccess.file_exists(backup) and DirAccess.remove_absolute(backup) != OK:
+			return "Cannot replace the previous backup."
+		if DirAccess.rename_absolute(path, backup) != OK:
+			return "Cannot back up the previous city."
+	if DirAccess.rename_absolute(temporary, path) != OK:
+		if FileAccess.file_exists(backup):
+			DirAccess.rename_absolute(backup, path)
+		return "Cannot install the saved city; the previous save was retained."
+	return ""
+
+
+func restore_embedded(document: Sc2File) -> String:
+	var data: Variant = JSON.parse_string(document.sc2x_extra_entries.get("multiplayer.json", PackedByteArray()).get_string_from_utf8())
+	if not data is Dictionary or data.get("version") != 1 or not data.get("members") is Dictionary:
+		return "Invalid multiplayer city data."
+	if not data.get("host") is String or not data.members.has(data.host) or not data.get("session") is String:
+		return "Invalid multiplayer identities."
+	for actor: Variant in data.members:
+		var member: Variant = data.members[actor]
+		if not actor is String or actor.length() != 48 or not member is Dictionary or not member.get("name") is String or not CoopWorld.whole_number(member.get("sequence"), 0, 2147483646):
+			return "Invalid multiplayer member."
+	if not data.get("dispatch") is Array or data.dispatch.size() != 3:
+		return "Invalid dispatch state."
+	for value: Variant in data.dispatch:
+		if not CoopWorld.whole_number(value, 0, 2147483647):
+			return "Invalid dispatch cycle."
+	if not data.get("statistics") is Dictionary or not data.get("dispatch_owners") is Dictionary:
+		return "Invalid multiplayer statistics."
+	var restored_world: CoopWorld = SharedWorld.new() if data.get("shared") is Dictionary else CoopWorld.new()
+	if not restored_world.open(document):
+		return restored_world.error
+	if restored_world is SharedWorld:
+		var shared_error: String = restored_world.restore_shared(data.shared)
+		if not shared_error.is_empty():
+			return shared_error
+		if restored_world.host_actor != data.host or restored_world.actors.size() != data.members.size():
+			return "Saved municipalities do not match session members."
+		for actor: String in restored_world.actors:
+			if not data.members.has(actor):
+				return "Missing municipality member."
+	var dispatch := CoopWorld.read_dispatch_points(data.get("dispatch_points", []), document.map_size)
+	if not dispatch.error.is_empty():
+		return dispatch.error
+	restored_world.dispatch_slot_points = dispatch.points
+	world = restored_world
+	token = data.host
+	session_id = data.session
+	members = data.members
+	requested_speed.clear()
+	requested_speed[token] = 1
+	next_command = int(members[token].sequence) + 1
+	world.statistics = data.statistics
+	world.dispatch_owners = data.dispatch_owners
+	world.dispatch_cycles = PackedInt32Array(data.dispatch)
+	world.dispatch_initialized = data.get("dispatch_initialized") == true
 	publish()
 	return ""

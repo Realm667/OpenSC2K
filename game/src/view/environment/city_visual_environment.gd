@@ -5,6 +5,12 @@ extends RefCounted
 var app: CityApplication
 var phase := 0.5
 var season_phase := 1.0
+const SHARED_OPTIONS := ["day_enabled", "day_mode", "day_seconds", "day_hour",
+	"season_enabled", "season_mode", "season_seconds", "season_fixed", "season_transition",
+	"weather_enabled", "weather_mode", "weather_fixed", "weather_seconds", "weather_transition",
+	"weather_strength", "cloud_enabled", "cloud_mode", "cloud_density", "cloud_speed",
+	"fog_enabled", "pause_freezes", "speed_link"]
+
 var tint := Color.WHITE
 var night := 0.0
 var lut: ImageTexture
@@ -169,21 +175,31 @@ func process(delta: float) -> void:
 		profiles.reset()
 		clouds.reset()
 		night_lighting.reset()
+	var saved_options := app.preferences.visual_enhancements
+	var remote := app.coop.active() and not app.coop.session.hosting
+	if remote and remote_weather.get("options") is Dictionary:
+		var network_options := saved_options.duplicate(true)
+		for key: String in SHARED_OPTIONS:
+			if remote_weather.options.has(key):
+				network_options[key] = remote_weather.options[key]
+		app.preferences.visual_enhancements = VisualEnhancementOptions.normalize(network_options)
+		phase = float(remote_weather.get("day_phase", phase))
+		season_phase = float(remote_weather.get("season_phase", season_phase))
 	var options := app.preferences.visual_enhancements
 	var speed := app.simulation_state.speed_controller.speed if app.simulation_state.speed_controller != null else 1
 	var elapsed := maxf(delta, 0.0)
-	var paused := speed == GameSpeedController.Speed.PAUSED or app.frame._simulation_suspended()
+	var paused := speed == GameSpeedController.Speed.PAUSED or (not app.coop.active() and app.frame._simulation_suspended())
 	if options.pause_freezes and paused:
 		elapsed = 0.0
 	# Camera navigation does not interrupt precipitation or its ambience.
 	var weather_paused := speed == GameSpeedController.Speed.PAUSED or app.frame._simulation_suspended(false)
 	var weather_delta := 0.0 if weather_paused else maxf(delta, 0.0)
 	var factor := VisualEnhancementOptions.speed_factor(speed) if options.speed_link and speed > 1 else 1.0
-	if active and options.day_enabled and options.day_mode == 0:
+	if active and not remote and options.day_enabled and options.day_mode == 0:
 		phase = fposmod(phase + elapsed * factor / float(options.day_seconds), 1.0)
 	var hour := phase * 24.0 if options.day_mode == 0 else float(options.day_hour)
 	var lighting := light_at_hour(hour, options.night_strength)
-	if active and options.season_enabled and options.season_mode == 1:
+	if active and not remote and options.season_enabled and options.season_mode == 1:
 		season_phase = fposmod(season_phase + elapsed * factor * 4.0 / float(options.season_seconds), 4.0)
 	var season := season_phase
 	if options.season_mode == 0 and city != null:
@@ -250,11 +266,17 @@ func process(delta: float) -> void:
 	night_lighting.process(active, night, options, elapsed * factor, maxf(delta, 0.0))
 	if clouds.layer != null and clouds.layer.visible:
 		app.map_view.layers._apply_environment(clouds.material)
+	app.preferences.visual_enhancements = saved_options
 
 
 func network_snapshot() -> Dictionary:
-	var paused := app.simulation_state.speed_controller == null or app.simulation_state.speed_controller.speed == GameSpeedController.Speed.PAUSED or app.frame._simulation_suspended(false)
-	return {"weather": [weather.kind, weather.tint.r, weather.tint.g, weather.tint.b,
+	var paused := app.simulation_state.speed_controller == null or app.simulation_state.speed_controller.speed == GameSpeedController.Speed.PAUSED or (not app.coop.active() and app.frame._simulation_suspended(false))
+	var options := {}
+	for key: String in SHARED_OPTIONS:
+		if app.preferences.visual_enhancements.has(key):
+			options[key] = app.preferences.visual_enhancements[key]
+	return {"options": options, "day_phase": phase, "season_phase": season_phase,
+		"weather": [weather.kind, weather.tint.r, weather.tint.g, weather.tint.b,
 		weather.frost, weather.rain, weather.snow, weather.clock, weather.flash,
 		weather.lightning.origin.x, weather.lightning.origin.y, weather.lightning.spread,
 		weather.lightning.color.r, weather.lightning.color.g, weather.lightning.color.b,
@@ -285,6 +307,10 @@ func receive_network_weather(state: Dictionary) -> void:
 			return
 	if float(state.clouds[9]) <= 0.0:
 		return
+	for key in ["day_phase", "season_phase"]:
+		var value: Variant = state.get(key, 0.0)
+		if not (value is int or value is float) or not is_finite(float(value)) or value < 0 or value > 4:
+			return
 	remote_weather = state.duplicate(true)
 
 

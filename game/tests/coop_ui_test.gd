@@ -30,6 +30,10 @@ func run() -> void:
 	main.coop.port.value = 0
 	main.coop.start_host()
 	await process_frame
+	check(main.city_dialogs.new_city_dialog.visible, "host opens complete new-city dialog")
+	main.new_city.cancel_new_city()
+	main.coop.host_document(Sc2xDocument.create_empty(128, "UI test").document)
+	await process_frame
 	check(main.coop.active() and main.coop.mirrored, "host activates a playable city")
 	check(not main.main_menu.visible and not main.coop.panel.visible, "city gets input ownership")
 	check(main.document_state.city != main.coop.session.world.city, "host display is isolated from authoritative model")
@@ -69,18 +73,34 @@ func run() -> void:
 	await rendering_cases(main)
 	await weather_cases(main, guest)
 	main.reports.on_windows_menu(0)
-	check(main.coop.panel.visible, "budget opens shared administration")
-	main.coop.budget_values[0].value = 11
-	main.coop.send_budget()
+	check(main.city_dialogs.budget_dialog.visible, "budget opens normal city dialog")
+	var funding := BudgetPhase.funding_values(main.document_state.city)
+	funding[0] = 11
+	main.city_dialogs.budget_dialog.open_budget(funding, false, true)
+	main.budget.commit_budget()
+	main.city_dialogs.budget_dialog.hide()
 	check(BudgetPhase.funding_values(main.coop.session.world.city)[0] == 11, "shared budget UI applies tax")
-	main.coop.save_path.text = "user://coop-ui.sc2mp"
-	main.coop.save()
-	check(FileAccess.file_exists("user://coop-ui.sc2mp"), "UI saves session")
+	main.coop.save_to("user://coop-ui.sc2x")
+	check(FileAccess.file_exists("user://coop-ui.sc2x"), "UI saves normal city with session")
+	main.autosave.directory = OS.get_user_data_dir().path_join("multiplayer-autosave")
+	check(main.autosave.save_now(), "host starts complete multiplayer autosave")
+	main.autosave.close()
+	var automatic := Sc2File.load_path(main.autosave.last_path)
+	check(automatic.is_valid() and automatic.sc2x_extra_entries.has("multiplayer.json"), "autosave includes session identities")
+	main.menus.on_options_menu(ApplicationMenus.MENU_SOUND_EFFECTS)
+	var local_sound := main.document_state.city.sound_enabled()
+	main.coop.session.publish()
+	check(main.document_state.city.sound_enabled() == local_sound, "local audio choice survives server snapshot")
 	if DisplayServer.get_name() != "headless":
 		main.coop.open()
 		await process_frame
 		await RenderingServer.frame_post_draw
 		root.get_texture().get_image().save_png("user://coop-menu.png")
+	main.coop.windows.open_chat()
+	main.coop.windows.chat_input.text_submitted.emit("Hello from the host")
+	check(main.coop.windows.chat_log.get_parsed_text().contains("Hello from the host"), "chat window displays message")
+	main.coop.windows.chat.hide()
+	check(main.coop.menu_button.get_index() == main.city_menu_bar.newspaper_menu.get_index() + 1, "multiplayer menu follows Newspaper")
 	guest.stop()
 	guest.queue_free()
 	main.coop.leave()

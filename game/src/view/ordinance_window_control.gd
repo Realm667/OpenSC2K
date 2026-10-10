@@ -4,6 +4,7 @@ extends VBoxContainer
 signal ordinances_changed
 signal update_failed(message: String)
 signal close_requested
+var command_sink: Callable
 
 const Ordinances = preload("res://src/simulation/economy/ordinance_command.gd")
 # describes the implemented simulation, not real-world policy effects
@@ -194,6 +195,9 @@ func _on_ordinance_toggled(enabled: bool, ordinance_id: int) -> void:
 	if refreshing:
 		return
 
+	if command_sink.is_valid():
+		command_sink.call(ordinance_id, enabled)
+		return
 	var result := Ordinances.set_enabled(city, ordinance_id, enabled)
 
 	if not result.ok:
