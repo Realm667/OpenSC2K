@@ -132,7 +132,7 @@ func run(small_medium: Sc2SpriteArchive) -> void:
 		IsometricRenderer.VIEW_SMALL, 0, false, true, false, false)
 	var reduced_indexed := IsometricRenderer.create_image(render_fixture, Palette.index_encoding(), small_medium,
 		IsometricRenderer.VIEW_SMALL, 0, false, true, false, false, Callable(), full_indexed.image.get_size() / 2)
-	var expected_indexed := full_indexed.image.duplicate()
+	var expected_indexed: Image = full_indexed.image.duplicate()
 	expected_indexed.resize(reduced_indexed.image.get_width(), reduced_indexed.image.get_height(), Image.INTERPOLATE_NEAREST)
 	_check(reduced_indexed.ok and reduced_indexed.image.get_data() == expected_indexed.get_data(),
 		"Reduced indexed previews preserve exact palette numbers and transparency instead of mixing false colors")
