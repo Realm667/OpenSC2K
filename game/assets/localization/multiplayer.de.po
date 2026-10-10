@@ -327,3 +327,5 @@ msgstr "Ungültige Landhandelsstatistik."
 msgid "Invalid land request buyer."
 msgstr "Ungültiger Käufer der Landanfrage."
 
+msgid "Open land entry"
+msgstr "Offen"

@@ -191,6 +191,7 @@ func update_state(value: Dictionary) -> void:
 	players = value.get("roster", players)
 	map_overlay.receive(players)
 	land_button.visible = value.get("mode") == "shared"
+	land_button.get_parent().columns = 3 if land_button.visible else 2
 	market.refresh(value)
 	if scoreboard.visible:
 		refresh_scores()
@@ -327,6 +328,7 @@ func close() -> void:
 		market.window.hide()
 	cancel_land()
 	land_button.hide()
+	land_button.get_parent().columns = 2
 	scoreboard.hide()
 	players.clear()
 	state.clear()
@@ -383,7 +385,13 @@ func tick() -> void:
 	if not coop.active() or not coop.mirrored:
 		return
 	map_overlay.step(coop.app.get_process_delta_time())
-	chat.offset_right = minf(408, coop.app.map_view.size.x - 8)
+	var view: Rect2 = coop.app.map_view.camera_view_rect
+	if view.size == Vector2.ZERO:
+		view = Rect2(Vector2.ZERO, coop.app.map_view.size)
+	chat.offset_left = view.position.x + 8
+	chat.offset_right = minf(chat.offset_left + 400, view.end.x - 8)
+	chat.offset_top = view.end.y - coop.app.map_view.size.y - 184
+	chat.offset_bottom = view.end.y - coop.app.map_view.size.y - 8
 	overlay.queue_redraw()
 
 

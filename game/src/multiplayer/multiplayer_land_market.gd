@@ -24,7 +24,7 @@ func refresh(state: Dictionary) -> void:
 		var key := str(record.id) + str(record.status)
 		if initialized and not known.has(key) and identity in [record.seller, record.buyer]:
 			windows.menu.get_popup().set_item_text(7, tr("Land offers") + " •")
-			windows.coop.show_message(tr("Land offers updated: %s — %s") % [record.name, tr(record.status)])
+			windows.coop.show_message(tr("Land offers updated: %s — %s") % [record.name, (tr("Open land entry") if record.status == "Open" else tr(record.status))])
 		known[key] = true
 	initialized = true
 	if is_instance_valid(window) and window.visible:
@@ -68,7 +68,7 @@ func rebuild() -> void:
 			var parties := str(record.name)
 			if request:
 				parties = tr("%s → %s") % [record.buyer_name, record.name]
-			ApplicationMultiplayer.label(box, tr("%s · %s tiles · %s · %s") % [parties, MultiplayerScoreboard.number(record.count), MultiplayerScoreboard.money(record.price), tr(record.status)])
+			ApplicationMultiplayer.label(box, tr("%s · %s tiles · %s · %s") % [parties, MultiplayerScoreboard.number(record.count), MultiplayerScoreboard.money(record.price), (tr("Open land entry") if record.status == "Open" else tr(record.status))])
 			var size: int = windows.coop.app.document_state.city.map_size
 			var bounds := tile_bounds(record.tiles, size)
 			ApplicationMultiplayer.label(box, tr("Area: (%d, %d) to (%d, %d)") % [bounds.position.x, bounds.position.y, bounds.end.x - 1, bounds.end.y - 1])

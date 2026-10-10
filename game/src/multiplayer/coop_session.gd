@@ -41,6 +41,7 @@ var environment_source: Callable
 var environment_elapsed := 0.0
 var player_color := "46b4ff"
 var cursors: Dictionary = {}
+var cursor_updated: Dictionary = {}
 var chat_history: Array = []
 var presence_elapsed := 0.0
 var cursor_source: Callable
@@ -122,6 +123,7 @@ func stop() -> void:
 	world = null
 	members.clear()
 	cursors.clear()
+	cursor_updated.clear()
 	chat_history.clear()
 	chat_last_sent.clear()
 	requested_speed.clear()
@@ -182,6 +184,7 @@ func _process(delta: float) -> void:
 			var position: Vector2 = cursor_source.call()
 			if hosting:
 				cursors[token] = [position.x, position.y]
+				cursor_updated[token] = Time.get_ticks_msec()
 			elif connected:
 				channels[0].send({"type": "cursor", "position": [position.x, position.y]})
 		if hosting:
@@ -241,6 +244,7 @@ func receive_host(id: int, message: Dictionary) -> void:
 		var position: Variant = message.get("position")
 		if position is Array and position.size() == 2 and valid_cursor_number(position[0]) and valid_cursor_number(position[1]):
 			cursors[actor] = position
+			cursor_updated[actor] = Time.get_ticks_msec()
 		return
 	if message.get("type") == "chat":
 		accept_chat(actor, message.get("text"))
@@ -400,6 +404,7 @@ func drop(id: int) -> void:
 			var actor: String = identities[id]
 			requested_speed.erase(actor)
 			cursors.erase(actor)
+			cursor_updated.erase(actor)
 			identities.erase(id)
 			disconnected_pause = true
 			world.controller.set_speed(1)
@@ -408,6 +413,9 @@ func drop(id: int) -> void:
 			emit_player_event(actor, "left" if graceful_peers.has(id) else "disconnected")
 	else:
 		connected = false
+		for member: Dictionary in latest.get("roster", []):
+			if member.get("host", false):
+				player_event.emit({"id": session_id + ":host-left", "name": member.name, "kind": "left" if graceful_peers.has(id) else "disconnected"})
 		feedback.emit("The host ended the session." if graceful_peers.has(id) else "Connection lost or refused. Check host, port and password, then reconnect. The view is frozen.")
 	graceful_peers.erase(id)
 	connection_changed.emit()
@@ -525,7 +533,7 @@ func roster() -> Array:
 		var row: Dictionary = statistics_cache[actor].duplicate()
 		row.merge({"id": actor.sha256_text(), "name": member.name, "host": actor == token,
 			"color": valid_color(member.get("color")), "online": requested_speed.has(actor),
-			"cursor": cursors.get(actor, [-1, -1])})
+			"cursor": cursors.get(actor, [-1, -1]) if Time.get_ticks_msec() - int(cursor_updated.get(actor, 0)) < 3000 else [-1, -1]})
 		result.append(row)
 	return result
 

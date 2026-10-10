@@ -108,6 +108,11 @@ static func visible_segments(app: CityApplication, tile: Vector2i, a: Vector2, b
 	for command in commands:
 		if command.depth_order < depth:
 			continue
+		var occluder_tile := IsometricFloatingOcclusion.depth_tile(command.depth_order, city.map_size)
+		# Flat neighbouring ground must not erase an outline shared by two tiles.
+		# Raised terrain still masks lower ground; buildings and trees use alpha.
+		if command.sprite_id % 500 >= 256 and city.land_altitude(occluder_tile.x, occluder_tile.y) <= city.land_altitude(tile.x, tile.y):
+			continue
 		var resource := app.moving_sprites.dynamic_sprite_resource(archive, command.sprite_id, command.flip, divisor)
 		if resource != null:
 			masks.append({"origin": Vector2(command.position) * divisor, "image": resource.image})
