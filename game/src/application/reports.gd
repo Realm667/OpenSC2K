@@ -216,6 +216,9 @@ func on_industry_tax_rates_changed() -> void:
 
 
 func _open_simnation_window() -> void:
+	if app.coop.active() and app.coop.session.latest.get("mode") == "region":
+		app.coop.windows.competition.open_regions()
+		return
 	if app.document_state.city == null or app.city_dialogs.simnation_window == null:
 		return
 

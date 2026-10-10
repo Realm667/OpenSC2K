@@ -81,6 +81,13 @@ func lobby_case(mode: String) -> void:
 	await settle()
 	check(not host.waiting_for_start and not guest.latest.lobby.waiting, "both peers enter running game")
 	check(host.world.controller.speed == 2 and int(guest.latest.speed) == 2, "shared initial speed")
+	guest.request({"kind": "speed", "speed": 1})
+	await settle()
+	check(host.world.controller.speed == 2, "guest cannot pause host simulation")
+	host.request({"kind": "speed", "speed": 4})
+	await settle()
+	check(host.world.controller.speed == 4 and int(guest.latest.speed) == 4, "host speed reaches clients without slowest-client veto")
+	host.request({"kind": "speed", "speed": 2})
 	if mode == "region":
 		guest.request({"kind": "view_city", "seat": host.token.sha256_text()})
 		await settle()

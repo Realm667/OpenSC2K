@@ -250,6 +250,7 @@ func sync_speed_ui() -> void:
 	)
 
 	if app.speed_menu != null:
+		app.speed_menu.disabled = app.coop.active() and not app.coop.session.hosting
 		var popup := app.speed_menu.get_popup()
 
 		for speed_id in range(5):

@@ -20,7 +20,7 @@ var region_signature := ""
 
 func _init(owner: MultiplayerWindows) -> void:
 	owner_ref = weakref(owner)
-	regions = windows.make_window(tr("Neighbouring cities"))
+	regions = windows.make_window(tr("SimNation"))
 	region_rows = windows.content(regions)
 	ending = windows.make_window(tr("Victory"))
 	ending.size = Vector2i(1000, 400)
@@ -28,6 +28,7 @@ func _init(owner: MultiplayerWindows) -> void:
 	result_label = ApplicationMultiplayer.label(end_rows, "")
 	result_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	end_scores.setup(end_rows)
+	end_rows.minimum_size_changed.connect(func() -> void: windows.fit_content.call_deferred(ending, end_rows, 1000))
 	var actions := HBoxContainer.new()
 	end_rows.add_child(actions)
 	ApplicationMultiplayer.button(actions, tr("Leave game"), windows.coop.confirm_leave)
@@ -45,23 +46,35 @@ func open_regions() -> void:
 	regions.popup_centered()
 
 func refresh_regions() -> void:
-	var signature := ""
+	var visible_players: Array = []
 	for player: Dictionary in windows.players:
-		signature += "%s|%s|%s|%s;" % [player.id, player.name, player.city, player.get("seat_status", "")]
+		visible_players.append([player.id, player.name, player.city, player.get("color"), player.get("population"), player.get("seat_status")])
+	var signature := JSON.stringify([visible_players, windows.state.get("starts", {}), windows.state.get("view_owner", ""), TranslationServer.get_locale()])
 	if signature == region_signature:
 		return
 	region_signature = signature
 	for child in region_rows.get_children():
 		region_rows.remove_child(child)
 		child.queue_free()
-	var hint := ApplicationMultiplayer.label(region_rows, tr("Visit any city to watch. During disasters you may deploy your own emergency services; other changes remain with its owner."))
+	var hint := ApplicationMultiplayer.label(region_rows, tr("Select a city to visit. You can watch every city and send emergency assistance during disasters."))
 	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	var grid := GridContainer.new()
+	grid.columns = 2
+	grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	region_rows.add_child(grid)
 	for player: Dictionary in windows.players:
+		var card := MultiplayerRegionCard.new()
+		card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		card.custom_minimum_size = Vector2(200, 112)
+		card.player = player
+		card.region = int(windows.state.get("starts", {}).get(player.id, {}).get("slot", 0)) + 1
+		grid.add_child(card)
 		var own := str(player.id) == windows.coop.session.token.sha256_text()
-		ApplicationMultiplayer.label(region_rows, "%s · %s · %s · %s" % [player.city, player.name, MultiplayerSeatWindow.status(player.get("seat_status", "reserved")), tr("Region %d") % (int(windows.state.get("starts", {}).get(player.id, {}).get("slot", 0)) + 1)])
-		ApplicationMultiplayer.button(region_rows, tr("Return to your city") if own else tr("Visit city"), func() -> void:
+		card.tooltip_text = tr("Return to your city") if own else tr("Visit city")
+		card.pressed.connect(func() -> void:
 			windows.coop.session.request({"kind": "view_city", "seat": player.id})
 			regions.hide())
+	windows.fit_content.call_deferred(regions, region_rows, 680)
 
 func update(state: Dictionary) -> void:
 	if regions.visible:

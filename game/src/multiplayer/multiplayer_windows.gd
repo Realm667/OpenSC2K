@@ -91,12 +91,14 @@ func setup() -> void:
 	score_rows = content(scoreboard)
 	scoreboard.size = Vector2i(1080, 520)
 	scores.setup(score_rows)
+	score_rows.minimum_size_changed.connect(func() -> void: fit_content.call_deferred(scoreboard, score_rows, 1080))
 	market = MultiplayerLandMarket.new(self)
 	seats = MultiplayerSeatWindow.new(self)
 	competition = MultiplayerCompetitionWindows.new(self)
 	start_lobby = MultiplayerStartLobby.new(self)
 	goal_hud = MultiplayerGoalHud.new(self)
 	chat = PanelContainer.new()
+	chat.z_index = 2
 	chat.theme = AppUiTheme.current()
 	chat.theme_type_variation = "TooltipPanel"
 	chat.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -279,6 +281,8 @@ func update_state(value: Dictionary) -> void:
 		if pending == "military_proposal":
 			coop.refresh_budget()
 			coop.app.budget.open_military_proposal()
+		elif pending == "annual_budget":
+			open_annual_budget.call_deferred()
 		elif not key.is_empty() and pending != "annual_budget":
 			decision_dialog = AcceptDialog.new()
 			decision_dialog.dialog_text = tr("Acknowledge the military administration notice to continue.") if pending == "military_notice" else tr("The simulation has a final notice. Acknowledge it to continue viewing the city.")
@@ -394,9 +398,14 @@ func draw_markers() -> void:
 			polygon.append(MultiplayerMapOverlay.project(map.city, point) * scale + offset)
 		polygon.append(polygon[0])
 		overlay.draw_polyline(polygon, Color(1.0, 0.9, 0.3, 0.65), 2.0, true)
-		overlay.draw_string(font, polygon[0], tr("Awaiting host confirmation…"), HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color.WHITE)
 	competition.draw_fireworks()
 
+
+func open_annual_budget() -> void:
+	# receive_state activates the incoming city after updating these windows.
+	if coop.mirrored and coop.active() and state.get("pending") == "annual_budget":
+		coop.refresh_budget()
+		coop.app.budget.open_budget_dialog(BudgetPhase.funding_values(coop.app.document_state.city), true)
 
 func close() -> void:
 	start_lobby.window.hide()
@@ -492,10 +501,11 @@ func tick() -> void:
 	if view.size == Vector2.ZERO:
 		view = Rect2(Vector2.ZERO, coop.app.map_view.size)
 	goal_hud.layout(view)
-	chat.offset_left = view.position.x + 8
-	chat.offset_right = minf(chat.offset_left + 400, view.end.x - 8)
-	chat.offset_top = view.end.y - coop.app.map_view.size.y - 184
-	chat.offset_bottom = view.end.y - coop.app.map_view.size.y - 8
+	if chat.get_parent() == coop.app.map_view:
+		chat.offset_left = view.position.x + 8
+		chat.offset_right = minf(chat.offset_left + 400, view.end.x - 8)
+		chat.offset_top = view.end.y - coop.app.map_view.size.y - 184
+		chat.offset_bottom = view.end.y - coop.app.map_view.size.y - 8
 	overlay.queue_redraw()
 
 
@@ -538,3 +548,21 @@ static func cue(kind: String) -> AudioStreamWAV:
 		data.encode_s16(index * 2, int(sin(TAU * frequency * time) * envelope * 3800))
 	wave.data = data
 	return wave
+
+
+func dock_chat(in_lobby: bool) -> void:
+	var target: Node = start_lobby.body if in_lobby else coop.app.map_view
+	if chat.get_parent() == target:
+		return
+	chat.reparent(target, false)
+	chat.custom_minimum_size.y = 160 if in_lobby else 0
+	chat.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	chat.size_flags_vertical = Control.SIZE_FILL
+	chat.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT if in_lobby else Control.PRESET_BOTTOM_LEFT)
+	chat.show()
+	tick()
+
+func fit_content(window: Window, body: Control, width := 680) -> void:
+	var available := coop.app.get_viewport().get_visible_rect().size
+	window.min_size.y = 120
+	window.size = Vector2i(mini(width, int(available.x) - 40), mini(int(body.get_combined_minimum_size().y) + 28, int(available.y) - 70))

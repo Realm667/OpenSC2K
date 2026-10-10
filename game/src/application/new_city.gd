@@ -72,6 +72,7 @@ func _generate_new_city_preview(advance_seed: bool) -> bool:
 		return false
 
 	app.new_city_state.preview_job = NewCityPreviewJob.new()
+	app.new_city_state.preview_job.visual_options = NewCityPreviewPresentation.options(app.preferences.visual_enhancements)
 	app.new_city_state.preview_job.revision = app.city_dialogs.new_city_dialog.generation_revision
 	app.new_city_state.preview_job.view_size = NewCityPreviewJob.preview_view_size(
 		app.city_dialogs.new_city_dialog.size_input.get_selected_id(), app.city_dialogs.new_city_dialog.size)
@@ -109,6 +110,7 @@ func poll_new_city_preview() -> void:
 		return
 
 	app.new_city_state.session = job.session
+	app.city_dialogs.new_city_dialog.set_visual_preview(generated, app.asset_state.palette, job.visual_sprites, job.view_size, job.visual_options)
 	app.city_dialogs.new_city_dialog.show_preview(generated.landscape_image, generated.minimap_image,
 		"Water: %s tiles   Trees: %s tiles   Height: %s–%s"
 		% [

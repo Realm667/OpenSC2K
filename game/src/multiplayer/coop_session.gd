@@ -5,6 +5,9 @@ extends Node
 signal state_received(state: Dictionary)
 signal command_sent(id: int, command: Dictionary)
 signal command_completed(id: int)
+signal action_sounds(sounds: Array[int])
+signal remote_action_sound(event: Dictionary)
+var sounded_commands: Dictionary = {}
 signal feedback(message: String)
 signal connection_changed
 signal choice_requested(result: Dictionary)
@@ -17,7 +20,7 @@ signal seat_lobby_received(data: Dictionary)
 
 const PROTOCOL := 1
 const BUILD := "opensc2k-coop-1"
-const NETWORK_BUILD := "opensc2k-multiplayer-9"
+const NETWORK_BUILD := "opensc2k-multiplayer-11"
 const MAX_PLAYERS := 8
 var world: CoopWorld
 var active := false
@@ -207,6 +210,7 @@ func stop() -> void:
 	chat_history.clear()
 	chat_last_sent.clear()
 	requested_speed.clear()
+	sounded_commands.clear()
 	active = false
 	connected = false
 	hosting = false
@@ -413,6 +417,8 @@ func execute(actor: String, message: Dictionary) -> Dictionary:
 			return CoopWorld.rejected("Player loans require separate city finances.")
 		return loans.command(world, actor, message)
 	if message.get("kind") == "speed":
+		if actor != token:
+			return CoopWorld.rejected("Only the host can change the game speed.")
 		if not CoopWorld.whole_number(message.get("speed"), 1, 5):
 			return CoopWorld.rejected("Invalid speed.")
 		requested_speed[actor] = int(message.speed)
@@ -428,13 +434,12 @@ func execute(actor: String, message: Dictionary) -> Dictionary:
 		if goal.evaluate(world, members, loans):
 			apply_speed()
 	result["id"] = sequence
+	announce_action(actor, message, result)
 	return result
 
 
 func apply_speed() -> void:
-	var speed := 5
-	for value: int in requested_speed.values():
-		speed = mini(speed, value)
+	var speed := int(requested_speed.get(token, GameSpeedController.Speed.PAUSED))
 	world.controller.set_speed(1 if waiting_for_start or disconnected_pause or goal.blocked() else speed)
 	if world is SharedWorld:
 		world.set_shared_speed(1 if waiting_for_start or disconnected_pause or goal.blocked() else speed)
@@ -477,6 +482,7 @@ func request(command: Dictionary) -> void:
 	command_sent.emit(int(command.id), command)
 	if hosting:
 		var result := execute(token, command)
+		play_result_sounds(result, int(command.id))
 		command_completed.emit(int(command.id))
 		feedback.emit(str(result.message))
 		if result.has("choices"):
@@ -523,10 +529,14 @@ func receive_client(message: Dictionary) -> void:
 				return
 			connected = true
 			accept_state(message)
+		"action_audio":
+			if message.get("event") is Dictionary:
+				remote_action_sound.emit(message.event)
 		"environment":
 			if message.get("weather") is Dictionary:
 				environment_received.emit(message.weather)
 		"result":
+			play_result_sounds(message, int(message.get("id", 0)))
 			command_completed.emit(int(message.get("id", 0)))
 			feedback.emit(str(message.get("message", "")))
 			if message.get("choices") is Array and message.get("request") is Dictionary:
@@ -718,6 +728,7 @@ func resume_session(path: String, port: int, join_code: String, player_name: Str
 	session_id = data.session
 	members = data.members
 	requested_speed.clear()
+	sounded_commands.clear()
 	requested_speed[token] = 1
 	next_command = int(members[token].sequence) + 1
 	world.revision = int(data.state.get("revision", 0)) + 1
@@ -906,6 +917,7 @@ func restore_embedded(document: Sc2File) -> String:
 	session_id = data.session
 	members = data.members
 	requested_speed.clear()
+	sounded_commands.clear()
 	requested_speed[token] = 1
 	next_command = int(members[token].sequence) + 1
 	world.statistics = data.statistics
@@ -919,6 +931,8 @@ func restore_embedded(document: Sc2File) -> String:
 	loans = MultiplayerLoans.new()
 	loans.contracts = data.get("loans", {}).get("contracts", []).duplicate(true)
 	loans.next_id = int(data.get("loans", {}).get("next", 1))
+	if world is SharedWorld:
+		loans.migrate(world)
 	history = MultiplayerHistory.new()
 	history.series = data.get("history", {}).duplicate(true)
 	starts.restore(data.get("starts", {"round": 1, "assigned": true, "previous": {}, "positions": {}}))
@@ -1016,3 +1030,28 @@ func prepare_rematch(actor: String) -> Dictionary:
 	reset_lobby_ready()
 	apply_speed()
 	return CoopWorld.accepted("Rematch prepared with new starting positions. Everyone must confirm Ready again.")
+
+func play_result_sounds(result: Dictionary, id: int) -> void:
+	if not result.get("ok", false) or id <= 0 or sounded_commands.has(id):
+		return
+	sounded_commands[id] = true
+	if sounded_commands.size() > 256:
+		sounded_commands.erase(sounded_commands.keys()[0])
+	var sounds: Array[int] = []
+	if result.get("sounds") is Array:
+		for value: Variant in result.sounds.slice(0, 32):
+			if CoopWorld.whole_number(value, 500, 529):
+				sounds.append(int(value))
+	if not sounds.is_empty():
+		action_sounds.emit(sounds)
+
+func announce_action(actor: String, command: Dictionary, result: Dictionary) -> void:
+	if not result.get("ok", false) or result.get("sounds", []).is_empty() or command.get("kind") != "build":
+		return
+	var event := {"actor": actor.sha256_text(), "id": command.id, "sounds": result.sounds,
+		"point": command.finish, "view_owner": command.get("view_owner", actor.sha256_text())}
+	if actor != token:
+		remote_action_sound.emit(event)
+	for peer: int in identities:
+		if identities[peer] != actor:
+			channels[peer].send({"type": "action_audio", "event": event})

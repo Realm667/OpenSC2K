@@ -22,6 +22,16 @@ func run() -> void:
 	await process_frame
 	await process_frame
 	check(main.asset_state.assets_ready, "assets loaded")
+	var view := Rect2(100, 50, 500, 300)
+	check(ApplicationMultiplayer.remote_gain(Vector2(200, 100), view) == 1.0, "visible remote sound has full gain")
+	check(ApplicationMultiplayer.remote_gain(Vector2(700, 100), view) > ApplicationMultiplayer.remote_gain(Vector2(1000, 100), view), "remote sound falls off smoothly outside view")
+	check(ApplicationMultiplayer.remote_gain(Vector2(1700, 100), view) == 0.0, "distant remote sound is silent")
+	var heard: Array = []
+	main.coop.session.action_sounds.connect(func(events: Array[int]) -> void: heard.append(events))
+	main.coop.session.play_result_sounds({"ok": true, "sounds": [500]}, 987654)
+	main.coop.session.play_result_sounds({"ok": true, "sounds": [500]}, 987654)
+	main.coop.session.play_result_sounds({"ok": false, "sounds": [500]}, 987655)
+	check(heard.size() == 1, "own confirmed action plays exactly once, rejected action never")
 	check(main.main_menu.visible, "normal startup menu")
 	main.main_menu.get_node("Center/Panel/Content/Multiplayer").pressed.emit()
 	await process_frame
@@ -67,12 +77,15 @@ func run() -> void:
 		if guest.connected:
 			break
 	check(guest.connected, "second player joins the UI-hosted city")
+	var remote_sounds: Array = []
+	main.coop.session.remote_action_sound.connect(func(event: Dictionary) -> void: remote_sounds.append(event))
 	guest.request({"kind": "build", "group": 9, "tool": 0, "start": [25, 25], "finish": [25, 25], "path": [[25, 25]]})
 	for _frame in 100:
 		await create_timer(0.01).timeout
 		if main.coop.session.world.revision == 2 and guest.local_revision == 2:
 			break
 	check(main.coop.session.world.revision == 2, "guest builds while host has its own camera")
+	check(remote_sounds.size() == 1 and not remote_sounds[0].sounds.is_empty(), "guest construction emits positioned sound on host")
 	check(main.document_state.city.zones == main.coop.session.world.city.zones, "guest edit reaches host view")
 	check(main.render_caches.region_cache.display_city.zones == main.document_state.city.zones, "guest zone reaches renderer")
 	await rendering_cases(main)
@@ -126,13 +139,28 @@ func run() -> void:
 	var hud := main.coop.windows.goal_hud
 	var visible_map := Rect2(main.map_view.global_position + main.map_view.camera_view_rect.position, main.map_view.camera_view_rect.size)
 	check(visible_map.encloses(hud.panel.get_global_rect()), "victory HUD fits inside the visible map below menu bar")
-	check(hud.panel.visible and hud.progress.value == 40, "live wealth progress displayed")
-	check(hud.hold.size.y > 0 and hud.own_label.size.y > 0, "goal values and holding duration remain visible")
+	check(hud.panel.visible and hud.rows.get_child_count() > 0 and hud.rows.get_child(0).get_child(0).value == 40, "live wealth progress displayed")
+	check(hud.rows.get_child(0).size.y > 0, "goal values and holding duration remain visible")
 	hud.panel.custom_minimum_size.x = 400
 	main.coop.windows.tick()
 	check(visible_map.encloses(hud.panel.get_global_rect()), "goal HUD remains within map with larger theme minimum")
 	hud.panel.custom_minimum_size.x = 0
+	var annual := main.coop.session.latest.duplicate(true)
+	annual.pending = "annual_budget"
+	annual.blocked = true
+	annual.policy = int(annual.policy) + 1
+	main.coop.windows.update_state(annual)
+	await process_frame
+	check(main.city_dialogs.budget_dialog.visible and main.simulation_state.annual_budget_pending, "pending annual budget opens visibly instead of silently stopping growth")
+	main.city_dialogs.budget_dialog.hide()
+	main.coop.windows.update_state(main.coop.session.latest)
 	main.coop.windows.scoreboard.hide()
+	main.coop.request_exit("quit")
+	check(not main.coop.windows.scoreboard.visible, "OS quit never opens scoreboard")
+	for child in main.get_children():
+		if child is ConfirmationDialog and child.title == main.coop.tr("Quit multiplayer"):
+			child.canceled.emit()
+	check(main.coop.active() and main.coop.exit_action.is_empty(), "cancel quit preserves connected session")
 	main.coop.windows.open_chat()
 	main.coop.windows.tick()
 	check(main.coop.windows.chat.position.x >= main.map_view.camera_view_rect.position.x, "chat clear of sidebar")

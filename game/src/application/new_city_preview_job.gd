@@ -6,6 +6,8 @@ var session := NewCityTerrainSession.new()
 var thread := Thread.new()
 var revision := 0
 var view_size := CityIsometricRenderer.VIEW_SMALL
+var visual_options: Dictionary = {}
+var visual_sprites: Sc2SpriteArchive
 
 
 func start(
@@ -20,7 +22,15 @@ func start(
 		source.preview_game_cursor if advance_seed else source.preview_game_start,
 	)
 
-	return thread.start(_generate.bind(options.copy(), palette, sprites))
+	visual_sprites = MainMenuPresentation.copy_graphics(sprites)
+	if not visual_options.is_empty():
+		CityNatureArtwork.prepare(visual_sprites, palette)
+		visual_sprites.visual_seasons.merge(visual_sprites.visual_nature_masks)
+		visual_sprites.visual_nature_enabled = true
+		visual_sprites.visual_terrain_enabled = true
+		visual_sprites.water_reflections = true
+		visual_sprites.water_indices = CityWaterLayer.blue_indices(palette)
+	return thread.start(_generate.bind(options.copy(), palette, visual_sprites))
 
 
 func _generate(
@@ -33,7 +43,7 @@ func _generate(
 	if not result.ok:
 		return result
 
-	var rendered := CityIsometricRenderer.create_image(result.city, palette, sprites, view_size, 0, false, false, false, false)
+	var rendered := CityIsometricRenderer.create_image(result.city, palette if visual_options.is_empty() else Sc2Palette.index_encoding(), sprites, view_size, 0, false, not visual_options.is_empty(), false, false)
 
 	if not rendered.ok:
 		return NewCityTerrainSession.PreviewResult.failure(rendered.error, "preview")

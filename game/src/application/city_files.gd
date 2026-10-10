@@ -230,8 +230,7 @@ func _city_has_unsaved_changes() -> bool:
 
 func request_city_exit(action: String, path := "") -> void:
 	if app.coop.active():
-		app.coop.open()
-		app.coop.show_message("Save and leave the Multiplayer session before closing the game.")
+		app.coop.request_exit(action)
 		return
 	if not _city_has_unsaved_changes():
 		_perform_city_exit(action, path)

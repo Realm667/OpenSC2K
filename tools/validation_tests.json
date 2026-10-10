@@ -1956,5 +1956,11 @@
     "script": "tests/multiplayer_load_test.gd",
     "domain": "simulation",
     "lane": "product"
+  },
+  {
+    "id": "multiplayer_growth_test",
+    "script": "tests/multiplayer_growth_test.gd",
+    "domain": "simulation",
+    "lane": "product"
   }
 ]

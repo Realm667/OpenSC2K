@@ -82,6 +82,7 @@ func update(players: Array, shared: bool, identity: String, samples: Dictionary 
 	rebuild()
 
 func rebuild() -> void:
+	table.custom_minimum_size.y = maxi(80, rows.size() * 28 + 32)
 	var show_history := picker.selected == VIEWS.size() - 1
 	table.visible = not show_history
 	chart.visible = show_history

@@ -93,10 +93,14 @@ func _run() -> void:
 	assert(not dialog._busy_spinner.is_processing())
 	assert(main.audio_controller.wave_sound_gate.current_sound_id == 529)
 	assert(dialog.candidate_valid and not dialog.done_button.disabled)
-	assert(dialog.landscape_background.texture != null)
+	assert(dialog.visual_preview != null and dialog.landscape_background.texture == null)
+	var preview_options := dialog.visual_preview.presentation.app.preferences.visual_enhancements
+	assert(preview_options.season_fixed == 1 and preview_options.season_mode == 2)
+	assert(not preview_options.weather_enabled and not preview_options.cloud_enabled and not preview_options.day_enabled)
+	assert(preview_options.nature_forests_enabled and preview_options.nature_terrain_enabled and preview_options.water_waves_enabled)
 	assert(NewCityPreviewJob.preview_view_size(128, Vector2(3000, 1800)) == CityIsometricRenderer.VIEW_LARGE)
 	assert(NewCityPreviewJob.preview_view_size(512, Vector2(1920, 1080)) == CityIsometricRenderer.VIEW_SMALL)
-	assert(dialog.landscape_background.texture.get_width() >= dialog.size.x)
+	assert(dialog.visual_preview.presentation.map.city_source.size.x >= dialog.size.x)
 	var candidate: Sc2File = main.new_city_state.session.preview_document
 	var bytes: PackedByteArray = candidate.serialize().data
 	var cursor: int = main.new_city_state.session.preview_process_cursor
