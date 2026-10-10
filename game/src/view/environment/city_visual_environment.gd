@@ -182,7 +182,7 @@ func process(delta: float) -> void:
 		for key: String in SHARED_OPTIONS:
 			if remote_weather.options.has(key):
 				network_options[key] = remote_weather.options[key]
-		app.preferences.visual_enhancements = VisualEnhancementOptions.normalize(network_options)
+		app.preferences.visual_enhancements = normalized_network_options(network_options)
 		phase = float(remote_weather.get("day_phase", phase))
 		season_phase = float(remote_weather.get("season_phase", season_phase))
 	var options := app.preferences.visual_enhancements
@@ -384,3 +384,15 @@ static func light_at_hour(hour: float, strength := 1.0) -> Dictionary:
 			return {"tint": Color.WHITE.lerp(colors[i].lerp(colors[i + 1], weight), clampf(strength, 0.0, 1.0)),
 				"night": lerpf(levels[i], levels[i + 1], weight)}
 	return {"tint": Color.WHITE, "night": 0.0}
+
+
+static func normalized_network_options(values: Dictionary) -> Dictionary:
+	var options := values.duplicate(true)
+	# JSON numbers arrive as floats. The local preference parser deliberately
+	# accepts only integer choice IDs, so restore their type at this boundary.
+	for field: Array in VisualEnhancementOptions.FIELDS:
+		if field[2] == "choice" and SHARED_OPTIONS.has(field[0]):
+			var value: Variant = options.get(field[0])
+			if CoopWorld.whole_number(value, 0, field[4].size() - 1):
+				options[field[0]] = int(value)
+	return VisualEnhancementOptions.normalize(options)
