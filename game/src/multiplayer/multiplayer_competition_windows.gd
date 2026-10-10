@@ -23,7 +23,7 @@ func _init(owner: MultiplayerWindows) -> void:
 	regions = windows.make_window(tr("Neighbouring cities"))
 	region_rows = windows.content(regions)
 	ending = windows.make_window(tr("Victory"))
-	ending.size = Vector2i(1000, 480)
+	ending.size = Vector2i(1000, 400)
 	end_rows = windows.content(ending)
 	result_label = ApplicationMultiplayer.label(end_rows, "")
 	result_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
