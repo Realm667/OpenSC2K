@@ -96,6 +96,7 @@ func run() -> void:
 	check(host.restore_embedded(saved).is_empty(), "embedded session restored")
 	host.stop()
 	host.queue_free()
+	military_ownership()
 	transfer_building()
 	await shared_network()
 	print("Multiplayer next checks: %d failures" % failures)
@@ -169,3 +170,17 @@ func transfer_building() -> void:
 	check(OverlayData.is_facility(marker), "facility marker retained after transfer")
 	var data: PackedByteArray = transfer.buyer.document.find_chunk("XMIC").decoded_payload
 	check((OverlayData.facility_record(marker) + 1) * Sc2MicrosimLayout.RECORD_SIZE <= data.size(), "facility points to buyer record")
+
+
+func military_ownership() -> void:
+	var world := SharedWorld.new()
+	var actor := "m".repeat(48)
+	check(world.open(Sc2xDocument.create_empty(128, "Military ownership").document), "military terrain")
+	check(world.add_player(actor).is_empty(), "military municipality")
+	var child: CoopWorld = world.municipalities[actor]
+	child.engine.forced_military_base_type = MilitaryProposalPhase.BASE_ARMY
+	var seed := child.engine.game_random.state
+	check(not world.military_land_error(actor).is_empty(), "military base cannot claim neutral land")
+	check(child.engine.game_random.state == seed, "military ownership preview preserves randomness")
+	world.owners.fill(1)
+	check(world.military_land_error(actor).is_empty(), "military base allowed on owned terrain")

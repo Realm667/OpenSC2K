@@ -172,6 +172,10 @@ func command(actor: String, request: Dictionary) -> Dictionary:
 		return result
 	if request.get("kind") == "undo":
 		return rejected("Undo is unavailable after ownership transactions in Shared.")
+	if request.get("kind") == "decision" and request.get("accept") == true and child.engine.pending_interaction == "military_proposal":
+		var land_error := military_land_error(actor)
+		if not land_error.is_empty():
+			return rejected(land_error)
 	var result := child.command(actor, local)
 	if result.get("ok", false):
 		revision += 1
@@ -498,3 +502,18 @@ static func remove_dispatch(things: PackedByteArray, text: PackedByteArray, reco
 	if x >= 0 and y >= 0 and x < edge and y < edge:
 		OverlayData.lift_object(text, things, record, x * edge + y, 0)
 	ThingData.write(things, offset, 0)
+
+
+func military_land_error(actor: String) -> String:
+	var child: CoopWorld = municipalities[actor]
+	# Preview with copied city/random state: a civic proposal must obey the same
+	# ownership rule as a player's building, without consuming a random draw.
+	var candidate := CityState.copy_for_edit(child.city)
+	var random := GameLcgRandom.new(child.engine.game_random.state)
+	var proposal := MilitaryProposalPhase.resolve(candidate, true, random, false, child.engine.forced_military_base_type)
+	if not proposal.ok:
+		return proposal.error
+	for tile: int in changed_tiles(child.city.document, candidate.document):
+		if owners[tile] != actors.find(actor) + 1:
+			return "The proposed military base extends outside your land. Buy its land first or decline the proposal."
+	return ""
