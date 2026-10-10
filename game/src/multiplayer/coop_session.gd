@@ -536,12 +536,12 @@ func accept_chat(actor: String, value: Variant) -> void:
 	broadcast({"type": "chat", "message": entry})
 
 
-func save_city(path: String) -> String:
+func city_checkpoint() -> Dictionary:
 	if not hosting:
-		return "Only the host saves the game."
+		return {"error": "Only the host saves the game."}
 	var error := Sc2xCheckpoint.save_error(world.controller)
 	if not error.is_empty():
-		return error
+		return {"error": error}
 	Sc2xCheckpoint.capture(world.controller, world.city.document.sc2x_metadata)
 	var document := world.city.document.duplicate_document()
 	var data := {"version": 1, "host": token, "session": session_id, "members": members,
@@ -550,8 +550,16 @@ func save_city(path: String) -> String:
 	if world is SharedWorld:
 		data["shared"] = world.saved_shared()
 		if data.shared.has("error"):
-			return data.shared.error
+			return {"error": data.shared.error}
 	document.sc2x_extra_entries["multiplayer.json"] = JSON.stringify(data).to_utf8_buffer()
+	return {"error": "", "document": document}
+
+
+func save_city(path: String) -> String:
+	var checkpoint := city_checkpoint()
+	if not checkpoint.error.is_empty():
+		return checkpoint.error
+	var document: Sc2File = checkpoint.document
 	var encoded := Sc2xDocument.encode(document)
 	if not encoded.ok:
 		return encoded.error

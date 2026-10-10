@@ -96,6 +96,7 @@ func run() -> void:
 	check(host.restore_embedded(saved).is_empty(), "embedded session restored")
 	host.stop()
 	host.queue_free()
+	transfer_building()
 	await shared_network()
 	print("Multiplayer next checks: %d failures" % failures)
 	quit(1 if failures else 0)
@@ -142,3 +143,29 @@ func shared_network() -> void:
 	host.stop()
 	host.queue_free()
 	guest.queue_free()
+
+
+func transfer_building() -> void:
+	var seller := CityState.from_document(Sc2xDocument.create_empty(32, "Seller").document)
+	var buyer := CityState.from_document(Sc2xDocument.create_empty(32, "Buyer").document)
+	var result := BuildingCommand.apply(seller, 13, 0, Vector2i(10, 10), SimLfsrRandom.new(1), SimRandom.new(1))
+	check(result.ok, "build facility for transfer")
+	var tiles: Array = []
+	for tile in seller.buildings.size():
+		if seller.buildings[tile] > 13:
+			tiles.append(tile)
+	check(tiles.size() > 1, "facility spans multiple tiles")
+	if tiles.is_empty():
+		return
+	var partial := SharedLandTransfer.stage(seller, buyer, [tiles[0]])
+	check(not partial.error.is_empty(), "partial building transfer rejected")
+	var transfer := SharedLandTransfer.stage(seller, buyer, tiles)
+	check(transfer.error.is_empty(), "complete facility transfer succeeds: " + transfer.error)
+	if not transfer.error.is_empty():
+		return
+	for tile: int in tiles:
+		check(transfer.seller.buildings[tile] == 0 and transfer.buyer.buildings[tile] == seller.buildings[tile], "facility exists only in buyer municipality")
+	var marker := OverlayData.facility_at(transfer.buyer.text_overlays, tiles[0])
+	check(OverlayData.is_facility(marker), "facility marker retained after transfer")
+	var data: PackedByteArray = transfer.buyer.document.find_chunk("XMIC").decoded_payload
+	check((OverlayData.facility_record(marker) + 1) * Sc2MicrosimLayout.RECORD_SIZE <= data.size(), "facility points to buyer record")

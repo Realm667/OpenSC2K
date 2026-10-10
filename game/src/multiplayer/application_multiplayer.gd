@@ -256,8 +256,14 @@ func receive_state(state: Dictionary) -> void:
 		show_message("Ungültiger Stadtzustand vom Host. Sitzung beenden und neu verbinden.")
 		return
 	last_city_bytes = state.city
+	if mirrored:
+		# Camera-follow and audio choices belong to this player.
+		var local_city := CityState.from_document(document)
+		local_city.set_auto_goto_enabled(app.document_state.city.auto_goto_enabled())
+		local_city.set_sound_enabled(app.document_state.city.sound_enabled())
+		local_city.set_music_enabled(app.document_state.city.music_enabled())
 	if not mirrored:
-		if not app.city_session.activate_document(document, null, "Koop verbunden", true):
+		if not app.city_session.activate_document(document, null, "Multiplayer verbunden", true):
 			return
 		if app.simulation_state.frame_simulation != null:
 			app.simulation_state.frame_simulation.close()

@@ -293,7 +293,7 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 		revision += 1
 		return accepted("Land offer published. Another player can accept it.")
 	if request.get("price") != price:
-		return choice_result("Buy %d tiles for $%d?" % [tiles.size(), price], request,
+		return choice_result("Buy %d tiles for $%d? Balance afterwards: $%d." % [tiles.size(), price, child.city.funds() - price], request,
 			[{"label": "Buy — $%d" % price, "fields": {"price": price}}])
 	if child.city.funds() < price:
 		return rejected("Insufficient funds.")

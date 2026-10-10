@@ -1,96 +1,31 @@
-# OpenSC2K — Multiplayer Koop
+# OpenSC2K — Multiplayer
 
-OpenSC2K is an open-source remake of SimCity 2000, built with Godot. This fork's
-**`feature/multiplayer`** branch adds experimental, playable real-time cooperative
-city building on a Visual Enhancements base.
+Playable real-time **Koop** and **Competitive Shared** on a Visual Enhancements base.
+Competitive Region remains a later mode. Up to eight players use the same build,
+with an optional host password over LAN or direct TCP/IP.
 
-**Coop is playable. Competitive Shared and Competitive Region are planned and
-are not implemented.** All participants must use the same multiplayer build.
+Create a city through the full New City dialog or continue a saved city (optionally
+as a copy). Normal SC2X saves include multiplayer state automatically. The regular
+city controls remain available; **Multiplayer**, between Newspaper and Help, contains
+Chat, Scoreboard, land purchases/offers and connection controls. Players have named
+cursors, individual colors and attributed emergency units. The host synchronizes
+weather, time of day and seasons.
 
-## What works now
+Shared provides independent municipal simulations, accounts and owned parcels on
+one visible map. Utility contracts and cross-border disaster propagation are not
+yet supported. Read [the multiplayer guide](docs/multiplayer.md) for scope and rules.
+The integrated runtime branch combines the newest Visual and German feature branches.
 
-- Up to eight participants, including the host, build one city simultaneously.
-  They share one treasury, budget and simulation; the city is at most 128 × 128 tiles.
-- The host runs the authoritative simulation and validates construction costs,
-  changed tiles and shared funds. Clients send actions and receive city updates.
-- Each participant has an independent camera and zoom. Everyone can request a
-  pause or speed; the slowest request applies to the shared city.
-- Shared administration supports tax percentages, service funding, ordinances,
-  bonds, Auto-Budget and pending simulation decisions.
-- The host can save and resume a `.sc2mp` session. Reconnecting with the same local
-  profile retains the participant identity.
-- Host weather progression is synchronized, including precipitation, clouds,
-  flashes and thunder. Guests can disable effects or mute audio locally.
+## Save and reconnect
 
-## Host or join
+Only the host writes the normal SC2X save. Session data is embedded automatically;
+the prior save remains as `.bak`. Keep each participant's private data profile to
+reconnect as the same player. A disconnected player pauses the session until the
+host releases the pause. Conflicting edits are rejected without payment.
 
-1. Build or install the **same revision of this branch** on every computer and
-   import the required original-game assets on each one.
-2. Open **Multiplayer** from the main menu. Enter a player name, TCP port and a
-   session code. The default port is **20000**.
-3. Select **Koop hosten** to create an empty 128 × 128 city. To host a copy of an
-   existing city, open it first, then select **Kopie der geöffneten Stadt verwenden**.
-   It must be SC2X, no larger than 128 tiles per side, and have no unresolved
-   simulation decision. The original city file is not overwritten.
-4. Other players enter the host's LAN address, matching port and code, then
-   select **Beitreten / Wiederverbinden**. On one computer, use `127.0.0.1` and
-   separate data profiles for each instance.
-5. Choose a running speed. The in-game **Multiplayer** button opens the participant
-   list, shared budget, decisions, save and leave controls.
-
-The current multiplayer panel contains German labels alongside English game UI.
-It is not the standalone German Translation feature. This branch incorporates a
-Visual Enhancements revision; later changes to that separate branch are not
-automatically included here.
-
-## Save, reconnect and handle conflicts
-
-Only the host saves the session, using the `.sc2mp` path in the Multiplayer panel.
-The default is `multiplayer/session.sc2mp` inside the installation's data folder.
-A previous save is retained as `.bak`. Resolve pending simulation decisions
-before saving. Resume with **Gespeicherte Sitzung hosten**; restored sessions start
-paused and need a session code for joining participants.
-
-A disconnected participant pauses the shared city. The host can explicitly
-release that pause. Keep each participant's local profile, including
-`multiplayer-client.cfg`, to reconnect with the same identity. Session files and
-profiles contain reconnect identities and should not be published.
-
-The host rejects conflicting or stale edits. Reload current budget values before
-submitting a policy change. Undo is limited to your immediately preceding edit,
-with no intervening edit or simulation step. Leaving returns you to your local
-singleplayer city.
-
-## Current limits
-
-- LAN and direct IP are supported. The host must be reachable on the selected TCP
-  port. There is no automatic discovery, NAT traversal, encryption or automatic
-  host migration. Use trusted participants on a private network; the session code
-  controls admission but does not encrypt traffic.
-- Map rotation is disabled in Coop. Manual disaster triggers, facility query
-  actions and industry tax detail controls are unavailable. Ordinary simulation
-  disasters still follow the hosted city's rules.
-- The shared budget panel does not reproduce every singleplayer budget report.
-- There are no separate player economies, land ownership or regional trade yet.
-- Automated loopback checks cover synchronization, conflicts, reconnection,
-  persistence and the UI. They do not establish eight-player performance or
-  reachability between separate computers. Developed cities need real LAN testing.
-
-See [the multiplayer guide](docs/multiplayer.md) for protocol behavior, save and
-recovery details, test coverage and the proposed Shared/Region modes. Larger city
-sizes listed in the base-game features below apply to singleplayer, not Coop.
-
-## Screenshots
-
-Real application captures. Click an image to open it at full size.
-
-**Coop lobby with host, join and saved-session controls**
-
-[![Coop lobby with host, join and saved-session controls](.github/screenshots/multiplayer/lobby.png)](.github/screenshots/multiplayer/lobby.png)
-
-**Two connected test participants and the shared budget panel**
-
-[![Two connected test participants and the shared budget panel](.github/screenshots/multiplayer/session.png)](.github/screenshots/multiplayer/session.png)
+Use trusted participants over LAN or direct IP. There is no discovery, NAT
+traversal, traffic encryption or host migration. Current tests use two localhost
+participants; eight-player physical LAN performance is not yet established.
 
 ## Run this branch
 
