@@ -77,6 +77,34 @@ Playable Koop and Competetive Shared are available from the main menu. See the
 [updated multiplayer guide](docs/multiplayer.md) for setup, normal city saves, land
 ownership, chat, scoreboard and disaster assistance. Region supports independent cities, spectating and disaster assistance.
 
+## German Translation
+
+- German menus, settings, tool names, tooltips, city dialogs, budget labels,
+  ordinances and month names.
+- German newspaper templates, original text resources, matched scenario
+  briefings and library text, available from the bundled text catalogs.
+- Terminology and wording from the original German SimCity 2000 and SCURK
+  editions. New OpenSC2K functions use German translations where the original
+  has no corresponding text.
+- Toolbar sizing that accommodates long translated names and the original
+  artwork, plus localized formatted labels and dialog updates.
+
+The catalogs are [de.po](game/assets/localization/de.po) for the interface and
+[de_original.po](game/assets/localization/de_original.po) for original-game text.
+Historical spelling and original newspaper price labels are retained. Displayed
+Pf/DM labels are text; they do not change the city's economy or numeric values.
+
+## Enable German
+
+1. Open **Settings > General > Language**.
+2. Select **Deutsch**. In German, the path is **Einstellungen > Allgemein > Sprache**.
+3. Open the city, newspaper or dialog you want to use. The language preference is
+   local to your installation; cities do not need conversion.
+
+The bundled German text does **not** require a separate German graphics or data
+pack. You still need the supported original game for artwork, sound and music,
+as described below. User-written city names and signs remain as entered.
+
 ## Screenshots
 
 Real application captures. Click an image to open it at full size.
@@ -93,6 +121,14 @@ Real application captures. Click an image to open it at full size.
 
 [![Rain and storm clouds over a developed city](.github/screenshots/visual-enhancements-package/thunderstorm.png)](.github/screenshots/visual-enhancements-package/thunderstorm.png)
 
+**German budget dialog and localized financial labels**
+
+[![German budget dialog and localized financial labels](.github/screenshots/german-translation/budget.png)](.github/screenshots/german-translation/budget.png)
+
+**German newspaper using the bundled text catalog**
+
+[![German newspaper using the bundled text catalog](.github/screenshots/german-translation/newspaper.png)](.github/screenshots/german-translation/newspaper.png)
+
 ## Run this branch
 
 Build this branch from source, or use a package explicitly built from it. The
@@ -105,8 +141,8 @@ requires CMake. See [installation](docs/install.md) and
 [native build details](docs/native-simulation.md) for platform requirements.
 
 ```sh
-git clone --branch integration/runtime --single-branch https://github.com/Realm667/OpenSC2K.git OpenSC2K-visual-enhancements-package
-cd OpenSC2K-visual-enhancements-package
+git clone --branch integration/runtime --single-branch https://github.com/Realm667/OpenSC2K.git OpenSC2K-runtime
+cd OpenSC2K-runtime
 python3 tools/build_native.py
 godot --headless --audio-driver Dummy --path game --editor --import
 godot --path game
