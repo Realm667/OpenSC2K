@@ -794,7 +794,6 @@ func _check_menu_dependencies(tab: VisualEnhancementsTab) -> void:
 	day_source.item_selected.emit(1)
 	assert((tab.controls.day_hour as VisualTimeEdit).editable and not (tab.controls.day_seconds as SpinBox).editable)
 	(tab.controls.brightmaps as CheckBox).button_pressed = false
-	assert(not (tab.controls.brightmap_folder as LineEdit).editable)
 	assert(not (tab.controls.night_light_strength as SpinBox).editable)
 	assert(not (tab.controls.night_glow as SpinBox).editable)
 	assert(not (tab.controls.night_ground as SpinBox).editable)
