@@ -8,6 +8,7 @@ const FADE_OUT := 0.35
 const MAX_ENTRIES := 512
 var app: CityApplication
 var clock := 0.0
+var animation_clock := 0.0
 var entries: Dictionary[int, Entry] = {}
 var seen: Dictionary[int, bool] = {}
 var signature: Array = []
@@ -36,10 +37,14 @@ func process(delta: float) -> void:
 			app.moving_sprites.refresh_moving_things()
 		return
 	if not frozen():
-		clock += clampf(delta, 0.0, 0.25)
+		var elapsed := clampf(delta, 0.0, 0.25)
+		clock += elapsed
+		var controller := app.simulation_state.speed_controller
+		var speed := controller.speed if controller != null else GameSpeedController.Speed.TURTLE
+		animation_clock += VisualEnhancementOptions.animation_delta(elapsed, app.preferences.visual_enhancements, speed)
 	var expired := false
 	for entry in entries.values():
-		entry.animation.phase = fposmod(clock / FRAME_SECONDS, 8.0)
+		entry.animation.phase = fposmod(animation_clock / FRAME_SECONDS, 8.0)
 		entry.animation.opacity = envelope(entry)
 		expired = expired or (entry.retired >= 0.0 and entry.animation.opacity <= 0.0)
 	if expired:
@@ -94,7 +99,7 @@ func observe(command: CityDynamicCommand, archive: Sc2SpriteArchive, view: int) 
 			return null
 		entry.source_signature = key
 	_refresh_mask(entry)
-	entry.animation.phase = fposmod(clock / FRAME_SECONDS, 8.0)
+	entry.animation.phase = fposmod(animation_clock / FRAME_SECONDS, 8.0)
 	entry.animation.opacity = envelope(entry)
 	return entry.visual
 

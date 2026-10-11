@@ -94,6 +94,12 @@ static func speed_factor(speed: int) -> float:
 	return [0.0, 0.0, 1.0, 1.5, 2.0, 3.0][clampi(speed, 0, 5)]
 
 
+static func animation_delta(delta: float, options: Dictionary, speed: int) -> float:
+	# Each consumer retains its own pause policy. Never advance simulation time.
+	var factor := speed_factor(speed) if options.speed_link and speed > GameSpeedController.Speed.PAUSED else 1.0
+	return maxf(delta, 0.0) * factor
+
+
 static func detail_lights_visible(options: Dictionary, zoom: float) -> bool:
 	return zoom + 0.00001 >= [0.1, 0.25, 0.5, 1.0, 2.0, 4.0][clampi(int(options.get("detail_lights_min_zoom", 2)), 0, 5)]
 
