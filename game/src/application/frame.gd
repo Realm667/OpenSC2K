@@ -89,6 +89,7 @@ func _simulation_suspended(include_camera_pan := true) -> bool:
 func _advance_palette_animation(delta: float, suspended: bool) -> void:
 	# Keep palette animation running while the simulation worker is busy.
 	if not suspended and app.simulation_state.speed_controller.speed != GameSpeed.Speed.PAUSED and not app.debug_tools.state.palette_frozen:
+		delta = VisualEnhancementOptions.animation_delta(delta, app.preferences.visual_enhancements, app.simulation_state.speed_controller.speed)
 		if app.map_view != null:
 			app.map_view.advance_artwork_animation(delta)
 		palette_clock.elapsed_msec += maxf(delta, 0.0) * 1000.0

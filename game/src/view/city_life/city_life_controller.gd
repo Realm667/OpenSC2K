@@ -90,8 +90,7 @@ func process(delta: float) -> void:
 	if options.pause_freezes and (speed == 1 or app.frame._simulation_suspended()):
 		elapsed = 0.0
 	var fade_elapsed := elapsed
-	if options.speed_link and speed > 1:
-		elapsed *= VisualEnhancementOptions.speed_factor(speed)
+	elapsed = VisualEnhancementOptions.animation_delta(elapsed, options, speed)
 	_elapsed += elapsed
 	_spawn_elapsed += elapsed
 	if _spawn_elapsed >= 0.8:

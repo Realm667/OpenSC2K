@@ -25,6 +25,12 @@ The scrolling city in the main menu also uses the visual settings. Each launch
 starts its preview with a randomized time, season and weather, without replacing
 the user's stored choices for a playable city.
 
+**Follow game speed** uses 1×, 1.5×, 2× and 3× presentation time at Turtle,
+Llama, Cheetah and African Swallow. Decorative cars and pedestrians, artwork,
+palette cycles and enhanced fire animation use this shared scale. Fades retain
+their readable duration. Simulated ships, trains and aircraft keep their original
+routes and movement timing.
+
 ## Try the effects
 
 1. Load an existing city, or finish terrain editing and **found a new city**.

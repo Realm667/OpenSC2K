@@ -193,6 +193,21 @@ func _check_hazard_transitions(app: CityApplication) -> void:
 	animation.process(0.125)
 	app.disaster_effects.process(0.125)
 	assert(entry.animation.opacity == 1.0)
+	var saved_speed := app.simulation_state.speed_controller.speed
+	var saved_link: bool = options.speed_link
+	for linked in [true, false]:
+		options.speed_link = linked
+		for speed in range(GameSpeedController.Speed.TURTLE, GameSpeedController.Speed.AFRICAN_SWALLOW + 1):
+			app.simulation_state.speed_controller.speed = speed
+			var animation_before := animation.animation_clock
+			var fade_before := animation.clock
+			animation.process(0.01)
+			var factor: float = [1.0, 1.5, 2.0, 3.0][speed - 2] if linked else 1.0
+			assert(is_equal_approx(animation.animation_clock - animation_before, 0.01 * factor))
+			assert(is_equal_approx(animation.clock - fade_before, 0.01), "Speed must not shorten readable fades")
+			assert(is_equal_approx(entry.animation.phase, fposmod(animation.animation_clock / CityHazardAnimation.FRAME_SECONDS, 8.0)))
+	app.simulation_state.speed_controller.speed = saved_speed
+	options.speed_link = saved_link
 	assert(DocumentState.capture(city.document) == before)
 	assert([engine.random.state, engine.lfsr_random.state, engine.game_random.state] == random_before)
 	city.set_text_overlay_id(tile.x, tile.y, 0)
