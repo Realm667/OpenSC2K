@@ -93,7 +93,7 @@ func rebuild() -> void:
 		var box := VBoxContainer.new()
 		panel.add_child(box)
 		var request: bool = record.buyer != "" and record.get("initiator") == record.buyer
-		ApplicationMultiplayer.label(box, "↔ " + tr("Purchase request") if request else "▣ " + tr("Land sale offer"))
+		ApplicationMultiplayer.label(box, tr("Release reserved land") if record.get("reservation", false) else "↔ " + tr("Purchase request") if request else "▣ " + tr("Land sale offer"))
 		var parties := RichTextLabel.new()
 		parties.fit_content = true
 		parties.scroll_active = false
@@ -108,7 +108,7 @@ func rebuild() -> void:
 					parties.push_color(Color(CoopSession.valid_color(player.color)))
 					parties.add_text(str(player.name) + " · " + str(player.city) + "  ")
 					parties.pop()
-		ApplicationMultiplayer.label(box, tr("%d tiles · %s: %s · %s per tile") % [record.count, tr("You receive") if identity == record.seller else tr("You pay"), MultiplayerScoreboard.money(record.price), ("≈ " if int(record.price) % maxi(1, int(record.count)) != 0 else "") + MultiplayerScoreboard.money(int(record.price) / maxi(1, int(record.count)))])
+		ApplicationMultiplayer.label(box, tr("%d tiles · %s: %s · %s per tile") % [record.count, tr("Payment to game") if record.get("reservation", false) else tr("You receive") if identity == record.seller else tr("You pay"), MultiplayerScoreboard.money(record.price), ("≈ " if int(record.price) % maxi(1, int(record.count)) != 0 else "") + MultiplayerScoreboard.money(int(record.price) / maxi(1, int(record.count)))])
 		ApplicationMultiplayer.label(box, "◷ " + ((tr("Your response required") if record.get("awaiting") == identity else tr("Awaiting response")) if not closed else tr(record.status)))
 		var actions := HFlowContainer.new()
 		box.add_child(actions)
@@ -126,19 +126,24 @@ func review(record: Dictionary) -> void:
 	var identity := windows.coop.session.token.sha256_text()
 	var receive: bool = identity == record.seller
 	var funds := windows.coop.app.document_state.city.funds()
-	ApplicationMultiplayer.label(box, tr("%d tiles · %s: %s") % [record.count, tr("You receive") if receive else tr("You pay"), MultiplayerScoreboard.money(record.price)])
-	ApplicationMultiplayer.label(box, tr("Balance after transfer: %s") % MultiplayerScoreboard.money(funds + int(record.price) * (1 if receive else -1)))
+	var reserved: bool = record.get("reservation", false)
+	ApplicationMultiplayer.label(box, tr("%d tiles · %s: %s") % [record.count, tr("Payment to game") if reserved else tr("You receive") if receive else tr("You pay"), MultiplayerScoreboard.money(record.price)])
+	if reserved:
+		ApplicationMultiplayer.label(box, tr("Release only this parcel. The buyer pays the game; you receive no money."))
+	ApplicationMultiplayer.label(box, tr("Balance after transfer: %s") % MultiplayerScoreboard.money(funds + int(record.price) * (0 if receive and reserved else 1 if receive else -1)))
 	var actions := HFlowContainer.new()
 	box.add_child(actions)
 	if record.status == "Open":
 		var awaiting: String = record.get("awaiting", "")
 		if identity == awaiting or (awaiting.is_empty() and identity != record.seller):
-			add_action(actions, tr("Accept"), func() -> void: submit_record("land_accept", record))
-			add_action(actions, tr("Counteroffer"), func() -> void: counter(record))
+			add_action(actions, tr("Approve release") if reserved else tr("Accept"), func() -> void: submit_record("land_accept", record))
+			if not reserved:
+				add_action(actions, tr("Counteroffer"), func() -> void: counter(record))
 			if not str(record.buyer).is_empty():
 				add_action(actions, tr("Decline"), func() -> void: submit_record("land_decline", record))
 		if identity == record.get("initiator", record.seller):
-			add_action(actions, tr("Change price"), func() -> void: counter(record))
+			if not reserved:
+				add_action(actions, tr("Change price"), func() -> void: counter(record))
 			add_action(actions, tr("Withdraw"), func() -> void: submit_record("land_withdraw", record))
 	add_action(actions, tr("Close"), close_map)
 
@@ -242,12 +247,16 @@ func select_parcel(start: Vector2i, finish: Vector2i) -> void:
 				continue
 			if windows.land_action != "land_offer" and owner == own:
 				continue
+			var reserved := int(state.get("protection", [])[tile]) if state.get("protection", []).size() == owners.size() else 0
+			if reserved == -1:
+				continue
+			if owner == 0 and reserved > 0 and reserved != own:
+				owner = -reserved
 			if not groups.has(owner):
 				groups[owner] = []
 			groups[owner].append(tile)
 	if groups.has(0) and windows.land_action == "land_buy":
 		windows.coop.session.request({"kind": "land_buy", "start": [start.x, start.y], "finish": [finish.x, finish.y], "include_water": windows.include_water})
-		return
 	groups.erase(0)
 	if groups.size() == 1:
 		var owner: int = groups.keys()[0]
@@ -259,9 +268,9 @@ func select_parcel(start: Vector2i, finish: Vector2i) -> void:
 		for owner: int in groups:
 			var name := ""
 			for player: Dictionary in windows.players:
-				if player.id == ids[owner - 1]:
+				if player.id == ids[absi(owner) - 1]:
 					name = player.name
-			add_action(box, tr("%s · %d tiles") % [name, groups[owner].size()], func() -> void:
+			add_action(box, tr("%s · %d tiles") % [name + (" · " + tr("Reserved") if owner < 0 else ""), groups[owner].size()], func() -> void:
 				open_parcel(owner, groups[owner], start, finish)
 				chooser.queue_free())
 		chooser.popup_centered()
@@ -269,15 +278,19 @@ func select_parcel(start: Vector2i, finish: Vector2i) -> void:
 func open_parcel(owner: int, tiles: Array, start: Vector2i, finish: Vector2i) -> void:
 	var name := ""
 	for player: Dictionary in windows.players:
-		if player.id == windows.state.owner_ids[owner - 1]:
+		if player.id == windows.state.owner_ids[absi(owner) - 1]:
 			name = player.name
 	var box := map_panel(tiles, tr("Offer land") if owner == windows.state.owner_ids.find(windows.coop.session.token.sha256_text()) + 1 else tr("Request land"))
 	ApplicationMultiplayer.label(box, name + " · " + parcel_counts(tiles))
-	ApplicationMultiplayer.label(box, tr("Total price"))
+	ApplicationMultiplayer.label(box, tr("Payment to game") if owner < 0 else tr("Total price"))
 	var price := SpinBox.new()
 	price.max_value = 2147483647
 	price.value = tiles.size() * int(windows.state.get("land_price", 0))
+	price.prefix = "$"
+	price.editable = owner >= 0
 	box.add_child(price)
+	if owner < 0:
+		ApplicationMultiplayer.label(box, tr("The reserving player must approve. Payment goes to the game after approval."))
 	add_action(box, tr("Publish offer") if owner == windows.state.owner_ids.find(windows.coop.session.token.sha256_text()) + 1 else tr("Send request"), func() -> void:
 		windows.coop.session.request({"kind": "land_offer" if owner == windows.state.owner_ids.find(windows.coop.session.token.sha256_text()) + 1 else "land_request", "start": [start.x, start.y], "finish": [finish.x, finish.y], "tiles": tiles, "price": int(price.value)})
 		close_map())

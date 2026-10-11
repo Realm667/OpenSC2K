@@ -79,8 +79,12 @@ func update(state: Dictionary) -> void:
 	var mode := tr("Co-op") if state.get("mode", "coop") == "coop" else tr("Competitive Region") if state.get("mode") == "region" else tr("Competitive Shared")
 	var goal: Dictionary = state.get("goal", {})
 	var target := tr("Endless game") if goal.get("kind", "endless") == "endless" else "%s: %s" % [tr("Population") if goal.kind == "population" else tr("Net wealth"), MultiplayerGoalHud.number(int(goal.target), goal.kind)]
+	if goal.get("kind") == "timed_score":
+		target = tr("Points after game time") + " · " + tr("%d game years · End year %d") % [int(goal.duration_days) / CityCalendar.DAYS_PER_YEAR, int(goal.end_year)]
 	summary.text = "%s · %s\n%s" % [mode, target, tr("Simulation and construction begin together after the host starts.")]
-	if state.get("mode", "coop") != "coop":
+	if goal.get("kind") == "timed_score":
+		summary.text += "\n" + MultiplayerGoal.score_help()
+	elif state.get("mode", "coop") != "coop" and goal.get("kind", "endless") != "endless":
 		summary.text += "\n" + (tr("Accumulate %d years as sole leader. Earned time is kept. Late cities are unranked.") % (int(goal.get("hold_days", 3000)) / CityCalendar.DAYS_PER_YEAR) if goal.get("rule") == "leadership" else tr("Stay at or above the target for one full game year. Dropping below resets the timer."))
 	var signature := JSON.stringify(state.get("start_preview", {})) + JSON.stringify(state.get("roster", []).map(func(player: Dictionary) -> Array: return [player.id, player.name, player.city, player.online, player.get("ready", false), player.color, player.get("handicap", {})]))
 	if signature != roster_signature and not editing_city():

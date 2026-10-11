@@ -21,7 +21,7 @@ signal seat_lobby_received(data: Dictionary)
 
 const PROTOCOL := 1
 const BUILD := "opensc2k-coop-1"
-const NETWORK_BUILD := "opensc2k-multiplayer-17"
+const NETWORK_BUILD := "opensc2k-multiplayer-18"
 const MAX_PLAYERS := 8
 var world: CoopWorld
 var active := false
@@ -37,6 +37,7 @@ var host_starter_tiles := 0
 var host_goal_kind := "endless"
 var host_goal_target := 10000
 var host_goal_years := 10
+var host_duration_years := 10
 var goal := MultiplayerGoal.new()
 var loans := MultiplayerLoans.new()
 var history := MultiplayerHistory.new()
@@ -131,6 +132,7 @@ func host(document: Sc2File, port: int, join_code: String, player_name: String, 
 	goal.kind = host_goal_kind if mode != "coop" else "endless"
 	goal.target = host_goal_target
 	goal.hold_days = host_goal_years * CityCalendar.DAYS_PER_YEAR
+	goal.duration_days = clampi(host_duration_years, 1, 100) * CityCalendar.DAYS_PER_YEAR
 	world = candidate
 	if world is SharedWorld:
 		var shared_error: String = world.add_player(token)
@@ -147,6 +149,9 @@ func host(document: Sc2File, port: int, join_code: String, player_name: String, 
 	active = true
 	hosting = true
 	connected = true
+	goal.reset_clock(world)
+	if not use_lobby:
+		goal.begin(world)
 	waiting_for_start = use_lobby
 	apply_speed()
 	publish()
@@ -312,7 +317,7 @@ func _process(delta: float) -> void:
 			channel.send({"type": "ping"})
 	if hosting:
 		if not waiting_for_start:
-			world.advance(delta)
+			goal.advance(world, delta)
 			if world is SharedWorld:
 				loans.advance(world)
 		if not waiting_for_start and goal.evaluate(world, members, loans):
@@ -459,6 +464,7 @@ func execute(actor: String, message: Dictionary) -> Dictionary:
 			var start_error := starts.prepare(world, members)
 			if not start_error.is_empty():
 				return CoopWorld.rejected(start_error)
+		goal.begin(world)
 		waiting_for_start = false
 		disconnected_pause = false
 		for player: String in requested_speed:
@@ -909,6 +915,8 @@ func roster() -> Array:
 			statistics_cache[actor] = MultiplayerStatistics.capture(world, actor)
 		var row: Dictionary = statistics_cache[actor].duplicate()
 		row.debt = int(row.debt) + loans.debt(actor)
+		if goal.kind == "timed_score":
+			row["points"] = goal.final_scores.get(actor.sha256_text(), MultiplayerGoal.score_units(int(row.population), int(row.funds) - int(row.debt)))
 		row["ranked"] = member.get("ranked", true)
 		row["handicap"] = starts.handicaps.get(actor, {}).duplicate(true)
 		row.merge({"id": actor.sha256_text(), "name": member.name, "host": actor == token,
@@ -1171,6 +1179,7 @@ func prepare_rematch(actor: String) -> Dictionary:
 	starts = next_starts
 	loans = MultiplayerLoans.new()
 	history = MultiplayerHistory.new()
+	goal.reset_clock(world)
 	goal.winners.clear()
 	goal.holding.clear()
 	goal.unscored = false

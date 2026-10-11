@@ -4,7 +4,7 @@ extends RefCounted
 const VIEWS := ["Overview", "Finances", "Land ownership", "Zoning", "Construction", "Emergency services", "History"]
 const COLUMNS := {
 	"name": "Player", "city": "City", "online": "Connection", "population": "Population",
-	"funds": "Funds", "balance": "Year-to-date balance", "debt": "Debt", "land": "Owned tiles",
+	"points": "Points", "funds": "Funds", "balance": "Year-to-date balance", "debt": "Debt", "land": "Owned tiles",
 	"builds": "Build actions", "spent": "Build spending", "built": "Developed tiles",
 	"residential": "Residential tiles", "commercial": "Commercial tiles", "industrial": "Industrial tiles",
 	"bought": "Land purchases", "sold": "Land sales", "units": "Active units", "aid": "Helping neighbours"}
@@ -101,7 +101,9 @@ func rebuild() -> void:
 		return
 	var selected := str(table.get_selected().get_metadata(0)) if table.get_selected() != null else ""
 	var scroll := table.get_scroll()
-	columns = GROUPS[picker.selected] if picker.get_meta("shared", false) else PERSONAL
+	columns = (GROUPS[picker.selected] if picker.get_meta("shared", false) else PERSONAL).duplicate()
+	if picker.selected == 0 and not rows.is_empty() and rows[0].has("points"):
+		columns.append("points")
 	if not columns.has(sort_key):
 		sort_key = "name"
 		descending = false
@@ -139,6 +141,9 @@ func rebuild() -> void:
 				var badge := Image.create(10, 10, false, Image.FORMAT_RGBA8)
 				badge.fill(Color(CoopSession.valid_color(row.get("color"))))
 				item.set_icon(index, ImageTexture.create_from_image(badge))
+			elif key == "points":
+				text = MultiplayerGoal.points(int(value))
+				item.set_text_alignment(index, HORIZONTAL_ALIGNMENT_RIGHT)
 			elif key == "online":
 				text = tr("Connected") if value else tr("Disconnected")
 			elif value != null and key != "city":
@@ -172,6 +177,8 @@ static func money(value: Variant) -> String:
 	return "$" + number(value)
 
 func tooltip(key: String) -> String:
+	if key == "points":
+		return MultiplayerGoal.score_help()
 	if key == "balance":
 		return tr("Recorded budget balance in the current city year; excludes construction and land transactions.")
 	if key in ["spent", "builds"]:
