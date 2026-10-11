@@ -142,6 +142,8 @@ func admit(peer: int, actor: String, kind := "joined") -> void:
 	session.publish()
 	session.channels[peer].send({"type": "welcome", "session": session.session_id,
 		"actor": actor, "next": int(session.members[actor].sequence) + 1})
+	if session.environment_source.is_valid():
+		session.channels[peer].send_latest({"type": "environment", "weather": session.environment_source.call()})
 	session.send_state(peer, session.make_state(actor))
 	for item: Dictionary in session.chat_history:
 		session.channels[peer].send({"type": "chat", "message": item.merged({"history": true}, true)})

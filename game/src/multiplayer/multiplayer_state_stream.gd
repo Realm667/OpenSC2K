@@ -86,7 +86,7 @@ func receive(message: Dictionary) -> Dictionary:
 			file.seek(0)
 			var result: Variant = JSON.parse_string(file.get_as_text())
 			close()
-			if not result is Dictionary or result.get("type") not in ["state", "state_delta"]:
+			if not result is Dictionary or result.get("type") not in ["state", "state_delta", "packed_state"]:
 				failed = true
 				return {}
 			complete = true

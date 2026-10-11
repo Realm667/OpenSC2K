@@ -27,7 +27,7 @@ func encode(state: Dictionary) -> Dictionary:
 		for field: String in state:
 			if state[field] == previous.get(field):
 				continue
-			if field in ["city", "owners", "protection"] and previous.has(field):
+			if (field in ["city", "owners", "protection"] or field.begins_with(MultiplayerDocument.PREFIX)) and previous.has(field):
 				var value: Variant = state[field]
 				var old: Variant = previous[field]
 				var changed: Array = []
@@ -67,11 +67,12 @@ func decode(message: Dictionary) -> Dictionary:
 	for field: Variant in message.removed:
 		result.erase(field)
 	for field: Variant in message.pages:
-		if field not in ["city", "owners", "protection"] or not before.has(field):
+		if not field is String or (field not in ["city", "owners", "protection"] and not field.begins_with(MultiplayerDocument.PREFIX)) or not before.has(field):
 			failed = true
 			return {}
 		var patch: Variant = message.pages[field]
-		var maximum := MultiplayerStateStream.MAX_BYTES * 2 if field == "city" else 4096 * 4096
+		var text_field: bool = field == "city" or field.begins_with(MultiplayerDocument.PREFIX)
+		var maximum := MultiplayerStateStream.MAX_BYTES * 2 if text_field else 4096 * 4096
 		if not patch is Dictionary or not CoopWorld.whole_number(patch.get("length"), 0, maximum) or not patch.get("chunks") is Array:
 			failed = true
 			return {}
@@ -80,10 +81,10 @@ func decode(message: Dictionary) -> Dictionary:
 			if not part is Array or part.size() != 2 or not CoopWorld.whole_number(part[0], 0, maxi(0, int(patch.length) - 1)) or int(part[0]) % PAGE != 0 or changes.has(int(part[0])):
 				failed = true
 				return {}
-			if (field == "city" and not part[1] is String) or (field != "city" and not part[1] is Array):
+			if (text_field and not part[1] is String) or (not text_field and not part[1] is Array):
 				failed = true
 				return {}
-			var count: int = part[1].length() if field == "city" else part[1].size()
+			var count: int = part[1].length() if text_field else part[1].size()
 			if count != mini(PAGE, int(patch.length) - int(part[0])):
 				failed = true
 				return {}
@@ -92,7 +93,7 @@ func decode(message: Dictionary) -> Dictionary:
 		var array: Array = []
 		for start in range(0, int(patch.length), PAGE):
 			var count := mini(PAGE, int(patch.length) - start)
-			if field == "city":
+			if text_field:
 				var part: String = changes.get(start, str(before[field]).substr(start, count))
 				if part.length() != count:
 					failed = true
@@ -104,7 +105,7 @@ func decode(message: Dictionary) -> Dictionary:
 					failed = true
 					return {}
 				array.append_array(part)
-		result[field] = "".join(strings) if field == "city" else array
+		result[field] = "".join(strings) if text_field else array
 	result["type"] = "state"
 	result["wire_id"] = message.wire_id
 	result["wire_key"] = key
@@ -116,9 +117,17 @@ func remember(key: String, state: Dictionary) -> void:
 	states[key] = state.duplicate(true)
 	var bytes := 0
 	for item: Dictionary in states.values():
-		bytes += str(item.get("city", "")).length() * 4 + (item.get("owners", []).size() + item.get("protection", []).size()) * 8
+		bytes += state_bytes(item)
 	while states.size() > 1 and (bytes > CACHE_BYTES or states.size() > 2):
 		var oldest: String = states.keys()[0]
 		var item: Dictionary = states[oldest]
-		bytes -= str(item.get("city", "")).length() * 4 + (item.get("owners", []).size() + item.get("protection", []).size()) * 8
+		bytes -= state_bytes(item)
 		states.erase(oldest)
+
+
+static func state_bytes(state: Dictionary) -> int:
+	var size: int = (state.get("owners", []).size() + state.get("protection", []).size()) * 8
+	for key: String in state:
+		if key == "city" or key.begins_with(MultiplayerDocument.PREFIX):
+			size += str(state[key]).length() * 4
+	return size

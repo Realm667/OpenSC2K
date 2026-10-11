@@ -48,6 +48,11 @@ static func host_ended(coop: ApplicationMultiplayer) -> void:
 	var encoded := str(coop.session.ended_city if not coop.session.ended_city.is_empty() else coop.session.confirmed_own_city)
 	var city := Sc2File.new()
 	var valid := not encoded.is_empty() and city.parse(Marshalls.base64_to_raw(encoded))
+	if not valid and not coop.session.confirmed_own_state.is_empty():
+		var confirmed := MultiplayerDocument.restore(coop.session.confirmed_own_state)
+		if confirmed != null:
+			city = MultiplayerSingleplayer.clean(confirmed)
+			valid = true
 	# For an old host or a failed final transfer, only use a confirmed OWN view.
 	if not valid and not coop.session.latest.get("visiting", false) and coop.app.document_state.current_document != null:
 		city = MultiplayerSingleplayer.clean(coop.app.document_state.current_document)

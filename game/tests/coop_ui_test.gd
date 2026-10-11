@@ -86,7 +86,7 @@ func run() -> void:
 	guest.request({"kind": "build", "group": 9, "tool": 0, "start": [25, 25], "finish": [25, 25], "path": [[25, 25]]})
 	for _frame in 100:
 		await create_timer(0.01).timeout
-		if main.coop.session.world.revision == 2 and guest.local_revision == 2:
+		if main.coop.session.world.revision == 2 and main.coop.session.local_revision == 2 and guest.local_revision == 2:
 			break
 	check(main.coop.session.world.revision == 2, "guest builds while host has its own camera")
 	check(remote_sounds.size() == 1 and not remote_sounds[0].sounds.is_empty(), "guest construction emits positioned sound on host")

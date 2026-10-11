@@ -26,6 +26,8 @@ var composition_sources: Dictionary = {}
 var composition_owners := PackedInt32Array()
 var composition_protection := PackedInt32Array()
 var municipal_compression: Dictionary = {}
+var live_documents: Dictionary = {}
+var shared_live_document := MultiplayerDocument.new()
 var record_cache: Dictionary = {}
 var record_signature: Array = []
 
@@ -499,13 +501,14 @@ func accept_reservation(key: String, buyer: String) -> Dictionary:
 	return accepted("Reservation released and land purchased. Payment went to the game.").merged({"sounds": [ToolSoundRules.SOUND_ZONE]})
 
 
-func snapshot_for(actor: String) -> Dictionary:
-	if snapshot_cache.get(actor, {}).get("revision", -1) == revision:
-		return snapshot_cache[actor].duplicate(true)
+func snapshot_for(actor: String, live := false) -> Dictionary:
+	var cache_key := actor + (":live" if live else ":archive")
+	if snapshot_cache.get(cache_key, {}).get("revision", -1) == revision:
+		return snapshot_cache[cache_key].duplicate()
 	var child: CoopWorld = municipalities.get(actor, municipalities[host_actor])
 	var result := child.snapshot_status()
 	Sc2xCheckpoint.capture(child.controller, child.city.document.sc2x_metadata)
-	var document := child.city.document.duplicate_document()
+	var document := MultiplayerDocument.view_copy(child.city.document) if live else child.city.document.duplicate_document()
 	if composed_revision != revision:
 		var ownership_changed := owners != composition_owners or protection != composition_protection
 		for id: String in TILE_CHUNKS:
@@ -550,12 +553,18 @@ func snapshot_for(actor: String) -> Dictionary:
 		for id: String in record_cache[actor]:
 			document.find_chunk(id).expected_decoded_size = record_cache[actor][id].size()
 			document.find_chunk(id).set_decoded_payload(record_cache[actor][id])
-	if not municipal_compression.has(actor):
-		municipal_compression[actor] = {}
-	var encoded := Sc2xDocument.encode(document, municipal_compression[actor])
-	if not encoded.ok:
-		return {"error": encoded.error}
-	result.city = Marshalls.raw_to_base64(encoded.data)
+	if live:
+		if not live_documents.has(actor):
+			live_documents[actor] = MultiplayerDocument.new()
+		var common_ids: Array = TILE_CHUNKS.keys().filter(func(id: String) -> bool: return id != "XTXT")
+		result.merge(live_documents[actor].capture(document, shared_live_document, common_ids))
+	else:
+		if not municipal_compression.has(actor):
+			municipal_compression[actor] = {}
+		var encoded := Sc2xDocument.encode(document, municipal_compression[actor])
+		if not encoded.ok:
+			return {"error": encoded.error}
+		result.city = Marshalls.raw_to_base64(encoded.data)
 	result.revision = revision
 	result["mode"] = "shared"
 	result["land_price"] = land_price
@@ -577,7 +586,7 @@ func snapshot_for(actor: String) -> Dictionary:
 					break
 			result.disasters.append({"owner": owner.sha256_text(), "type": municipality.engine.active_disaster_type,
 				"point": [location / city.map_size, location % city.map_size]})
-	snapshot_cache[actor] = result.duplicate(true)
+	snapshot_cache[cache_key] = result.duplicate()
 	return result
 
 
@@ -646,8 +655,8 @@ func compose_records(document: Sc2File, viewing_actor: String) -> void:
 		chunk.set_decoded_payload(pair[1])
 
 
-func snapshot(_force_checkpoint := false) -> Dictionary:
-	return snapshot_for(host_actor) if not host_actor.is_empty() else super.snapshot()
+func snapshot(_force_checkpoint := false, live := false) -> Dictionary:
+	return snapshot_for(host_actor, live) if not host_actor.is_empty() else super.snapshot(false, live)
 
 
 func saved_shared() -> Dictionary:

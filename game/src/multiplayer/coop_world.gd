@@ -29,6 +29,10 @@ var compression_cache: Dictionary = {}
 var statistics_tiles: Dictionary = {}
 var encoded_revision := -1
 var encoded_policy := -1
+var live_document := MultiplayerDocument.new()
+var live_snapshot: Dictionary = {}
+var live_revision := -1
+var live_policy := -1
 
 
 func open(document: Sc2File) -> bool:
@@ -39,6 +43,10 @@ func open(document: Sc2File) -> bool:
 	if not error.is_empty():
 		return false
 	city = CityState.from_document(document.duplicate_document())
+	live_document = MultiplayerDocument.new()
+	live_snapshot.clear()
+	live_revision = -1
+	live_policy = -1
 	# Saved authentication/municipality data is restored by the session, never
 	# sent to guests as an extra entry in the public display city.
 	city.document.sc2x_extra_entries.erase("multiplayer.json")
@@ -115,7 +123,14 @@ func advance(delta: float) -> void:
 		policy_revision += 1
 
 
-func snapshot(force_checkpoint := false) -> Dictionary:
+func snapshot(force_checkpoint := false, live := false) -> Dictionary:
+	if live:
+		if live_snapshot.is_empty() or live_revision != revision or live_policy != policy_revision:
+			Sc2xCheckpoint.capture(controller, city.document.sc2x_metadata)
+			live_snapshot = live_document.capture(city.document)
+			live_revision = revision
+			live_policy = policy_revision
+		return snapshot_status().merged(live_snapshot)
 	if force_checkpoint or encoded_city.is_empty() or encoded_revision != revision or encoded_policy != policy_revision:
 		Sc2xCheckpoint.capture(controller, city.document.sc2x_metadata)
 		var encoded := Sc2xDocument.encode(city.document, compression_cache)

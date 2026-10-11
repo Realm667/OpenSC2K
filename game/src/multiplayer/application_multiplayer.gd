@@ -20,6 +20,7 @@ var original_saved_snapshot := PackedByteArray()
 var original_saved_once := false
 var mirrored := false
 var last_city_bytes := ""
+var last_live_state: Dictionary = {}
 var sign_dialog: ConfirmationDialog
 var sign_text: LineEdit
 var pending_sign: Dictionary = {}
@@ -227,22 +228,34 @@ func start_join() -> void:
 	save_identity()
 
 
+static func city_fields(state: Dictionary) -> Dictionary:
+	var result := {"document": state.get("document")}
+	for key: String in state:
+		if key.begins_with(MultiplayerDocument.PREFIX):
+			result[key] = state[key]
+	return result
+
+
 func receive_state(state: Dictionary) -> void:
 	windows.update_state(state)
 	if not str(state.get("error", "")).is_empty():
 		show_message(str(state.error))
-	if last_city_bytes == state.city:
+	var live: bool = state.get("document") is Dictionary
+	var unchanged: bool = last_live_state == city_fields(state) if live else last_city_bytes == state.get("city", "")
+	if unchanged:
 		app.simulation_state.speed_controller.speed = int(state.get("speed", 1))
 		app.frame.sync_speed_ui()
 		return
-	var document := Sc2File.new()
-	if not document.parse(Marshalls.base64_to_raw(state.city)) or not document.is_sc2x() or document.map_size not in Sc2File.MAP_SIZES:
+	var document := MultiplayerDocument.restore(state, last_live_state, app.document_state.current_document) if live else Sc2File.new()
+	if document == null or (not live and not document.parse(Marshalls.base64_to_raw(state.city))) or not document.is_sc2x() or document.map_size not in Sc2File.MAP_SIZES:
 		show_message("Ungültiger Stadtzustand vom Host. Sitzung beenden und neu verbinden.")
 		return
-	last_city_bytes = state.city
+	last_city_bytes = str(state.get("city", ""))
+	last_live_state = city_fields(state) if live else {}
 	if mirrored:
 		# Camera-follow and audio choices belong to this player.
-		var local_city := CityState.from_document(document)
+		var local_city := CityState.new()
+		local_city.document = document
 		local_city.set_auto_goto_enabled(app.document_state.city.auto_goto_enabled())
 		local_city.set_sound_enabled(app.document_state.city.sound_enabled())
 		local_city.set_music_enabled(app.document_state.city.music_enabled())
@@ -384,6 +397,7 @@ func leave() -> void:
 	session.stop()
 	mirrored = false
 	last_city_bytes = ""
+	last_live_state.clear()
 	panel.hide()
 	multiplayer_save_path = ""
 	windows.close()
