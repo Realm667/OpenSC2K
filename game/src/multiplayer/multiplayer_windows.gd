@@ -37,6 +37,8 @@ var chat_jump: Button
 var chat_entry: HBoxContainer
 var chat_preview: Label
 var chat_collapsed := false
+var chat_grip: Control
+var remote_cursor := MultiplayerCursor.new()
 var chat_height := 184.0
 var chat_resize_y := -1.0
 var chat_resize_height := 184.0
@@ -121,6 +123,7 @@ func setup() -> void:
 	coop.app.map_view.add_child(chat)
 	FrostedTooltipPanel.bind(chat)
 	chat.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
+	chat.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	chat.offset_left = 8
 	chat.offset_right = 408
 	chat.offset_top = -184
@@ -179,6 +182,7 @@ func setup() -> void:
 			chat_input.release_focus()
 			chat_input.accept_event())
 	var grip := Control.new()
+	chat_grip = grip
 	grip.custom_minimum_size.y = 5
 	grip.mouse_default_cursor_shape = Control.CURSOR_VSIZE
 	chat_body.add_child(grip)
@@ -443,16 +447,25 @@ func draw_markers() -> void:
 		var bounds := map.camera_view_rect.grow(-3)
 		if not bounds.has_point(center):
 			continue
-		var arrow := PackedVector2Array([center, center + Vector2(2, 17), center + Vector2(6, 12), center + Vector2(12, 12), center])
-		overlay.draw_colored_polygon(arrow, color)
-		overlay.draw_polyline(arrow, Color(0.06, 0.08, 0.10, 0.85), 1.0, true)
+		var icon := remote_cursor.artwork(coop.app.desktop_presentation.graphics, item.get("cursor_tool", {}), color)
+		var icon_extent := Vector2(16, 18)
+		if not icon.is_empty():
+			var pixel := maxi(1, roundi(DisplayServer.screen_get_scale())) / maxf(0.01, ScreenPixels.scale)
+			var texture: Texture2D = icon.texture
+			icon_extent = texture.get_size() * pixel
+			var rect := Rect2(center - Vector2(icon.hotspot) * pixel, icon_extent)
+			overlay.draw_texture_rect(texture, rect, false)
+		else:
+			var arrow := PackedVector2Array([center, center + Vector2(2, 17), center + Vector2(6, 12), center + Vector2(12, 12), center])
+			overlay.draw_colored_polygon(arrow, color)
+			overlay.draw_polyline(arrow, Color(0.06, 0.08, 0.10, 0.85), 1.0, true)
 		var idle := float(Time.get_ticks_msec() - int(map_overlay.cursors[item.id].moved)) / 1000.0
 		var alpha := clampf(3.0 - idle, 0.0, 1.0)
 		if alpha <= 0:
 			continue
 		var text := str(item.get("name", ""))
 		var extent := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 14) + Vector2(12, 6)
-		var anchor := center + Vector2(18, -4)
+		var anchor := center + Vector2(icon_extent.x + 4, -4)
 		if anchor.x + extent.x > bounds.end.x:
 			anchor.x = center.x - extent.x - 8
 		anchor = anchor.clamp(bounds.position, bounds.end - extent)
@@ -651,8 +664,7 @@ func tick() -> void:
 	if chat.get_parent() == coop.app.map_view:
 		chat.offset_left = view.position.x + 8
 		chat.offset_right = minf(chat.offset_left + 400, view.end.x - 8)
-		chat.offset_top = view.end.y - coop.app.map_view.size.y - (70 if chat_collapsed and chat_preview.visible else 42 if chat_collapsed else chat_height)
-		chat.offset_bottom = view.end.y - coop.app.map_view.size.y - 8
+		layout_chat(view)
 	overlay.queue_redraw()
 
 
@@ -769,6 +781,9 @@ func append_status(text: String) -> void:
 
 func set_chat_collapsed(value: bool) -> void:
 	chat_collapsed = value
+	chat_grip.visible = not value
+	if value:
+		chat_resize_y = -1.0
 	chat_log.visible = not value
 	chat_entry.visible = not value
 	chat_toggle.text = "+" if value else "−"
@@ -776,6 +791,14 @@ func set_chat_collapsed(value: bool) -> void:
 	if not value and chat_log.scroll_following:
 		unread = 0
 	refresh_chat_heading()
+
+func layout_chat(view: Rect2) -> void:
+	var height := chat.get_combined_minimum_size().y
+	if not chat_collapsed:
+		height = maxf(height, minf(chat_height, view.size.y - 16))
+	chat.offset_bottom = view.end.y - coop.app.map_view.size.y - 8
+	chat.offset_top = chat.offset_bottom - height
+
 
 func refresh_chat_heading() -> void:
 	chat_title.text = tr("Chat") + (" · %d" % unread if unread > 0 else "")

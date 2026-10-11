@@ -83,6 +83,19 @@ func run() -> void:
 	app.coop.windows.scores.rebuild()
 	await settle()
 	check_fit(app.coop.windows.scoreboard, app.coop.windows.score_rows, "history")
+	app.coop.windows.scoreboard.hide()
+	app.coop.windows.open_chat()
+	for collapsed in [true, false, true]:
+		app.coop.windows.set_chat_collapsed(collapsed)
+		await settle()
+		var chat := app.coop.windows.chat
+		var area := app.map_view.camera_view_rect
+		check(chat.get_rect().end.y <= area.end.y, "chat remains above status bar after collapse or expansion")
+		check(chat.get_rect().position.y >= area.position.y, "chat fits the visible map")
+	app.coop.windows.preview_until = Time.get_ticks_msec() + 10000
+	app.coop.windows.chat_preview.text = "Player: New message"
+	await settle()
+	check(app.coop.windows.chat.get_rect().end.y <= app.map_view.camera_view_rect.end.y, "collapsed message preview also fits")
 	app.coop.leave()
 	app.queue_free()
 	await process_frame

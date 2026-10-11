@@ -57,6 +57,10 @@ func setup() -> void:
 	session.session_ended.connect(func() -> void: MultiplayerCopyDialog.host_ended(self))
 	session.cursor_source = func() -> Vector2:
 		return MultiplayerMapOverlay.local_cursor(app) if mirrored and app.map_view.visible else Vector2(-1, -1)
+	session.cursor_tool_source = func() -> Dictionary:
+		var desktop := app.desktop_presentation
+		var selection := desktop.cursor_selection(app.map_view, DisplayServer.screen_get_size(app.get_window().current_screen).x)
+		return {"app": selection.app, "group": selection.group} if selection != null else {}
 	session.selection_source = func() -> Array:
 		if not mirrored or session.latest.get("visiting", false) or app.map_view.selection_start.x < 0:
 			return []
