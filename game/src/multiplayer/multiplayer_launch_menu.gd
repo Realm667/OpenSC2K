@@ -17,6 +17,8 @@ var goal_picker: OptionButton
 var goal_target: SpinBox
 var goal_years: OptionButton
 var years_label: Label
+var duration: SpinBox
+var duration_label: Label
 
 func _init(owner: ApplicationMultiplayer) -> void:
 	owner_ref = weakref(owner)
@@ -105,7 +107,7 @@ func setup(body: VBoxContainer) -> void:
 	host_fields.add_child(goal_fields)
 	ApplicationMultiplayer.label(goal_fields, tr("Victory goal"))
 	goal_picker = OptionButton.new()
-	for title in ["Endless game", "Population", "Wealth (funds minus debt)"]:
+	for title in ["Endless game", "Population", "Wealth (funds minus debt)", "Points after game time"]:
 		goal_picker.add_item(tr(title))
 	goal_fields.add_child(goal_picker)
 	goal_target = SpinBox.new()
@@ -120,6 +122,13 @@ func setup(body: VBoxContainer) -> void:
 	goal_years.select(3)
 	goal_fields.add_child(goal_years)
 	goal_years.tooltip_text = tr("Only the sole leader at or above the target earns time. Earned time is kept; ties pause all clocks.")
+	duration_label = ApplicationMultiplayer.label(goal_fields, tr("Duration in game years"))
+	duration = SpinBox.new()
+	duration.min_value = 1
+	duration.max_value = 100
+	duration.value = 10
+	duration.tooltip_text = tr("Starts when the host starts the game. The lobby shows the end year. Paused game time does not count.")
+	goal_fields.add_child(duration)
 	goal_picker.item_selected.connect(func(index: int) -> void:
 		goal_target.value = 100000 if index == 2 else 10000
 		update())
@@ -166,7 +175,9 @@ func update() -> void:
 	coop.use_current.visible = coop.city_picker.selected == 1
 	shared_fields.visible = coop.mode_picker.selected == 1 and coop.city_picker.selected == 0
 	goal_fields.visible = coop.mode_picker.selected != 0 and coop.city_picker.selected == 0
-	goal_target.visible = goal_picker.selected != 0
+	goal_target.visible = goal_picker.selected in [1, 2]
+	duration.visible = goal_picker.selected == 3
+	duration_label.visible = duration.visible
 	goal_years.visible = goal_target.visible
 	years_label.visible = goal_target.visible
 	goal_picker.tooltip_text = goal_help()
@@ -189,6 +200,8 @@ static func column(parent: Control, ratio: float) -> VBoxContainer:
 	return box
 
 func goal_help() -> String:
+	if goal_picker.selected == 3:
+		return MultiplayerGoal.score_help()
 	var hint := tr("Population: residents of your own city. Suggested targets: 2,000 for a short development goal, 10,000 for a medium goal, 50,000 for a long goal.") if goal_picker.selected == 1 else tr("Net wealth: treasury minus bank bonds and outstanding player debt. Suggested targets: $50,000, $100,000 or $500,000 for increasingly long economic goals.")
 	if goal_picker.selected == 0:
 		return tr("Build without a victory target or time limit.")

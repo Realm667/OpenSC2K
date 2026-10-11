@@ -72,8 +72,8 @@ static func transfer_error(world: SharedWorld, seller: String, buyer: String, ti
 	var to := world.actors.find(buyer) + 1
 	var removed := {}
 	for tile: int in tiles:
-		if world.protection[tile] != 0:
-			return "Reserved land and public corridors cannot be traded."
+		if world.protection[tile] not in [0, from]:
+			return "Another player's reservation and public corridors cannot be traded."
 		removed[tile] = true
 	if connected(tiles, world.owners, to, world.city.map_size).size() != tiles.size():
 		return "This parcel does not connect to the buyer's city."

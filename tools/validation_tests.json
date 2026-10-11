@@ -2142,5 +2142,11 @@
     "script": "tests/multiplayer_dialog_test.gd",
     "domain": "ui",
     "lane": "product"
+  },
+  {
+    "id": "multiplayer_timed_land_test",
+    "script": "tests/multiplayer_timed_land_test.gd",
+    "domain": "simulation",
+    "lane": "product"
   }
 ]

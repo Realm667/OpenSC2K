@@ -39,10 +39,14 @@ func _process(_delta: float) -> void:
 	var scale_factor := window.content_scale_factor
 	window.min_size = Vector2i(mini(420, int(available.x) - 40), 100)
 	var desired := Vector2i(mini(preferred_width, int(available.x) - 40), mini(ceili((body.get_combined_minimum_size().y + chrome.y) * scale_factor) + 2, int(available.y) - 70))
+	# The artwork fitter can enlarge embedded windows at fractional UI scales.
+	# Use the same pixel fit here, so two fitters never fight over the width.
+	var position := window.position
+	if window.get_meta("center_after_fit", false):
+		position = Vector2i((available - Vector2(desired)) * 0.5)
+	position = Vector2i(clampi(position.x, 20, maxi(20, int(available.x) - desired.x - 20)), clampi(position.y, 36, maxi(36, int(available.y) - desired.y - 34)))
+	desired = ScreenPixels.window_size(position, desired)
 	# Rounded content measurements can alternate by a pixel as scrollbars settle.
 	if absi(window.size.x - desired.x) > 1 or absi(window.size.y - desired.y) > 2:
 		window.size = desired
-	if window.get_meta("center_after_fit", false):
-		window.position = Vector2i((available - Vector2(window.size)) * 0.5)
-	# A newly enlarged dialog must also stay within the viewport.
-	window.position = Vector2i(clampi(window.position.x, 20, maxi(20, int(available.x) - window.size.x - 20)), clampi(window.position.y, 36, maxi(36, int(available.y) - window.size.y - 34)))
+	window.position = position

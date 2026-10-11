@@ -10,6 +10,7 @@ var home: Button
 var visit_frame: Panel
 var rows: VBoxContainer
 var signature := ""
+var timer: Label
 
 func _init(windows: MultiplayerWindows) -> void:
 	owner_ref = weakref(windows)
@@ -54,6 +55,8 @@ func _init(windows: MultiplayerWindows) -> void:
 	glow.shadow_size = 6
 	visit_frame.add_theme_stylebox_override("panel", glow)
 	visit_frame.hide()
+	timer = ApplicationMultiplayer.label(body, "")
+	timer.hide()
 	title.clip_text = true
 	rows = VBoxContainer.new()
 	rows.add_theme_constant_override("separation", 3)
@@ -69,6 +72,8 @@ func layout(view: Rect2) -> void:
 	home.position = view.end - home.size - Vector2(12, 12)
 
 static func value(player: Dictionary, kind: String) -> int:
+	if kind == "timed_score":
+		return int(player.get("points", MultiplayerGoal.score_units(int(player.get("population", 0)), int(player.get("funds", 0)) - int(player.get("debt", 0)))))
 	return int(player.get("population", 0)) if kind == "population" else int(player.get("funds", 0)) - int(player.get("debt", 0))
 
 func update(state: Dictionary, _actor: String) -> void:
@@ -88,7 +93,15 @@ func update(state: Dictionary, _actor: String) -> void:
 		return
 	signature = key
 	title.text = tr("Endless game · no scoring") if goal.get("unscored", false) else tr("Endless game") if endless else "%s · %s" % [tr("Population") if kind == "population" else tr("Net wealth"), number(int(goal.get("target", 1)), kind)]
+	var timed := kind == "timed_score" and not endless
+	if timed:
+		title.text = tr("Points after game time")
 	title.text = tr("Game goal") + ": " + title.text
+	timer.visible = timed
+	if timed:
+		var remaining := maxi(0, int(goal.get("duration_days", 0)) - int(goal.get("elapsed_days", 0)))
+		timer.text = tr("End year %d · %d years, %d days remaining") % [int(goal.get("end_year", 0)), remaining / CityCalendar.DAYS_PER_YEAR, remaining % CityCalendar.DAYS_PER_YEAR]
+		timer.tooltip_text = MultiplayerGoal.score_help()
 	title.tooltip_text = title.text
 	for child in rows.get_children():
 		rows.remove_child(child)
@@ -96,6 +109,11 @@ func update(state: Dictionary, _actor: String) -> void:
 	if endless and state.get("mode") != "region":
 		return
 	var target := maxi(1, int(goal.get("target", 1)))
+	if timed:
+		target = 1
+		for player: Dictionary in state.get("roster", []):
+			if player.get("ranked", true):
+				target = maxi(target, value(player, kind))
 	var required := maxi(1, int(goal.get("hold_days", 300)))
 	for player: Dictionary in state.get("roster", []):
 		var current := value(player, kind)
@@ -122,7 +140,7 @@ func update(state: Dictionary, _actor: String) -> void:
 				compact.content_margin_bottom = 0
 				visit.add_theme_stylebox_override(style_name, compact)
 		var progress := bar(row, Color(color, 0.6), 0.0 if endless else clampf(float(current) / target, 0, 1))
-		if not endless and ranked and (current >= target or days > 0):
+		if not endless and not timed and ranked and (current >= target or days > 0):
 			bar(row, Color(color, 1.0), float(days) / required, true)
 		var text := Label.new()
 		text.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -148,6 +166,8 @@ func update(state: Dictionary, _actor: String) -> void:
 			amount.text = tr("Leadership: %s / %d years") % [String.num(float(days) / CityCalendar.DAYS_PER_YEAR, 1).replace(".", ",") if TranslationServer.get_locale().begins_with("de") else String.num(float(days) / CityCalendar.DAYS_PER_YEAR, 1), required / CityCalendar.DAYS_PER_YEAR]
 		elif days > 0:
 			amount.text = tr("Target held: %d / %d game days") % [days, required]
+		if timed:
+			amount.text = tr("%s points") % MultiplayerGoal.points(current)
 		if not ranked:
 			amount.text = tr("Unranked")
 		amount.visible = not endless
@@ -162,6 +182,11 @@ func update(state: Dictionary, _actor: String) -> void:
 		if goal.get("rule", "continuous") == "continuous":
 			status = tr("Below target") if current < target else tr("Target reached")
 		row.tooltip_text = status + "\n" + "%s: %s / %s\n%s" % [player.name, number(current, kind), number(target, kind), (tr("Leadership: %d / %d game days") if goal.get("rule", "continuous") == "leadership" else tr("Target held: %d / %d game days")) % [days, required] if ranked else tr("Unranked · city founded after the start")]
+		if timed:
+			row.tooltip_text = str(player.name) + ": " + tr("%s points") % MultiplayerGoal.points(current) + "\n" + tr("Bar relative to the leading positive score.")
+	if timed:
+		panel.tooltip_text = MultiplayerGoal.score_help()
+		return
 	if goal.get("rule", "continuous") == "continuous":
 		panel.tooltip_text = tr("Stay at or above the target for one full game year. Dropping below resets the timer.")
 		return
@@ -185,4 +210,4 @@ static func bar(parent: Control, color: Color, fraction: float, transparent := f
 	return result
 
 static func number(amount: int, kind: String) -> String:
-	return MultiplayerScoreboard.money(amount) if kind == "wealth" else MultiplayerScoreboard.number(amount)
+	return MultiplayerGoal.points(amount) if kind == "timed_score" else MultiplayerScoreboard.money(amount) if kind == "wealth" else MultiplayerScoreboard.number(amount)

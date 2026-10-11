@@ -282,6 +282,8 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 		if not offers.has(key) or not whole_number(request.get("price"), 0, 2147483647):
 			return rejected("This offer is no longer available.")
 		var record: Dictionary = offers[key]
+		if record.get("reservation", false):
+			return rejected("Reserved land has a fixed field price payable to the game.")
 		if actor != record.seller and record.get("buyer", actor) != actor:
 			return rejected("Only the responsible player can change this land entry.")
 		var buyer: String = record.get("buyer", actor)
@@ -313,6 +315,8 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 				return rejected("Only the owner can approve this purchase request.")
 			actor = offer.buyer
 			child = municipalities[actor]
+		if offer.get("reservation", false):
+			return accept_reservation(key, actor)
 		if offer.seller == actor:
 			return rejected("You already own this land.")
 		for tile: int in offer.tiles:
@@ -339,6 +343,7 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 		seller.city.set_funds(seller.city.funds() + int(offer.price))
 		for tile: int in offer.tiles:
 			owners[tile] = actors.find(actor) + 1
+			protection[tile] = 0
 			tile_versions[tile] = revision + 1
 		child.undo_document = null
 		seller.undo_document = null
@@ -368,6 +373,8 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 		tiles = PackedInt32Array(MultiplayerLandRules.purchasable(city, owners, protection, actors.find(actor) + 1, Array(tiles), request.get("include_water", false)))
 		if tiles.is_empty():
 			return accepted("No purchasable tiles selected. Nothing was charged.")
+	if request.kind == "land_request" and owners[tiles[0]] == 0:
+		return request_reservation(actor, Array(tiles))
 	var expected_owner := 0 if request.kind == "land_buy" else int(owners[tiles[0]]) if request.kind == "land_request" else actors.find(actor) + 1
 	if request.kind == "land_request" and (expected_owner == 0 or expected_owner == actors.find(actor) + 1):
 		return rejected("Select land belonging to another player to send a purchase request.")
@@ -404,8 +411,8 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 		if not whole_number(request.get("price"), 0, 2147483647):
 			return rejected("Invalid offer price.")
 		for tile: int in tiles:
-			if protection[tile] != 0:
-				return rejected("Reserved land and public corridors cannot be traded.")
+			if protection[tile] not in [0, actors.find(actor) + 1]:
+				return rejected("Another player's reservation and public corridors cannot be traded.")
 		price = int(request.price)
 		offers[str(next_offer)] = {"seller": actor, "tiles": Array(tiles), "price": price}
 		next_offer += 1
@@ -423,6 +430,65 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 		tile_versions[tile] = revision + 1
 	revision += 1
 	return accepted("Land purchased.").merged({"sounds": [ToolSoundRules.SOUND_ZONE]})
+
+
+func reservation_error(seller: String, buyer: String, tiles: Array) -> String:
+	var reservation := actors.find(seller) + 1
+	if reservation <= 0 or seller == buyer or not municipalities.has(buyer):
+		return "Select another player's reserved land."
+	for tile: int in tiles:
+		if owners[tile] != 0 or protection[tile] != reservation:
+			return "The reservation changed; nothing was charged."
+	if MultiplayerLandRules.connected(tiles, owners, actors.find(buyer) + 1, city.map_size).size() != tiles.size():
+		return "This parcel does not connect to the buyer's city."
+	return ""
+
+
+func request_reservation(buyer: String, tiles: Array) -> Dictionary:
+	var index := int(protection[tiles[0]])
+	if index <= 0 or index > actors.size():
+		return rejected("Select another player's reserved land.")
+	var seller: String = actors[index - 1]
+	var error := reservation_error(seller, buyer, tiles)
+	if not error.is_empty():
+		return rejected(error)
+	var price := tiles.size() * land_price
+	if price > 2147483647 or municipalities[buyer].city.funds() < price:
+		return rejected("Insufficient funds.")
+	for record: Dictionary in offers.values():
+		if record.get("buyer") == buyer and record.tiles == tiles:
+			return rejected("This purchase request is already open.")
+	if offers.size() >= 256:
+		return rejected("Close an existing land entry before creating another.")
+	offers[str(next_offer)] = {"seller": seller, "buyer": buyer, "tiles": tiles.duplicate(), "price": price, "reservation": true}
+	next_offer += 1
+	revision += 1
+	return accepted("Reservation release requested. The buyer pays the game only after approval.")
+
+
+func accept_reservation(key: String, buyer: String) -> Dictionary:
+	var offer: Dictionary = offers[key]
+	var error := reservation_error(offer.seller, buyer, offer.tiles)
+	if not error.is_empty():
+		return rejected(error)
+	# Price and consent cannot be changed by a client-supplied amount or counteroffer.
+	var price: int = offer.tiles.size() * land_price
+	if price != int(offer.price):
+		return rejected("The field price changed; send a new request.")
+	var child: CoopWorld = municipalities[buyer]
+	if child.city.funds() < price:
+		return rejected("Insufficient funds.")
+	child.city.set_funds(child.city.funds() - price)
+	for tile: int in offer.tiles:
+		owners[tile] = actors.find(buyer) + 1
+		protection[tile] = 0
+		tile_versions[tile] = revision + 1
+	child.undo_document = null
+	child.revision += 1
+	record_land_spending(buyer, "bought", price)
+	finish_land_entry(key, "Sold", buyer)
+	revision += 1
+	return accepted("Reservation released and land purchased. Payment went to the game.").merged({"sounds": [ToolSoundRules.SOUND_ZONE]})
 
 
 func snapshot_for(actor: String) -> Dictionary:
@@ -635,6 +701,10 @@ func restore_shared(data: Dictionary) -> String:
 			return "Invalid land offer."
 		if offer.has("buyer") and (not restored.has(offer.buyer) or offer.buyer == offer.seller):
 			return "Invalid land request buyer."
+		if not offer.get("reservation", false) is bool:
+			return "Invalid land reservation request."
+		if offer.get("reservation", false) and (not offer.has("buyer") or offer.get("awaiting", offer.seller) != offer.seller or offer.get("initiator", offer.buyer) != offer.buyer or int(offer.price) != offer.tiles.size() * int(data.get("land_price", LAND_PRICE))):
+			return "Invalid land reservation request."
 		for field in ["initiator", "awaiting"]:
 			if offer.has(field) and offer[field] not in [offer.seller, offer.get("buyer", "")]:
 				return "Invalid land request buyer."
@@ -737,7 +807,10 @@ func finish_land_entry(key: String, status: String, buyer := "") -> void:
 	if status == "Sold":
 		for other: String in offers.keys():
 			for tile: int in offers[other].tiles:
-				if owners[tile] != actors.find(offers[other].seller) + 1:
+				var entry: Dictionary = offers[other]
+				var seller_index := actors.find(entry.seller) + 1
+				var changed := (owners[tile] != 0 or protection[tile] != seller_index) if entry.get("reservation", false) else owners[tile] != seller_index
+				if changed:
 					finish_land_entry(other, "Ownership changed")
 					break
 

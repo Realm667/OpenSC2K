@@ -45,7 +45,7 @@ var unread := 0
 var players: Array = []
 var state: Dictionary = {}
 var overlay: Control
-var land_mode_picker: MultiplayerTabs
+var land_tool_buttons: Array[Button] = []
 var land_action := ""
 var land_offer_price := -1
 var known_disasters: Array = []
@@ -236,19 +236,7 @@ func setup() -> void:
 	var palette := coop.app.city_toolbar.child_palette
 	palette.get_parent().add_child(land_options)
 	palette.get_parent().move_child(land_options, palette.get_index() + 1)
-	land_mode_picker = MultiplayerTabs.new()
-	land_mode_picker.add_item(tr("Buy land"))
-	land_mode_picker.add_item(tr("Sell land"))
-	land_mode_picker.item_selected.connect(func(index: int) -> void: select_land("land_buy" if index == 0 else "land_offer"))
-	land_options.add_child(land_mode_picker)
-	allowance_label = ApplicationMultiplayer.label(land_options, "")
-	allowance_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	var water := CheckBox.new()
-	water.text = tr("Include water")
-	water.toggled.connect(func(value: bool) -> void:
-		include_water = value
-		update_land_tooltip())
-	land_options.add_child(water)
+	MultiplayerLandPalette.setup(self, land_options)
 	land_options.hide()
 	coop.app.get_tree().process_frame.connect(tick)
 
@@ -579,7 +567,8 @@ func select_land(action: String) -> void:
 	coop.app.city_toolbar.land_mode = true
 	coop.app.city_toolbar.child_palette.hide()
 	land_options.show()
-	land_mode_picker.select(1 if action == "land_offer" else 0)
+	for index in land_tool_buttons.size():
+		land_tool_buttons[index].set_pressed_no_signal(index == (2 if action == "land_offer" else 0) + (1 if include_water else 0))
 	for button in coop.app.city_toolbar.toolbar_buttons:
 		button.set_pressed_no_signal(false)
 	land_button.set_pressed_no_signal(true)

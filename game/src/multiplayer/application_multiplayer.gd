@@ -178,7 +178,8 @@ func host_document(document: Sc2File) -> void:
 	session.player_color = color_picker.color.to_html(false)
 	session.host_land_price = int(launch.land_price.value)
 	session.host_starter_tiles = 1024
-	session.host_goal_kind = ["endless", "population", "wealth"][launch.goal_picker.selected]
+	session.host_goal_kind = ["endless", "population", "wealth", "timed_score"][launch.goal_picker.selected]
+	session.host_duration_years = int(launch.duration.value)
 	session.host_goal_target = int(launch.goal_target.value)
 	session.host_goal_years = [1, 3, 5, 10][launch.goal_years.selected]
 	var result := session.host(document, int(port.value), join_code.text, player.text, ["coop", "shared", "region"][mode_picker.selected])

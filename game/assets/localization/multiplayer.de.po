@@ -1277,3 +1277,72 @@ msgstr "Die gemeinsame Stadtkasse überschreitet das Einzelspieler-Limit."
 
 msgid "Single-player copy opened. Save it as a new city."
 msgstr "Einzelspielerkopie geöffnet. Speichere sie als neue Stadt."
+
+msgid "Points after game time"
+msgstr "Punkte nach Spielzeit"
+
+msgid "Points"
+msgstr "Punkte"
+
+msgid "1 point per 100 residents + 1 point per $1,000 net wealth (funds minus debt). Highest score at the deadline wins; ties share victory. Late cities are unranked."
+msgstr "1 Punkt je 100 Einwohner + 1 Punkt je $1.000 Nettovermögen (Kasse minus Schulden). Am Ende gewinnt die höchste Punktzahl; Gleichstände teilen den Sieg. Späte Städte bleiben ungewertet."
+
+msgid "Duration in game years"
+msgstr "Dauer in Spieljahren"
+
+msgid "Starts when the host starts the game. The lobby shows the end year. Paused game time does not count."
+msgstr "Beginnt mit dem Spielstart durch den Host. Die Lobby zeigt das Endjahr. Pausierte Spielzeit zählt nicht."
+
+msgid "%d game years · End year %d"
+msgstr "%d Spieljahre · Endjahr %d"
+
+msgid "End year %d · %d years, %d days remaining"
+msgstr "Endjahr %d · Noch %d Jahre, %d Tage"
+
+msgid "%s points"
+msgstr "%s Punkte"
+
+msgid "Bar relative to the leading positive score."
+msgstr "Balken relativ zur höchsten positiven Punktzahl."
+
+msgid "Another player's reservation and public corridors cannot be traded."
+msgstr "Fremde Reservierungen und öffentliche Korridore sind nicht handelbar."
+
+msgid "Reserved land has a fixed field price payable to the game."
+msgstr "Reserviertes Land hat einen festen Feldpreis, zahlbar an das Spiel."
+
+msgid "Invalid land reservation request."
+msgstr "Ungültige Freigabeanfrage."
+
+msgid "Select another player's reserved land."
+msgstr "Wähle reserviertes Land eines anderen Spielers."
+
+msgid "The reservation changed; nothing was charged."
+msgstr "Die Reservierung hat sich geändert. Keine Zahlung erfolgt."
+
+msgid "Reservation release requested. The buyer pays the game only after approval."
+msgstr "Freigabe angefragt. Der Käufer zahlt erst nach Zustimmung an das Spiel."
+
+msgid "The field price changed; send a new request."
+msgstr "Der Feldpreis hat sich geändert. Stelle eine neue Anfrage."
+
+msgid "Reservation released and land purchased. Payment went to the game."
+msgstr "Reservierung freigegeben, Land gekauft. Zahlung an das Spiel erfolgt."
+
+msgid "Release reserved land"
+msgstr "Reserviertes Land freigeben"
+
+msgid "Payment to game"
+msgstr "Zahlung an das Spiel"
+
+msgid "Release only this parcel. The buyer pays the game; you receive no money."
+msgstr "Nur diese Fläche freigeben. Der Käufer zahlt an das Spiel; du erhältst kein Geld."
+
+msgid "Approve release"
+msgstr "Freigabe bestätigen"
+
+msgid "Reserved"
+msgstr "Reserviert"
+
+msgid "The reserving player must approve. Payment goes to the game after approval."
+msgstr "Der reservierende Spieler muss zustimmen. Erst danach erfolgt die Zahlung an das Spiel."

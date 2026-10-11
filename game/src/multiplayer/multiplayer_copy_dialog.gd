@@ -54,11 +54,19 @@ static func host_ended(coop: ApplicationMultiplayer) -> void:
 		valid = true
 	coop.ended_dialog = coop.windows.make_window(_tr("Session ended"))
 	coop.ended_dialog.exclusive = true
-	var box := coop.windows.content(coop.ended_dialog)
+	coop.ended_dialog.set_meta("center_after_fit", true)
+	var panel := PanelContainer.new()
+	panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	coop.ended_dialog.add_child(panel)
+	var box := VBoxContainer.new()
+	panel.add_child(box)
+	MultiplayerDialogFit.bind(coop.ended_dialog, box, 680)
 	ApplicationMultiplayer.label(box, _tr("The host ended the game. Save a single-player copy before leaving."))
 	var status := ApplicationMultiplayer.label(box, "")
+	status.hide()
 	if not valid:
 		status.text = _tr("No confirmed copy of your city is available.")
+		status.show()
 	var save := ApplicationMultiplayer.button(box, _tr("Save city copy"), func() -> void:
 		var file := FileDialog.new()
 		file.theme = AppUiTheme.current()
@@ -70,6 +78,7 @@ static func host_ended(coop: ApplicationMultiplayer) -> void:
 		coop.ended_dialog.add_child(file)
 		file.canceled.connect(file.queue_free)
 		file.file_selected.connect(func(path: String) -> void:
+			status.show()
 			if not path.to_lower().ends_with(".sc2x"):
 				path += ".sc2x"
 			# This flow deliberately creates a new file; it never replaces a city.
