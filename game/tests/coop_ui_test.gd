@@ -274,7 +274,7 @@ func cloud_front_cases(main: CityApplication) -> void:
 	var speed := main.simulation_state.speed_controller.speed
 	main.simulation_state.speed_controller.speed = GameSpeedController.Speed.TURTLE
 	main.map_view.interaction.panning = true
-	check(main.frame._simulation_suspended(), "camera drag still suspends local simulation")
+	check(not main.frame._simulation_suspended(), "camera drag never suspends multiplayer simulation")
 	check(environment.network_snapshot().weather[20] == 0, "camera drag must not broadcast a weather pause")
 	main.simulation_state.speed_controller.speed = GameSpeedController.Speed.PAUSED
 	check(environment.network_snapshot().weather[20] == 1, "real pause is still sent during camera drag")
