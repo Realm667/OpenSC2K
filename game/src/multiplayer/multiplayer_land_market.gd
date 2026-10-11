@@ -190,6 +190,7 @@ func map_panel(tiles: Array, title: String) -> VBoxContainer:
 	map_detail.z_index = 3
 	map.add_child(map_detail)
 	map_detail.position = map.camera_view_rect.position + Vector2(12, 12)
+	map_detail.custom_minimum_size.x = minf(360, maxf(0, map.camera_view_rect.size.x - 24))
 	var box := VBoxContainer.new()
 	map_detail.add_child(box)
 	ApplicationMultiplayer.label(box, title)

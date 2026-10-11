@@ -632,6 +632,11 @@ func tick() -> void:
 				legend.push_color(Color.from_string(player.get("color", "ffffff"), Color.WHITE))
 				legend.add_text("● " + str(player.name) + " · " + str(player.city) + "   ")
 				legend.pop()
+	view = view.intersection(Rect2(Vector2.ZERO, coop.app.map_view.size))
+	if is_instance_valid(market.map_detail):
+		market.map_detail.position = view.position + Vector2(12, 12)
+		market.map_detail.custom_minimum_size.x = minf(360, maxf(0, view.size.x - 24))
+		market.map_detail.size = Vector2(market.map_detail.custom_minimum_size.x, market.map_detail.get_combined_minimum_size().y)
 	goal_hud.layout(view)
 	var visiting: bool = state.get("visiting", false)
 	coop.app.city_menu_bar.debug_menu.disabled = not coop.session.hosting or visiting
