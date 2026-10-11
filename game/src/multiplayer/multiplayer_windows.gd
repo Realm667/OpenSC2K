@@ -459,7 +459,7 @@ func close() -> void:
 	displayed_map_generation = -1
 	coop.app.city_menu_bar.debug_menu.disabled = false
 	var popup := coop.app.city_menu_bar.windows_menu.get_popup()
-	for id in [0, 1, 3]:
+	for id in [0, 1, 3, CityMenuBar.MENU_CONSOLE]:
 		popup.set_item_disabled(popup.get_item_index(id), false)
 	market.initialized = false
 	admin_seen.clear()
@@ -549,6 +549,7 @@ func tick() -> void:
 	var visiting: bool = state.get("visiting", false)
 	coop.app.city_menu_bar.debug_menu.disabled = not coop.session.hosting or visiting
 	var window_menu := coop.app.city_menu_bar.windows_menu.get_popup()
+	window_menu.set_item_disabled(window_menu.get_item_index(CityMenuBar.MENU_CONSOLE), visiting or not coop.session.hosting)
 	for id in [0, 1, 3]:
 		var index := window_menu.get_item_index(id)
 		if index >= 0:
