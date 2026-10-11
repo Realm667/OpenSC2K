@@ -95,6 +95,8 @@ func handle_console_key(event: InputEventKey) -> bool:
 	if app.console_window == null or not is_console_shortcut(event):
 		return false
 
+	if app.coop.active() and (not app.coop.session.hosting or app.coop.session.latest.get("visiting", false)):
+		return true
 	app.console_window.toggle()
 
 	return true
