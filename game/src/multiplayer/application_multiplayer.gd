@@ -53,6 +53,9 @@ func setup() -> void:
 	session.environment_received.connect(app.visual_environment.receive_network_weather)
 	app.add_child(session)
 	session.state_received.connect(receive_state)
+	session.session_ended.connect(func() -> void:
+		leave()
+		show_message("The host ended the session."))
 	session.cursor_source = func() -> Vector2:
 		return MultiplayerMapOverlay.local_cursor(app) if mirrored and app.map_view.visible else Vector2(-1, -1)
 	session.feedback.connect(show_message)
@@ -82,6 +85,7 @@ func setup() -> void:
 	scroll.add_child(body)
 	launch = MultiplayerLaunchMenu.new(self)
 	launch.setup(body)
+	MultiplayerDialogFit.bind(panel, body, 700)
 	city_file = FileDialog.new()
 	city_file.access = FileDialog.ACCESS_FILESYSTEM
 	city_file.file_mode = FileDialog.FILE_MODE_OPEN_FILE
@@ -111,7 +115,7 @@ func setup() -> void:
 		var quitting := exit_action == "quit"
 		leave()
 		if quitting:
-			app.get_tree().quit())
+			finish_quit())
 	leave_dialog.canceled.connect(func() -> void: exit_action = "")
 	app.add_child(leave_dialog)
 	windows = MultiplayerWindows.new(self)
@@ -353,7 +357,7 @@ func save_to(path: String) -> void:
 		multiplayer_save_path = path
 		if exit_action == "quit":
 			session.stop()
-			app.get_tree().quit()
+			finish_quit()
 	show_message(error if not error.is_empty() else "Multiplayer-Spielstand gespeichert: " + path)
 
 
@@ -503,7 +507,7 @@ func request_exit(action: String) -> void:
 	dialog.custom_action.connect(func(value: StringName) -> void:
 		if value == &"discard":
 			session.stop()
-			app.get_tree().quit())
+			finish_quit())
 	dialog.canceled.connect(func() -> void:
 		exit_action = ""
 		dialog.queue_free())
@@ -542,3 +546,11 @@ static func remote_gain(point: Vector2, view: Rect2) -> float:
 	var nearest := point.clamp(view.position, view.end)
 	var distance := point.distance_to(nearest) / maxf(1.0, view.size.x)
 	return pow(maxf(0.0, 1.0 - distance / 2.0), 2)
+
+
+func finish_quit() -> void:
+	# Keep processing until the final ordered leave is acknowledged or times out.
+	session.stop()
+	while not session.retiring_channels.is_empty():
+		await app.get_tree().process_frame
+	app.get_tree().quit()

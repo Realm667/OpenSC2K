@@ -126,7 +126,6 @@ func transfer(actor: String, identity: String, player_name: String, color: Varia
 	credentials[identity.sha256_text()] = actor
 	session.members[actor].name = player_name.left(32)
 	session.members[actor].color = session.valid_color(color)
-	session.members[actor].sequence = 0
 	session.statistics_cache.clear()
 	session.world.revision += 1
 

@@ -240,7 +240,7 @@ func process(delta: float) -> void:
 		"water_waves_enabled": options.water_waves_enabled,
 		"water_season_strength": options.season_water_strength if active and options.season_enabled else 0.0,
 		"water_rain": weather.rain * clouds.precipitation_readiness,
-		"water_frozen": options.pause_freezes and (speed == 1 or app.frame._simulation_suspended()),
+		"water_frozen": options.pause_freezes and (speed == 1 or (not app.coop.active() and app.frame._simulation_suspended())),
 		"environment_enabled": active and (options.day_enabled or options.season_enabled or options.weather_enabled or daytime_lights),
 		"environment_weather": Vector3(weather.tint.r, weather.tint.g, weather.tint.b),
 		"environment_frost": weather.frost,

@@ -33,7 +33,7 @@ func process(delta: float) -> void:
 		return
 	var controller := app.simulation_state.speed_controller
 	if controller == null or controller.speed == GameSpeedController.Speed.PAUSED \
-			or controller.interaction_blocked or controller.terminal_blocked or app.frame._simulation_suspended():
+			or controller.interaction_blocked or controller.terminal_blocked or (not app.coop.active() and app.frame._simulation_suspended()):
 		return
 	if traffic_motion.advance(delta):
 		refresh_moving_things()

@@ -27,7 +27,7 @@ func active() -> bool:
 func frozen() -> bool:
 	var controller := app.simulation_state.speed_controller
 	return app.preferences.visual_enhancements.pause_freezes and controller != null \
-		and (controller.speed == GameSpeedController.Speed.PAUSED or app.frame._simulation_suspended())
+		and (controller.speed == GameSpeedController.Speed.PAUSED or (not app.coop.active() and app.frame._simulation_suspended()))
 
 
 func process(delta: float) -> void:

@@ -125,7 +125,7 @@ func command(actor: String, request: Dictionary) -> Dictionary:
 		return rejected("No municipality is assigned to this player.")
 	if not whole_number(request.get("revision"), 0, revision):
 		return rejected("Invalid map revision.")
-	if request.get("kind") in ["land_buy", "land_offer", "land_accept", "land_withdraw", "land_decline"]:
+	if request.get("kind") in ["land_buy", "land_request", "land_offer", "land_accept", "land_withdraw", "land_decline"]:
 		return land_command(actor, request)
 	if request.get("kind") == "recall":
 		for municipality: CoopWorld in municipalities.values():
@@ -326,26 +326,23 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 	if request.kind == "land_buy":
 		if not request.get("include_water", false) is bool:
 			return rejected("Invalid land selection.")
-		if not request.get("include_water", false):
-			var dry := PackedInt32Array()
-			for tile: int in tiles:
-				var owner := int(owners[tile])
-				var terrain: CityState = municipalities[actors[owner - 1]].city if owner > 0 else city
-				if not terrain.is_water(tile / city.map_size, tile % city.map_size):
-					dry.append(tile)
-			tiles = dry
+		var eligible := PackedInt32Array()
+		for tile: int in tiles:
+			if owners[tile] == 0 and (request.get("include_water", false) or not city.is_water(tile / city.map_size, tile % city.map_size)):
+				eligible.append(tile)
+		tiles = eligible
 		if tiles.is_empty():
-			return rejected("No land tiles in this selection. Choose Include water to buy water tiles.")
-	var expected_owner := int(owners[tiles[0]]) if request.kind == "land_buy" else actors.find(actor) + 1
-	if request.kind == "land_buy" and expected_owner == actors.find(actor) + 1:
-		return rejected("You already own this land.")
+			return accepted("No purchasable tiles selected. Nothing was charged.")
+	var expected_owner := 0 if request.kind == "land_buy" else int(owners[tiles[0]]) if request.kind == "land_request" else actors.find(actor) + 1
+	if request.kind == "land_request" and (expected_owner == 0 or expected_owner == actors.find(actor) + 1):
+		return rejected("Select land belonging to another player to send a purchase request.")
 	for tile: int in tiles:
 		if owners[tile] != expected_owner:
 			return rejected("The entire selection must have the same owner. Nothing was charged.")
 	var price := tiles.size() * land_price
 	if price > 2147483647:
 		return rejected("This land purchase exceeds the supported transaction limit. Select a smaller area.")
-	if request.kind == "land_buy" and expected_owner > 0:
+	if request.kind == "land_request":
 		var seller: String = actors[expected_owner - 1]
 		if request.get("price") != price:
 			return choice_result("Send a purchase request for %d tiles at $%d? The owner must approve before any transfer." % [tiles.size(), price], request,
@@ -373,12 +370,6 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 		return accepted("Land offer published. Another player can accept it.")
 	var allowance := mini(int(land_allowance.get(actor, 0)), price)
 	var payment := price - allowance
-	if request.get("price") != price:
-		var prompt := "Buy %d tiles for $%d? Balance afterwards: $%d." % [tiles.size(), price, child.city.funds() - payment]
-		if allowance > 0:
-			prompt = "Buy %d tiles: $%d from land allowance and $%d from city funds?" % [tiles.size(), allowance, payment]
-		return choice_result(prompt, request,
-			[{"label": "Buy — $%d" % price, "fields": {"price": price}}])
 	if child.city.funds() < payment:
 		return rejected("Insufficient funds.")
 	record_land_spending(actor, "bought", payment)

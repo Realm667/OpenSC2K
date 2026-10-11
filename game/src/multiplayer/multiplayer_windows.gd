@@ -57,8 +57,8 @@ func setup() -> void:
 	row.add_child(menu)
 	row.move_child(menu, coop.app.city_menu_bar.newspaper_menu.get_index() + 1)
 	var popup := menu.get_popup()
-	var titles := ["Scoreboard", "Chat", "Host / Join game", "Release disconnect pause", "Leave game", "Buy land", "Offer land", "Land offers", "Player seats", "Neighbouring cities", "Rematch · rotate starts"]
-	for id in [0, 1, 8, 9, 10, 2, 3, 4, 5, 6, 7]:
+	var titles := ["Scoreboard", "Chat", "Host / Join game", "Release disconnect pause", "Leave game", "Buy land", "Offer land", "Land offers", "Player seats", "Neighbouring cities", "Rematch · rotate starts", "Request land"]
+	for id in [0, 1, 8, 9, 10, 2, 3, 4, 5, 6, 11, 7]:
 		if id in [2, 5]:
 			popup.add_separator()
 		popup.add_item(tr(titles[id]), id)
@@ -78,6 +78,8 @@ func setup() -> void:
 				select_land("land_buy")
 			6:
 				select_land("land_offer")
+			11:
+				select_land("land_request")
 			7:
 				open_offers()
 			8:
@@ -227,8 +229,9 @@ func content(window: Window) -> VBoxContainer:
 	panel.add_child(scroll)
 	var body := VBoxContainer.new()
 	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	body.size_flags_vertical = Control.SIZE_FILL
 	scroll.add_child(body)
+	MultiplayerDialogFit.bind(window, body, window.size.x)
 	return body
 
 
@@ -258,7 +261,7 @@ func update_state(value: Dictionary) -> void:
 	competition.update(value)
 	start_lobby.update(value)
 	goal_hud.update(value, coop.session.token.sha256_text())
-	for id in [5, 6, 7]:
+	for id in [5, 6, 7, 11]:
 		menu.get_popup().set_item_disabled(menu.get_popup().get_item_index(id), value.get("mode") != "shared")
 	menu.get_popup().set_item_disabled(menu.get_popup().get_item_index(9), value.get("mode") != "region")
 	menu.get_popup().set_item_disabled(menu.get_popup().get_item_index(10), not coop.session.hosting or value.get("goal", {}).get("winners", []).is_empty())
@@ -457,7 +460,7 @@ func select_land(action: String) -> void:
 		button.set_pressed_no_signal(false)
 	land_button.set_pressed_no_signal(true)
 	coop.app.current_tool.update_edit_state()
-	coop.show_message(tr("Select an area. Confirm the price before buying or sending a purchase request."))
+	coop.show_message(tr("Select neutral tiles to buy at the displayed price. Owned tiles are skipped.") if action == "land_buy" else tr("Select land belonging to another player to send a purchase request.") if action == "land_request" else tr("Set a price, then select your land to offer."))
 	if action == "land_offer":
 		var window := make_window(tr("Sale price"))
 		var body := content(window)
@@ -563,6 +566,25 @@ func dock_chat(in_lobby: bool) -> void:
 	tick()
 
 func fit_content(window: Window, body: Control, width := 680) -> void:
-	var available := coop.app.get_viewport().get_visible_rect().size
-	window.min_size.y = 120
-	window.size = Vector2i(mini(width, int(available.x) - 40), mini(int(body.get_combined_minimum_size().y) + 28, int(available.y) - 70))
+	var fitter: MultiplayerDialogFit = window.get_meta("multiplayer_fit")
+	fitter.preferred_width = width
+	fitter.schedule()
+
+
+func preview_land(start: Vector2i, finish: Vector2i) -> void:
+	var city := coop.app.document_state.city
+	var owners: Array = state.get("owners", [])
+	if city == null or owners.size() != city.map_size * city.map_size:
+		coop.app.map_view.clear_selection_price()
+		return
+	var count := 0
+	for x in range(maxi(0, mini(start.x, finish.x)), mini(city.map_size - 1, maxi(start.x, finish.x)) + 1):
+		for y in range(maxi(0, mini(start.y, finish.y)), mini(city.map_size - 1, maxi(start.y, finish.y)) + 1):
+			if int(owners[x * city.map_size + y]) == 0 and (include_water or not city.is_water(x, y)):
+				count += 1
+	var total := count * int(state.get("land_price", 0))
+	var allowance := mini(total, int(state.get("land_allowance", 0)))
+	var payment := total - allowance
+	coop.app.map_view.set_selection_price(payment, payment <= city.funds())
+	coop.app.status_label.text = tr("Land: %d tiles · Total %s · Allowance %s · City funds %s") % [count, MultiplayerScoreboard.money(total), MultiplayerScoreboard.money(allowance), MultiplayerScoreboard.money(payment)]
+	coop.app.status_label.theme_type_variation = "" if payment <= city.funds() else "ErrorLabel"

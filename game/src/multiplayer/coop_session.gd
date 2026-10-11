@@ -9,6 +9,7 @@ signal action_sounds(sounds: Array[int])
 signal remote_action_sound(event: Dictionary)
 var sounded_commands: Dictionary = {}
 signal feedback(message: String)
+signal session_ended
 signal connection_changed
 signal choice_requested(result: Dictionary)
 signal environment_received(state: Dictionary)
@@ -20,7 +21,7 @@ signal seat_lobby_received(data: Dictionary)
 
 const PROTOCOL := 1
 const BUILD := "opensc2k-coop-1"
-const NETWORK_BUILD := "opensc2k-multiplayer-11"
+const NETWORK_BUILD := "opensc2k-multiplayer-13"
 const MAX_PLAYERS := 8
 var world: CoopWorld
 var active := false
@@ -77,6 +78,11 @@ var incoming_state: MultiplayerStateStream
 var retiring_channels: Array = []
 var encoders: Dictionary = {}
 var decoder := MultiplayerDelta.new()
+var reconnect_endpoint: Dictionary = {}
+var reconnect_until := 0
+var reconnect_at := 0
+var reconnect_attempt := 0
+var resync_requested := false
 
 
 
@@ -142,6 +148,8 @@ func host(document: Sc2File, port: int, join_code: String, player_name: String, 
 func join(address: String, port: int, join_code: String, player_name: String, intent := "new") -> String:
 	ensure_credential()
 	local_player_name = player_name
+	reconnect_endpoint = {"address": address, "port": port, "code": join_code, "name": player_name, "intent": intent}
+	resync_requested = false
 	if active and hosting:
 		return "Leave the hosted session first."
 	if incoming_state != null:
@@ -168,6 +176,9 @@ func join(address: String, port: int, join_code: String, player_name: String, in
 
 
 func stop() -> void:
+	reconnect_until = 0
+	reconnect_endpoint.clear()
+	reconnect_attempt = 0
 	for stream: MultiplayerStateStream in outgoing_states.values():
 		stream.close()
 	outgoing_states.clear()
@@ -176,7 +187,8 @@ func stop() -> void:
 		incoming_state = null
 	if active and connected:
 		for channel in channels.values():
-			channel.output.clear()
+			# Preserve the remainder of a partially transmitted TCP frame.
+			channel.ephemeral.clear()
 			channel.send({"type": "leave"})
 			channel.flush()
 			retiring_channels.append({"channel": channel, "until": Time.get_ticks_msec() + 2000})
@@ -229,11 +241,15 @@ func _process(delta: float) -> void:
 		for message: Dictionary in channel.poll():
 			if message.get("type") == "leave_ack":
 				channel.failed = true
-		if channel.failed or Time.get_ticks_msec() >= retired.until:
+		if channel.failed or Time.get_ticks_msec() >= retired.until or (retired.get("ack_only", false) and channel.output.is_empty()):
 			channel.close()
 			retiring_channels.erase(retired)
 	if not active:
 		return
+	if not hosting and channels.is_empty() and reconnect_until > Time.get_ticks_msec() and Time.get_ticks_msec() >= reconnect_at:
+		reconnect_attempt += 1
+		reconnect_at = Time.get_ticks_msec() + mini(8000, 1000 * reconnect_attempt)
+		join(reconnect_endpoint.address, reconnect_endpoint.port, reconnect_endpoint.code, reconnect_endpoint.name, reconnect_endpoint.intent)
 	if hosting and server.is_connection_available():
 		var peer := server.take_connection()
 		if channels.size() >= MAX_PLAYERS - 1:
@@ -245,6 +261,8 @@ func _process(delta: float) -> void:
 	for id: int in channels.keys():
 		var channel := channels[id]
 		for message in channel.poll():
+			if channel.failed:
+				break
 			if hosting:
 				receive_host(id, message)
 			else:
@@ -301,12 +319,12 @@ func _process(delta: float) -> void:
 
 func receive_host(id: int, message: Dictionary) -> void:
 	var now := Time.get_ticks_msec()
-	var rate: Array = command_rates.get(id, [now, 0])
-	if now - int(rate[0]) >= 1000:
-		rate = [now, 0]
-	rate[1] += 1
+	# TCP can deliver queued traffic in a burst after a temporary stall.
+	var rate: Array = command_rates.get(id, [now, 512.0])
+	rate[1] = minf(512.0, float(rate[1]) + maxf(0.0, now - int(rate[0])) * 0.128) - 1.0
+	rate[0] = now
 	command_rates[id] = rate
-	if rate[1] > 40:
+	if rate[1] < 0.0:
 		channels[id].failed = true
 		return
 	if message.get("type") == "ping":
@@ -394,6 +412,17 @@ func execute(actor: String, message: Dictionary) -> Dictionary:
 			requested_speed[player] = 2
 		apply_speed()
 		return CoopWorld.accepted("The game has started.")
+	if message.get("kind") == "rename_city":
+		if not waiting_for_start or not message.get("name") is String or message.name.strip_edges().is_empty() or message.name.length() > Sc2xMetadata.MAX_NAME_CODE_POINTS:
+			return CoopWorld.rejected("City names can only be changed in the lobby.")
+		var municipality: CoopWorld = world.municipalities[actor] if world is SharedWorld else world
+		municipality.city.document.set_city_name(message.name.strip_edges())
+		municipality.revision += 1
+		if municipality != world:
+			world.revision += 1
+		statistics_cache.clear()
+		reset_lobby_ready()
+		return CoopWorld.accepted("City name updated.")
 	if waiting_for_start:
 		return CoopWorld.rejected("Wait until the host starts the game.")
 	if message.get("kind") == "view_city" and world is RegionWorld:
@@ -410,8 +439,12 @@ func execute(actor: String, message: Dictionary) -> Dictionary:
 		goal.unscored = true
 		apply_speed()
 		return CoopWorld.accepted("The game continues without scoring.")
+	if message.get("kind") == "debug":
+		return MultiplayerDebug.execute(self, actor, message)
 	if goal.blocked():
 		return CoopWorld.rejected("The victory target was reached. The host can continue without scoring.")
+	if actor != token and (message.get("kind") in ["disaster", "no_disasters"] or (message.get("kind") == "city_option" and message.get("option") == "no_disasters")):
+		return CoopWorld.rejected("Only the host can control disasters.")
 	if str(message.get("kind", "")).begins_with("loan_"):
 		if not world is SharedWorld:
 			return CoopWorld.rejected("Player loans require separate city finances.")
@@ -422,6 +455,7 @@ func execute(actor: String, message: Dictionary) -> Dictionary:
 		if not CoopWorld.whole_number(message.get("speed"), 1, 5):
 			return CoopWorld.rejected("Invalid speed.")
 		requested_speed[actor] = int(message.speed)
+		disconnected_pause = false
 		apply_speed()
 		result = CoopWorld.accepted("Your requested speed was updated.")
 	else:
@@ -522,12 +556,17 @@ func receive_client(message: Dictionary) -> void:
 			if message.has("wire_id") or message.get("type") == "state_delta":
 				message = decoder.decode(message)
 				if decoder.failed:
-					channels[0].send({"type": "resync"})
+					if not resync_requested:
+						channels[0].send({"type": "resync"})
+						resync_requested = true
 					return
 			if not message.get("city") is String or not CoopWorld.whole_number(message.get("revision"), 0, 9007199254740991):
 				channels[0].failed = true
 				return
 			connected = true
+			resync_requested = false
+			reconnect_until = 0
+			reconnect_attempt = 0
 			accept_state(message)
 		"action_audio":
 			if message.get("event") is Dictionary:
@@ -623,7 +662,12 @@ func drop(id: int) -> void:
 	if not hosting and incoming_state != null:
 		incoming_state.close()
 		incoming_state = null
-	channels[id].close()
+	if graceful_peers.has(id) and not channels[id].output.is_empty():
+		channels[id].failed = false
+		channels[id].ephemeral.clear()
+		retiring_channels.append({"channel": channels[id], "until": Time.get_ticks_msec() + 2000, "ack_only": true})
+	else:
+		channels[id].close()
 	channels.erase(id)
 	handshake_started.erase(id)
 	command_rates.erase(id)
@@ -642,6 +686,12 @@ func drop(id: int) -> void:
 			apply_speed()
 			emit_player_event(actor, "left" if graceful_peers.has(id) else "disconnected")
 	else:
+		if graceful_peers.has(id):
+			reconnect_until = 0
+			session_ended.emit.call_deferred()
+		elif connected and not reconnect_endpoint.is_empty():
+			reconnect_until = Time.get_ticks_msec() + 90000
+			reconnect_at = Time.get_ticks_msec() + 1000
 		connected = false
 		for member: Dictionary in latest.get("roster", []):
 			if member.get("host", false):

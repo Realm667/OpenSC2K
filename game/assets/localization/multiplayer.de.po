@@ -848,3 +848,51 @@ msgstr "Nicht genügend Mittel zur Rückzahlung dieses Kredits."
 
 msgid "Loan principal repaid."
 msgstr "Kreditnennbetrag zurückgezahlt."
+
+msgid "City names can only be changed in the lobby."
+msgstr "Stadtnamen können nur in der Spiellobby geändert werden."
+
+msgid "City name updated."
+msgstr "Stadtname aktualisiert."
+
+msgid "Click your city name to rename it before the game starts."
+msgstr "Klicke auf deinen Stadtnamen, um ihn vor Spielstart zu ändern."
+
+msgid "Only the host can control disasters."
+msgstr "Nur der Host kann Katastrophen steuern."
+
+msgid "Only the host can control disasters and simulation time."
+msgstr "Nur der Host kann Katastrophen und die Simulationszeit steuern."
+
+msgid "No purchasable tiles selected. Nothing was charged."
+msgstr "Keine kaufbaren Felder ausgewählt. Es wurde nichts berechnet."
+
+msgid "Select land belonging to another player to send a purchase request."
+msgstr "Wähle Land eines anderen Spielers aus, um eine Kaufanfrage zu senden."
+
+msgid "Request land"
+msgstr "Land anfragen"
+
+msgid "Select neutral tiles to buy at the displayed price. Owned tiles are skipped."
+msgstr "Wähle neutrale Felder zum angezeigten Preis aus. Bereits belegte Felder werden übersprungen."
+
+msgid "Set a price, then select your land to offer."
+msgstr "Lege einen Preis fest und wähle dann dein Land für das Angebot aus."
+
+msgid "Land: %d tiles · Total %s · Allowance %s · City funds %s"
+msgstr "Land: %d Felder · Gesamt %s · Landbudget %s · Stadtkasse %s"
+
+msgid "Invalid debug value."
+msgstr "Ungültiger Debugwert."
+
+msgid "Invalid debug action."
+msgstr "Ungültige Debugaktion."
+
+msgid "Debug action applied to your city."
+msgstr "Debugaktion auf deine Stadt angewendet."
+
+msgid "Wait for the connection to be restored."
+msgstr "Warte, bis die Verbindung wiederhergestellt ist."
+
+msgid "Debug request sent to the host."
+msgstr "Debuganfrage an den Host gesendet."

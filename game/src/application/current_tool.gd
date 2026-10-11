@@ -292,7 +292,7 @@ func update_edit_state() -> void:
 		state.area = 1
 		state.landscape = false
 		state.show_status = true
-		state.status_text = tr("Buy land") if app.coop.windows.land_action == "land_buy" else tr("Offer land")
+		state.status_text = tr("Buy land") if app.coop.windows.land_action == "land_buy" else tr("Request land") if app.coop.windows.land_action == "land_request" else tr("Offer land")
 		state.status_detail = tr("Drag to select land. Purchases require confirmation; foreign land requires the owner's consent.")
 		app.map_view.query_footprint_preview = false
 		app.map_view.repeat_placement = false

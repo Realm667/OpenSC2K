@@ -75,7 +75,7 @@ func process(delta: float) -> void:
 		return
 	var controller := app.simulation_state.speed_controller
 	var frozen: bool = options.pause_freezes and controller != null and \
-		(controller.speed == GameSpeedController.Speed.PAUSED or app.frame._simulation_suspended())
+		(controller.speed == GameSpeedController.Speed.PAUSED or (not app.coop.active() and app.frame._simulation_suspended()))
 	var elapsed := clampf(delta, 0.0, 0.25)
 	if not frozen:
 		clock += elapsed
