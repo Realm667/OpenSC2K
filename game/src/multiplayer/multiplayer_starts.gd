@@ -9,75 +9,63 @@ var positions: Dictionary = {}
 var round_number := 1
 var assigned := false
 var handicaps: Dictionary = {}
+var preview: Dictionary = {}
+var parcel_cache: Dictionary = {}
+var cache_key := ""
 
 func prepare(world: SharedWorld, members: Dictionary, commit := true) -> String:
 	if assigned:
 		return ""
+	var next_key := str(world.city.document.get_instance_id()) + ":" + str(hash(world.owners))
+	if next_key != cache_key:
+		cache_key = next_key
+		parcel_cache.clear()
 	var size := world.city.map_size
 	var width := size / GRID
-	var candidates: Array = []
 	var protected := PackedInt32Array()
 	protected.resize(world.owners.size())
-	# Public perimeter plus open-ended access routes leave the interior connected. Existing property
-	# is never confiscated when loading an older/imported game.
+	# Internal open corridors remain; the exterior edge is available to cities.
 	for tile in protected.size():
-		if world.owners[tile] == 0 and (tile / size < 2 or tile % size < 2 or tile / size >= size - 2 or tile % size >= size - 2):
+		var x := tile / size
+		var y := tile % size
+		if world.owners[tile] == 0 and ((x > 0 and x % width == 0) or (y > 0 and y % width == 0)):
 			protected[tile] = -1
-	for slot in GRID * GRID:
-		var center := Vector2i(slot / GRID * width + width / 2, slot % GRID * width + width / 2)
-		if world is RegionWorld:
-			candidates.append({"slot": slot, "tiles": [], "center": center})
-			continue
-		var allowed := {}
-		for x in range(slot / GRID * width + 2, (slot / GRID + 1) * width):
-			for y in range(slot % GRID * width + 2, (slot % GRID + 1) * width):
-				var tile := world.city.index_of(x, y)
-				if world.owners[tile] == 0 and protected[tile] == 0 and not world.city.is_water(x, y):
-					allowed[tile] = true
-		var largest: Array[int] = []
-		while not allowed.is_empty():
-			var queue: Array[int] = [allowed.keys()[0]]
-			allowed.erase(queue[0])
-			var cursor := 0
-			while cursor < queue.size():
-				var tile := queue[cursor]
-				cursor += 1
-				for next: int in MultiplayerLandRules.neighbours(tile, size):
-					if allowed.has(next):
-						allowed.erase(next)
-						queue.append(next)
-			if queue.size() > largest.size():
-				largest = queue
-		# BFS prefixes keep the granted land connected.
-		candidates.append({"slot": slot, "tiles": largest, "center": center})
 	var chosen := {}
 	var used: Array[int] = []
-	var amount := mini(1024, (width - 2) * (width - 2) / 2)
+	var amount := MultiplayerStartParcel.standard(size)
+	var water_ratio := -1.0
 	for offset in world.actors.size():
 		var actor: String = world.actors[(offset + round_number - 1) % world.actors.size()]
-		var best := -1
-		var score := -1.0
 		var handicap: Dictionary = handicaps.get(actor, {})
 		var requested := int(handicap.get("tiles", 0))
-		for index in candidates.size():
-			var candidate: Dictionary = candidates[index]
-			if used.has(index) or previous.get(actor, []).has(index):
+		if requested == 0:
+			requested = maxi(1, roundi(amount * int(handicap.get("scale", 100)) / 100.0))
+		var best: Dictionary = {}
+		var score := -INF
+		for slot in GRID * GRID:
+			if used.has(slot) or previous.get(actor, []).has(slot):
 				continue
-			if not world is RegionWorld and candidate.tiles.size() < maxi(16, requested * 2):
+			var candidate := {"slot": slot, "tiles": [], "reserve": [], "land": 0, "water": 0, "center": Vector2i(slot / GRID * width + width / 2, slot % GRID * width + width / 2)} if world is RegionWorld else cached_parcel(world, slot, requested)
+			if candidate.is_empty():
 				continue
 			var spacing := float(size * size)
-			for other: int in used:
-				spacing = minf(spacing, Vector2(candidate.center).distance_squared_to(candidates[other].center))
-			var value := spacing + mini(amount * 2, candidate.tiles.size()) * size
+			for other: Dictionary in chosen.values():
+				spacing = minf(spacing, Vector2(candidate.center).distance_squared_to(other.center))
+			var ratio := float(candidate.water) / maxi(1, candidate.tiles.size())
+			var value := spacing - (absf(ratio - water_ratio) * size * size * 8 if water_ratio >= 0 else ratio * size * size)
 			if value > score:
-				best = index
+				best = candidate
 				score = value
-		if best < 0:
+		if best.is_empty():
 			return "Not enough connected land for these starts and reserved expansion areas. Adjust handicaps or generate new terrain."
-		used.append(best)
-		chosen[actor] = candidates[best]
-		if not world is RegionWorld and requested == 0:
-			amount = mini(amount, candidates[best].tiles.size() / 2)
+		used.append(best.slot)
+		chosen[actor] = best
+		if water_ratio < 0:
+			water_ratio = float(best.water) / maxi(1, best.tiles.size())
+	preview.clear()
+	for actor: String in chosen:
+		var parcel: Dictionary = chosen[actor]
+		preview[actor.sha256_text()] = {"land": parcel.land, "water": parcel.water, "tiles": parcel.tiles.size(), "reserved": parcel.reserve.size()}
 	if not commit:
 		return ""
 	world.protection = protected if not world is RegionWorld else world.protection
@@ -87,24 +75,19 @@ func prepare(world: SharedWorld, members: Dictionary, commit := true) -> String:
 		history.append(candidate.slot)
 		previous[actor] = history
 		var handicap: Dictionary = handicaps.get(actor, {})
-		var grant := int(handicap.get("tiles", 0))
-		if grant == 0:
-			grant = amount
+		var grant: int = candidate.tiles.size()
 		var point: Vector2i = candidate.center
 		if not world is RegionWorld:
 			var owner := world.actors.find(actor) + 1
-			var parcel: Array = candidate.tiles.slice(0, grant)
-			for tile: int in parcel:
+			for tile: int in candidate.tiles:
 				world.owners[tile] = owner
-			if not parcel.is_empty():
-				point = Vector2i(int(parcel[0]) / size, int(parcel[0]) % size)
-			for tile: int in candidate.tiles.slice(grant, grant * 2):
+			for tile: int in candidate.reserve:
 				world.protection[tile] = owner
 		var municipality: CoopWorld = world.municipalities[actor]
 		if handicap.has("funds"):
 			municipality.city.set_funds(int(handicap.funds))
 			municipality.revision += 1
-		positions[actor] = {"slot": candidate.slot, "point": [point.x, point.y], "tiles": 0 if world is RegionWorld else grant}
+		positions[actor] = {"slot": candidate.slot, "point": [point.x, point.y], "tiles": 0 if world is RegionWorld else grant, "land": candidate.land, "water": candidate.water, "reserved": candidate.reserve.size()}
 		members[actor]["ranked"] = true
 		world.land_allowance[actor] = 0
 	if not world is RegionWorld:
@@ -134,6 +117,8 @@ static func valid(data: Variant, members: Dictionary, size: int) -> bool:
 	for actor: Variant in data.get("handicaps", {}):
 		var handicap: Variant = data.handicaps[actor]
 		if not members.has(actor) or not handicap is Dictionary or not CoopWorld.whole_number(handicap.get("funds"), 0, 2147483647) or not CoopWorld.whole_number(handicap.get("tiles", 0), 0, size * size / 16):
+			return false
+		if not CoopWorld.whole_number(handicap.get("scale", 100), 50, 150) or int(handicap.get("scale", 100)) not in [50, 75, 100, 125, 150]:
 			return false
 	for actor: Variant in data.previous:
 		if not members.has(actor) or not data.previous[actor] is Array or data.previous[actor].size() > GRID * GRID:
@@ -184,3 +169,9 @@ static func connect_access(world: SharedWorld, owner: int) -> void:
 			if world.owners[next] == 0 and world.protection[next] in [0, owner, -1] and not parents.has(next):
 				parents[next] = tile
 				queue.append(next)
+
+func cached_parcel(world: SharedWorld, slot: int, amount: int) -> Dictionary:
+	var key := str(slot) + ":" + str(amount)
+	if not parcel_cache.has(key):
+		parcel_cache[key] = MultiplayerStartParcel.make(world.city, world.owners, slot, amount)
+	return parcel_cache[key]

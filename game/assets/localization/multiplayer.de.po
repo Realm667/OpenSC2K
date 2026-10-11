@@ -1115,3 +1115,165 @@ msgstr "Deaktiviert"
 
 msgid "Progression: %d · Reward flags: %d"
 msgstr "Fortschritt: %d · Belohnungsfreigaben: %d"
+
+msgid "%d game years"
+msgstr "%d Spieljahre"
+
+msgid "%d land · %d water"
+msgstr "%d Land · %d Wasser"
+
+msgid "%d land · %d water · %d reserved tiles"
+msgstr "%d Land · %d Wasser · %d Felder reserviert"
+
+msgid "Accumulate %d years as sole leader. Earned time is kept. Late cities are unranked."
+msgstr "Sammle %d Jahre alleinige Führung. Gesammelte Zeit bleibt erhalten. Späte Städte sind ungewertet."
+
+msgid "All cities merge: shared terrain once, combined funds and bank bonds, internal player loans cancel. Host tax and funding settings apply. More than 50 bank bonds are repaid from combined funds."
+msgstr "Alle Städte werden zusammengeführt: gemeinsame Karte, addierte Kassen und Bankanleihen. Interne Spielerkredite entfallen. Steuern und Budget des Hosts gelten. Bankanleihen über dem Limit von 50 werden aus der gemeinsamen Kasse getilgt."
+
+msgid "Below target"
+msgstr "Ziel unterschritten"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Choose a new filename; existing cities are kept."
+msgstr "Neuen Dateinamen wählen; bestehende Städte bleiben erhalten."
+
+msgid "Choose a new filename; the multiplayer save stays unchanged."
+msgstr "Neuen Dateinamen wählen; der Multiplayer-Spielstand bleibt erhalten."
+
+msgid "City copy saved."
+msgstr "Stadtkopie gespeichert."
+
+msgid "Collapse chat"
+msgstr "Chat einklappen"
+
+msgid "Continue multiplayer"
+msgstr "Multiplayer fortsetzen"
+
+msgid "Each Region player has a separate city map."
+msgstr "In Region hat jeder Spieler eine eigene Stadtkarte."
+
+msgid "Free starting territory: %d land equivalents. Two water tiles count as one land tile. Treasury unchanged."
+msgstr "Kostenloses Startgebiet: %d Landäquivalente. Zwei Wasserfelder zählen wie ein Landfeld. Stadtkasse unverändert."
+
+msgid "Host set starting funds for %s to %s."
+msgstr "Host hat das Startvermögen für %s auf %s gesetzt."
+
+msgid "Host set starting territory for %s to %s."
+msgstr "Host hat das Startgebiet für %s auf %s gesetzt."
+
+msgid "Leadership: %d / %d game days"
+msgstr "Führungszeit: %d / %d Spieltage"
+
+msgid "Leadership: %s / %d years"
+msgstr "Führungszeit: %s / %d Jahre"
+
+msgid "Leading"
+msgstr "Führt"
+
+msgid "Message…"
+msgstr "Nachricht …"
+
+msgid "New land trade · response requested"
+msgstr "Neuer Landhandel · Antwort erbeten"
+
+msgid "Land trade: %d tiles · %s"
+msgstr "Landhandel: %d Felder · %s"
+
+msgid "No confirmed copy of your city is available."
+msgstr "Keine bestätigte Kopie deiner Stadt verfügbar."
+
+msgid "Only the sole leader at or above the target earns time. Earned time is kept; ties pause all clocks."
+msgstr "Nur wer das Ziel erreicht und allein führt, sammelt Zeit. Gesammelte Zeit bleibt erhalten; bei Gleichstand pausieren alle Zähler."
+
+msgid "Open a single-player copy or continue multiplayer."
+msgstr "Einzelspielerkopie öffnen oder Multiplayer fortsetzen."
+
+msgid "Open chat"
+msgstr "Chat öffnen"
+
+msgid "Open multiplayer save"
+msgstr "Multiplayer-Spielstand öffnen"
+
+msgid "Open single-player copy"
+msgstr "Einzelspielerkopie öffnen"
+
+msgid "Overtaken"
+msgstr "Überholt"
+
+msgid "Reach the target and accumulate %d years as sole leader. Earned time is kept."
+msgstr "Erreiche das Ziel und sammle %d Jahre alleinige Führung. Gesammelte Zeit bleibt erhalten."
+
+msgid "Reach the target and accumulate the selected number of years as sole leader. Earned time is kept when overtaken; ties pause all clocks."
+msgstr "Erreiche das Ziel und sammle die gewählten Führungsjahre. Beim Überholen bleibt die Zeit erhalten; bei Gleichstand pausieren alle Zähler."
+
+msgid "Required leadership"
+msgstr "Benötigte Führungszeit"
+
+msgid "Save city copy"
+msgstr "Stadtkopie speichern"
+
+msgid "Sell land"
+msgstr "Land verkaufen"
+
+msgid "Send message"
+msgstr "Nachricht senden"
+
+msgid "Session ended"
+msgstr "Partie beendet"
+
+msgid "SimNation"
+msgstr "SimNation"
+
+msgid "Starting territory"
+msgstr "Startgebiet"
+
+msgid "Target reached"
+msgstr "Ziel erreicht"
+
+msgid "The host ended the game. Save a single-player copy before leaving."
+msgstr "Der Host hat die Partie beendet. Du kannst deine Stadt vor dem Verlassen als Einzelspielerkopie speichern."
+
+msgid "Tied lead"
+msgstr "Gleichstand an der Spitze"
+
+msgid "View"
+msgstr "Ansehen"
+
+msgid "↓ %d new messages"
+msgstr "↓ %d neue Nachrichten"
+
+msgid "Very small"
+msgstr "Sehr klein"
+
+msgid "Small"
+msgstr "Klein"
+
+msgid "Medium · standard"
+msgstr "Mittel · Standard"
+
+msgid "Large"
+msgstr "Groß"
+
+msgid "Generous"
+msgstr "Großzügig"
+
+msgid "Custom…"
+msgstr "Benutzerdefiniert …"
+
+msgid "Invalid multiplayer save."
+msgstr "Ungültiger Multiplayer-Spielstand."
+
+msgid "Choose a city from this save."
+msgstr "Wähle eine Stadt aus diesem Spielstand."
+
+msgid "Cannot compose the shared city."
+msgstr "Die gemeinsame Stadt konnte nicht zusammengeführt werden."
+
+msgid "Combined funds exceed the single-player limit."
+msgstr "Die gemeinsame Stadtkasse überschreitet das Einzelspieler-Limit."
+
+msgid "Single-player copy opened. Save it as a new city."
+msgstr "Einzelspielerkopie geöffnet. Speichere sie als neue Stadt."

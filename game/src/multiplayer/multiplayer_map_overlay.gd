@@ -6,6 +6,7 @@ const DIRECTIONS := [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]
 var cursors: Dictionary = {}
 var cached_key: Array = []
 var lines: Dictionary = {}
+var layer_cache: Dictionary = {}
 var highlight: Array = []
 var highlight_until := 0
 
@@ -23,6 +24,9 @@ static func project(city: CityState, position: Vector2) -> Vector2:
 
 static func local_cursor(app: CityApplication) -> Vector2:
 	var map := app.map_view
+	var hovered := app.get_viewport().gui_get_hovered_control()
+	if hovered != null and hovered != map:
+		return Vector2(-1, -1)
 	var tile := map.hover_tile
 	if map.city == null or map.city.index_of(tile.x, tile.y) < 0 or not map.get_global_rect().has_point(map.get_global_mouse_position()):
 		return Vector2(-1, -1)
@@ -46,7 +50,9 @@ func receive(players: Array) -> void:
 			continue
 		online[player.id] = true
 		if not cursors.has(player.id) or Vector2(cursors[player.id].position).distance_to(position) > 12:
-			cursors[player.id] = {"position": position, "target": position}
+			cursors[player.id] = {"position": position, "target": position, "moved": Time.get_ticks_msec()}
+		if Vector2(cursors[player.id].target).distance_to(position) > 0.025:
+			cursors[player.id].moved = Time.get_ticks_msec()
 		cursors[player.id].target = position
 		cursors[player.id].received = Time.get_ticks_msec()
 	for id: String in cursors.keys():
@@ -61,16 +67,27 @@ func step(delta: float) -> void:
 		cursors[id].position = Vector2(cursors[id].position).lerp(cursors[id].target, 1.0 - exp(-28.0 * delta))
 
 func boundaries(app: CityApplication, state: Dictionary) -> Dictionary:
+	var owned: Array = state.get("owners", [])
+	var protection: Array = state.get("protection", [])
+	var extended := owned.duplicate()
+	for tile in mini(extended.size(), protection.size()):
+		if int(extended[tile]) == 0 and int(protection[tile]) > 0:
+			extended[tile] = protection[tile]
+	var combined := boundary_layer(app, state, owned, "")
+	if extended != owned:
+		combined.merge(boundary_layer(app, state, extended, ":reserved"))
+	return combined
+
+func boundary_layer(app: CityApplication, state: Dictionary, ownership: Array, suffix: String) -> Dictionary:
 	var city := app.document_state.city
-	var ownership: Array = state.get("owners", [])
 	var map := app.map_view
 	var scale: float = map.camera._view_scale()
 	var offset: Vector2 = map.camera._draw_offset(scale)
 	var area := Rect2(-offset / scale, map.size / scale).grow(3)
 	# Cache at the network display cadence, including newly arrived render regions.
 	var key := [ownership.hash(), city.document.get_instance_id(), city.chunk_revision("XBLD"), city.chunk_revision("ALTM"), city.chunk_revision("XTER"), area, app.static_render.city_view_size(), Time.get_ticks_msec() / 500]
-	if key == cached_key:
-		return lines
+	if layer_cache.has(suffix) and layer_cache[suffix].key == key:
+		return layer_cache[suffix].lines.duplicate()
 	cached_key = key
 	lines.clear()
 	var ids: Array = state.get("owner_ids", [])
@@ -87,10 +104,11 @@ func boundaries(app: CityApplication, state: Dictionary) -> Dictionary:
 			if not edge_visible(ownership, city.map_size, point, edge):
 				continue
 			var segments := visible_segments(app, point, polygon[edge], polygon[(edge + 1) % 4])
-			var existing: PackedVector2Array = lines.get(ids[owner - 1], PackedVector2Array())
+			var existing: PackedVector2Array = lines.get(str(ids[owner - 1]) + suffix, PackedVector2Array())
 			existing.append_array(segments)
-			lines[ids[owner - 1]] = existing
-	return lines
+			lines[str(ids[owner - 1]) + suffix] = existing
+	layer_cache[suffix] = {"key": key, "lines": lines.duplicate()}
+	return lines.duplicate()
 
 static func visible_segments(app: CityApplication, tile: Vector2i, a: Vector2, b: Vector2) -> PackedVector2Array:
 	var city := app.document_state.city

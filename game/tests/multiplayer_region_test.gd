@@ -41,6 +41,8 @@ func run() -> void:
 	check(restored.municipalities[a].city.zones == world.municipalities[a].city.zones, "owner city retained")
 	check(restored.municipalities[b].dispatch_owners == world.municipalities[b].dispatch_owners, "foreign aid persists")
 	var goal := MultiplayerGoal.new()
+	goal.rule = "continuous"
+	goal.hold_days = CityCalendar.DAYS_PER_YEAR
 	goal.kind = "wealth"
 	goal.target = 30000
 	var members := {a: {"name": "Alice"}, b: {"name": "Bob"}}

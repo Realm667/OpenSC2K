@@ -20,8 +20,10 @@ The integrated runtime branch combines the newest Visual and German feature bran
 
 Only the host writes the normal SC2X save. Session data is embedded automatically;
 the prior save remains as `.bak`. Keep each participant's private data profile to
-reconnect as the same player. A disconnected player pauses the session until the
-host releases the pause. Conflicting edits are rejected without payment.
+reconnect as the same player. Only the host controls simulation speed and pause;
+client dialogs and disconnections do not stop the match. Conflicting edits are
+rejected without payment. A normal host shutdown offers clients a single-player
+copy. Saved multiplayer games can also be opened explicitly as single-player copies.
 
 Use trusted participants over LAN or direct IP. There is no discovery, NAT
 traversal, traffic encryption or host migration. Current tests use two localhost

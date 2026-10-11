@@ -78,6 +78,8 @@ func _input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo:
 		return
 
+	if get_viewport().gui_get_focus_owner() is LineEdit or get_viewport().gui_get_focus_owner() is TextEdit:
+		return
 	if event.keycode == KEY_F12 or (event.keycode == KEY_ESCAPE and is_open):
 		toggle()
 		get_viewport().set_input_as_handled()
@@ -382,6 +384,10 @@ func set_status(message: String) -> void:
 
 
 func toggle() -> void:
+	if main_control is CityApplication and main_control.coop.active() and (not main_control.coop.session.hosting or main_control.coop.session.latest.get("visiting", false)):
+		_window.hide()
+		is_open = false
+		return
 	is_open = not is_open
 
 	if _window != null:

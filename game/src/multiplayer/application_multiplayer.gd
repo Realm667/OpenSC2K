@@ -37,6 +37,7 @@ var multiplayer_save_path := ""
 var identity_signature := ""
 var selection_revision := 0
 var exit_action := ""
+var ended_dialog: Window
 
 
 func _init(application: CityApplication) -> void:
@@ -53,11 +54,13 @@ func setup() -> void:
 	session.environment_received.connect(app.visual_environment.receive_network_weather)
 	app.add_child(session)
 	session.state_received.connect(receive_state)
-	session.session_ended.connect(func() -> void:
-		leave()
-		show_message("The host ended the session."))
+	session.session_ended.connect(func() -> void: MultiplayerCopyDialog.host_ended(self))
 	session.cursor_source = func() -> Vector2:
 		return MultiplayerMapOverlay.local_cursor(app) if mirrored and app.map_view.visible else Vector2(-1, -1)
+	session.selection_source = func() -> Array:
+		if not mirrored or session.latest.get("visiting", false) or app.map_view.selection_start.x < 0:
+			return []
+		return app.map_view.selection_path.slice(0, 1024).map(func(point: Vector2i) -> Array: return [point.x, point.y])
 	session.feedback.connect(show_message)
 	session.action_sounds.connect(app.effects_audio.play_sound_ids)
 	session.remote_action_sound.connect(play_remote_action)
@@ -177,6 +180,7 @@ func host_document(document: Sc2File) -> void:
 	session.host_starter_tiles = 1024
 	session.host_goal_kind = ["endless", "population", "wealth"][launch.goal_picker.selected]
 	session.host_goal_target = int(launch.goal_target.value)
+	session.host_goal_years = [1, 3, 5, 10][launch.goal_years.selected]
 	var result := session.host(document, int(port.value), join_code.text, player.text, ["coop", "shared", "region"][mode_picker.selected])
 	if not result.is_empty():
 		show_message(result)

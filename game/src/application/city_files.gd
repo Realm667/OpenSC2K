@@ -1,6 +1,9 @@
 class_name ApplicationCityFiles
 extends RefCounted
 
+var pending_multiplayer_copy: Sc2File
+var pending_multiplayer_source := ""
+
 const Sc2Document = preload("res://src/formats/sc2_file.gd")
 const CityFiles = preload("res://src/formats/city_file_store.gd")
 const ScenarioModel = preload("res://src/model/scenario_state.gd")
@@ -250,6 +253,12 @@ func request_city_exit(action: String, path := "") -> void:
 
 func _perform_city_exit(action: String, path := "") -> void:
 	match action:
+		"multiplayer_copy":
+			if pending_multiplayer_copy != null and app.city_session.activate_document(pending_multiplayer_copy, null, tr("Single-player copy opened. Save it as a new city."), true):
+				document_state.current_save_path = ""
+				document_state.current_city_saved_once = false
+				document_state.current_document.sc2x_converted_from = pending_multiplayer_source
+				pending_multiplayer_copy = null
 		"create_new_city":
 			app.new_city.create_new_city_unchecked()
 		"load_city":
@@ -295,14 +304,16 @@ func _continue_pending_city_exit() -> void:
 func load_city(path: String) -> void:
 	if not app.coop.active():
 		var multiplayer_document := Sc2File.new()
-		if path.to_lower().ends_with(".sc2mp") or (multiplayer_document.parse(FileAccess.get_file_as_bytes(path)) and multiplayer_document.sc2x_extra_entries.has("multiplayer.json")):
+		if path.to_lower().ends_with(".sc2mp"):
 			app.coop.open()
 			app.coop.city_picker.select(1)
 			app.coop.use_current.show()
 			app.coop.use_current.button_pressed = false
 			app.coop.selected_city_path = path
 			app.coop.city_file.current_path = path
-			app.coop.show_message("Multiplayer-Spielstand ausgewählt. Mit Spiel erstellen fortsetzen.")
+			return
+		if multiplayer_document.parse(FileAccess.get_file_as_bytes(path)) and multiplayer_document.sc2x_extra_entries.has("multiplayer.json"):
+			MultiplayerCopyDialog.choose(app, multiplayer_document, path)
 			return
 	request_city_exit("load_city", path)
 
@@ -364,6 +375,9 @@ func _loaded_scenario(document: Sc2File) -> ScenarioState:
 
 
 func on_save_path_selected(path: String) -> void:
+	if document_state.current_document != null and not document_state.current_document.sc2x_converted_from.is_empty() and path.simplify_path().to_lower() == document_state.current_document.sc2x_converted_from.simplify_path().to_lower():
+		app.interface.show_error(tr("Choose a new filename; the multiplayer save stays unchanged."))
+		return
 	if app.coop.active():
 		app.coop.save_to(path)
 		return

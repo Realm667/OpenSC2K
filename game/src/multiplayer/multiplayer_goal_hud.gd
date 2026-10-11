@@ -1,6 +1,7 @@
 class_name MultiplayerGoalHud
 extends RefCounted
-## Per-city goal and continuous-hold progress; presentation only.
+## Per-city target and leadership progress; presentation only.
+@warning_ignore_start("integer_division")
 
 var panel: PanelContainer
 var title: Label
@@ -32,7 +33,7 @@ func _init(windows: MultiplayerWindows) -> void:
 	title.autowrap_mode = TextServer.AUTOWRAP_OFF
 	title.custom_minimum_size.x = 0
 	var stats := ApplicationMultiplayer.button(heading, tr("Statistics"), windows.open_scoreboard)
-	stats.icon = preload("res://src/ui/city_windows/icons/budget_history.svg")
+	stats.icon = preload("res://src/multiplayer/icons/statistics.svg")
 	stats.add_theme_constant_override("icon_max_width", 18)
 	stats.tooltip_text = tr("Open scoreboard")
 	home = ApplicationMultiplayer.button(windows.coop.app.map_view, tr("Return to your city"), func() -> void:
@@ -107,8 +108,10 @@ func update(state: Dictionary, _actor: String) -> void:
 		line.add_child(row)
 		if state.get("mode") == "region":
 			var windows: MultiplayerWindows = owner_ref.get_ref()
-			var visit := ApplicationMultiplayer.button(line, "↗", func() -> void:
+			var visit := ApplicationMultiplayer.button(line, "", func() -> void:
 				windows.coop.session.request({"kind": "view_city", "seat": player.id}))
+			visit.icon = preload("res://src/multiplayer/icons/visit.svg")
+			visit.add_theme_constant_override("icon_max_width", 16)
 			visit.tooltip_text = tr("Visit city") + ": " + str(player.city)
 			visit.disabled = player.id == state.get("view_owner")
 			for style_name in ["normal", "hover", "pressed", "disabled"]:
@@ -117,7 +120,7 @@ func update(state: Dictionary, _actor: String) -> void:
 				compact.content_margin_bottom = 0
 				visit.add_theme_stylebox_override(style_name, compact)
 		var progress := bar(row, Color(color, 0.6), 0.0 if endless else clampf(float(current) / target, 0, 1))
-		if not endless and current >= target and ranked:
+		if not endless and ranked and (current >= target or days > 0):
 			bar(row, Color(color, 1.0), float(days) / required, true)
 		var text := Label.new()
 		text.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -128,13 +131,38 @@ func update(state: Dictionary, _actor: String) -> void:
 		text.add_theme_color_override("font_color", Color.WHITE)
 		text.add_theme_constant_override("outline_size", 0)
 		text.add_theme_font_size_override("font_size", 14)
-		text.text = "%s · %s" % [player.name, ("%d / %d d" % [days, required]) if current >= target and ranked else "%d%%" % int(progress.value)]
+		text.text = str(player.name)
+		var amount := Label.new()
+		amount.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		amount.offset_right = -6
+		amount.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		amount.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		amount.add_theme_constant_override("outline_size", 0)
+		amount.add_theme_font_size_override("font_size", 14)
+		amount.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		amount.text = "%s / %s" % [number(current, kind), number(target, kind)]
+		if days > 0 and goal.get("rule", "continuous") == "leadership":
+			amount.text = tr("Leadership: %s / %d years") % [String.num(float(days) / CityCalendar.DAYS_PER_YEAR, 1).replace(".", ",") if TranslationServer.get_locale().begins_with("de") else String.num(float(days) / CityCalendar.DAYS_PER_YEAR, 1), required / CityCalendar.DAYS_PER_YEAR]
+		elif days > 0:
+			amount.text = tr("Target held: %d / %d game days") % [days, required]
+		if not ranked:
+			amount.text = tr("Unranked")
+		amount.visible = not endless
+		row.add_child(amount)
+		text.offset_right = -maxf(6, amount.get_minimum_size().x + 12)
+
 		if endless:
 			text.text = player.name
 		text.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		row.add_child(text)
-		row.tooltip_text = "%s: %s / %s\n%s" % [player.name, number(current, kind), number(target, kind), tr("Target held: %d / %d game days") % [days, required] if ranked else tr("Unranked · city founded after the start")]
-	panel.tooltip_text = tr("Stay at or above the target for one full game year. Dropping below resets the timer.")
+		var status := tr("Below target") if current < target else tr("Tied lead") if goal.get("tied", false) else tr("Leading") if goal.get("leader", "") == player.id else tr("Overtaken")
+		if goal.get("rule", "continuous") == "continuous":
+			status = tr("Below target") if current < target else tr("Target reached")
+		row.tooltip_text = status + "\n" + "%s: %s / %s\n%s" % [player.name, number(current, kind), number(target, kind), (tr("Leadership: %d / %d game days") if goal.get("rule", "continuous") == "leadership" else tr("Target held: %d / %d game days")) % [days, required] if ranked else tr("Unranked · city founded after the start")]
+	if goal.get("rule", "continuous") == "continuous":
+		panel.tooltip_text = tr("Stay at or above the target for one full game year. Dropping below resets the timer.")
+		return
+	panel.tooltip_text = tr("Reach the target and accumulate %d years as sole leader. Earned time is kept.") % (required / CityCalendar.DAYS_PER_YEAR)
 
 static func bar(parent: Control, color: Color, fraction: float, transparent := false) -> ProgressBar:
 	var result := ProgressBar.new()
@@ -144,8 +172,10 @@ static func bar(parent: Control, color: Color, fraction: float, transparent := f
 	result.value = fraction * 100
 	var fill := StyleBoxFlat.new()
 	fill.bg_color = color
+	fill.set_corner_radius_all(4)
 	result.add_theme_stylebox_override("fill", fill)
 	var background := StyleBoxFlat.new()
+	background.set_corner_radius_all(4)
 	background.bg_color = Color.TRANSPARENT if transparent else Color(0.08, 0.1, 0.12, 0.9)
 	result.add_theme_stylebox_override("background", background)
 	parent.add_child(result)

@@ -52,7 +52,12 @@ func scenario(mode: String, count: int) -> void:
 		for peer in peers:
 			var slot: Dictionary = host.starts.positions[peer.token]
 			var center := Vector2i(int(slot.point[0]), int(slot.point[1]))
-			var begin := center if mode == "shared" else center - Vector2i(12, 12)
+			var begin := center - Vector2i(12, 12)
+			if mode == "shared":
+				# Start seeds may now sit directly at any exterior map edge.
+				# Keep the load rectangle inside its sector, clear of public seams.
+				var sector := Vector2i(int(slot.slot) / 4, int(slot.slot) % 4) * 32
+				begin = (center - Vector2i(width / 2, width / 2)).clamp(sector + Vector2i.ONE, sector + Vector2i.ONE * (31 - width))
 			var end := begin + Vector2i(width - 1, width - 1)
 			if mode == "shared":
 				peer.request({"kind": "land_buy", "start": [begin.x, begin.y], "finish": [end.x, end.y]})

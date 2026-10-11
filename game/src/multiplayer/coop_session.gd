@@ -21,7 +21,7 @@ signal seat_lobby_received(data: Dictionary)
 
 const PROTOCOL := 1
 const BUILD := "opensc2k-coop-1"
-const NETWORK_BUILD := "opensc2k-multiplayer-15"
+const NETWORK_BUILD := "opensc2k-multiplayer-17"
 const MAX_PLAYERS := 8
 var world: CoopWorld
 var active := false
@@ -36,6 +36,7 @@ var host_land_price := 10
 var host_starter_tiles := 0
 var host_goal_kind := "endless"
 var host_goal_target := 10000
+var host_goal_years := 10
 var goal := MultiplayerGoal.new()
 var loans := MultiplayerLoans.new()
 var history := MultiplayerHistory.new()
@@ -67,6 +68,8 @@ var cursors: Dictionary = {}
 var cursor_updated: Dictionary = {}
 var chat_history: Array = []
 var presence_elapsed := 0.0
+var selection_source: Callable
+var selections: Dictionary = {}
 var cursor_source: Callable
 var chat_last_sent: Dictionary = {}
 var event_sequence := 0
@@ -77,6 +80,8 @@ var statistics_revision := -1
 var outgoing_states: Dictionary = {}
 var incoming_state: MultiplayerStateStream
 var retiring_channels: Array = []
+var ended_city := ""
+var confirmed_own_city := ""
 var encoders: Dictionary = {}
 var decoder := MultiplayerDelta.new()
 var reconnect_endpoint: Dictionary = {}
@@ -98,6 +103,8 @@ func ensure_credential() -> void:
 
 func _exit_tree() -> void:
 	for retired: Dictionary in retiring_channels:
+		for stream: MultiplayerStateStream in retired.get("streams", []):
+			stream.close()
 		retired.channel.close()
 	for stream: MultiplayerStateStream in outgoing_states.values():
 		stream.close()
@@ -123,6 +130,7 @@ func host(document: Sc2File, port: int, join_code: String, player_name: String, 
 	goal = MultiplayerGoal.new()
 	goal.kind = host_goal_kind if mode != "coop" else "endless"
 	goal.target = host_goal_target
+	goal.hold_days = host_goal_years * CityCalendar.DAYS_PER_YEAR
 	world = candidate
 	if world is SharedWorld:
 		var shared_error: String = world.add_player(token)
@@ -177,22 +185,36 @@ func join(address: String, port: int, join_code: String, player_name: String, in
 
 
 func stop() -> void:
+	ended_city = ""
+	confirmed_own_city = ""
 	reconnect_until = 0
 	reconnect_endpoint.clear()
 	reconnect_attempt = 0
-	for stream: MultiplayerStateStream in outgoing_states.values():
-		stream.close()
-	outgoing_states.clear()
 	if incoming_state != null:
 		incoming_state.close()
 		incoming_state = null
 	if active and connected:
-		for channel in channels.values():
-			# Preserve the remainder of a partially transmitted TCP frame.
+		for id: int in channels:
+			var channel: CityTcpChannel = channels[id]
 			channel.ephemeral.clear()
-			channel.send({"type": "leave"})
-			channel.flush()
-			retiring_channels.append({"channel": channel, "until": Time.get_ticks_msec() + 2000})
+			if hosting:
+				channel.send({"type": "ending"})
+			var streams: Array = []
+			if outgoing_states.has(id):
+				streams.append(outgoing_states[id])
+				outgoing_states.erase(id)
+			if hosting and identities.has(id):
+				var converted := MultiplayerSingleplayer.from_world(world, identities[id])
+				if converted.error.is_empty():
+					var encoded := Sc2xDocument.encode(converted.document)
+					if encoded.ok:
+						var stream := MultiplayerStateStream.new()
+						if stream.open_output({"type": "state", "ended_copy": Marshalls.raw_to_base64(encoded.data)}):
+							streams.append(stream)
+			retiring_channels.append({"channel": channel, "until": Time.get_ticks_msec() + 60000, "streams": streams, "sent_leave": false})
+	for stream: MultiplayerStateStream in outgoing_states.values():
+		stream.close()
+	outgoing_states.clear()
 	graceful_peers.clear()
 	encoders.clear()
 	decoder = MultiplayerDelta.new()
@@ -219,6 +241,7 @@ func stop() -> void:
 	waiting_for_start = false
 	lobby_ready.clear()
 	cursors.clear()
+	selections.clear()
 	cursor_updated.clear()
 	admin_history.clear()
 	chat_history.clear()
@@ -240,10 +263,19 @@ func _process(delta: float) -> void:
 	# disconnect can discard the last packet and look like a connection loss.
 	for retired: Dictionary in retiring_channels.duplicate():
 		var channel: CityTcpChannel = retired.channel
+		var streams: Array = retired.get("streams", [])
+		if not streams.is_empty():
+			if streams[0].pump(channel):
+				streams.pop_front()
+		elif not retired.get("ack_only", false) and not retired.get("sent_leave", false):
+			channel.send({"type": "leave"})
+			retired.sent_leave = true
 		for message: Dictionary in channel.poll():
 			if message.get("type") == "leave_ack":
 				channel.failed = true
 		if channel.failed or Time.get_ticks_msec() >= retired.until or (retired.get("ack_only", false) and channel.output.is_empty()):
+			for stream: MultiplayerStateStream in streams:
+				stream.close()
 			channel.close()
 			retiring_channels.erase(retired)
 	if not active:
@@ -302,11 +334,13 @@ func _process(delta: float) -> void:
 		presence_elapsed = 0.0
 		if cursor_source.is_valid():
 			var position: Vector2 = cursor_source.call()
+			var selection: Array = selection_source.call() if selection_source.is_valid() else []
 			if hosting:
+				selections[token] = selection
 				cursors[token] = [position.x, position.y]
 				cursor_updated[token] = Time.get_ticks_msec()
 			elif connected:
-				channels[0].send_latest({"type": "cursor", "position": [position.x, position.y]})
+				channels[0].send_latest({"type": "cursor", "position": [position.x, position.y], "selection": selection})
 		if hosting:
 			var players := roster()
 			presence_received.emit(players)
@@ -360,6 +394,7 @@ func receive_host(id: int, message: Dictionary) -> void:
 	if message.get("type") == "cursor":
 		var position: Variant = message.get("position")
 		if position is Array and position.size() == 2 and valid_cursor_number(position[0]) and valid_cursor_number(position[1]):
+			selections[actor] = valid_selection(message.get("selection", []), world.city.map_size)
 			cursors[actor] = position
 			cursor_updated[actor] = Time.get_ticks_msec()
 		return
@@ -398,10 +433,15 @@ func execute(actor: String, message: Dictionary) -> Dictionary:
 		var seat := seats.find_seat(str(message.get("seat", "")))
 		if seat.is_empty() or not CoopWorld.whole_number(message.get("funds"), 0, 2147483647) or not CoopWorld.whole_number(message.get("tiles"), 0, world.city.map_size * world.city.map_size / 32):
 			return CoopWorld.rejected("Invalid starting handicap.")
-		var before := handicap_text(starts.handicaps.get(seat, {"funds": world.municipalities[seat].city.funds(), "tiles": 0}))
-		starts.handicaps[seat] = {"funds": int(message.funds), "tiles": int(message.tiles)}
+		var old: Dictionary = starts.handicaps.get(seat, {"funds": world.municipalities[seat].city.funds(), "tiles": 0})
+		if not CoopWorld.whole_number(message.get("scale", 100), 50, 150) or int(message.get("scale", 100)) not in [50, 75, 100, 125, 150]:
+			return CoopWorld.rejected("Invalid starting handicap.")
+		starts.handicaps[seat] = {"funds": int(message.funds), "tiles": int(message.tiles), "scale": int(message.get("scale", 100))}
 		reset_lobby_ready()
-		announce_admin(actor, world.municipalities[seat].city.city_name(), "Starting handicap", before, handicap_text(starts.handicaps[seat]))
+		if int(old.funds) != int(message.funds):
+			announce_admin(actor, members[seat].name, "Starting funds", str(old.funds), str(message.funds))
+		if old.get("tiles", 0) != message.tiles or old.get("scale", 100) != message.get("scale", 100):
+			announce_admin(actor, members[seat].name, "Starting territory", "", str(message.tiles) if int(message.tiles) > 0 else str(message.get("scale", 100)) + "%")
 		return CoopWorld.accepted("Starting handicap updated. Everyone must confirm Ready again.")
 	if message.get("kind") == "lobby_ready":
 		if not waiting_for_start or not message.get("ready") is bool or message.get("lobby_generation") != lobby_generation:
@@ -573,6 +613,11 @@ func receive_client(message: Dictionary) -> void:
 			if message.get("seats") is Array:
 				seat_lobby_received.emit(message)
 		"state", "state_delta":
+			if message.get("ended_copy") is String:
+				var document := Sc2File.new()
+				if document.parse(Marshalls.base64_to_raw(message.ended_copy)) and document.is_sc2x():
+					ended_city = message.ended_copy
+				return
 			if message.has("wire_id") or message.get("type") == "state_delta":
 				message = decoder.decode(message)
 				if decoder.failed:
@@ -606,6 +651,9 @@ func receive_client(message: Dictionary) -> void:
 		"player_event":
 			if message.get("event") is Dictionary:
 				player_event.emit(message.event)
+		"ending":
+			graceful_peers[0] = true
+			reconnect_until = 0
 		"leave":
 			graceful_peers[0] = true
 			channels[0].send({"type": "leave_ack"})
@@ -634,6 +682,7 @@ func make_state(recipient := "") -> Dictionary:
 	state["starts"] = starts.public_positions()
 	state["round"] = starts.round_number
 	state["lobby"] = {"waiting": waiting_for_start, "can_start": can_start_lobby(), "generation": lobby_generation}
+	state["start_preview"] = starts.preview.duplicate(true)
 	var players: Array[String] = []
 	for player: String in requested_speed:
 		players.append("%s (%s)" % [members[player].name, "paused" if requested_speed[player] == 1 else "playing"])
@@ -667,6 +716,8 @@ func publish() -> void:
 
 
 func accept_state(state: Dictionary) -> void:
+	if not state.get("visiting", false):
+		confirmed_own_city = str(state.get("city", ""))
 	latest = state
 	local_revision = int(state.revision)
 	local_policy = int(state.get("policy", 0))
@@ -862,6 +913,7 @@ func roster() -> Array:
 			"color": valid_color(member.get("color")), "online": requested_speed.has(actor),
 			"seat_status": "connected" if requested_speed.has(actor) else member.get("seat_status", "reserved"),
 			"view_owner": str(viewed_cities.get(actor, actor)).sha256_text(),
+			"selection": selections.get(actor, []) if Time.get_ticks_msec() - int(cursor_updated.get(actor, 0)) < 3000 else [],
 			"cursor": cursors.get(actor, [-1, -1]) if Time.get_ticks_msec() - int(cursor_updated.get(actor, 0)) < 3000 else [-1, -1]})
 		result.append(row)
 	return result
@@ -926,7 +978,10 @@ func save_city(path: String) -> String:
 	var checkpoint := city_checkpoint()
 	if not checkpoint.error.is_empty():
 		return checkpoint.error
-	var document: Sc2File = checkpoint.document
+	return write_document(checkpoint.document, path)
+
+
+static func write_document(document: Sc2File, path: String) -> String:
 	var encoded := Sc2xDocument.encode(document)
 	if not encoded.ok:
 		return encoded.error
@@ -1120,6 +1175,7 @@ func prepare_rematch(actor: String) -> Dictionary:
 	statistics_revision = -1
 	viewed_cities.clear()
 	cursors.clear()
+	selections.clear()
 	waiting_for_start = true
 	reset_lobby_ready()
 	apply_speed()
@@ -1160,3 +1216,11 @@ func announce_admin(actor: String, city_name: String, action: String, before: St
 	admin_history.append({"id": session_id + ":admin:" + str(event_sequence), "actor": actor.sha256_text(), "name": members[actor].name, "color": valid_color(members[actor].get("color")), "city": city_name, "action": action, "before": before, "after": after})
 	if admin_history.size() > 256:
 		admin_history.pop_front()
+
+static func valid_selection(value: Variant, size: int) -> Array:
+	if not value is Array or value.size() > 1024:
+		return []
+	for point: Variant in value:
+		if not point is Array or point.size() != 2 or not CoopWorld.whole_number(point[0], 0, size - 1) or not CoopWorld.whole_number(point[1], 0, size - 1):
+			return []
+	return value
