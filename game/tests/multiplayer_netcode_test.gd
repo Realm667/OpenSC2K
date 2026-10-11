@@ -26,6 +26,7 @@ func build(id: int, revision: int, point: Vector2i) -> Dictionary:
 
 func run() -> void:
 	archive_cache()
+	incremental_statistics()
 	await direct_documents()
 	reservation_delta()
 	reservation_ring()
@@ -96,6 +97,22 @@ func reservation_delta() -> void:
 	wire.base = restored.wire_id
 	wire.pages.protection.chunks[0][1] = "invalid"
 	check(receiver.decode(wire).is_empty() and receiver.failed, "malformed reservation patch rejected atomically")
+
+func incremental_statistics() -> void:
+	var world := SharedWorld.new()
+	world.open(Sc2xDocument.create_empty(32, "Incremental statistics").document)
+	world.add_player("one")
+	world.add_player("two")
+	for pass_index in 4:
+		for actor: String in world.actors:
+			var child: CoopWorld = world.municipalities[actor]
+			for tile in [0, 511, 512, 1023]:
+				world.owners[tile] = (pass_index + tile) % 3
+				child.city.buildings[tile] = 0 if pass_index == 3 else 20 + pass_index
+				child.city.zones[tile] = pass_index * 2
+			var incremental := MultiplayerStatistics.capture(world, actor)
+			child.statistics_tiles.clear()
+			check(incremental == MultiplayerStatistics.capture(world, actor), "incremental ownership, demolition and zone counts equal a fresh full scan")
 
 func archive_cache() -> void:
 	var doc := Sc2xDocument.create_empty(32, "Cached archive").document
