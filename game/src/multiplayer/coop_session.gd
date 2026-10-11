@@ -21,7 +21,7 @@ signal seat_lobby_received(data: Dictionary)
 
 const PROTOCOL := 1
 const BUILD := "opensc2k-coop-1"
-const NETWORK_BUILD := "opensc2k-multiplayer-14"
+const NETWORK_BUILD := "opensc2k-multiplayer-16"
 const MAX_PLAYERS := 8
 var world: CoopWorld
 var active := false
@@ -70,6 +70,7 @@ var presence_elapsed := 0.0
 var cursor_source: Callable
 var chat_last_sent: Dictionary = {}
 var event_sequence := 0
+var admin_history: Array = []
 var graceful_peers: Dictionary = {}
 var statistics_cache: Dictionary = {}
 var statistics_revision := -1
@@ -219,6 +220,7 @@ func stop() -> void:
 	lobby_ready.clear()
 	cursors.clear()
 	cursor_updated.clear()
+	admin_history.clear()
 	chat_history.clear()
 	chat_last_sent.clear()
 	requested_speed.clear()
@@ -390,6 +392,17 @@ func execute(actor: String, message: Dictionary) -> Dictionary:
 		return CoopWorld.rejected("Command order changed. Reconnect to synchronize.")
 	member.sequence = sequence
 	var result: Dictionary
+	if message.get("kind") == "handicap":
+		if actor != token or not waiting_for_start or not world is SharedWorld or starts.assigned:
+			return CoopWorld.rejected("Only the host can assign handicaps before a new game starts.")
+		var seat := seats.find_seat(str(message.get("seat", "")))
+		if seat.is_empty() or not CoopWorld.whole_number(message.get("funds"), 0, 2147483647) or not CoopWorld.whole_number(message.get("tiles"), 0, world.city.map_size * world.city.map_size / 32):
+			return CoopWorld.rejected("Invalid starting handicap.")
+		var before := handicap_text(starts.handicaps.get(seat, {"funds": world.municipalities[seat].city.funds(), "tiles": 0}))
+		starts.handicaps[seat] = {"funds": int(message.funds), "tiles": int(message.tiles)}
+		reset_lobby_ready()
+		announce_admin(actor, world.municipalities[seat].city.city_name(), "Starting handicap", before, handicap_text(starts.handicaps[seat]))
+		return CoopWorld.accepted("Starting handicap updated. Everyone must confirm Ready again.")
 	if message.get("kind") == "lobby_ready":
 		if not waiting_for_start or not message.get("ready") is bool or message.get("lobby_generation") != lobby_generation:
 			return CoopWorld.rejected("Readiness can only be changed in the lobby.")
@@ -439,9 +452,11 @@ func execute(actor: String, message: Dictionary) -> Dictionary:
 		goal.unscored = true
 		apply_speed()
 		return CoopWorld.accepted("The game continues without scoring.")
+	if world is RegionWorld and viewed_cities.get(actor, actor) != actor and message.get("kind") not in ["speed"]:
+		return CoopWorld.rejected("This city view is read-only. Return to your own city to make changes.")
 	if message.get("kind") == "debug":
 		return MultiplayerDebug.execute(self, actor, message)
-	if goal.blocked():
+	if goal.blocked() and message.get("kind") != "speed":
 		return CoopWorld.rejected("The victory target was reached. The host can continue without scoring.")
 	if actor != token and (message.get("kind") in ["disaster", "no_disasters"] or (message.get("kind") == "city_option" and message.get("option") == "no_disasters")):
 		return CoopWorld.rejected("Only the host can control disasters.")
@@ -464,7 +479,12 @@ func execute(actor: String, message: Dictionary) -> Dictionary:
 			if message.has("view_owner") and message.view_owner != viewed.sha256_text():
 				return CoopWorld.rejected("Your city view changed. Review the target before acting.")
 			message["view_owner"] = viewed.sha256_text()
+		var admin_city: CoopWorld = world.municipalities[actor] if world is SharedWorld else world
+		var before_admin := str(admin_city.engine.active_disaster_type) if message.get("kind") == "disaster" else str(admin_city.city.no_disasters_enabled())
 		result = world.command(actor, message)
+		if result.get("ok", false) and actor == token and (message.get("kind") in ["disaster", "no_disasters"] or (message.get("kind") == "city_option" and message.get("option") == "no_disasters")):
+			var after_admin := str(admin_city.engine.active_disaster_type) if message.get("kind") == "disaster" else str(admin_city.city.no_disasters_enabled())
+			announce_admin(actor, admin_city.city.city_name(), "Disaster administration", before_admin, after_admin)
 		if goal.evaluate(world, members, loans):
 			apply_speed()
 	result["id"] = sequence
@@ -474,9 +494,9 @@ func execute(actor: String, message: Dictionary) -> Dictionary:
 
 func apply_speed() -> void:
 	var speed := int(requested_speed.get(token, GameSpeedController.Speed.PAUSED))
-	world.controller.set_speed(1 if waiting_for_start or disconnected_pause or goal.blocked() else speed)
+	world.controller.set_speed(1 if waiting_for_start else speed)
 	if world is SharedWorld:
-		world.set_shared_speed(1 if waiting_for_start or disconnected_pause or goal.blocked() else speed)
+		world.set_shared_speed(1 if waiting_for_start else speed)
 
 
 func can_start_lobby() -> bool:
@@ -627,6 +647,7 @@ func make_state(recipient := "") -> Dictionary:
 		for key: String in world.offers:
 			state.offers.append(public_land_entry(world.offers[key].merged({"id": key, "status": "Open"}, true)))
 		state["land_history"] = world.land_history.map(public_land_entry)
+	state["admin_history"] = admin_history.duplicate(true)
 	state["disconnect_pause"] = disconnected_pause
 	if environment_source.is_valid():
 		state["weather"] = environment_source.call()
@@ -682,7 +703,7 @@ func drop(id: int) -> void:
 			identities.erase(id)
 			members[actor]["seat_status"] = "unoccupied" if graceful_peers.has(id) else "reserved"
 			if not graceful_peers.has(id):
-				disconnected_pause = true
+				disconnected_pause = false
 			apply_speed()
 			emit_player_event(actor, "left" if graceful_peers.has(id) else "disconnected")
 	else:
@@ -713,7 +734,7 @@ func save_session(path: String) -> String:
 		return checkpoint_error
 	var data := {"format": "OpenSC2K Koop", "version": PROTOCOL, "build": BUILD,
 		"started": not waiting_for_start,
-		"goal": goal.saved(), "loans": loans.saved(), "history": history.series, "starts": starts.saved(),
+		"admin_history": admin_history, "goal": goal.saved(), "loans": loans.saved(), "history": history.series, "starts": starts.saved(),
 		"session": session_id, "host": token, "members": members, "seats": seats.saved(), "state": world.snapshot(true),
 		"dispatch": Array(world.dispatch_cycles), "dispatch_initialized": world.dispatch_initialized,
 		"dispatch_points": world.saved_dispatch_points(), "statistics": world.statistics, "dispatch_owners": world.dispatch_owners}
@@ -752,6 +773,14 @@ func resume_session(path: String, port: int, join_code: String, player_name: Str
 		return "Unsupported session file."
 	if not data.get("host") is String or not data.get("session") is String or not data.get("members") is Dictionary or not data.members.has(data.host):
 		return "Invalid session identities."
+	if not data.get("admin_history", []) is Array or data.get("admin_history", []).size() > 256:
+		return "Invalid administration history."
+	for entry: Variant in data.get("admin_history", []):
+		if not entry is Dictionary:
+			return "Invalid administration history."
+		for field in ["id", "actor", "name", "color", "city", "action", "before", "after"]:
+			if not entry.get(field) is String or entry[field].length() > 1024:
+				return "Invalid administration history."
 	var seat_error := MultiplayerSeats.validate(data.get("seats"), data.members)
 	if not seat_error.is_empty():
 		return seat_error
@@ -831,6 +860,7 @@ func roster() -> Array:
 		var row: Dictionary = statistics_cache[actor].duplicate()
 		row.debt = int(row.debt) + loans.debt(actor)
 		row["ranked"] = member.get("ranked", true)
+		row["handicap"] = starts.handicaps.get(actor, {}).duplicate(true)
 		row.merge({"id": actor.sha256_text(), "name": member.name, "host": actor == token,
 			"ready": lobby_ready.get(actor, false),
 			"color": valid_color(member.get("color")), "online": requested_speed.has(actor),
@@ -885,7 +915,7 @@ func city_checkpoint() -> Dictionary:
 	var document := world.city.document.duplicate_document()
 	var data := {"version": 1, "host": token, "session": session_id, "members": members, "seats": seats.saved(),
 		"started": not waiting_for_start,
-		"goal": goal.saved(), "loans": loans.saved(), "history": history.series, "starts": starts.saved(),
+		"admin_history": admin_history, "goal": goal.saved(), "loans": loans.saved(), "history": history.series, "starts": starts.saved(),
 		"statistics": world.statistics, "dispatch_owners": world.dispatch_owners,
 		"dispatch": Array(world.dispatch_cycles), "dispatch_initialized": world.dispatch_initialized, "dispatch_points": world.saved_dispatch_points()}
 	if world is SharedWorld:
@@ -938,6 +968,14 @@ func restore_embedded(document: Sc2File) -> String:
 		return "Invalid saved victory goal."
 	if not MultiplayerLoans.valid(data.get("loans", {"next": 1, "contracts": []}), data.members) or not MultiplayerHistory.valid(data.get("history", {}), data.members) or not MultiplayerStarts.valid(data.get("starts", {"round": 1, "assigned": true, "previous": {}, "positions": {}}), data.members, document.map_size):
 		return "Invalid saved competition data."
+	if not data.get("admin_history", []) is Array or data.get("admin_history", []).size() > 256:
+		return "Invalid administration history."
+	for entry: Variant in data.get("admin_history", []):
+		if not entry is Dictionary:
+			return "Invalid administration history."
+		for field in ["id", "actor", "name", "color", "city", "action", "before", "after"]:
+			if not entry.get(field) is String or entry[field].length() > 1024:
+				return "Invalid administration history."
 	var seat_error := MultiplayerSeats.validate(data.get("seats"), data.members)
 	if not seat_error.is_empty():
 		return seat_error
@@ -993,6 +1031,9 @@ func restore_embedded(document: Sc2File) -> String:
 		loans.migrate(world)
 	history = MultiplayerHistory.new()
 	history.series = data.get("history", {}).duplicate(true)
+	admin_history = data.get("admin_history", []).duplicate(true)
+	for entry: Dictionary in admin_history:
+		event_sequence = maxi(event_sequence, int(str(entry.id).get_slice(":admin:", 1)))
 	starts.restore(data.get("starts", {"round": 1, "assigned": true, "previous": {}, "positions": {}}))
 	waiting_for_start = data.get("started", true) != true
 	reset_lobby_ready()
@@ -1022,6 +1063,8 @@ func public_land_entry(record: Dictionary) -> Dictionary:
 	result["seller"] = str(record.get("seller", "")).sha256_text()
 	result["buyer"] = str(record.buyer).sha256_text() if record.has("buyer") else ""
 	result["count"] = record.get("tiles", []).size()
+	result["awaiting"] = str(record.get("awaiting", record.get("seller") if record.has("buyer") else "")).sha256_text() if record.has("buyer") else ""
+	result["initiator"] = str(record.get("initiator", record.get("buyer", record.get("seller", "")))).sha256_text()
 	return result
 
 
@@ -1065,6 +1108,7 @@ func prepare_rematch(actor: String) -> Dictionary:
 		candidate.municipalities[player].city.document.set_city_name(world.municipalities[player].city.city_name())
 	var next_starts := MultiplayerStarts.new()
 	next_starts.previous = starts.previous.duplicate(true)
+	next_starts.handicaps = starts.handicaps.duplicate(true)
 	next_starts.round_number = starts.round_number + 1
 	var next_members := members.duplicate(true)
 	var error := next_starts.prepare(candidate, next_members, false)
@@ -1113,3 +1157,14 @@ func announce_action(actor: String, command: Dictionary, result: Dictionary) -> 
 	for peer: int in identities:
 		if identities[peer] != actor:
 			channels[peer].send({"type": "action_audio", "event": event})
+
+
+static func handicap_text(value: Dictionary) -> String:
+	return "Funds: $%d · Start tiles: %d (0 = automatic)" % [value.funds, value.tiles]
+
+
+func announce_admin(actor: String, city_name: String, action: String, before: String, after: String) -> void:
+	event_sequence += 1
+	admin_history.append({"id": session_id + ":admin:" + str(event_sequence), "actor": actor.sha256_text(), "name": members[actor].name, "color": valid_color(members[actor].get("color")), "city": city_name, "action": action, "before": before, "after": after})
+	if admin_history.size() > 256:
+		admin_history.pop_front()

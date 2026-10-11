@@ -896,3 +896,222 @@ msgstr "Warte, bis die Verbindung wiederhergestellt ist."
 
 msgid "Debug request sent to the host."
 msgstr "Debuganfrage an den Host gesendet."
+
+msgid "%d tiles · %s: %s"
+msgstr "%d Felder · %s: %s"
+
+msgid "%d tiles · %s: %s · %s per tile"
+msgstr "%d Felder · %s: %s · %s je Feld"
+
+msgid "%s lost the connection."
+msgstr "%s hat die Verbindung verloren."
+
+msgid "%s · %d tiles"
+msgstr "%s · %d Felder"
+
+msgid "%s · %d tiles · %s"
+msgstr "%s · %d Felder · %s"
+
+msgid "Accept"
+msgstr "Annehmen"
+
+msgid "Apply"
+msgstr "Übernehmen"
+
+msgid "Automatic"
+msgstr "Automatisch"
+
+msgid "Close"
+msgstr "Schließen"
+
+msgid "Administration · %s · %s: %s (%s → %s)"
+msgstr "Administration · %s · %s: %s (%s → %s)"
+
+msgid "Awaiting response"
+msgstr "Antwort ausstehend"
+
+msgid "Balance after transfer: %s"
+msgstr "Kontostand nach Übergabe: %s"
+
+msgid "Buildings: %d · Moving objects: %d"
+msgstr "Bebaute Felder: %d · Bewegte Objekte: %d"
+
+msgid "Change price"
+msgstr "Preis ändern"
+
+msgid "City territories"
+msgstr "Stadtgebiete"
+
+msgid "Counteroffer"
+msgstr "Gegenangebot"
+
+msgid "Counteroffer sent. The other player must confirm the new price."
+msgstr "Gegenangebot gesendet. Der andere Spieler muss den neuen Preis bestätigen."
+
+msgid "Game goal"
+msgstr "Spielziel"
+
+msgid "Invalid administration history."
+msgstr "Ungültiges Administrationsprotokoll."
+
+msgid "Invalid land protection map."
+msgstr "Ungültige Karte der geschützten Flächen."
+
+msgid "Invalid starting handicap."
+msgstr "Ungültiges Starthandicap."
+
+msgid "Land trade"
+msgstr "Landhandel"
+
+msgid "Inbox"
+msgstr "Eingang"
+
+msgid "Outbox"
+msgstr "Ausgang"
+
+msgid "Not enough connected land for these starts and reserved expansion areas. Adjust handicaps or generate new terrain."
+msgstr "Nicht genug zusammenhängendes Land für diese Start- und Erweiterungsflächen. Passe die Handicaps an oder erzeuge neues Gelände."
+
+msgid "Offer price updated. Previous confirmations are no longer valid."
+msgstr "Angebotspreis aktualisiert. Frühere Bestätigungen gelten nicht mehr."
+
+msgid "Only the host can assign handicaps before a new game starts."
+msgstr "Nur der Host kann vor dem Start einer neuen Partie Handicaps vergeben."
+
+msgid "Only the host can use debug actions."
+msgstr "Nur der Host kann Debugaktionen verwenden."
+
+msgid "Publish offer"
+msgstr "Angebot veröffentlichen"
+
+msgid "Reserved land and public corridors cannot be traded."
+msgstr "Reservierte Flächen und öffentliche Korridore können nicht gehandelt werden."
+
+msgid "This parcel does not connect to the buyer's city."
+msgstr "Dieses Grundstück schließt nicht an die Stadt des Käufers an."
+
+msgid "This sale would split the seller's remaining land."
+msgstr "Dieser Verkauf würde das verbleibende Gebiet des Verkäufers aufteilen."
+
+msgid "Review"
+msgstr "Prüfen"
+
+msgid "Review land trade"
+msgstr "Landhandel prüfen"
+
+msgid "Rules are fixed at start: hold the target for one game year; late-founded cities are unranked. Starting handicaps are visible in the lobby."
+msgstr "Regeln ab Spielstart: Ziel ein Spieljahr halten; später gegründete Städte bleiben außer Wertung. Starthandicaps sind in der Lobby sichtbar."
+
+msgid "Select a city to visit. Other cities are read-only; their dialogs remain private."
+msgstr "Wähle eine Stadt zum Besichtigen. Andere Städte sind schreibgeschützt; ihre Dialoge bleiben privat."
+
+msgid "Select a parcel to review its owner, price and available trade action."
+msgstr "Wähle eine Fläche aus, um Besitzer, Preis und mögliche Handelsaktion zu prüfen."
+
+msgid "Send counteroffer"
+msgstr "Gegenangebot senden"
+
+msgid "Solid: owned land. Hatched: reserved expansion. Grey: public road and power corridors."
+msgstr "Flächig: Landbesitz. Schraffiert: reservierte Erweiterung. Grau: öffentliche Straßen- und Stromkorridore."
+
+msgid "Starting funds"
+msgstr "Startvermögen"
+
+msgid "Starting handicap"
+msgstr "Starthandicap"
+
+msgid "Starting handicap updated. Everyone must confirm Ready again."
+msgstr "Starthandicap aktualisiert. Alle müssen erneut „Bereit“ bestätigen."
+
+msgid "Starting land (0 = automatic)"
+msgstr "Startfläche (0 = automatisch)"
+
+msgid "Starting land"
+msgstr "Startfläche"
+
+msgid "Statistics"
+msgstr "Statistik"
+
+msgid "There is no decision to resolve."
+msgstr "Es steht keine Entscheidung aus."
+
+msgid "This city view is read-only. Return to your own city to make changes."
+msgstr "Diese Stadtansicht ist schreibgeschützt. Kehre für Änderungen zu deiner eigenen Stadt zurück."
+
+msgid "Total price"
+msgstr "Gesamtpreis"
+
+msgid "Total price · the other player must confirm"
+msgstr "Gesamtpreis · der andere Spieler muss bestätigen"
+
+msgid "Victory: %s. Leave or let the host continue without scoring."
+msgstr "Sieg: %s. Verlasse die Partie oder lass den Host ohne Wertung fortsetzen."
+
+msgid "You pay"
+msgstr "Du zahlst"
+
+msgid "You receive"
+msgstr "Du erhältst"
+
+msgid "Disaster administration"
+msgstr "Katastrophenverwaltung"
+
+msgid "Debug · add funds"
+msgstr "Debug · Geld hinzufügen"
+
+msgid "Debug · set funds"
+msgstr "Debug · Geld festlegen"
+
+msgid "Debug · unlock"
+msgstr "Debug · Alles freischalten"
+
+msgid "Debug · no disasters"
+msgstr "Debug · Katastrophen abschalten"
+
+msgid "Debug · end disaster"
+msgstr "Debug · Katastrophe beenden"
+
+msgid "Debug · military"
+msgstr "Debug · Militärangebot"
+
+msgid "Debug · remove things"
+msgstr "Debug · Bewegte Objekte entfernen"
+
+msgid "Debug · maxis"
+msgstr "Debug · Maxis-Man"
+
+msgid "Debug · spawn"
+msgstr "Debug · Objekt erzeugen"
+
+msgid "Debug · nessie"
+msgstr "Debug · Nessie"
+
+msgid "Debug · run to date"
+msgstr "Debug · Bis Datum simulieren"
+
+msgid "Any player"
+msgstr "Beliebiger Spieler"
+
+msgid "Your response required"
+msgstr "Deine Antwort ist gefragt"
+
+msgid "Choose a parcel"
+msgstr "Grundstück auswählen"
+
+msgid "This selection contains several owners. Choose one parcel to negotiate."
+msgstr "Diese Auswahl enthält mehrere Besitzer. Wähle ein Grundstück für die Verhandlung."
+
+msgid "Funds: $%d · Start tiles: %d (0 = automatic)"
+msgstr "Kasse: $%d · Startfelder: %d (0 = automatisch)"
+
+msgid "Invalid saved military proposal."
+msgstr "Ungültiges gespeichertes Militärangebot."
+
+msgid "Enabled"
+msgstr "Aktiviert"
+
+msgid "Disabled"
+msgstr "Deaktiviert"
+
+msgid "Progression: %d · Reward flags: %d"
+msgstr "Fortschritt: %d · Belohnungsfreigaben: %d"

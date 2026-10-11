@@ -11,6 +11,8 @@ const TILE_CHUNKS := {"ALTM": 2, "XTER": 1, "XBLD": 1, "XZON": 1, "XUND": 1, "XB
 var municipalities: Dictionary = {}
 var actors: Array[String] = []
 var owners := PackedInt32Array()
+# -1 public corridor, 0 unreserved, positive values reserve for an owner index.
+var protection := PackedInt32Array()
 var template: Sc2File
 var offers: Dictionary = {}
 var next_offer := 1
@@ -31,6 +33,8 @@ func open(document: Sc2File) -> bool:
 	template.sc2x_extra_entries.erase("multiplayer.json")
 	owners.resize(city.map_size * city.map_size)
 	owners.fill(0)
+	protection.resize(owners.size())
+	protection.fill(0)
 	return true
 
 
@@ -91,9 +95,6 @@ func set_shared_speed(value: int) -> void:
 func advance(delta: float) -> void:
 	if controller.speed == GameSpeedController.Speed.PAUSED:
 		return
-	for child: CoopWorld in municipalities.values():
-		if child.controller.interaction_blocked or child.controller.terminal_blocked:
-			return
 	var changed := false
 	var emergency := false
 	for child: CoopWorld in municipalities.values():
@@ -125,7 +126,7 @@ func command(actor: String, request: Dictionary) -> Dictionary:
 		return rejected("No municipality is assigned to this player.")
 	if not whole_number(request.get("revision"), 0, revision):
 		return rejected("Invalid map revision.")
-	if request.get("kind") in ["land_buy", "land_request", "land_offer", "land_accept", "land_withdraw", "land_decline"]:
+	if request.get("kind") in ["land_buy", "land_request", "land_offer", "land_accept", "land_withdraw", "land_decline", "land_counter"]:
 		return land_command(actor, request)
 	if request.get("kind") == "recall":
 		for municipality: CoopWorld in municipalities.values():
@@ -155,13 +156,14 @@ func command(actor: String, request: Dictionary) -> Dictionary:
 			return rejected("Invalid map position.")
 		var area := selected_tiles(request)
 		var owner := actors.find(actor) + 1
+		var public_network: bool = request.get("kind") == "build" and request.get("tool") == 0 and request.get("group") in [CityToolIds.Group.ROADS, CityToolIds.Group.POWER]
 		for tile: int in area:
-			if owners[tile] != owner:
+			if owners[tile] != owner and not (public_network and protection[tile] == -1):
 				return rejected("Buy this land before building here.")
 			if tile_versions[tile] > int(request.revision):
 				return rejected("This area changed. Review it before building.")
 		for path_point: Variant in request.get("path", []):
-			if not point_valid(path_point) or owners[city.index_of(int(path_point[0]), int(path_point[1]))] != owner:
+			if not point_valid(path_point) or (owners[city.index_of(int(path_point[0]), int(path_point[1]))] != owner and not (public_network and protection[city.index_of(int(path_point[0]), int(path_point[1]))] == -1)):
 				return rejected("The complete path must stay on your own land.")
 		var before := child.city.document.duplicate_document()
 		var before_stats := child.statistics.duplicate(true)
@@ -172,7 +174,7 @@ func command(actor: String, request: Dictionary) -> Dictionary:
 		if not result.get("ok", false):
 			return result
 		for tile: int in changed_tiles(before, child.city.document):
-			if owners[tile] != owner:
+			if owners[tile] != owner and not (public_network and protection[tile] == -1):
 				child.city = CityState.from_document(before)
 				child.engine.city = child.city
 				Sc2xCheckpoint.restore(child.controller, before.sc2x_metadata)
@@ -182,6 +184,8 @@ func command(actor: String, request: Dictionary) -> Dictionary:
 				child.dispatch_owners = before_dispatch
 				child.undo_document = null
 				return rejected("The complete building or terrain edit must fit on your land.")
+		if public_network:
+			share_public_network(child, changed_tiles(before, child.city.document))
 		statistics[actor] = child.statistics.get(actor, {})
 		revision += 1
 		for tile: int in changed_tiles(before, child.city.document):
@@ -189,7 +193,7 @@ func command(actor: String, request: Dictionary) -> Dictionary:
 		return result
 	if request.get("kind") == "undo":
 		return rejected("Undo is unavailable after ownership transactions in Shared.")
-	if request.get("kind") == "decision" and request.get("accept") == true and child.engine.pending_interaction == "military_proposal":
+	if request.get("kind") == "decision" and request.get("accept") == true and (child.engine.pending_interaction == "military_proposal" or child.city.document.sc2x_metadata.extensions.has("multiplayer_military")):
 		var land_error := military_land_error(actor)
 		if not land_error.is_empty():
 			return rejected(land_error)
@@ -267,19 +271,45 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 		if not offers.has(key):
 			return rejected("This offer is no longer available.")
 		var record: Dictionary = offers[key]
-		var initiator: String = record.get("buyer", record.seller)
-		if (request.kind == "land_withdraw" and actor != initiator) or (request.kind == "land_decline" and (not record.has("buyer") or actor != record.seller)):
+		var initiator: String = record.get("initiator", record.get("buyer", record.seller))
+		if (request.kind == "land_withdraw" and actor != initiator) or (request.kind == "land_decline" and (actor != record.get("awaiting", record.seller))):
 			return rejected("Only the responsible player can change this land entry.")
 		finish_land_entry(key, "Withdrawn" if request.kind == "land_withdraw" else "Declined")
 		revision += 1
 		return accepted("Land entry updated. No money was charged.")
+	if request.kind == "land_counter":
+		var key := str(request.get("offer", ""))
+		if not offers.has(key) or not whole_number(request.get("price"), 0, 2147483647):
+			return rejected("This offer is no longer available.")
+		var record: Dictionary = offers[key]
+		if actor != record.seller and record.get("buyer", actor) != actor:
+			return rejected("Only the responsible player can change this land entry.")
+		var buyer: String = record.get("buyer", actor)
+		if buyer == record.seller:
+			var updated := record.duplicate(true)
+			updated.price = int(request.price)
+			finish_land_entry(key, "Withdrawn")
+			offers[str(next_offer)] = updated
+			next_offer += 1
+			revision += 1
+			return accepted("Offer price updated. Previous confirmations are no longer valid.")
+		var next := record.duplicate(true)
+		next["buyer"] = buyer
+		next["initiator"] = actor
+		next["awaiting"] = buyer if actor == record.seller else record.seller
+		next["price"] = int(request.price)
+		finish_land_entry(key, "Withdrawn")
+		offers[str(next_offer)] = next
+		next_offer += 1
+		revision += 1
+		return accepted("Counteroffer sent. The other player must confirm the new price.")
 	if request.kind == "land_accept":
 		var key := str(request.get("offer", ""))
 		if not offers.has(key):
 			return rejected("This offer is no longer available.")
 		var offer: Dictionary = offers[key]
 		if offer.has("buyer"):
-			if actor != offer.seller:
+			if actor != offer.get("awaiting", offer.seller):
 				return rejected("Only the owner can approve this purchase request.")
 			actor = offer.buyer
 			child = municipalities[actor]
@@ -288,6 +318,9 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 		for tile: int in offer.tiles:
 			if owners[tile] != actors.find(offer.seller) + 1:
 				return rejected("Land ownership changed; nothing was charged.")
+		var rule_error := MultiplayerLandRules.transfer_error(self, offer.seller, actor, offer.tiles)
+		if not rule_error.is_empty():
+			return rejected(rule_error)
 		if child.city.funds() < int(offer.price):
 			return rejected("Insufficient funds.")
 		var seller: CoopWorld = municipalities[offer.seller]
@@ -316,18 +349,23 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 		record_land_spending(offer.seller, "sold", int(offer.price))
 		finish_land_entry(key, "Sold", actor)
 		revision += 1
-		return accepted("Land purchased from its owner.")
+		return accepted("Land purchased from its owner.").merged({"sounds": [ToolSoundRules.SOUND_ZONE]})
 	if not point_valid(request.get("start")) or not point_valid(request.get("finish")):
 		return rejected("Invalid land selection.")
 	var tiles := selected_tiles(request)
+	if request.has("tiles"):
+		if not request.tiles is Array or request.tiles.is_empty() or request.tiles.size() > owners.size():
+			return rejected("Invalid land selection.")
+		var unique := {}
+		for value: Variant in request.tiles:
+			if not whole_number(value, 0, owners.size() - 1) or unique.has(int(value)):
+				return rejected("Invalid land selection.")
+			unique[int(value)] = true
+		tiles = PackedInt32Array(request.tiles)
 	if request.kind == "land_buy":
 		if not request.get("include_water", false) is bool:
 			return rejected("Invalid land selection.")
-		var eligible := PackedInt32Array()
-		for tile: int in tiles:
-			if owners[tile] == 0 and (request.get("include_water", false) or not city.is_water(tile / city.map_size, tile % city.map_size)):
-				eligible.append(tile)
-		tiles = eligible
+		tiles = PackedInt32Array(MultiplayerLandRules.purchasable(city, owners, protection, actors.find(actor) + 1, Array(tiles), request.get("include_water", false)))
 		if tiles.is_empty():
 			return accepted("No purchasable tiles selected. Nothing was charged.")
 	var expected_owner := 0 if request.kind == "land_buy" else int(owners[tiles[0]]) if request.kind == "land_request" else actors.find(actor) + 1
@@ -341,9 +379,14 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 		return rejected("This land purchase exceeds the supported transaction limit. Select a smaller area.")
 	if request.kind == "land_request":
 		var seller: String = actors[expected_owner - 1]
-		if request.get("price") != price:
+		if whole_number(request.get("price"), 0, 2147483647):
+			price = int(request.price)
+		if not whole_number(request.get("price"), 0, 2147483647):
 			return choice_result("Send a purchase request for %d tiles at $%d? The owner must approve before any transfer." % [tiles.size(), price], request,
 				[{"label": "Send request", "fields": {"price": price}}])
+		var rule_error := MultiplayerLandRules.transfer_error(self, seller, actor, Array(tiles))
+		if not rule_error.is_empty():
+			return rejected(rule_error)
 		if child.city.funds() < price:
 			return rejected("Insufficient funds.")
 		for record: Dictionary in offers.values():
@@ -360,6 +403,9 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 			return rejected("Close an existing land entry before creating another.")
 		if not whole_number(request.get("price"), 0, 2147483647):
 			return rejected("Invalid offer price.")
+		for tile: int in tiles:
+			if protection[tile] != 0:
+				return rejected("Reserved land and public corridors cannot be traded.")
 		price = int(request.price)
 		offers[str(next_offer)] = {"seller": actor, "tiles": Array(tiles), "price": price}
 		next_offer += 1
@@ -376,7 +422,7 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 		owners[tile] = actors.find(actor) + 1
 		tile_versions[tile] = revision + 1
 	revision += 1
-	return accepted("Land purchased.")
+	return accepted("Land purchased.").merged({"sounds": [ToolSoundRules.SOUND_ZONE]})
 
 
 func snapshot_for(actor: String) -> Dictionary:
@@ -396,6 +442,8 @@ func snapshot_for(actor: String) -> Dictionary:
 				sources.append(municipalities[player].city.document.find_chunk(id).decoded_payload)
 			for tile in owners.size():
 				var owner := owners[tile] - 1
+				if protection[tile] == -1:
+					owner = 0
 				if owner >= 0:
 					for byte in stride:
 						data[tile * stride + byte] = sources[owner][tile * stride + byte]
@@ -430,6 +478,7 @@ func snapshot_for(actor: String) -> Dictionary:
 	result["land_price"] = land_price
 	result["land_allowance"] = int(land_allowance.get(actor, 0))
 	result["owners"] = Array(owners)
+	result["protection"] = Array(protection)
 	result["owner_ids"] = actors.map(func(value: String) -> String: return value.sha256_text())
 	result["dispatch_owners"] = {}
 	result["disasters"] = []
@@ -528,7 +577,7 @@ func saved_shared() -> Dictionary:
 		cities[actor] = {"state": child.snapshot(true), "statistics": child.statistics,
 			"dispatch": Array(child.dispatch_cycles), "dispatch_owners": child.dispatch_owners,
 			"dispatch_initialized": child.dispatch_initialized, "dispatch_points": child.saved_dispatch_points()}
-	return {"owners": Array(owners), "actors": actors, "host": host_actor,
+	return {"protection": Array(protection), "owners": Array(owners), "actors": actors, "host": host_actor,
 		"land_price": land_price, "starter_tiles": starter_tiles, "land_allowance": land_allowance,
 		"cities": cities, "offers": offers, "next_offer": next_offer,
 		"land_history": land_history, "land_statistics": land_statistics,
@@ -586,6 +635,9 @@ func restore_shared(data: Dictionary) -> String:
 			return "Invalid land offer."
 		if offer.has("buyer") and (not restored.has(offer.buyer) or offer.buyer == offer.seller):
 			return "Invalid land request buyer."
+		for field in ["initiator", "awaiting"]:
+			if offer.has(field) and offer[field] not in [offer.seller, offer.get("buyer", "")]:
+				return "Invalid land request buyer."
 		var unique := {}
 		for tile: Variant in offer.tiles:
 			if not whole_number(tile, 0, owners.size() - 1) or unique.has(int(tile)):
@@ -615,7 +667,17 @@ func restore_shared(data: Dictionary) -> String:
 	land_allowance = data.get("land_allowance", {}).duplicate()
 	municipalities = restored
 	actors.assign(data.actors)
+	var saved_protection: Variant = data.get("protection", [])
+	if not saved_protection is Array or (not saved_protection.is_empty() and saved_protection.size() != owners.size()):
+		return "Invalid land protection map."
+	for value: Variant in saved_protection:
+		if not whole_number(value, -1, data.actors.size()):
+			return "Invalid land protection map."
 	owners = PackedInt32Array(data.owners)
+	protection.resize(owners.size())
+	protection.fill(0)
+	if not saved_protection.is_empty():
+		protection = PackedInt32Array(saved_protection)
 	host_actor = data.host
 	template = restored_template
 	offers = data.get("offers", {})
@@ -646,7 +708,7 @@ func military_land_error(actor: String) -> String:
 	# ownership rule as a player's building, without consuming a random draw.
 	var candidate := CityState.copy_for_edit(child.city)
 	var random := GameLcgRandom.new(child.engine.game_random.state)
-	var proposal := MilitaryProposalPhase.resolve(candidate, true, random, false, child.engine.forced_military_base_type)
+	var proposal := MilitaryProposalPhase.resolve(candidate, true, random, false, int(child.city.document.sc2x_metadata.extensions.get("multiplayer_military", child.engine.forced_military_base_type)))
 	if not proposal.ok:
 		return proposal.error
 	for tile: int in changed_tiles(child.city.document, candidate.document):
@@ -678,3 +740,33 @@ func finish_land_entry(key: String, status: String, buyer := "") -> void:
 				if owners[tile] != actors.find(offers[other].seller) + 1:
 					finish_land_entry(other, "Ownership changed")
 					break
+
+# Common road/wire corridors stay neutral. Players pay for their own additions;
+# nobody can bulldoze, zone, sell, or terraform these shared access routes.
+func share_public_network(source: CoopWorld, changed: PackedInt32Array) -> void:
+	var public_tiles: Array[int] = []
+	for tile: int in changed:
+		if protection[tile] == -1:
+			public_tiles.append(tile)
+	if public_tiles.is_empty():
+		return
+	var destinations: Array[Sc2File] = []
+	for child: CoopWorld in municipalities.values():
+		if child != source:
+			destinations.append(child.city.document)
+	for document: Sc2File in destinations:
+		for id: String in TILE_CHUNKS:
+			var payload := document.find_chunk(id).decoded_payload.duplicate()
+			var input := source.city.document.find_chunk(id).decoded_payload
+			var stride: int = TILE_CHUNKS[id]
+			for tile: int in public_tiles:
+				for byte in stride:
+					payload[tile * stride + byte] = input[tile * stride + byte]
+			document.find_chunk(id).set_decoded_payload(payload)
+	for child: CoopWorld in municipalities.values():
+		if child == source:
+			continue
+		child.city.resync_mirrors(PackedStringArray(TILE_CHUNKS.keys()))
+		child.revision += 1
+		child.undo_document = null
+	snapshot_cache.clear()

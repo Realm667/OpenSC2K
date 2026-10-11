@@ -44,6 +44,11 @@ func run() -> void:
 					app.coop.open()
 					await settle()
 					check_fit(app.coop.panel, app.coop.lobby.get_parent(), "%s %s role %d mode %d" % [theme, locale, role, mode])
+	var settled_size := app.coop.panel.size
+	var settled_position := app.coop.panel.position
+	for frame in 90:
+		await process_frame
+		check(app.coop.panel.size == settled_size and app.coop.panel.position == settled_position, "launch dialog geometry stays still")
 	app.coop.panel.hide()
 	app.coop.windows.seats.open()
 	await settle()

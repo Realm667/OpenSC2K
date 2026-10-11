@@ -47,6 +47,9 @@ func open(document: Sc2File) -> bool:
 	if not city.is_valid():
 		error = city.load_error
 		return false
+	if city.document.sc2x_metadata.extensions.has("multiplayer_military") and not whole_number(city.document.sc2x_metadata.extensions.multiplayer_military, -1, 5):
+		error = "Invalid saved military proposal."
+		return false
 	engine = SimulationEngine.new(city)
 	controller = GameSpeedController.new(engine)
 	Sc2xCheckpoint.restore_random(engine, city.document.sc2x_metadata)
@@ -67,6 +70,38 @@ func advance(delta: float) -> void:
 	if controller.speed == GameSpeedController.Speed.PAUSED:
 		return
 	var before := city.document.duplicate_document(true)
+	# Continue annual accounting using existing funding while the mayor edits.
+	# This does not enable Auto-Budget or change the single-player controller.
+	if engine.pending_interaction == "annual_budget":
+		var settled := controller.resolve_annual_budget(BudgetPhase.funding_values(city), city.auto_budget_enabled())
+		if not settled.ok:
+			error = settled.error
+			return
+		policy_revision += 1
+		revision += 1
+	if engine.pending_interaction == "military_proposal":
+		# Detach the decision from the calendar. Preserve it in the checkpoint until
+		# this city's mayor answers; choosing nothing never declines the proposal.
+		city.document.sc2x_metadata.extensions["multiplayer_military"] = engine.forced_military_base_type
+		engine.forced_military_base_type = 0
+		var placeholder := MilitaryProposalPhase.Result.new()
+		placeholder.ok = true
+		var completed := engine._complete_military_proposal(placeholder)
+		if not completed.ok:
+			error = completed.error
+			return
+		controller._consume_day_result(SimulationTickResult.new(), completed)
+		controller.interaction_blocked = not engine.pending_interaction.is_empty()
+		revision += 1
+		policy_revision += 1
+	elif engine.pending_interaction == "military_notice":
+		var completed := controller.resolve_military_notice()
+		if not completed.ok:
+			error = completed.error
+			return
+		revision += 1
+		policy_revision += 1
+	controller.terminal_blocked = false
 	var pending := engine.pending_interaction
 	var blocked := controller.interaction_blocked
 	var result := controller.advance_time(minf(delta, 0.25) * 1000.0, Time.get_ticks_msec())
@@ -97,8 +132,8 @@ func snapshot(force_checkpoint := false) -> Dictionary:
 func snapshot_status() -> Dictionary:
 	return {"type": "state", "revision": revision, "policy": policy_revision,
 		"speed": controller.speed,
-		"pending": engine.pending_interaction, "terminal": controller.terminal_blocked,
-		"blocked": controller.interaction_blocked,
+		"pending": "military_proposal" if city.document.sc2x_metadata.extensions.has("multiplayer_military") else engine.pending_interaction, "terminal": controller.terminal_blocked,
+		"blocked": controller.interaction_blocked or city.document.sc2x_metadata.extensions.has("multiplayer_military"),
 		"error": error, "dispatch_owners": dispatch_owners, "disaster": engine.active_disaster_type}
 
 
@@ -330,6 +365,13 @@ func policy_command(request: Dictionary) -> Dictionary:
 		"repay":
 			result_error = BondCommand.repay(city, 1).error
 		"decision":
+			if city.document.sc2x_metadata.extensions.has("multiplayer_military"):
+				var proposal := MilitaryProposalPhase.resolve(city, request.get("accept") == true, engine.game_random, false, int(city.document.sc2x_metadata.extensions.multiplayer_military))
+				if not proposal.ok:
+					return rejected(proposal.error)
+				city.document.sc2x_metadata.extensions.erase("multiplayer_military")
+			elif engine.pending_interaction.is_empty() and not controller.interaction_blocked and not controller.terminal_blocked:
+				return rejected("There is no decision to resolve.")
 			match engine.pending_interaction:
 				"military_proposal":
 					result_error = controller.resolve_military_proposal(request.get("accept") == true).error
@@ -338,8 +380,7 @@ func policy_command(request: Dictionary) -> Dictionary:
 				_:
 					if controller.interaction_blocked:
 						controller.acknowledge_game_over()
-					else:
-						return rejected("There is no decision to resolve.")
+
 		"recall":
 			result_error = DispatchCommand.recall_all(city).error
 			dispatch_owners.clear()

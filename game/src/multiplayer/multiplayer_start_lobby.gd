@@ -35,20 +35,22 @@ func _init(owner: MultiplayerWindows) -> void:
 	roster.cell_selected.connect(func() -> void:
 		var row := roster.get_selected()
 		if row != null and roster.get_selected_column() == 1 and row.is_editable(1):
-			roster.edit_selected.call_deferred())
+			roster.edit_selected.call_deferred()
+		elif row != null and roster.get_selected_column() in [3, 4] and windows.coop.session.hosting and windows.state.get("mode") != "coop":
+			edit_handicap(str(row.get_metadata(0))))
 	roster.item_edited.connect(func() -> void:
 		var row := roster.get_edited()
 		if row != null and roster.get_edited_column() == 1 and row.is_editable(1):
 			windows.coop.session.request({"kind": "rename_city", "name": row.get_text(1)})
 			roster_signature = "")
-	roster.columns = 3
+	roster.columns = 5
 	roster.column_titles_visible = true
 	roster.scroll_horizontal_enabled = false
 	roster.size_flags_vertical = Control.SIZE_FILL
 	roster.set_column_title(0, tr("Player"))
 	roster.set_column_title(1, tr("City"))
 	roster.set_column_title(2, tr("Status"))
-	for column in 3:
+	for column in 5:
 		roster.set_column_clip_content(column, true)
 	body.add_child(roster)
 	hint = ApplicationMultiplayer.label(body, "")
@@ -69,8 +71,8 @@ func update(state: Dictionary) -> void:
 		return
 	var session := windows.coop.session
 	window.title = tr("Game lobby")
-	for column in 3:
-		roster.set_column_title(column, tr(["Player", "City", "Status"][column]))
+	for column in 5:
+		roster.set_column_title(column, tr(["Player", "City", "Status", "Starting funds", "Starting land"][column]))
 	hint.text = tr("At least two players must join. Everyone confirms Ready; the host then starts the game. Changes to the player list reset readiness.")
 	start.text = tr("Start game")
 	leave_button.text = tr("Leave game")
@@ -79,8 +81,8 @@ func update(state: Dictionary) -> void:
 	var target := tr("Endless game") if goal.get("kind", "endless") == "endless" else "%s: %s" % [tr("Population") if goal.kind == "population" else tr("Net wealth"), MultiplayerGoalHud.number(int(goal.target), goal.kind)]
 	summary.text = "%s · %s\n%s" % [mode, target, tr("Simulation and construction begin together after the host starts.")]
 	if state.get("mode", "coop") != "coop":
-		summary.text += "\n" + tr("Rules are fixed at start: hold the target for one game year; late-founded cities are unranked. Shared starts receive equal land grants.")
-	var signature := JSON.stringify(state.get("roster", []).map(func(player: Dictionary) -> Array: return [player.id, player.name, player.city, player.online, player.get("ready", false), player.color]))
+		summary.text += "\n" + tr("Rules are fixed at start: hold the target for one game year; late-founded cities are unranked. Starting handicaps are visible in the lobby.")
+	var signature := JSON.stringify(state.get("roster", []).map(func(player: Dictionary) -> Array: return [player.id, player.name, player.city, player.online, player.get("ready", false), player.color, player.get("handicap", {})]))
 	if signature != roster_signature and not editing_city():
 		roster_signature = signature
 		roster.clear()
@@ -90,9 +92,12 @@ func update(state: Dictionary) -> void:
 			row.set_text(0, player.name)
 			row.set_custom_color(0, Color.from_string(player.color, Color.WHITE))
 			row.set_text(1, player.city)
+			row.set_metadata(0, player.id)
+			row.set_text(3, MultiplayerScoreboard.money(player.get("handicap", {}).get("funds", player.funds)))
+			row.set_text(4, str(player.get("handicap", {}).get("tiles", 0)) if int(player.get("handicap", {}).get("tiles", 0)) > 0 else tr("Automatic"))
 			row.set_text(2, tr("Offline") if not player.online else tr("Ready") if player.get("ready", false) else tr("Not ready"))
 			row.set_custom_color(2, Color("66cf79") if player.get("ready", false) and player.online else Color("ff9c40"))
-			for column in 3:
+			for column in 5:
 				row.set_tooltip_text(column, row.get_text(column))
 			if player.id == session.token.sha256_text():
 				own_ready = player.get("ready", false)
@@ -120,3 +125,31 @@ func editing_city() -> bool:
 		if child is Window and child.visible:
 			return true
 	return false
+
+
+func edit_handicap(seat: String) -> void:
+	var dialog := windows.make_window(tr("Starting handicap"))
+	var box := windows.content(dialog)
+	var player: Dictionary = {}
+	for entry: Dictionary in windows.players:
+		if entry.id == seat:
+			player = entry
+	if player.is_empty():
+		dialog.queue_free()
+		return
+	ApplicationMultiplayer.label(box, str(player.name) + " · " + str(player.city))
+	ApplicationMultiplayer.label(box, tr("Starting funds"))
+	var funds := SpinBox.new()
+	funds.max_value = 2147483647
+	funds.value = player.get("handicap", {}).get("funds", player.funds)
+	box.add_child(funds)
+	ApplicationMultiplayer.label(box, tr("Starting land (0 = automatic)"))
+	var tiles := SpinBox.new()
+	tiles.max_value = windows.coop.app.document_state.city.map_size ** 2 / 32
+	tiles.value = player.get("handicap", {}).get("tiles", 0)
+	tiles.editable = windows.state.get("mode") == "shared"
+	box.add_child(tiles)
+	ApplicationMultiplayer.button(box, tr("Apply"), func() -> void:
+		windows.coop.session.request({"kind": "handicap", "seat": seat, "funds": int(funds.value), "tiles": int(tiles.value)})
+		dialog.queue_free())
+	dialog.popup_centered()

@@ -33,7 +33,7 @@ func run() -> void:
 	child.statistics[actor] = {"builds": 4, "spent": 100}
 	old.channels[0].close()
 	await settle()
-	check(host.disconnected_pause and host.members[actor].seat_status == "reserved", "loss reserves and pauses")
+	check(not host.disconnected_pause and host.members[actor].seat_status == "reserved", "loss reserves seat without pausing")
 	old.join("127.0.0.1", port, "", "First")
 	await settle()
 	check(old.connected and old.token == actor and child.city.funds() == funds, "authenticated reconnect preserves city")

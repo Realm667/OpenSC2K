@@ -6,6 +6,8 @@ signal center_requested(point: Vector2i)
 const MAP_SIZE := 128
 const BORDER := 2.0
 
+var ownership_texture: Texture2D
+var ownership_signature: Array = []
 var map_texture: Texture2D
 var viewport_outline := PackedVector2Array()
 # the city-centre cross in tiles. A negative point hides it
@@ -34,6 +36,8 @@ func _draw() -> void:
 	if map_texture != null:
 		draw_texture_rect(map_texture, target, false)
 
+	if ownership_texture != null:
+		draw_texture_rect(ownership_texture, target, false)
 	for rect in center_marker_rects():
 		draw_rect(rect, center_marker_color, true)
 
@@ -117,3 +121,38 @@ func _on_gui_input(event: InputEvent) -> void:
 	)
 	center_requested.emit(point)
 	accept_event()
+
+
+func set_ownership(state: Dictionary, map_size: int) -> void:
+	var owners: Array = state.get("owners", [])
+	var actor_ids: Array = state.get("owner_ids", [])
+	var colors := {}
+	for player: Dictionary in state.get("roster", []):
+		colors[player.id] = player.get("color", "ffffff")
+	var signature: Array = [hash(owners), hash(state.get("protection", [])), actor_ids, colors]
+	if signature == ownership_signature:
+		return
+	ownership_signature = signature
+	ownership_texture = null
+	if owners.size() != map_size * map_size or actor_ids.is_empty():
+		queue_redraw()
+		return
+	var image := Image.create(map_size, map_size, false, Image.FORMAT_RGBA8)
+	for x in map_size:
+		for y in map_size:
+			var tile := x * map_size + y
+			var owner := int(owners[tile])
+			if owner <= 0 or owner > actor_ids.size():
+				var reserved := int(state.protection[tile]) if state.get("protection", []).size() == owners.size() else 0
+				if reserved == -1:
+					image.set_pixel(x, y, Color(0.85, 0.85, 0.85, 0.45))
+				elif reserved > 0 and reserved <= actor_ids.size() and (x + y) % 2 == 0:
+					image.set_pixel(x, y, Color(Color.from_string(colors.get(actor_ids[reserved - 1], "ffffff"), Color.WHITE), 0.45))
+				continue
+			var color := Color.from_string(colors.get(actor_ids[owner - 1], "ffffff"), Color.WHITE)
+			var edge := x == 0 or y == 0 or x == map_size - 1 or y == map_size - 1
+			for next: int in MultiplayerLandRules.neighbours(tile, map_size):
+				edge = edge or int(owners[next]) != owner
+			image.set_pixel(x, y, Color(color, 0.95 if edge else 0.35))
+	ownership_texture = ImageTexture.create_from_image(image)
+	queue_redraw()

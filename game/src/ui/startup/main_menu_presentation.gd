@@ -115,7 +115,7 @@ func animate(palette: ImageTexture) -> void:
 
 
 func advance(delta: float, offset: Vector2, zoom: float) -> void:
-	map.zoom_factor = zoom
+	map.zoom_factor = zoom / maxf(0.001, map.map_pixel_ratio)
 	map.source_center = (map.size / 2.0 - offset) / zoom
 	map.layers._sync_base_layer()
 	map.advance_artwork_animation(delta)

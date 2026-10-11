@@ -37,16 +37,17 @@ func run() -> void:
 	check(world.municipalities[b].city.funds() == initial, "land cost charged only to buyer")
 	check(buy(world, b, [2, 2], [12, 12]).ok, "foreign land is skipped without charging")
 	check(world.municipalities[b].city.funds() == initial, "failed purchase charges nothing")
-	check(buy(world, a, [25, 25], [25, 25]).ok, "disconnected land allowed")
+	check(buy(world, a, [25, 25], [25, 25]).ok and world.owners[world.city.index_of(25, 25)] == 0, "disconnected selection buys nothing")
+	check(buy(world, b, [1, 5], [1, 6]).ok, "buyer owns adjacent parcel")
 	var build := {"kind": "build", "revision": world.revision, "group": 9, "tool": 0,
-		"start": [5, 5], "finish": [5, 5], "path": [[5, 5]], "dragged": false}
+		"start": [2, 5], "finish": [2, 5], "path": [[2, 5]], "dragged": false}
 	check(world.command(a, build).ok, "owner can zone")
 	check(not world.command(b, build).ok, "other player cannot zone owned tile")
-	check(world.municipalities[b].city.zones[world.city.index_of(5, 5)] == 0, "other economy does not simulate owner's zones")
+	check(world.municipalities[b].city.zones[world.city.index_of(2, 5)] == 0, "other economy does not simulate owner's zones")
 	var snapshot := world.snapshot_for(b)
 	var shown := Sc2File.new()
 	check(shown.parse(Marshalls.base64_to_raw(snapshot.city)), "shared visible map parses")
-	check(CityState.from_document(shown).zones[world.city.index_of(5, 5)] != 0, "other city visible on common map")
+	check(CityState.from_document(shown).zones[world.city.index_of(2, 5)] != 0, "other city visible on common map")
 	var rates := Array(BudgetPhase.funding_values(world.municipalities[a].city))
 	rates[0] = 19
 	check(world.command(a, {"kind": "budget", "revision": world.revision, "policy": 0, "values": rates, "auto": true}).ok, "municipal tax policy")
@@ -54,17 +55,17 @@ func run() -> void:
 	var offer_id := str(world.next_offer)
 	var funds_a: int = world.municipalities[a].city.funds()
 	var funds_b: int = world.municipalities[b].city.funds()
-	check(world.command(a, {"kind": "land_offer", "start": [5, 5], "finish": [5, 5], "price": 100, "revision": world.revision}).ok, "owner offers developed parcel")
+	check(world.command(a, {"kind": "land_offer", "start": [2, 5], "finish": [2, 5], "price": 100, "revision": world.revision}).ok, "owner offers developed parcel")
 	check(world.command(b, {"kind": "land_accept", "offer": offer_id, "revision": world.revision}).ok, "consensual developed parcel transfer")
 	check(world.municipalities[a].city.funds() == funds_a + 100 and world.municipalities[b].city.funds() == funds_b - 100, "atomic purchase accounts")
-	check(world.municipalities[a].city.zones[world.city.index_of(5, 5)] == 0 and world.municipalities[b].city.zones[world.city.index_of(5, 5)] != 0, "zone belongs only to buyer's simulation")
+	check(world.municipalities[a].city.zones[world.city.index_of(2, 5)] == 0 and world.municipalities[b].city.zones[world.city.index_of(2, 5)] != 0, "zone belongs only to buyer's simulation")
 	check(not world.command(b, {"kind": "land_accept", "offer": offer_id, "revision": world.revision}).ok, "offer cannot be paid twice")
-	check(buy(world, b, [20, 20], [24, 24]).ok, "second municipality territory")
-	var fire_request := {"kind": "disaster", "disaster": 7, "point": [5, 5], "revision": world.revision, "policy": world.municipalities[b].policy_revision}
+	check(buy(world, b, [0, 5], [1, 20]).ok, "second municipality expands contiguously")
+	var fire_request := {"kind": "disaster", "disaster": 7, "point": [2, 5], "revision": world.revision, "policy": world.municipalities[b].policy_revision}
 	check(world.command(b, fire_request).ok, "start own disaster")
 	check(world.municipalities[b].engine.active_disaster_type != 0, "target municipality in disaster mode")
 	check(world.municipalities[a].engine.active_disaster_type == 0, "helper remains outside disaster mode")
-	var help := {"kind": "build", "group": 2, "tool": 2, "finish": [20, 20], "revision": world.revision}
+	var help := {"kind": "build", "group": 2, "tool": 2, "finish": [1, 20], "revision": world.revision}
 	check(world.command(a, help).ok, "own military unit helps neighbor")
 	check(world.municipalities[b].dispatch_owners.values().any(func(unit: Dictionary) -> bool: return unit.actor == a.sha256_text()), "foreign assistance retains dispatcher identity")
 	check(world.command(a, {"kind": "recall", "revision": world.revision}).ok, "helper can recall own foreign units")

@@ -289,7 +289,7 @@ func receive_state(state: Dictionary) -> void:
 
 func apply_selection(start: Vector2i, finish: Vector2i, path: Array[Vector2i], dragged: bool) -> void:
 	if windows.land_action != "":
-		session.request({"kind": windows.land_action, "start": [start.x, start.y], "finish": [finish.x, finish.y], "price": windows.land_offer_price, "include_water": windows.include_water})
+		windows.market.select_parcel(start, finish)
 		return
 	var group := app.tool_state.selected_group
 	if group == CityToolIds.Group.QUERY:
@@ -297,6 +297,9 @@ func apply_selection(start: Vector2i, finish: Vector2i, path: Array[Vector2i], d
 		return
 	if group == CityToolIds.Group.CENTERING:
 		app.camera_input.center_map_on_tile(finish)
+		return
+	if session.latest.get("visiting", false):
+		show_message("This city view is read-only. Return to your own city to make changes.")
 		return
 	var positions: Array = []
 	for target in path:
