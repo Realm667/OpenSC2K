@@ -74,15 +74,15 @@ func mark_changed(actor: String, before: Sc2File) -> void:
 		versions[tile] = revision
 	region_versions[actor] = versions
 
-func snapshot_for(actor: String) -> Dictionary:
-	return snapshot_region(actor, actor)
+func snapshot_for(actor: String, live := false) -> Dictionary:
+	return snapshot_region(actor, actor, live)
 
-func snapshot_region(actor: String, viewed: String) -> Dictionary:
+func snapshot_region(actor: String, viewed: String, live := false) -> Dictionary:
 	if not municipalities.has(viewed):
 		viewed = actor
 	var child: CoopWorld = municipalities[viewed]
 	var own: CoopWorld = municipalities[actor]
-	var result := child.snapshot()
+	var result := child.snapshot(false, live)
 	result.revision = revision
 	result["mode"] = "region"
 	result["view_owner"] = viewed.sha256_text()

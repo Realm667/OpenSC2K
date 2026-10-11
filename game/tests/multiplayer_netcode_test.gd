@@ -26,12 +26,58 @@ func build(id: int, revision: int, point: Vector2i) -> Dictionary:
 
 func run() -> void:
 	archive_cache()
+	await direct_documents()
 	reservation_delta()
 	reservation_ring()
 	causal_commands()
 	await shaped_connection()
 	print("Multiplayer netcode checks: %d failures" % failures)
 	quit(1 if failures else 0)
+
+func direct_documents() -> void:
+	var source := Sc2xDocument.create_empty(32, "Direct document").document
+	source.sc2x_extra_entries["unknown.data"] = PackedByteArray([17, 83, 0, 255])
+	var cache := MultiplayerDocument.new()
+	var snapshot := cache.capture(source).merged({"type": "state", "revision": 0})
+	var job := MultiplayerWireJob.new()
+	job.start(snapshot)
+	check(await wait_for(job.ready), "background encoder completes")
+	job.finish()
+	var envelope: Dictionary = JSON.parse_string(job.bytes.get_string_from_utf8())
+	var unpack := MultiplayerWireJob.new()
+	unpack.start(envelope, true)
+	check(await wait_for(unpack.ready), "background decoder completes")
+	unpack.finish()
+	check(not unpack.failed, "compressed state passes digest validation")
+	var restored := MultiplayerDocument.restore(unpack.decoded)
+	check(restored != null, "direct document restores after real JSON and compression")
+	if restored == null:
+		return
+	check(Sc2xDocument.encode(restored).data == Sc2xDocument.encode(source).data, "direct document preserves complete save bytes and unknown extras")
+	var sender := MultiplayerDelta.new()
+	var receiver := MultiplayerDelta.new()
+	receiver.decode(sender.encode(snapshot))
+	CityState.from_document(source).set_funds(54321)
+	var changed := cache.capture(source).merged({"type": "state", "revision": 1})
+	var wire := sender.encode(changed)
+	check(wire.pages.size() == 1, "finance change sends only its changed chunk page")
+	var decoded := receiver.decode(wire)
+	var next := MultiplayerDocument.restore(decoded, snapshot, restored)
+	check(next != null and next.find_chunk("ALTM") == restored.find_chunk("ALTM"), "unchanged client terrain buffer is reused")
+	check(next != null and Sc2xDocument.encode(next).data == Sc2xDocument.encode(source).data, "incremental document matches authoritative archive exactly")
+	var invalid := changed.duplicate(true)
+	invalid.document.layout[0][1] += 1
+	check(MultiplayerDocument.restore(invalid) == null, "mismatched chunk lengths rejected")
+	envelope.sha256 = "invalid"
+	var corrupt := MultiplayerWireJob.new()
+	corrupt.start(envelope, true)
+	await wait_for(corrupt.ready)
+	corrupt.finish()
+	check(corrupt.failed and corrupt.decoded.is_empty(), "corrupt compressed state rejected")
+	var canceled := MultiplayerWireJob.new()
+	canceled.start(snapshot)
+	canceled.finish()
+	check(canceled.task == -1 and canceled.input.is_empty(), "shutdown joins outstanding codec work")
 
 func reservation_delta() -> void:
 	var sender := MultiplayerDelta.new()
@@ -136,12 +182,13 @@ func shaped_connection() -> void:
 	guest.decoder.states.clear()
 	host.publish()
 	check(await wait_for(func() -> bool: return guest.resync_requested), "missing delta base triggers repair")
-	check(await wait_for(func() -> bool: return not guest.resync_requested and guest.latest.city == host.latest.city), "full baseline repairs without stale rollback")
+	check(await wait_for(func() -> bool: return not guest.resync_requested and guest.local_revision == host.world.revision), "full baseline repairs without stale rollback")
+	check(same_city(host, guest), "repaired city matches authoritative save bytes")
 	link.disconnect_peers()
 	check(await wait_for(func() -> bool: return not guest.connected), "connection interruption detected")
 	check(await wait_for(func() -> bool: return guest.connected), "same identity reconnects through proxy")
 	check(guest.next_command == start_id + 12 and host.world.city.funds() == acknowledged_funds, "reconnect preserves sequence and does not replay payments")
-	check(guest.latest.city == host.latest.city, "reconnected archive matches authoritative archive")
+	check(same_city(host, guest), "reconnected document matches authoritative document")
 	guest.stop()
 	host.stop()
 	link.disconnect_peers()
@@ -150,6 +197,11 @@ func shaped_connection() -> void:
 	guest.queue_free()
 	host.queue_free()
 	await process_frame
+
+func same_city(host: CoopSession, guest: CoopSession) -> bool:
+	var authoritative := MultiplayerDocument.restore(host.latest)
+	var received := MultiplayerDocument.restore(guest.latest)
+	return authoritative != null and received != null and Sc2xDocument.encode(authoritative).data == Sc2xDocument.encode(received).data
 
 class ShapedLink extends Node:
 	var listener := TCPServer.new()

@@ -137,8 +137,7 @@ func shared_network() -> void:
 	check(positions.any(func(item: Dictionary) -> bool: return item.name == "Alice" and int(item.cursor[0]) == 7 and int(item.cursor[1]) == 8), "remote cursor uses map coordinates: " + str(positions))
 	check(host.world.owners[8 * 32 + 8] == 2, "guest land purchase authoritative")
 	check(host.latest.roster[1].color == guest.player_color, "host preserves the client's selected colour")
-	var document := Sc2File.new()
-	document.parse(Marshalls.base64_to_raw(guest.latest.city))
+	var document := MultiplayerDocument.restore(guest.latest)
 	check(not document.sc2x_extra_entries.has("multiplayer.json"), "private reconnect identities never sent inside public city")
 	var path := "user://multiplayer-shared-save.sc2x"
 	check(host.save_city(path).is_empty(), "Shared normal save")
