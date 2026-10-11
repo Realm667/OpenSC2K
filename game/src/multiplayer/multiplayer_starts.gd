@@ -90,9 +90,6 @@ func prepare(world: SharedWorld, members: Dictionary, commit := true) -> String:
 		positions[actor] = {"slot": candidate.slot, "point": [point.x, point.y], "tiles": 0 if world is RegionWorld else grant, "land": candidate.land, "water": candidate.water, "reserved": candidate.reserve.size()}
 		members[actor]["ranked"] = true
 		world.land_allowance[actor] = 0
-	if not world is RegionWorld:
-		for actor: String in world.actors:
-			connect_access(world, world.actors.find(actor) + 1)
 	world.revision += 1
 	world.tile_versions.fill(world.revision)
 	world.snapshot_cache.clear()
@@ -146,29 +143,39 @@ func restore(data: Dictionary) -> void:
 		previous[actor] = previous[actor].map(func(slot: Variant) -> int: return int(slot))
 	positions = data.positions.duplicate(true)
 
-static func connect_access(world: SharedWorld, owner: int) -> void:
-	var parents := {}
-	var queue: Array[int] = []
-	for tile in world.owners.size():
-		if world.owners[tile] != owner:
+func repair_reserved_corridors(world: SharedWorld) -> void:
+	if world is RegionWorld or not assigned:
+		return
+	# Reconstruct only recorded start parcels on their original terrain. Keep
+	# purchased land, public seams and already-built shared roads untouched.
+	var terrain := CityState.from_document(world.template)
+	var original := PackedInt32Array()
+	original.resize(world.owners.size())
+	for tile in original.size():
+		if terrain.buildings[tile] > 13 or terrain.zones[tile] != 0 or terrain.underground[tile] != 0:
+			original[tile] = 1
+	var changed := false
+	for actor: String in positions:
+		var start: Dictionary = positions[actor]
+		if not start.has("land") or not start.has("water"):
 			continue
-		for next: int in MultiplayerLandRules.neighbours(tile, world.city.map_size):
-			if world.owners[next] == 0 and world.protection[next] in [-1, 0, owner] and not parents.has(next):
-				parents[next] = -1
-				queue.append(next)
-	var cursor := 0
-	while cursor < queue.size():
-		var tile := queue[cursor]
-		cursor += 1
-		if world.protection[tile] == -1:
-			while tile >= 0:
-				world.protection[tile] = -1
-				tile = int(parents[tile])
-			return
-		for next: int in MultiplayerLandRules.neighbours(tile, world.city.map_size):
-			if world.owners[next] == 0 and world.protection[next] in [0, owner, -1] and not parents.has(next):
-				parents[next] = tile
-				queue.append(next)
+		var parcel := MultiplayerStartParcel.make(terrain, original, int(start.slot), int(start.land) + int(start.water) / 2)
+		if parcel.is_empty() or parcel.land != start.land or parcel.water != start.water or [parcel.center.x, parcel.center.y] != start.point:
+			continue
+		var owner := world.actors.find(actor) + 1
+		for tile: int in parcel.reserve:
+			if world.owners[tile] != 0 or world.protection[tile] != -1:
+				continue
+			var built := false
+			for city: CoopWorld in world.municipalities.values():
+				built = built or city.city.buildings[tile] > 13 or city.city.zones[tile] != 0 or city.city.underground[tile] != 0
+			if not built:
+				world.protection[tile] = owner
+				changed = true
+	if changed:
+		world.revision += 1
+		world.tile_versions.fill(world.revision)
+		world.snapshot_cache.clear()
 
 func cached_parcel(world: SharedWorld, slot: int, amount: int) -> Dictionary:
 	var key := str(slot) + ":" + str(amount)

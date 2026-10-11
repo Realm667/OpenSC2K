@@ -91,7 +91,9 @@ static func entries(document: Sc2File) -> EntriesResult:
 	return result
 
 
-static func encode(document: Sc2File) -> BinaryResult:
+static func encode(document: Sc2File, _compression_cache: Dictionary = {}) -> BinaryResult:
+	# Keep the multiplayer call compatible with the GDScript feature branch.
+	# The integrated native codec owns serialization and compression here.
 	if document == null or not document.is_sc2x():
 		return BinaryResult.failure("The document is not an SC2X version 4 working document")
 

@@ -15,11 +15,15 @@ var started := false
 var complete := false
 
 func open_output(state: Dictionary) -> bool:
+	return open_encoded(JSON.stringify(state).to_utf8_buffer())
+
+
+func open_encoded(body: PackedByteArray) -> bool:
 	path = temporary_path()
 	file = FileAccess.open(path, FileAccess.WRITE_READ)
 	if file == null:
 		return false
-	file.store_string(JSON.stringify(state))
+	file.store_buffer(body)
 	file.flush()
 	size = file.get_length()
 	if file.get_error() != OK or size > MAX_BYTES:

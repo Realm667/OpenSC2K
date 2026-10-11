@@ -57,6 +57,13 @@ Only edge-connected expansion is allowed. Existing ownership, foreign land,
 excluded water and protected territory are skipped without charging for them.
 The same success sound as zoning confirms a purchase.
 
+Expansion reservations are closed around the starting parcel. They no longer
+contain an artificial access corridor. Loading an older match restores empty
+corridor cuts inside recorded reservations; existing public infrastructure and
+separate public sector boundaries remain intact. Buying another player's reserved
+neutral land still requires that player's consent and pays the normal price to
+the game. Ownership and edge-connection checks still apply.
+
 Selecting foreign land prepares a purchase request; selecting owned land in Sell
 mode prepares an offer. Each has an exact parcel and total price. Incoming requests
 show a prominent nonmodal notification with View and remain in the market inbox.
@@ -103,6 +110,19 @@ name tags; construction previews are separate. They appear only in the relevant
 city view. Own action sounds remain normal; remote sounds attenuate with distance
 outside the visible map. The host synchronizes cosmetic weather/season/time choices.
 
+Build commands receive an immediate authoritative acknowledgement. Consecutive
+brush edits share a snapshot publication within 40 ms, and recipient preparation
+is spread across frames. The integrated runtime retains its native archive codec;
+the GDScript feature branch reuses unchanged compressed members. Statistics
+reuse tile counts until the underlying map or ownership changes. Protection masks
+use the same checked delta path as city and ownership data. A missing baseline
+requests a full state without replaying or charging a completed command again.
+
+Presence messages contain cursor and player identity data, without city statistics.
+Stationary cursors use a heartbeat. Weather descriptions travel on changes with a
+periodic phase anchor; clouds, particles, lightning and transition animation run
+locally. Reliable command order and the authoritative simulation remain on the host.
+
 ## Saves, shutdown and single-player copies
 
 File > Save saves the complete match on the host, including private reconnect
@@ -129,6 +149,9 @@ TCP uses ordered bounded queues and checked streamed snapshots. There is no
 Internet discovery, NAT traversal, transport encryption or automatic host migration.
 Use trusted participants. Loopback tests do not establish performance on eight
 physical LAN computers. Automated audio tests use Dummy audio, not listening tests.
+Per-frame work limits apply between messages and recipients; one large archive or
+JSON message can still exceed that budget. Batching does not guarantee hitch-free
+rendering for every city size or computer.
 Run the complete release suite plus native two-window review before distribution.
 Tests cover competition/save compatibility, land protections, copy conversion,
 shutdown while visiting, client Debug guards, synchronization and private dialogs.

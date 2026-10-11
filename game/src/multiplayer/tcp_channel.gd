@@ -28,7 +28,10 @@ func _init(peer: StreamPeerTCP, receive_limit := MAX_FRAME) -> void:
 
 
 func send(message: Dictionary) -> bool:
-	var body := JSON.stringify(message).to_utf8_buffer()
+	return send_encoded(JSON.stringify(message).to_utf8_buffer())
+
+
+func send_encoded(body: PackedByteArray) -> bool:
 	if body.size() > MAX_FRAME or output.size() + body.size() + 4 > MAX_FRAME * 2:
 		failed = true
 		return false
@@ -40,7 +43,7 @@ func send(message: Dictionary) -> bool:
 	return true
 
 
-func poll() -> Array[Dictionary]:
+func poll(max_messages := 64) -> Array[Dictionary]:
 	var messages: Array[Dictionary] = []
 	socket.poll()
 	if socket.get_status() == StreamPeerTCP.STATUS_CONNECTING:
@@ -64,7 +67,10 @@ func poll() -> Array[Dictionary]:
 		bytes_received += received[1].size()
 		last_received = Time.get_ticks_msec()
 	# Bound reads rather than rejecting a backlog of individually valid frames.
-	for _index in 64:
+	var started := Time.get_ticks_usec()
+	for _index in max_messages:
+		if not messages.is_empty() and Time.get_ticks_usec() - started >= 2000:
+			break
 		if input.size() < 4:
 			break
 		var size := input.decode_u32(0)

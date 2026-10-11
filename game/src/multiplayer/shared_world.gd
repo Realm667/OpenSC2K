@@ -22,6 +22,10 @@ var host_actor := ""
 var snapshot_cache: Dictionary = {}
 var composed_revision := -1
 var composed_chunks: Dictionary = {}
+var composition_sources: Dictionary = {}
+var composition_owners := PackedInt32Array()
+var composition_protection := PackedInt32Array()
+var municipal_compression: Dictionary = {}
 var record_cache: Dictionary = {}
 var record_signature: Array = []
 
@@ -173,7 +177,8 @@ func command(actor: String, request: Dictionary) -> Dictionary:
 		var result := child.command(actor, local)
 		if not result.get("ok", false):
 			return result
-		for tile: int in changed_tiles(before, child.city.document):
+		var changed := changed_tiles(before, child.city.document)
+		for tile: int in changed:
 			if owners[tile] != owner and not (public_network and protection[tile] == -1):
 				child.city = CityState.from_document(before)
 				child.engine.city = child.city
@@ -185,10 +190,10 @@ func command(actor: String, request: Dictionary) -> Dictionary:
 				child.undo_document = null
 				return rejected("The complete building or terrain edit must fit on your land.")
 		if public_network:
-			share_public_network(child, changed_tiles(before, child.city.document))
+			share_public_network(child, changed)
 		statistics[actor] = child.statistics.get(actor, {})
 		revision += 1
-		for tile: int in changed_tiles(before, child.city.document):
+		for tile: int in changed:
 			tile_versions[tile] = revision
 		return result
 	if request.get("kind") == "undo":
@@ -499,13 +504,15 @@ func snapshot_for(actor: String) -> Dictionary:
 	Sc2xCheckpoint.capture(child.controller, child.city.document.sc2x_metadata)
 	var document := child.city.document.duplicate_document()
 	if composed_revision != revision:
-		composed_chunks.clear()
+		var ownership_changed := owners != composition_owners or protection != composition_protection
 		for id: String in TILE_CHUNKS:
-			var data := template.find_chunk(id).decoded_payload.duplicate()
-			var stride: int = TILE_CHUNKS[id]
 			var sources: Array = []
 			for player: String in actors:
 				sources.append(municipalities[player].city.document.find_chunk(id).decoded_payload)
+			if not ownership_changed and sources == composition_sources.get(id) and composed_chunks.has(id):
+				continue
+			var data := template.find_chunk(id).decoded_payload.duplicate()
+			var stride: int = TILE_CHUNKS[id]
 			for tile in owners.size():
 				var owner := owners[tile] - 1
 				if protection[tile] == -1:
@@ -514,6 +521,11 @@ func snapshot_for(actor: String) -> Dictionary:
 					for byte in stride:
 						data[tile * stride + byte] = sources[owner][tile * stride + byte]
 			composed_chunks[id] = data
+			# Simulation may mutate a packed buffer in place. Keep an immutable
+			# comparison copy so an unchanged revision never hides a changed plane.
+			composition_sources[id] = sources.map(func(data: PackedByteArray) -> PackedByteArray: return data.duplicate())
+		composition_owners = owners.duplicate()
+		composition_protection = protection.duplicate()
 		var signature: Array = [hash(owners)]
 		for player: String in actors:
 			for id in ["XTXT", "XTHG", "XMIC", "XLAB"]:
@@ -535,7 +547,9 @@ func snapshot_for(actor: String) -> Dictionary:
 		for id: String in record_cache[actor]:
 			document.find_chunk(id).expected_decoded_size = record_cache[actor][id].size()
 			document.find_chunk(id).set_decoded_payload(record_cache[actor][id])
-	var encoded := Sc2xDocument.encode(document)
+	if not municipal_compression.has(actor):
+		municipal_compression[actor] = {}
+	var encoded := Sc2xDocument.encode(document, municipal_compression[actor])
 	if not encoded.ok:
 		return {"error": encoded.error}
 	result.city = Marshalls.raw_to_base64(encoded.data)

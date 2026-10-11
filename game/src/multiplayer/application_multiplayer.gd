@@ -50,7 +50,7 @@ func active() -> bool:
 
 func setup() -> void:
 	session = CoopSession.new()
-	session.environment_source = app.visual_environment.network_snapshot
+	session.environment_source = app.visual_environment.network_description
 	session.environment_received.connect(app.visual_environment.receive_network_weather)
 	app.add_child(session)
 	session.state_received.connect(receive_state)

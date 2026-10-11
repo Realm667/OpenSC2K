@@ -63,6 +63,10 @@ func run() -> void:
 	main.tool_state.selected_subtool = 0
 	main.city_edits.apply_map_selection(Vector2i(20, 20), Vector2i(20, 20), [Vector2i(20, 20)], false)
 	check(main.coop.session.world.revision == 1, "ordinary map selection reaches host")
+	for frame in 60:
+		if main.coop.session.local_revision == main.coop.session.world.revision:
+			break
+		await process_frame
 	check(main.document_state.city.funds() == main.coop.session.world.city.funds(), "host display updates funds")
 	check(main.document_state.current_document == display_document, "snapshot retains display document identity")
 	check(main.document_state.city.chunk_revision("XZON") > 0, "received zone increments render revision")
@@ -245,24 +249,18 @@ func weather_cases(main: CityApplication, guest: CoopSession) -> void:
 	if received.is_empty():
 		return
 	var state: Dictionary = received.back()
-	check(int(state.weather[0]) == CityVisualWeather.Kind.HEAVY_SNOW, "guest receives host's weather choice")
+	check(int(state.kind) == CityVisualWeather.Kind.HEAVY_SNOW, "guest receives host weather choice")
+	check(not state.has("weather") and not state.has("clouds"), "network excludes animated particles, cloud positions and audio cues")
 	var remote := CityVisualWeather.new(main)
-	remote.remote_state = state.weather
+	remote.remote_kind = int(state.kind)
 	main.preferences.visual_enhancements.weather_fixed = CityVisualWeather.Kind.SUNNY
 	remote.process(0.1, 10.0, true, 1.0)
-	check(remote.kind == CityVisualWeather.Kind.HEAVY_SNOW and remote.snow == float(state.weather[6]), "remote weather overrides local choice and season")
-	check(remote.clock == float(state.weather[7]), "late join receives weather phase")
-	remote.remote_state[18] = 5
-	remote.remote_state[20] = 0
-	remote.process(0.1, 0.0, true, 1.0)
-	remote.process(0.1, 0.0, true, 1.0)
-	check(is_equal_approx(remote.clock, float(state.weather[7]) + 0.2), "particle animation runs smoothly between packets")
-	check(remote.received_thunder == 5, "duplicate weather frames do not replay thunder")
-	remote.process(0.1, 0.0, true, 1.0, true)
-	check(is_equal_approx(remote.clock, float(state.weather[7]) + 0.2), "paused remote particles retain their phase")
-	remote.remote_state[20] = 1
-	remote.process(0.1, 0.0, true, 1.0)
-	check(is_equal_approx(remote.clock, float(state.weather[7]) + 0.2), "host pause freezes guests even with local running speed")
+	check(remote.kind == CityVisualWeather.Kind.HEAVY_SNOW and remote.snow > 0.0, "host atmosphere overrides local choice and season")
+	var before := remote.clock
+	remote.process(0.1, 0.1, true, 1.0)
+	check(is_equal_approx(remote.clock, before + 0.1), "local animation advances without network packets")
+	remote.process(0.1, 0.1, true, 1.0, true)
+	check(is_equal_approx(remote.clock, before + 0.1), "host pause freezes local weather clocks")
 	await cloud_front_cases(main)
 	remote.reset()
 	if remote.layer != null:
