@@ -242,7 +242,9 @@ func setup() -> void:
 	palette.get_parent().move_child(land_options, palette.get_index() + 1)
 	MultiplayerLandPalette.setup(self, land_options)
 	land_options.hide()
-	coop.app.get_tree().process_frame.connect(tick)
+	var tree := coop.app.get_tree()
+	tree.process_frame.connect(tick)
+	coop.app.tree_exiting.connect(func() -> void: tree.process_frame.disconnect(tick), CONNECT_ONE_SHOT)
 
 
 func make_window(title: String) -> Window:
@@ -408,7 +410,7 @@ func receive_chat(entry: Dictionary) -> void:
 
 
 func draw_markers() -> void:
-	if not coop.active() or not coop.mirrored:
+	if coop == null or not coop.active() or not coop.mirrored:
 		return
 	var map := coop.app.map_view
 	var scale: float = map.camera._view_scale()
