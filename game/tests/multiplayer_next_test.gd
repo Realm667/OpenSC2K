@@ -263,6 +263,18 @@ func leadership_and_copy() -> void:
 		check(city.zones[city.index_of(2, 2)] != 0 and city.zones[city.index_of(20, 20)] != 0, "both physical cities exist once in the merged map")
 		check(not city.document.sc2x_extra_entries.has("multiplayer.json") and city.document.sc2x_metadata.phase_state.is_empty(), "single-player copy has no authentication and rescans combined population")
 	check(before == world.city.document.content_snapshot(), "copy conversion does not mutate source municipality")
+	var archive := world.city.document.duplicate_document()
+	archive.sc2x_extra_entries["multiplayer.json"] = JSON.stringify({"shared": world.saved_shared()}).to_utf8_buffer()
+	var loaded := Sc2File.new()
+	check(loaded.parse(Sc2xDocument.encode(archive).data), "shared archive survives file encoding")
+	var archived_copy := MultiplayerSingleplayer.convert(loaded, b)
+	check(archived_copy.error.is_empty(), "saved shared archive converts through its metadata")
+	if archived_copy.error.is_empty():
+		check(CityState.from_document(archived_copy.document).funds() == 60000, "saved shared copy preserves combined treasury")
+	var coop_document := Sc2xDocument.create_empty(32, "Coop copy").document
+	coop_document.sc2x_extra_entries["multiplayer.json"] = JSON.stringify({"build": CoopSession.NETWORK_BUILD}).to_utf8_buffer()
+	var coop_copy := MultiplayerSingleplayer.convert(coop_document)
+	check(coop_copy.error.is_empty() and not coop_copy.document.sc2x_extra_entries.has("multiplayer.json") and coop_document.sc2x_extra_entries.has("multiplayer.json"), "coop copy removes session metadata without altering the original")
 
 func water_starts() -> void:
 	var city := CityState.from_document(Sc2xDocument.create_empty(64, "Water starts").document)
@@ -312,6 +324,13 @@ func end_copy_network() -> void:
 		while not guest.latest.get("visiting", false) and Time.get_ticks_msec() < deadline:
 			await create_timer(0.01).timeout
 		check(guest.latest.get("visiting", false), "client is visiting host city at shutdown")
+		var checkpoint := host.city_checkpoint()
+		check(checkpoint.error.is_empty(), "region multiplayer archive checkpoint")
+		if checkpoint.error.is_empty():
+			var selected_copy := MultiplayerSingleplayer.convert(checkpoint.document, guest.token)
+			check(selected_copy.error.is_empty(), "saved region archive permits selecting the guest city")
+			if selected_copy.error.is_empty():
+				check(CityState.from_document(selected_copy.document).funds() == 43210, "region archive selection preserves the chosen treasury")
 		var ended: Array = []
 		guest.session_ended.connect(func() -> void: ended.append(true))
 		host.stop()
