@@ -66,6 +66,8 @@ var environment_source: Callable
 var environment_elapsed := 0.0
 var player_color := "46b4ff"
 var cursors: Dictionary = {}
+var cursor_tools: Dictionary = {}
+var cursor_tool_source: Callable
 var cursor_updated: Dictionary = {}
 var chat_history: Array = []
 var presence_elapsed := 0.0
@@ -246,6 +248,7 @@ func stop() -> void:
 	waiting_for_start = false
 	lobby_ready.clear()
 	cursors.clear()
+	cursor_tools.clear()
 	selections.clear()
 	cursor_updated.clear()
 	admin_history.clear()
@@ -339,13 +342,15 @@ func _process(delta: float) -> void:
 		presence_elapsed = 0.0
 		if cursor_source.is_valid():
 			var position: Vector2 = cursor_source.call()
+			var tool := MultiplayerCursor.valid_tool(cursor_tool_source.call() if cursor_tool_source.is_valid() else {})
 			var selection: Array = selection_source.call() if selection_source.is_valid() else []
 			if hosting:
 				selections[token] = selection
 				cursors[token] = [position.x, position.y]
+				cursor_tools[token] = tool
 				cursor_updated[token] = Time.get_ticks_msec()
 			elif connected:
-				channels[0].send_latest({"type": "cursor", "position": [position.x, position.y], "selection": selection})
+				channels[0].send_latest({"type": "cursor", "position": [position.x, position.y], "selection": selection, "tool": tool})
 		if hosting:
 			var players := roster()
 			presence_received.emit(players)
@@ -401,6 +406,7 @@ func receive_host(id: int, message: Dictionary) -> void:
 		if position is Array and position.size() == 2 and valid_cursor_number(position[0]) and valid_cursor_number(position[1]):
 			selections[actor] = valid_selection(message.get("selection", []), world.city.map_size)
 			cursors[actor] = position
+			cursor_tools[actor] = MultiplayerCursor.valid_tool(message.get("tool", {}))
 			cursor_updated[actor] = Time.get_ticks_msec()
 		return
 	if message.get("type") == "resync":
@@ -759,6 +765,7 @@ func drop(id: int) -> void:
 			var actor: String = identities[id]
 			requested_speed.erase(actor)
 			cursors.erase(actor)
+			cursor_tools.erase(actor)
 			cursor_updated.erase(actor)
 			identities.erase(id)
 			members[actor]["seat_status"] = "unoccupied" if graceful_peers.has(id) else "reserved"
@@ -925,6 +932,7 @@ func roster() -> Array:
 			"seat_status": "connected" if requested_speed.has(actor) else member.get("seat_status", "reserved"),
 			"view_owner": str(viewed_cities.get(actor, actor)).sha256_text(),
 			"selection": selections.get(actor, []) if Time.get_ticks_msec() - int(cursor_updated.get(actor, 0)) < 3000 else [],
+			"cursor_tool": cursor_tools.get(actor, {}),
 			"cursor": cursors.get(actor, [-1, -1]) if Time.get_ticks_msec() - int(cursor_updated.get(actor, 0)) < 3000 else [-1, -1]})
 		result.append(row)
 	return result
@@ -1187,6 +1195,7 @@ func prepare_rematch(actor: String) -> Dictionary:
 	statistics_revision = -1
 	viewed_cities.clear()
 	cursors.clear()
+	cursor_tools.clear()
 	selections.clear()
 	waiting_for_start = true
 	reset_lobby_ready()

@@ -15,6 +15,13 @@ func command(world: SharedWorld, actor: String, request: Dictionary) -> Dictiona
 	return world.command(actor, request)
 
 func run() -> void:
+	var pointer := Image.create(2, 1, false, Image.FORMAT_RGBA8)
+	pointer.set_pixel(0, 0, Color.BLACK)
+	var cursor_record := DesktopGraphics.Cursor.new(pointer, Vector2i.ZERO)
+	var tinted := MultiplayerCursor.tinted(cursor_record, Color.GREEN)
+	check(tinted.get_pixel(0, 0) == Color.GREEN and tinted.get_pixel(1, 0).a == 0, "black-only cursor takes player colour and retains transparency")
+	check(pointer.get_pixel(0, 0) == Color.BLACK, "remote tint leaves local cursor pixels unchanged")
+	check(MultiplayerCursor.valid_tool({"app":"city","group":1021.5}).is_empty(), "fractional tool identifiers rejected")
 	var a := "a".repeat(48)
 	var b := "b".repeat(48)
 	var world := SharedWorld.new()

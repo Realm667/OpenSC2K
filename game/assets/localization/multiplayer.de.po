@@ -1346,3 +1346,12 @@ msgstr "Reserviert"
 
 msgid "The reserving player must approve. Payment goes to the game after approval."
 msgstr "Der reservierende Spieler muss zustimmen. Erst danach erfolgt die Zahlung an das Spiel."
+
+msgid "Fields with a pencil can be edited."
+msgstr "Felder mit Stift sind bearbeitbar."
+
+msgid "Change starting funds"
+msgstr "Startvermögen ändern"
+
+msgid "Change starting territory"
+msgstr "Startfläche ändern"

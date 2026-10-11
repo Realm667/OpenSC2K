@@ -148,6 +148,22 @@ func network_cases(source: Sc2File) -> void:
 		if guest.connected:
 			break
 	check(guest.connected, "TCP handshake and initial city received")
+	var seen_presence: Array = []
+	guest.presence_received.connect(func(rows: Array) -> void: seen_presence.assign(rows))
+	guest.cursor_source = func() -> Vector2: return Vector2(4, 5)
+	guest.cursor_tool_source = func() -> Dictionary: return {"app": "city", "group": 1021}
+	for frame in 60:
+		await create_timer(0.01).timeout
+		if seen_presence.any(func(row: Dictionary) -> bool: return row.id == guest.token.sha256_text() and row.get("cursor_tool", {}).get("group") == 1021):
+			break
+	check(host.cursor_tools.get(guest.token, {}).get("group") == 1021, "guest tool reaches authoritative presence")
+	check(seen_presence.any(func(row: Dictionary) -> bool: return row.id == guest.token.sha256_text() and row.get("cursor_tool", {}).get("group") == 1021), "tool icon relayed to peers")
+	guest.cursor_tool_source = func() -> Dictionary: return {"app": "res://invalid", "group": 1021}
+	for frame in 30:
+		await create_timer(0.01).timeout
+		if host.cursor_tools.get(guest.token, {}).is_empty():
+			break
+	check(host.cursor_tools.get(guest.token, {}).is_empty(), "unknown cursor identifiers fall back safely")
 	# Suppress the timer: a successful command must publish in its receive turn.
 	host.snapshot_elapsed = -100.0
 	guest.request(build_at(Vector2i(12, 12), guest.local_revision))

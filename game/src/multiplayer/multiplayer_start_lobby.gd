@@ -17,6 +17,8 @@ var leave_button: Button
 var body: VBoxContainer
 var waiting := false
 var roster_signature := ""
+var handicap_dialog: Window
+const EDIT_ICON := preload("res://src/multiplayer/icons/edit_cell.svg")
 
 func _init(owner: MultiplayerWindows) -> void:
 	owner_ref = weakref(owner)
@@ -36,8 +38,19 @@ func _init(owner: MultiplayerWindows) -> void:
 		var row := roster.get_selected()
 		if row != null and roster.get_selected_column() == 1 and row.is_editable(1):
 			roster.edit_selected.call_deferred()
-		elif row != null and roster.get_selected_column() in [3, 4] and windows.coop.session.hosting and windows.state.get("mode") != "coop":
+		elif row != null and row.get_metadata(roster.get_selected_column()) == true and roster.get_selected_column() in [3, 4] and windows.coop.session.hosting:
 			edit_handicap(str(row.get_metadata(0))))
+	roster.button_clicked.connect(func(row: TreeItem, column: int, _id: int, _mouse: int) -> void:
+		if column == 1 and row.is_editable(1):
+			row.select(1)
+			roster.edit_selected.call_deferred()
+		elif column in [3, 4] and windows.coop.session.hosting:
+			edit_handicap(str(row.get_metadata(0))))
+	roster.mouse_exited.connect(roster.queue_redraw)
+	roster.gui_input.connect(func(event: InputEvent) -> void:
+		if event is InputEventMouseMotion:
+			roster.queue_redraw())
+	roster.draw.connect(draw_edit_hover)
 	roster.item_edited.connect(func() -> void:
 		var row := roster.get_edited()
 		if row != null and roster.get_edited_column() == 1 and row.is_editable(1):
@@ -73,7 +86,7 @@ func update(state: Dictionary) -> void:
 	window.title = tr("Game lobby")
 	for column in 5:
 		roster.set_column_title(column, tr(["Player", "City", "Status", "Starting funds", "Starting land"][column]))
-	hint.text = tr("At least two players must join. Everyone confirms Ready; the host then starts the game. Changes to the player list reset readiness.")
+	hint.text = tr("At least two players must join. Everyone confirms Ready; the host then starts the game. Changes to the player list reset readiness.") + "\n" + tr("Fields with a pencil can be edited.")
 	start.text = tr("Start game")
 	leave_button.text = tr("Leave game")
 	var mode := tr("Co-op") if state.get("mode", "coop") == "coop" else tr("Competitive Region") if state.get("mode") == "region" else tr("Competitive Shared")
@@ -109,7 +122,11 @@ func update(state: Dictionary) -> void:
 			if player.id == session.token.sha256_text():
 				own_ready = player.get("ready", false)
 				row.set_editable(1, true)
-				row.set_tooltip_text(1, tr("Click your city name to rename it before the game starts."))
+				mark_editable(row, 1, tr("Click your city name to rename it before the game starts."))
+			if session.hosting and state.get("mode") != "coop":
+				mark_editable(row, 3, tr("Change starting funds"))
+				if state.get("mode") == "shared":
+					mark_editable(row, 4, tr("Change starting territory"))
 	ready.text = tr("Not ready") if own_ready else tr("Ready")
 	start.visible = session.hosting
 	start.disabled = not lobby.get("can_start", false)
@@ -118,6 +135,27 @@ func update(state: Dictionary) -> void:
 		windows.fit_content.call_deferred(window, body, 760)
 	if not window.visible:
 		show_if_waiting.call_deferred()
+
+func mark_editable(row: TreeItem, column: int, tip: String) -> void:
+	row.set_metadata(column, true)
+	row.set_custom_bg_color(column, Color(0.5, 0.65, 0.75, 0.12))
+	row.set_tooltip_text(column, tip)
+	row.add_button(column, EDIT_ICON, column, false, tip)
+
+
+func draw_edit_hover() -> void:
+	var point := roster.get_local_mouse_position()
+	var row := roster.get_item_at_position(point)
+	var column := roster.get_column_at_position(point)
+	if row == null or column < 0 or row.get_metadata(column) != true:
+		return
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.5, 0.65, 0.75, 0.08)
+	style.border_color = Color(0.6, 0.75, 0.85, 0.65)
+	style.set_border_width_all(1)
+	style.set_corner_radius_all(3)
+	roster.draw_style_box(style, roster.get_item_area_rect(row, column).grow(-1))
+
 
 func show_if_waiting() -> void:
 	if waiting and windows.coop.active():
@@ -135,7 +173,10 @@ func editing_city() -> bool:
 
 
 func edit_handicap(seat: String) -> void:
+	if is_instance_valid(handicap_dialog) and handicap_dialog.visible:
+		return
 	var dialog := windows.make_window(tr("Starting handicap"))
+	handicap_dialog = dialog
 	var box := windows.content(dialog)
 	var player: Dictionary = {}
 	for entry: Dictionary in windows.players:
