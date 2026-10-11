@@ -323,6 +323,8 @@ func poll_region_cache() -> void:
 # a moving sprite or overlay that does not sample static pixels depends only on the silhouettes
 func _invalidate_region_foregrounds(changes: Array[Rect2i], occluder_changes: Array[Rect2i], lighting_changes: Variant = null) -> bool:
 	var invalidated := false
+	if app.coop.active() and app.coop.windows != null:
+		app.coop.windows.map_overlay.invalidate_occlusion(occluder_changes)
 	if app.city_life.canvas != null:
 		app.city_life.canvas.invalidate_occlusion(occluder_changes)
 	app.disaster_effects.invalidate_occlusion(occluder_changes)

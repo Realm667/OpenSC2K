@@ -30,6 +30,9 @@ func run() -> void:
 	await direct_documents()
 	reservation_delta()
 	reservation_ring()
+	municipal_policy_isolation()
+	incremental_shared()
+	land_constraints()
 	causal_commands()
 	await shaped_connection()
 	print("Multiplayer netcode checks: %d failures" % failures)
@@ -101,8 +104,8 @@ func reservation_delta() -> void:
 func incremental_statistics() -> void:
 	var world := SharedWorld.new()
 	world.open(Sc2xDocument.create_empty(32, "Incremental statistics").document)
-	world.add_player("one")
-	world.add_player("two")
+	world.add_player("a".repeat(48))
+	world.add_player("b".repeat(48))
 	for pass_index in 4:
 		for actor: String in world.actors:
 			var child: CoopWorld = world.municipalities[actor]
@@ -136,21 +139,103 @@ func archive_cache() -> void:
 func reservation_ring() -> void:
 	var world := SharedWorld.new()
 	world.open(Sc2xDocument.create_empty(64, "Reservation").document)
-	world.add_player("one")
-	world.add_player("two")
+	world.add_player("a".repeat(48))
+	world.add_player("b".repeat(48))
 	var starts := MultiplayerStarts.new()
-	check(starts.prepare(world, {"one": {}, "two": {}}).is_empty(), "start allocation succeeds")
+	check(starts.prepare(world, {"a".repeat(48): {}, "b".repeat(48): {}}).is_empty(), "start allocation succeeds")
 	for actor: String in world.actors:
 		var reserve_count := 0
 		for value: int in world.protection:
 			if value == world.actors.find(actor) + 1:
 				reserve_count += 1
 		check(reserve_count == starts.positions[actor].reserved, "entire promised reserve remains protected without a carved corridor")
-	check(world.protection[32 * 64 + 32] == -1, "public seams outside reservations retain their protection")
-	var reserved := world.protection.find(1)
-	world.protection[reserved] = -1
-	starts.repair_reserved_corridors(world)
-	check(world.protection[reserved] == 1, "old empty corridor restored inside recorded reservation")
+	check(world.protection[32 * 64 + 32] == 0, "empty sector seams are purchasable")
+	for slot in [0, 5, 15]:
+		var empty := PackedInt32Array()
+		empty.resize(64 * 64)
+		var parcel := MultiplayerStartParcel.make(world.city, empty, slot, 50)
+		var bounds := MultiplayerLandMarket.tile_bounds(parcel.tiles, 64)
+		check(bounds.get_area() == parcel.tiles.size(), "start is a complete rectangle")
+		check(maxf(bounds.size.x, bounds.size.y) / minf(bounds.size.x, bounds.size.y) <= 1.25, "start remains near square")
+		var complete: Array = parcel.tiles.duplicate()
+		complete.append_array(parcel.reserve)
+		check(MultiplayerLandMarket.tile_bounds(complete, 64).get_area() == complete.size(), "reserve forms a complete surrounding rectangle")
+		if slot == 0:
+			check(bounds.position == Vector2i.ZERO, "corner start touches actual map boundary")
+	world.protection[32 * 64 + 32] = -1
+	var saved := world.saved_shared()
+	var restored := SharedWorld.new()
+	check(restored.open(world.city.document) and restored.restore_shared(saved).is_empty(), "legacy seam save restored")
+	check(restored.protection[32 * 64 + 32] == 0 and restored.owners == world.owners, "legacy empty seams released without changing ownership")
+
+func municipal_policy_isolation() -> void:
+	for region in [false, true]:
+		var world: SharedWorld = RegionWorld.new() if region else SharedWorld.new()
+		world.open(Sc2xDocument.create_empty(32, "Policies").document)
+		world.add_player("a".repeat(48))
+		world.add_player("b".repeat(48))
+		var other: CoopWorld = world.municipalities["a".repeat(48)]
+		var own: CoopWorld = world.municipalities["b".repeat(48)]
+		var unchanged := other.city.document.find_chunk("MISC").decoded_payload.duplicate()
+		var values := Array(BudgetPhase.funding_values(own.city))
+		values[0] = 11
+		for action in [{"kind":"budget", "values":values,"auto":true}, {"kind":"ordinance","ordinance":0,"enabled":true}, {"kind":"industry_tax","industry":0,"rate":4,"all":false}, {"kind":"bond"}, {"kind":"city_option","option":"newspaper_subscription","enabled":true}]:
+			action["revision"] = world.revision
+			action["policy"] = own.policy_revision
+			check(world.command("b".repeat(48), action).ok, "municipal policy accepted: " + action.kind)
+			check(other.city.document.find_chunk("MISC").decoded_payload == unchanged, "policy never changes other municipality: " + action.kind)
+		var restored: SharedWorld = RegionWorld.new() if region else SharedWorld.new()
+		restored.open(world.city.document)
+		check(restored.restore_shared(world.saved_shared()).is_empty(), "municipal budgets reload")
+		check(restored.municipalities["b".repeat(48)].city.auto_budget_enabled() and BudgetPhase.funding_values(restored.municipalities["b".repeat(48)].city)[0] == 11, "own funding and auto-budget survive reload")
+		check(restored.municipalities["a".repeat(48)].city.document.find_chunk("MISC").decoded_payload == unchanged, "other budget remains independent after reload")
+
+func incremental_shared() -> void:
+	var world := SharedWorld.new()
+	world.open(Sc2xDocument.create_empty(32, "Composition").document)
+	world.add_player("a".repeat(48))
+	world.add_player("b".repeat(48))
+	world.owners.fill(1)
+	for tile in range(512, 1024): world.owners[tile] = 2
+	world.snapshot_for("a".repeat(48), true)
+	var child: CoopWorld = world.municipalities["b".repeat(48)]
+	for tile in [512, 800, 1023]: child.city.document.find_chunk("XBLD").decoded_payload[tile] = 30
+	world.revision += 1
+	var cached := world.snapshot_for("a".repeat(48), true)
+	world.snapshot_cache.clear()
+	world.composed_revision = -1
+	world.composition_sources.clear()
+	world.composed_chunks.clear()
+	world.record_overlay_cache.clear()
+	world.record_cache.clear()
+	check(cached == world.snapshot_for("a".repeat(48), true), "incremental shared composition equals full recomposition across block edges")
+
+func land_constraints() -> void:
+	var world := SharedWorld.new()
+	world.open(Sc2xDocument.create_empty(64, "Land access").document)
+	world.add_player("a".repeat(48))
+	world.add_player("b".repeat(48))
+	world.owners[30 * 64 + 10] = 1
+	world.owners[40 * 64 + 10] = 2
+	var request := {"kind":"land_request", "start":[40,10], "finish":[40,10], "revision":world.revision}
+	check(not world.command("a".repeat(48),request).ok and world.offers.is_empty(), "disconnected land rejected before asking for a price")
+	request.price = 10
+	check(not world.command("a".repeat(48),request).ok and world.offers.is_empty(), "disconnected land cannot create an offer")
+	var purchased := world.command("a".repeat(48),{"kind":"land_buy", "start":[31,10], "finish":[39,10], "revision":world.revision})
+	check(purchased.ok and world.owners[32 * 64 + 10] == 1 and world.owners[39 * 64 + 10] == 1, "purchase crosses the old sector boundary")
+	request.revision = world.revision
+	check(world.command("a".repeat(48),request).ok and world.offers.size() == 1, "adjacent request is allowed")
+	world.owners[39 * 64 + 10] = 0
+	var before: int = world.municipalities["a".repeat(48)].city.funds()
+	check(not world.command("b".repeat(48),{"kind":"land_accept","offer":world.offers.keys()[0],"revision":world.revision}).ok, "connection is rechecked at acceptance")
+	check(world.municipalities["a".repeat(48)].city.funds() == before, "invalidated trade never charges buyer")
+	var host := CoopSession.new()
+	host.token = "a".repeat(48)
+	var heard: Array = []
+	host.remote_action_sound.connect(func(event: Dictionary) -> void: heard.append(event))
+	host.announce_action("b".repeat(48), {"id":1,"kind":"land_buy"}, purchased)
+	check(heard.size() == 1 and heard[0].point == purchased.sound_point, "other player's purchase carries a spatial sound position")
+	host.free()
 
 func causal_commands() -> void:
 	var host := CoopSession.new()

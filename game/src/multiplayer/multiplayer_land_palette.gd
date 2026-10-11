@@ -21,12 +21,12 @@ static func water_icon(graphics: CityUiGraphics) -> Texture2D:
 
 static func action_icon(selling: bool, water: bool, drop: Texture2D) -> Texture2D:
 	var source: Texture2D = preload("res://src/multiplayer/icons/land_sell.svg") if selling else preload("res://src/multiplayer/icons/land_buy.svg")
-	var image := Image.create(48, 36, false, Image.FORMAT_RGBA8)
-	image.blend_rect(source.get_image(), Rect2i(0, 0, 40, 36), Vector2i.ZERO)
+	var image := Image.create(36, 24, false, Image.FORMAT_RGBA8)
+	image.blend_rect(source.get_image(), Rect2i(0, 0, 24, 24), Vector2i.ZERO)
 	if water and drop != null:
 		var badge := drop.get_image()
-		badge.resize(12, 20, Image.INTERPOLATE_NEAREST)
-		image.blend_rect(badge, Rect2i(0, 0, 12, 20), Vector2i(35, 0))
+		badge.resize(10, 16, Image.INTERPOLATE_NEAREST)
+		image.blend_rect(badge, Rect2i(0, 0, 10, 16), Vector2i(26, 3))
 	return PixelArtTexture.wrap(ImageTexture.create_from_image(image))
 
 static func setup(windows: MultiplayerWindows, body: VBoxContainer) -> void:

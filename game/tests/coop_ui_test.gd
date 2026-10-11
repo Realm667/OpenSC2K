@@ -96,6 +96,30 @@ func run() -> void:
 	await weather_cases(main, guest)
 	main.reports.on_windows_menu(0)
 	check(main.city_dialogs.budget_dialog.visible, "budget opens normal city dialog")
+	var budget_dialog := main.city_dialogs.budget_dialog
+	budget_dialog.tabs.current_tab = 3
+	budget_dialog.controls[0].value = 13
+	for ordinance in [0, 1]:
+		budget_dialog.ordinance_control.ordinance_checks[ordinance].button_pressed = true
+		check(budget_dialog.visible and budget_dialog.tabs.current_tab == 3, "ordinance confirmation keeps budget and selected tab open")
+		check(budget_dialog.controls[0].value == 13, "confirmed ordinances preserve draft funding")
+	main.coop.session.world.newspaper_sequence += 1
+	main.coop.session.publish()
+	check(main.city_dialogs.newspaper_dialog.visible, "host-confirmed newspaper event reaches the player's UI")
+	main.city_dialogs.newspaper_dialog.hide()
+	main.coop.session.publish()
+	check(not main.city_dialogs.newspaper_dialog.visible, "same newspaper event is not shown twice")
+	main.camera_input.center_map_on_tile(Vector2i(26, 26))
+	await process_frame
+	main.coop.session.request({"kind":"build", "group":CityToolIds.Group.WATER, "tool":CityToolIds.Water.PUMP, "start":[26,26], "finish":[26,26], "path":[], "dragged":false})
+	main.coop.session.publish()
+	check(main.document_state.city.building_id(26,26) > 13, "demolition fixture built through authority")
+	var enhanced: bool = main.preferences.visual_enhancements.disaster_enabled
+	main.preferences.visual_enhancements.disaster_enabled = false
+	main.coop.bulldoze(Vector2i(26,26))
+	main.coop.session.publish()
+	check(main.document_state.city.building_id(26,26) <= 13 and main.map_view.presentation.transient_effect_count() > 0, "confirmed demolition produces visible local dust")
+	main.preferences.visual_enhancements.disaster_enabled = enhanced
 	var funding := BudgetPhase.funding_values(main.document_state.city)
 	funding[0] = 11
 	main.city_dialogs.budget_dialog.open_budget(funding, false, true)

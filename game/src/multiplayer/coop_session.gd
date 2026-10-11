@@ -21,7 +21,7 @@ signal seat_lobby_received(data: Dictionary)
 
 const PROTOCOL := 1
 const BUILD := "opensc2k-coop-1"
-const NETWORK_BUILD := "opensc2k-multiplayer-20"
+const NETWORK_BUILD := "opensc2k-multiplayer-21"
 const MAX_PLAYERS := 8
 var world: CoopWorld
 var active := false
@@ -1416,10 +1416,13 @@ func play_result_sounds(result: Dictionary, id: int) -> void:
 		action_sounds.emit(sounds)
 
 func announce_action(actor: String, command: Dictionary, result: Dictionary) -> void:
-	if not result.get("ok", false) or result.get("sounds", []).is_empty() or command.get("kind") != "build":
+	if not result.get("ok", false) or result.get("sounds", []).is_empty() or command.get("kind") not in ["build", "land_buy", "land_accept"]:
+		return
+	var point: Variant = result.get("sound_point", command.get("finish"))
+	if not point is Array or point.size() != 2:
 		return
 	var event := {"actor": actor.sha256_text(), "id": command.id, "sounds": result.sounds,
-		"point": command.finish, "view_owner": command.get("view_owner", actor.sha256_text())}
+		"point": point, "view_owner": command.get("view_owner", actor.sha256_text())}
 	if actor != token:
 		remote_action_sound.emit(event)
 	for peer: int in identities:

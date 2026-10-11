@@ -93,6 +93,8 @@ func snapshot_region(actor: String, viewed: String, live := false) -> Dictionary
 	result["disasters"] = []
 	result["disaster"] = own.engine.active_disaster_type
 	if viewed != actor:
+		result.erase("newspaper_sequence")
+		result.erase("newspaper_paper")
 		result["pending"] = ""
 		result["blocked"] = false
 		result["terminal"] = false

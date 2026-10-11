@@ -37,6 +37,8 @@ var live_document := MultiplayerDocument.new()
 var live_snapshot: Dictionary = {}
 var live_revision := -1
 var live_policy := -1
+var newspaper_sequence := 0
+var newspaper_paper := -1
 
 
 func open(document: Sc2File) -> bool:
@@ -84,6 +86,7 @@ func advance(delta: float) -> void:
 	# This does not enable Auto-Budget or change the single-player controller.
 	if engine.pending_interaction == "annual_budget":
 		var settled := controller.resolve_annual_budget(BudgetPhase.funding_values(city), city.auto_budget_enabled())
+		capture_newspaper(settled)
 		if not settled.ok:
 			error = settled.error
 			return
@@ -100,6 +103,7 @@ func advance(delta: float) -> void:
 		engine.pending_military_site = Rect2i()
 		engine.pending_military_base_type = 0
 		var completed := controller.resolve_military_notice()
+		capture_newspaper(completed)
 		if not completed.ok:
 			error = completed.error
 			return
@@ -107,6 +111,7 @@ func advance(delta: float) -> void:
 		policy_revision += 1
 	elif engine.pending_interaction == "military_notice":
 		var completed := controller.resolve_military_notice()
+		capture_newspaper(completed)
 		if not completed.ok:
 			error = completed.error
 			return
@@ -116,6 +121,7 @@ func advance(delta: float) -> void:
 	var pending := engine.pending_interaction
 	var blocked := controller.interaction_blocked
 	var result := controller.advance_time(minf(delta, 0.25) * 1000.0, Time.get_ticks_msec())
+	capture_newspaper(result)
 	if not result.ok:
 		error = result.error
 		controller.set_speed(GameSpeedController.Speed.PAUSED)
@@ -126,6 +132,12 @@ func advance(delta: float) -> void:
 		mark_changes(before, city.document)
 	if pending != engine.pending_interaction or blocked != controller.interaction_blocked:
 		policy_revision += 1
+
+
+func capture_newspaper(result: SimulationTickResult) -> void:
+	if result.newspaper_requested:
+		newspaper_sequence += 1
+		newspaper_paper = result.newspaper_paper
 
 
 func snapshot(force_checkpoint := false, live := false) -> Dictionary:
@@ -149,6 +161,7 @@ func snapshot(force_checkpoint := false, live := false) -> Dictionary:
 
 func snapshot_status() -> Dictionary:
 	return {"type": "state", "revision": revision, "policy": policy_revision,
+		"newspaper_sequence": newspaper_sequence, "newspaper_paper": newspaper_paper,
 		"speed": controller.speed,
 		"pending": "military_proposal" if city.document.sc2x_metadata.extensions.has("multiplayer_military") else engine.pending_interaction, "terminal": controller.terminal_blocked,
 		"blocked": controller.interaction_blocked or city.document.sc2x_metadata.extensions.has("multiplayer_military"),
@@ -344,6 +357,12 @@ func policy_command(request: Dictionary) -> Dictionary:
 				"auto_goto": city.set_auto_goto_enabled(request.get("enabled") == true)
 				"sound": city.set_sound_enabled(request.get("enabled") == true)
 				"music": city.set_music_enabled(request.get("enabled") == true)
+				"newspaper_subscription": city.set_newspaper_subscription_enabled(request.get("enabled") == true)
+				"newspaper_extras": city.set_newspaper_extras_enabled(request.get("enabled") == true)
+				"newspaper_paper":
+					if not whole_number(request.get("paper"), 0, NewsQueue.available_paper_count(city.city_status()) - 1):
+						return rejected("Invalid city option.")
+					city.document.set_misc_u32(Sc2MiscLayout.NEWSPAPER_CHOICE, int(request.paper))
 				_: return rejected("Invalid city option.")
 		"disaster":
 			if not whole_number(request.get("disaster"), 1, 18) or not point_valid(request.get("point")):
@@ -429,11 +448,15 @@ static func changed_tiles(before: Sc2File, after: Sc2File) -> PackedInt32Array:
 		if old == current:
 			continue
 		var stride: int = STRUCTURAL[id]
-		for index in mini(old.size(), current.size()):
-			if old[index] != current[index]:
-				# SC2X overlays store the low and high bytes in separate planes.
-				var tile: int = index % (before.map_size * before.map_size) if id == "XTXT" else index / stride
-				changed[tile] = true
+		for block in range(0, mini(old.size(), current.size()), 1024):
+			var end := mini(block + 1024, mini(old.size(), current.size()))
+			if old.slice(block, end) == current.slice(block, end):
+				continue
+			for index in range(block, end):
+				if old[index] != current[index]:
+					# SC2X overlays store the low and high bytes in separate planes.
+					var tile: int = index % (before.map_size * before.map_size) if id == "XTXT" else index / stride
+					changed[tile] = true
 	return PackedInt32Array(changed.keys())
 
 

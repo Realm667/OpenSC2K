@@ -16,6 +16,7 @@ const GROUPS := [
 	["name", "builds", "spent"],
 	["name", "online", "units", "aid"]]
 const PERSONAL := ["name", "online", "builds", "spent", "units", "aid"]
+const CROWN = preload("res://src/multiplayer/icons/crown.svg")
 var table: Tree
 var summary: Label
 var picker: MultiplayerTabs
@@ -127,6 +128,16 @@ func rebuild() -> void:
 			return bv == null
 		return av > bv if descending else av < bv)
 	var root := table.create_item()
+	var leaders := {}
+	for key: String in columns:
+		if key in ["name", "city", "online"]:
+			continue
+		for row: Dictionary in rows:
+			var value: Variant = row.get(key)
+			if value == null:
+				continue
+			if not leaders.has(key) or (value < leaders[key] if key == "debt" else value > leaders[key]):
+				leaders[key] = value
 	for row_index in ordered.size():
 		var row: Dictionary = ordered[row_index]
 		var item := table.create_item(root)
@@ -154,6 +165,9 @@ func rebuild() -> void:
 				if key == "name":
 					text += " · " + tr("Unranked")
 			item.set_text(index, text)
+			if leaders.has(key) and value == leaders[key]:
+				item.set_icon(index, PixelArtTexture.wrap(CROWN))
+				item.set_icon_max_width(index, 16)
 			item.set_custom_bg_color(index, Color(1, 1, 1, 0.035) if row_index % 2 else Color(0, 0, 0, 0.08))
 			item.set_tooltip_text(index, tr(COLUMNS[key]) + ": " + text + "\n" + tooltip(key))
 		if row.id == selected:

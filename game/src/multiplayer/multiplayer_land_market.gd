@@ -276,6 +276,10 @@ func select_parcel(start: Vector2i, finish: Vector2i) -> void:
 		chooser.popup_centered()
 
 func open_parcel(owner: int, tiles: Array, start: Vector2i, finish: Vector2i) -> void:
+	var own: int = windows.state.owner_ids.find(windows.coop.session.token.sha256_text()) + 1
+	if owner != own and MultiplayerLandRules.connected(tiles, windows.state.owners, own, windows.coop.app.document_state.city.map_size).size() != tiles.size():
+		windows.coop.show_message("This parcel does not connect to the buyer's city.")
+		return
 	var name := ""
 	for player: Dictionary in windows.players:
 		if player.id == windows.state.owner_ids[absi(owner) - 1]:

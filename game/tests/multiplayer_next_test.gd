@@ -286,7 +286,8 @@ func water_starts() -> void:
 	check(not parcel.is_empty(), "start crosses water while retaining a dry seed")
 	if parcel.is_empty():
 		return
-	check(parcel.water > 0 and parcel.land * 2 + parcel.water >= 196 and parcel.land * 2 + parcel.water <= 197, "water included with explicit 2:1 land-equivalent compensation")
+	var bounds := MultiplayerLandMarket.tile_bounds(parcel.tiles, 64)
+	check(parcel.water > 0 and parcel.land * 2 + parcel.water >= 196 and parcel.land * 2 + parcel.water <= 196 + 2 * maxi(bounds.size.x, bounds.size.y), "water included with 2:1 compensation and rounding to a full rectangle")
 	check(parcel.tiles.has(0), "outer-edge start reaches actual map edge")
 	var all := {}
 	for tile: int in parcel.tiles:

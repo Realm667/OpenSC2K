@@ -30,6 +30,8 @@ var live_documents: Dictionary = {}
 var shared_live_document := MultiplayerDocument.new()
 var record_cache: Dictionary = {}
 var record_signature: Array = []
+var record_overlay_cache: Dictionary = {}
+var restored_empty_corridors: Dictionary = {}
 
 
 func open(document: Sc2File) -> bool:
@@ -361,7 +363,7 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 		record_land_spending(offer.seller, "sold", int(offer.price))
 		finish_land_entry(key, "Sold", actor)
 		revision += 1
-		return accepted("Land purchased from its owner.").merged({"sounds": [ToolSoundRules.SOUND_ZONE]})
+		return land_success("Land purchased from its owner.", offer.tiles)
 	if not point_valid(request.get("start")) or not point_valid(request.get("finish")):
 		return rejected("Invalid land selection.")
 	var tiles := selected_tiles(request)
@@ -393,14 +395,14 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 		return rejected("This land purchase exceeds the supported transaction limit. Select a smaller area.")
 	if request.kind == "land_request":
 		var seller: String = actors[expected_owner - 1]
+		var rule_error := MultiplayerLandRules.transfer_error(self, seller, actor, Array(tiles))
+		if not rule_error.is_empty():
+			return rejected(rule_error)
 		if whole_number(request.get("price"), 0, 2147483647):
 			price = int(request.price)
 		if not whole_number(request.get("price"), 0, 2147483647):
 			return choice_result("Send a purchase request for %d tiles at $%d? The owner must approve before any transfer." % [tiles.size(), price], request,
 				[{"label": "Send request", "fields": {"price": price}}])
-		var rule_error := MultiplayerLandRules.transfer_error(self, seller, actor, Array(tiles))
-		if not rule_error.is_empty():
-			return rejected(rule_error)
 		if child.city.funds() < price:
 			return rejected("Insufficient funds.")
 		for record: Dictionary in offers.values():
@@ -436,7 +438,14 @@ func land_command(actor: String, request: Dictionary) -> Dictionary:
 		owners[tile] = actors.find(actor) + 1
 		tile_versions[tile] = revision + 1
 	revision += 1
-	return accepted("Land purchased.").merged({"sounds": [ToolSoundRules.SOUND_ZONE]})
+	return land_success("Land purchased.", Array(tiles))
+
+func land_success(message: String, tiles: Array) -> Dictionary:
+	var center := Vector2.ZERO
+	for tile: int in tiles:
+		center += Vector2(tile / city.map_size, tile % city.map_size)
+	center /= maxi(1, tiles.size())
+	return accepted(message).merged({"sounds": [ToolSoundRules.SOUND_ZONE], "sound_point": [roundi(center.x), roundi(center.y)]})
 
 
 func reservation_error(seller: String, buyer: String, tiles: Array) -> String:
@@ -495,7 +504,7 @@ func accept_reservation(key: String, buyer: String) -> Dictionary:
 	record_land_spending(buyer, "bought", price)
 	finish_land_entry(key, "Sold", buyer)
 	revision += 1
-	return accepted("Reservation released and land purchased. Payment went to the game.").merged({"sounds": [ToolSoundRules.SOUND_ZONE]})
+	return land_success("Reservation released and land purchased. Payment went to the game.", offer.tiles)
 
 
 func snapshot_for(actor: String, live := false) -> Dictionary:
@@ -514,15 +523,27 @@ func snapshot_for(actor: String, live := false) -> Dictionary:
 				sources.append(municipalities[player].city.document.find_chunk(id).decoded_payload)
 			if not ownership_changed and sources == composition_sources.get(id) and composed_chunks.has(id):
 				continue
-			var data := template.find_chunk(id).decoded_payload.duplicate()
+			var previous_sources: Array = composition_sources.get(id, [])
+			var incremental := not ownership_changed and composed_chunks.has(id) and previous_sources.size() == sources.size()
+			var data: PackedByteArray = composed_chunks[id].duplicate() if incremental else template.find_chunk(id).decoded_payload.duplicate()
 			var stride: int = TILE_CHUNKS[id]
-			for tile in owners.size():
-				var owner := owners[tile] - 1
-				if protection[tile] == -1:
-					owner = 0
-				if owner >= 0:
-					for byte in stride:
-						data[tile * stride + byte] = sources[owner][tile * stride + byte]
+			for block in range(0, owners.size(), 512):
+				var end := mini(block + 512, owners.size())
+				var dirty := not incremental
+				if incremental:
+					for index in sources.size():
+						if sources[index].slice(block * stride, end * stride) != previous_sources[index].slice(block * stride, end * stride):
+							dirty = true
+							break
+				if not dirty:
+					continue
+				for tile in range(block, end):
+					var owner := owners[tile] - 1
+					if protection[tile] == -1:
+						owner = 0
+					if owner >= 0:
+						for byte in stride:
+							data[tile * stride + byte] = sources[owner][tile * stride + byte]
 			composed_chunks[id] = data
 			# Simulation may mutate a packed buffer in place. Keep an immutable
 			# comparison copy so an unchanged revision never hides a changed plane.
@@ -588,6 +609,17 @@ func snapshot_for(actor: String, live := false) -> Dictionary:
 
 
 func compose_records(document: Sc2File, viewing_actor: String) -> void:
+	# Moving records change often; tile references only depend on overlay bytes
+	# and record counts. Reuse the remapped planes while those inputs are stable.
+	var overlay_key: Array = [owners.duplicate(), actors.duplicate()]
+	for actor: String in actors:
+		var source: Sc2File = municipalities[actor].city.document
+		overlay_key.append(source.find_chunk("XTXT").decoded_payload.duplicate())
+		overlay_key.append(source.find_chunk("XLAB").decoded_payload.duplicate())
+		overlay_key.append(source.find_chunk("XMIC").decoded_payload.size())
+		overlay_key.append(source.find_chunk("XTHG").decoded_payload.size())
+	var cached: Dictionary = record_overlay_cache.get(viewing_actor, {})
+	var reuse: bool = cached.get("key") == overlay_key
 	var text := document.find_chunk("XTXT").decoded_payload.duplicate()
 	var things := document.find_chunk("XTHG").decoded_payload.duplicate()
 	var facilities := document.find_chunk("XMIC").decoded_payload.duplicate()
@@ -622,6 +654,8 @@ func compose_records(document: Sc2File, viewing_actor: String) -> void:
 				ThingData.write(expanded, label_offset, OverlayData.facility_id(OverlayData.facility_record(link) + facility_base))
 		things = expanded
 		facilities.append_array(source_facilities)
+		if reuse:
+			continue
 		var signs := {}
 		for tile in owners.size():
 			if owners[tile] != actors.find(actor) + 1:
@@ -646,6 +680,11 @@ func compose_records(document: Sc2File, viewing_actor: String) -> void:
 						labels[next_sign * Sc2LabelLayout.RECORD_SIZE + byte] = source_labels[sign_id * Sc2LabelLayout.RECORD_SIZE + byte]
 					next_sign += 1
 				OverlayData.write(text, tile, signs[sign_id])
+	if reuse:
+		text = cached.text
+		labels = cached.labels
+	else:
+		record_overlay_cache[viewing_actor] = {"key": overlay_key, "text": text.duplicate(), "labels": labels.duplicate()}
 	for pair in [["XTXT", text], ["XTHG", things], ["XMIC", facilities], ["XLAB", labels]]:
 		var chunk := document.find_chunk(pair[0])
 		chunk.expected_decoded_size = pair[1].size()
@@ -771,6 +810,19 @@ func restore_shared(data: Dictionary) -> String:
 	protection.fill(0)
 	if not saved_protection.is_empty():
 		protection = PackedInt32Array(saved_protection)
+	# Older starts marked entire sector seams as public corridors. Empty seams
+	# must not imprison a city in its starting sector. Built shared infrastructure
+	# remains public; private ownership and other players' reservations are intact.
+	restored_empty_corridors.clear()
+	for tile in protection.size():
+		if protection[tile] != -1 or owners[tile] != 0:
+			continue
+		var developed := false
+		for child: CoopWorld in municipalities.values():
+			developed = developed or child.city.buildings[tile] > 13 or child.city.zones[tile] != 0 or child.city.underground[tile] != 0
+		if not developed:
+			protection[tile] = 0
+			restored_empty_corridors[tile] = true
 	host_actor = data.host
 	template = restored_template
 	offers = data.get("offers", {})
