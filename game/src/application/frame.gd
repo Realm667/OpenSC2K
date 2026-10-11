@@ -75,6 +75,8 @@ func process(delta: float) -> void:
 
 # registered windows declare whether they block. other conditions stay listed here
 func _simulation_suspended() -> bool:
+	if app.coop.active():
+		return false
 	return (
 		(app.map_view != null and (app.map_view.is_left_drag_active() or app.map_view.is_panning()))
 		or (app.city_dialogs != null and app.city_dialogs.blocks_simulation())

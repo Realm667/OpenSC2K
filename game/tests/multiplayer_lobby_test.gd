@@ -53,6 +53,12 @@ func lobby_case(mode: String) -> void:
 	check(guest.connected and guest.latest.get("lobby", {}).get("waiting", false), "guest receives lobby")
 	check(host.members[guest.token].color == "c7a0ff", "exact guest colour retained")
 	check(not host.lobby_ready.get(host.token, false), "new participant resets host readiness")
+	if mode != "coop":
+		host.request({"kind": "handicap", "seat": guest.token.sha256_text(), "funds": 15000, "tiles": 8 if mode == "shared" else 0})
+		check(host.starts.handicaps[guest.token].funds == 15000 and host.lobby_ready.is_empty(), "host handicap resets readiness")
+		guest.request({"kind": "handicap", "seat": guest.token.sha256_text(), "funds": 999999, "tiles": 0})
+		await settle()
+		check(host.starts.handicaps[guest.token].funds == 15000, "clients cannot grant themselves handicaps")
 	await await_lobby_view(host, guest)
 	host.request({"kind": "lobby_ready", "ready": true})
 	guest.request({"kind": "lobby_ready", "ready": true})
@@ -81,6 +87,10 @@ func lobby_case(mode: String) -> void:
 	await settle()
 	check(not host.waiting_for_start and not guest.latest.lobby.waiting, "both peers enter running game")
 	check(host.world.controller.speed == 2 and int(guest.latest.speed) == 2, "shared initial speed")
+	if mode != "coop":
+		check(host.world.municipalities[guest.token].city.funds() == 15000, "saved handicap applied once at start")
+		if mode == "shared":
+			check(host.world.owners.count(2) == 8, "requested start area applied")
 	guest.request({"kind": "speed", "speed": 1})
 	await settle()
 	check(host.world.controller.speed == 2, "guest cannot pause host simulation")
@@ -105,7 +115,7 @@ func lobby_case(mode: String) -> void:
 		host.world.municipalities[guest.token].city.set_age_in_days(host.world.municipalities[guest.token].city.age_in_days() + CityCalendar.DAYS_PER_YEAR)
 		await settle()
 		check(host.goal.blocked() and guest.latest.goal.winners[0].seat == guest.token.sha256_text(), "TCP victory reaches all players")
-		check(host.world.controller.speed == 1, "victory stops simulation")
+		check(host.world.controller.speed == int(host.requested_speed[host.token]), "victory dialog does not override host speed")
 		guest.request({"kind": "continue_unscored"})
 		await settle()
 		check(host.goal.blocked(), "only host can release victory")

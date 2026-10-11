@@ -34,6 +34,8 @@ func reset_pending_state() -> void:
 
 
 func open_manual_budget() -> void:
+	if app.coop.active() and app.coop.session.latest.get("visiting", false):
+		return
 	if app.coop.active():
 		app.coop.refresh_budget()
 	if app.tool_state.landscape_editor:

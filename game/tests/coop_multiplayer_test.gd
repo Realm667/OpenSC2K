@@ -168,7 +168,7 @@ func network_cases(source: Sc2File) -> void:
 		await create_timer(0.01).timeout
 		if host.disconnected_pause:
 			break
-	check(host.disconnected_pause, "disconnect pauses world")
+	check(not host.disconnected_pause, "disconnect does not override host speed")
 	check(guest.join("127.0.0.1", port, "test-code", "Bob").is_empty(), "reconnect")
 	for _frame in 100:
 		await create_timer(0.01).timeout

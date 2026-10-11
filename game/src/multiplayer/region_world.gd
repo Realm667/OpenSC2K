@@ -20,14 +20,14 @@ func command(actor: String, request: Dictionary) -> Dictionary:
 	for candidate: String in actors:
 		if candidate.sha256_text() == request.get("view_owner"):
 			viewing = candidate
+	if viewing != actor:
+		return rejected("This city view is read-only. Return to your own city to make changes.")
 	if request.get("kind") == "recall":
 		return super.command(actor, request)
 	if request.get("kind") == "build" and request.get("group") == CityToolIds.Group.DISPATCH:
 		if not point_valid(request.get("finish")) or not whole_number(request.get("tool"), 0, 2):
 			return rejected("Invalid emergency service target.")
 		return deploy_help(actor, municipalities[viewing], request)
-	if viewing != actor:
-		return rejected("You are visiting another city. Only your emergency services may assist here.")
 	if str(request.get("kind", "")).begins_with("land_"):
 		return rejected("Region cities own their entire map. Land trading is available in Shared mode.")
 	var child: CoopWorld = municipalities[actor]

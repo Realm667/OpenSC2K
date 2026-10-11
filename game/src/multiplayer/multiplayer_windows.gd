@@ -25,6 +25,9 @@ var pending_builds: Dictionary = {}
 var displayed_round := 0
 var chat_seen: Dictionary = {}
 var event_seen: Dictionary = {}
+var admin_seen: Dictionary = {}
+var map_state_generation := 0
+var displayed_map_generation := -1
 var tones: Dictionary = {}
 var chat_log: RichTextLabel
 var chat_input: LineEdit
@@ -57,7 +60,7 @@ func setup() -> void:
 	row.add_child(menu)
 	row.move_child(menu, coop.app.city_menu_bar.newspaper_menu.get_index() + 1)
 	var popup := menu.get_popup()
-	var titles := ["Scoreboard", "Chat", "Host / Join game", "Release disconnect pause", "Leave game", "Buy land", "Offer land", "Land offers", "Player seats", "Neighbouring cities", "Rematch · rotate starts", "Request land"]
+	var titles := ["Scoreboard", "Chat", "Host / Join game", "Release disconnect pause", "Leave game", "Buy land", "Offer land", "Land trade", "Player seats", "Neighbouring cities", "Rematch · rotate starts", "Request land"]
 	for id in [0, 1, 8, 9, 10, 2, 3, 4, 5, 6, 11, 7]:
 		if id in [2, 5]:
 			popup.add_separator()
@@ -249,15 +252,30 @@ func open_scoreboard() -> void:
 func update_state(value: Dictionary) -> void:
 	if not coop.session.hosting:
 		seats.window.hide()
+	if state.get("view_owner") != value.get("view_owner"):
+		if is_instance_valid(decision_dialog):
+			decision_dialog.hide()
+		coop.app.city_dialogs.budget_dialog.hide()
+		coop.app.city_dialogs.military_dialog.hide()
+		coop.app.simulation_state.military_proposal_pending = false
+		coop.app.city_dialogs.ordinance_window.hide()
+		coop.app.city_dialogs.industry_window.hide()
 	if state.is_empty():
 		chat.show()
 	state = value
+	map_state_generation += 1
 	allowance_label.text = tr("Remaining land allowance: %s · Price per tile: %s") % [MultiplayerScoreboard.money(value.get("land_allowance", 0)), MultiplayerScoreboard.money(value.get("land_price", 0))]
 	players = value.get("roster", players)
 	map_overlay.receive(players)
 	land_button.visible = value.get("mode") == "shared"
 	land_button.get_parent().columns = 3 if land_button.visible else 2
 	market.refresh(value)
+	for entry: Dictionary in value.get("admin_history", []):
+		if not admin_seen.has(entry.id):
+			admin_seen[entry.id] = true
+			var notice := tr("Administration · %s · %s: %s (%s → %s)") % [entry.name, entry.city, tr(entry.action), MultiplayerText.message(entry.before), MultiplayerText.message(entry.after)]
+			append_status(notice)
+			coop.show_message(notice)
 	competition.update(value)
 	start_lobby.update(value)
 	goal_hud.update(value, coop.session.token.sha256_text())
@@ -276,12 +294,12 @@ func update_state(value: Dictionary) -> void:
 	own_disaster = active_disaster
 	if pending == "annual_budget":
 		coop.show_message(tr("The annual budget awaits confirmation under Windows → Budget."))
-	var key := pending + str(value.get("policy", 0)) if value.get("blocked", false) else ""
+	var key := pending + str(value.get("view_owner", "")) if value.get("blocked", false) and not value.get("visiting", false) else ""
 	if key != decision_key:
 		decision_key = key
 		if is_instance_valid(decision_dialog):
 			decision_dialog.queue_free()
-		if pending == "military_proposal":
+		if pending == "military_proposal" and not value.get("visiting", false):
 			coop.refresh_budget()
 			coop.app.budget.open_military_proposal()
 		elif pending == "annual_budget":
@@ -362,7 +380,11 @@ func draw_markers() -> void:
 			for tile: int in map_overlay.highlight:
 				@warning_ignore("integer_division")
 				var polygon := CityIsometricRenderer.terrain_surface_polygon(map.city, tile / map.city.map_size, tile % map.city.map_size)
-				overlay.draw_colored_polygon(polygon, Color(1, 0.95, 0.45, 0.32))
+				overlay.draw_colored_polygon(polygon, Color(1, 0.95, 0.45, 0.22))
+				var outline := polygon.duplicate()
+				outline.append(outline[0])
+				overlay.draw_polyline(outline, Color(1, 0.95, 0.45, 0.8), 1.0 / scale)
+				overlay.draw_line(polygon[0].lerp(polygon[1], 0.25), polygon[3].lerp(polygon[2], 0.25), Color(1, 0.95, 0.45, 0.45), 1.0 / scale)
 		overlay.draw_set_transform(Vector2.ZERO)
 	for item: Dictionary in players:
 		if item.get("id") == coop.session.token.sha256_text() or not map_overlay.cursors.has(item.id):
@@ -413,6 +435,8 @@ func open_annual_budget() -> void:
 func close() -> void:
 	start_lobby.window.hide()
 	goal_hud.panel.hide()
+	goal_hud.home.hide()
+	goal_hud.visit_frame.hide()
 	competition.close()
 	seats.window.hide()
 	chat.hide()
@@ -424,7 +448,21 @@ func close() -> void:
 	map_overlay.cursors.clear()
 	map_overlay.cached_key.clear()
 	map_overlay.highlight.clear()
+	if is_instance_valid(market.detail):
+		market.detail.hide()
+	if is_instance_valid(market.map_detail):
+		market.map_detail.queue_free()
+	var minimap := coop.app.city_dialogs.city_map_window.map_control
+	minimap.preview.set_ownership({}, 0)
+	if minimap.has_meta("ownership_legend"):
+		minimap.get_meta("ownership_legend").clear()
+	displayed_map_generation = -1
+	coop.app.city_menu_bar.debug_menu.disabled = false
+	var popup := coop.app.city_menu_bar.windows_menu.get_popup()
+	for id in [0, 1, 3]:
+		popup.set_item_disabled(popup.get_item_index(id), false)
 	market.initialized = false
+	admin_seen.clear()
 	market.known.clear()
 	market.signature = ""
 	if is_instance_valid(market.window):
@@ -460,17 +498,7 @@ func select_land(action: String) -> void:
 		button.set_pressed_no_signal(false)
 	land_button.set_pressed_no_signal(true)
 	coop.app.current_tool.update_edit_state()
-	coop.show_message(tr("Select neutral tiles to buy at the displayed price. Owned tiles are skipped.") if action == "land_buy" else tr("Select land belonging to another player to send a purchase request.") if action == "land_request" else tr("Set a price, then select your land to offer."))
-	if action == "land_offer":
-		var window := make_window(tr("Sale price"))
-		var body := content(window)
-		var price := SpinBox.new()
-		price.max_value = 2147483647
-		body.add_child(price)
-		ApplicationMultiplayer.button(body, tr("Set price and select area"), func() -> void:
-			land_offer_price = int(price.value)
-			window.queue_free())
-		window.popup_centered()
+	coop.show_message(tr("Select neutral tiles to buy at the displayed price. Owned tiles are skipped.") if action == "land_buy" else tr("Select land belonging to another player to send a purchase request.") if action == "land_request" else tr("Select a parcel to review its owner, price and available trade action."))
 
 
 func open_offers() -> void:
@@ -495,15 +523,42 @@ func tick() -> void:
 		displayed_round = round_id
 		coop.app.camera_input.center_map_on_tile(Vector2i(int(own_start.point[0]), int(own_start.point[1])))
 	map_overlay.step(coop.app.get_process_delta_time())
-	if state.get("visiting", false) and coop.app.tool_state.selected_group == CityToolIds.Group.DISPATCH:
-		var availability: Array = state.get("assistance_available", [0, 0, 0])
-		for key: int in coop.app.city_toolbar.child_tool_buttons:
-			if key >= 0 and key < availability.size():
-				coop.app.city_toolbar.child_tool_buttons[key].disabled = int(availability[key]) <= 0
 	var view: Rect2 = coop.app.map_view.camera_view_rect
 	if view.size == Vector2.ZERO:
 		view = Rect2(Vector2.ZERO, coop.app.map_view.size)
+	var minimap := coop.app.city_dialogs.city_map_window.map_control
+	if coop.app.city_dialogs.city_map_window.visible and displayed_map_generation != map_state_generation:
+		displayed_map_generation = map_state_generation
+		minimap.preview.set_ownership(state, coop.app.document_state.city.map_size)
+		if not minimap.has_meta("ownership_legend"):
+			var legend := RichTextLabel.new()
+			legend.fit_content = true
+			legend.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			minimap.add_child(legend)
+			minimap.set_meta("ownership_legend", legend)
+		var legend: RichTextLabel = minimap.get_meta("ownership_legend")
+		legend.clear()
+		if state.get("mode") == "shared":
+			legend.add_text(tr("City territories") + ": ")
+			legend.tooltip_text = tr("Solid: owned land. Hatched: reserved expansion. Grey: public road and power corridors.")
+			for player: Dictionary in players:
+				legend.push_color(Color.from_string(player.get("color", "ffffff"), Color.WHITE))
+				legend.add_text("● " + str(player.name) + " · " + str(player.city) + "   ")
+				legend.pop()
 	goal_hud.layout(view)
+	var visiting: bool = state.get("visiting", false)
+	coop.app.city_menu_bar.debug_menu.disabled = not coop.session.hosting or visiting
+	var window_menu := coop.app.city_menu_bar.windows_menu.get_popup()
+	for id in [0, 1, 3]:
+		var index := window_menu.get_item_index(id)
+		if index >= 0:
+			window_menu.set_item_disabled(index, visiting)
+	if visiting:
+		coop.app.city_dialogs.budget_dialog.hide()
+		coop.app.city_dialogs.military_dialog.hide()
+		coop.app.simulation_state.military_proposal_pending = false
+		coop.app.city_dialogs.ordinance_window.hide()
+		coop.app.city_dialogs.industry_window.hide()
 	if chat.get_parent() == coop.app.map_view:
 		chat.offset_left = view.position.x + 8
 		chat.offset_right = minf(chat.offset_left + 400, view.end.x - 8)
@@ -520,11 +575,11 @@ func receive_player_event(event: Dictionary) -> void:
 	if event_seen.size() > 256:
 		event_seen.erase(event_seen.keys()[0])
 	var kind := str(event.get("kind"))
-	var text := tr("%s joined the game.") if kind == "joined" else (tr("%s left the game.") if kind == "left" else tr("%s lost the connection. The game is paused."))
+	var text := tr("%s joined the game.") if kind == "joined" else (tr("%s left the game.") if kind == "left" else tr("%s lost the connection."))
 	if kind == "taken_over":
 		text = tr("%s took over an unoccupied player seat.")
 	text = text % str(event.get("name", ""))
-	chat_log.add_text(text + "\n")
+	append_status(text)
 	coop.show_message(text)
 	play_cue("joined" if kind == "joined" else "left")
 
@@ -554,14 +609,16 @@ static func cue(kind: String) -> AudioStreamWAV:
 
 
 func dock_chat(in_lobby: bool) -> void:
-	var target: Node = start_lobby.body if in_lobby else coop.app.map_view
+	var victory := is_instance_valid(competition.ending) and competition.ending.visible
+	var embedded := in_lobby or victory
+	var target: Node = start_lobby.body if in_lobby else competition.end_rows if victory else coop.app.map_view
 	if chat.get_parent() == target:
 		return
 	chat.reparent(target, false)
-	chat.custom_minimum_size.y = 160 if in_lobby else 0
+	chat.custom_minimum_size.y = 160 if embedded else 0
 	chat.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	chat.size_flags_vertical = Control.SIZE_FILL
-	chat.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT if in_lobby else Control.PRESET_BOTTOM_LEFT)
+	chat.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT if embedded else Control.PRESET_BOTTOM_LEFT)
 	chat.show()
 	tick()
 
@@ -577,14 +634,42 @@ func preview_land(start: Vector2i, finish: Vector2i) -> void:
 	if city == null or owners.size() != city.map_size * city.map_size:
 		coop.app.map_view.clear_selection_price()
 		return
-	var count := 0
+	var selected: Array = []
 	for x in range(maxi(0, mini(start.x, finish.x)), mini(city.map_size - 1, maxi(start.x, finish.x)) + 1):
 		for y in range(maxi(0, mini(start.y, finish.y)), mini(city.map_size - 1, maxi(start.y, finish.y)) + 1):
-			if int(owners[x * city.map_size + y]) == 0 and (include_water or not city.is_water(x, y)):
-				count += 1
+			selected.append(x * city.map_size + y)
+	var owner: int = state.get("owner_ids", []).find(coop.session.token.sha256_text()) + 1
+	var eligible := MultiplayerLandRules.purchasable(city, owners, state.get("protection", []), owner, selected, include_water)
+	var count := eligible.size()
+	map_overlay.highlight = eligible
+	map_overlay.highlight_until = Time.get_ticks_msec() + 500
 	var total := count * int(state.get("land_price", 0))
 	var allowance := mini(total, int(state.get("land_allowance", 0)))
 	var payment := total - allowance
 	coop.app.map_view.set_selection_price(payment, payment <= city.funds())
 	coop.app.status_label.text = tr("Land: %d tiles · Total %s · Allowance %s · City funds %s") % [count, MultiplayerScoreboard.money(total), MultiplayerScoreboard.money(allowance), MultiplayerScoreboard.money(payment)]
 	coop.app.status_label.theme_type_variation = "" if payment <= city.funds() else "ErrorLabel"
+
+
+func append_status(text: String) -> void:
+	chat_log.push_italics()
+	# Segment literal names rather than interpreting player-supplied rich text.
+	var offset := 0
+	while offset < text.length():
+		var nearest := text.length()
+		var match_player: Dictionary = {}
+		for player: Dictionary in players:
+			var name := str(player.get("name", ""))
+			var found := text.find(name, offset) if not name.is_empty() else -1
+			if found >= 0 and found < nearest:
+				nearest = found
+				match_player = player
+		chat_log.add_text(text.substr(offset, nearest - offset))
+		if match_player.is_empty():
+			break
+		chat_log.push_color(Color(CoopSession.valid_color(match_player.get("color"))))
+		chat_log.add_text(match_player.name)
+		chat_log.pop()
+		offset = nearest + str(match_player.name).length()
+	chat_log.add_text("\n")
+	chat_log.pop()

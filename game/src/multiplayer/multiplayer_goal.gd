@@ -1,6 +1,6 @@
 class_name MultiplayerGoal
 extends RefCounted
-## Read-only victory evaluation. The session owns the shared end-of-game pause.
+## Read-only victory evaluation; only the host controls the simulation speed.
 
 var kind := "endless"
 var target := 10000

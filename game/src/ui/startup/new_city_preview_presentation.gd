@@ -22,6 +22,11 @@ func setup(result: NewCityTerrainSession.PreviewResult, colors: Sc2Palette, spri
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	clip_contents = true
+	var backdrop := ColorRect.new()
+	backdrop.color = Color("1b222b")
+	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(backdrop)
 	palette = colors
 	var city := CityState.from_document(result.document.duplicate_document())
 	var controller := GameSpeedController.new(SimulationEngine.new(city))

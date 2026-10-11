@@ -52,8 +52,13 @@ func scenario(mode: String, count: int) -> void:
 		for peer in peers:
 			var slot: Dictionary = host.starts.positions[peer.token]
 			var center := Vector2i(int(slot.point[0]), int(slot.point[1]))
-			var begin := center - Vector2i(12, 12)
+			var begin := center if mode == "shared" else center - Vector2i(12, 12)
 			var end := begin + Vector2i(width - 1, width - 1)
+			if mode == "shared":
+				peer.request({"kind": "land_buy", "start": [begin.x, begin.y], "finish": [end.x, end.y]})
+				var purchase_id := int(peer.next_command) - 1
+				check(await wait_for(func() -> bool: return int(host.members[peer.token].sequence) == purchase_id), "expansion purchase acknowledged")
+				check(await wait_for(func() -> bool: return peer.local_revision >= host.world.revision), "expansion ownership synchronized")
 			var start_time := Time.get_ticks_usec()
 			peer.request({"kind": "build", "group": CityToolIds.Group.RESIDENTIAL, "tool": 0,
 				"start": [begin.x, begin.y], "finish": [end.x, end.y], "path": [], "dragged": false})

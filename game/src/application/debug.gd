@@ -385,6 +385,8 @@ class ActionResult extends RefCounted:
 
 
 func multiplayer_debug(action: String, fields: Dictionary = {}) -> ActionResult:
+	if not app.coop.session.hosting:
+		return ActionResult.new(false, tr("Only the host can use debug actions."))
 	if not app.coop.session.connected:
 		return ActionResult.new(false, tr("Wait for the connection to be restored."))
 	var center := app.map_view.center_tile()

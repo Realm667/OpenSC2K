@@ -21,6 +21,7 @@ func run() -> void:
 	check(world.open(Sc2xDocument.create_empty(32, "Market").document), "open")
 	check(world.add_player(a).is_empty() and world.add_player(b).is_empty(), "players")
 	check(command(world, a, {"kind": "land_buy", "start": [4, 4], "finish": [6, 6], "price": 90}).ok, "buy neutral")
+	check(command(world, b, {"kind": "land_buy", "start": [3, 4], "finish": [3, 6]}).ok, "buyer has connecting territory")
 	var before_a: int = world.municipalities[a].city.funds()
 	var before_b: int = world.municipalities[b].city.funds()
 	check(command(world, b, {"kind": "land_request", "start": [4, 4], "finish": [5, 5], "price": 40}).ok, "foreign land creates request")
@@ -36,6 +37,7 @@ func run() -> void:
 	check(command(world, a, {"kind": "land_withdraw", "offer": "2"}).ok, "seller withdraws")
 	check(not command(world, b, {"kind": "land_accept", "offer": "2"}).ok, "withdraw wins before purchase")
 	check(world.municipalities[b].city.funds() == before_b - 40, "failed accept cannot charge")
+	world.owners[world.city.index_of(5, 6)] = 2
 	check(command(world, b, {"kind": "land_request", "start": [6, 6], "finish": [6, 6], "price": 10}).ok, "second request")
 	check(command(world, a, {"kind": "land_decline", "offer": "3"}).ok, "owner declines request")
 	check(world.land_history.back().status == "Declined", "decline history")

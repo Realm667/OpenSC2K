@@ -203,6 +203,8 @@ func sync_city_option_menus() -> void:
 	app.city_files.sync_upgrade_city_option()
 	var has_city := app.document_state.city != null
 	app.options_menu.disabled = not has_city
+	var visiting: bool = app.coop.active() and app.coop.session.latest.get("visiting", false)
+	app.disasters_menu.disabled = not has_city or visiting
 
 	if app.view_menu != null:
 		app.view_menu.disabled = not has_city
@@ -218,6 +220,8 @@ func sync_city_option_menus() -> void:
 		var option_index := app.options_menu.get_popup().get_item_index(option_id)
 
 		if option_index >= 0:
+			if option_id == MENU_AUTO_BUDGET:
+				app.options_menu.get_popup().set_item_disabled(option_index, visiting)
 			app.options_menu.get_popup().set_item_checked(
 				option_index, bool(option_states[option_id])
 			)

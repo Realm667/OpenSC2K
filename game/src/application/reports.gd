@@ -138,6 +138,8 @@ func start_disaster_at_view_center(id: int) -> DisasterReportResult:
 
 
 func on_windows_menu(id: int) -> void:
+	if app.coop.active() and app.coop.session.latest.get("visiting", false) and id in [0, 1, 3]:
+		return
 	if id == 0:
 		app.budget.open_manual_budget()
 	elif id == 1:

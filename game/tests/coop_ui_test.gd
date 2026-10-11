@@ -114,6 +114,7 @@ func run() -> void:
 	guest.queue_free()
 	main.coop.leave()
 	await process_frame
+	check(not main.city_menu_bar.debug_menu.disabled and not main.city_menu_bar.windows_menu.get_popup().is_item_disabled(0), "leaving multiplayer restores local administrative menus")
 	check(not main.coop.active() and main.main_menu.visible, "leave returns to singleplayer menu")
 	check(not main.visual_preparation.busy and main.visual_preparation.banks.is_empty(), "leave releases pending visual banks before clearing the city")
 	main.coop.mode_picker.select(1)
@@ -141,7 +142,7 @@ func run() -> void:
 	var hud := main.coop.windows.goal_hud
 	var visible_map := Rect2(main.map_view.global_position + main.map_view.camera_view_rect.position, main.map_view.camera_view_rect.size)
 	check(visible_map.encloses(hud.panel.get_global_rect()), "victory HUD fits inside the visible map below menu bar")
-	check(hud.panel.visible and hud.rows.get_child_count() > 0 and hud.rows.get_child(0).get_child(0).value == 40, "live wealth progress displayed")
+	check(hud.panel.visible and hud.rows.get_child_count() > 0 and hud.rows.get_child(0).get_child(0).get_child(0).value == 40, "live wealth progress displayed")
 	check(hud.rows.get_child(0).size.y > 0, "goal values and holding duration remain visible")
 	hud.panel.custom_minimum_size.x = 400
 	main.coop.windows.tick()
@@ -170,10 +171,21 @@ func run() -> void:
 	main.coop.windows.receive_chat(entry)
 	main.coop.windows.receive_chat(entry)
 	check(main.coop.windows.chat_log.get_parsed_text().count("unique chat") == 1, "chat de-duplicates deliveries")
+	main.coop.session.request({"kind": "land_offer", "start": [4, 4], "finish": [4, 4], "price": 20})
+	main.coop.windows.open_offers()
+	await process_frame
+	var parcel: Dictionary = main.coop.session.latest.offers[0]
+	main.coop.windows.market.review(parcel)
+	await process_frame
+	check(main.coop.windows.market.detail.visible, "parcel details and map preview open")
+	main.coop.windows.market.show_on_map(parcel)
+	check(main.coop.windows.map_overlay.highlight == parcel.tiles, "map highlights the exact trade parcel")
+	main.coop.windows.market.map_detail.queue_free()
 	main.current_tool.select_tool_group(9)
 	check(not main.city_toolbar.land_mode and not main.coop.windows.land_button.button_pressed, "normal tool exits land mode")
 	main.coop.leave()
 	await process_frame
+	await readonly_city(main)
 	main.queue_free()
 	await process_frame
 	print("Koop UI checks: %d failures" % failures)
@@ -315,3 +327,56 @@ func cloud_front_cases(main: CityApplication) -> void:
 	for layer in [remote_clouds.layer, remote_clouds.fog_overlay.layer, remote_clouds.fog_overlay.height_viewport]:
 		if layer != null:
 			layer.queue_free()
+
+func readonly_city(main: CityApplication) -> void:
+	main.coop.mode_picker.select(2)
+	main.coop.port.value = 0
+	main.coop.host_document(Sc2xDocument.create_empty(32, "Own city").document)
+	var guest := CoopSession.new()
+	root.add_child(guest)
+	guest.join("127.0.0.1", main.coop.session.server.get_local_port(), main.coop.join_code.text, "Other mayor")
+	for frame in 200:
+		await create_timer(0.01).timeout
+		if guest.connected:
+			break
+	check(guest.connected, "Region UI peer connected")
+	if not guest.connected:
+		guest.queue_free()
+		main.coop.leave()
+		return
+	var other: CoopWorld = main.coop.session.world.municipalities[guest.token]
+	other.city.document.set_city_name("Visited city")
+	other.city.set_funds(12345)
+	other.revision += 1
+	main.coop.session.world.revision += 1
+	main.coop.session.waiting_for_start = false
+	main.coop.session.publish()
+	main.reports.on_windows_menu(0)
+	main.coop.session.request({"kind": "view_city", "seat": guest.token.sha256_text()})
+	await process_frame
+	main.coop.windows.tick()
+	check(main.document_state.city.city_name() == "Visited city" and main.document_state.city.funds() == 12345, "visited city data drives local reports")
+	check(not main.city_dialogs.budget_dialog.visible, "own budget closes on visit")
+	main.reports.on_windows_menu(0)
+	check(not main.city_dialogs.budget_dialog.visible and main.city_menu_bar.debug_menu.disabled, "visitor administrative UI is disabled")
+	check(main.coop.windows.goal_hud.home.visible and main.coop.windows.goal_hud.visit_frame.visible, "visit frame and return button shown even without a goal")
+	other.city.document.sc2x_metadata.extensions["multiplayer_military"] = 2
+	other.revision += 1
+	main.coop.session.world.revision += 1
+	main.coop.session.publish()
+	await process_frame
+	check(not main.city_dialogs.military_dialog.visible and main.coop.windows.state.pending == "", "owner decision is never mirrored to spectators")
+	main.coop.session.request({"kind": "debug", "action": "add_funds", "value": 1000})
+	check(other.city.funds() == 12345, "even host visit is read-only")
+	main.coop.session.request({"kind": "view_city", "seat": main.coop.session.token.sha256_text()})
+	main.reports.on_windows_menu(0)
+	main.coop.session.request({"kind": "speed", "speed": 5})
+	var day := main.coop.session.world.city.age_in_days()
+	for frame in 8:
+		main.coop.session.world.advance(0.1)
+	check(main.coop.session.world.city.age_in_days() > day and not main.frame._simulation_suspended(), "open budget never suspends multiplayer")
+	guest.stop()
+	guest.queue_free()
+	main.coop.leave()
+	await process_frame
+	check(not main.city_menu_bar.debug_menu.disabled and not main.city_menu_bar.windows_menu.get_popup().is_item_disabled(0), "leaving multiplayer restores local administrative menus")
