@@ -18,6 +18,23 @@ static func capture(world: CoopWorld, actor: String) -> Dictionary:
 	var counts: Dictionary
 	if cached.get("buildings") == city.buildings and cached.get("zones") == city.zones and cached.get("owners") == owners:
 		counts = cached.counts
+	elif cached.has("counts") and cached.buildings.size() == city.buildings.size() and cached.zones.size() == city.zones.size() and cached.owners.size() == owners.size():
+		# Packed slices compare in native code. A single building must not force
+		# a GDScript scan of every tile in every recipient's statistics table.
+		counts = cached.counts.duplicate()
+		for begin in range(0, city.buildings.size(), 512):
+			var end := mini(begin + 512, city.buildings.size())
+			if cached.buildings.slice(begin, end) == city.buildings.slice(begin, end) and cached.zones.slice(begin, end) == city.zones.slice(begin, end) and (owners.is_empty() or cached.owners.slice(begin, end) == owners.slice(begin, end)):
+				continue
+			for tile in range(begin, end):
+				var before: bool = owners.is_empty() or cached.owners[tile] == owner
+				var after: bool = owners.is_empty() or owners[tile] == owner
+				if before == after and cached.buildings[tile] == city.buildings[tile] and cached.zones[tile] == city.zones[tile]:
+					continue
+				if before:
+					adjust(counts, cached.buildings[tile], cached.zones[tile], -1)
+				if after:
+					adjust(counts, city.buildings[tile], city.zones[tile], 1)
 	else:
 		counts = {"land": 0, "built": 0, "residential": 0, "commercial": 0, "industrial": 0}
 		for tile in city.buildings.size():
@@ -33,6 +50,7 @@ static func capture(world: CoopWorld, actor: String) -> Dictionary:
 				counts.commercial += 1
 			elif zone in [5, 6]:
 				counts.industrial += 1
+	if counts != cached.get("counts") or cached.get("buildings") != city.buildings or cached.get("zones") != city.zones or cached.get("owners") != owners:
 		own.statistics_tiles[owner] = {"buildings": city.buildings.duplicate(), "zones": city.zones.duplicate(), "owners": owners.duplicate(), "counts": counts}
 	result.merge(counts, true)
 	if world is SharedWorld:
@@ -49,3 +67,16 @@ static func capture(world: CoopWorld, actor: String) -> Dictionary:
 			if unit.get("actor") == actor.sha256_text():
 				result.units += 1
 	return result
+
+
+static func adjust(counts: Dictionary, building: int, zone: int, amount: int) -> void:
+	counts.land += amount
+	if building > 13:
+		counts.built += amount
+	match zone & 15:
+		1, 2:
+			counts.residential += amount
+		3, 4:
+			counts.commercial += amount
+		5, 6:
+			counts.industrial += amount
