@@ -24,12 +24,6 @@ func prepare(world: SharedWorld, members: Dictionary, commit := true) -> String:
 	var width := size / GRID
 	var protected := PackedInt32Array()
 	protected.resize(world.owners.size())
-	# Internal open corridors remain; the exterior edge is available to cities.
-	for tile in protected.size():
-		var x := tile / size
-		var y := tile % size
-		if world.owners[tile] == 0 and ((x > 0 and x % width == 0) or (y > 0 and y % width == 0)):
-			protected[tile] = -1
 	var chosen := {}
 	var used: Array[int] = []
 	var amount := MultiplayerStartParcel.standard(size)
@@ -159,12 +153,12 @@ func repair_reserved_corridors(world: SharedWorld) -> void:
 		var start: Dictionary = positions[actor]
 		if not start.has("land") or not start.has("water"):
 			continue
-		var parcel := MultiplayerStartParcel.make(terrain, original, int(start.slot), int(start.land) + int(start.water) / 2)
+		var parcel := MultiplayerStartParcel.legacy_make(terrain, original, int(start.slot), int(start.land) + int(start.water) / 2)
 		if parcel.is_empty() or parcel.land != start.land or parcel.water != start.water or [parcel.center.x, parcel.center.y] != start.point:
 			continue
 		var owner := world.actors.find(actor) + 1
 		for tile: int in parcel.reserve:
-			if world.owners[tile] != 0 or world.protection[tile] != -1:
+			if world.owners[tile] != 0 or (world.protection[tile] != -1 and not world.restored_empty_corridors.has(tile)):
 				continue
 			var built := false
 			for city: CoopWorld in world.municipalities.values():

@@ -9,6 +9,60 @@ var lines: Dictionary = {}
 var layer_cache: Dictionary = {}
 var highlight: Array = []
 var highlight_until := 0
+var owned_tiles: Array = []
+var reserved_tiles: Array = []
+var boundary_edges: Dictionary = {}
+var ownership_generation := 0
+var occlusion_generation := 0
+var segment_cache: Dictionary = {}
+var segment_context: Array = []
+
+func invalidate_occlusion(rects: Array[Rect2i]) -> void:
+	var changed := false
+	for key: Vector3i in segment_cache.keys():
+		for rect: Rect2i in rects:
+			if segment_cache[key].bounds.intersects(rect):
+				segment_cache.erase(key)
+				changed = true
+				break
+	if changed:
+		occlusion_generation += 1
+
+func receive_ownership(state: Dictionary) -> void:
+	var owned: Array = state.get("owners", [])
+	var protection: Array = state.get("protection", [])
+	if owned == owned_tiles and protection == reserved_tiles:
+		return
+	owned_tiles = owned.duplicate()
+	reserved_tiles = protection.duplicate()
+	ownership_generation += 1
+	layer_cache.clear()
+	segment_cache.clear()
+	boundary_edges.clear()
+	var extended := owned.duplicate()
+	for tile in mini(extended.size(), protection.size()):
+		if int(extended[tile]) == 0 and int(protection[tile]) > 0:
+			extended[tile] = protection[tile]
+	var size := roundi(sqrt(owned.size()))
+	if size == 0:
+		return
+	for suffix: String in ["", ":reserved"]:
+		var ownership: Array = extended if not suffix.is_empty() else owned
+		var edges: Array = []
+		if suffix.is_empty() or extended != owned:
+			for tile in ownership.size():
+				var owner := int(ownership[tile])
+				if owner <= 0:
+					continue
+				@warning_ignore("integer_division")
+				var point := Vector2i(tile / size, tile % size)
+				var visible := 0
+				for edge in 4:
+					if edge_visible(ownership, size, point, edge):
+						visible |= 1 << edge
+				if visible:
+					edges.append([point, owner, visible])
+		boundary_edges[suffix] = edges
 
 static func edge_visible(ownership: Array, size: int, tile: Vector2i, edge: int) -> bool:
 	var near: Vector2i = tile + DIRECTIONS[edge]
@@ -67,43 +121,48 @@ func step(delta: float) -> void:
 		cursors[id].position = Vector2(cursors[id].position).lerp(cursors[id].target, 1.0 - exp(-28.0 * delta))
 
 func boundaries(app: CityApplication, state: Dictionary) -> Dictionary:
-	var owned: Array = state.get("owners", [])
-	var protection: Array = state.get("protection", [])
-	var extended := owned.duplicate()
-	for tile in mini(extended.size(), protection.size()):
-		if int(extended[tile]) == 0 and int(protection[tile]) > 0:
-			extended[tile] = protection[tile]
-	var combined := boundary_layer(app, state, owned, "")
-	if extended != owned:
-		combined.merge(boundary_layer(app, state, extended, ":reserved"))
+	var combined := boundary_layer(app, state, owned_tiles, "")
+	if not boundary_edges.get(":reserved", []).is_empty():
+		combined.merge(boundary_layer(app, state, owned_tiles, ":reserved"))
 	return combined
 
-func boundary_layer(app: CityApplication, state: Dictionary, ownership: Array, suffix: String) -> Dictionary:
+func boundary_layer(app: CityApplication, state: Dictionary, _ownership: Array, suffix: String) -> Dictionary:
 	var city := app.document_state.city
 	var map := app.map_view
 	var scale: float = map.camera._view_scale()
 	var offset: Vector2 = map.camera._draw_offset(scale)
 	var area := Rect2(-offset / scale, map.size / scale).grow(3)
-	# Cache at the network display cadence, including newly arrived render regions.
-	var key := [ownership.hash(), city.document.get_instance_id(), city.chunk_revision("XBLD"), city.chunk_revision("ALTM"), city.chunk_revision("XTER"), area, app.static_render.city_view_size(), Time.get_ticks_msec() / 500]
+	var context := [city.document.get_instance_id(), city.chunk_revision("ALTM"), city.chunk_revision("XTER"),
+		app.static_render.city_view_size(), city.compass_rotation(), app.view_state.surface_visibility]
+	if context != segment_context:
+		segment_context = context.duplicate(true)
+		segment_cache.clear()
+		occlusion_generation += 1
+	# Static rendering invalidates only segments intersecting changed silhouettes.
+	var key := [ownership_generation, state.get("owner_ids"), occlusion_generation, area]
 	if layer_cache.has(suffix) and layer_cache[suffix].key == key:
 		return layer_cache[suffix].lines.duplicate()
 	cached_key = key
 	lines.clear()
 	var ids: Array = state.get("owner_ids", [])
-	for tile in ownership.size():
-		var owner := int(ownership[tile])
-		if owner <= 0 or owner > ids.size():
+	for entry: Array in boundary_edges.get(suffix, []):
+		var point: Vector2i = entry[0]
+		var owner: int = entry[1]
+		if owner > ids.size():
 			continue
-		@warning_ignore("integer_division")
-		var point := Vector2i(tile / city.map_size, tile % city.map_size)
 		var polygon := CityIsometricRenderer.terrain_surface_polygon(city, point.x, point.y)
 		if not area.intersects(Rect2(polygon[0], Vector2.ZERO).expand(polygon[1]).expand(polygon[2]).expand(polygon[3])):
 			continue
 		for edge in 4:
-			if not edge_visible(ownership, city.map_size, point, edge):
+			if int(entry[2]) & (1 << edge) == 0:
 				continue
-			var segments := visible_segments(app, point, polygon[edge], polygon[(edge + 1) % 4])
+			var segment_key := Vector3i(point.x, point.y, edge)
+			if not segment_cache.has(segment_key):
+				var a: Vector2 = polygon[edge]
+				var b: Vector2 = polygon[(edge + 1) % 4]
+				segment_cache[segment_key] = {"bounds": Rect2i(Rect2(a, Vector2.ZERO).expand(b).grow(2)),
+					"segments": visible_segments(app, point, a, b)}
+			var segments: PackedVector2Array = segment_cache[segment_key].segments
 			var existing: PackedVector2Array = lines.get(str(ids[owner - 1]) + suffix, PackedVector2Array())
 			existing.append_array(segments)
 			lines[str(ids[owner - 1]) + suffix] = existing

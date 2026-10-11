@@ -171,10 +171,8 @@ func _open_ordinance_window() -> void:
 	var control := app.city_dialogs.ordinance_window.ordinance_control
 	control.command_sink = Callable()
 	if app.coop.active():
-		var policy := app.coop.session.local_policy
 		control.command_sink = func(index: int, enabled: bool) -> void:
-			app.coop.session.request({"kind": "ordinance", "ordinance": index, "enabled": enabled, "policy": policy})
-			app.city_dialogs.ordinance_window.hide()
+			app.coop.session.request({"kind": "ordinance", "ordinance": index, "enabled": enabled})
 	var result: OrdinanceCommand.Result = app.city_dialogs.ordinance_window.open_city(app.document_state.city)
 
 	if not result.ok:
@@ -253,7 +251,10 @@ func on_newspaper_menu(id: int) -> void:
 
 	# the original saves the paper that the player opens. a subscribed or extra
 	# edition opens this paper
-	if not app.document_state.city.document.set_misc_u32(Sc2MiscLayout.NEWSPAPER_CHOICE, id):
+	if app.coop.active():
+		if not app.coop.session.latest.get("visiting", false) and app.document_state.city.document.misc_u32(Sc2MiscLayout.NEWSPAPER_CHOICE) != id:
+			app.coop.session.request({"kind": "city_option", "option": "newspaper_paper", "paper": id})
+	elif not app.document_state.city.document.set_misc_u32(Sc2MiscLayout.NEWSPAPER_CHOICE, id):
 		app.interface.show_error("Cannot store the newspaper choice.")
 
 		return
@@ -276,6 +277,10 @@ func _toggle_newspaper_option(id: int) -> void:
 	var city := app.document_state.city
 	var subscription := id == CityMenuBarView.MENU_NEWSPAPER_SUBSCRIPTION
 	var enabled := not (city.newspaper_subscription_enabled() if subscription else city.newspaper_extras_enabled())
+	if app.coop.active():
+		if not app.coop.session.latest.get("visiting", false):
+			app.coop.session.request({"kind": "city_option", "option": "newspaper_subscription" if subscription else "newspaper_extras", "enabled": enabled})
+		return
 	var stored := (
 		city.set_newspaper_subscription_enabled(enabled)
 		if subscription

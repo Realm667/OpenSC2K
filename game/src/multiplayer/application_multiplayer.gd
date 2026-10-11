@@ -237,6 +237,7 @@ static func city_fields(state: Dictionary) -> Dictionary:
 
 
 func receive_state(state: Dictionary) -> void:
+	var same_view: bool = windows.state.get("view_owner") == state.get("view_owner")
 	windows.update_state(state)
 	if not str(state.get("error", "")).is_empty():
 		show_message(str(state.error))
@@ -245,6 +246,8 @@ func receive_state(state: Dictionary) -> void:
 	if unchanged:
 		app.simulation_state.speed_controller.speed = int(state.get("speed", 1))
 		app.frame.sync_speed_ui()
+		refresh_budget_view()
+		receive_newspaper(state)
 		return
 	var document := MultiplayerDocument.restore(state, last_live_state, app.document_state.current_document) if live else Sc2File.new()
 	if document == null or (not live and not document.parse(Marshalls.base64_to_raw(state.city))) or not document.is_sc2x() or document.map_size not in Sc2File.MAP_SIZES:
@@ -300,12 +303,19 @@ func receive_state(state: Dictionary) -> void:
 		Sc2xCheckpoint.restore(app.simulation_state.speed_controller, previous.sc2x_metadata)
 		if map_changed:
 			app.static_render.refresh_after_city_edit(edit)
+			if app.render_caches.region_cache == null:
+				windows.map_overlay.segment_cache.clear()
+				windows.map_overlay.occlusion_generation += 1
+			if same_view:
+				show_demolition(edit)
 		app.moving_sprites.refresh_moving_things()
 		app.interface.refresh_details()
 	app.city_menu_bar.set_city_name(app.document_state.city.display_name(),
 		DebugFileInfo.city_tooltip(app.document_state.city.display_name(), app.document_state.current_document))
 	app.simulation_state.speed_controller.speed = int(state.get("speed", 1))
 	app.frame.sync_speed_ui()
+	refresh_budget_view()
+	receive_newspaper(state)
 	save_identity()
 
 
@@ -357,6 +367,62 @@ func request_speed(value: int) -> void:
 
 func refresh_budget() -> void:
 	policy_at_open = session.local_policy
+	budget_at_open = BudgetPhase.funding_values(app.document_state.city)
+
+var budget_at_open := PackedInt32Array()
+var newspaper_seen: Dictionary = {}
+
+func refresh_budget_view() -> void:
+	var dialog := app.city_dialogs.budget_dialog
+	if not mirrored or not dialog.visible:
+		return
+	# Refresh confirmed ordinances and accounting without replacing draft funding,
+	# Auto-Budget, focus, or the selected tab. Foreign funding edits keep the
+	# original policy guard so stale drafts cannot silently overwrite them.
+	var current := BudgetPhase.funding_values(app.document_state.city)
+	if current.size() == budget_at_open.size():
+		for index in [3, 4]:
+			current[index] = budget_at_open[index]
+	if current == budget_at_open:
+		policy_at_open = session.local_policy
+	dialog.set_city(app.document_state.city)
+	app.budget._update_bond_controls()
+
+func receive_newspaper(state: Dictionary) -> void:
+	if not mirrored or state.get("visiting", false):
+		return
+	var owner := str(state.get("view_owner", session.token))
+	var sequence := int(state.get("newspaper_sequence", 0))
+	var previous := int(newspaper_seen.get(owner, sequence))
+	newspaper_seen[owner] = sequence
+	if sequence > previous:
+		app.reports.open_scheduled_newspaper(int(state.get("newspaper_paper", -1)))
+
+func show_demolition(edit: EditCommandResult) -> void:
+	if not edit.old_payloads.has("XBLD") or not edit.new_payloads.has("XBLD"):
+		return
+	var old: PackedByteArray = edit.old_payloads.XBLD
+	var current: PackedByteArray = edit.new_payloads.XBLD
+	var effects: Array[EffectEvent] = []
+	var city := app.document_state.city
+	var map := app.map_view
+	var scale: float = map.camera._view_scale()
+	var offset: Vector2 = map.camera._draw_offset(scale)
+	for block in range(0, mini(old.size(), current.size()), 512):
+		var end := mini(block + 512, mini(old.size(), current.size()))
+		if old.slice(block, end) == current.slice(block, end):
+			continue
+		for tile in range(block, end):
+			if old[tile] <= 13 or current[tile] > 13:
+				continue
+			@warning_ignore("integer_division")
+			var point := Vector2i(tile / city.map_size, tile % city.map_size)
+			if not map.camera_view_rect.grow(64).has_point(MultiplayerMapOverlay.project(city, Vector2(point)) * scale + offset):
+				continue
+			for frame in 4:
+				effects.append(EffectEvent.new(point, 1392 + frame, Vector2i.ZERO, false, frame))
+	if not effects.is_empty():
+		app.effects_audio.show_effect_events(effects, [])
 
 
 func send_decision(accepted: bool) -> void:
@@ -395,6 +461,7 @@ func confirm_leave() -> void:
 
 func leave() -> void:
 	session.stop()
+	newspaper_seen.clear()
 	mirrored = false
 	last_city_bytes = ""
 	last_live_state.clear()

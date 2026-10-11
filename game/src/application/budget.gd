@@ -67,8 +67,7 @@ func open_budget_dialog(values: PackedInt32Array, annual: bool) -> void:
 	ordinance_control.command_sink = Callable()
 	if app.coop.active():
 		ordinance_control.command_sink = func(index: int, enabled: bool) -> void:
-			app.coop.session.request({"kind": "ordinance", "ordinance": index, "enabled": enabled, "policy": app.coop.policy_at_open})
-			app.city_dialogs.budget_dialog.hide()
+			app.coop.session.request({"kind": "ordinance", "ordinance": index, "enabled": enabled})
 	app.simulation_state.annual_budget_pending = annual
 	app.city_dialogs.budget_dialog.open_budget(
 		values,
@@ -157,7 +156,7 @@ func request_repay_bond() -> void:
 func resolve_bond_action(action: String, confirmed: bool) -> void:
 	if app.coop.active():
 		if confirmed:
-			app.coop.session.request({"kind": "bond" if action == "issue" else "repay", "policy": app.coop.policy_at_open})
+			app.coop.session.request({"kind": "bond" if action == "issue" else "repay"})
 		return
 	if app.document_state.city == null or action.is_empty():
 		return

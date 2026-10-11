@@ -67,6 +67,13 @@ func run() -> void:
 				edges += int(MultiplayerMapOverlay.edge_visible(owners, 4, Vector2i(x, y), edge))
 	check(edges == 16, "solid 4x4 parcel has sixteen exterior segments, no crossbars")
 	var motion := MultiplayerMapOverlay.new()
+	motion.segment_cache[Vector3i(0, 0, 0)] = {"bounds": Rect2i(0, 0, 10, 10)}
+	motion.segment_cache[Vector3i(1, 0, 0)] = {"bounds": Rect2i(100, 100, 10, 10)}
+	motion.invalidate_occlusion([Rect2i(2, 2, 5, 5)])
+	check(motion.segment_cache.size() == 1 and motion.segment_cache.has(Vector3i(1, 0, 0)), "changed silhouette invalidates only intersecting boundary segments")
+	var generation := motion.occlusion_generation
+	motion.invalidate_occlusion([Rect2i(20, 20, 5, 5)])
+	check(motion.occlusion_generation == generation, "unrelated scene edits preserve boundary cache")
 	motion.receive([{"id": "a", "online": true, "cursor": [1.2, 3.4]}])
 	motion.receive([{"id": "a", "online": true, "cursor": [2.2, 3.4]}])
 	motion.step(1.0 / 60.0)

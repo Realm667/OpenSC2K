@@ -297,6 +297,7 @@ func update_state(value: Dictionary) -> void:
 	if state.is_empty():
 		chat.show()
 	state = value
+	map_overlay.receive_ownership(value)
 	map_state_generation += 1
 	allowance_label.text = tr("Remaining land allowance: %s · Price per tile: %s") % [MultiplayerScoreboard.money(value.get("land_allowance", 0)), MultiplayerScoreboard.money(value.get("land_price", 0))]
 	players = value.get("roster", players)

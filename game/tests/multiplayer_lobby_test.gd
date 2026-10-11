@@ -90,7 +90,7 @@ func lobby_case(mode: String) -> void:
 	if mode != "coop":
 		check(host.world.municipalities[guest.token].city.funds() == 15000, "saved handicap applied once at start")
 		if mode == "shared":
-			check(host.world.owners.count(2) == 8, "requested start area applied")
+			check(host.world.owners.count(2) == 9, "eight requested fields round up to a complete near-square 3x3 start")
 	guest.request({"kind": "speed", "speed": 1})
 	await settle()
 	check(host.world.controller.speed == 2, "guest cannot pause host simulation")
