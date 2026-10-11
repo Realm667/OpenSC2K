@@ -677,6 +677,9 @@ func make_state(recipient := "") -> Dictionary:
 		state = world.snapshot_region(actor, viewed_cities.get(actor, actor))
 	else:
 		state = world.snapshot_for(actor) if world is SharedWorld else world.snapshot()
+	if waiting_for_start and world is SharedWorld:
+		if not starts.prepare(world, members, false).is_empty():
+			starts.preview.clear()
 	state["goal"] = goal.saved()
 	state["loans"] = loans.public_rows()
 	state["starts"] = starts.public_positions()
