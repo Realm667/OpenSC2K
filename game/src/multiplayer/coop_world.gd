@@ -79,14 +79,15 @@ func advance(delta: float) -> void:
 		# this city's mayor answers; choosing nothing never declines the proposal.
 		city.document.sc2x_metadata.extensions["multiplayer_military"] = engine.forced_military_base_type
 		engine.forced_military_base_type = 0
-		var placeholder := MilitaryProposalPhase.Result.new()
-		placeholder.ok = true
-		var completed := engine._complete_military_proposal(placeholder)
+		# Complete only the interrupted day via the public controller API. An empty
+		# notice reserves no military site and leaves the stored decision unanswered.
+		engine.pending_interaction = "military_notice"
+		engine.pending_military_site = Rect2i()
+		engine.pending_military_base_type = 0
+		var completed := controller.resolve_military_notice()
 		if not completed.ok:
 			error = completed.error
 			return
-		controller._consume_day_result(SimulationTickResult.new(), completed)
-		controller.interaction_blocked = not engine.pending_interaction.is_empty()
 		revision += 1
 		policy_revision += 1
 	elif engine.pending_interaction == "military_notice":
