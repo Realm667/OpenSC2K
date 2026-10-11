@@ -99,7 +99,7 @@ func rebuild() -> void:
 					parties.push_color(Color(CoopSession.valid_color(player.color)))
 					parties.add_text(str(player.name) + " · " + str(player.city) + "  ")
 					parties.pop()
-		ApplicationMultiplayer.label(box, tr("%d tiles · %s: %s · %s per tile") % [record.count, tr("You receive") if identity == record.seller else tr("You pay"), MultiplayerScoreboard.money(record.price), MultiplayerScoreboard.money(int(record.price) / maxi(1, int(record.count)))])
+		ApplicationMultiplayer.label(box, tr("%d tiles · %s: %s · %s per tile") % [record.count, tr("You receive") if identity == record.seller else tr("You pay"), MultiplayerScoreboard.money(record.price), ("≈ " if int(record.price) % maxi(1, int(record.count)) != 0 else "") + MultiplayerScoreboard.money(int(record.price) / maxi(1, int(record.count)))])
 		ApplicationMultiplayer.label(box, "◷ " + ((tr("Your response required") if record.get("awaiting") == identity else tr("Awaiting response")) if not closed else tr(record.status)))
 		var actions := HFlowContainer.new()
 		box.add_child(actions)

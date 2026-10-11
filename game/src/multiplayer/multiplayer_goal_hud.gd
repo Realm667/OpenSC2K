@@ -29,8 +29,11 @@ func _init(windows: MultiplayerWindows) -> void:
 	heading.add_child(goal_icon)
 	title = ApplicationMultiplayer.label(heading, "")
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	title.autowrap_mode = TextServer.AUTOWRAP_OFF
+	title.custom_minimum_size.x = 0
 	var stats := ApplicationMultiplayer.button(heading, tr("Statistics"), windows.open_scoreboard)
 	stats.icon = preload("res://src/ui/city_windows/icons/budget_history.svg")
+	stats.add_theme_constant_override("icon_max_width", 18)
 	stats.tooltip_text = tr("Open scoreboard")
 	home = ApplicationMultiplayer.button(windows.coop.app.map_view, tr("Return to your city"), func() -> void:
 		windows.coop.session.request({"kind": "view_city", "seat": windows.coop.session.token.sha256_text()}))

@@ -149,6 +149,8 @@ func draw_fireworks() -> void:
 		if phase > 1.8:
 			continue
 		var origin := point + Vector2((burst - 2) * 52, -90 - (burst % 2) * 45)
+		# Keep the celebration above the centred results instead of hidden behind it.
+		origin.y = maxf(map.camera_view_rect.position.y + 45, minf(origin.y, ending.position.y - 65 - (burst % 2) * 25))
 		var light := Color.from_hsv(fmod(burst * 0.23, 1.0), 0.55, 1.0)
 		for ring in range(6, 0, -1):
 			windows.overlay.draw_circle(origin, ring * 13.0 * (0.6 + phase), Color(light, maxf(0, 1.0 - phase) * 0.035))

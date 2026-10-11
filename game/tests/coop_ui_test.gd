@@ -144,6 +144,7 @@ func run() -> void:
 	check(visible_map.encloses(hud.panel.get_global_rect()), "victory HUD fits inside the visible map below menu bar")
 	check(hud.panel.visible and hud.rows.get_child_count() > 0 and hud.rows.get_child(0).get_child(0).get_child(0).value == 40, "live wealth progress displayed")
 	check(hud.rows.get_child(0).size.y > 0, "goal values and holding duration remain visible")
+	check(hud.title.size.x > 0 and hud.title.size.y >= hud.title.get_line_height() and not hud.title.text.is_empty(), "goal heading has readable layout bounds")
 	hud.panel.custom_minimum_size.x = 400
 	main.coop.windows.tick()
 	check(visible_map.encloses(hud.panel.get_global_rect()), "goal HUD remains within map with larger theme minimum")
