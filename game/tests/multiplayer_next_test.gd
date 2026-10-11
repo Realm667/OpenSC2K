@@ -35,7 +35,7 @@ func run() -> void:
 	var initial: int = world.municipalities[b].city.funds()
 	check(buy(world, a, [2, 2], [12, 12]).ok, "neutral land purchase")
 	check(world.municipalities[b].city.funds() == initial, "land cost charged only to buyer")
-	check(buy(world, b, [2, 2], [12, 12]).ok, "foreign land creates purchase request")
+	check(buy(world, b, [2, 2], [12, 12]).ok, "foreign land is skipped without charging")
 	check(world.municipalities[b].city.funds() == initial, "failed purchase charges nothing")
 	check(buy(world, a, [25, 25], [25, 25]).ok, "disconnected land allowed")
 	var build := {"kind": "build", "revision": world.revision, "group": 9, "tool": 0,

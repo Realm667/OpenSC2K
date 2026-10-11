@@ -54,7 +54,7 @@ func poll() -> Array[Dictionary]:
 		socket.set_no_delay(true)
 		low_latency = true
 	flush()
-	var available := mini(socket.get_available_bytes(), IO_BUDGET)
+	var available := mini(socket.get_available_bytes(), mini(IO_BUDGET, maxi(0, limit + 4 - input.size())))
 	if available > 0:
 		var received := socket.get_partial_data(available)
 		if received[0] != OK:
@@ -63,10 +63,8 @@ func poll() -> Array[Dictionary]:
 		input.append_array(received[1])
 		bytes_received += received[1].size()
 		last_received = Time.get_ticks_msec()
-	if input.size() > limit + IO_BUDGET:
-		failed = true
-		return messages
-	for _index in 16:
+	# Bound reads rather than rejecting a backlog of individually valid frames.
+	for _index in 64:
 		if input.size() < 4:
 			break
 		var size := input.decode_u32(0)
@@ -81,7 +79,7 @@ func poll() -> Array[Dictionary]:
 			break
 		messages.append(parser.data)
 		input = input.slice(size + 4)
-	if Time.get_ticks_msec() - last_received > 30000:
+	if Time.get_ticks_msec() - last_received > 60000:
 		failed = true
 	return messages
 

@@ -18,19 +18,19 @@ const GROUPS := [
 const PERSONAL := ["name", "online", "builds", "spent", "units", "aid"]
 var table: Tree
 var summary: Label
-var picker: OptionButton
+var picker: MultiplayerTabs
 var rows: Array = []
 var columns: Array = []
 var sort_key := "name"
 var descending := false
 var self_id := ""
 var chart: MultiplayerHistoryChart
-var metric_picker: OptionButton
+var metric_picker: MultiplayerTabs
 var legend: RichTextLabel
 var history: Dictionary = {}
 
 func setup(body: VBoxContainer) -> void:
-	picker = OptionButton.new()
+	picker = MultiplayerTabs.new()
 	for title in VIEWS:
 		picker.add_item(tr(title))
 	body.add_child(picker)
@@ -46,7 +46,7 @@ func setup(body: VBoxContainer) -> void:
 	table.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	table.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	body.add_child(table)
-	metric_picker = OptionButton.new()
+	metric_picker = MultiplayerTabs.new()
 	for metric: String in MultiplayerHistory.METRICS:
 		metric_picker.add_item(tr(COLUMNS[metric]))
 	body.add_child(metric_picker)

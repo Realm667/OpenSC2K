@@ -167,9 +167,8 @@ func update() -> void:
 func fit() -> void:
 	if not is_instance_valid(coop.panel):
 		return
-	var available := coop.app.get_viewport().get_visible_rect().size
-	var height := int(coop.lobby.get_parent().get_combined_minimum_size().y) + 28
-	coop.panel.size = Vector2i(mini(700, int(available.x) - 40), mini(height, int(available.y) - 70))
+	if coop.panel.has_meta("multiplayer_fit"):
+		coop.panel.get_meta("multiplayer_fit").schedule()
 
 static func column(parent: Control, ratio: float) -> VBoxContainer:
 	var box := VBoxContainer.new()

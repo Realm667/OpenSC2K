@@ -432,6 +432,10 @@ func on_map_selection_changed(
 		app.map_view.clear_selection_price()
 		return
 
+	if app.coop.active() and app.coop.windows.land_action == "land_buy":
+		app.coop.windows.preview_land(start, finish)
+		return
+
 	if app.document_state.city != null and NetworkPlacementPreview.supports_tool(
 		app.tool_state.selected_group,
 		app.tool_state.selected_subtool,

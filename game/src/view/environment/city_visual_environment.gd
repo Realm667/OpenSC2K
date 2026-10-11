@@ -194,7 +194,7 @@ func process(delta: float) -> void:
 	if options.pause_freezes and paused:
 		elapsed = 0.0
 	# Camera navigation does not interrupt precipitation or its ambience.
-	var weather_paused := speed == GameSpeedController.Speed.PAUSED or app.frame._simulation_suspended(false)
+	var weather_paused := speed == GameSpeedController.Speed.PAUSED or (not app.coop.active() and app.frame._simulation_suspended(false))
 	var weather_delta := 0.0 if weather_paused else maxf(delta, 0.0)
 	var factor := VisualEnhancementOptions.speed_factor(speed) if options.speed_link and speed > 1 else 1.0
 	if active and not remote and options.day_enabled and options.day_mode == 0:
@@ -242,7 +242,7 @@ func process(delta: float) -> void:
 		"water_waves_enabled": options.water_waves_enabled,
 		"water_season_strength": options.season_water_strength if active and options.season_enabled else 0.0,
 		"water_rain": weather.rain * clouds.precipitation_readiness,
-		"water_frozen": options.pause_freezes and (speed == 1 or app.frame._simulation_suspended()),
+		"water_frozen": options.pause_freezes and (speed == 1 or (not app.coop.active() and app.frame._simulation_suspended())),
 		"environment_enabled": active and (options.day_enabled or options.season_enabled or options.weather_enabled or daytime_lights),
 		"environment_weather": Vector3(weather.tint.r, weather.tint.g, weather.tint.b),
 		"environment_frost": weather.frost,

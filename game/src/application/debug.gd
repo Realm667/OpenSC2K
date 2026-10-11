@@ -108,6 +108,8 @@ func debug_clear_render_caches() -> void:
 
 
 func debug_add_funds(amount: int) -> ActionResult:
+	if app.coop.active():
+		return multiplayer_debug("add_funds", {"value": amount})
 	var result := DebugActions.add_funds(app.document_state.city, amount)
 
 	if not result.ok:
@@ -123,6 +125,8 @@ func debug_add_funds(amount: int) -> ActionResult:
 
 
 func debug_set_funds(amount: int) -> ActionResult:
+	if app.coop.active():
+		return multiplayer_debug("set_funds", {"value": amount})
 	var result := DebugActions.set_funds(app.document_state.city, amount)
 
 	if not result.ok:
@@ -136,6 +140,8 @@ func debug_set_funds(amount: int) -> ActionResult:
 
 
 func debug_unlock_everything() -> ActionResult:
+	if app.coop.active():
+		return multiplayer_debug("unlock")
 	var result := DebugActions.unlock_everything(app.document_state.city, app.document_state.current_document)
 
 	if not result.ok:
@@ -150,6 +156,8 @@ func debug_unlock_everything() -> ActionResult:
 
 
 func debug_set_no_disasters(enabled: bool) -> ActionResult:
+	if app.coop.active():
+		return multiplayer_debug("no_disasters", {"value": enabled})
 	var result := DebugActions.set_no_disasters(app.document_state.city, enabled)
 
 	if not result.ok:
@@ -162,6 +170,8 @@ func debug_set_no_disasters(enabled: bool) -> ActionResult:
 
 
 func debug_run_to_date(month: int, day: int, year: int, resume_speed: int) -> ActionResult:
+	if app.coop.active():
+		return multiplayer_debug("run_to_date", {"month": month, "day": day, "year": year, "value": resume_speed})
 	var city := app.document_state.city
 	var controller := app.simulation_state.speed_controller
 
@@ -214,6 +224,8 @@ func debug_start_disaster(disaster_type: int) -> ActionResult:
 
 
 func debug_end_disaster() -> ActionResult:
+	if app.coop.active():
+		return multiplayer_debug("end_disaster")
 	var result := DebugActions.end_disaster(
 		app.document_state.city,
 		app.document_state.current_document,
@@ -248,6 +260,8 @@ func debug_end_disaster() -> ActionResult:
 
 
 func debug_dispatch_maxis_man() -> ActionResult:
+	if app.coop.active():
+		return multiplayer_debug("maxis")
 	var center := app.map_view.center_tile() if app.map_view != null else Vector2i(64, 64)
 	var result := DebugActions.dispatch_maxis_man(app.document_state.city, app.document_state.current_document, center)
 
@@ -264,6 +278,8 @@ func debug_dispatch_maxis_man() -> ActionResult:
 
 
 func debug_spawn_moving_thing(kind: int) -> ActionResult:
+	if app.coop.active():
+		return multiplayer_debug("spawn", {"value": kind})
 	var center := app.map_view.center_tile() if app.map_view != null else Vector2i(64, 64)
 	var result := DebugActions.spawn_moving_thing(app.document_state.city, app.document_state.current_document,
 		app.simulation_state.simulation_engine, kind, center, Time.get_ticks_usec() & 0x7fffffff)
@@ -287,6 +303,8 @@ func debug_spawn_moving_thing(kind: int) -> ActionResult:
 
 
 func debug_summon_nessie() -> ActionResult:
+	if app.coop.active():
+		return multiplayer_debug("nessie")
 	var center := app.map_view.center_tile() if app.map_view != null else Vector2i(64, 64)
 	var result := DebugActions.summon_nessie(app.document_state.city, app.document_state.current_document,
 		app.simulation_state.simulation_engine, center, Time.get_ticks_usec() & 0x7fffffff)
@@ -302,6 +320,8 @@ func debug_summon_nessie() -> ActionResult:
 
 # `kind` indexes CityDebugActions.DELETE_KINDS. 0 removes every moving thing
 func debug_remove_moving_things(kind := 0) -> ActionResult:
+	if app.coop.active():
+		return multiplayer_debug("remove_things", {"value": kind})
 	if kind < 0 or kind >= DebugActions.DELETE_KINDS.size():
 		return ActionResult.new(false, "The moving thing selection is not valid.")
 
@@ -319,6 +339,8 @@ func debug_remove_moving_things(kind := 0) -> ActionResult:
 
 # `base_type` 0 follows the game rules; another value proposes that base type
 func debug_offer_military_base(base_type := 0) -> ActionResult:
+	if app.coop.active():
+		return multiplayer_debug("military", {"value": base_type})
 	if app.simulation_state.military_proposal_pending:
 		return ActionResult.new(false, "The military base offer is already open.")
 
@@ -363,3 +385,12 @@ class ActionResult extends RefCounted:
 	func _init(succeeded: bool, text: String) -> void:
 		ok = succeeded
 		message = text
+
+
+func multiplayer_debug(action: String, fields: Dictionary = {}) -> ActionResult:
+	if not app.coop.session.connected:
+		return ActionResult.new(false, tr("Wait for the connection to be restored."))
+	var center := app.map_view.center_tile()
+	fields.merge({"kind": "debug", "action": action, "point": [center.x, center.y]})
+	app.coop.session.request(fields)
+	return ActionResult.new(true, tr("Debug request sent to the host."))

@@ -202,6 +202,7 @@ func sync_city_option_menus() -> void:
 	if app.options_menu == null or app.disasters_menu == null:
 		return
 
+	app.disasters_menu.visible = not app.coop.active() or app.coop.session.hosting
 	app.city_files.sync_upgrade_city_option()
 	var has_city := app.document_state.city != null
 	app.options_menu.disabled = not has_city
