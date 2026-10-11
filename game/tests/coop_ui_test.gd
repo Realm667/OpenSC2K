@@ -187,15 +187,16 @@ func run() -> void:
 	var parcel: Dictionary = main.coop.session.latest.offers[0]
 	main.coop.windows.market.review(parcel)
 	await process_frame
-	check(main.coop.windows.market.detail.visible, "parcel details and map preview open")
+	check(main.coop.windows.market.map_detail.visible and main.coop.windows.map_overlay.highlight == parcel.tiles, "trade decisions open directly on the exact real-time parcel")
 	main.coop.windows.market.show_on_map(parcel)
 	check(main.coop.windows.map_overlay.highlight == parcel.tiles, "map highlights the exact trade parcel")
-	main.coop.windows.market.map_detail.queue_free()
+	main.coop.windows.market.close_map()
 	main.current_tool.select_tool_group(9)
 	check(not main.city_toolbar.land_mode and not main.coop.windows.land_button.button_pressed, "normal tool exits land mode")
 	main.coop.leave()
 	await process_frame
 	await readonly_city(main)
+	await client_rights_and_end(main)
 	main.queue_free()
 	await process_frame
 	print("Koop UI checks: %d failures" % failures)
@@ -399,3 +400,33 @@ func readonly_city(main: CityApplication) -> void:
 	main.coop.leave()
 	await process_frame
 	check(not main.city_menu_bar.debug_menu.disabled and not main.city_menu_bar.windows_menu.get_popup().is_item_disabled(0), "leaving multiplayer restores local administrative menus")
+
+
+func client_rights_and_end(main: CityApplication) -> void:
+	var host := CoopSession.new()
+	root.add_child(host)
+	host.host(Sc2xDocument.create_empty(32, "End notice").document, 0, "", "Host", "coop", false)
+	main.coop.session.join("127.0.0.1", host.server.get_local_port(), "", "Client")
+	var deadline := Time.get_ticks_msec() + 5000
+	while not main.coop.mirrored and Time.get_ticks_msec() < deadline:
+		await create_timer(0.01).timeout
+	check(main.coop.mirrored, "client UI connected")
+	if main.coop.mirrored:
+		main.coop.windows.tick()
+		var popup := main.city_menu_bar.windows_menu.get_popup()
+		check(popup.is_item_disabled(popup.get_item_index(7)), "Windows Debug item is disabled for client in own city")
+		main.reports.on_windows_menu(7)
+		main.debug_overlay.toggle()
+		check(not main.debug_overlay.is_open and not main.debug_overlay._window.visible, "client cannot open debug by menu or alternate path")
+		host.stop()
+		deadline = Time.get_ticks_msec() + 5000
+		while not is_instance_valid(main.coop.ended_dialog) and Time.get_ticks_msec() < deadline:
+			await create_timer(0.01).timeout
+		check(is_instance_valid(main.coop.ended_dialog) and main.coop.ended_dialog.visible and main.document_state.current_document != null, "visible host-end notice retains city for save or retry")
+		if is_instance_valid(main.coop.ended_dialog):
+			main.coop.ended_dialog.queue_free()
+			main.coop.ended_dialog = null
+	main.coop.leave()
+	host.stop()
+	host.queue_free()
+	await process_frame

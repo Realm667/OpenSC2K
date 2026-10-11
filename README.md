@@ -26,6 +26,13 @@ The scrolling city in the main menu also uses the visual settings. Each launch
 starts its preview with a randomized time, season and weather, without replacing
 the user's stored choices for a playable city.
 
+Only the host writes the normal SC2X save. Session data is embedded automatically;
+the prior save remains as `.bak`. Keep each participant's private data profile to
+reconnect as the same player. Only the host controls simulation speed and pause;
+client dialogs and disconnections do not stop the match. Conflicting edits are
+rejected without payment. A normal host shutdown offers clients a single-player
+copy. Saved multiplayer games can also be opened explicitly as single-player copies.
+
 ## Try the effects
 
 1. Load an existing city, or finish terrain editing and **found a new city**.

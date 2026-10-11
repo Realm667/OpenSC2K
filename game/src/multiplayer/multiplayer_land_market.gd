@@ -15,6 +15,10 @@ var known: Dictionary = {}
 var initialized := false
 var unread := 0
 var detail: Window
+var notice_label: RichTextLabel
+var notification: PanelContainer
+var notice_record: Dictionary = {}
+var active_record := ""
 var map_detail: PanelContainer
 
 func _init(owner: MultiplayerWindows) -> void:
@@ -32,7 +36,12 @@ func refresh(state: Dictionary) -> void:
 		var key := str(record.id) + str(record.status)
 		if initialized and not known.has(key) and (identity in [record.seller, record.buyer] or record.buyer == ""):
 			unread += 1
+			if record.status == "Open" and (record.get("awaiting") == identity or (record.buyer == "" and record.seller != identity)):
+				notify_offer(record)
 		known[key] = true
+		if str(record.id) == active_record and record.status != "Open":
+			close_map()
+			windows.coop.show_message(tr(record.status))
 	initialized = true
 	var popup := windows.menu.get_popup()
 	popup.set_item_text(popup.get_item_index(7), tr("Land trade") + (" · %d" % unread if unread > 0 else ""))
@@ -109,27 +118,11 @@ func rebuild() -> void:
 		ApplicationMultiplayer.label(entries_box, tr("No entries."))
 	windows.fit_content.call_deferred(window, body, 760)
 
-func parcel_preview(parent: Control, tiles: Array) -> void:
-	var city := windows.coop.app.document_state.city
-	var image := CityMinimap.create_image(city, windows.coop.app.asset_state.palette)
-	for tile: int in tiles:
-		var point := Vector2i(tile / city.map_size, tile % city.map_size)
-		point = Vector2i(Vector2(point) * float(image.get_width()) / city.map_size)
-		image.set_pixelv(point, Color("ffe16b"))
-	var preview := TextureRect.new()
-	preview.texture = ImageTexture.create_from_image(image)
-	preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	preview.custom_minimum_size = Vector2(180, 160)
-	preview.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	parent.add_child(preview)
-
 func review(record: Dictionary) -> void:
-	if is_instance_valid(detail):
-		detail.queue_free()
-	detail = windows.make_window(tr("Review land trade"))
-	var box := windows.content(detail)
-	parcel_preview(box, record.tiles)
+	var box := map_panel(record.tiles, tr("Review land trade"))
+	ApplicationMultiplayer.label(box, str(record.name))
+	ApplicationMultiplayer.label(box, parcel_counts(record.tiles))
+	active_record = str(record.id)
 	var identity := windows.coop.session.token.sha256_text()
 	var receive: bool = identity == record.seller
 	var funds := windows.coop.app.document_state.city.funds()
@@ -137,7 +130,6 @@ func review(record: Dictionary) -> void:
 	ApplicationMultiplayer.label(box, tr("Balance after transfer: %s") % MultiplayerScoreboard.money(funds + int(record.price) * (1 if receive else -1)))
 	var actions := HFlowContainer.new()
 	box.add_child(actions)
-	add_action(actions, tr("Show on map"), func() -> void: show_on_map(record))
 	if record.status == "Open":
 		var awaiting: String = record.get("awaiting", "")
 		if identity == awaiting or (awaiting.is_empty() and identity != record.seller):
@@ -148,7 +140,7 @@ func review(record: Dictionary) -> void:
 		if identity == record.get("initiator", record.seller):
 			add_action(actions, tr("Change price"), func() -> void: counter(record))
 			add_action(actions, tr("Withdraw"), func() -> void: submit_record("land_withdraw", record))
-	detail.popup_centered()
+	add_action(actions, tr("Close"), close_map)
 
 func confirm(record: Dictionary) -> void:
 	review(record)
@@ -157,6 +149,7 @@ func submit_record(kind: String, record: Dictionary) -> void:
 	windows.coop.session.request({"kind": kind, "offer": record.id})
 	if is_instance_valid(detail):
 		detail.hide()
+	close_map()
 
 func counter(record: Dictionary) -> void:
 	var dialog := windows.make_window(tr("Counteroffer"))
@@ -169,31 +162,67 @@ func counter(record: Dictionary) -> void:
 	add_action(box, tr("Send counteroffer"), func() -> void:
 		windows.coop.session.request({"kind": "land_counter", "offer": record.id, "price": int(price.value)})
 		dialog.queue_free()
-		detail.hide())
+		close_map())
 	dialog.popup_centered()
 
 func show_on_map(record: Dictionary) -> void:
+	review(record)
+
+func close_map() -> void:
+	active_record = ""
+	windows.map_overlay.highlight.clear()
+	if is_instance_valid(map_detail):
+		map_detail.queue_free()
+		map_detail = null
+
+func map_panel(tiles: Array, title: String) -> VBoxContainer:
+	close_map()
 	var map := windows.coop.app.map_view
-	windows.map_overlay.highlight = record.tiles.duplicate()
+	windows.map_overlay.highlight = tiles.duplicate()
 	windows.map_overlay.highlight_until = Time.get_ticks_msec() + 3600000
-	windows.coop.app.camera_input.center_map_on_tile(tile_bounds(record.tiles, map.city.map_size).get_center())
+	windows.coop.app.camera_input.center_map_on_tile(tile_bounds(tiles, map.city.map_size).get_center())
 	if is_instance_valid(window):
 		window.hide()
 	if is_instance_valid(detail):
 		detail.hide()
-	if is_instance_valid(map_detail):
-		map_detail.queue_free()
 	map_detail = PanelContainer.new()
+	map_detail.theme = AppUiTheme.current()
 	map_detail.z_index = 3
 	map.add_child(map_detail)
 	map_detail.position = map.camera_view_rect.position + Vector2(12, 12)
 	var box := VBoxContainer.new()
 	map_detail.add_child(box)
-	ApplicationMultiplayer.label(box, tr("%s · %d tiles · %s") % [record.name, record.count, MultiplayerScoreboard.money(record.price)])
-	add_action(box, tr("Review"), func() -> void: review(record))
-	add_action(box, tr("Close"), func() -> void:
-		windows.map_overlay.highlight.clear()
-		map_detail.queue_free())
+	ApplicationMultiplayer.label(box, title)
+	return box
+
+func notify_offer(record: Dictionary) -> void:
+	notice_record = record.duplicate(true)
+	if not is_instance_valid(notification):
+		notification = PanelContainer.new()
+		notification.theme = AppUiTheme.current()
+		notification.z_index = 4
+		windows.coop.app.map_view.add_child(notification)
+		var row := HBoxContainer.new()
+		notification.add_child(row)
+		notice_label = RichTextLabel.new()
+		notice_label.fit_content = true
+		notice_label.custom_minimum_size.x = 260
+		notice_label.scroll_active = false
+		row.add_child(notice_label)
+		add_action(row, tr("View"), func() -> void:
+			review(notice_record)
+			notification.hide())
+		add_action(row, "×", notification.hide)
+	notification.position = windows.coop.app.map_view.camera_view_rect.position + Vector2(12, 12)
+	notice_label.clear()
+	for player: Dictionary in windows.players:
+		if player.id == record.get("initiator", record.seller):
+			notice_label.push_color(Color(CoopSession.valid_color(player.color)))
+			notice_label.add_text(str(player.name) + "\n")
+			notice_label.pop()
+	notice_label.add_text(tr("Land trade: %d tiles · %s") % [record.count, MultiplayerScoreboard.money(record.price)])
+	notification.show()
+	windows.play_cue("chat")
 
 func select_parcel(start: Vector2i, finish: Vector2i) -> void:
 	var state := windows.state
@@ -204,7 +233,14 @@ func select_parcel(start: Vector2i, finish: Vector2i) -> void:
 	for x in range(maxi(0, mini(start.x, finish.x)), mini(city.map_size - 1, maxi(start.x, finish.x)) + 1):
 		for y in range(maxi(0, mini(start.y, finish.y)), mini(city.map_size - 1, maxi(start.y, finish.y)) + 1):
 			var tile := city.index_of(x, y)
+			if not windows.include_water and city.is_water(x, y):
+				continue
 			var owner := int(owners[tile])
+			var own := ids.find(windows.coop.session.token.sha256_text()) + 1
+			if windows.land_action == "land_offer" and owner != own:
+				continue
+			if windows.land_action != "land_offer" and owner == own:
+				continue
 			if not groups.has(owner):
 				groups[owner] = []
 			groups[owner].append(tile)
@@ -234,10 +270,8 @@ func open_parcel(owner: int, tiles: Array, start: Vector2i, finish: Vector2i) ->
 	for player: Dictionary in windows.players:
 		if player.id == windows.state.owner_ids[owner - 1]:
 			name = player.name
-	var dialog := windows.make_window(tr("Offer land") if owner == windows.state.owner_ids.find(windows.coop.session.token.sha256_text()) + 1 else tr("Request land"))
-	var box := windows.content(dialog)
-	parcel_preview(box, tiles)
-	ApplicationMultiplayer.label(box, tr("%s · %d tiles") % [name, tiles.size()])
+	var box := map_panel(tiles, tr("Offer land") if owner == windows.state.owner_ids.find(windows.coop.session.token.sha256_text()) + 1 else tr("Request land"))
+	ApplicationMultiplayer.label(box, name + " · " + parcel_counts(tiles))
 	ApplicationMultiplayer.label(box, tr("Total price"))
 	var price := SpinBox.new()
 	price.max_value = 2147483647
@@ -245,8 +279,8 @@ func open_parcel(owner: int, tiles: Array, start: Vector2i, finish: Vector2i) ->
 	box.add_child(price)
 	add_action(box, tr("Publish offer") if owner == windows.state.owner_ids.find(windows.coop.session.token.sha256_text()) + 1 else tr("Send request"), func() -> void:
 		windows.coop.session.request({"kind": "land_offer" if owner == windows.state.owner_ids.find(windows.coop.session.token.sha256_text()) + 1 else "land_request", "start": [start.x, start.y], "finish": [finish.x, finish.y], "tiles": tiles, "price": int(price.value)})
-		dialog.queue_free())
-	dialog.popup_centered()
+		close_map())
+	add_action(box, tr("Cancel"), close_map)
 static func tile_bounds(tiles: Array, size: int) -> Rect2i:
 	var result := Rect2i()
 	var first := true
@@ -258,3 +292,10 @@ static func tile_bounds(tiles: Array, size: int) -> Rect2i:
 
 static func add_action(parent: Control, title: String, action: Callable) -> void:
 	ApplicationMultiplayer.button(parent, title, action)
+
+func parcel_counts(tiles: Array) -> String:
+	var city := windows.coop.app.document_state.city
+	var water := 0
+	for tile: int in tiles:
+		water += 1 if city.is_water(tile / city.map_size, tile % city.map_size) else 0
+	return tr("%d land · %d water") % [tiles.size() - water, water]

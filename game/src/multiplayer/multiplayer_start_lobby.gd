@@ -81,8 +81,8 @@ func update(state: Dictionary) -> void:
 	var target := tr("Endless game") if goal.get("kind", "endless") == "endless" else "%s: %s" % [tr("Population") if goal.kind == "population" else tr("Net wealth"), MultiplayerGoalHud.number(int(goal.target), goal.kind)]
 	summary.text = "%s · %s\n%s" % [mode, target, tr("Simulation and construction begin together after the host starts.")]
 	if state.get("mode", "coop") != "coop":
-		summary.text += "\n" + tr("Rules are fixed at start: hold the target for one game year; late-founded cities are unranked. Starting handicaps are visible in the lobby.")
-	var signature := JSON.stringify(state.get("roster", []).map(func(player: Dictionary) -> Array: return [player.id, player.name, player.city, player.online, player.get("ready", false), player.color, player.get("handicap", {})]))
+		summary.text += "\n" + (tr("Accumulate %d years as sole leader. Earned time is kept. Late cities are unranked.") % (int(goal.get("hold_days", 3000)) / CityCalendar.DAYS_PER_YEAR) if goal.get("rule") == "leadership" else tr("Stay at or above the target for one full game year. Dropping below resets the timer."))
+	var signature := JSON.stringify(state.get("start_preview", {})) + JSON.stringify(state.get("roster", []).map(func(player: Dictionary) -> Array: return [player.id, player.name, player.city, player.online, player.get("ready", false), player.color, player.get("handicap", {})]))
 	if signature != roster_signature and not editing_city():
 		roster_signature = signature
 		roster.clear()
@@ -95,6 +95,9 @@ func update(state: Dictionary) -> void:
 			row.set_metadata(0, player.id)
 			row.set_text(3, MultiplayerScoreboard.money(player.get("handicap", {}).get("funds", player.funds)))
 			row.set_text(4, str(player.get("handicap", {}).get("tiles", 0)) if int(player.get("handicap", {}).get("tiles", 0)) > 0 else tr("Automatic"))
+			var area: Dictionary = state.get("start_preview", {}).get(player.id, {})
+			if not area.is_empty() and state.get("mode") == "shared":
+				row.set_text(4, tr("%d land · %d water") % [area.land, area.water])
 			row.set_text(2, tr("Offline") if not player.online else tr("Ready") if player.get("ready", false) else tr("Not ready"))
 			row.set_custom_color(2, Color("66cf79") if player.get("ready", false) and player.online else Color("ff9c40"))
 			for column in 5:
@@ -139,17 +142,63 @@ func edit_handicap(seat: String) -> void:
 		return
 	ApplicationMultiplayer.label(box, str(player.name) + " · " + str(player.city))
 	ApplicationMultiplayer.label(box, tr("Starting funds"))
-	var funds := SpinBox.new()
-	funds.max_value = 2147483647
-	funds.value = player.get("handicap", {}).get("funds", player.funds)
-	box.add_child(funds)
-	ApplicationMultiplayer.label(box, tr("Starting land (0 = automatic)"))
+	var funds := LineEdit.new()
+	funds.text = MultiplayerScoreboard.money(int(player.get("handicap", {}).get("funds", player.funds)))
+	var money_row := HBoxContainer.new()
+	box.add_child(money_row)
+	funds.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	money_row.add_child(funds)
+	var money_value := func() -> int:
+		var number := funds.text.replace("$", "").replace(".", "").replace(",", "").replace(" ", "")
+		return clampi(number.to_int(), 0, 2147483647) if number.is_valid_int() else int(player.get("handicap", {}).get("funds", player.funds))
+	for delta in [-1000, 1000]:
+		var step := ApplicationMultiplayer.button(money_row, "−" if delta < 0 else "+", func() -> void: funds.text = MultiplayerScoreboard.money(clampi(money_value.call() + delta, 0, 2147483647)))
+		step.tooltip_text = MultiplayerScoreboard.money(delta)
+	funds.gui_input.connect(func(event: InputEvent) -> void:
+		if event is InputEventKey and event.pressed and event.keycode in [KEY_UP, KEY_DOWN]:
+			funds.text = MultiplayerScoreboard.money(clampi(money_value.call() + (1000 if event.keycode == KEY_UP else -1000), 0, 2147483647))
+			funds.accept_event())
+	funds.focus_exited.connect(func() -> void: funds.text = MultiplayerScoreboard.money(money_value.call()))
+	ApplicationMultiplayer.label(box, tr("Starting territory"))
+	var size_choice := OptionButton.new()
+	for name in ["Very small", "Small", "Medium · standard", "Large", "Generous", "Custom…"]:
+		size_choice.add_item(tr(name))
+	var scales := [50, 75, 100, 125, 150]
+	var saved: Dictionary = player.get("handicap", {})
+	size_choice.select(5 if int(saved.get("tiles", 0)) > 0 else maxi(0, scales.find(int(saved.get("scale", 100)))))
+	size_choice.disabled = windows.state.get("mode") != "shared"
+	box.add_child(size_choice)
 	var tiles := SpinBox.new()
+	tiles.min_value = 1
 	tiles.max_value = windows.coop.app.document_state.city.map_size ** 2 / 32
-	tiles.value = player.get("handicap", {}).get("tiles", 0)
-	tiles.editable = windows.state.get("mode") == "shared"
+	tiles.value = maxi(1, int(saved.get("tiles", 0)))
 	box.add_child(tiles)
+	var explanation := ApplicationMultiplayer.label(box, "")
+	explanation.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	var refresh := func() -> void:
+		tiles.visible = size_choice.selected == 5 and not size_choice.disabled
+		var count := int(tiles.value) if tiles.visible else roundi(MultiplayerStartParcel.standard(windows.coop.app.document_state.city.map_size) * scales[mini(4, size_choice.selected)] / 100.0)
+		explanation.text = tr("Free starting territory: %d land equivalents. Two water tiles count as one land tile. Treasury unchanged.") % count
+		if size_choice.disabled:
+			explanation.text = tr("Each Region player has a separate city map.")
+		elif windows.coop.session.hosting:
+			var session := windows.coop.session
+			var actor := session.seats.find_seat(seat)
+			var original := session.starts.handicaps.duplicate(true)
+			var original_preview := session.starts.preview.duplicate(true)
+			session.starts.handicaps[actor] = {"funds": money_value.call(), "tiles": count, "scale": 100}
+			var error := session.starts.prepare(session.world, session.members, false)
+			var area: Dictionary = session.starts.preview.get(seat, {})
+			session.starts.handicaps = original
+			session.starts.preview = original_preview
+			if not error.is_empty():
+				explanation.text = MultiplayerText.message(error)
+			elif not area.is_empty():
+				explanation.text += "\n" + tr("%d land · %d water · %d reserved tiles") % [area.land, area.water, area.reserved]
+	size_choice.item_selected.connect(func(_index: int) -> void: refresh.call())
+	tiles.value_changed.connect(func(_value: float) -> void: refresh.call())
+	refresh.call()
 	ApplicationMultiplayer.button(box, tr("Apply"), func() -> void:
-		windows.coop.session.request({"kind": "handicap", "seat": seat, "funds": int(funds.value), "tiles": int(tiles.value)})
+		windows.coop.session.request({"kind": "handicap", "seat": seat, "funds": money_value.call(), "tiles": int(tiles.value) if size_choice.selected == 5 else 0, "scale": scales[mini(4, size_choice.selected)]})
 		dialog.queue_free())
 	dialog.popup_centered()

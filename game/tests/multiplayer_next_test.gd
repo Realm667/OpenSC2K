@@ -101,6 +101,9 @@ func run() -> void:
 	atmosphere_choices()
 	military_ownership()
 	transfer_building()
+	leadership_and_copy()
+	water_starts()
+	await end_copy_network()
 	await shared_network()
 	print("Multiplayer next checks: %d failures" % failures)
 	quit(1 if failures else 0)
@@ -196,3 +199,131 @@ func atmosphere_choices() -> void:
 	check(options.day_mode == 1 and options.day_hour == 22, "wire-format fixed time remains fixed")
 	check(options.season_mode == 2 and options.season_fixed == 3, "wire-format fixed season retained")
 	check(options.weather_mode == 2 and options.weather_fixed == 6 and options.cloud_mode == 4, "wire-format weather/cloud choices retained")
+
+
+func leadership_and_copy() -> void:
+	var a := "a".repeat(48)
+	var b := "b".repeat(48)
+	var world := SharedWorld.new()
+	world.open(Sc2xDocument.create_empty(32, "Merged").document)
+	world.add_player(a)
+	world.add_player(b)
+	var members := {a: {"name": "A"}, b: {"name": "B"}}
+	var goal := MultiplayerGoal.new()
+	goal.kind = "wealth"
+	goal.target = 100
+	check(goal.hold_days == CityCalendar.DAYS_PER_YEAR * 10, "new contest defaults to a leadership decade")
+	goal.hold_days = 3
+	world.city.set_funds(200)
+	world.municipalities[b].city.set_funds(150)
+	goal.evaluate(world, members)
+	for actor: String in world.actors:
+		world.municipalities[actor].city.set_age_in_days(1)
+	check(not goal.evaluate(world, members) and goal.holding[a.sha256_text()].days == 1, "sole leader earns one day")
+	world.municipalities[b].city.set_funds(200)
+	for actor: String in world.actors:
+		world.municipalities[actor].city.set_age_in_days(2)
+	goal.evaluate(world, members)
+	check(goal.tied and goal.holding[a.sha256_text()].days == 1 and goal.holding[b.sha256_text()].days == 0, "ties pause both clocks without erasing time")
+	world.city.set_funds(50)
+	world.municipalities[b].city.set_funds(250)
+	for actor: String in world.actors:
+		world.municipalities[actor].city.set_age_in_days(3)
+	goal.evaluate(world, members)
+	check(goal.holding[a.sha256_text()].days == 1 and goal.holding[b.sha256_text()].days == 1, "new leader accumulates while old leader keeps credit below threshold")
+	var restored := MultiplayerGoal.new()
+	restored.restore(goal.saved())
+	check(restored.rule == "leadership" and restored.holding == goal.holding, "leadership credit survives save and restore")
+	world.city.set_funds(300)
+	for actor: String in world.actors:
+		world.municipalities[actor].city.set_age_in_days(5)
+	check(restored.evaluate(world, members) and restored.winners.size() == 1 and restored.winners[0].seat == a.sha256_text(), "returning leader completes cumulative time")
+	var old := goal.saved()
+	old.erase("rule")
+	old.hold_days = 300
+	restored.restore(old)
+	check(restored.rule == "continuous" and restored.hold_days == 300, "old save retains continuous year")
+	world.city.set_funds(25000)
+	world.municipalities[b].city.set_funds(35000)
+	world.city.document.set_misc_u32(Sc2MiscLayout.BONDS, 1)
+	world.city.document.set_misc_u32(Sc2MiscLayout.BOND_RATES, 4)
+	world.municipalities[b].city.document.set_misc_u32(Sc2MiscLayout.BONDS, 1)
+	world.municipalities[b].city.document.set_misc_u32(Sc2MiscLayout.BOND_RATES, 7)
+	world.owners[world.city.index_of(2, 2)] = 1
+	world.owners[world.city.index_of(20, 20)] = 2
+	world.city.set_zone_id(2, 2, 1)
+	world.municipalities[b].city.set_zone_id(20, 20, 2)
+	world.revision += 1
+	var before := world.city.document.content_snapshot()
+	var copy := MultiplayerSingleplayer.from_world(world, a)
+	check(copy.error.is_empty(), "shared single-player conversion succeeds")
+	if copy.error.is_empty():
+		var city := CityState.from_document(copy.document)
+		check(city.funds() == 60000 and city.document.misc_u32(Sc2MiscLayout.BONDS) == 2, "cash and external bond debt merge exactly")
+		check(city.zones[city.index_of(2, 2)] != 0 and city.zones[city.index_of(20, 20)] != 0, "both physical cities exist once in the merged map")
+		check(not city.document.sc2x_extra_entries.has("multiplayer.json") and city.document.sc2x_metadata.phase_state.is_empty(), "single-player copy has no authentication and rescans combined population")
+	check(before == world.city.document.content_snapshot(), "copy conversion does not mutate source municipality")
+
+func water_starts() -> void:
+	var city := CityState.from_document(Sc2xDocument.create_empty(64, "Water starts").document)
+	var owners := PackedInt32Array()
+	owners.resize(4096)
+	for x in 64:
+		for y in 64:
+			city.set_tile_flag(x, y, Sc2TileFlags.WATER, x % 16 >= 7)
+	var parcel := MultiplayerStartParcel.make(city, owners, 0, 98)
+	check(not parcel.is_empty(), "start crosses water while retaining a dry seed")
+	if parcel.is_empty():
+		return
+	check(parcel.water > 0 and parcel.land * 2 + parcel.water >= 196 and parcel.land * 2 + parcel.water <= 197, "water included with explicit 2:1 land-equivalent compensation")
+	check(parcel.tiles.has(0), "outer-edge start reaches actual map edge")
+	var all := {}
+	for tile: int in parcel.tiles:
+		all[tile] = true
+	var reached := {parcel.tiles[0]: true}
+	var queue: Array = [parcel.tiles[0]]
+	while not queue.is_empty():
+		for tile: int in MultiplayerLandRules.neighbours(queue.pop_front(), 64):
+			if all.has(tile) and not reached.has(tile):
+				reached[tile] = true
+				queue.append(tile)
+	check(reached.size() == parcel.tiles.size(), "water-inclusive start remains connected")
+	check(parcel.reserve.size() > 0, "start has a surrounding expansion ring")
+	for tile: int in parcel.reserve:
+		check(not all.has(tile), "reserved expansion never overlaps initial ownership")
+
+func end_copy_network() -> void:
+	var host := CoopSession.new()
+	var guest := CoopSession.new()
+	root.add_child(host)
+	root.add_child(guest)
+	check(host.host(Sc2xDocument.create_empty(32, "Region ending").document, 0, "", "Host", "region", false).is_empty(), "region end-copy host")
+	check(guest.join("127.0.0.1", host.server.get_local_port(), "", "Guest").is_empty(), "region end-copy client")
+	var deadline := Time.get_ticks_msec() + 5000
+	while not guest.connected and Time.get_ticks_msec() < deadline:
+		await create_timer(0.01).timeout
+	check(guest.connected, "end-copy client connected")
+	if guest.connected:
+		host.world.municipalities[guest.token].city.set_funds(43210)
+		host.world.municipalities[guest.token].revision += 1
+		host.world.revision += 1
+		guest.request({"kind": "view_city", "seat": host.token.sha256_text()})
+		deadline = Time.get_ticks_msec() + 5000
+		while not guest.latest.get("visiting", false) and Time.get_ticks_msec() < deadline:
+			await create_timer(0.01).timeout
+		check(guest.latest.get("visiting", false), "client is visiting host city at shutdown")
+		var ended: Array = []
+		guest.session_ended.connect(func() -> void: ended.append(true))
+		host.stop()
+		deadline = Time.get_ticks_msec() + 5000
+		while ended.is_empty() and Time.get_ticks_msec() < deadline:
+			await create_timer(0.01).timeout
+		check(not ended.is_empty() and guest.reconnect_until == 0, "graceful host end is acknowledged without reconnect")
+		var copy := Sc2File.new()
+		check(copy.parse(Marshalls.base64_to_raw(guest.ended_city)), "client receives final verified export")
+		if copy.is_valid():
+			check(CityState.from_document(copy).funds() == 43210 and not copy.sc2x_extra_entries.has("multiplayer.json"), "host end saves own city rather than visited city; no private session metadata")
+	guest.stop()
+	host.stop()
+	guest.queue_free()
+	host.queue_free()

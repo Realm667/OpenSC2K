@@ -1,232 +1,134 @@
 # Multiplayer
 
-Experimental LAN/direct-IP multiplayer supports simultaneous **Koop**,
-**Competitive Shared** and **Competitive Region**, up to eight players on the
-engine-supported SC2X map sizes. Large snapshots use checked, bounded chunks;
-the largest maps still require suitable host memory and processing capacity.
-All participants need the same network build.
+Experimental LAN/direct-IP multiplayer supports **Koop**, **Competitive Shared**
+and **Competitive Region**, with two to eight players on supported SC2X map sizes.
+All participants need the same network build. The host owns the simulation;
+clients send commands, never authoritative balances or city files.
 
-## Start and continue
+## Starting a game
 
-Open Multiplayer from the main menu. Choose Host or Join, a name and a preset or
-custom color. The host chooses the mode and may set an optional password. Guests
-enter the host's address and port (default 20000), then choose a new city seat or
-request an existing one. The server supplies the mode; selected colors are retained.
-For two local installations use separate profiles and 127.0.0.1.
+Open Multiplayer from the main menu. Select Host or Join, player name and color.
+The host chooses the mode, terrain, land price and optional password. Guests enter
+the host address and TCP port (default 20000), then create or request a city seat.
+A new game begins only after everyone is ready and the host starts it. A lobby
+change resets readiness. The host can rename their own city and assign visible
+starting handicaps; each player can edit their own city-name cell.
 
-New games open a pre-game lobby. Simulation and construction remain stopped until
-at least two players have joined, all connected players confirm Ready, and the host
-chooses Start game. Player changes invalidate readiness. Pending joins prevent start.
-All participants start at Turtle speed. Existing in-progress saves resume paused;
-saves created before the first start return to the lobby without stale confirmations.
+Starting funds use localized currency formatting. Shared starting territories
+have Very small, Small, Medium (standard), Large and Generous presets: 50%, 75%,
+100%, 125% and 150% of the map-dependent standard. Custom sizes remain available.
+The dialog and lobby show actual land and water counts. Start grants cost no cash.
+A water tile counts as half a land equivalent, compensating for less usable land.
+Starts cross shorelines, stay connected and favor similar land/water proportions.
+Shapes vary; an outer-edge start may touch the map boundary. Unsupported sizes
+are reported rather than silently reduced. Region cities have their own whole map.
 
-**Neue Stadt** opens the regular terrain preview and complete city setup.
-**Gespeicherte Stadt** opens a city file. **Kopie erstellen** keeps the original
-and asks for a new save destination; otherwise continue the selected save.
-Legacy SC2 cities are converted to SC2X. Old .sc2mp sessions can still be imported.
+Shared start sectors retain public access corridors. A contiguous expansion ring
+reserves approximately 50% additional area around each start, rounded to complete
+outer tile layers and clipped by map edges, other ownership and access protection.
+It is an initial reservation, not an automatically expanding claim on every purchase.
+Owned borders are strong; reservation borders use a much more transparent player color.
 
-Use normal File > Save / Save As. Only the host saves. Session identities,
-municipalities, ownership, statistics and simulation checkpoints travel inside
-SC2X automatically; no separate session path is needed. The previous save is
-retained as .bak. Enabled recent autosaves also include the complete session on
-the host; guests do not autosave the display replica. Resolve pending simulation decisions before saving. Keep client
-profiles and saves private: they contain reconnect identities.
+## Simulation and permissions
 
-The Multiplayer menu between Newspaper and Help contains Scoreboard, Chat,
-connection recovery, leaving and Shared land transactions. Budgets, ordinances,
-industry taxes, bonds and speed use regular controls. Chat and camera movement do
-not pause the host. Only the host can change speed or pause; clients have a disabled
-speed menu and the server rejects their speed commands. A disconnect pauses
-the world until the host releases it. Reconnection preserves identity and sequence.
+Only the host changes speed or pauses. Client dialogs, construction drags,
+connection interruptions and winner dialogs do not pause the running simulation.
+Single-player pause behavior is unchanged. Debug and disasters belong to the host;
+client Debug is disabled in both the menu and alternate entry points. Host changes
+that affect fairness appear in the shared chat. New text ships in English and German.
 
-## Koop
+Koop players share one city, treasury and decisions. Shared players have independent
+municipal accounts, zones and services on one physical terrain. Region players
+have separate cities. City visits are strictly read-only: information windows show
+the visited city, administrative windows and construction are disabled, and private
+owner dialogs are never shown to the visitor. An edge glow and Return to your city
+button identify visits. Eye buttons beside progress rows switch views quickly.
 
-All players administer one city, treasury and budget concurrently. The host checks
-costs and the full affected area, including indirect terrain edits and building
-footprints. Stale conflicts are rejected without payment. Existing limited Undo
-only applies to your immediately preceding edit before another change or tick.
-Everyone can dispatch shared emergency services. Colored marker outlines identify
-the last dispatcher without creating exclusive ownership.
+Shared infrastructure must stay on owned land, apart from explicitly public road
+and power corridors. Adjacent foreign networks do not provide free services.
+Intermunicipal supply contracts, cross-border environmental propagation, Shared
+Undo and city rotation are not implemented.
 
-## Competetive Shared
+## Land market
 
-Each participant has a separate municipal simulation and account on the shared
-visible terrain. Budgets, taxes, loans, population and services are independent.
-Imported development belongs to the host. Guests receive fresh accounts using the
-session difficulty. Undeveloped land is neutral. Use Multiplayer > Land kaufen,
-drag a rectangle and confirm the quote. New games default to $5 per tile, adjustable
-by the host before the lobby opens. At the shared start the host assigns equal dry-land
-grants in separated geographical sectors, favouring compact and level areas. Grants
-contain up to 1,024 tiles (limited by sector size and the least suitable chosen sector),
-without reducing city funds. Further expansion uses city funds. Existing saves retain
-their original purchase rules; late-founded cities receive the existing land allowance. The land tool excludes water by default; Include water
-explicitly includes it in the selection and quote.
-Disconnected parcels are allowed. Buildings and indirect terrain changes must
-stay on your land. Colored boundaries identify ownership.
+The land toolbar has Buy and Sell modes plus Include water. Neutral purchases
+show the eligible area and price while selecting, then buy without an extra dialog.
+Only edge-connected expansion is allowed. Existing ownership, foreign land,
+excluded water and protected territory are skipped without charging for them.
+The same success sound as zoning confirms a purchase.
 
-Owners may offer rectangles at explicit prices. Buyers accept through Landangebote.
-The host transfers payment, ownership, zones and complete buildings together;
-partial-building sales are rejected. Loans stay with the seller. Active emergency
-or moving objects must leave a transferred parcel first, and transfers wait while
-either city handles a disaster. Raced or expired purchases charge nothing.
+Selecting foreign land prepares a purchase request; selecting owned land in Sell
+mode prepares an offer. Each has an exact parcel and total price. Incoming requests
+show a prominent nonmodal notification with View and remain in the market inbox.
+Opening a trade centers and highlights its actual parcel in the running city view,
+with direct accept, counteroffer, decline, price-change or withdrawal actions as
+appropriate. It never buys simply by viewing. The server rechecks ownership,
+connection, seller continuity, complete buildings, balances and offer identity.
+A counteroffer creates a new offer identity, invalidating previous acceptance.
+Raced/expired transactions charge nothing. The history retains recent outcomes.
 
-Each city uses its own infrastructure; adjacent foreign networks do not provide
-free services. Intermunicipal supply contracts and cross-border environmental
-propagation are not implemented in this first Shared version. City rotation and
-Shared Undo remain unavailable.
+## Competition
 
-Players may assist an active disaster with their own available fire, police or
-military units without entering disaster mode themselves. A distinct two-tone
-alarm and bottom-toolbar location identify the affected player. Markers retain
-dispatcher colors and show names on hover. Recall includes your foreign deployments.
+Competitive games can be endless, or target population or net wealth (cash minus
+bank debt and outstanding player debt). New competitions require the target plus
+**cumulative sole-leadership time**. The host selects 1, 3, 5 or 10 game years,
+with 10 as standard, before starting. One game year is 300 simulation days.
+Only the sole ranked leader at or above the target earns time. Ties pause all
+clocks; being overtaken or dropping below the target preserves earned time.
+The first player to accumulate the required time wins. A leadership decade can
+therefore take more than ten calendar years. Older saves retain their continuous
+holding rule; their rules are never silently reinterpreted.
 
-## Presentation and communication
+The HUD separates the white goal flag from the three-color Statistics button.
+Thin rounded bars show player name and actual target values, then leadership
+progress. Target fill uses 60% opacity and earned leadership uses full opacity.
+Late-founded cities remain unranked; taking over an original seat preserves rank.
+The centered victory window has results, fireworks, cheer/music and the shared
+chat. Only the host can continue without scoring or propose a rematch. Rematches
+rotate starts without reusing a prior start for the same city seat.
 
-Competitive Region gives each seat a complete separate map and municipal simulation.
-Multiplayer > Neighbouring cities lets everyone visit any city. Only the owner can
-build or administer it. Visitors may send their own available emergency services
-during a disaster; ownership colors and the distinct neighbour alarm remain active.
-Cities continue under their normal simulation rules, including budget decisions.
+Player loans use the game's existing bond rate, selected principal and lender,
+with lender consent and no fixed maturity. Banks and players remain separate
+creditors during multiplayer; debt counts toward net wealth.
 
-Competitive games default to Endless. The host may instead set a population target
-or net wealth target (city funds minus bank debt, player-loan principal and unpaid interest). A compact top-right
-panel shows one narrow progress bar per player; click its title for the
-scoreboard. New scored matches require undeveloped starting terrain. New matches require staying at or above the target for 300 game days
-(one full engine calendar year). Dropping below resets the timer; the HUD shows days
-held. Target progress uses the player's colour at 60% opacity; holding progress
-fills the same bar at full opacity. Ownership lines stay behind the panel.
-Cities founded after the start are permanently unranked and grey in statistics;
-a player taking over a founder city inherits its eligibility. Holding the target for
-the full year pauses the game, shows winner fireworks and results,
-and allows leaving or host-authorized continuation without scoring. Goals, results
-and the unscored continuation state are stored in the normal city save.
+## Communication
 
-Reconnect credentials belong to people; city seats persist separately. Connection
-loss reserves the seat and pauses the game. Deliberate departure leaves it unoccupied.
-Replacement requires host approval. City, land, treasury and debt remain; personal
-statistics are archived, previous credentials revoked and old land proposals withdrawn.
-A holder of the complete save may host it; automatic live host migration is not provided.
+Chat is compact and collapsible, can be enlarged upward, preserves drafts across
+lobby/game/victory docking, and has unread counts and a brief collapsed preview.
+Reading older messages stops automatic scrolling; the new-message button returns
+to the newest entry. Names use player colors, system notices are smaller and italic.
+A short two-tone chat cue respects local sound and volume settings. Text entry does
+not trigger game shortcuts. Remote cursors are precise arrows with compact fading
+name tags; construction previews are separate. They appear only in the relevant
+city view. Own action sounds remain normal; remote sounds attenuate with distance
+outside the visible map. The host synchronizes cosmetic weather/season/time choices.
 
-Remote cursors use map coordinates with names and colors. Scoreboard shows
-construction counts/spending, common city totals in Koop, and individual municipal
-totals in Shared. The session chat has colored names, literal text and unread counts.
+## Saves, shutdown and single-player copies
 
-The host controls day/night, seasons, weather and clouds. Guests receive the phase
-and settings on joining; corresponding environmental controls are locked. Local
-audio levels remain available. Visual effects restart when hosting a saved city;
-simulation weather is saved.
+File > Save saves the complete match on the host, including private reconnect
+identities. The prior file is retained as .bak. Keep saves and personal profiles
+private. Reconnect restores identities and ordered commands. Normal host shutdown
+sends a final city copy before disconnecting; clients receive a visible notice with
+Save city copy. Canceling or failing a save retains the city for another attempt.
+Region exports the client's own city even while visiting another. Unexpected loss
+uses the reconnect path, not the deliberate-shutdown dialog.
 
-Confirmed edits publish immediately. Simulation snapshots run at four updates per
-second, atmosphere up to twenty and cursors up to ten. TCP uses no-delay and bounded
-queues. Only the host simulates; clients send intentions, never city files or
-balances. Discovery, NAT traversal, encryption and host migration are not provided.
+Opening a multiplayer save offers Continue multiplayer or Open single-player copy.
+Koop copies the shared city. Region lets you choose a player's city. Shared composes
+the physical map once, adds municipal cash and external bank bonds, and cancels
+internal player debts. Host taxes, funding and ordinances become the common policy;
+combined population is rebuilt from the map instead of adding overlapping totals.
+If combined bank bonds exceed the single-player format's 50 slots, excess principal
+is repaid from combined cash, preserving net assets. An unrepresentable combined
+cash balance reports an error. Save the result to a new single-player file: the
+multiplayer original is preserved and the copy has no active session identity.
 
-## Validation
+## Limits and validation
 
-coop_multiplayer_test, multiplayer_next_test and coop_ui_test cover concurrent
-edits, conflicts/costs, budgets, city setup controls, saves, reconnect, separate
-Shared accounts, land transactions, disaster aid, chat, colors, presence and
-atmosphere. Run the release suite plus GPU/two-process checks before distribution.
-Loopback tests do not establish reachability/performance on physical LAN computers.
-
-## Land market and multiplayer interface
-
-The dedicated Buy land toolbar button sits immediately before Signs. It selects
-rectangles without activating Residential. Selecting foreign land sends a priced
-purchase request after confirmation; the owner must explicitly approve it.
-Land offers & requests lists open offers, incoming/outgoing requests and the last
-128 completed/withdrawn/declined entries. Show on map highlights the exact tiles
-for 12 seconds. Preview never buys. Sellers can withdraw offers, requesters can
-withdraw requests, and owners can decline requests. All decisions are serialized
-by the host and revalidate balances and ownership before transferring anything.
-Overlapping offers expire after ownership changes.
-
-Ownership is drawn as an exterior ground outline, with foreground sprite alpha
-and painter depth masking it. Remote map cursors use sub-tile positions and
-frame-independent interpolation; large jumps snap and stale cursors disappear.
-
-Scoreboard provides compact sortable Overview, Finances, Land ownership, Zoning,
-Construction and Emergency services tables without horizontal scrolling. Koop city
-totals are separate from personal contributions.
-Year-to-date balance is the recorded budget balance, excluding construction and
-land transactions. Land purchase/sale totals are persisted from the introduction
-of tracking; older unknown totals remain unavailable.
-
-Chat is docked at the lower left of the map, beside the toolbar, with an inline
-reply field. In the lobby the same chat sits at its bottom; starting closes the
-lobby on every peer and returns the chat to the map without losing a draft.
-Typing does not trigger game shortcuts. New incoming messages and
-actual player joins/leaves have distinct quiet cues respecting local sound/volume.
-Chat replay and duplicate events are silent. Status text distinguishes voluntary
-leave from connection loss. New interface text ships in English and German via
-the feature-local PO catalog and the integrated AppLocalization locale.
-
-multiplayer_polish_test covers ownership consent, failed/raced transactions,
-withdrawal, saved counters, exterior boundaries, interpolation, localization,
-stable table sorting and real TCP chat/status events.
-
-## Player loans, history and rematches
-
-Budget > Player loans lets the borrower select a lender and principal in $10,000
-bond units. The game uses the normal bank-bond issue rate and credit rules, also
-counting existing player-loan principal. The lender confirms the displayed rate.
-Only acceptance transfers funds; insufficient lender funds reject the transaction.
-Interest accrues monthly and settles with the annual budget in whole currency units.
-Like bank-budget expenses it can overdraw the borrower's treasury. There is no
-maturity date: the borrower repays when funds permit. Already accrued interest
-still settles at year end. Storage-limited transfers remain arrears. Accepted
-contracts remain with city seats on departure or takeover; unaccepted proposals are
-withdrawn on takeover. These transfers are shown in this Budget tab, separately from
-the original bank-bond reports.
-
-Legacy accepted loans retain their rate, outstanding principal and unpaid interest
-but lose their old maturity date. Unaccepted legacy offers are discarded because
-their terms have changed. The normal city save contains the migrated ledger.
-
-## Terrain preview, sound and dialogs
-
-New City renders forest, ground and water enhancements in fixed summer. Weather,
-clouds and day/night are disabled only for that detached preview; saved preferences
-and the generated simulation document remain unchanged.
-
-Own confirmed construction and demolition use the normal sound path once. Remote
-actions have full volume inside the visible map and fade smoothly outside it,
-reaching silence two viewport widths away. Region sounds only come from the viewed
-city. Remote throttling cannot suppress local feedback. Local mute and volume apply.
-
-Region's SimNation view shows the actual two to eight player cities in coloured
-region tiles with names, population and seat status. Select a tile to visit it.
-Player-seat, land-market and statistics windows fit their content. The custom colour
-picker has an explicit Apply colour button. Window-close uses quit/save confirmation
-instead of opening statistics. Annual budget decisions open the normal Budget window
-so the player can resolve a simulation stop.
-
-Scoreboard > History compares monthly population, treasury, debt, land, developed
-land and budget balance with shared axes, player colours and exact-value tooltips.
-The latest 600 months are retained in the normal save. No values are invented for
-months before recording began. Switching statistics pages needs no horizontal scroll.
-
-After a result, the host may propose a rematch. The original terrain and difficulty
-are reused, city progress and loan contracts reset, and everybody must confirm Ready
-again. Starting sectors are stored per city seat across rounds and saves. A seat never
-receives a previously used sector; when the finite set of 16 sectors is exhausted (or
-there are no suitable unused positions), the request is rejected and new terrain is
-required. Region cities show their assigned region number and change their initial
-camera/start position. Absent players keep their saved city-seat identities.
-
-## Synchronization performance
-
-Reliable ordered deltas transfer only changed top-level fields and changed pages of
-the encoded city/ownership arrays. Full snapshots establish join/recovery baselines;
-a baseline mismatch requests recovery instead of applying uncertain changes. Large
-messages are streamed in bounded chunks; cursor and environment updates replace older
-unsent updates. Confirmed build commands publish immediately. Pending selections are
-marked locally until the host responds, without changing local money or simulation.
-
-Shared composes its common tile planes once per revision, and Region encodes each
-viewed city once per revision. Two recent views are cached for delta reuse, subject to
-a 64 MiB multi-view cache budget. Every Region city still simulates by its ordinary
-rules; only the viewed city is rendered. The loopback load test measures 2/4/8 peers
-with increasing zoned areas, transfer bytes, command convergence, simulation work and
-combined GDScript static memory (not complete native/process RSS). It does not
-establish real Internet latency or GPU FPS.
+TCP uses ordered bounded queues and checked streamed snapshots. There is no
+Internet discovery, NAT traversal, transport encryption or automatic host migration.
+Use trusted participants. Loopback tests do not establish performance on eight
+physical LAN computers. Automated audio tests use Dummy audio, not listening tests.
+Run the complete release suite plus native two-window review before distribution.
+Tests cover competition/save compatibility, land protections, copy conversion,
+shutdown while visiting, client Debug guards, synchronization and private dialogs.

@@ -31,10 +31,21 @@ var displayed_map_generation := -1
 var tones: Dictionary = {}
 var chat_log: RichTextLabel
 var chat_input: LineEdit
+var chat_title: Label
+var chat_toggle: Button
+var chat_jump: Button
+var chat_entry: HBoxContainer
+var chat_preview: Label
+var chat_collapsed := false
+var chat_height := 184.0
+var chat_resize_y := -1.0
+var chat_resize_height := 184.0
+var preview_until := 0
 var unread := 0
 var players: Array = []
 var state: Dictionary = {}
 var overlay: Control
+var land_mode_picker: MultiplayerTabs
 var land_action := ""
 var land_offer_price := -1
 var known_disasters: Array = []
@@ -119,27 +130,47 @@ func setup() -> void:
 	chat.add_child(chat_body)
 	var heading := HBoxContainer.new()
 	chat_body.add_child(heading)
-	var title := ApplicationMultiplayer.label(heading, tr("Multiplayer chat"))
+	var title := ApplicationMultiplayer.label(heading, tr("Chat"))
+	chat_title = title
 	title.theme_type_variation = "TooltipLabel"
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var hide_button := Button.new()
 	hide_button.text = "−"
 	hide_button.tooltip_text = tr("Hide chat")
 	heading.add_child(hide_button)
-	hide_button.pressed.connect(chat.hide)
+	chat_toggle = hide_button
+	hide_button.pressed.connect(func() -> void: set_chat_collapsed(not chat_collapsed))
 	chat_log = RichTextLabel.new()
 	chat_log.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	chat_log.selection_enabled = true
 	chat_log.scroll_following = true
+	chat_log.get_v_scroll_bar().value_changed.connect(func(value: float) -> void:
+		var scroll := chat_log.get_v_scroll_bar()
+		chat_log.scroll_following = value >= scroll.max_value - scroll.page - 2)
 	chat_body.add_child(chat_log)
 	var chat_color := func() -> void:
 		chat_log.add_theme_color_override("default_color", AppUiTheme.current().get_color("font_color", "TooltipLabel"))
 	chat.theme_changed.connect(chat_color)
 	chat_color.call()
+	chat_preview = ApplicationMultiplayer.label(chat_body, "")
+	chat_preview.autowrap_mode = TextServer.AUTOWRAP_OFF
+	chat_preview.clip_text = true
+	chat_preview.hide()
+	chat_jump = ApplicationMultiplayer.button(chat_body, "", func() -> void:
+		chat_log.scroll_following = true
+		chat_log.get_v_scroll_bar().value = chat_log.get_v_scroll_bar().max_value
+		unread = 0
+		refresh_chat_heading())
+	chat_jump.hide()
+	chat_entry = HBoxContainer.new()
+	chat_body.add_child(chat_entry)
 	chat_input = LineEdit.new()
 	chat_input.max_length = 500
-	chat_input.placeholder_text = tr("Message all players…")
-	chat_body.add_child(chat_input)
+	chat_input.placeholder_text = tr("Message…")
+	chat_input.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	chat_entry.add_child(chat_input)
+	var send := ApplicationMultiplayer.button(chat_entry, "➤", func() -> void: chat_input.text_submitted.emit(chat_input.text))
+	send.tooltip_text = tr("Send message")
 	chat_input.text_submitted.connect(func(text: String) -> void:
 		coop.session.send_chat(text)
 		chat_input.clear())
@@ -147,6 +178,17 @@ func setup() -> void:
 		if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 			chat_input.release_focus()
 			chat_input.accept_event())
+	var grip := Control.new()
+	grip.custom_minimum_size.y = 5
+	grip.mouse_default_cursor_shape = Control.CURSOR_VSIZE
+	chat_body.add_child(grip)
+	chat_body.move_child(grip, 0)
+	grip.gui_input.connect(func(event: InputEvent) -> void:
+		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+			chat_resize_y = chat.get_global_mouse_position().y if event.pressed else -1.0
+			chat_resize_height = chat_height
+		if event is InputEventMouseMotion and chat_resize_y >= 0:
+			chat_height = clampf(chat_resize_height + chat_resize_y - chat.get_global_mouse_position().y, 150, 380))
 	coop.session.chat_received.connect(receive_chat)
 	coop.session.player_event.connect(receive_player_event)
 	coop.session.presence_received.connect(func(value: Array) -> void:
@@ -184,7 +226,7 @@ func setup() -> void:
 	land_button.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	land_button.custom_minimum_size = Vector2(32, 32)
 	land_button.toggle_mode = true
-	land_button.tooltip_text = tr("Buy land")
+	land_button.tooltip_text = tr("Land trade")
 	land_button.hide()
 	var signs := coop.app.city_toolbar.toolbar_buttons[CityToolIds.Group.SIGNS]
 	signs.get_parent().add_child(land_button)
@@ -194,19 +236,19 @@ func setup() -> void:
 	var palette := coop.app.city_toolbar.child_palette
 	palette.get_parent().add_child(land_options)
 	palette.get_parent().move_child(land_options, palette.get_index() + 1)
-	ApplicationMultiplayer.label(land_options, tr("Buy land"))
+	land_mode_picker = MultiplayerTabs.new()
+	land_mode_picker.add_item(tr("Buy land"))
+	land_mode_picker.add_item(tr("Sell land"))
+	land_mode_picker.item_selected.connect(func(index: int) -> void: select_land("land_buy" if index == 0 else "land_offer"))
+	land_options.add_child(land_mode_picker)
 	allowance_label = ApplicationMultiplayer.label(land_options, "")
 	allowance_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	var land_group := ButtonGroup.new()
-	for index in 2:
-		var option := Button.new()
-		option.text = tr("Land only") if index == 0 else tr("Include water")
-		option.toggle_mode = true
-		option.button_group = land_group
-		option.button_pressed = index == 0
-		option.custom_minimum_size.y = 40
-		option.pressed.connect(func() -> void: include_water = index == 1)
-		land_options.add_child(option)
+	var water := CheckBox.new()
+	water.text = tr("Include water")
+	water.toggled.connect(func(value: bool) -> void:
+		include_water = value
+		update_land_tooltip())
+	land_options.add_child(water)
 	land_options.hide()
 	coop.app.get_tree().process_frame.connect(tick)
 
@@ -274,6 +316,10 @@ func update_state(value: Dictionary) -> void:
 		if not admin_seen.has(entry.id):
 			admin_seen[entry.id] = true
 			var notice := tr("Administration · %s · %s: %s (%s → %s)") % [entry.name, entry.city, tr(entry.action), MultiplayerText.message(entry.before), MultiplayerText.message(entry.after)]
+			if entry.action == "Starting funds":
+				notice = tr("Host set starting funds for %s to %s.") % [entry.city, MultiplayerScoreboard.money(int(entry.after))]
+			elif entry.action == "Starting territory":
+				notice = tr("Host set starting territory for %s to %s.") % [entry.city, entry.after]
 			append_status(notice)
 			coop.show_message(notice)
 	competition.update(value)
@@ -338,6 +384,7 @@ func open_chat() -> void:
 	unread = 0
 	menu.get_popup().set_item_text(1, "Chat")
 	chat.show()
+	set_chat_collapsed(false)
 	chat_input.grab_focus()
 
 
@@ -351,6 +398,11 @@ func receive_chat(entry: Dictionary) -> void:
 	if not entry.get("history", false) and entry.get("sender") != coop.session.token.sha256_text():
 		play_cue("chat")
 		chat.show()
+	if not entry.get("history", false) and (chat_collapsed or not chat_log.scroll_following):
+		unread += 1
+	chat_preview.text = str(entry.get("name", "")) + ": " + str(entry.get("text", ""))
+	preview_until = Time.get_ticks_msec() + 5000
+	refresh_chat_heading()
 	chat_log.push_color(Color(CoopSession.valid_color(entry.get("color"))))
 	chat_log.add_text(str(entry.get("name", "")) + ": ")
 	chat_log.pop()
@@ -374,8 +426,8 @@ func draw_markers() -> void:
 		overlay.draw_set_transform(offset, 0.0, Vector2.ONE * scale)
 		for id: String in boundaries:
 			for item: Dictionary in players:
-				if item.get("id") == id and not boundaries[id].is_empty():
-					overlay.draw_multiline(boundaries[id], Color(CoopSession.valid_color(item.get("color")), 0.8), 1.5 / scale, true)
+				if item.get("id") == id.trim_suffix(":reserved") and not boundaries[id].is_empty():
+					overlay.draw_multiline(boundaries[id], Color(CoopSession.valid_color(item.get("color")), 0.25 if id.ends_with(":reserved") else 0.8), 1.5 / scale, true)
 		if Time.get_ticks_msec() < map_overlay.highlight_until:
 			for tile: int in map_overlay.highlight:
 				@warning_ignore("integer_division")
@@ -391,11 +443,38 @@ func draw_markers() -> void:
 			continue
 		if state.get("mode") == "region" and item.get("view_owner") != state.get("view_owner"):
 			continue
+		for selected: Array in item.get("selection", []):
+			var tile := Vector2i(int(selected[0]), int(selected[1]))
+			var shape := CityIsometricRenderer.terrain_surface_polygon(map.city, tile.x, tile.y)
+			var projected := PackedVector2Array()
+			for point: Vector2 in shape:
+				projected.append(point * scale + offset)
+			overlay.draw_colored_polygon(projected, Color(CoopSession.valid_color(item.get("color")), 0.18))
 		var center := MultiplayerMapOverlay.project(map.city, map_overlay.cursors[item.id].position) * scale + offset
 		var color := Color(CoopSession.valid_color(item.get("color")))
-		overlay.draw_circle(center, 5, color)
-		overlay.draw_string_outline(font, center + Vector2(10, -5), str(item.get("name", "")), HORIZONTAL_ALIGNMENT_LEFT, -1, 16, 4, Color.BLACK)
-		overlay.draw_string(font, center + Vector2(10, -5), str(item.get("name", "")), HORIZONTAL_ALIGNMENT_LEFT, -1, 16, color)
+		var bounds := map.camera_view_rect.grow(-3)
+		if not bounds.has_point(center):
+			continue
+		var arrow := PackedVector2Array([center, center + Vector2(2, 17), center + Vector2(6, 12), center + Vector2(12, 12), center])
+		overlay.draw_colored_polygon(arrow, color)
+		overlay.draw_polyline(arrow, Color(0.06, 0.08, 0.10, 0.85), 1.0, true)
+		var idle := float(Time.get_ticks_msec() - int(map_overlay.cursors[item.id].moved)) / 1000.0
+		var alpha := clampf(3.0 - idle, 0.0, 1.0)
+		if alpha <= 0:
+			continue
+		var text := str(item.get("name", ""))
+		var extent := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 14) + Vector2(12, 6)
+		var anchor := center + Vector2(18, -4)
+		if anchor.x + extent.x > bounds.end.x:
+			anchor.x = center.x - extent.x - 8
+		anchor = anchor.clamp(bounds.position, bounds.end - extent)
+		var style := StyleBoxFlat.new()
+		style.bg_color = Color(0.06, 0.075, 0.09, 0.85 * alpha)
+		style.set_corner_radius_all(4)
+		overlay.draw_style_box(style, Rect2(anchor, extent))
+		color = color.lerp(Color.WHITE, 0.3)
+		color.a = alpha
+		overlay.draw_string(font, anchor + Vector2(6, 3 + font.get_ascent(14)), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 14, color)
 	for unit: Dictionary in state.get("dispatch_owners", {}).values():
 		var target := Vector2i(int(unit.position[0]), int(unit.position[1]))
 		var polygon := CityIsometricRenderer.terrain_surface_polygon(map.city, target.x, target.y)
@@ -438,10 +517,15 @@ func close() -> void:
 	goal_hud.home.hide()
 	goal_hud.visit_frame.hide()
 	competition.close()
+	market.close_map()
+	if is_instance_valid(market.notification):
+		market.notification.hide()
 	seats.window.hide()
 	chat.hide()
 	chat_log.clear()
 	chat_seen.clear()
+	unread = 0
+	set_chat_collapsed(false)
 	event_seen.clear()
 	displayed_round = 0
 	pending_builds.clear()
@@ -459,7 +543,7 @@ func close() -> void:
 	displayed_map_generation = -1
 	coop.app.city_menu_bar.debug_menu.disabled = false
 	var popup := coop.app.city_menu_bar.windows_menu.get_popup()
-	for id in [0, 1, 3, CityMenuBar.MENU_CONSOLE]:
+	for id in [0, 1, 3, 7, CityMenuBar.MENU_CONSOLE]:
 		popup.set_item_disabled(popup.get_item_index(id), false)
 	market.initialized = false
 	admin_seen.clear()
@@ -490,10 +574,12 @@ func select_land(action: String) -> void:
 		return
 	coop.app.current_tool.select_tool_group(CityToolIds.Group.QUERY)
 	land_action = action
+	update_land_tooltip()
 	land_offer_price = -1
 	coop.app.city_toolbar.land_mode = true
 	coop.app.city_toolbar.child_palette.hide()
-	land_options.visible = action == "land_buy"
+	land_options.show()
+	land_mode_picker.select(1 if action == "land_offer" else 0)
 	for button in coop.app.city_toolbar.toolbar_buttons:
 		button.set_pressed_no_signal(false)
 	land_button.set_pressed_no_signal(true)
@@ -523,6 +609,7 @@ func tick() -> void:
 		displayed_round = round_id
 		coop.app.camera_input.center_map_on_tile(Vector2i(int(own_start.point[0]), int(own_start.point[1])))
 	map_overlay.step(coop.app.get_process_delta_time())
+	chat_preview.visible = chat_collapsed and Time.get_ticks_msec() < preview_until
 	var view: Rect2 = coop.app.map_view.camera_view_rect
 	if view.size == Vector2.ZERO:
 		view = Rect2(Vector2.ZERO, coop.app.map_view.size)
@@ -548,6 +635,11 @@ func tick() -> void:
 	goal_hud.layout(view)
 	var visiting: bool = state.get("visiting", false)
 	coop.app.city_menu_bar.debug_menu.disabled = not coop.session.hosting or visiting
+	var debug_popup := coop.app.city_menu_bar.windows_menu.get_popup()
+	debug_popup.set_item_disabled(debug_popup.get_item_index(7), not coop.session.hosting or visiting)
+	if not coop.session.hosting or visiting:
+		coop.app.debug_overlay._window.hide()
+		coop.app.debug_overlay.is_open = false
 	var window_menu := coop.app.city_menu_bar.windows_menu.get_popup()
 	window_menu.set_item_disabled(window_menu.get_item_index(CityMenuBar.MENU_CONSOLE), visiting or not coop.session.hosting)
 	if visiting or not coop.session.hosting:
@@ -565,7 +657,7 @@ func tick() -> void:
 	if chat.get_parent() == coop.app.map_view:
 		chat.offset_left = view.position.x + 8
 		chat.offset_right = minf(chat.offset_left + 400, view.end.x - 8)
-		chat.offset_top = view.end.y - coop.app.map_view.size.y - 184
+		chat.offset_top = view.end.y - coop.app.map_view.size.y - (70 if chat_collapsed and chat_preview.visible else 42 if chat_collapsed else chat_height)
 		chat.offset_bottom = view.end.y - coop.app.map_view.size.y - 8
 	overlay.queue_redraw()
 
@@ -601,12 +693,12 @@ static func cue(kind: String) -> AudioStreamWAV:
 	wave.format = AudioStreamWAV.FORMAT_16_BITS
 	wave.mix_rate = 22050
 	var data := PackedByteArray()
-	data.resize(8820)
-	for index in 4410:
+	data.resize(17640 if kind == "chat" else 8820)
+	for index in (8820 if kind == "chat" else 4410):
 		var time := index / 22050.0
-		var frequency := 1046.5 if kind == "chat" else (523.25 if (index < 2205) == (kind == "joined") else 783.99)
+		var frequency := (880.0 if index < 4410 else 1318.5) if kind == "chat" else (523.25 if (index < 2205) == (kind == "joined") else 783.99)
 		var envelope := pow(sin(PI * fmod(float(index), 2205.0) / 2205.0), 2)
-		data.encode_s16(index * 2, int(sin(TAU * frequency * time) * envelope * 3800))
+		data.encode_s16(index * 2, int(sin(TAU * frequency * time) * envelope * (7600 if kind == "chat" else 3800)))
 	wave.data = data
 	return wave
 
@@ -655,6 +747,8 @@ func preview_land(start: Vector2i, finish: Vector2i) -> void:
 
 
 func append_status(text: String) -> void:
+	chat_log.push_font_size(13)
+	chat_log.push_color(Color(0.8, 0.82, 0.85))
 	chat_log.push_italics()
 	# Segment literal names rather than interpreting player-supplied rich text.
 	var offset := 0
@@ -676,3 +770,23 @@ func append_status(text: String) -> void:
 		offset = nearest + str(match_player.name).length()
 	chat_log.add_text("\n")
 	chat_log.pop()
+	chat_log.pop()
+	chat_log.pop()
+
+func set_chat_collapsed(value: bool) -> void:
+	chat_collapsed = value
+	chat_log.visible = not value
+	chat_entry.visible = not value
+	chat_toggle.text = "+" if value else "−"
+	chat_toggle.tooltip_text = tr("Open chat") if value else tr("Collapse chat")
+	if not value and chat_log.scroll_following:
+		unread = 0
+	refresh_chat_heading()
+
+func refresh_chat_heading() -> void:
+	chat_title.text = tr("Chat") + (" · %d" % unread if unread > 0 else "")
+	chat_jump.text = tr("↓ %d new messages") % unread
+	chat_jump.visible = unread > 0 and not chat_collapsed
+
+func update_land_tooltip() -> void:
+	land_button.tooltip_text = (tr("Sell land") if land_action == "land_offer" else tr("Buy land")) + " · " + (tr("Include water") if include_water else tr("Land only"))

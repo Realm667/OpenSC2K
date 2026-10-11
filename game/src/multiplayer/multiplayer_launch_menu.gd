@@ -15,6 +15,8 @@ var land_price: SpinBox
 var goal_fields: VBoxContainer
 var goal_picker: OptionButton
 var goal_target: SpinBox
+var goal_years: OptionButton
+var years_label: Label
 
 func _init(owner: ApplicationMultiplayer) -> void:
 	owner_ref = weakref(owner)
@@ -111,6 +113,13 @@ func setup(body: VBoxContainer) -> void:
 	goal_target.max_value = 2147483647
 	goal_target.value = 10000
 	goal_fields.add_child(goal_target)
+	years_label = ApplicationMultiplayer.label(goal_fields, tr("Required leadership"))
+	goal_years = OptionButton.new()
+	for years in [1, 3, 5, 10]:
+		goal_years.add_item(tr("%d game years") % years)
+	goal_years.select(3)
+	goal_fields.add_child(goal_years)
+	goal_years.tooltip_text = tr("Only the sole leader at or above the target earns time. Earned time is kept; ties pause all clocks.")
 	goal_picker.item_selected.connect(func(index: int) -> void:
 		goal_target.value = 100000 if index == 2 else 10000
 		update())
@@ -158,6 +167,8 @@ func update() -> void:
 	shared_fields.visible = coop.mode_picker.selected == 1 and coop.city_picker.selected == 0
 	goal_fields.visible = coop.mode_picker.selected != 0 and coop.city_picker.selected == 0
 	goal_target.visible = goal_picker.selected != 0
+	goal_years.visible = goal_target.visible
+	years_label.visible = goal_target.visible
 	goal_picker.tooltip_text = goal_help()
 	goal_target.tooltip_text = goal_help()
 	coop.join_code.tooltip_text = tr("Leave empty to allow joining without a password.") if hosting else tr("Enter the game's password if the host set one; otherwise leave empty.")
@@ -181,4 +192,4 @@ func goal_help() -> String:
 	var hint := tr("Population: residents of your own city. Suggested targets: 2,000 for a short development goal, 10,000 for a medium goal, 50,000 for a long goal.") if goal_picker.selected == 1 else tr("Net wealth: treasury minus bank bonds and outstanding player debt. Suggested targets: $50,000, $100,000 or $500,000 for increasingly long economic goals.")
 	if goal_picker.selected == 0:
 		return tr("Build without a victory target or time limit.")
-	return hint + "\n" + tr("The target must then be held for one full game year (300 game days). At uninterrupted simulation speed, that year takes about 4 minutes at Turtle, 2 at Llama or 1 at Cheetah. Swallow advances one day per processed frame (about 5 seconds per year at 60 simulation frames/s). Development time is additional and depends on difficulty, terrain, experience, pauses and computer performance; these are not match-duration guarantees.")
+	return hint + "\n" + tr("Reach the target and accumulate the selected number of years as sole leader. Earned time is kept when overtaken; ties pause all clocks.")

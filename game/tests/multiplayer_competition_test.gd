@@ -67,6 +67,8 @@ func run() -> void:
 	world.city.set_funds(31000)
 	world.city.set_age_in_days(0)
 	var goal := MultiplayerGoal.new()
+	goal.rule = "continuous"
+	goal.hold_days = CityCalendar.DAYS_PER_YEAR
 	goal.kind = "wealth"
 	goal.target = 30000
 	check(not goal.evaluate(world, members, loans), "threshold starts holding year")
