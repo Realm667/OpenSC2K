@@ -35,6 +35,8 @@ func _init(windows: MultiplayerWindows) -> void:
 	var stats := ApplicationMultiplayer.button(heading, tr("Statistics"), windows.open_scoreboard)
 	stats.icon = preload("res://src/multiplayer/icons/statistics.svg")
 	stats.add_theme_constant_override("icon_max_width", 18)
+	for icon_state in ["icon_normal_color", "icon_hover_color", "icon_pressed_color", "icon_focus_color"]:
+		stats.add_theme_color_override(icon_state, Color.WHITE)
 	stats.tooltip_text = tr("Open scoreboard")
 	home = ApplicationMultiplayer.button(windows.coop.app.map_view, tr("Return to your city"), func() -> void:
 		windows.coop.session.request({"kind": "view_city", "seat": windows.coop.session.token.sha256_text()}))
@@ -138,6 +140,7 @@ func update(state: Dictionary, _actor: String) -> void:
 		amount.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		amount.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		amount.add_theme_constant_override("outline_size", 0)
+		amount.add_theme_color_override("font_color", Color.WHITE)
 		amount.add_theme_font_size_override("font_size", 14)
 		amount.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		amount.text = "%s / %s" % [number(current, kind), number(target, kind)]
