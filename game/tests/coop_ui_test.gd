@@ -128,6 +128,8 @@ func run() -> void:
 	main.coop.mode_picker.select(1)
 	main.coop.port.value = 0
 	main.coop.host_document(Sc2xDocument.create_empty(128, "Land UI").document)
+	main.coop.session.request({"kind": "rename_city", "name": "Renamed lobby city"})
+	check(main.city_menu_bar.city_label.text == "Renamed lobby city", "lobby rename updates persistent city header")
 	main.coop.session.waiting_for_start = false
 	main.coop.session.publish()
 	main.coop.windows.select_land("land_buy")

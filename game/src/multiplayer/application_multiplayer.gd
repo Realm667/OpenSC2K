@@ -280,6 +280,8 @@ func receive_state(state: Dictionary) -> void:
 			app.static_render.refresh_after_city_edit(edit)
 		app.moving_sprites.refresh_moving_things()
 		app.interface.refresh_details()
+	app.city_menu_bar.set_city_name(app.document_state.city.display_name(),
+		DebugFileInfo.city_tooltip(app.document_state.city.display_name(), app.document_state.current_document))
 	app.simulation_state.speed_controller.speed = int(state.get("speed", 1))
 	app.frame.sync_speed_ui()
 	save_identity()
