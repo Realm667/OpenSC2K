@@ -42,6 +42,7 @@ static func encode(
 	max_file_bytes: int,
 	max_data_bytes: int,
 	always_deflate := false,
+	compression_cache: Dictionary = {},
 ) -> Result:
 	if max_file_bytes < 0 or max_file_bytes > ABSOLUTE_MAX_BYTES or max_data_bytes < 0 or max_data_bytes > ABSOLUTE_MAX_BYTES:
 		return _failure("The ZIP size limit is invalid.")
@@ -73,7 +74,13 @@ static func encode(
 			payload = PackedByteArray([0x03, 0x00])
 			entry.method = DEFLATE
 		elif not payload.is_empty():
-			var gzip := payload.compress(FileAccess.COMPRESSION_GZIP)
+			var cached: Dictionary = compression_cache.get(path, {})
+			var gzip: PackedByteArray
+			if cached.get("raw") == payload:
+				gzip = cached.gzip
+			else:
+				gzip = payload.compress(FileAccess.COMPRESSION_GZIP)
+				compression_cache[path] = {"raw": payload.duplicate(), "gzip": gzip}
 			# Godot emits a fixed GZIP header. Its trailer supplies the native CRC.
 			if (gzip.size() < GZIP_HEADER.size() + GZIP_TRAILER_SIZE
 					or gzip[0] != 0x1f

@@ -28,6 +28,7 @@ var camera_pan := Vector2.ZERO
 var last_camera_center := Vector2.ZERO
 var last_camera_zoom := 0.0
 var remote_state: Array = []
+var remote_kind := -1
 var thunder_sequence := 0
 var received_thunder := -1
 var remote_clock := -1.0
@@ -77,13 +78,15 @@ func process(delta: float, phase_elapsed: float, active: bool, season: float, pa
 	if not remote_state.is_empty():
 		_process_remote(delta, enabled, paused)
 		return
-	var snow_allowed: bool = options.weather_mode == 2 or int(fposmod(season, 4.0)) == 3
+	var snow_allowed: bool = remote_kind >= 0 or options.weather_mode == 2 or int(fposmod(season, 4.0)) == 3
 	if enabled:
 		if options.weather_mode != last_mode:
 			last_mode = options.weather_mode
 			last_game_weather = -1
 			interval = float(options.weather_seconds)
-		if options.weather_mode == 0:
+		if remote_kind >= 0:
+			selected_kind = remote_kind as Kind
+		elif options.weather_mode == 0:
 			var game_weather := app.document_state.city.weather_type()
 			if game_weather != last_game_weather:
 				last_game_weather = game_weather

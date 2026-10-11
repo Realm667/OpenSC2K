@@ -330,13 +330,13 @@ static func entries(document: Sc2File) -> EntriesResult:
 	return result
 
 
-static func encode(document: Sc2File) -> BinaryResult:
+static func encode(document: Sc2File, compression_cache: Dictionary = {}) -> BinaryResult:
 	var prepared := entries(document)
 
 	if not prepared.ok:
 		return BinaryResult.failure(prepared.error)
 
-	var archive := ZipArchive.encode(prepared.order, prepared.members, MAX_ARCHIVE_BYTES, MAX_DATA_BYTES, true)
+	var archive := ZipArchive.encode(prepared.order, prepared.members, MAX_ARCHIVE_BYTES, MAX_DATA_BYTES, true, compression_cache)
 
 	if not archive.ok:
 		return BinaryResult.failure(archive.error)

@@ -137,6 +137,9 @@ func admit(peer: int, actor: String, kind := "joined") -> void:
 	session.requested_speed[actor] = 5
 	session.reset_lobby_ready()
 	session.apply_speed()
+	# The host must see the same readiness generation as the newly admitted
+	# guest before either can click Ready, independently of snapshot cadence.
+	session.publish()
 	session.channels[peer].send({"type": "welcome", "session": session.session_id,
 		"actor": actor, "next": int(session.members[actor].sequence) + 1})
 	session.send_state(peer, session.make_state(actor))

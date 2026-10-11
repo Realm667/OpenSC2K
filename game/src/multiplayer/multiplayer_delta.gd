@@ -27,7 +27,7 @@ func encode(state: Dictionary) -> Dictionary:
 		for field: String in state:
 			if state[field] == previous.get(field):
 				continue
-			if field in ["city", "owners"] and previous.has(field):
+			if field in ["city", "owners", "protection"] and previous.has(field):
 				var value: Variant = state[field]
 				var old: Variant = previous[field]
 				var changed: Array = []
@@ -67,7 +67,7 @@ func decode(message: Dictionary) -> Dictionary:
 	for field: Variant in message.removed:
 		result.erase(field)
 	for field: Variant in message.pages:
-		if field not in ["city", "owners"] or not before.has(field):
+		if field not in ["city", "owners", "protection"] or not before.has(field):
 			failed = true
 			return {}
 		var patch: Variant = message.pages[field]
@@ -80,7 +80,7 @@ func decode(message: Dictionary) -> Dictionary:
 			if not part is Array or part.size() != 2 or not CoopWorld.whole_number(part[0], 0, maxi(0, int(patch.length) - 1)) or int(part[0]) % PAGE != 0 or changes.has(int(part[0])):
 				failed = true
 				return {}
-			if (field == "city" and not part[1] is String) or (field == "owners" and not part[1] is Array):
+			if (field == "city" and not part[1] is String) or (field != "city" and not part[1] is Array):
 				failed = true
 				return {}
 			var count: int = part[1].length() if field == "city" else part[1].size()
@@ -116,9 +116,9 @@ func remember(key: String, state: Dictionary) -> void:
 	states[key] = state.duplicate(true)
 	var bytes := 0
 	for item: Dictionary in states.values():
-		bytes += str(item.get("city", "")).length() * 4 + item.get("owners", []).size() * 8
+		bytes += str(item.get("city", "")).length() * 4 + (item.get("owners", []).size() + item.get("protection", []).size()) * 8
 	while states.size() > 1 and (bytes > CACHE_BYTES or states.size() > 2):
 		var oldest: String = states.keys()[0]
 		var item: Dictionary = states[oldest]
-		bytes -= str(item.get("city", "")).length() * 4 + item.get("owners", []).size() * 8
+		bytes -= str(item.get("city", "")).length() * 4 + (item.get("owners", []).size() + item.get("protection", []).size()) * 8
 		states.erase(oldest)

@@ -25,6 +25,8 @@ var dispatch_owners: Dictionary = {}
 var undo_statistics: Dictionary = {}
 var undo_dispatch_owners: Dictionary = {}
 var encoded_city := ""
+var compression_cache: Dictionary = {}
+var statistics_tiles: Dictionary = {}
 var encoded_revision := -1
 var encoded_policy := -1
 
@@ -116,7 +118,7 @@ func advance(delta: float) -> void:
 func snapshot(force_checkpoint := false) -> Dictionary:
 	if force_checkpoint or encoded_city.is_empty() or encoded_revision != revision or encoded_policy != policy_revision:
 		Sc2xCheckpoint.capture(controller, city.document.sc2x_metadata)
-		var encoded := Sc2xDocument.encode(city.document)
+		var encoded := Sc2xDocument.encode(city.document, compression_cache)
 		if not encoded.ok:
 			return {"error": encoded.error}
 		encoded_city = Marshalls.raw_to_base64(encoded.data)

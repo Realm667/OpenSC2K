@@ -185,27 +185,30 @@ func process(delta: float) -> void:
 			if remote_weather.options.has(key):
 				network_options[key] = remote_weather.options[key]
 		app.preferences.visual_enhancements = normalized_network_options(network_options)
-		phase = float(remote_weather.get("day_phase", phase))
-		season_phase = float(remote_weather.get("season_phase", season_phase))
+		if not remote_weather.has("kind"):
+			phase = float(remote_weather.get("day_phase", phase))
+			season_phase = float(remote_weather.get("season_phase", season_phase))
 	var options := app.preferences.visual_enhancements
 	var speed := app.simulation_state.speed_controller.speed if app.simulation_state.speed_controller != null else 1
 	var elapsed := maxf(delta, 0.0)
 	var paused := speed == GameSpeedController.Speed.PAUSED or (not app.coop.active() and app.frame._simulation_suspended())
+	paused = paused or (remote and remote_weather.get("paused", false))
 	if options.pause_freezes and paused:
 		elapsed = 0.0
 	var weather_delta := 0.0 if paused else maxf(delta, 0.0)
 	var factor := VisualEnhancementOptions.speed_factor(speed) if options.speed_link and speed > 1 else 1.0
-	if active and not remote and options.day_enabled and options.day_mode == 0:
+	if active and (not remote or remote_weather.has("kind")) and options.day_enabled and options.day_mode == 0:
 		phase = fposmod(phase + elapsed * factor / float(options.day_seconds), 1.0)
 	var hour := phase * 24.0 if options.day_mode == 0 else float(options.day_hour)
 	var lighting := light_at_hour(hour, options.night_strength)
-	if active and not remote and options.season_enabled and options.season_mode == 1:
+	if active and (not remote or remote_weather.has("kind")) and options.season_enabled and options.season_mode == 1:
 		season_phase = fposmod(season_phase + elapsed * factor * 4.0 / float(options.season_seconds), 4.0)
 	var season := season_phase
 	if options.season_mode == 0 and city != null:
 		season = fposmod(float(city.age_in_days() % CityCalendar.DAYS_PER_YEAR) / CityCalendar.DAYS_PER_YEAR * 4.0 - 2.0 / 3.0, 4.0)
 	elif options.season_mode == 2:
 		season = float(options.season_fixed)
+	weather.remote_kind = int(remote_weather.get("kind", -1)) if remote else -1
 	weather.remote_state = remote_weather.get("weather", [])
 	clouds.remote_state = remote_weather.get("clouds", [])
 	var previous_weather := weather.kind
@@ -269,6 +272,17 @@ func process(delta: float) -> void:
 	app.preferences.visual_enhancements = saved_options
 
 
+func network_description() -> Dictionary:
+	# Only the chosen atmosphere and occasional phase anchors are shared. Each
+	# client owns cloud drift, particle clocks, lightning and audio presentation.
+	var options := {}
+	for key: String in SHARED_OPTIONS:
+		if app.preferences.visual_enhancements.has(key):
+			options[key] = app.preferences.visual_enhancements[key]
+	return {"options": options, "kind": weather.kind, "day_phase": phase,
+		"season_phase": season_phase, "paused": app.simulation_state.speed_controller == null or app.simulation_state.speed_controller.speed == GameSpeedController.Speed.PAUSED}
+
+
 func network_snapshot() -> Dictionary:
 	var paused := app.simulation_state.speed_controller == null or app.simulation_state.speed_controller.speed == GameSpeedController.Speed.PAUSED or (not app.coop.active() and app.frame._simulation_suspended())
 	var options := {}
@@ -289,6 +303,17 @@ func network_snapshot() -> Dictionary:
 
 
 func receive_network_weather(state: Dictionary) -> void:
+	if state.has("kind"):
+		if not CoopWorld.whole_number(state.kind, 0, CityVisualWeather.Kind.HEAVY_SNOW) or not state.get("paused") is bool or not state.get("options") is Dictionary:
+			return
+		for key in ["day_phase", "season_phase"]:
+			var value: Variant = state.get(key)
+			if not (value is int or value is float) or not is_finite(float(value)) or value < 0 or value > (1 if key == "day_phase" else 4):
+				return
+		remote_weather = state.duplicate(true)
+		phase = float(state.day_phase)
+		season_phase = float(state.season_phase)
+		return
 	if not state.get("weather") is Array or state.weather.size() != 21 or not state.get("clouds") is Array or state.clouds.size() != 14:
 		return
 	for value: Variant in state.weather + state.clouds:

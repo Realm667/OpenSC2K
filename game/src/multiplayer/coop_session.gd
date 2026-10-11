@@ -21,7 +21,7 @@ signal seat_lobby_received(data: Dictionary)
 
 const PROTOCOL := 1
 const BUILD := "opensc2k-coop-1"
-const NETWORK_BUILD := "opensc2k-multiplayer-18"
+const NETWORK_BUILD := "opensc2k-multiplayer-19"
 const MAX_PLAYERS := 8
 var world: CoopWorld
 var active := false
@@ -57,6 +57,17 @@ var local_revision := 0
 var local_policy := 0
 var latest: Dictionary = {}
 var snapshot_elapsed := 0.0
+var build_publication_pending := false
+var build_publication_due := 0
+var pending_publications: Dictionary = {}
+var received_messages: Dictionary = {}
+var environment_signature: Dictionary = {}
+var presence_signature: Array = []
+var cursor_signature: Dictionary = {}
+var cursor_sent_at := 0
+var build_chain: Dictionary = {}
+var publication_count := 0
+var publication_usec := 0
 var heartbeat_elapsed := 0.0
 var disconnected_pause := false
 var requested_speed: Dictionary = {}
@@ -192,6 +203,14 @@ func join(address: String, port: int, join_code: String, player_name: String, in
 
 
 func stop() -> void:
+	build_publication_pending = false
+	build_chain.clear()
+	pending_publications.clear()
+	received_messages.clear()
+	environment_signature.clear()
+	presence_signature.clear()
+	cursor_signature.clear()
+	snapshot_elapsed = 0.0
 	ended_city = ""
 	confirmed_own_city = ""
 	reconnect_until = 0
@@ -302,13 +321,21 @@ func _process(delta: float) -> void:
 			next_peer += 1
 	for id: int in channels.keys():
 		var channel := channels[id]
-		for message in channel.poll():
-			if channel.failed:
-				break
+		var inbox: Array = received_messages.get(id, [])
+		# Leave excess complete frames in the bounded transport input. Never drop
+		# reliable commands, and bound execution as well as JSON parsing.
+		if inbox.is_empty():
+			inbox = channel.poll(8 if hosting else 16)
+		var began := Time.get_ticks_usec()
+		while not inbox.is_empty() and not channel.failed:
+			var message: Dictionary = inbox.pop_front()
 			if hosting:
 				receive_host(id, message)
 			else:
 				receive_client(message)
+			if Time.get_ticks_usec() - began >= 2000:
+				break
+		received_messages[id] = inbox
 		if hosting and not identities.has(id) and not seats.pending.has(id) and Time.get_ticks_msec() - handshake_started.get(id, 0) > 10000:
 			channel.failed = true
 		if channel.failed:
@@ -327,15 +354,18 @@ func _process(delta: float) -> void:
 			apply_speed()
 			publish()
 		snapshot_elapsed += delta
-		if snapshot_elapsed >= 0.25:
-			snapshot_elapsed = 0.0
+		if snapshot_elapsed >= 0.25 or (build_publication_pending and Time.get_ticks_msec() >= build_publication_due):
 			publish()
 		environment_elapsed += delta
-		if environment_elapsed >= 0.05 and environment_source.is_valid():
-			environment_elapsed = 0.0
+		if environment_elapsed >= 0.1 and environment_source.is_valid():
 			var atmosphere: Dictionary = environment_source.call()
-			for id: int in identities:
-				if channels[id].output.is_empty():
+			var signature := atmosphere.duplicate()
+			signature.erase("day_phase")
+			signature.erase("season_phase")
+			if signature != environment_signature or environment_elapsed >= 5.0:
+				environment_elapsed = 0.0
+				environment_signature = signature
+				for id: int in identities:
 					channels[id].send_latest({"type": "environment", "weather": atmosphere})
 	presence_elapsed += delta
 	if presence_elapsed >= 0.1:
@@ -350,12 +380,31 @@ func _process(delta: float) -> void:
 				cursor_tools[token] = tool
 				cursor_updated[token] = Time.get_ticks_msec()
 			elif connected:
-				channels[0].send_latest({"type": "cursor", "position": [position.x, position.y], "selection": selection, "tool": tool})
+				var cursor := {"type": "cursor", "position": [position.x, position.y], "selection": selection, "tool": tool}
+				if cursor != cursor_signature or Time.get_ticks_msec() - cursor_sent_at >= 1000:
+					cursor_signature = cursor.duplicate(true)
+					cursor_sent_at = Time.get_ticks_msec()
+					channels[0].send_latest(cursor)
 		if hosting:
-			var players := roster()
-			presence_received.emit(players)
-			for id: int in identities:
-				channels[id].send_latest({"type": "presence", "players": players})
+			var players := presence_rows()
+			presence_received.emit(merge_presence(players))
+			if players != presence_signature:
+				presence_signature = players.duplicate(true)
+				for id: int in identities:
+					channels[id].send_latest({"type": "presence", "players": players})
+	# Prepare at least one recipient, then yield before another expensive city.
+	# A slow recipient is skipped; its next state uses the newest authoritative data.
+	var publication_started := Time.get_ticks_usec()
+	for id: int in pending_publications.keys():
+		if not identities.has(id):
+			pending_publications.erase(id)
+			continue
+		if outgoing_states.has(id) or channels[id].output.size() >= CityTcpChannel.IO_BUDGET:
+			continue
+		send_state(id, make_state(identities[id]))
+		pending_publications.erase(id)
+		if Time.get_ticks_usec() - publication_started >= 2000:
+			break
 	for id: int in outgoing_states.keys():
 		if outgoing_states[id].pump(channels[id]):
 			outgoing_states.erase(id)
@@ -423,11 +472,35 @@ func receive_host(id: int, message: Dictionary) -> void:
 	var response := execute(identities[id], message)
 	response["id"] = message.get("id", 0)
 	channels[id].send(response)
-	# Confirmed edits must not wait for the periodic simulation snapshot.
-	publish()
+	# Acknowledge now. Consecutive brush actions share one bounded publication.
+	channels[id].flush()
+	if message.get("kind") == "build":
+		schedule_build_publication()
+	else:
+		publish()
 
 
 func execute(actor: String, message: Dictionary) -> Dictionary:
+	# A reliable ordered brush stream may depend on its own preceding edits
+	# before their shared snapshot arrives. Never advance across another actor,
+	# a simulation revision, a policy change or a city-view change.
+	var before := world.revision
+	var seen: Variant = message.get("revision")
+	var build: bool = message.get("kind") == "build"
+	var chained: bool = build and CoopWorld.whole_number(seen, 0, before) and build_chain.get("actor") == actor and build_chain.get("world") == world.get_instance_id() and build_chain.get("head") == before and int(seen) >= int(build_chain.get("base", before)) and message.get("view_owner", "") == build_chain.get("view", "")
+	if chained:
+		message = message.duplicate()
+		message.revision = before
+	var result := execute_ordered(actor, message)
+	if result.get("ok", false) and build:
+		build_chain = {"actor": actor, "world": world.get_instance_id(), "head": world.revision,
+			"base": build_chain.base if chained else before, "view": message.get("view_owner", "")}
+	elif not build or world.revision != before:
+		build_chain.clear()
+	return result
+
+
+func execute_ordered(actor: String, message: Dictionary) -> Dictionary:
 	var member: Dictionary = members[actor]
 	if not CoopWorld.whole_number(message.get("id"), 1, 2147483647):
 		return CoopWorld.rejected("Invalid command identifier.")
@@ -593,7 +666,10 @@ func request(command: Dictionary) -> void:
 		feedback.emit(str(result.message))
 		if result.has("choices"):
 			choice_requested.emit(result)
-		publish()
+		if command.get("kind") == "build":
+			schedule_build_publication()
+		else:
+			publish()
 	else:
 		channels[0].send(command)
 		channels[0].flush()
@@ -673,7 +749,7 @@ func receive_client(message: Dictionary) -> void:
 			channels[0].failed = true
 		"presence":
 			if message.get("players") is Array:
-				presence_received.emit(message.players)
+				presence_received.emit(merge_presence(message.players))
 		"ping":
 			pass
 		"leave_ack":
@@ -718,16 +794,25 @@ func make_state(recipient := "") -> Dictionary:
 	return state
 
 
+func schedule_build_publication() -> void:
+	if not build_publication_pending:
+		build_publication_due = Time.get_ticks_msec() + 40
+	build_publication_pending = true
+
+
 func publish() -> void:
+	var started := Time.get_ticks_usec()
+	build_publication_pending = false
+	snapshot_elapsed = 0.0
+	publication_count += 1
 	var state := make_state()
 	if not state.has("city"):
 		feedback.emit(str(state.get("error", "Cannot synchronize the city.")))
 		return
 	accept_state(state)
+	publication_usec += Time.get_ticks_usec() - started
 	for id: int in identities:
-		# Do not accumulate stale snapshots behind a slow client.
-		if channels[id].output.size() < CityTcpChannel.IO_BUDGET and not outgoing_states.has(id):
-			send_state(id, make_state(identities[id]) if world is SharedWorld else state)
+		pending_publications[id] = true
 
 
 func accept_state(state: Dictionary) -> void:
@@ -742,6 +827,8 @@ func accept_state(state: Dictionary) -> void:
 
 
 func drop(id: int) -> void:
+	pending_publications.erase(id)
+	received_messages.erase(id)
 	encoders.erase(id)
 	if outgoing_states.has(id):
 		outgoing_states[id].close()
@@ -909,6 +996,30 @@ func available_color(value: Variant) -> String:
 		if not used.has(color):
 			return color
 	return wanted
+
+
+func presence_rows() -> Array:
+	var result: Array = []
+	for actor: String in members:
+		var member: Dictionary = members[actor]
+		var fresh := Time.get_ticks_msec() - int(cursor_updated.get(actor, 0)) < 3000
+		result.append({"id": actor.sha256_text(), "name": member.name, "color": valid_color(member.get("color")),
+			"online": requested_speed.has(actor), "view_owner": str(viewed_cities.get(actor, actor)).sha256_text(),
+			"selection": selections.get(actor, []) if fresh else [], "cursor_tool": cursor_tools.get(actor, {}),
+			"cursor": cursors.get(actor, [-1, -1]) if fresh else [-1, -1]})
+	return result
+
+
+func merge_presence(rows: Array) -> Array:
+	var result: Array = latest.get("roster", []).duplicate(true)
+	for row: Variant in rows:
+		if not row is Dictionary or not row.get("id") is String:
+			continue
+		for player: Dictionary in result:
+			if player.get("id") == row.id:
+				player.merge(row, true)
+				break
+	return result
 
 
 func roster() -> Array:
@@ -1101,6 +1212,8 @@ func restore_embedded(document: Sc2File) -> String:
 	for entry: Dictionary in admin_history:
 		event_sequence = maxi(event_sequence, int(str(entry.id).get_slice(":admin:", 1)))
 	starts.restore(data.get("starts", {"round": 1, "assigned": true, "previous": {}, "positions": {}}))
+	if world is SharedWorld:
+		starts.repair_reserved_corridors(world)
 	waiting_for_start = data.get("started", true) != true
 	reset_lobby_ready()
 	apply_speed()
@@ -1141,16 +1254,17 @@ func send_state(id: int, state: Dictionary) -> void:
 		encoders[id] = MultiplayerDelta.new()
 	var encoder: MultiplayerDelta = encoders[id]
 	var wire := encoder.encode(state)
-	var bytes := JSON.stringify(wire).to_utf8_buffer().size()
+	var body := JSON.stringify(wire).to_utf8_buffer()
+	var bytes := body.size()
 	if wire.type == "state":
 		encoder.full_bytes += bytes
 	else:
 		encoder.delta_bytes += bytes
 	if bytes < MultiplayerStateStream.CHUNK_BYTES:
-		channels[id].send(wire)
+		channels[id].send_encoded(body)
 		return
 	var stream := MultiplayerStateStream.new()
-	if not stream.open_output(wire):
+	if not stream.open_encoded(body):
 		stream.close()
 		feedback.emit("The city snapshot could not be prepared for transfer.")
 		channels[id].failed = true

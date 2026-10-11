@@ -12,27 +12,37 @@ static func capture(world: CoopWorld, actor: String) -> Dictionary:
 		"spent": own.statistics.get(actor, {}).get("spent", 0),
 		"land": 0, "built": 0, "residential": 0, "commercial": 0, "industrial": 0,
 		"bought": null, "sold": null, "units": 0, "aid": 0}
-	for tile in city.buildings.size():
-		if world is SharedWorld and not world is RegionWorld and world.owners[tile] != world.actors.find(actor) + 1:
-			continue
-		result.land += 1
-		if city.buildings[tile] > 13:
-			result.built += 1
-		var zone := int(city.zones[tile]) & 15
-		if zone in [1, 2]:
-			result.residential += 1
-		elif zone in [3, 4]:
-			result.commercial += 1
-		elif zone in [5, 6]:
-			result.industrial += 1
+	var owners: PackedInt32Array = world.owners if world is SharedWorld and not world is RegionWorld else PackedInt32Array()
+	var owner: int = world.actors.find(actor) + 1 if not owners.is_empty() else 0
+	var cached: Dictionary = own.statistics_tiles.get(owner, {})
+	var counts: Dictionary
+	if cached.get("buildings") == city.buildings and cached.get("zones") == city.zones and cached.get("owners") == owners:
+		counts = cached.counts
+	else:
+		counts = {"land": 0, "built": 0, "residential": 0, "commercial": 0, "industrial": 0}
+		for tile in city.buildings.size():
+			if world is SharedWorld and not world is RegionWorld and owners[tile] != owner:
+				continue
+			counts.land += 1
+			if city.buildings[tile] > 13:
+				counts.built += 1
+			var zone := int(city.zones[tile]) & 15
+			if zone in [1, 2]:
+				counts.residential += 1
+			elif zone in [3, 4]:
+				counts.commercial += 1
+			elif zone in [5, 6]:
+				counts.industrial += 1
+		own.statistics_tiles[owner] = {"buildings": city.buildings.duplicate(), "zones": city.zones.duplicate(), "owners": owners.duplicate(), "counts": counts}
+	result.merge(counts, true)
 	if world is SharedWorld:
 		result.bought = world.land_statistics.get(actor, {}).get("bought")
 		result.sold = world.land_statistics.get(actor, {}).get("sold")
-		for owner: String in world.municipalities:
-			for unit: Dictionary in world.municipalities[owner].dispatch_owners.values():
+		for municipality: String in world.municipalities:
+			for unit: Dictionary in world.municipalities[municipality].dispatch_owners.values():
 				if unit.get("actor") == actor.sha256_text():
 					result.units += 1
-					if owner != actor:
+					if municipality != actor:
 						result.aid += 1
 	else:
 		for unit: Dictionary in world.dispatch_owners.values():

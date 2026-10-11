@@ -1952,6 +1952,12 @@
     "lane": "product"
   },
   {
+    "id": "multiplayer_netcode_test",
+    "script": "tests/multiplayer_netcode_test.gd",
+    "domain": "simulation",
+    "lane": "product"
+  },
+  {
     "id": "multiplayer_load_test",
     "script": "tests/multiplayer_load_test.gd",
     "domain": "simulation",
