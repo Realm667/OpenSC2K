@@ -1,8 +1,8 @@
 class_name ApplicationQualityOfLife
 extends Node
 
-const MENU_LAYOUTS := 0x8400
-const MENU_MUSIC_BOX := 0x8401
+const MENU_LAYOUTS := CityMenuBar.MENU_WORKSPACES
+const MENU_MUSIC_BOX := CityMenuBar.MENU_MUSIC_BOX
 const WORKSPACES := ["Building", "Finances", "City analysis"]
 
 var app: CityApplication
@@ -27,10 +27,6 @@ func _ready() -> void:
 	report_windows = {0: app.city_dialogs.budget_dialog, 1: app.city_dialogs.ordinance_window,
 		2: app.city_dialogs.population_window, 3: app.city_dialogs.industry_window,
 		4: app.city_dialogs.graph_window, 5: app.city_dialogs.simnation_window, 6: app.city_dialogs.city_map_window}
-	var popup := app.city_menu_bar.windows_menu.get_popup()
-	popup.add_separator()
-	popup.add_item("Workspaces", MENU_LAYOUTS)
-	popup.add_item("Music box", MENU_MUSIC_BOX)
 	app.city_menu_bar.windows_menu_requested.connect(_menu)
 	_build_layout_dialog()
 	music_box = MusicBoxDialog.new(app)

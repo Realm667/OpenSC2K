@@ -31,6 +31,16 @@ func _run() -> void:
 	app.city_files._load_city_unchecked(GeneratedCityFixture.path(128))
 	app.frame.select_speed(GameSpeedController.Speed.PAUSED)
 	app.interface.hide_main_menu()
+	var window_menu := app.city_menu_bar.windows_menu.get_popup()
+	for scenario_available in [false, true, false]:
+		app.city_menu_bar.set_scenario_available(scenario_available)
+		assert(window_menu.get_item_index(ApplicationQualityOfLife.MENU_LAYOUTS) >= 0)
+		assert(window_menu.get_item_index(ApplicationQualityOfLife.MENU_MUSIC_BOX) >= 0)
+	window_menu.id_pressed.emit(ApplicationQualityOfLife.MENU_MUSIC_BOX)
+	assert(qol.music_box.visible, "The real Windows menu must open the music box after loading a city")
+	qol.music_box.hide()
+	window_menu.id_pressed.emit(ApplicationQualityOfLife.MENU_LAYOUTS)
+	assert(qol.layouts.visible)
 	qol.layouts.popup_centered(Vector2i(500, 300))
 	await process_frame
 	await process_frame
