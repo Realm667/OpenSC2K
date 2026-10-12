@@ -267,7 +267,11 @@ impl NativeCityRegionBuilder {
             ("emission", pixels.emission),
             ("seasons", pixels.seasons),
             ("seabed", pixels.seabed),
+            ("lights", pixels.lights),
         ] {
+            if name == "lights" && !bytes.chunks_exact(4).any(|pixel| pixel[3] != 0) {
+                continue;
+            }
             let image = Image::create_from_data(rect.w, rect.h, false, Format::RGBA8, &PackedByteArray::from(bytes.as_slice()))
                 .expect("validated water bounds");
             result.set(name, &image);

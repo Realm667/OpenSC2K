@@ -10,6 +10,7 @@ pub struct WaterPixels {
     pub emission: Vec<u8>,
     pub seasons: Vec<u8>,
     pub seabed: Vec<u8>,
+    pub lights: Vec<u8>,
 }
 
 pub fn mirrored_row(row: i32, contact: i32, object_altitude: i32, water_altitude: i32, step: i32) -> i32 {
@@ -187,6 +188,7 @@ impl Builder {
             emission: vec![0; bytes],
             seasons: vec![0; bytes],
             seabed: vec![0; bytes],
+            lights: vec![0; bytes],
         };
         if self.config.underground || water_indices.len() != 256 {
             return Ok(out);
@@ -237,6 +239,7 @@ impl Builder {
             let sprite = &self.sprites.images[&draw.image];
             let altitude = self.city.object(i);
             let building = self.city.buildings[i];
+            self.water_lights(&mut out, bounds, draw, emission, &levels);
             let contacts: Vec<_> = (0..sprite.w)
                 .map(|x| {
                     let axis = contact_twice(draw, x, building);
@@ -307,6 +310,85 @@ impl Builder {
             }
         }
         Ok(out)
+    }
+
+    // Cache a light envelope per authored brightmap column. Only the shader's
+    // small wave modulation changes per frame. No simulated light or water state.
+    fn water_lights(&self, out: &mut WaterPixels, bounds: Rect, draw: &Draw, emission: &HashMap<u64, Sprite>, levels: &[bool; 32]) {
+        let i = cell(&self.city, draw.depth).expect("validated building draw");
+        if draw.emission_disabled || self.city.buildings[i] < crate::ids::building_tile_ids::DEVELOPED_FIRST {
+            return;
+        }
+        let sprite = &self.sprites.images[&draw.image];
+        let Some(mask) = emission.get(&((draw.sprite as u64) * 2)) else {
+            return;
+        };
+        if mask.w != sprite.w || mask.h != sprite.h {
+            return;
+        }
+        let c = self.config;
+        for sx in (bounds.x - draw.rect.x).max(0)..(bounds.x + bounds.w - draw.rect.x).min(sprite.w) {
+            let contact = contact_row(draw, sx, true);
+            let mut color = [0.0_f32; 3];
+            let mut energy = 0.0_f32;
+            let mut height = 0;
+            for sy in 0..sprite.h {
+                if sprite.rgba[((sy * sprite.w + sx) * 4 + 3) as usize] == 0 || draw.rect.y + sy >= contact {
+                    continue;
+                }
+                let light = auxiliary(emission, draw, sprite, sx, sy);
+                let alpha = f32::from(light[3]) / 255.0;
+                if alpha == 0.0 || light[..3].iter().all(|v| *v == 0) {
+                    continue;
+                }
+                for channel in 0..3 {
+                    color[channel] += f32::from(light[channel]) * alpha;
+                }
+                energy += alpha;
+                height = height.max(contact - draw.rect.y - sy);
+            }
+            if energy == 0.0 {
+                continue;
+            }
+            let rgb = color.map(|v| (v / energy).round() as u8);
+            let strength = (energy / sprite.h as f32).sqrt().min(1.0);
+            let x = draw.rect.x + sx;
+            for (level, present) in levels.iter().enumerate() {
+                if !present || self.city.object(i) < level as i32 {
+                    continue;
+                }
+                let level = level as i32;
+                let plane = contact + (self.city.object(i) - level) * c.step();
+                // Require a nearby receiving shore at this column, not just a
+                // distant lake aligned with an inland building. A quay may sit
+                // between the facade and water; islands terminate the trail.
+                if !unobstructed(&self.city, c, x, plane, plane + c.hh(), level) {
+                    continue;
+                }
+                let length = (height + 24 / c.divisor()).clamp(32 / c.divisor(), 160 / c.divisor());
+                let mut visibility = HashMap::new();
+                for y in plane.max(bounds.y)..(plane + length).min(bounds.y + bounds.h) {
+                    let at = (((y - bounds.y) * bounds.w + x - bounds.x) * 4) as usize;
+                    if out.surface[at + 3] == 0 || out.surface[at] != level as u8 + 1 {
+                        continue;
+                    }
+                    let receiver = plane_cell(&self.city, c, x, y, level);
+                    if !*visibility
+                        .entry(receiver)
+                        .or_insert_with(|| unobstructed(&self.city, c, x, plane, y, level))
+                    {
+                        continue;
+                    }
+                    let fade = 1.0 - (y - plane) as f32 / length as f32;
+                    let alpha = (255.0 * strength * fade * fade).round() as u8;
+                    // Bound overlapping sources rather than accumulating an
+                    // unbounded glow along a densely developed waterfront.
+                    if alpha > out.lights[at + 3] {
+                        out.lights[at..at + 4].copy_from_slice(&[rgb[0], rgb[1], rgb[2], alpha]);
+                    }
+                }
+            }
+        }
     }
 
     // The coast belongs to the terrain pass, not the visible water mask. A
@@ -594,11 +676,16 @@ mod tests {
             b.update(city);
             let on = b.water_pixels(bounds, &indices, &masks, &masks).unwrap();
             assert!(on.emission.iter().any(|p| *p != 0));
+            assert!(
+                on.lights.chunks_exact(4).any(|p| p[3] != 0),
+                "missing waterfront light in view {view}"
+            );
             let mut city = b.city.clone();
             city.flags[0] &= !crate::ids::sc2tile_flags::POWERED;
             b.update(city);
             let off = b.water_pixels(bounds, &indices, &masks, &masks).unwrap();
             assert!(off.emission.iter().all(|p| *p == 0));
+            assert!(off.lights.iter().all(|p| *p == 0));
             assert_eq!(on.reflected, off.reflected);
             assert_eq!(on.seasons, off.seasons);
             assert_eq!(on.surface, off.surface);
@@ -660,14 +747,29 @@ mod tests {
         let whole = Rect::new(c.side(), c.top() - 32, 160, 160);
         let mut indices = [0; 256];
         indices[96] = 1;
-        let expected = builder.water_pixels(whole, &indices, &HashMap::new(), &HashMap::new()).unwrap();
+        builder.city.flags[0] |= crate::ids::sc2tile_flags::POWERED;
+        let key = ((c.base() + 112) * 2) as u64;
+        let mut mask = builder.sprites.images[&key].clone();
+        for pixel in mask.rgba.chunks_exact_mut(4) {
+            pixel.copy_from_slice(&[240, 130, 35, 200]);
+        }
+        let masks = HashMap::from([(key, mask)]);
+        let expected = builder.water_pixels(whole, &indices, &masks, &HashMap::new()).unwrap();
+        assert!(expected.lights.chunks_exact(4).any(|p| p[3] != 0));
+        for (surface, light) in expected.surface.chunks_exact(4).zip(expected.lights.chunks_exact(4)) {
+            if light[3] != 0 {
+                assert_eq!(surface[3], 255);
+                assert_eq!(&light[..3], &[240, 130, 35]);
+            }
+        }
         let parts = [Rect::new(whole.x, whole.y, 80, 160), Rect::new(whole.x + 80, whole.y + 48, 80, 112)];
         for part in parts {
-            let actual = builder.water_pixels(part, &indices, &HashMap::new(), &HashMap::new()).unwrap();
+            let actual = builder.water_pixels(part, &indices, &masks, &HashMap::new()).unwrap();
             for (all, section) in [
                 (&expected.surface, &actual.surface),
                 (&expected.reflected, &actual.reflected),
                 (&expected.seabed, &actual.seabed),
+                (&expected.lights, &actual.lights),
             ] {
                 for y in 0..part.h {
                     let start = (((part.y - whole.y + y) * whole.w + part.x - whole.x) * 4) as usize;
@@ -679,6 +781,38 @@ mod tests {
                 }
             }
         }
+    }
+
+    #[test]
+    fn inland_building_does_not_cast_a_waterfront_light_trail() {
+        let mut b = fixture(2);
+        let c = b.config;
+        b.city.flags[0] |= crate::ids::sc2tile_flags::POWERED;
+        // Move the shoreline two tile rows away from the facade.
+        for x in 0..b.city.edge {
+            for y in 0..b.city.edge {
+                if x + y <= 3 {
+                    let i = b.city.index(x, y);
+                    b.city.flags[i] &= !4;
+                    b.city.terrain[i] = 0;
+                }
+            }
+        }
+        let key = ((c.base() + 112) * 2) as u64;
+        let mut mask = b.sprites.images[&key].clone();
+        mask.rgba.fill(255);
+        let mut indices = [0; 256];
+        indices[96] = 1;
+        let result = b
+            .water_pixels(
+                Rect::new(c.side(), c.top() - 32, 160, 160),
+                &indices,
+                &HashMap::from([(key, mask)]),
+                &HashMap::new(),
+            )
+            .unwrap();
+        assert!(result.surface.chunks_exact(4).any(|p| p[3] != 0));
+        assert!(result.lights.iter().all(|v| *v == 0));
     }
 
     #[test]
