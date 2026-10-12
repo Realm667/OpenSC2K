@@ -166,7 +166,17 @@ static func _tick_gpu(cache: CityRegionCache) -> bool:
 		if not current:
 			worker.cancel()
 
-		var regions := worker.take_regions(4 if cache.background_preparation and current else 0)
+		var budget := cache.work_budget if cache.background_preparation else null
+		var published_at := Time.get_ticks_usec()
+		var limit := budget.region_limit() if budget != null else (4 if cache.background_preparation and current else 8)
+		var regions: Array[CityGpuRegionResult] = []
+		if budget == null or budget.available():
+			regions = worker.take_regions(limit, maxi(1, VisualWorkBudget.UPLOAD_LIMIT - budget.upload_bytes) if budget != null else VisualWorkBudget.UPLOAD_LIMIT)
+		if budget != null:
+			for region in regions:
+				for image: Image in [region.atlas_image, region.emission_image, region.season_image]:
+					if image != null:
+						budget.upload_bytes += image.get_width() * image.get_height() * 4
 
 		if current:
 			if not regions.is_empty() and worker.generation == cache.generation and not cache._prepared:
@@ -215,6 +225,8 @@ static func _tick_gpu(cache: CityRegionCache) -> bool:
 		else:
 			cache.discarded_regions += regions.size()
 
+		if budget != null:
+			budget.record_regions(regions.size(), Time.get_ticks_usec() - published_at)
 		if not regions.is_empty():
 			cache._gpu_has_work = true
 

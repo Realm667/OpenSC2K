@@ -7,6 +7,8 @@ const HEIGHT_SHADER := preload("res://src/view/environment/fog_height.gdshader")
 const WIND := Vector2(0.36, 0.16)
 const WRAP := 4096.0
 var app: CityApplication
+var fog_viewport: SubViewport
+var fog_rect: ColorRect
 var layer: ColorRect
 var material: ShaderMaterial
 var field: Texture2D
@@ -29,6 +31,8 @@ func reset() -> void:
 	drift = Vector2.ZERO
 	terrain_signature.clear()
 	height_signature.clear()
+	if fog_viewport != null:
+		fog_viewport.render_target_update_mode = SubViewport.UPDATE_DISABLED
 	if height_viewport != null:
 		height_viewport.render_target_update_mode = SubViewport.UPDATE_DISABLED
 	if layer != null:
@@ -53,6 +57,8 @@ func process(elapsed: float, active: bool, fog_density: float, light: Color) -> 
 	if density <= 0.001 or app.map_view.city_source == null:
 		if layer != null:
 			layer.hide()
+		if fog_viewport != null:
+			fog_viewport.render_target_update_mode = SubViewport.UPDATE_DISABLED
 		return
 	prepare()
 	drift += WIND * maxf(elapsed, 0.0)
@@ -64,7 +70,18 @@ func process(elapsed: float, active: bool, fog_density: float, light: Color) -> 
 		material = ShaderMaterial.new()
 		material.shader = SHADER
 		material.set_shader_parameter("fog_field", field)
-		layer.material = material
+		fog_viewport = SubViewport.new()
+		fog_viewport.disable_3d = true
+		fog_viewport.transparent_bg = true
+		fog_viewport.world_2d = World2D.new()
+		app.map_view.add_child(fog_viewport)
+		fog_rect = ColorRect.new()
+		fog_rect.material = material
+		fog_viewport.add_child(fog_rect)
+		var composite := ShaderMaterial.new()
+		composite.shader = load("res://src/view/environment/fog_composite.gdshader")
+		composite.set_shader_parameter("fog_surface", fog_viewport.get_texture())
+		layer.material = composite
 		app.map_view.add_child(layer)
 	var map := app.map_view
 	var city := app.document_state.city
@@ -77,6 +94,15 @@ func process(elapsed: float, active: bool, fog_density: float, light: Color) -> 
 	material.set_shader_parameter("fog_density", density)
 	material.set_shader_parameter("fog_light", Vector3(light.r, light.g, light.b))
 	var bounds := map.camera._camera_rect()
+	# Preserve the fine field when many tiles fit into a screen pixel.
+	var reduction := 0.5 if map.zoom_factor >= 0.5 else 1.0
+	var size := Vector2i((bounds.size * minf(reduction, 1920.0 * reduction / maxf(bounds.size.x, bounds.size.y))).ceil()).max(Vector2i.ONE)
+	fog_viewport.use_hdr_2d = map.get_viewport().use_hdr_2d
+	fog_viewport.size = size
+	fog_rect.size = Vector2(size)
+	var to_canvas := map.get_global_transform() * Transform2D(Vector2(bounds.size.x / size.x, 0), Vector2(0, bounds.size.y / size.y), bounds.position)
+	material.set_shader_parameter("fog_canvas_to_grid", CityVisualClouds.shader_basis(grid * to_canvas))
+	fog_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	_sync_height(city, source_to_canvas, bounds)
 	layer.position = bounds.position
 	layer.size = bounds.size

@@ -57,6 +57,8 @@ func _run() -> void:
 	await _check_headlight_batches(true)
 	await _check_sparse_artwork(false)
 	await _check_sparse_artwork(true)
+	await _check_instances(false)
+	await _check_instances(true)
 	print("PASS: GPU city-life colors, transparent background, cloud shadows and environment lighting")
 	quit()
 
@@ -201,3 +203,112 @@ func _check_headlight_batches(hdr: bool) -> void:
 	viewport.queue_free()
 	await process_frame
 	print("PASS: batched headlights match individual GPU pixels at three zooms, including HDR, fades, movement and slot reuse")
+
+
+func _check_instances(hdr: bool) -> void:
+	var viewport := SubViewport.new()
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	viewport.size = Vector2i(400, 300)
+	viewport.transparent_bg = true
+	viewport.use_hdr_2d = hdr
+	root.add_child(viewport)
+	var canvas := CityLifeCanvas.new()
+	canvas.source_bounds = Rect2i(0, 0, 400, 300)
+	viewport.add_child(canvas)
+	var sprites := CityLifeSprites.new()
+	canvas.gpu = CityLifeGpu.new()
+	canvas.gpu.prepare(sprites, canvas.lights)
+	var entries: Array[Dictionary] = []
+	var mask := Image.create(400, 300, false, Image.FORMAT_RGBA8)
+	mask.fill_rect(Rect2i(90, 0, 5, 300), Color.WHITE)
+	for i in 150:
+		var figure := CityLifeController.Figure.new()
+		figure.tile = Vector2i(i, 0)
+		var walking := i % 4 == 3
+		var sprite := sprites.sprite(walking, i % 18, i % 8, i % 2, 0 if walking else i % 3)
+		var point := Vector2i(3 + (i * 23) % 370, 3 + (i * 17) % 260)
+		figure.position = point
+		canvas._occluder_bounds[Vector3i(i, 0, 0)] = Rect2i(point, Vector2i(64, 48))
+		entries.append({"figure":figure,"sprite":sprite,"origin":point,"opacity":1.0,"occluders":[{"origin":Vector2i.ZERO,"image":mask}]})
+	var reference := Sprite2D.new()
+	reference.centered = false
+	reference.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	viewport.add_child(reference)
+	for phase in 3:
+		if phase == 1:
+			entries.reverse()
+		elif phase == 2:
+			mask.fill_rect(Rect2i(90, 0, 5, 300), Color.TRANSPARENT)
+			mask = mask.duplicate()
+			for entry in entries:
+				entry.occluders = [{"origin":Vector2i.ZERO,"image":mask}]
+		var pixels := Image.create(400, 300, false, Image.FORMAT_RGBA8)
+		for entry in entries:
+			CityLifeCanvas.stamp(pixels, Vector2i.ZERO, entry.sprite, entry.origin, entry.occluders)
+		reference.texture = ImageTexture.create_from_image(pixels)
+		canvas.gpu.render(canvas, entries)
+		for zoom in [0.5, 0.75, 1.0, 1.5, 2.0, 3.0]:
+			canvas.scale = Vector2.ONE * zoom
+			reference.scale = canvas.scale
+			canvas.hide()
+			reference.show()
+			await RenderingServer.frame_post_draw
+			var expected := viewport.get_texture().get_image()
+			assert(not expected.is_invisible(), "GPU reference viewport did not render")
+			reference.hide()
+			canvas.show()
+			await RenderingServer.frame_post_draw
+			var actual := viewport.get_texture().get_image()
+			assert(actual.get_data() == expected.get_data(), "Instanced figures differ: phase %s zoom %s HDR %s" % [phase, zoom, hdr])
+		# Depth reorder must preserve cached mask layers, apart from group crossings.
+		canvas.gpu.render(canvas, entries)
+		assert(canvas.gpu.upload_bytes <= canvas.gpu.groups.size() * CityLifeGpu.GROUP * 96)
+	# Interpolation reads the previous published position without changing movement.
+	for entry in entries:
+		entry.figure.previous_position = entry.figure.position - Vector2(4,0)
+		entry.figure.has_previous_position = true
+	canvas.gpu.render(canvas, entries)
+	for group in canvas.gpu.groups:
+		(group.material as ShaderMaterial).set_shader_parameter("interpolation",0.5)
+	canvas.scale = Vector2.ONE
+	reference.scale = Vector2.ONE
+	var interpolated := Image.create(400,300,false,Image.FORMAT_RGBA8)
+	for entry in entries:
+		CityLifeCanvas.stamp(interpolated,Vector2i.ZERO,entry.sprite,entry.origin-Vector2i(2,0),entry.occluders)
+	reference.texture = ImageTexture.create_from_image(interpolated)
+	canvas.hide()
+	reference.show()
+	await RenderingServer.frame_post_draw
+	var midpoint := viewport.get_texture().get_image()
+	canvas.show()
+	reference.hide()
+	await RenderingServer.frame_post_draw
+	assert(viewport.get_texture().get_image().get_data() == midpoint.get_data(), "Interpolated figures or world masks slipped")
+	var light_output := Node2D.new()
+	viewport.add_child(light_output)
+	canvas.gpu.blend = 1.0
+	canvas.gpu.sync_emission(light_output)
+	var pixels := Image.create(400,300,false,Image.FORMAT_RGBA8)
+	var lamps := pixels.duplicate()
+	for entry in entries:
+		var index: int = entry.figure.tile.x
+		var light := canvas.lights.lamp_mask(entry.sprite,index%3,index%8) if index%4!=3 else null
+		CityLifeCanvas.stamp(pixels,Vector2i.ZERO,entry.sprite,entry.origin,entry.occluders,1.0,lamps,light)
+	reference.texture = ImageTexture.create_from_image(pixels)
+	var emission_material := ShaderMaterial.new()
+	emission_material.shader = CityNightLighting.EMISSION
+	emission_material.set_shader_parameter("has_emission",true)
+	emission_material.set_shader_parameter("emission",ImageTexture.create_from_image(lamps))
+	reference.material = emission_material
+	canvas.hide()
+	light_output.hide()
+	reference.show()
+	await RenderingServer.frame_post_draw
+	var expected_lamps := viewport.get_texture().get_image()
+	reference.hide()
+	light_output.show()
+	await RenderingServer.frame_post_draw
+	assert(viewport.get_texture().get_image().get_data() == expected_lamps.get_data(), "Instanced emissions changed foreground coverage")
+	print("PASS: instanced figure pixels, mask invalidation, interpolation and emissions in HDR %s" % hdr)
+	viewport.queue_free()
+	await process_frame

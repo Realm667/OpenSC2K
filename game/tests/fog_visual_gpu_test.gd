@@ -56,4 +56,65 @@ func _run() -> void:
 	viewport.queue_free()
 	await process_frame
 	print("PASS: visible translucent fog wisps, map bounds, pause, seamless drift and zero strength")
+	await _check_reduced_surface(fog.field, false)
+	await _check_reduced_surface(fog.field, true)
 	quit()
+
+
+func _check_reduced_surface(noise: Texture2D, hdr: bool) -> void:
+	var reduced := SubViewport.new()
+	reduced.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	reduced.size = Vector2i(128,128)
+	reduced.use_hdr_2d = hdr
+	reduced.transparent_bg = true
+	reduced.world_2d = World2D.new()
+	root.add_child(reduced)
+	var output := SubViewport.new()
+	output.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	output.size = Vector2i(256,256)
+	output.use_hdr_2d = hdr
+	output.transparent_bg = true
+	output.world_2d = World2D.new()
+	root.add_child(output)
+	var small := ColorRect.new()
+	small.size = Vector2(reduced.size)
+	var original := ColorRect.new()
+	original.size = Vector2(output.size)
+	for pair in [[small,0.25],[original,0.125]]:
+		var shader := ShaderMaterial.new()
+		shader.shader = CityVisualFog.SHADER
+		shader.set_shader_parameter("fog_field",noise)
+		shader.set_shader_parameter("fog_canvas_to_grid",CityVisualClouds.shader_basis(Transform2D(Vector2(pair[1],0),Vector2(0,pair[1]),Vector2(-8,-8))))
+		shader.set_shader_parameter("fog_density",0.65)
+		pair[0].material = shader
+	reduced.add_child(small)
+	output.add_child(original)
+	var composite := ColorRect.new()
+	composite.size = original.size
+	var material := ShaderMaterial.new()
+	material.shader = load("res://src/view/environment/fog_composite.gdshader")
+	material.set_shader_parameter("fog_surface",reduced.get_texture())
+	composite.material = material
+	composite.hide()
+	output.add_child(composite)
+	await RenderingServer.frame_post_draw
+	var expected := output.get_texture().get_image()
+	assert(not expected.is_invisible(),"Fog reference did not render")
+	original.hide()
+	composite.show()
+	await RenderingServer.frame_post_draw
+	var actual := output.get_texture().get_image()
+	var error := 0.0
+	var largest := 0.0
+	for y in 256:
+		for x in 256:
+			var a := actual.get_pixel(x,y)
+			var b := expected.get_pixel(x,y)
+			var difference := maxf(absf(a.r-b.r),absf(a.a-b.a))
+			error += difference
+			largest = maxf(largest,difference)
+	assert(error / 65536.0 < 0.012 and largest < 0.09,"Reduced fog differs: mean %s max %s" % [error/65536.0,largest])
+	reduced.queue_free()
+	output.queue_free()
+	await process_frame
+	print("PASS: reduced fog color/alpha and world alignment (mean %s max %s)" % [error/65536.0,largest])

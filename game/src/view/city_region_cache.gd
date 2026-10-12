@@ -31,6 +31,7 @@ var gpu_enabled := gpu_supported()
 var resident := false
 # Limit background uploads and worker queues while the player uses another view.
 var background_preparation := false
+var work_budget: VisualWorkBudget
 # Shared with CityRegionScheduling; each cache owns its worker lifetime.
 var gpu_workers: Array[RegionWorker] = []
 var entries: Dictionary[Vector2i, CityRegionResult] = {}
@@ -765,9 +766,21 @@ class RegionWorker extends RefCounted:
 
 		return count
 
-	func take_regions(limit := 0) -> Array[CityGpuRegionResult]:
+	func take_regions(limit := 0, byte_limit := 0) -> Array[CityGpuRegionResult]:
 		mutex.lock()
 		var count := mini(limit, outbox.size()) if limit > 0 else outbox.size()
+		if byte_limit > 0:
+			var bytes := 0
+			for index in count:
+				var region := outbox[index]
+				var cost := 0
+				for image: Image in [region.atlas_image, region.emission_image, region.season_image]:
+					if image != null:
+						cost += image.get_width() * image.get_height() * 4
+				if index > 0 and bytes + cost > byte_limit:
+					count = index
+					break
+				bytes += cost
 		var regions: Array[CityGpuRegionResult] = outbox.slice(0, count)
 		outbox = outbox.slice(count)
 		mutex.unlock()

@@ -14,6 +14,7 @@ func _init(application: CityApplication) -> void:
 
 
 func process(delta: float) -> void:
+	app.visual_preparation.work_budget.begin_frame(delta)
 	var preparing := app.visual_preparation.process()
 	if not preparing:
 		app.visual_environment.process(delta)

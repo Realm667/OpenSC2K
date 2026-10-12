@@ -66,16 +66,21 @@ func process(active: bool, night: float, options: Dictionary, elapsed := 0.0, pr
 	var map := app.map_view
 	var bounds := map.camera._camera_rect()
 	var padded := bounds.grow(PADDING)
-	var reduction := minf(0.5, 1024.0 / maxf(padded.size.x, padded.size.y))
+	# Keep crisp emitters at half resolution. Only the two diffuse blur passes
+	# use a quarter-resolution surface, preserving small moving lamps.
+	var emission_reduction := minf(0.5, 1024.0 / maxf(padded.size.x, padded.size.y))
+	var reduction := emission_reduction * 0.5
 	var size := Vector2i((padded.size * reduction).ceil())
-	for buffer in buffers:
-		buffer.size = size
-	for rect in blur_rects:
-		rect.size = Vector2(size)
-		(rect.material as ShaderMaterial).set_shader_parameter("radius", maxf(0.65, map.camera._view_scale() * reduction * 1.5))
+	buffers[0].size = Vector2i((padded.size * emission_reduction).ceil())
+	for index in range(1, buffers.size()):
+		buffers[index].size = size
 	var view_scale := map.camera._view_scale()
-	scene.scale = Vector2.ONE * view_scale * reduction
-	scene.position = (map.camera._draw_offset(view_scale) - padded.position) * reduction
+	var radius := maxf(0.65, view_scale * emission_reduction * 1.5)
+	for index in blur_rects.size():
+		blur_rects[index].size = Vector2(size)
+		(blur_rects[index].material as ShaderMaterial).set_shader_parameter("radius", radius if index == 0 else radius * 0.5)
+	scene.scale = Vector2.ONE * view_scale * emission_reduction
+	scene.position = (map.camera._draw_offset(view_scale) - padded.position) * emission_reduction
 	if source != map.city_source:
 		_rebuild(map.city_source)
 	_sync_moving()
@@ -174,12 +179,21 @@ func _rebuild(value: CityMapSource) -> void:
 	# changed light geometry instead of recreating every canvas item and material.
 	if previous != null and previous.texture == null and value.texture == null \
 			and previous.tiles.is_empty() and value.tiles.is_empty() \
-			and previous.meshes.size() == value.meshes.size() and copies.size() == value.meshes.size():
-		for index in value.meshes.size():
-			var entry := value.meshes[index]
-			if entry == previous.meshes[index] and entry.immutable:
-				continue
+			and copies.all(func(item: CanvasItem) -> bool: return item is MeshInstance2D):
+		while copies.size() < value.meshes.size():
+			_register(MeshInstance2D.new(), null)
+		for index in copies.size():
 			var mesh := copies[index] as MeshInstance2D
+			mesh.visible = index < value.meshes.size()
+			if not mesh.visible:
+				# Retain the cheap node, release hidden geometry and atlas references.
+				mesh.mesh = null
+				mesh.texture = null
+				(mesh.material as ShaderMaterial).set_shader_parameter("emission", null)
+				continue
+			var entry := value.meshes[index]
+			if index < previous.meshes.size() and entry == previous.meshes[index] and entry.immutable:
+				continue
 			mesh.mesh = entry.mesh
 			mesh.texture = entry.texture
 			mesh.position = entry.position
@@ -187,6 +201,8 @@ func _rebuild(value: CityMapSource) -> void:
 			var shader := mesh.material as ShaderMaterial
 			shader.set_shader_parameter("emission", entry.emission)
 			shader.set_shader_parameter("has_emission", entry.emission != null)
+		scene.move_child(moving, -1)
+		scene.move_child(life, -1)
 		return
 	for copy in copies:
 		copy.free()
@@ -249,6 +265,10 @@ class LifeEmission extends Node2D:
 	func _draw() -> void:
 		if not is_instance_valid(figures) or not figures.visible or figures.texture == null:
 			return
+		if figures.gpu != null:
+			figures.gpu.sync_emission(self)
+			return
+		position = Vector2.ZERO
 		var atlas := figures.atlas
 		# The atlas packs occupied squares; its texture coordinates are not
 		# world positions. Match the vehicle canvas before blurring its lamps.

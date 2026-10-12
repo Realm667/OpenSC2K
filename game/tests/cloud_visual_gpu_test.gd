@@ -131,6 +131,7 @@ func _run() -> void:
 	await _check_overview_stability()
 	await _check_type_fronts()
 	print("PASS: GPU cloud tops/shadows, sunny gaps, movement, frozen clock, region seams, transparency, foreground and exact disable")
+	await _check_cached_cover()
 	quit()
 
 
@@ -282,3 +283,67 @@ func _check_type_fronts() -> void:
 	viewport.queue_free()
 	await process_frame
 	print("PASS: five aerial cloud types, ground-only fog, seamless drift and continuous two-atlas front commit")
+
+
+func _check_cached_cover() -> void:
+	var field := SubViewport.new()
+	field.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	field.size = Vector2i(512,512)
+	field.world_2d = World2D.new()
+	root.add_child(field)
+	var field_rect := ColorRect.new()
+	field_rect.size = Vector2(512,512)
+	var generator := ShaderMaterial.new()
+	generator.shader = load("res://src/view/clouds/cloud_shadow_field.gdshader")
+	field_rect.material = generator
+	field.add_child(field_rect)
+	var output := SubViewport.new()
+	output.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	output.size = Vector2i(256,256)
+	output.world_2d = World2D.new()
+	root.add_child(output)
+	var rect := ColorRect.new()
+	rect.size = Vector2(output.size)
+	var shader := Shader.new()
+	shader.code = '''shader_type canvas_item;
+render_mode unshaded;
+#include "res://src/view/clouds/cloud_field.gdshaderinc"
+void fragment(){float a=cloud_cover(UV*cloud_span); COLOR=vec4(vec3(a),1.0);}'''
+	var material := ShaderMaterial.new()
+	material.shader = shader
+	rect.material = material
+	output.add_child(rect)
+	var largest := 0.0
+	var total_error := 0.0
+	var samples := 0
+	for projection in [Vector4(1,0.5,-1,0.5),Vector4(-1,0.5,-1,-0.5)]:
+		for item in [generator,material]:
+			item.set_shader_parameter("cloud_enabled",true)
+			item.set_shader_parameter("cloud_density",0.7)
+			item.set_shader_parameter("cloud_field",CityCloudSituations.ATLASES[0])
+			item.set_shader_parameter("cloud_field_next",CityCloudSituations.ATLASES[0])
+			item.set_shader_parameter("cloud_projection",projection)
+		await RenderingServer.frame_post_draw
+		material.set_shader_parameter("cloud_cover_field",field.get_texture())
+		for drift in [Vector2.ZERO,Vector2(17.25,9.75),Vector2(191.8,191.8)]:
+			material.set_shader_parameter("cloud_drift",drift)
+			material.set_shader_parameter("cloud_cover_cached",false)
+			await RenderingServer.frame_post_draw
+			var expected := output.get_texture().get_image()
+			assert(expected.get_data().count(0) < 256*256*3,"Cloud reference did not render")
+			material.set_shader_parameter("cloud_cover_cached",true)
+			await RenderingServer.frame_post_draw
+			var actual := output.get_texture().get_image()
+			for y in range(0,256,2):
+				for x in range(0,256,2):
+					var difference := absf(expected.get_pixel(x,y).r-actual.get_pixel(x,y).r)
+					total_error += difference
+					samples += 1
+					largest = maxf(largest,difference)
+	# Filtering softens the original patch boundaries; constrain both the
+	# isolated edge error and the field's mean error, including drift wrap.
+	assert(largest < 0.075 and total_error / samples < 0.001, "Cached cloud coverage diverged: max %s mean %s" % [largest, total_error / samples])
+	field.queue_free()
+	output.queue_free()
+	await process_frame
+	print("PASS: cached cloud coverage, rotation and wrap (maximum error %s)" % largest)

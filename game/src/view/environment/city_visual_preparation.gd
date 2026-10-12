@@ -4,6 +4,7 @@ extends RefCounted
 @warning_ignore_start("integer_division")
 
 const VARIANTS := 6
+var work_budget := VisualWorkBudget.new()
 var app: CityApplication
 var banks: Array[CityRegionCache] = []
 var archives: Array[Sc2SpriteArchive] = []
@@ -130,10 +131,8 @@ func begin() -> void:
 		cache.gpu_enabled = CityRegionCache.gpu_supported(app.preferences.city_renderer)
 		cache.resident = true
 		cache.background_preparation = true
+		cache.work_budget = work_budget
 		banks.append(cache)
-		_configure(index)
-		if index in stages:
-			cache.update_viewport(Rect2(Vector2.ZERO, Vector2(cache.native_size * cache.divisor)))
 	busy = true
 	if replace_active:
 		app.map_render.refresh_map(false)
@@ -156,6 +155,8 @@ func process() -> bool:
 		return false
 	if layout != _layout():
 		begin()
+		return false
+	if not work_budget.available():
 		return false
 	if not busy:
 		if ready:
@@ -190,6 +191,7 @@ func process() -> bool:
 func _prepare_step() -> void:
 	var cache := banks[stages[stage]]
 	_configure(stages[stage])
+	cache.update_viewport(Rect2(Vector2.ZERO, Vector2(cache.native_size * cache.divisor)))
 	cache.tick()
 	# An edit can arrive while a bank is loading. Publish its changed silhouettes
 	# to retained light masks, just as the ordinary visible renderer does.
@@ -210,15 +212,13 @@ func _prepare_step() -> void:
 			var ground := lighting.ground
 			ground.resident = true
 			if not lighting_started:
-				# Discover offscreen receivers once. Keep the ordinary viewport for
-				# drawing; resident pending jobs survive the visible-area collection.
-				ground.sync(app, 0.0, 0.0, true, 1000)
-				ground.bounds = ground._city_bounds(app.document_state.city)
-				ground._collect(app.document_state.city)
-				preparing_lights.assign(ground.visible_tiles)
-				ground.bounds = Rect2i()
+				ground.sync(app, 0.0, 0.0, true, maxi(1, work_budget.remaining()))
+				ground.begin_city_discovery(app.document_state.city)
 				lighting_started = true
-			ground.sync(app, 0.0, 0.0, true, 1000)
+			ground.sync(app, 0.0, 0.0, true, maxi(1, work_budget.remaining()))
+			if ground.discovery_active:
+				return
+			preparing_lights.assign(ground.discovered)
 			var built_lights := 0
 			for tile in preparing_lights:
 				built_lights += int(ground.cache.has(tile))
@@ -289,6 +289,8 @@ func _background() -> void:
 	cache.tick()
 	if not cache.lighting_changes.is_empty():
 		app.visual_environment.night_lighting.invalidate_regions(cache.lighting_changes)
+	if not work_budget.available():
+		return
 	var view := background_cursor / 2
 	if not VisualEnhancementOptions.detail_lights_visible(app.preferences.visual_enhancements, app.map_view.zoom_factor):
 		return
@@ -305,7 +307,7 @@ func _background() -> void:
 	# Geometry tracking finds local additions/removals, including offscreen
 	# streets. Traffic repaint generations must not enumerate the whole city.
 	light_rescan.erase(view)
-	ground.sync(app, 0.0, 0.0, true)
+	ground.sync(app, 0.0, 0.0, true, maxi(1, work_budget.remaining()))
 	preparing_view = -1
 	preparing_traffic = -1
 	app.render_caches.region_cache = previous_cache

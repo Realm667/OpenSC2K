@@ -32,6 +32,8 @@ var _bus_tiles: Dictionary[Vector2i, bool] = {}
 var _path_signature: Array = []
 var _paths: Dictionary[Vector3i, CityLifePaths.Segment] = {}
 var _tile_cache := CityLifeTiles.new()
+var _spawn_counts: Dictionary[Vector3i, int] = {}
+var _spawn_entries: Array[int] = []
 
 
 func _init(application: CityApplication) -> void:
@@ -83,8 +85,13 @@ func process(delta: float) -> void:
 	if activity != _activity_signature:
 		_activity_signature = activity
 		_spawn_elapsed = 1.0
-	figures = figures.filter(func(f: Figure) -> bool:
-		return (options.life_people_enabled if f.walking else options.life_cars_enabled and app.view_state.show_vehicles))
+	# Compact in place instead of allocating a filtered array every frame.
+	var kept := 0
+	for figure in figures:
+		if options.life_people_enabled if figure.walking else options.life_cars_enabled and app.view_state.show_vehicles:
+			figures[kept] = figure
+			kept += 1
+	figures.resize(kept)
 	var elapsed := maxf(delta, 0.0)
 	var speed := app.simulation_state.speed_controller.speed if app.simulation_state.speed_controller != null else 1
 	if options.pause_freezes and (speed == 1 or app.frame._simulation_suspended()):
@@ -108,8 +115,10 @@ func process(delta: float) -> void:
 	_render_elapsed += maxf(delta, 0.0)
 	if _render_elapsed >= UPDATE_SECONDS or canvas.texture == null:
 		_render_elapsed = 0.0
+		canvas.interpolation = 0.0 if elapsed > 0.0 else 1.0
 		canvas.render(app, figures, sprites)
 	else:
+		canvas.interpolation = clampf(_render_elapsed / UPDATE_SECONDS, 0.0, 1.0) if elapsed > 0.0 else 1.0
 		canvas.sync_view(app)
 
 
@@ -137,9 +146,10 @@ func _collect_tiles(city: CityState) -> void:
 func _spawn(city: CityState, options: Dictionary) -> void:
 	_refresh_bus_area(city)
 	_rebuild_buckets()
-	var counts: Dictionary[String, int] = {}
+	_spawn_counts.clear()
+	var counts := _spawn_counts
 	for figure in figures:
-		var key := "%d:%d:%d" % [figure.tile.x, figure.tile.y, int(figure.walking)]
+		var key := Vector3i(figure.tile.x, figure.tile.y, int(figure.walking))
 		counts[key] = counts.get(key, 0) + 1
 	if tiles.is_empty():
 		return
@@ -155,11 +165,12 @@ func _spawn(city: CityState, options: Dictionary) -> void:
 				continue
 			var strength: float = options.life_people_amount if walking else options.life_car_amount
 			var expected := CityLifePaths.target(CityLifePaths.density(city, tile, walking), strength, walking)
-			var key := "%d:%d:%d" % [tile.x, tile.y, int(walking)]
+			var key := Vector3i(tile.x, tile.y, int(walking))
 			var count: int = counts.get(key, 0)
 			if count >= ceili(expected) or random.randf() >= clampf(expected - count, 0.0, 1.0) * 0.35:
 				continue
-			var entries: Array[int] = []
+			_spawn_entries.clear()
+			var entries := _spawn_entries
 			for direction in 4:
 				if CityLifePaths.connected(city, tile, direction, walking):
 					entries.append(direction)
@@ -259,9 +270,21 @@ func _vehicle_kind(tile: Vector2i) -> int:
 
 func _advance(city: CityState, elapsed: float) -> void:
 	var path_signature := [city.mirror_signature(["ALTM", "XBLD", "XTER", "XZON", "XBIT"]), city.compass_rotation()]
-	if path_signature != _path_signature or _paths.size() > 4096:
+	if path_signature != _path_signature:
 		_paths.clear()
 		_path_signature = path_signature
+	if _paths.size() > 4096:
+		var occupied: Dictionary[Vector2i, bool] = {}
+		for figure in figures:
+			occupied[figure.tile] = true
+		var removed := 0
+		for key in _paths.keys():
+			if occupied.has(Vector2i(key.x, key.y)):
+				continue
+			_paths.erase(key)
+			removed += 1
+			if removed >= 64:
+				break
 	_rebuild_buckets()
 	for figure in figures:
 		figure.age += elapsed
@@ -349,9 +372,14 @@ func _bucket_add(figure: Figure) -> void:
 
 
 func _rebuild_buckets() -> void:
-	_buckets.clear()
+	for bucket: Array in _buckets.values():
+		bucket.clear()
 	for figure in figures:
 		_bucket_add(figure)
+	if _buckets.size() > 1024:
+		for key in _buckets.keys():
+			if _buckets[key].is_empty():
+				_buckets.erase(key)
 
 
 class Figure extends RefCounted:
@@ -368,6 +396,8 @@ class Figure extends RefCounted:
 	var speed := 1.0
 	var variant := 0
 	var position := Vector2.ZERO
+	var previous_position := Vector2.ZERO
+	var has_previous_position := false
 	var age := 0.0
 	var lifetime := 40.0
 	var wait := 0.0
