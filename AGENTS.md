@@ -20,6 +20,14 @@ Load and save cities that the supplied game can use.
 - Use computer-use automation for live Godot input and visual checks.
 - Run Godot tests and live checks with the Dummy audio driver. Automated validation must not play sound.
 - Use Simplified Technical English where practical.
+- Every new or changed user-visible feature text must ship in English and all
+  languages registered in AppLocalization (currently de, es, fr, it, ko, pt_BR).
+  Use the central catalogs in game/assets/localization; never add a feature-local
+  translation dictionary or catalog. Update messages.pot and every locale in the
+  same change. Preserve placeholders, contexts and original-game terminology.
+  Read game/assets/localization/README.md for source provenance, legacy Korean
+  gaps and the validation workflow. Existing fallback exceptions cannot be used
+  for new feature text. Check language switching and representative UI fit.
 
 ## GDScript readability
 

@@ -138,7 +138,7 @@ static func _compile(value: String) -> PackedByteArray:
 
 
 # The text tables address alternative phrases; these are not news priorities,
-# simulation parameters, or story queues. German prose lives in de_original.po;
+# simulation parameters, or story queues. German prose lives in de.po;
 # the other editions use OriginalNewspaperTables and their original-text catalogs.
 const TABLES := {
 	0: Vector2i(8, 1),

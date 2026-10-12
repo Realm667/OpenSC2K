@@ -33,13 +33,13 @@ func _init(windows: MultiplayerWindows) -> void:
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	title.autowrap_mode = TextServer.AUTOWRAP_OFF
 	title.custom_minimum_size.x = 0
-	var stats := ApplicationMultiplayer.button(heading, tr("Statistics"), windows.open_scoreboard)
+	var stats := ApplicationMultiplayer.button(heading, "Statistics", windows.open_scoreboard)
 	stats.icon = preload("res://src/multiplayer/icons/statistics.svg")
 	stats.add_theme_constant_override("icon_max_width", 18)
 	for icon_state in ["icon_normal_color", "icon_hover_color", "icon_pressed_color", "icon_focus_color"]:
 		stats.add_theme_color_override(icon_state, Color.WHITE)
 	stats.tooltip_text = tr("Open scoreboard")
-	home = ApplicationMultiplayer.button(windows.coop.app.map_view, tr("Return to your city"), func() -> void:
+	home = ApplicationMultiplayer.button(windows.coop.app.map_view, "Return to your city", func() -> void:
 		windows.coop.session.request({"kind": "view_city", "seat": windows.coop.session.token.sha256_text()}))
 	home.z_index = 3
 	home.hide()

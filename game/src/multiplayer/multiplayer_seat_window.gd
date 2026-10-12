@@ -52,8 +52,8 @@ func refresh() -> void:
 			add_text(tr("%s requests the seat of %s.") % [request.name, session.members[request.seat].name])
 			var row := HBoxContainer.new()
 			body.add_child(row)
-			ApplicationMultiplayer.button(row, tr("Approve takeover"), func() -> void: session.seats.decide(peer, true))
-			ApplicationMultiplayer.button(row, tr("Decline takeover"), func() -> void: session.seats.decide(peer, false))
+			ApplicationMultiplayer.button(row, "Approve takeover", func() -> void: session.seats.decide(peer, true))
+			ApplicationMultiplayer.button(row, "Decline takeover", func() -> void: session.seats.decide(peer, false))
 	elif session.connected:
 		for row: Dictionary in session.latest.get("roster", []):
 			add_text("%s · %s · %s" % [row.name, row.city, status(row.get("seat_status", "reserved"))])
@@ -62,18 +62,18 @@ func refresh() -> void:
 		if lobby.get("waiting", false):
 			add_text(tr("Waiting for the host to approve your seat request."))
 		if lobby.get("shared", false):
-			var field := ApplicationMultiplayer.field(body, tr("Name of your new city"), city_name)
+			var field := ApplicationMultiplayer.field(body, "Name of your new city", city_name)
 			field.placeholder_text = windows.coop.player.text
 			field.max_length = Sc2xMetadata.MAX_NAME_CODE_POINTS
 			field.text_changed.connect(func(value: String) -> void: city_name = value)
 		var actions := HBoxContainer.new()
 		body.add_child(actions)
-		var create := ApplicationMultiplayer.button(actions, tr("Create new player seat"), func() -> void: choose("new"))
+		var create := ApplicationMultiplayer.button(actions, "Create new player seat", func() -> void: choose("new"))
 		create.disabled = not lobby.get("new_allowed", false)
 		for seat: Dictionary in lobby.get("seats", []):
 			var text := "%s · %s · %s" % [seat.name, seat.city, status(seat.status)]
 			ApplicationMultiplayer.button(body, tr("Request seat: %s") % text, func() -> void: choose(seat.id))
-		ApplicationMultiplayer.button(actions, tr("Cancel joining"), windows.coop.leave)
+		ApplicationMultiplayer.button(actions, "Cancel joining", windows.coop.leave)
 	windows.fit_content.call_deferred(window, body)
 
 

@@ -25,19 +25,19 @@ func _init(owner: ApplicationMultiplayer) -> void:
 
 func setup(body: VBoxContainer) -> void:
 	MultiplayerText.setup()
-	ApplicationMultiplayer.label(body, tr("LAN / direct IP · up to 8 players · matching game versions required."))
+	ApplicationMultiplayer.label(body, "LAN / direct IP · up to 8 players · matching game versions required.")
 	coop.lobby = VBoxContainer.new()
 	body.add_child(coop.lobby)
 	role = OptionButton.new()
-	role.add_item(tr("Host game"))
-	role.add_item(tr("Join / Reconnect"))
+	role.add_item("Host game")
+	role.add_item("Join / Reconnect")
 	coop.lobby.add_child(role)
 	var identity := HBoxContainer.new()
 	coop.lobby.add_child(identity)
 	var names := column(identity, 2)
-	coop.player = ApplicationMultiplayer.field(names, tr("Player name"), "Mayor")
+	coop.player = ApplicationMultiplayer.field(names, "Player name", "Mayor")
 	var colors := column(identity, 1)
-	ApplicationMultiplayer.label(colors, tr("Player colour"))
+	ApplicationMultiplayer.label(colors, "Player colour")
 	var swatches := HBoxContainer.new()
 	colors.add_child(swatches)
 	var selection := ButtonGroup.new()
@@ -45,7 +45,7 @@ func setup(body: VBoxContainer) -> void:
 	coop.color_picker.color = Color("46b4ff")
 	coop.color_picker.edit_alpha = false
 	coop.color_picker.text = "…"
-	coop.color_picker.tooltip_text = tr("Custom colour…")
+	coop.color_picker.tooltip_text = "Custom colour…"
 	coop.color_picker.custom_minimum_size = Vector2(34, 28)
 	for value in ["46b4ff", "ff9c40", "66cf79", "e77ba8", "c7a0ff", "ffe173"]:
 		var button := Button.new()
@@ -72,62 +72,62 @@ func setup(body: VBoxContainer) -> void:
 	popup.remove_child(picker)
 	popup.add_child(color_body)
 	color_body.add_child(picker)
-	ApplicationMultiplayer.button(color_body, tr("Apply colour"), func() -> void:
+	ApplicationMultiplayer.button(color_body, "Apply colour", func() -> void:
 		coop.color_picker.color = picker.color
 		coop.color_picker.color_changed.emit(picker.color)
 		popup.hide())
 	host_fields = VBoxContainer.new()
 	coop.lobby.add_child(host_fields)
-	ApplicationMultiplayer.label(host_fields, tr("Game mode"))
+	ApplicationMultiplayer.label(host_fields, "Game mode")
 	coop.mode_picker = OptionButton.new()
 	for title in ["Co-op", "Competitive Shared", "Competitive Region"]:
-		coop.mode_picker.add_item(tr(title))
+		coop.mode_picker.add_item(title)
 	host_fields.add_child(coop.mode_picker)
-	ApplicationMultiplayer.label(host_fields, tr("City"))
+	ApplicationMultiplayer.label(host_fields, "City")
 	coop.city_picker = OptionButton.new()
-	coop.city_picker.add_item(tr("New city"))
-	coop.city_picker.add_item(tr("Saved city"))
+	coop.city_picker.add_item("New city")
+	coop.city_picker.add_item("Saved city")
 	host_fields.add_child(coop.city_picker)
 	coop.use_current = CheckBox.new()
-	coop.use_current.text = tr("Create a copy")
-	coop.use_current.tooltip_text = tr("Keep the selected save unchanged and save this game separately.")
+	coop.use_current.text = "Create a copy"
+	coop.use_current.tooltip_text = "Keep the selected save unchanged and save this game separately."
 	coop.use_current.button_pressed = true
 	host_fields.add_child(coop.use_current)
 	shared_fields = VBoxContainer.new()
 	host_fields.add_child(shared_fields)
-	ApplicationMultiplayer.label(shared_fields, tr("Neutral land price per tile"))
+	ApplicationMultiplayer.label(shared_fields, "Neutral land price per tile")
 	land_price = SpinBox.new()
 	land_price.min_value = 0
 	land_price.max_value = 1000
 	land_price.value = 5
 	land_price.prefix = "$"
 	shared_fields.add_child(land_price)
-	land_price.tooltip_text = tr("Price for additional neutral land. At the shared start, every city receives an equal free starting area; its treasury stays intact. Saved games retain their rules.")
+	land_price.tooltip_text = "Price for additional neutral land. At the shared start, every city receives an equal free starting area; its treasury stays intact. Saved games retain their rules."
 	goal_fields = VBoxContainer.new()
 	host_fields.add_child(goal_fields)
-	ApplicationMultiplayer.label(goal_fields, tr("Victory goal"))
+	ApplicationMultiplayer.label(goal_fields, "Victory goal")
 	goal_picker = OptionButton.new()
 	for title in ["Endless game", "Population", "Wealth (funds minus debt)", "Points after game time"]:
-		goal_picker.add_item(tr(title))
+		goal_picker.add_item(title)
 	goal_fields.add_child(goal_picker)
 	goal_target = SpinBox.new()
 	goal_target.min_value = 1
 	goal_target.max_value = 2147483647
 	goal_target.value = 10000
 	goal_fields.add_child(goal_target)
-	years_label = ApplicationMultiplayer.label(goal_fields, tr("Required leadership"))
+	years_label = ApplicationMultiplayer.label(goal_fields, "Required leadership")
 	goal_years = OptionButton.new()
 	for years in [1, 3, 5, 10]:
 		goal_years.add_item(tr("%d game years") % years)
 	goal_years.select(3)
 	goal_fields.add_child(goal_years)
-	goal_years.tooltip_text = tr("Only the sole leader at or above the target earns time. Earned time is kept; ties pause all clocks.")
-	duration_label = ApplicationMultiplayer.label(goal_fields, tr("Duration in game years"))
+	goal_years.tooltip_text = "Only the sole leader at or above the target earns time. Earned time is kept; ties pause all clocks."
+	duration_label = ApplicationMultiplayer.label(goal_fields, "Duration in game years")
 	duration = SpinBox.new()
 	duration.min_value = 1
 	duration.max_value = 100
 	duration.value = 10
-	duration.tooltip_text = tr("Starts when the host starts the game. The lobby shows the end year. Paused game time does not count.")
+	duration.tooltip_text = "Starts when the host starts the game. The lobby shows the end year. Paused game time does not count."
 	goal_fields.add_child(duration)
 	goal_picker.item_selected.connect(func(index: int) -> void:
 		goal_target.value = 100000 if index == 2 else 10000
@@ -135,9 +135,9 @@ func setup(body: VBoxContainer) -> void:
 	var network := HBoxContainer.new()
 	coop.lobby.add_child(network)
 	address_box = column(network, 2)
-	coop.address = ApplicationMultiplayer.field(address_box, tr("Host address"), "127.0.0.1")
+	coop.address = ApplicationMultiplayer.field(address_box, "Host address", "127.0.0.1")
 	var ports := column(network, 1)
-	ApplicationMultiplayer.label(ports, tr("TCP port"))
+	ApplicationMultiplayer.label(ports, "TCP port")
 	coop.port = SpinBox.new()
 	coop.port.min_value = 1024
 	coop.port.max_value = 65535
@@ -157,21 +157,23 @@ func setup(body: VBoxContainer) -> void:
 	coop.city_picker.item_selected.connect(func(_index: int) -> void:
 		coop.selected_city_path = ""
 		update())
-	role.tooltip_text = tr("Host a game on this computer, or connect to an existing host.")
-	coop.player.tooltip_text = tr("Your name in the lobby, chat and scoreboard.")
-	coop.color_picker.tooltip_text = tr("Choose a custom colour for your cursor, territory and statistics, then Apply colour.")
-	coop.address.tooltip_text = tr("Enter the host computer's LAN address or reachable IP address.")
-	coop.port.tooltip_text = tr("The host and joining players must use the same TCP port.")
-	coop.mode_picker.tooltip_text = tr("Co-op: one shared city. Shared: separate cities on one map. Region: independent neighbouring city maps.")
-	coop.city_picker.tooltip_text = tr("Generate new terrain, or continue a saved multiplayer game. Saved games keep their rules and player seats.")
+	role.tooltip_text = "Host a game on this computer, or connect to an existing host."
+	coop.player.tooltip_text = "Your name in the lobby, chat and scoreboard."
+	coop.color_picker.tooltip_text = "Choose a custom colour for your cursor, territory and statistics, then Apply colour."
+	coop.address.tooltip_text = "Enter the host computer's LAN address or reachable IP address."
+	coop.port.tooltip_text = "The host and joining players must use the same TCP port."
+	coop.mode_picker.tooltip_text = "Co-op: one shared city. Shared: separate cities on one map. Region: independent neighbouring city maps."
+	coop.city_picker.tooltip_text = "Generate new terrain, or continue a saved multiplayer game. Saved games keep their rules and player seats."
 	update()
 
 func update() -> void:
+	for index in goal_years.item_count:
+		goal_years.set_item_text(index, tr("%d game years") % [1, 3, 5, 10][index])
 	var hosting := role.selected == 0
 	host_fields.visible = hosting
 	address_box.visible = not hosting
-	password_label.text = tr("Password (optional)") if hosting else tr("Password")
-	action.text = tr("Create game") if hosting else tr("Join / Reconnect")
+	password_label.text = "Password (optional)" if hosting else "Password"
+	action.text = "Create game" if hosting else "Join / Reconnect"
 	coop.use_current.visible = coop.city_picker.selected == 1
 	shared_fields.visible = coop.mode_picker.selected == 1 and coop.city_picker.selected == 0
 	goal_fields.visible = coop.mode_picker.selected != 0 and coop.city_picker.selected == 0
@@ -182,8 +184,8 @@ func update() -> void:
 	years_label.visible = goal_target.visible
 	goal_picker.tooltip_text = goal_help()
 	goal_target.tooltip_text = goal_help()
-	coop.join_code.tooltip_text = tr("Leave empty to allow joining without a password.") if hosting else tr("Enter the game's password if the host set one; otherwise leave empty.")
-	action.tooltip_text = tr("Configure the city, then wait in the lobby until everyone is ready.") if hosting else tr("Connect and select a new or reserved player seat. The host controls the game rules.")
+	coop.join_code.tooltip_text = "Leave empty to allow joining without a password." if hosting else "Enter the game's password if the host set one; otherwise leave empty."
+	action.tooltip_text = "Configure the city, then wait in the lobby until everyone is ready." if hosting else "Connect and select a new or reserved player seat. The host controls the game rules."
 	fit.call_deferred()
 
 func fit() -> void:

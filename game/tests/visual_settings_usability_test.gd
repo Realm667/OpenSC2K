@@ -105,6 +105,20 @@ func _run() -> void:
 	assert(dialog.tabs.get_current_tab_control() == tab and tab.selected_category == 3)
 	assert(tab.page_scroll.scroll_vertical == scroll)
 	# Closing while a category restore is queued must cancel its callback.
+	# The earlier short viewport exercises scrolling. Review translated dialog fit
+	# at the normal application size, above the settings window's minimum height.
+	root.size = Vector2i(1280, 900)
+	for locale in AppLocalization.codes():
+		AppLocalization.select(locale)
+		for category in tab.pages.size():
+			tab.select_category(category)
+			await process_frame
+			await process_frame
+			assert(dialog.size.x <= root.size.x and dialog.size.y <= root.size.y, "%s visual settings %s exceed viewport %s" % [locale, dialog.size, root.size])
+			for button: Button in tab.category_buttons:
+				var text_width := button.get_theme_font("font").get_string_size(tr(button.text), HORIZONTAL_ALIGNMENT_LEFT, -1, button.get_theme_font_size("font_size")).x
+				assert(text_width <= button.size.x, "%s category text exceeds button" % locale)
+	AppLocalization.select("en")
 	tab._schedule_scroll_restore(3)
 	dialog.free()
 	await process_frame

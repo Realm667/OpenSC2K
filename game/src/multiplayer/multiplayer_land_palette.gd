@@ -31,7 +31,7 @@ static func action_icon(selling: bool, water: bool, drop: Texture2D) -> Texture2
 
 static func setup(windows: MultiplayerWindows, body: VBoxContainer) -> void:
 	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	var heading := ApplicationMultiplayer.label(body, windows.tr("Land trade"))
+	var heading := ApplicationMultiplayer.label(body, "Land trade")
 	heading.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	heading.add_theme_font_size_override("font_size", 13)
 	windows.allowance_label = ApplicationMultiplayer.label(body, "")

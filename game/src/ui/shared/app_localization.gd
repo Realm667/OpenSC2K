@@ -23,17 +23,11 @@ const TRANSLATIONS: Dictionary[String, String] = {
 	"ko": "res://assets/localization/ko.po",
 	"pt_BR": "res://assets/localization/pt_BR.po",
 }
-const ORIGINAL_TRANSLATIONS: Dictionary[String, String] = {
-	"de": "res://assets/localization/de_original.po",
-	"es": "res://assets/localization/es_original.po",
-	"fr": "res://assets/localization/fr_original.po",
-	"it": "res://assets/localization/it_original.po",
-	"pt_BR": "res://assets/localization/pt_BR_original.po",
-}
 const REGULAR_FONT = preload("res://assets/fonts/pretendard/Pretendard-Regular.otf")
 const BOLD_FONT = preload("res://assets/fonts/pretendard/Pretendard-Bold.otf")
 
 static var _loaded := false
+static var _message_patterns: Array[Dictionary] = []
 
 
 static func normalize(value: Variant) -> String:
@@ -45,17 +39,54 @@ static func codes() -> Array[String]:
 	return LANGUAGES.keys()
 
 
-static func select(value: String) -> void:
+static func ensure_loaded() -> void:
 	if not _loaded:
 		for code: String in TRANSLATIONS:
 			TranslationServer.add_translation(load(TRANSLATIONS[code]) as Translation)
-
-		for code: String in ORIGINAL_TRANSLATIONS:
-			TranslationServer.add_translation(load(ORIGINAL_TRANSLATIONS[code]) as Translation)
-
 		_loaded = true
 
+
+static func select(value: String) -> void:
+	ensure_loaded()
 	TranslationServer.set_locale(normalize(value))
+
+
+# Legacy network feedback arrives already formatted in the source language.
+# Translate its template locally; never translate player names or saved data.
+static func message(value: String) -> String:
+	ensure_loaded()
+	var translated := str(TranslationServer.translate(value))
+	if translated != value or TranslationServer.get_locale().begins_with("en"):
+		return translated
+	if _message_patterns.is_empty():
+		var sources: Array = JSON.parse_string(FileAccess.get_file_as_string("res://assets/localization/formatted_messages.json"))
+		for source: String in sources:
+			var pattern := "^"
+			var types: Array[String] = []
+			var index := 0
+			while index < source.length():
+				var character := source[index]
+				if character == "%" and index + 1 < source.length():
+					var next := source[index + 1]
+					if next in ["d", "s"]:
+						types.append(next)
+						pattern += "(-?[0-9]+)" if next == "d" else "(.*?)"
+						index += 2
+						continue
+					if next == "%":
+						index += 1
+				pattern += ("\\" if character in "\\.^$|?*+()[]{}" else "") + character
+				index += 1
+			_message_patterns.append({"regex": RegEx.create_from_string(pattern + "$"), "source": source, "types": types})
+	for pattern: Dictionary in _message_patterns:
+		var found: RegExMatch = pattern.regex.search(value)
+		if found == null:
+			continue
+		var arguments: Array = []
+		for index in pattern.types.size():
+			arguments.append(int(found.get_string(index + 1)) if pattern.types[index] == "d" else found.get_string(index + 1))
+		return str(TranslationServer.translate(pattern.source)) % arguments
+	return value
 
 
 # `font` with the Hangul fallback font. `bold` selects the bold fallback.

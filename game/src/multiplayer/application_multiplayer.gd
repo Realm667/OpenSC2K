@@ -118,7 +118,7 @@ func setup() -> void:
 	city_file = FileDialog.new()
 	city_file.access = FileDialog.ACCESS_FILESYSTEM
 	city_file.file_mode = FileDialog.FILE_MODE_OPEN_FILE
-	city_file.filters = PackedStringArray(["*.sc2x, *.sc2, *.SC2, *.sc2mp ; Städte"])
+	city_file.filters = PackedStringArray(["*.sc2x, *.sc2, *.SC2, *.sc2mp ; " + tr("Cities")])
 	city_file.current_dir = AppPaths.path("cities")
 	city_file.file_selected.connect(host_saved_city)
 	app.add_child(city_file)
@@ -128,7 +128,7 @@ func setup() -> void:
 	message.hide()
 	sign_dialog = ConfirmationDialog.new()
 	sign_dialog.theme = AppUiTheme.current()
-	sign_dialog.title = "Gemeinsames Schild"
+	sign_dialog.title = "Shared sign"
 	sign_text = LineEdit.new()
 	sign_text.max_length = 120
 	sign_text.custom_minimum_size.x = 400
@@ -139,7 +139,7 @@ func setup() -> void:
 		session.request(pending_sign.duplicate(true)))
 	leave_dialog = ConfirmationDialog.new()
 	leave_dialog.theme = AppUiTheme.current()
-	leave_dialog.dialog_text = "Sitzung verlassen? Nicht gespeicherte Änderungen gehen beim Host verloren.\nAls Host trennst du dabei alle Mitspieler."
+	leave_dialog.dialog_text = "Leave the session? Unsaved changes on the host will be lost.\nAs host, you will disconnect all other players."
 	leave_dialog.confirmed.connect(func() -> void:
 		var quitting := exit_action == "quit"
 		leave()
@@ -153,6 +153,19 @@ func setup() -> void:
 	menu_button = windows.menu
 	app.main_menu.multiplayer_requested.connect(open)
 	load_identity()
+
+
+func refresh_language() -> void:
+	if windows == null:
+		return
+	launch.update()
+	windows.refresh_chat_heading()
+	windows.update_land_tooltip()
+	var scores := windows.scores
+	scores.update(scores.rows, scores.picker.get_meta("shared", false), scores.self_id, scores.history)
+	for column in 3:
+		windows.start_lobby.roster.set_column_title(column, tr(["Player", "City", "Status"][column]))
+	city_file.filters = PackedStringArray(["*.sc2x, *.sc2, *.SC2, *.sc2mp ; " + tr("Cities")])
 
 
 func open() -> void:
@@ -186,6 +199,7 @@ func start_host() -> void:
 		if not selected_city_path.is_empty():
 			host_saved_city(selected_city_path)
 			return
+		city_file.filters = PackedStringArray(["*.sc2x, *.sc2, *.SC2, *.sc2mp ; " + tr("Cities")])
 		city_file.popup_centered_ratio(0.8)
 		return
 	remember_city()
@@ -215,7 +229,7 @@ func host_document(document: Sc2File) -> void:
 	pending_new_city = false
 	save_identity()
 	panel.hide()
-	show_message("Partie läuft auf Port %d. Wähle eine Spielgeschwindigkeit." % int(port.value))
+	show_message("Game running on port %d. Choose a game speed." % int(port.value))
 
 
 func host_saved_city(path: String) -> void:
@@ -245,7 +259,7 @@ func start_join() -> void:
 	remember_city()
 	session.player_color = color_picker.color.to_html(false)
 	var result := session.join(address.text.strip_edges(), int(port.value), join_code.text, player.text, "choose")
-	show_message(result if not result.is_empty() else "Verbinde mit dem Host …")
+	show_message(result if not result.is_empty() else "Connecting to the host…")
 	save_identity()
 
 
@@ -328,7 +342,7 @@ func apply_display(state: Dictionary, prepared: MultiplayerDisplayJob = null) ->
 		return
 	var document := prepared.document if prepared != null else MultiplayerDocument.restore(state, last_live_state, app.document_state.current_document) if live else Sc2File.new()
 	if document == null or (not live and not document.parse(Marshalls.base64_to_raw(state.city))) or not document.is_sc2x() or document.map_size not in Sc2File.MAP_SIZES:
-		show_message("Ungültiger Stadtzustand vom Host. Sitzung beenden und neu verbinden.")
+		show_message("Invalid city state from the host. Leave the session and reconnect.")
 		return
 	last_city_bytes = str(state.get("city", ""))
 	last_live_state = city_fields(state) if live else {}
@@ -342,7 +356,7 @@ func apply_display(state: Dictionary, prepared: MultiplayerDisplayJob = null) ->
 		local_city.set_sound_enabled(app.document_state.city.sound_enabled())
 		local_city.set_music_enabled(app.document_state.city.music_enabled())
 	if not mirrored:
-		if not app.city_session.activate_document(document, null, "Multiplayer verbunden", true):
+		if not app.city_session.activate_document(document, null, tr("Multiplayer connected"), true):
 			return
 		if app.simulation_state.frame_simulation != null:
 			app.simulation_state.frame_simulation.close()
@@ -521,7 +535,7 @@ func send_decision(accepted: bool) -> void:
 
 func save(as_copy := false) -> void:
 	if not session.hosting:
-		show_message("Der Host speichert die gemeinsame Partie.")
+		show_message("The host saves the shared game.")
 		return
 	if as_copy or multiplayer_save_path.is_empty() or not multiplayer_save_path.ends_with(".sc2x"):
 		app.city_files.open_save_dialog()
@@ -541,7 +555,7 @@ func save_to(path: String) -> void:
 		if exit_action == "quit":
 			session.stop()
 			finish_quit()
-	show_message(error if not error.is_empty() else "Multiplayer-Spielstand gespeichert: " + path)
+	show_message(error if not error.is_empty() else tr("Multiplayer game saved: %s") % path)
 
 
 func confirm_leave() -> void:
@@ -559,7 +573,7 @@ func leave() -> void:
 	multiplayer_save_path = ""
 	windows.close()
 	if original_document != null:
-		app.city_session.activate_document(original_document, null, "Multiplayer verlassen", true)
+		app.city_session.activate_document(original_document, null, tr("Left multiplayer"), true)
 		app.document_state.current_save_path = original_save_path
 		app.document_state.saved_city_snapshot = original_saved_snapshot
 		app.document_state.current_city_saved_once = original_saved_once
@@ -619,14 +633,14 @@ func can_start() -> bool:
 	if active():
 		return not session.hosting
 	if app.tool_state.landscape_editor:
-		show_message("Beende zuerst die Landschaftserstellung mit Start City.")
+		show_message("Finish creating the terrain with Start City first.")
 		return false
 	var error := Sc2xCheckpoint.save_error(app.simulation_state.speed_controller)
 	if not error.is_empty():
 		show_message(error)
 		return false
 	if player.text.strip_edges().is_empty() or player.text.length() > 32 or join_code.text.length() > 64:
-		show_message("Verwende einen Spielernamen mit 1–32 Zeichen und ein optionales Passwort mit höchstens 64 Zeichen.")
+		show_message("Use a player name of 1–32 characters and an optional password of at most 64 characters.")
 		return false
 	return true
 

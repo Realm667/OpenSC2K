@@ -33,7 +33,7 @@ var history: Dictionary = {}
 func setup(body: VBoxContainer) -> void:
 	picker = MultiplayerTabs.new()
 	for title in VIEWS:
-		picker.add_item(tr(title))
+		picker.add_item(title)
 	body.add_child(picker)
 	summary = Label.new()
 	summary.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -49,7 +49,7 @@ func setup(body: VBoxContainer) -> void:
 	body.add_child(table)
 	metric_picker = MultiplayerTabs.new()
 	for metric: String in MultiplayerHistory.METRICS:
-		metric_picker.add_item(tr(COLUMNS[metric]))
+		metric_picker.add_item(COLUMNS[metric])
 	body.add_child(metric_picker)
 	chart = MultiplayerHistoryChart.new()
 	chart.custom_minimum_size = Vector2(400, 240)

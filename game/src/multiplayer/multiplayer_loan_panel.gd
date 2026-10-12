@@ -14,17 +14,17 @@ var signature := ""
 func setup(owner: ApplicationMultiplayer) -> void:
 	coop_ref = weakref(owner)
 	name = "Player loans"
-	var help := ApplicationMultiplayer.label(self, tr("Choose the lender and principal. The game sets the bond rate. Interest settles with the annual budget; there is no maturity date. Repay when funds permit."))
+	var help := ApplicationMultiplayer.label(self, "Choose the lender and principal. The game sets the bond rate. Interest settles with the annual budget; there is no maturity date. Repay when funds permit.")
 	help.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	var form := GridContainer.new()
 	form.columns = 2
 	add_child(form)
-	ApplicationMultiplayer.label(form, tr("Lender"))
+	ApplicationMultiplayer.label(form, "Lender")
 	counterpart = OptionButton.new()
 	form.add_child(counterpart)
 	amount = field(form, tr("Principal"), 10000, 500000, 10000)
 	amount.step = 10000
-	ApplicationMultiplayer.button(self, tr("Confirm and send proposal"), func() -> void:
+	ApplicationMultiplayer.button(self, "Confirm and send proposal", func() -> void:
 		if counterpart.selected >= 0:
 			coop.session.request({"kind": "loan_offer", "seat": counterpart.get_item_metadata(counterpart.selected),
 				"amount": int(amount.value)}))
@@ -90,10 +90,10 @@ func update(state: Dictionary) -> void:
 			var actions := HBoxContainer.new()
 			panel.add_child(actions)
 			if own != loan.proposer:
-				ApplicationMultiplayer.button(actions, tr("Approve loan"), func() -> void: coop.session.request({"kind": "loan_accept", "loan": loan.id}))
-			ApplicationMultiplayer.button(actions, tr("Withdraw") if own == loan.proposer else tr("Decline"), func() -> void: coop.session.request({"kind": "loan_cancel", "loan": loan.id}))
+				ApplicationMultiplayer.button(actions, "Approve loan", func() -> void: coop.session.request({"kind": "loan_accept", "loan": loan.id}))
+			ApplicationMultiplayer.button(actions, "Withdraw" if own == loan.proposer else "Decline", func() -> void: coop.session.request({"kind": "loan_cancel", "loan": loan.id}))
 		else:
 			ApplicationMultiplayer.label(panel, tr("Outstanding: %s · Unpaid interest: %s") % [MultiplayerScoreboard.money(loan.principal), MultiplayerScoreboard.money(loan.arrears)])
 			if own == loan.borrower and loan.status == "active":
-				ApplicationMultiplayer.button(panel, tr("Repay principal"), func() -> void: coop.session.request({"kind": "loan_repay", "loan": loan.id}))
+				ApplicationMultiplayer.button(panel, "Repay principal", func() -> void: coop.session.request({"kind": "loan_repay", "loan": loan.id}))
 		panel.add_child(HSeparator.new())

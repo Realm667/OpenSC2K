@@ -149,7 +149,9 @@ func _show_data_folder_error() -> void:
 
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_WM_CLOSE_REQUEST and is_inside_tree():
+	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+		coop.refresh_language()
+	elif what == NOTIFICATION_WM_CLOSE_REQUEST and is_inside_tree():
 		city_files.request_city_exit("quit")
 	elif what == NOTIFICATION_WM_DPI_CHANGE:
 		settings.apply_ui_scale()

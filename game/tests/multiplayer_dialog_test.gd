@@ -23,7 +23,9 @@ func check_fit(window: Window, body: Control, description: String) -> void:
 	var scroll := body.get_parent() as ScrollContainer
 	if window.size.y < available.y - 72:
 		check(content_bottom <= scroll.size.y + 1, description + " does not clip the bottom action")
-		check(scroll.size.y - content_bottom < 20, description + " has no empty lower area")
+		# Short translations can reach the window's deliberate minimum height.
+		if window.size.y > window.min_size.y + 2:
+			check(scroll.size.y - content_bottom < 20, description + " has no empty lower area: %s / minimum %s / content %s" % [window.size, window.min_size, content_bottom])
 
 func run() -> void:
 	root.gui_embed_subwindows = true
@@ -34,8 +36,11 @@ func run() -> void:
 	await settle()
 	for theme in ["dark", "light"]:
 		AppUiTheme.select(theme)
-		for locale in ["en", "de"]:
-			TranslationServer.set_locale(locale)
+		for locale in AppLocalization.codes():
+			AppLocalization.select(locale)
+			check(app.coop.launch.role.get_item_text(0) == "Host game", "role retains its source key for repeated language changes")
+			check(app.coop.windows.menu.get_popup().get_item_text(0) == "Scoreboard", "menu retains its source key")
+			check(app.coop.launch.goal_years.get_item_text(0) == tr("%d game years") % 1, "formatted option refreshes on language change")
 			for role in [0, 1]:
 				app.coop.launch.role.select(role)
 				for mode in [0, 1, 2]:

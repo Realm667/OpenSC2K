@@ -88,7 +88,7 @@ func setup() -> void:
 	for id in [0, 1, 8, 9, 10, 2, 3, 4, 5, 6, 11, 7]:
 		if id in [2, 5]:
 			popup.add_separator()
-		popup.add_item(tr(titles[id]), id)
+		popup.add_item(titles[id], id)
 	popup.id_pressed.connect(func(id: int) -> void:
 		match id:
 			0:
@@ -144,13 +144,13 @@ func setup() -> void:
 	chat.add_child(chat_body)
 	var heading := HBoxContainer.new()
 	chat_body.add_child(heading)
-	var title := ApplicationMultiplayer.label(heading, tr("Chat"))
+	var title := ApplicationMultiplayer.label(heading, "Chat")
 	chat_title = title
 	title.theme_type_variation = "TooltipLabel"
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var hide_button := Button.new()
 	hide_button.text = "−"
-	hide_button.tooltip_text = tr("Hide chat")
+	hide_button.tooltip_text = "Hide chat"
 	heading.add_child(hide_button)
 	chat_toggle = hide_button
 	hide_button.pressed.connect(func() -> void: set_chat_collapsed(not chat_collapsed))
@@ -180,11 +180,11 @@ func setup() -> void:
 	chat_body.add_child(chat_entry)
 	chat_input = LineEdit.new()
 	chat_input.max_length = 500
-	chat_input.placeholder_text = tr("Message…")
+	chat_input.placeholder_text = "Message…"
 	chat_input.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	chat_entry.add_child(chat_input)
 	var send := ApplicationMultiplayer.button(chat_entry, "➤", func() -> void: chat_input.text_submitted.emit(chat_input.text))
-	send.tooltip_text = tr("Send message")
+	send.tooltip_text = "Send message"
 	chat_input.text_submitted.connect(func(text: String) -> void:
 		coop.session.send_chat(text)
 		chat_input.clear())

@@ -7,9 +7,9 @@ static func choose(app: CityApplication, document: Sc2File, path: String) -> voi
 		app.interface.show_error(_tr(validated.error))
 		return
 	var data := MultiplayerSingleplayer.metadata(document)
-	var dialog := app.coop.windows.make_window(_tr("Open multiplayer save"))
+	var dialog := app.coop.windows.make_window("Open multiplayer save")
 	var box := app.coop.windows.content(dialog)
-	ApplicationMultiplayer.label(box, _tr("Open a single-player copy or continue multiplayer."))
+	ApplicationMultiplayer.label(box, "Open a single-player copy or continue multiplayer.")
 	var region: bool = data.get("shared", {}).get("mode") == "region"
 	var picker := OptionButton.new()
 	var actors: Array = data.get("shared", {}).get("actors", [])
@@ -21,9 +21,9 @@ static func choose(app: CityApplication, document: Sc2File, path: String) -> voi
 			city.parse(Marshalls.base64_to_raw(str(data.shared.cities[actor].state.city)))
 			picker.add_item(str(entry.get("name", "")) + " · " + CityState.from_document(city).city_name())
 	elif data.has("shared"):
-		var note := ApplicationMultiplayer.label(box, _tr("All cities merge: shared terrain once, combined funds and bank bonds, internal player loans cancel. Host tax and funding settings apply. More than 50 bank bonds are repaid from combined funds."))
+		var note := ApplicationMultiplayer.label(box, "All cities merge: shared terrain once, combined funds and bank bonds, internal player loans cancel. Host tax and funding settings apply. More than 50 bank bonds are repaid from combined funds.")
 		note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	ApplicationMultiplayer.button(box, _tr("Open single-player copy"), func() -> void:
+	ApplicationMultiplayer.button(box, "Open single-player copy", func() -> void:
 		var converted := MultiplayerSingleplayer.convert(document, str(actors[picker.selected]) if region and not actors.is_empty() else "")
 		if not converted.error.is_empty():
 			app.interface.show_error(_tr(converted.error))
@@ -32,7 +32,7 @@ static func choose(app: CityApplication, document: Sc2File, path: String) -> voi
 		app.city_files.pending_multiplayer_source = path
 		app.city_files.request_city_exit("multiplayer_copy")
 		dialog.queue_free())
-	ApplicationMultiplayer.button(box, _tr("Continue multiplayer"), func() -> void:
+	ApplicationMultiplayer.button(box, "Continue multiplayer", func() -> void:
 		app.coop.open()
 		app.coop.city_picker.select(1)
 		app.coop.use_current.show()
@@ -57,7 +57,7 @@ static func host_ended(coop: ApplicationMultiplayer) -> void:
 	if not valid and not coop.session.latest.get("visiting", false) and coop.app.document_state.current_document != null:
 		city = MultiplayerSingleplayer.clean(coop.app.document_state.current_document)
 		valid = true
-	coop.ended_dialog = coop.windows.make_window(_tr("Session ended"))
+	coop.ended_dialog = coop.windows.make_window("Session ended")
 	coop.ended_dialog.exclusive = true
 	coop.ended_dialog.set_meta("center_after_fit", true)
 	var panel := PanelContainer.new()
@@ -66,18 +66,18 @@ static func host_ended(coop: ApplicationMultiplayer) -> void:
 	var box := VBoxContainer.new()
 	panel.add_child(box)
 	MultiplayerDialogFit.bind(coop.ended_dialog, box, 680)
-	ApplicationMultiplayer.label(box, _tr("The host ended the game. Save a single-player copy before leaving."))
+	ApplicationMultiplayer.label(box, "The host ended the game. Save a single-player copy before leaving.")
 	var status := ApplicationMultiplayer.label(box, "")
 	status.hide()
 	if not valid:
 		status.text = _tr("No confirmed copy of your city is available.")
 		status.show()
-	var save := ApplicationMultiplayer.button(box, _tr("Save city copy"), func() -> void:
+	var save := ApplicationMultiplayer.button(box, "Save city copy", func() -> void:
 		var file := FileDialog.new()
 		file.theme = AppUiTheme.current()
 		file.access = FileDialog.ACCESS_FILESYSTEM
 		file.file_mode = FileDialog.FILE_MODE_SAVE_FILE
-		file.filters = PackedStringArray(["*.sc2x ; Single-player city"])
+		file.filters = PackedStringArray(["*.sc2x ; " + str(TranslationServer.translate("Single-player city"))])
 		file.current_dir = AppPaths.path("cities")
 		file.current_file = CityState.from_document(city).city_name().validate_filename() + "-singleplayer.sc2x"
 		coop.ended_dialog.add_child(file)
@@ -100,7 +100,7 @@ static func host_ended(coop: ApplicationMultiplayer) -> void:
 		coop.ended_dialog.queue_free()
 		coop.ended_dialog = null
 		coop.leave()
-	ApplicationMultiplayer.button(box, _tr("Leave game"), leave)
+	ApplicationMultiplayer.button(box, "Leave game", leave)
 	coop.ended_dialog.close_requested.connect(leave)
 	coop.ended_dialog.popup_centered()
 

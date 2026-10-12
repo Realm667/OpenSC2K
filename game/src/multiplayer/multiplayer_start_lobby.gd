@@ -22,7 +22,7 @@ const EDIT_ICON := preload("res://src/multiplayer/icons/edit_cell.svg")
 
 func _init(owner: MultiplayerWindows) -> void:
 	owner_ref = weakref(owner)
-	window = windows.make_window(tr("Game lobby"))
+	window = windows.make_window("Game lobby")
 	window.size = Vector2i(660, 430)
 	window.min_size = Vector2i(400, 300)
 	body = windows.content(window)
@@ -70,11 +70,11 @@ func _init(owner: MultiplayerWindows) -> void:
 	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	var actions := HBoxContainer.new()
 	body.add_child(actions)
-	ready = ApplicationMultiplayer.button(actions, tr("Ready"), func() -> void:
+	ready = ApplicationMultiplayer.button(actions, "Ready", func() -> void:
 		windows.coop.session.request({"kind": "lobby_ready", "ready": not own_ready}))
-	start = ApplicationMultiplayer.button(actions, tr("Start game"), func() -> void:
+	start = ApplicationMultiplayer.button(actions, "Start game", func() -> void:
 		windows.coop.session.request({"kind": "lobby_start"}))
-	leave_button = ApplicationMultiplayer.button(actions, tr("Leave game"), windows.coop.confirm_leave)
+	leave_button = ApplicationMultiplayer.button(actions, "Leave game", windows.coop.confirm_leave)
 
 func update(state: Dictionary) -> void:
 	var lobby: Dictionary = state.get("lobby", {})
@@ -99,7 +99,7 @@ func update(state: Dictionary) -> void:
 		summary.text += "\n" + MultiplayerGoal.score_help()
 	elif state.get("mode", "coop") != "coop" and goal.get("kind", "endless") != "endless":
 		summary.text += "\n" + (tr("Accumulate %d years as sole leader. Earned time is kept. Late cities are unranked.") % (int(goal.get("hold_days", 3000)) / CityCalendar.DAYS_PER_YEAR) if goal.get("rule") == "leadership" else tr("Stay at or above the target for one full game year. Dropping below resets the timer."))
-	var signature := JSON.stringify(state.get("start_preview", {})) + JSON.stringify(state.get("roster", []).map(func(player: Dictionary) -> Array: return [player.id, player.name, player.city, player.online, player.get("ready", false), player.color, player.get("handicap", {})]))
+	var signature := TranslationServer.get_locale() + JSON.stringify(state.get("start_preview", {})) + JSON.stringify(state.get("roster", []).map(func(player: Dictionary) -> Array: return [player.id, player.name, player.city, player.online, player.get("ready", false), player.color, player.get("handicap", {})]))
 	if signature != roster_signature and not editing_city():
 		roster_signature = signature
 		roster.clear()
@@ -175,7 +175,7 @@ func editing_city() -> bool:
 func edit_handicap(seat: String) -> void:
 	if is_instance_valid(handicap_dialog) and handicap_dialog.visible:
 		return
-	var dialog := windows.make_window(tr("Starting handicap"))
+	var dialog := windows.make_window("Starting handicap")
 	handicap_dialog = dialog
 	var box := windows.content(dialog)
 	var player: Dictionary = {}
@@ -186,7 +186,7 @@ func edit_handicap(seat: String) -> void:
 		dialog.queue_free()
 		return
 	ApplicationMultiplayer.label(box, str(player.name) + " · " + str(player.city))
-	ApplicationMultiplayer.label(box, tr("Starting funds"))
+	ApplicationMultiplayer.label(box, "Starting funds")
 	var funds := LineEdit.new()
 	funds.text = MultiplayerScoreboard.money(int(player.get("handicap", {}).get("funds", player.funds)))
 	var money_row := HBoxContainer.new()
@@ -204,7 +204,7 @@ func edit_handicap(seat: String) -> void:
 			funds.text = MultiplayerScoreboard.money(clampi(money_value.call() + (1000 if event.keycode == KEY_UP else -1000), 0, 2147483647))
 			funds.accept_event())
 	funds.focus_exited.connect(func() -> void: funds.text = MultiplayerScoreboard.money(money_value.call()))
-	ApplicationMultiplayer.label(box, tr("Starting territory"))
+	ApplicationMultiplayer.label(box, "Starting territory")
 	var size_choice := OptionButton.new()
 	for name in ["Very small", "Small", "Medium · standard", "Large", "Generous", "Custom…"]:
 		size_choice.add_item(tr(name))
@@ -243,7 +243,7 @@ func edit_handicap(seat: String) -> void:
 	size_choice.item_selected.connect(func(_index: int) -> void: refresh.call())
 	tiles.value_changed.connect(func(_value: float) -> void: refresh.call())
 	refresh.call()
-	ApplicationMultiplayer.button(box, tr("Apply"), func() -> void:
+	ApplicationMultiplayer.button(box, "Apply", func() -> void:
 		windows.coop.session.request({"kind": "handicap", "seat": seat, "funds": money_value.call(), "tiles": int(tiles.value) if size_choice.selected == 5 else 0, "scale": scales[mini(4, size_choice.selected)]})
 		dialog.queue_free())
 	dialog.popup_centered()

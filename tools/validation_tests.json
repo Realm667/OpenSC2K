@@ -1,5 +1,11 @@
 [
   {
+    "id": "localization_catalogs_test",
+    "python": "tools/check_localization.py",
+    "domain": "ui",
+    "lane": "product"
+  },
+  {
     "id": "multiplayer_polish_test",
     "script": "tests/multiplayer_polish_test.gd",
     "domain": "simulation",

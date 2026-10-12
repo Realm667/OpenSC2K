@@ -27,9 +27,9 @@ func _init(owner: MultiplayerWindows) -> void:
 	fireworks_audio.max_polyphony = 4
 	fireworks_audio.stream = firework_sound()
 	windows.coop.app.add_child(fireworks_audio)
-	regions = windows.make_window(tr("SimNation"))
+	regions = windows.make_window("SimNation")
 	region_rows = windows.content(regions)
-	ending = windows.make_window(tr("Victory"))
+	ending = windows.make_window("Victory")
 	ending.size = Vector2i(1000, 400)
 	end_rows = windows.content(ending)
 	ending.visibility_changed.connect(func() -> void:
@@ -43,11 +43,11 @@ func _init(owner: MultiplayerWindows) -> void:
 	end_rows.minimum_size_changed.connect(func() -> void: windows.fit_content.call_deferred(ending, end_rows, 1000))
 	var actions := HBoxContainer.new()
 	end_rows.add_child(actions)
-	ApplicationMultiplayer.button(actions, tr("Leave game"), windows.coop.confirm_leave)
-	continue_button = ApplicationMultiplayer.button(actions, tr("Continue without scoring (endless)"), func() -> void:
+	ApplicationMultiplayer.button(actions, "Leave game", windows.coop.confirm_leave)
+	continue_button = ApplicationMultiplayer.button(actions, "Continue without scoring (endless)", func() -> void:
 		windows.coop.session.request({"kind": "continue_unscored"}))
 
-	rematch_button = ApplicationMultiplayer.button(actions, tr("Rematch · rotate starts"), func() -> void:
+	rematch_button = ApplicationMultiplayer.button(actions, "Rematch · rotate starts", func() -> void:
 		windows.coop.session.request({"kind": "rematch"}))
 
 func open_regions() -> void:
@@ -68,7 +68,7 @@ func refresh_regions() -> void:
 	for child in region_rows.get_children():
 		region_rows.remove_child(child)
 		child.queue_free()
-	var hint := ApplicationMultiplayer.label(region_rows, tr("Select a city to visit. Other cities are read-only; their dialogs remain private."))
+	var hint := ApplicationMultiplayer.label(region_rows, "Select a city to visit. Other cities are read-only; their dialogs remain private.")
 	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	var grid := GridContainer.new()
 	grid.columns = 2
