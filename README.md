@@ -1,12 +1,17 @@
 # OpenSC2K — Integrated Runtime
 
 OpenSC2K is an open-source remake of SimCity 2000, built with Godot.
-This integration branch combines Visual Enhancements, German Translation and
+This integration branch combines Visual Enhancements, five-language Localization and
 playable Koop/Competitive Shared/Competitive Region multiplayer on the upstream 0.3.0 base.
 Visual effects preserve simulation rules; multiplayer adds shared control and
 municipal ownership/account rules. See [the multiplayer guide](docs/multiplayer.md).
 
 ## Included features
+
+Settings > General > Language adds German, Spanish, Italian, French and Brazilian
+Portuguese for the base-game interface and original-game text. See the
+[translation sources and coverage](docs/localization-sources.md). Separate feature
+messages may still use English where their own language catalog has no entry.
 
 Open **Settings > Visual Enhancements**. The settings are grouped as follows:
 
