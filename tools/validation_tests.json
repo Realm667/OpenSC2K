@@ -1958,6 +1958,12 @@
     "lane": "product"
   },
   {
+    "id": "multiplayer_pipeline_test",
+    "script": "tests/multiplayer_pipeline_test.gd",
+    "domain": "simulation",
+    "lane": "product"
+  },
+  {
     "id": "multiplayer_load_test",
     "script": "tests/multiplayer_load_test.gd",
     "domain": "simulation",

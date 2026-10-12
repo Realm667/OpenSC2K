@@ -10,17 +10,22 @@ const EXTRA_FIELDS := ["sc2x_compat_labels", "sc2x_object_ids", "sc2x_object_kin
 	"sc2x_extra_entries", "sc2x_unsupported_features", "sc2x_converted_from"]
 var buffers: Dictionary = {}
 var texts: Dictionary = {}
+var page_versions: Dictionary = {}
+var generation := 0
+const RAW_PAGE := 3072 # Exactly 4096 base64 characters; never split a triplet.
 
 
 func capture(document: Sc2File, shared: MultiplayerDocument = null, shared_ids: Array = []) -> Dictionary:
 	document.reconcile_object_identities()
 	var layout: Array = []
 	var result := {}
+	var versions := {}
 	for index in document.chunks.size():
 		var chunk := document.chunks[index]
 		var key := PREFIX + str(index)
 		layout.append([chunk.chunk_id, chunk.decoded_payload.size()])
 		result[key] = shared.encode_buffer(chunk.chunk_id, chunk.decoded_payload) if shared != null and chunk.chunk_id in shared_ids else encode_buffer(key, chunk.decoded_payload)
+		versions[key] = shared.page_versions[chunk.chunk_id] if shared != null and chunk.chunk_id in shared_ids else page_versions[key]
 	var extras := {}
 	for field: String in EXTRA_FIELDS:
 		extras[field] = document.get(field)
@@ -28,19 +33,40 @@ func capture(document: Sc2File, shared: MultiplayerDocument = null, shared_ids: 
 	extras.sc2x_extra_entries = extras.sc2x_extra_entries.duplicate()
 	extras.sc2x_extra_entries.erase("multiplayer.json")
 	result[EXTRA] = encode_buffer(EXTRA, var_to_bytes(extras))
+	versions[EXTRA] = page_versions[EXTRA]
+	result["chunk_pages"] = versions
 	result["document"] = {"size": document.map_size, "layout": layout,
 		"metadata": document.sc2x_metadata.to_json()}
 	for key: String in buffers.keys():
 		if not result.has(key):
 			buffers.erase(key)
 			texts.erase(key)
+			page_versions.erase(key)
 	return result
 
 
 func encode_buffer(key: String, bytes: PackedByteArray) -> String:
 	if buffers.get(key) != bytes:
+		generation += 1
+		var old: PackedByteArray = buffers.get(key, PackedByteArray())
+		var old_versions: Array = page_versions.get(key, {}).get("pages", [])
+		var versions: Array = []
+		var parts := PackedStringArray()
+		for offset in range(0, bytes.size(), RAW_PAGE):
+			@warning_ignore("integer_division")
+			var page := offset / RAW_PAGE
+			var part := bytes.slice(offset, offset + RAW_PAGE)
+			# Native byte comparison also covers imported/borrowed raw-buffer edits.
+			# Its result is reused by every recipient's worker delta codec.
+			if page < old_versions.size() and part == old.slice(offset, offset + RAW_PAGE):
+				versions.append(old_versions[page])
+				parts.append(str(texts[key]).substr(page * MultiplayerDelta.PAGE, MultiplayerDelta.PAGE))
+			else:
+				versions.append(generation)
+				parts.append(Marshalls.raw_to_base64(part))
 		buffers[key] = bytes.duplicate()
-		texts[key] = Marshalls.raw_to_base64(bytes)
+		texts[key] = "".join(parts)
+		page_versions[key] = {"epoch": str(get_instance_id()), "pages": versions}
 	return texts[key]
 
 
@@ -59,6 +85,7 @@ static func view_copy(source: Sc2File) -> Sc2File:
 		chunk.chunk_id = original.chunk_id
 		chunk.expected_decoded_size = original.expected_decoded_size
 		chunk.decoded_payload = original.decoded_payload
+		chunk.mutation_revision = original.mutation_revision
 		chunk.is_dirty = true
 		result.chunks.append(chunk)
 	result.rebuild_chunk_cache()

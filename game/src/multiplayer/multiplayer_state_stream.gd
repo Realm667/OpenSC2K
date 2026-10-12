@@ -3,7 +3,7 @@ extends RefCounted
 ## Large snapshots are spooled to temporary files, with one small chunk queued
 ## at a time. The TCP frame/queue limits and host command limit remain unchanged.
 
-const CHUNK_BYTES := 48 * 1024
+const CHUNK_BYTES := 8 * 1024
 const MAX_BYTES := Sc2xDocument.MAX_ARCHIVE_BYTES
 var path := ""
 var file: FileAccess
@@ -65,7 +65,7 @@ func receive(message: Dictionary) -> Dictionary:
 			failed = file == null
 			started = not failed
 		"state_part":
-			if not started or message.get("offset") != offset or not message.get("data") is String or message.data.length() > CHUNK_BYTES * 4 / 3:
+			if not started or message.get("offset") != offset or not message.get("data") is String or message.data.length() > 4 * ceili(float(CHUNK_BYTES) / 3.0):
 				failed = true
 				return {}
 			var data := Marshalls.base64_to_raw(message.data)

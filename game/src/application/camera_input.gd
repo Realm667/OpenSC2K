@@ -335,7 +335,7 @@ func on_map_selection_canceled() -> void:
 
 func on_map_selection_started() -> void:
 	if app.coop.active():
-		app.coop.selection_revision = app.coop.session.local_revision
+		app.coop.selection_revision = app.coop.display_revision if app.coop.display_revision >= 0 else app.coop.session.local_revision
 	app.tool_state.landscape_brush_command = null
 	app.tool_state.level_brush_altitude = -1
 

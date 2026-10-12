@@ -65,8 +65,19 @@ func setup() -> void:
 	MultiplayerText.setup()
 	coop.session.command_sent.connect(func(id: int, command: Dictionary) -> void:
 		if command.get("kind") in ["build", "land_buy"] and command.get("start") is Array and command.get("finish") is Array:
-			pending_builds[id] = {"start": command.start, "finish": command.finish, "until": Time.get_ticks_msec() + 10000})
-	coop.session.command_completed.connect(func(id: int) -> void: pending_builds.erase(id))
+			pending_builds[id] = command.duplicate(true).merged({"until": Time.get_ticks_msec() + 10000, "confirmed": -1})
+			# This bounds only cosmetic previews, never the reliable command queue.
+			if pending_builds.size() > 256:
+				pending_builds.erase(pending_builds.keys()[0])
+			if is_instance_valid(overlay):
+				overlay.queue_redraw())
+	coop.session.command_resolved.connect(func(id: int, result: Dictionary) -> void:
+		if not pending_builds.has(id):
+			return
+		if not result.get("ok", false) or result.has("choices"):
+			pending_builds.erase(id)
+		else:
+			pending_builds[id].confirmed = int(result.get("revision", -1)))
 	var row := coop.app.city_menu_bar.newspaper_menu.get_parent()
 	menu = MenuButton.new()
 	menu.text = "Multiplayer"
@@ -494,18 +505,37 @@ func draw_markers() -> void:
 				if target == map.hover_tile:
 					overlay.draw_string_outline(font, outline[0] + Vector2(8, -8), str(item.name), HORIZONTAL_ALIGNMENT_LEFT, -1, 16, 4, Color.BLACK)
 					overlay.draw_string(font, outline[0] + Vector2(8, -8), str(item.name), HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color(CoopSession.valid_color(item.get("color"))))
+	var preview_budget := 1024
 	for id: int in pending_builds.keys():
 		var pending: Dictionary = pending_builds[id]
-		if not coop.session.connected or Time.get_ticks_msec() > int(pending.until):
+		if not coop.session.connected or Time.get_ticks_msec() > int(pending.until) or (int(pending.confirmed) >= 0 and coop.display_revision >= int(pending.confirmed)) or pending.get("view_owner", "") != state.get("view_owner", ""):
 			pending_builds.erase(id)
+			continue
+		if preview_budget <= 0:
 			continue
 		var a := Vector2i(int(pending.start[0]), int(pending.start[1]))
 		var b := Vector2i(int(pending.finish[0]), int(pending.finish[1]))
-		var polygon := PackedVector2Array()
-		for point: Vector2 in [Vector2(mini(a.x,b.x)-0.5,mini(a.y,b.y)-0.5), Vector2(maxi(a.x,b.x)+0.5,mini(a.y,b.y)-0.5), Vector2(maxi(a.x,b.x)+0.5,maxi(a.y,b.y)+0.5), Vector2(mini(a.x,b.x)-0.5,maxi(a.y,b.y)+0.5)]:
-			polygon.append(MultiplayerMapOverlay.project(map.city, point) * scale + offset)
-		polygon.append(polygon[0])
-		overlay.draw_polyline(polygon, Color(1.0, 0.9, 0.3, 0.65), 2.0, true)
+		var sites: Array[Rect2i] = []
+		var group := int(pending.get("group", -1))
+		var tool := int(pending.get("tool", -1))
+		if BuildingSites.supports_tool(group, tool):
+			var path: Array = pending.get("path", [])
+			if path.is_empty():
+				path = [pending.finish]
+			for point: Array in path.slice(0, preview_budget):
+				sites.append(BuildingSites.footprint(Vector2i(int(point[0]), int(point[1])), int(ToolCatalog.tool(group, tool).area)))
+		else:
+			sites.append(Rect2i(Vector2i(mini(a.x, b.x), mini(a.y, b.y)), Vector2i(absi(a.x-b.x)+1, absi(a.y-b.y)+1)))
+		for site in sites:
+			preview_budget -= 1
+			var polygon := PackedVector2Array()
+			for point: Vector2 in [Vector2(site.position)-Vector2.ONE*0.5, Vector2(site.end.x,site.position.y)-Vector2.ONE*0.5, Vector2(site.end)-Vector2.ONE*0.5, Vector2(site.position.x,site.end.y)-Vector2.ONE*0.5]:
+				polygon.append(MultiplayerMapOverlay.project(map.city, point) * scale + offset)
+			if not Rect2(polygon[0], Vector2.ZERO).expand(polygon[1]).expand(polygon[2]).expand(polygon[3]).intersects(map.camera_view_rect):
+				continue
+			overlay.draw_colored_polygon(polygon, Color(1.0, 0.9, 0.3, 0.18))
+			polygon.append(polygon[0])
+			overlay.draw_polyline(polygon, Color(1.0, 0.9, 0.3, 0.8), 2.0, true)
 	competition.draw_fireworks()
 
 

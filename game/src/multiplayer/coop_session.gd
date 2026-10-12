@@ -3,8 +3,10 @@ extends Node
 ## One authoritative host, up to eight simultaneous participants, no client simulation.
 
 signal state_received(state: Dictionary)
+signal summary_received(state: Dictionary)
 signal command_sent(id: int, command: Dictionary)
 signal command_completed(id: int)
+signal command_resolved(id: int, result: Dictionary)
 signal action_sounds(sounds: Array[int])
 signal remote_action_sound(event: Dictionary)
 var sounded_commands: Dictionary = {}
@@ -21,7 +23,7 @@ signal seat_lobby_received(data: Dictionary)
 
 const PROTOCOL := 1
 const BUILD := "opensc2k-coop-1"
-const NETWORK_BUILD := "opensc2k-multiplayer-21"
+const NETWORK_BUILD := "opensc2k-multiplayer-22"
 const MAX_PLAYERS := 8
 var world: CoopWorld
 var active := false
@@ -110,6 +112,13 @@ var reconnect_until := 0
 var reconnect_at := 0
 var reconnect_attempt := 0
 var resync_requested := false
+var command_started: Dictionary = {}
+var acknowledgement_usec: Array[int] = []
+var interest := MultiplayerInterest.new()
+var interest_source: Callable
+var interest_signature: Dictionary = {}
+var summary_signature: Dictionary = {}
+const SUMMARY_FIELDS := ["roster", "goal", "loans", "history", "offers", "land_history", "admin_history", "lobby", "round", "starts", "start_preview"]
 
 
 
@@ -215,6 +224,9 @@ func stop() -> void:
 	build_publication_pending = false
 	build_chain.clear()
 	pending_publications.clear()
+	interest = MultiplayerInterest.new()
+	interest_signature.clear()
+	summary_signature.clear()
 	received_messages.clear()
 	environment_signature.clear()
 	presence_signature.clear()
@@ -289,6 +301,7 @@ func stop() -> void:
 	chat_last_sent.clear()
 	requested_speed.clear()
 	sounded_commands.clear()
+	command_started.clear()
 	active = false
 	connected = false
 	hosting = false
@@ -339,11 +352,21 @@ func _process(delta: float) -> void:
 		var inbox: Array = received_messages.get(id, [])
 		# Leave excess complete frames in the bounded transport input. Never drop
 		# reliable commands, and bound execution as well as JSON parsing.
-		if inbox.is_empty():
-			inbox = channel.poll(8 if hosting else 16)
+		if inbox.size() < 32:
+			inbox.append_array(channel.poll(8 if hosting else 16))
 		var began := Time.get_ticks_usec()
-		while not inbox.is_empty() and not channel.failed and (hosting or decode_job == null):
-			var message: Dictionary = inbox.pop_front()
+		while not inbox.is_empty() and not channel.failed:
+			var index := 0
+			if not hosting and decode_job != null:
+				index = -1
+				for candidate in inbox.size():
+					if inbox[candidate].get("type") in ["result", "ping", "presence", "environment", "chat", "player_event", "action_audio"]:
+						index = candidate
+						break
+				if index < 0:
+					break
+			var message: Dictionary = inbox[index]
+			inbox.remove_at(index)
 			if hosting:
 				receive_host(id, message)
 			else:
@@ -385,6 +408,11 @@ func _process(delta: float) -> void:
 	presence_elapsed += delta
 	if presence_elapsed >= 0.1:
 		presence_elapsed = 0.0
+		if not hosting and connected and interest_source.is_valid():
+			var view: Dictionary = interest_source.call()
+			if not view.is_empty() and view != interest_signature:
+				interest_signature = view.duplicate(true)
+				channels[0].send_latest({"type": "interest", "view": view})
 		if cursor_source.is_valid():
 			var position: Vector2 = cursor_source.call()
 			var tool := MultiplayerCursor.valid_tool(cursor_tool_source.call() if cursor_tool_source.is_valid() else {})
@@ -416,7 +444,11 @@ func _process(delta: float) -> void:
 			continue
 		if wire_jobs.has(id) or outgoing_states.has(id) or channels[id].output.size() >= CityTcpChannel.IO_BUDGET:
 			continue
-		send_state(id, make_state(identities[id]))
+		var actor: String = identities[id]
+		var viewed: String = viewed_cities.get(actor, actor)
+		if not interest.due(world, actor, viewed, Time.get_ticks_msec()):
+			continue
+		send_state(id, make_state(actor))
 		pending_publications.erase(id)
 		if Time.get_ticks_usec() - publication_started >= 2000:
 			break
@@ -459,6 +491,12 @@ func receive_host(id: int, message: Dictionary) -> void:
 		seats.hello(id, message)
 		return
 	var actor: String = identities[id]
+	if message.get("type") == "interest":
+		if not interest.receive(actor, message.get("view"), world.city.map_size):
+			channels[id].failed = true
+		else:
+			pending_publications[id] = true
+		return
 	if message.get("type") == "leave":
 		graceful_peers[id] = true
 		channels[id].send({"type": "leave_ack"})
@@ -490,6 +528,7 @@ func receive_host(id: int, message: Dictionary) -> void:
 		channels[id].failed = true
 		return
 	var response := execute(identities[id], message)
+	interest.forced[actor] = true
 	response["id"] = message.get("id", 0)
 	channels[id].send(response)
 	# Acknowledge now. Consecutive brush actions share one bounded publication.
@@ -517,6 +556,7 @@ func execute(actor: String, message: Dictionary) -> Dictionary:
 			"base": build_chain.base if chained else before, "view": message.get("view_owner", "")}
 	elif not build or world.revision != before:
 		build_chain.clear()
+	result["revision"] = world.revision
 	return result
 
 
@@ -678,11 +718,14 @@ func request(command: Dictionary) -> void:
 	if latest.get("mode") == "region":
 		command["view_owner"] = latest.get("view_owner", "")
 	next_command += 1
+	command_started[int(command.id)] = Time.get_ticks_usec()
+	if command_started.size() > 1024:
+		command_started.erase(command_started.keys()[0])
 	command_sent.emit(int(command.id), command)
 	if hosting:
 		var result := execute(token, command)
 		play_result_sounds(result, int(command.id))
-		command_completed.emit(int(command.id))
+		resolve_command(int(command.id), result)
 		feedback.emit(str(result.message))
 		if result.has("choices"):
 			choice_requested.emit(result)
@@ -695,11 +738,11 @@ func request(command: Dictionary) -> void:
 		channels[0].flush()
 
 
-func receive_client(message: Dictionary) -> void:
+func receive_client(message: Dictionary, decoded := false) -> void:
 	match message.get("type"):
 		"packed_state":
 			decode_job = MultiplayerWireJob.new()
-			decode_job.start(message, true)
+			decode_job.start_state(message, decoder, true)
 		"state_begin", "state_part", "state_end":
 			if incoming_state == null:
 				incoming_state = MultiplayerStateStream.new()
@@ -729,13 +772,10 @@ func receive_client(message: Dictionary) -> void:
 				if document.parse(Marshalls.base64_to_raw(message.ended_copy)) and document.is_sc2x():
 					ended_city = message.ended_copy
 				return
-			if message.has("wire_id") or message.get("type") == "state_delta":
-				message = decoder.decode(message)
-				if decoder.failed:
-					if not resync_requested:
-						channels[0].send({"type": "resync"})
-						resync_requested = true
-					return
+			if not decoded and (message.has("wire_id") or message.get("type") == "state_delta"):
+				decode_job = MultiplayerWireJob.new()
+				decode_job.start_state(message, decoder, true)
+				return
 			if (not message.get("city") is String and not message.get("document") is Dictionary) or not CoopWorld.whole_number(message.get("revision"), 0, 9007199254740991):
 				channels[0].failed = true
 				return
@@ -752,7 +792,7 @@ func receive_client(message: Dictionary) -> void:
 				environment_received.emit(message.weather)
 		"result":
 			play_result_sounds(message, int(message.get("id", 0)))
-			command_completed.emit(int(message.get("id", 0)))
+			resolve_command(int(message.get("id", 0)), message)
 			feedback.emit(str(message.get("message", "")))
 			if message.get("choices") is Array and message.get("request") is Dictionary:
 				choice_requested.emit(message)
@@ -770,6 +810,13 @@ func receive_client(message: Dictionary) -> void:
 			channels[0].send({"type": "leave_ack"})
 			channels[0].flush()
 			channels[0].failed = true
+		"summary":
+			if message.get("values") is Dictionary and CoopWorld.whole_number(message.get("sequence"), 0, 9007199254740991) and int(message.sequence) >= int(latest.get("summary_sequence", -1)):
+				for field: String in SUMMARY_FIELDS:
+					if message.values.has(field):
+						latest[field] = message.values[field]
+				latest["summary_sequence"] = int(message.sequence)
+				summary_received.emit(message.values)
 		"presence":
 			if message.get("players") is Array:
 				presence_received.emit(merge_presence(message.players))
@@ -779,6 +826,16 @@ func receive_client(message: Dictionary) -> void:
 			pass
 		_:
 			channels[0].failed = true
+
+
+func resolve_command(id: int, result: Dictionary) -> void:
+	if command_started.has(id):
+		acknowledgement_usec.append(Time.get_ticks_usec() - int(command_started[id]))
+		command_started.erase(id)
+		if acknowledgement_usec.size() > 512:
+			acknowledgement_usec.pop_front()
+	command_resolved.emit(id, result)
+	command_completed.emit(id)
 
 
 func make_state(recipient := "") -> Dictionary:
@@ -795,7 +852,7 @@ func make_state(recipient := "") -> Dictionary:
 
 
 func make_common_state() -> Dictionary:
-	var state := {}
+	var state := {"summary_sequence": publication_count}
 	if waiting_for_start and world is SharedWorld:
 		if not starts.prepare(world, members, false).is_empty():
 			starts.preview.clear()
@@ -843,11 +900,24 @@ func publish() -> void:
 		return
 	accept_state(state)
 	publication_usec += Time.get_ticks_usec() - started
+	var summary := {}
+	for field: String in SUMMARY_FIELDS:
+		if state.has(field) and state[field] != summary_signature.get(field):
+			summary[field] = state[field]
+	summary_signature.merge(summary, true)
 	for id: int in identities:
 		pending_publications[id] = true
+		if not summary.is_empty():
+			channels[id].send_latest({"type": "summary", "sequence": publication_count, "values": summary})
 
 
 func accept_state(state: Dictionary) -> void:
+	if int(state.get("summary_sequence", -1)) < int(latest.get("summary_sequence", -1)):
+		state = state.duplicate()
+		for field: String in SUMMARY_FIELDS:
+			if latest.has(field):
+				state[field] = latest[field]
+		state["summary_sequence"] = latest.summary_sequence
 	if not state.get("visiting", false):
 		confirmed_own_city = str(state.get("city", ""))
 		confirmed_own_state = state.duplicate(true)
@@ -1293,10 +1363,12 @@ func send_state(id: int, state: Dictionary) -> void:
 	if not encoders.has(id):
 		encoders[id] = MultiplayerDelta.new()
 	var encoder: MultiplayerDelta = encoders[id]
-	var wire := encoder.encode(state)
 	var job := MultiplayerWireJob.new()
-	job.start(wire)
+	job.start_state(state, encoder)
 	wire_jobs[id] = job
+	if identities.has(id):
+		var actor: String = identities[id]
+		interest.published(actor, viewed_cities.get(actor, actor), state, Time.get_ticks_msec())
 
 
 func send_state_body(id: int, body: PackedByteArray) -> void:
@@ -1336,8 +1408,12 @@ func pump_wire_jobs() -> void:
 		if job.failed:
 			if channels.has(0):
 				channels[0].failed = true
+		elif job.baseline_failed:
+			if not resync_requested and channels.has(0):
+				channels[0].send({"type": "resync"})
+				resync_requested = true
 		else:
-			receive_client(job.decoded)
+			receive_client(job.decoded, true)
 
 
 func close_wire_jobs() -> void:

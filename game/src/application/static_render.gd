@@ -39,21 +39,13 @@ func refresh_after_city_edit(command: EditCommandResult) -> void:
 func _apply_static_edit_patch(command: EditCommandResult) -> bool:
 	if caches.region_cache != null:
 		var region_start := Time.get_ticks_usec()
-		var indices := _edit_dirty_indices(command, app.document_state.city.map_size)
+		# The region cache retains the previous source planes. Its native change
+		# collector preserves disjoint sprite bounds, including old silhouettes.
+		# A single bounding box here redraws the space between distant cities.
+		app.map_render.refresh_region_map(false)
 		app.timing_state.edit_display_timings = {
-			"dirty_ms": (Time.get_ticks_usec() - region_start) / 1000.0,
-			"dirty_tiles": indices.size(),
+			"region_ms": (Time.get_ticks_usec() - region_start) / 1000.0,
 		}
-
-		if indices.is_empty():
-			return false
-
-		region_start = Time.get_ticks_usec()
-		var dirty := IsometricRenderer.dirty_screen_rect(indices, sprite_archive_for_view(city_view_size()), city_view_size(),
-			Vector2i.ZERO,
-				app.document_state.city.map_size)
-		app.map_render.refresh_region_map(false, dirty)
-		app.timing_state.edit_display_timings.region_ms = (Time.get_ticks_usec() - region_start) / 1000.0
 
 		return true
 
