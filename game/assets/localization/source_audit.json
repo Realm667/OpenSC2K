@@ -1,0 +1,19 @@
+{
+  "paths": [
+    "game/src/multiplayer/*.gd",
+    "game/src/ui/settings/visual*.gd",
+    "game/src/**/visual_enhancement_options.gd"
+  ],
+  "non_display_literals": {
+    "OpenSC2K Koop": "Saved session format signature; never translate.",
+    "Multiplayer display transaction": "Internal worker job name.",
+    "Multiplayer state codec": "Internal worker job name.",
+    "Debug · ": "Joined with an action identifier; resulting templates are in formatted_messages.json.",
+    "Label": "Godot theme type, not display text.",
+    "ArtworkButton": "Godot theme type, not display text.",
+    "TooltipPanel": "Godot theme type, not display text.",
+    "TooltipLabel": "Godot theme type, not display text.",
+    "ErrorLabel": "Godot theme type, not display text.",
+    "HelpLabel": "Godot theme type, not display text."
+  }
+}

@@ -1,9 +1,9 @@
+#
 msgid ""
 msgstr ""
 "Language: ko\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
 
 msgid " %d buildings still need records; the table is full."
 msgstr " 기록 표가 가득 차 건물 %d개의 기록이 아직 필요합니다."
@@ -32,11 +32,21 @@ msgstr "%d 교육지수"
 msgid "%d yrs"
 msgstr "%d세"
 
-msgid "%s\n$%s total\n$%s for each %s"
-msgstr "%s\n총 $%s\n$%s / %s"
+msgid ""
+"%s\n"
+"$%s total\n"
+"$%s for each %s"
+msgstr ""
+"%s\n"
+"총 $%s\n"
+"$%s / %s"
 
-msgid "%s\nFree in Place & Print"
-msgstr "%s\n배치 및 인쇄 모드에서는 무료"
+msgid ""
+"%s\n"
+"Free in Place & Print"
+msgstr ""
+"%s\n"
+"배치 및 인쇄 모드에서는 무료"
 
 msgid "%s %s."
 msgstr "%s %s."
@@ -47,13 +57,19 @@ msgstr "%s 보좌관"
 msgid "%s counts %d residents"
 msgstr "%s의 인구 %d명"
 
-msgid "%s has a recorded population of %d. City services and transport must keep pace as new neighborhoods develop. Residents need connections to employment, electricity and water. This edition records conditions on %s."
-msgstr "%s의 인구는 %d명으로 집계됐습니다. 새 주거지가 늘어나면 공공서비스와 교통도 함께 확충해야 합니다. 주민에게는 일자리로 가는 길과 전기, 수도가 필요합니다. 이번 기사는 %s의 상황을 전합니다."
+msgid ""
+"%s has a recorded population of %d. City services and transport must keep "
+"pace as new neighborhoods develop. Residents need connections to employment,"
+" electricity and water. This edition records conditions on %s."
+msgstr ""
+"%s의 인구는 %d명으로 집계됐습니다. 새 주거지가 늘어나면 공공서비스와 교통도 함께 확충해야 합니다. 주민에게는 일자리로 가는 길과 "
+"전기, 수도가 필요합니다. 이번 기사는 %s의 상황을 전합니다."
 
 msgid "%s is not available in this city."
 msgstr "이 도시에서는 %s을(를) 사용할 수 없습니다."
 
-msgid "%s pack saved, but could not be loaded. The previous pack is still active."
+msgid ""
+"%s pack saved, but could not be loaded. The previous pack is still active."
 msgstr "%s 팩을 저장했지만 불러오지 못했습니다. 이전 팩을 계속 사용합니다."
 
 msgid "%s placement was rejected by nearby residents."
@@ -176,7 +192,9 @@ msgstr "공항 또는 항구"
 msgid "All"
 msgstr "모두"
 
-msgid "All keyboard and mouse bindings will return to their default values. Your custom bindings will be lost."
+msgid ""
+"All keyboard and mouse bindings will return to their default values. Your "
+"custom bindings will be lost."
 msgstr "키보드와 마우스 조작을 모두 기본값으로 복원합니다. 사용자 지정 단축키는 사라집니다."
 
 msgid "Allow different destination"
@@ -209,13 +227,19 @@ msgstr "%s 보좌관에게 조언 요청"
 msgid "Assigned %s to the new stadium."
 msgstr "새 경기장에 %s 팀을 지정했습니다."
 
-msgid "At full funding, each college supplies 50 units of capacity to the education phase. Serves the college-age population group."
+msgid ""
+"At full funding, each college supplies 50 units of capacity to the education"
+" phase. Serves the college-age population group."
 msgstr "예산을 전액 배정하면 대학당 교육 수용 능력 50을 제공합니다. 대학 연령대의 주민을 교육합니다."
 
-msgid "At full funding, each hospital supplies 25 units of capacity to the health phase. Funding cuts reduce capacity proportionally."
+msgid ""
+"At full funding, each hospital supplies 25 units of capacity to the health "
+"phase. Funding cuts reduce capacity proportionally."
 msgstr "예산을 전액 배정하면 병원당 의료 수용 능력 25를 제공합니다. 예산 삭감 비율에 따라 능력이 감소합니다."
 
-msgid "At full funding, each school supplies 15 units of capacity to the education phase. Serves younger population groups."
+msgid ""
+"At full funding, each school supplies 15 units of capacity to the education "
+"phase. Serves younger population groups."
 msgstr "예산을 전액 배정하면 학교당 교육 수용 능력 15를 제공합니다. 어린 연령대의 주민을 교육합니다."
 
 msgid "Audio"
@@ -302,11 +326,19 @@ msgstr "예산"
 msgid "Build %s"
 msgstr "%s 건설"
 
-msgid "Build a %s connection to a neighboring city for $%s?\nThe %d-tile route costs $%s and remains if you cancel."
-msgstr "이웃 도시와 %s 연결을 $%s에 건설할까요?\n%d타일 경로 비용은 $%s이며, 취소해도 경로는 남습니다."
+msgid ""
+"Build a %s connection to a neighboring city for $%s?\n"
+"The %d-tile route costs $%s and remains if you cancel."
+msgstr ""
+"이웃 도시와 %s 연결을 $%s에 건설할까요?\n"
+"%d타일 경로 비용은 $%s이며, 취소해도 경로는 남습니다."
 
-msgid "Build a %s connection to a neighboring city?\nThe route and connection are free in Place & Print."
-msgstr "이웃 도시와 %s 연결을 건설할까요?\n배치 및 인쇄 모드에서는 경로와 연결이 무료입니다."
+msgid ""
+"Build a %s connection to a neighboring city?\n"
+"The route and connection are free in Place & Print."
+msgstr ""
+"이웃 도시와 %s 연결을 건설할까요?\n"
+"배치 및 인쇄 모드에서는 경로와 연결이 무료입니다."
 
 msgid "Building Zone"
 msgstr "건물 구역"
@@ -503,7 +535,9 @@ msgstr "파일 선택…"
 msgid "Choose Folder…"
 msgstr "폴더 선택…"
 
-msgid "Choose the graphics size for each zoom level. Larger graphics show more detail. Higher zoom levels cannot use a smaller size."
+msgid ""
+"Choose the graphics size for each zoom level. Larger graphics show more "
+"detail. Higher zoom levels cannot use a smaller size."
 msgstr "확대율별 그래픽 크기를 선택합니다. 큰 그래픽은 더 세밀하며, 높은 확대율에 더 작은 그래픽을 지정할 수는 없습니다."
 
 msgid "Chronicle"
@@ -623,7 +657,8 @@ msgstr "상업지역"
 msgid "Compare"
 msgstr "비교"
 
-msgid "Confirmed bond actions take effect immediately. Cancel does not undo them."
+msgid ""
+"Confirmed bond actions take effect immediately. Cancel does not undo them."
 msgstr "확정한 채권 거래는 즉시 적용됩니다. 취소해도 되돌아가지 않습니다."
 
 msgid "Connections keep the city moving"
@@ -635,13 +670,16 @@ msgstr "건설"
 msgid "Continue City"
 msgstr "도시 계속하기"
 
-msgid "Continue to play music and sounds when OpenSC2K is not the active window."
+msgid ""
+"Continue to play music and sounds when OpenSC2K is not the active window."
 msgstr "다른 창을 사용하는 동안에도 음악과 효과음을 계속 재생합니다."
 
 msgid "Controls"
 msgstr "조작"
 
-msgid "Converted %s to SC2X version 4. Save a new copy; the original file stays unchanged."
+msgid ""
+"Converted %s to SC2X version 4. Save a new copy; the original file stays "
+"unchanged."
 msgstr "%s을(를) SC2X 버전 4로 변환했습니다. 새 사본으로 저장하세요. 원본 파일은 그대로 유지됩니다."
 
 msgid "Copy"
@@ -665,7 +703,8 @@ msgstr "비용: %s"
 msgid "Courier"
 msgstr "신문"
 
-msgid "Created %s in %d on %s difficulty with generated terrain. Map view: %s."
+msgid ""
+"Created %s in %d on %s difficulty with generated terrain. Map view: %s."
 msgstr "%s 도시를 %d년에 %s 난이도와 생성한 지형으로 만들었습니다. 지도 보기: %s."
 
 msgid "Crime"
@@ -692,8 +731,14 @@ msgstr "현재 도시 인구 정보가 없습니다."
 msgid "Current city population: %s"
 msgstr "현재 도시 인구: %s"
 
-msgid "Current demand readings are %d for homes, %d for commerce and %d for industry. Positive readings indicate room for growth. Tax rates, transport access and city conditions affect development. Zoned land still needs suitable services before it can grow."
-msgstr "현재 수요는 주거 %d, 상업 %d, 공업 %d입니다. 양수는 성장 여력이 있음을 뜻합니다. 세율과 교통 접근성, 도시 환경이 개발에 영향을 줍니다. 구역이 성장하려면 적절한 공공서비스도 갖춰야 합니다."
+msgid ""
+"Current demand readings are %d for homes, %d for commerce and %d for "
+"industry. Positive readings indicate room for growth. Tax rates, transport "
+"access and city conditions affect development. Zoned land still needs "
+"suitable services before it can grow."
+msgstr ""
+"현재 수요는 주거 %d, 상업 %d, 공업 %d입니다. 양수는 성장 여력이 있음을 뜻합니다. 세율과 교통 접근성, 도시 환경이 개발에 "
+"영향을 줍니다. 구역이 성장하려면 적절한 공공서비스도 갖춰야 합니다."
 
 msgid "Current rendered frames per second"
 msgstr "현재 초당 화면 프레임 수"
@@ -914,7 +959,9 @@ msgstr "화재"
 msgid "Fire Station"
 msgstr "소방서"
 
-msgid "Fire coverage scales with funding. Unpowered stations have half strength. Supports emergency fire dispatch."
+msgid ""
+"Fire coverage scales with funding. Unpowered stations have half strength. "
+"Supports emergency fire dispatch."
 msgstr "예산에 따라 소방 능력이 달라집니다. 전력이 없으면 능력이 절반으로 감소합니다. 화재 시 긴급 출동할 수 있습니다."
 
 msgid "Firestorm"
@@ -1100,13 +1147,17 @@ msgstr "이미지 가져오기"
 msgid "Import only a %s pack from your copy of SimCity 2000."
 msgstr "보유한 심시티 2000에서 %s 팩만 가져옵니다."
 
-msgid "Import your SimCity 2000 game files again to update them. The import keeps your other packs."
+msgid ""
+"Import your SimCity 2000 game files again to update them. The import keeps "
+"your other packs."
 msgstr "심시티 2000 게임 파일을 다시 가져와 업데이트하세요. 다른 팩은 그대로 유지됩니다."
 
 msgid "Import..."
 msgstr "가져오기..."
 
-msgid "In Tax Rates view, drag a bar to set its surcharge. Hold Alt to set all industries."
+msgid ""
+"In Tax Rates view, drag a bar to set its surcharge. Hold Alt to set all "
+"industries."
 msgstr "세율 보기에서 막대를 드래그해 추가 세율을 설정하세요. Alt를 누르면 모든 산업에 적용됩니다."
 
 msgid "Include"
@@ -1298,7 +1349,9 @@ msgstr "세상만사"
 msgid "Misc"
 msgstr "기타"
 
-msgid "Mixed rates stay unchanged until you edit the group. History shows recorded and projected months."
+msgid ""
+"Mixed rates stay unchanged until you edit the group. History shows recorded "
+"and projected months."
 msgstr "서로 다른 비율은 그룹을 편집하기 전까지 유지됩니다. 내역에는 실제 기록과 예상 월별 값이 표시됩니다."
 
 msgid "Monster"
@@ -1457,7 +1510,9 @@ msgstr "원본"
 msgid "Output"
 msgstr "출력"
 
-msgid "Outstanding: %s   ·   Credit: %s   ·   Bank rate: %d%%   ·   Next bond: %d%%   ·   City value: %s"
+msgid ""
+"Outstanding: %s   ·   Credit: %s   ·   Bank rate: %d%%   ·   Next bond: %d%%"
+"   ·   City value: %s"
 msgstr "미상환 채무: %s · 신용: %s · 은행 금리: %d%% · 다음 채권 금리: %d%% · 도시 가치: %s"
 
 msgid "Overcast"
@@ -1514,7 +1569,9 @@ msgstr "시나리오 시작"
 msgid "Play a click sound when you select a toolbar or main menu button."
 msgstr "도구 모음이나 주 메뉴 버튼을 누를 때 효과음을 재생합니다."
 
-msgid "Play all 19 tracks, including menu and special music, once per shuffle cycle."
+msgid ""
+"Play all 19 tracks, including menu and special music, once per shuffle "
+"cycle."
 msgstr "메뉴 음악과 특별 음악을 포함한 19곡을 한 주기마다 한 번씩 무작위로 재생합니다."
 
 msgid "Play interface sounds"
@@ -1532,11 +1589,20 @@ msgstr "경찰"
 msgid "Police Station"
 msgstr "경찰서"
 
-msgid "Police coverage scales with funding and the prison bonus. Unpowered stations have half strength. Coverage reduces local crime."
-msgstr "예산과 교도소 보너스에 따라 치안 능력이 달라집니다. 전력이 없으면 능력이 절반으로 감소합니다. 관할 지역의 범죄를 줄입니다."
+msgid ""
+"Police coverage scales with funding and the prison bonus. Unpowered stations"
+" have half strength. Coverage reduces local crime."
+msgstr ""
+"예산과 교도소 보너스에 따라 치안 능력이 달라집니다. 전력이 없으면 능력이 절반으로 감소합니다. 관할 지역의 범죄를 줄입니다."
 
-msgid "Police, fire protection, schools and health services depend on facilities and their funding. The city maps show local coverage. The Budget window lets the mayor review service spending, while Query provides details for individual facilities."
-msgstr "경찰과 소방, 학교, 의료 서비스는 시설과 운영 예산에 달려 있습니다. 도시 지도에서 지역별 서비스 범위를 볼 수 있습니다. 예산 창에서는 공공서비스 지출을, 조사 도구에서는 개별 시설의 상세 정보를 확인할 수 있습니다."
+msgid ""
+"Police, fire protection, schools and health services depend on facilities "
+"and their funding. The city maps show local coverage. The Budget window lets"
+" the mayor review service spending, while Query provides details for "
+"individual facilities."
+msgstr ""
+"경찰과 소방, 학교, 의료 서비스는 시설과 운영 예산에 달려 있습니다. 도시 지도에서 지역별 서비스 범위를 볼 수 있습니다. 예산 "
+"창에서는 공공서비스 지출을, 조사 도구에서는 개별 시설의 상세 정보를 확인할 수 있습니다."
 
 msgid "Pollution"
 msgstr "공해"
@@ -1616,7 +1682,9 @@ msgstr "도시 인쇄"
 msgid "Prison"
 msgstr "교도소"
 
-msgid "Prison facilities contribute to the police-strength bonus. Query shows annual prison statistics."
+msgid ""
+"Prison facilities contribute to the police-strength bonus. Query shows "
+"annual prison statistics."
 msgstr "교도소는 치안 능력에 보너스를 제공합니다. 정보 조회에서 연간 운영 통계를 확인할 수 있습니다."
 
 msgid "Project title"
@@ -1661,7 +1729,9 @@ msgstr "비율"
 msgid "Ready."
 msgstr "준비되었습니다."
 
-msgid "Recorded months use saved costs and rates. Projected months use the proposed budget."
+msgid ""
+"Recorded months use saved costs and rates. Projected months use the proposed"
+" budget."
 msgstr "기록된 월은 저장된 비용과 비율을, 예상 월은 제안된 예산을 사용합니다."
 
 msgid "Recover Autosave"
@@ -1673,7 +1743,9 @@ msgstr "SCURK 프로젝트 복구"
 msgid "Recreation"
 msgstr "레크레이션"
 
-msgid "Recreation facility. Choose the team name after placement. Query shows annual attendance and financial statistics."
+msgid ""
+"Recreation facility. Choose the team name after placement. Query shows "
+"annual attendance and financial statistics."
 msgstr "여가 시설입니다. 배치 후 팀 이름을 정합니다. 정보 조회에서 연간 관객 수와 재정을 확인할 수 있습니다."
 
 msgid "Redo"
@@ -1715,10 +1787,14 @@ msgstr "색상 바꾸기"
 msgid "Replace color"
 msgstr "색상 바꾸기"
 
-msgid "Requires power and pipes. Each adjacent salt-water tile adds 20 supply units. Coastal placement improves output."
+msgid ""
+"Requires power and pipes. Each adjacent salt-water tile adds 20 supply "
+"units. Coastal placement improves output."
 msgstr "전력과 수도관이 필요합니다. 인접한 해수 타일마다 공급량이 20 증가하므로 해안에 배치하면 생산량이 늘어납니다."
 
-msgid "Requires power and pipes. Output depends on weather and nearby water; each adjacent fresh-water tile adds 10 supply units."
+msgid ""
+"Requires power and pipes. Output depends on weather and nearby water; each "
+"adjacent fresh-water tile adds 10 supply units."
 msgstr "전력과 수도관이 필요합니다. 날씨와 주변 물에 따라 생산량이 달라지며, 인접한 담수 타일마다 공급량이 10 증가합니다."
 
 msgid "Reset Controls"
@@ -1736,7 +1812,9 @@ msgstr "주거지역"
 msgid "Residents"
 msgstr "주민"
 
-msgid "Residents are concerned about %s. The mayor can review current city conditions in the graphs and city maps."
+msgid ""
+"Residents are concerned about %s. The mayor can review current city "
+"conditions in the graphs and city maps."
 msgstr "주민들은 %s 문제를 우려하고 있습니다. 시장은 그래프와 도시 지도에서 현재 상황을 확인할 수 있습니다."
 
 msgid "Residents graph (R)"
@@ -1796,8 +1874,13 @@ msgstr "도로"
 msgid "Roads & transit"
 msgstr "교통"
 
-msgid "Roads, rail and subway routes connect neighborhoods with jobs. Gaps and disconnected stations can prevent trips. The City Map transport views show where the network is busy and where better connections may help."
-msgstr "도로와 철도, 지하철은 주거지와 일자리를 연결합니다. 끊어진 노선이나 연결되지 않은 역은 통행을 막을 수 있습니다. 도시 지도의 교통 보기에서 혼잡 구간과 연결을 개선할 곳을 확인할 수 있습니다."
+msgid ""
+"Roads, rail and subway routes connect neighborhoods with jobs. Gaps and "
+"disconnected stations can prevent trips. The City Map transport views show "
+"where the network is busy and where better connections may help."
+msgstr ""
+"도로와 철도, 지하철은 주거지와 일자리를 연결합니다. 끊어진 노선이나 연결되지 않은 역은 통행을 막을 수 있습니다. 도시 지도의 교통 "
+"보기에서 혼잡 구간과 연결을 개선할 곳을 확인할 수 있습니다."
 
 msgid "Rotate Clockwise"
 msgstr "시계 방향 회전"
@@ -1811,7 +1894,9 @@ msgstr "원형"
 msgid "Round brush"
 msgstr "원형 브러시"
 
-msgid "Run the game in full screen mode when enabled, otherwise run in a resizable window."
+msgid ""
+"Run the game in full screen mode when enabled, otherwise run in a resizable "
+"window."
 msgstr "전체 화면으로 실행합니다. 끄면 크기를 조절할 수 있는 창으로 실행합니다."
 
 msgid "SCURK Place & Print"
@@ -1973,7 +2058,9 @@ msgstr "개별 세율과 예산 비율 표시"
 msgid "Show monthly history for %s"
 msgstr "%s 월별 내역 보기"
 
-msgid "Show or hide airplanes, helicopters, ships, boats and trains. Hidden vehicles make no sound and cannot crash."
+msgid ""
+"Show or hide airplanes, helicopters, ships, boats and trains. Hidden "
+"vehicles make no sound and cannot crash."
 msgstr "비행기, 헬리콥터, 선박, 기차를 표시하거나 숨깁니다. 숨긴 차량은 소리를 내거나 사고를 일으키지 않습니다."
 
 msgid "Show or hide buildings in the city view."
@@ -2033,8 +2120,12 @@ msgstr "시뮬레이션 중지: %s"
 msgid "Size"
 msgstr "크기"
 
-msgid "Size of menus, windows, and text. 2.0 is the standard size. Smaller values show more of the city. The city map keeps its own sharp pixel size."
-msgstr "메뉴, 창, 글자의 크기입니다. 기본값은 2.0이며 작게 설정하면 도시를 더 넓게 볼 수 있습니다. 도시 지도의 확대율은 별도로 유지됩니다."
+msgid ""
+"Size of menus, windows, and text. 2.0 is the standard size. Smaller values "
+"show more of the city. The city map keeps its own sharp pixel size."
+msgstr ""
+"메뉴, 창, 글자의 크기입니다. 기본값은 2.0이며 작게 설정하면 도시를 더 넓게 볼 수 있습니다. 도시 지도의 확대율은 별도로 "
+"유지됩니다."
 
 msgid "Small"
 msgstr "작게"
@@ -2111,7 +2202,9 @@ msgstr "철강·광업"
 msgid "Still A Quarter"
 msgstr "200원"
 
-msgid "Stores 100 water units per tower tile. Stores surplus supply and releases stored water when needed. Requires a pipe connection."
+msgid ""
+"Stores 100 water units per tower tile. Stores surplus supply and releases "
+"stored water when needed. Requires a pipe connection."
 msgstr "급수탑 타일당 물 100을 저장합니다. 남는 물을 저장하고 필요할 때 공급합니다. 수도관 연결이 필요합니다."
 
 msgid "Stretch Terrain"
@@ -2132,10 +2225,14 @@ msgstr "지하철<->기차"
 msgid "Subways"
 msgstr "지하철"
 
-msgid "Supports education and city services. Query shows the annual museum statistic."
+msgid ""
+"Supports education and city services. Query shows the annual museum "
+"statistic."
 msgstr "교육과 공공 서비스를 지원합니다. 정보 조회에서 연간 박물관 통계를 확인할 수 있습니다."
 
-msgid "Supports education. Query shows its annual education statistic. Ruminate opens the library reports."
+msgid ""
+"Supports education. Query shows its annual education statistic. Ruminate "
+"opens the library reports."
 msgstr "교육을 지원합니다. 정보 조회에서 연간 교육 통계를 확인하고 도서관 보고서를 열 수 있습니다."
 
 msgid "Survey"
@@ -2171,10 +2268,17 @@ msgstr "텍스처"
 msgid "The Nuclear-Free ordinance disables this plant."
 msgstr "비핵 지대 법령이 시행 중이면 이 발전소를 새로 건설할 수 없습니다."
 
-msgid "The city treasury holds $%d. Construction draws from this balance, while taxes and service spending affect the annual budget. The Budget window contains current funding levels and projected totals."
-msgstr "도시 재정 잔액은 $%d입니다. 건설비는 이 잔액에서 지출되며, 세금과 공공서비스 지출은 연간 예산에 영향을 줍니다. 예산 창에서 현재 재원과 예상 총액을 확인할 수 있습니다."
+msgid ""
+"The city treasury holds $%d. Construction draws from this balance, while "
+"taxes and service spending affect the annual budget. The Budget window "
+"contains current funding levels and projected totals."
+msgstr ""
+"도시 재정 잔액은 $%d입니다. 건설비는 이 잔액에서 지출되며, 세금과 공공서비스 지출은 연간 예산에 영향을 줍니다. 예산 창에서 현재 "
+"재원과 예상 총액을 확인할 수 있습니다."
 
-msgid "The first year of the city. The year sets the buildings and inventions that you can use."
+msgid ""
+"The first year of the city. The year sets the buildings and inventions that "
+"you can use."
 msgstr "도시를 시작할 연도입니다. 사용할 수 있는 건물과 기술이 연도에 따라 달라집니다."
 
 msgid "The mayor name for new cities."
@@ -2198,8 +2302,12 @@ msgstr "효과음의 음량입니다."
 msgid "Theme"
 msgstr "테마"
 
-msgid "These imported packs are missing or out of date: %s.\n\n"
-msgstr "다음 팩이 없거나 오래된 버전입니다: %s.\n\n"
+msgid ""
+"These imported packs are missing or out of date: %s.\n"
+"\n"
+msgstr ""
+"다음 팩이 없거나 오래된 버전입니다: %s.\n"
+"\n"
 
 msgid "This plant becomes available after its invention."
 msgstr "해당 기술이 발명된 이후 사용할 수 있습니다."
@@ -2252,7 +2360,9 @@ msgstr "시 재정"
 msgid "Treasury reports $%d"
 msgstr "도시 재정 $%d"
 
-msgid "Treats 2,000 watered consumers per plant. Sufficient treatment improves the pollution calculation. It does not generate water."
+msgid ""
+"Treats 2,000 watered consumers per plant. Sufficient treatment improves the "
+"pollution calculation. It does not generate water."
 msgstr "시설당 급수 소비 타일 2,000개의 하수를 처리합니다. 충분한 처리 능력은 공해를 줄이며 물 자체를 생산하지는 않습니다."
 
 msgid "Trees"
@@ -2318,7 +2428,9 @@ msgstr "저장하지 않은 SCURK 변경 사항"
 msgid "Use Defaults"
 msgstr "기본값 복원"
 
-msgid "Use cool slate colors, clean greens, and softer shading while keeping the original shapes."
+msgid ""
+"Use cool slate colors, clean greens, and softer shading while keeping the "
+"original shapes."
 msgstr "원래 형태를 유지하면서 고해상도 일러스트와 부드러운 명암을 적용합니다."
 
 msgid "Use light or dark colors for menus and windows."
@@ -2327,7 +2439,9 @@ msgstr "메뉴와 창에 밝거나 어두운 테마를 사용합니다."
 msgid "Use this budget automatically next year"
 msgstr "내년에도 이 예산 자동 적용"
 
-msgid "Use this renderer now and for new cities. If GPU setup fails, use the CPU renderer."
+msgid ""
+"Use this renderer now and for new cities. If GPU setup fails, use the CPU "
+"renderer."
 msgstr "현재 도시와 새 도시에 사용할 렌더러입니다. GPU 초기화에 실패하면 CPU를 사용합니다."
 
 msgid "Use translucent backgrounds with a frosted glass effect."
@@ -2876,8 +2990,18 @@ msgstr "심시티 2000 호환성 유지"
 msgid "Hold the right mouse button to hide this dialog."
 msgstr "마우스 오른쪽 버튼을 누르고 있으면 이 창을 숨깁니다."
 
-msgid "This patch requires complete imported graphics, game data, sound and music.\n\n%s\n\nChoose OK to import your original game resources."
-msgstr "이 패치를 실행하려면 원본 게임의 그래픽, 게임 데이터, 효과음, 음악을 모두 가져와야 합니다.\n\n%s\n\n확인을 누르면 원본 가져오기를 엽니다."
+msgid ""
+"This patch requires complete imported graphics, game data, sound and music.\n"
+"\n"
+"%s\n"
+"\n"
+"Choose OK to import your original game resources."
+msgstr ""
+"이 패치를 실행하려면 원본 게임의 그래픽, 게임 데이터, 효과음, 음악을 모두 가져와야 합니다.\n"
+"\n"
+"%s\n"
+"\n"
+"확인을 누르면 원본 가져오기를 엽니다."
 
 msgid "NEWSPAPER"
 msgstr "신문"
@@ -2891,8 +3015,3886 @@ msgstr "HD 스프라이트"
 msgid "HD sprite pack"
 msgstr "HD 스프라이트 팩"
 
-msgid "The language of menus and windows. Original game text, such as newspapers, uses the language of the imported game."
+msgid ""
+"The language of menus and windows. Original game text, such as newspapers, "
+"uses the language of the imported game."
 msgstr "메뉴와 창의 언어입니다. 신문 같은 원본 게임 텍스트는 가져온 게임의 언어를 사용합니다."
 
-msgid "The pack.json file of an HD sprite pack. It replaces the look of the city sprites with full-color art. The GPU renderer shows it. Leave this empty to show the sprites of the graphics pack."
-msgstr "HD 스프라이트 팩의 pack.json 파일입니다. 도시 스프라이트를 풀컬러 그림으로 바꿔 보여 줍니다. GPU 렌더러에서만 표시됩니다. 비워 두면 그래픽 팩의 스프라이트를 표시합니다."
+msgid ""
+"The pack.json file of an HD sprite pack. It replaces the look of the city "
+"sprites with full-color art. The GPU renderer shows it. Leave this empty to "
+"show the sprites of the graphics pack."
+msgstr ""
+"HD 스프라이트 팩의 pack.json 파일입니다. 도시 스프라이트를 풀컬러 그림으로 바꿔 보여 줍니다. GPU 렌더러에서만 표시됩니다."
+" 비워 두면 그래픽 팩의 스프라이트를 표시합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Scoreboard"
+msgstr "순위표"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Chat"
+msgstr "채팅"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Host / Join game"
+msgstr "게임 만들기 / 참가"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Release disconnect pause"
+msgstr "연결 끊김 일시 정지 해제"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Leave game"
+msgstr "게임 나가기"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Buy land"
+msgstr "토지 구입"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Offer land"
+msgstr "토지 매각 제안"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Land offers"
+msgstr "토지 매물"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Multiplayer chat"
+msgstr "멀티플레이 채팅"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Hide chat"
+msgstr "채팅 숨기기"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Message all players…"
+msgstr "모든 플레이어에게 메시지…"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "%s joined the game."
+msgstr "%s 님이 게임에 참가했습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "%s left the game."
+msgstr "%s 님이 게임을 나갔습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "%s lost the connection. The game is paused."
+msgstr "%s 님의 연결이 끊겼습니다. 게임이 일시 정지되었습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The host ended the session."
+msgstr "호스트가 세션을 종료했습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Finances"
+msgstr "재정"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Land & building"
+msgstr "토지 및 건설"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Emergency services"
+msgstr "긴급 구조대"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Player"
+msgstr "플레이어"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Connection"
+msgstr "연결"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Funds"
+msgstr "자금"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Year-to-date balance"
+msgstr "올해 누적 수지"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Debt"
+msgstr "부채"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Owned tiles"
+msgstr "소유 타일"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Build actions"
+msgstr "건설 횟수"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Build spending"
+msgstr "건설 지출"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Developed tiles"
+msgstr "개발된 타일"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Residential tiles"
+msgstr "주거 타일"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Commercial tiles"
+msgstr "상업 타일"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Industrial tiles"
+msgstr "공업 타일"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Land purchases"
+msgstr "토지 구입액"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Land sales"
+msgstr "토지 매각액"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Active units"
+msgstr "활동 중인 부대"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Helping neighbours"
+msgstr "이웃 지원"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Not available"
+msgstr "사용 불가"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "You"
+msgstr "나"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Host"
+msgstr "호스트"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Connected"
+msgstr "연결됨"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Disconnected"
+msgstr "연결 끊김"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Statistics are host-confirmed. Select a column heading to sort."
+msgstr "호스트가 확인한 통계입니다. 열 제목을 선택하면 정렬됩니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Shared city: %s · Population %s · Funds %s · Year-to-date balance %s · Debt "
+"%s"
+msgstr "공동 도시: %s · 인구 %s · 자금 %s · 올해 수지 %s · 부채 %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Recorded budget balance in the current city year; excludes construction and "
+"land transactions."
+msgstr "현재 도시 연도에 기록된 예산 수지입니다. 건설 및 토지 거래는 제외됩니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Personal confirmed construction contributions recorded by this multiplayer "
+"session."
+msgstr "이 멀티플레이 세션에 기록된 개인별 확정 건설 기여액입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Cumulative confirmed land transactions since tracking began. Older untracked"
+" totals are unavailable."
+msgstr "기록을 시작한 이후 확정된 토지 거래의 누계입니다. 이전 미기록 합계는 제공되지 않습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Number of map tiles in this municipality; developed tiles include "
+"infrastructure."
+msgstr "이 도시의 지도 타일 수입니다. 개발된 타일에는 기반 시설도 포함됩니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Own active emergency units deployed in another municipality."
+msgstr "다른 도시에 배치되어 활동 중인 내 긴급 구조대입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Current host-confirmed value."
+msgstr "호스트가 확인한 현재 값입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Land offers & requests"
+msgstr "토지 매물 및 요청"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Land offers updated: %s — %s"
+msgstr "토지 매물이 갱신되었습니다: %s — %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Inspect the highlighted tiles before buying. Foreign land requires its "
+"owner's approval."
+msgstr "구입 전에 강조 표시된 타일을 확인하세요. 다른 사람의 토지는 소유자의 승인이 필요합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Offers"
+msgstr "매물"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Purchase requests"
+msgstr "구입 요청"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Recent activity"
+msgstr "최근 활동"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "%s → %s"
+msgstr "%s → %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "%s · %s tiles · %s · %s"
+msgstr "%s · %s타일 · %s · %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Area: (%d, %d) to (%d, %d)"
+msgstr "영역: (%d, %d)에서 (%d, %d)까지"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Show on map"
+msgstr "지도에서 보기"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Approve request"
+msgstr "요청 승인"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Buy"
+msgstr "구입"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Withdraw request"
+msgstr "요청 철회"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Withdraw offer"
+msgstr "매물 철회"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Decline"
+msgstr "거절"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "No entries."
+msgstr "항목이 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Transfer %d tiles for %s between %s and %s?"
+msgstr "%d타일을 %s에 %s 님과 %s 님 사이에서 양도하시겠습니까?"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Withdrawn"
+msgstr "철회됨"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Declined"
+msgstr "거절됨"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Sold"
+msgstr "매각됨"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Ownership changed"
+msgstr "소유권 변경됨"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Only the responsible player can change this land entry."
+msgstr "담당 플레이어만 이 토지 항목을 변경할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Land entry updated. No money was charged."
+msgstr "토지 항목이 갱신되었습니다. 비용은 청구되지 않았습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Only the owner can approve this purchase request."
+msgstr "소유자만 이 구입 요청을 승인할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Send a purchase request for %d tiles at $%d? The owner must approve before "
+"any transfer."
+msgstr "%d타일을 $%d에 구입하도록 요청하시겠습니까? 양도 전에 소유자의 승인이 필요합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Send request"
+msgstr "요청 보내기"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "This purchase request is already open."
+msgstr "이 구입 요청은 이미 진행 중입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Close an existing land entry before creating another."
+msgstr "새 토지 항목을 만들기 전에 기존 항목을 종료하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Purchase request sent. The owner can review it in Land offers."
+msgstr "구입 요청을 보냈습니다. 소유자는 토지 매물에서 확인할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "This offer is no longer available."
+msgstr "이 매물은 더 이상 이용할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "You already own this land."
+msgstr "이미 소유한 토지입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Land ownership changed; nothing was charged."
+msgstr "토지 소유권이 변경되었습니다. 비용은 청구되지 않았습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The seller's balance would exceed the supported limit."
+msgstr "판매자의 잔액이 지원 한도를 초과하게 됩니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Finish disaster response before transferring a municipality's land."
+msgstr "도시의 토지를 양도하기 전에 재해 대응을 마치세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Land purchased from its owner."
+msgstr "소유자로부터 토지를 구입했습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid land selection."
+msgstr "잘못된 토지 선택입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The entire selection must have the same owner. Nothing was charged."
+msgstr "선택한 전체 영역의 소유자가 같아야 합니다. 비용은 청구되지 않았습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid offer price."
+msgstr "잘못된 매물 가격입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Land offer published. Another player can accept it."
+msgstr "토지 매물을 등록했습니다. 다른 플레이어가 수락할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Buy %d tiles for $%d? Balance afterwards: $%d."
+msgstr "%d타일을 $%d에 구입하시겠습니까? 구입 후 잔액: $%d."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Buy — $%d"
+msgstr "구입 — $%d"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Land purchased."
+msgstr "토지를 구입했습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Drag to select land. Purchases require confirmation; foreign land requires "
+"the owner's consent."
+msgstr "드래그하여 토지를 선택하세요. 구입에는 확인이 필요하며, 다른 사람의 토지는 소유자의 동의가 필요합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Land trading is available in Shared mode."
+msgstr "토지 거래는 공유 모드에서 이용할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Select an area. Confirm the price before buying or sending a purchase "
+"request."
+msgstr "영역을 선택하세요. 구입하거나 구입 요청을 보내기 전에 가격을 확인하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Sale price"
+msgstr "매각 가격"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Set price and select area"
+msgstr "가격 설정 및 영역 선택"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Disaster in your city: deploy emergency services from the normal toolbar."
+msgstr "도시에 재해가 발생했습니다. 일반 도구 모음에서 긴급 구조대를 배치하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The annual budget awaits confirmation under Windows → Budget."
+msgstr "창 → 예산에서 연간 예산을 확인해야 합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Acknowledge the military administration notice to continue."
+msgstr "계속하려면 군사 행정 알림을 확인하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"The simulation has a final notice. Acknowledge it to continue viewing the "
+"city."
+msgstr "시뮬레이션의 최종 알림이 있습니다. 도시를 계속 보려면 확인하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Neighbouring city"
+msgstr "이웃 도시"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Disaster at %s — area (%d, %d). Your emergency services can help."
+msgstr "%s에 재해 발생 — 위치 (%d, %d). 긴급 구조대로 지원할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid land history."
+msgstr "잘못된 토지 거래 기록입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid land statistics."
+msgstr "잘못된 토지 통계입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid land request buyer."
+msgstr "토지 요청의 구매자가 잘못되었습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Open land entry"
+msgstr "토지 항목 열기"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Player seats"
+msgstr "플레이어 자리"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Disconnected seats remain reserved until you approve a replacement."
+msgstr "연결이 끊긴 자리는 대체 플레이어를 승인할 때까지 예약됩니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "%s requests the seat of %s."
+msgstr "%s 님이 %s 님의 자리를 요청합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Approve takeover"
+msgstr "자리 인계 승인"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Decline takeover"
+msgstr "자리 인계 거절"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Choose a new player seat or request an unoccupied seat. The host must "
+"approve takeovers."
+msgstr "새 플레이어 자리를 선택하거나 빈자리를 요청하세요. 자리 인계는 호스트의 승인이 필요합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Waiting for the host to approve your seat request."
+msgstr "호스트가 자리 요청을 승인하기를 기다리는 중입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Create new player seat"
+msgstr "새 플레이어 자리 만들기"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Request seat: %s"
+msgstr "자리 요청: %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Cancel joining"
+msgstr "참가 취소"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Unoccupied"
+msgstr "빈자리"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Reserved for reconnection"
+msgstr "재접속을 위해 예약됨"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "%s took over an unoccupied player seat."
+msgstr "%s 님이 빈 플레이어 자리를 인계받았습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "This player seat is already connected."
+msgstr "이 플레이어 자리는 이미 연결되어 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "This identity is already waiting to join."
+msgstr "이 식별자로 이미 참가를 기다리고 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "All player seats are occupied. Request an unoccupied seat instead."
+msgstr "모든 플레이어 자리가 사용 중입니다. 대신 접속자가 없는 자리를 요청하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "This seat is no longer available."
+msgstr "이 자리는 더 이상 이용할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The host declined the seat request."
+msgstr "호스트가 자리 요청을 거절했습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid saved player seats."
+msgstr "저장된 플레이어 자리 정보가 잘못되었습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Land ownership"
+msgstr "토지 소유권"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Zoning"
+msgstr "구역 지정"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Multiplayer requires a valid SC2X city with a supported map size."
+msgstr "멀티플레이에는 지원되는 지도 크기의 유효한 SC2X 도시가 필요합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "LAN / direct IP · up to 8 players · matching game versions required."
+msgstr "LAN / 직접 IP · 최대 8명 · 게임 버전이 같아야 합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Host game"
+msgstr "게임 호스트"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Join / Reconnect"
+msgstr "참가 / 재접속"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Player name"
+msgstr "플레이어 이름"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Player colour"
+msgstr "플레이어 색상"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Custom colour…"
+msgstr "사용자 지정 색상…"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Game mode"
+msgstr "게임 모드"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Co-op"
+msgstr "협동"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Competitive Shared"
+msgstr "공유 지도 경쟁"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Competitive Region (coming later)"
+msgstr "지역 경쟁 (추후 제공)"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "New city"
+msgstr "새 도시"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Saved city"
+msgstr "저장된 도시"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Create a copy"
+msgstr "복사본 만들기"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Keep the selected save unchanged and save this game separately."
+msgstr "선택한 저장 파일을 그대로 두고 이 게임을 별도로 저장합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Neutral land price per tile"
+msgstr "중립 토지 타일당 가격"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Each city receives a separate starter land allowance for up to 1,024 tiles "
+"(at most a quarter of the map). City funds stay intact. Saved games retain "
+"their rules."
+msgstr ""
+"각 도시는 최대 1,024타일(지도 면적의 최대 4분의 1)에 해당하는 별도의 초기 토지 지원금을 받습니다. 도시 자금은 유지됩니다. "
+"저장된 게임은 기존 규칙을 유지합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Host address"
+msgstr "호스트 주소"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "TCP port"
+msgstr "TCP 포트"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Password (optional)"
+msgstr "비밀번호 (선택 사항)"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Password"
+msgstr "비밀번호"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Create game"
+msgstr "게임 만들기"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Land only"
+msgstr "육지만"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Include water"
+msgstr "수역 포함"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"No land tiles in this selection. Choose Include water to buy water tiles."
+msgstr "선택 영역에 육지 타일이 없습니다. 수역을 구입하려면 수역 포함을 선택하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"This land purchase exceeds the supported transaction limit. Select a smaller"
+" area."
+msgstr "이 토지 구입은 지원되는 거래 한도를 초과합니다. 더 작은 영역을 선택하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Buy %d tiles: $%d from land allowance and $%d from city funds?"
+msgstr "%d타일을 토지 지원금 $%d와 도시 자금 $%d로 구입하시겠습니까?"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid saved land purchase rules."
+msgstr "저장된 토지 구입 규칙이 잘못되었습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Name of your new city"
+msgstr "새 도시 이름"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid city name."
+msgstr "잘못된 도시 이름입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Purchase request"
+msgstr "구입 요청"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Land sale offer"
+msgstr "토지 매각 제안"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The city snapshot could not be prepared for transfer."
+msgstr "전송할 도시 스냅샷을 준비하지 못했습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Remaining land allowance: %s · Price per tile: %s"
+msgstr "남은 토지 지원금: %s · 타일당 가격: %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Competitive Region"
+msgstr "지역 경쟁"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Victory goal"
+msgstr "승리 목표"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Endless game"
+msgstr "무제한 게임"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Wealth (funds minus debt)"
+msgstr "자산 (자금에서 부채 차감)"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid saved victory goal."
+msgstr "저장된 승리 목표가 잘못되었습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Only the host can continue the completed game without scoring."
+msgstr "호스트만 종료된 게임을 점수 집계 없이 계속할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The game continues without scoring."
+msgstr "점수 집계 없이 게임을 계속합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The victory target was reached. The host can continue without scoring."
+msgstr "승리 목표에 도달했습니다. 호스트가 점수 집계 없이 계속할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "This city is not available."
+msgstr "이 도시는 이용할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "City view changed."
+msgstr "도시 화면이 변경되었습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Your city view changed. Review the target before acting."
+msgstr "도시 화면이 변경되었습니다. 작업 전에 대상을 확인하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid region command."
+msgstr "잘못된 지역 명령입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"You are visiting another city. Only your emergency services may assist here."
+msgstr "다른 도시를 방문 중입니다. 이곳에서는 내 긴급 구조대로만 지원할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Region cities own their entire map. Land trading is available in Shared "
+"mode."
+msgstr "지역 모드의 도시는 지도 전체를 소유합니다. 토지 거래는 공유 모드에서 이용할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Neighbouring cities"
+msgstr "이웃 도시"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Victory"
+msgstr "승리"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Continue without scoring (endless)"
+msgstr "점수 집계 없이 계속 (무제한)"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Neighbouring cities are available in Region mode."
+msgstr "이웃 도시는 지역 모드에서 이용할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Visit any city to watch. During disasters you may deploy your own emergency "
+"services; other changes remain with its owner."
+msgstr "도시를 방문하여 관찰할 수 있습니다. 재해 중에는 내 긴급 구조대를 배치할 수 있으며, 그 외 변경은 소유자만 가능합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Return to your city"
+msgstr "내 도시로 돌아가기"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Visit city"
+msgstr "도시 방문"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Victory: %s. The game is paused. Leave or let the host continue without "
+"scoring."
+msgstr "승리: %s. 게임이 일시 정지되었습니다. 나가거나 호스트가 점수 집계 없이 계속하도록 하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Visiting another city: watch or deploy your own emergency services."
+msgstr "다른 도시 방문 중: 관찰하거나 내 긴급 구조대를 배치하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Readiness can only be changed in the lobby."
+msgstr "준비 상태는 대기실에서만 변경할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Readiness updated."
+msgstr "준비 상태가 갱신되었습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Only the host can start when all connected players are ready."
+msgstr "연결된 모든 플레이어가 준비되면 호스트만 시작할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The game has started."
+msgstr "게임이 시작되었습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Wait until the host starts the game."
+msgstr "호스트가 게임을 시작할 때까지 기다리세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Game lobby"
+msgstr "게임 대기실"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Ready"
+msgstr "준비 완료"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Not ready"
+msgstr "준비 안 됨"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Offline"
+msgstr "오프라인"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Start game"
+msgstr "게임 시작"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"At least two players must join. Everyone confirms Ready; the host then "
+"starts the game. Changes to the player list reset readiness."
+msgstr ""
+"최소 두 명이 참가해야 합니다. 모두 준비 완료를 확인하면 호스트가 시작합니다. 플레이어 목록이 변경되면 준비 상태가 초기화됩니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Simulation and construction begin together after the host starts."
+msgstr "호스트가 시작하면 시뮬레이션과 건설이 함께 시작됩니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Net wealth"
+msgstr "순자산"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Open scoreboard"
+msgstr "순위표 열기"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Endless game · no scoring"
+msgstr "무제한 게임 · 점수 집계 없음"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Victory target: %s"
+msgstr "승리 목표: %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "You: %s / %s"
+msgstr "나: %s / %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Leading: %s · %s"
+msgstr "선두: %s · %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Net wealth = city funds minus outstanding debt."
+msgstr "순자산 = 도시 자금에서 미상환 부채를 뺀 금액입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Population of your own city."
+msgstr "내 도시의 인구입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "History"
+msgstr "기록"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Unranked"
+msgstr "순위 제외"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"History begins when the game starts; a new sample is recorded each month."
+msgstr "게임이 시작되면 기록을 시작하며, 매월 표본을 기록합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Month %d"
+msgstr "%d개월"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Player colours · hover over a line for exact values"
+msgstr "플레이어 색상 · 선 위에 마우스를 올리면 정확한 값 표시"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Rematch · rotate starts"
+msgstr "재대결 · 시작 위치 순환"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"No unused fair starting positions remain. Create a new game with new "
+"terrain."
+msgstr "사용하지 않은 공정한 시작 위치가 없습니다. 새 지형으로 새 게임을 만드세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Only the host can propose a rematch after the result."
+msgstr "결과가 나온 뒤에는 호스트만 재대결을 제안할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Rematch prepared with new starting positions. Everyone must confirm Ready "
+"again."
+msgstr "새 시작 위치로 재대결을 준비했습니다. 모두 준비 완료를 다시 확인해야 합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Target held: %d / %d game days"
+msgstr "목표 유지: %d / %d 게임일"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Unranked · city founded after the start"
+msgstr "순위 제외 · 시작 후 설립된 도시"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Stay at or above the target for one full game year. Dropping below resets "
+"the timer."
+msgstr "게임 시간으로 1년 동안 목표 이상을 유지하세요. 목표 아래로 내려가면 시간이 초기화됩니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Rules are fixed at start: hold the target for one game year; late-founded "
+"cities are unranked. Shared starts receive equal land grants."
+msgstr ""
+"시작 시 규칙이 확정됩니다. 목표를 게임 시간으로 1년간 유지해야 하며, 늦게 설립된 도시는 순위에서 제외됩니다. 공유 모드에서는 같은 "
+"면적의 초기 토지를 받습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Player loans"
+msgstr "플레이어 간 대출"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Both players confirm the terms. Interest is paid each year; principal is due"
+" at maturity. Unpaid amounts remain debt; interest does not compound."
+msgstr ""
+"두 플레이어가 조건을 확인합니다. 이자는 매년 지급하며 원금은 만기에 상환합니다. 미납액은 부채로 남고, 이자에 이자가 붙지 않습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Proposal"
+msgstr "제안"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Request a loan"
+msgstr "대출 요청"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Offer a loan"
+msgstr "대출 제안"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Fixed annual interest (%)"
+msgstr "고정 연 이자율 (%)"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Term (game years)"
+msgstr "기간 (게임 연도)"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Confirm and send proposal"
+msgstr "확인 후 제안 보내기"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "%s → %s · %s · %d%% annually · %d years"
+msgstr "%s → %s · %s · 연 %d%% · %d년"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Accept fixed terms"
+msgstr "고정 조건 수락"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Outstanding: %s · Unpaid interest: %s · Maturity: game day %d"
+msgstr "미상환액: %s · 미납 이자: %s · 만기: 게임 %d일"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid loan terms or contract limit reached."
+msgstr "대출 조건이 잘못되었거나 계약 한도에 도달했습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Loan proposal sent. The other player must confirm the fixed terms."
+msgstr "대출 제안을 보냈습니다. 상대 플레이어가 고정 조건을 확인해야 합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Loan proposal withdrawn or declined."
+msgstr "대출 제안이 철회되거나 거절되었습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The lender cannot fund this loan or the receiving treasury is full."
+msgstr "대출자가 이 대출을 제공할 수 없거나 수령 도시의 자금이 한도에 도달했습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Loan accepted. Annual interest and the maturity date are fixed."
+msgstr "대출이 수락되었습니다. 연 이자율과 만기일이 확정되었습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "This loan action is no longer available."
+msgstr "이 대출 작업은 더 이상 이용할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Player loans require separate city finances."
+msgstr "플레이어 간 대출에는 도시별로 분리된 재정이 필요합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid saved competition data."
+msgstr "저장된 경쟁 데이터가 잘못되었습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Awaiting host confirmation…"
+msgstr "호스트 확인 대기 중…"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Region %d"
+msgstr "지역 %d"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Scored competitions require undeveloped starting terrain. Create a new city."
+msgstr "점수를 집계하는 경쟁에는 개발되지 않은 시작 지형이 필요합니다. 새 도시를 만드세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Withdraw"
+msgstr "철회"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Quit multiplayer"
+msgstr "멀티플레이 종료"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Save the multiplayer game before quitting? All connected players will be "
+"disconnected."
+msgstr "종료 전에 멀티플레이 게임을 저장하시겠습니까? 연결된 모든 플레이어의 연결이 끊깁니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Save and quit"
+msgstr "저장 후 종료"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Quit without saving"
+msgstr "저장하지 않고 종료"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Only the host can change the game speed."
+msgstr "호스트만 게임 속도를 변경할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Select a city to visit. You can watch every city and send emergency "
+"assistance during disasters."
+msgstr "방문할 도시를 선택하세요. 모든 도시를 관찰하고 재해 시 긴급 지원을 보낼 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Apply colour"
+msgstr "색상 적용"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Price for additional neutral land. At the shared start, every city receives "
+"an equal free starting area; its treasury stays intact. Saved games retain "
+"their rules."
+msgstr ""
+"추가 중립 토지의 가격입니다. 공유 모드 시작 시 각 도시는 동일한 무료 시작 영역을 받으며 자금은 유지됩니다. 저장된 게임은 기존 "
+"규칙을 유지합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Host a game on this computer, or connect to an existing host."
+msgstr "이 컴퓨터에서 게임을 호스트하거나 기존 호스트에 연결하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Your name in the lobby, chat and scoreboard."
+msgstr "대기실, 채팅, 순위표에 표시할 이름입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Choose a custom colour for your cursor, territory and statistics, then Apply"
+" colour."
+msgstr "커서, 영토 및 통계에 사용할 색상을 선택한 뒤 색상 적용을 누르세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Enter the host computer's LAN address or reachable IP address."
+msgstr "호스트 컴퓨터의 LAN 주소 또는 접속 가능한 IP 주소를 입력하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The host and joining players must use the same TCP port."
+msgstr "호스트와 참가 플레이어는 같은 TCP 포트를 사용해야 합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Co-op: one shared city. Shared: separate cities on one map. Region: "
+"independent neighbouring city maps."
+msgstr "협동: 하나의 공동 도시. 공유: 하나의 지도에 별도 도시. 지역: 독립된 이웃 도시 지도."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Generate new terrain, or continue a saved multiplayer game. Saved games keep"
+" their rules and player seats."
+msgstr "새 지형을 생성하거나 저장된 멀티플레이 게임을 계속하세요. 저장된 게임은 기존 규칙과 플레이어 자리를 유지합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Leave empty to allow joining without a password."
+msgstr "비밀번호 없이 참가하도록 허용하려면 비워 두세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Enter the game's password if the host set one; otherwise leave empty."
+msgstr "호스트가 비밀번호를 설정했다면 입력하고, 아니면 비워 두세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Configure the city, then wait in the lobby until everyone is ready."
+msgstr "도시를 설정한 뒤 모두 준비될 때까지 대기실에서 기다리세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Connect and select a new or reserved player seat. The host controls the game"
+" rules."
+msgstr "연결한 뒤 새 자리나 예약된 자리를 선택하세요. 게임 규칙은 호스트가 설정합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Population: residents of your own city. Suggested targets: 2,000 for a short"
+" development goal, 10,000 for a medium goal, 50,000 for a long goal."
+msgstr ""
+"인구: 내 도시의 주민 수입니다. 권장 목표는 짧은 개발 목표 2,000명, 중간 목표 10,000명, 긴 목표 50,000명입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Net wealth: treasury minus bank bonds and outstanding player debt. Suggested"
+" targets: $50,000, $100,000 or $500,000 for increasingly long economic "
+"goals."
+msgstr ""
+"순자산: 보유 자금에서 은행 채권과 미상환 플레이어 부채를 뺀 금액입니다. 경제 목표는 짧은 순서대로 $50,000, $100,000, "
+"$500,000을 권장합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Build without a victory target or time limit."
+msgstr "승리 목표나 시간제한 없이 건설합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"The target must then be held for one full game year (300 game days). At "
+"uninterrupted simulation speed, that year takes about 4 minutes at Turtle, 2"
+" at Llama or 1 at Cheetah. Swallow advances one day per processed frame "
+"(about 5 seconds per year at 60 simulation frames/s). Development time is "
+"additional and depends on difficulty, terrain, experience, pauses and "
+"computer performance; these are not match-duration guarantees."
+msgstr ""
+"이후 게임 시간으로 1년(300일) 동안 목표를 유지해야 합니다. 중단 없이 진행하면 거북이 속도로 약 4분, 라마로 2분, 치타로 "
+"1분이 걸립니다. 제비는 처리된 프레임마다 하루 진행합니다(초당 시뮬레이션 60프레임이면 1년에 약 5초). 개발 시간은 별도이며 "
+"난이도, 지형, 경험, 일시 정지, 컴퓨터 성능에 따라 달라집니다. 실제 경기 시간을 보장하는 수치는 아닙니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Choose the lender and principal. The game sets the bond rate. Interest "
+"settles with the annual budget; there is no maturity date. Repay when funds "
+"permit."
+msgstr ""
+"대출자와 원금을 선택하세요. 채권 이자율은 게임에서 정합니다. 이자는 연간 예산에서 정산하며 만기일은 없습니다. 자금이 충분할 때 "
+"상환하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Lender"
+msgstr "대출자"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "%s → %s · %s · %d%% annually"
+msgstr "%s → %s · %s · 연 %d%%"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Approve loan"
+msgstr "대출 승인"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Outstanding: %s · Unpaid interest: %s"
+msgstr "미상환액: %s · 미납 이자: %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Repay principal"
+msgstr "원금 상환"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Choose a lender and a principal in $10,000 bond units."
+msgstr "대출자와 $10,000 채권 단위의 원금을 선택하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The normal bond credit limit does not permit this loan."
+msgstr "일반 채권 신용 한도로는 이 대출을 허용할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Loan requested. The lender must approve the game's bond rate."
+msgstr "대출을 요청했습니다. 대출자가 게임의 채권 이자율을 승인해야 합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The bond rate or credit limit changed. Send a new request."
+msgstr "채권 이자율 또는 신용 한도가 변경되었습니다. 새 요청을 보내세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Loan accepted. Interest follows the bond budget; repay the principal when "
+"funds permit."
+msgstr "대출이 수락되었습니다. 이자는 채권 예산을 따릅니다. 자금이 충분할 때 원금을 상환하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Insufficient funds to repay this loan."
+msgstr "이 대출을 상환할 자금이 부족합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Loan principal repaid."
+msgstr "대출 원금을 상환했습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "City names can only be changed in the lobby."
+msgstr "도시 이름은 대기실에서만 변경할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "City name updated."
+msgstr "도시 이름이 갱신되었습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Click your city name to rename it before the game starts."
+msgstr "게임 시작 전에 도시 이름을 클릭하여 변경하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Only the host can control disasters."
+msgstr "호스트만 재해를 제어할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Only the host can control disasters and simulation time."
+msgstr "호스트만 재해와 시뮬레이션 시간을 제어할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "No purchasable tiles selected. Nothing was charged."
+msgstr "구입 가능한 타일을 선택하지 않았습니다. 비용은 청구되지 않았습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Select land belonging to another player to send a purchase request."
+msgstr "구입 요청을 보내려면 다른 플레이어의 토지를 선택하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Request land"
+msgstr "토지 요청"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Select neutral tiles to buy at the displayed price. Owned tiles are skipped."
+msgstr "표시된 가격에 구입할 중립 타일을 선택하세요. 소유자가 있는 타일은 건너뜁니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Set a price, then select your land to offer."
+msgstr "가격을 설정한 뒤 매물로 내놓을 내 토지를 선택하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Land: %d tiles · Total %s · Allowance %s · City funds %s"
+msgstr "토지: %d타일 · 합계 %s · 지원금 %s · 도시 자금 %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid debug value."
+msgstr "잘못된 디버그 값입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid debug action."
+msgstr "잘못된 디버그 작업입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Debug action applied to your city."
+msgstr "내 도시에 디버그 작업을 적용했습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Wait for the connection to be restored."
+msgstr "연결이 복구될 때까지 기다리세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Debug request sent to the host."
+msgstr "호스트에게 디버그 요청을 보냈습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "%d tiles · %s: %s"
+msgstr "%d타일 · %s: %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "%d tiles · %s: %s · %s per tile"
+msgstr "%d타일 · %s: %s · 타일당 %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "%s lost the connection."
+msgstr "%s 님의 연결이 끊겼습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "%s · %d tiles"
+msgstr "%s · %d타일"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "%s · %d tiles · %s"
+msgstr "%s · %d타일 · %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Accept"
+msgstr "수락"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Administration · %s · %s: %s (%s → %s)"
+msgstr "관리 · %s · %s: %s (%s → %s)"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Awaiting response"
+msgstr "응답 대기 중"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Balance after transfer: %s"
+msgstr "양도 후 잔액: %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Buildings: %d · Moving objects: %d"
+msgstr "건물: %d · 이동 물체: %d"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Change price"
+msgstr "가격 변경"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "City territories"
+msgstr "도시 영토"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Counteroffer"
+msgstr "역제안"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Counteroffer sent. The other player must confirm the new price."
+msgstr "역제안을 보냈습니다. 상대 플레이어가 새 가격을 확인해야 합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Game goal"
+msgstr "게임 목표"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid administration history."
+msgstr "잘못된 관리 기록입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid land protection map."
+msgstr "잘못된 토지 보호 지도입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid starting handicap."
+msgstr "잘못된 시작 핸디캡입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Land trade"
+msgstr "토지 거래"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Inbox"
+msgstr "받은 요청"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Outbox"
+msgstr "보낸 요청"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Not enough connected land for these starts and reserved expansion areas. "
+"Adjust handicaps or generate new terrain."
+msgstr "시작 영역과 예약된 확장 영역을 위한 연결된 토지가 부족합니다. 핸디캡을 조정하거나 새 지형을 생성하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Offer price updated. Previous confirmations are no longer valid."
+msgstr "매물 가격이 갱신되었습니다. 이전 확인은 더 이상 유효하지 않습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Only the host can assign handicaps before a new game starts."
+msgstr "새 게임 시작 전에 호스트만 핸디캡을 지정할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Only the host can use debug actions."
+msgstr "호스트만 디버그 작업을 사용할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Publish offer"
+msgstr "매물 등록"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Reserved land and public corridors cannot be traded."
+msgstr "예약 토지와 공공 통로는 거래할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "This parcel does not connect to the buyer's city."
+msgstr "이 필지는 구매자의 도시와 연결되어 있지 않습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "This sale would split the seller's remaining land."
+msgstr "이 매각으로 판매자의 남은 토지가 분리됩니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Review"
+msgstr "검토"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Review land trade"
+msgstr "토지 거래 검토"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Rules are fixed at start: hold the target for one game year; late-founded "
+"cities are unranked. Starting handicaps are visible in the lobby."
+msgstr ""
+"시작 시 규칙이 확정됩니다. 목표를 게임 시간으로 1년간 유지해야 하며 늦게 설립된 도시는 순위에서 제외됩니다. 시작 핸디캡은 대기실에 "
+"표시됩니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Select a city to visit. Other cities are read-only; their dialogs remain "
+"private."
+msgstr "방문할 도시를 선택하세요. 다른 도시는 읽기 전용이며 해당 도시의 대화 상자는 비공개로 유지됩니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Select a parcel to review its owner, price and available trade action."
+msgstr "필지를 선택하여 소유자, 가격 및 가능한 거래 작업을 확인하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Send counteroffer"
+msgstr "역제안 보내기"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Solid: owned land. Hatched: reserved expansion. Grey: public road and power "
+"corridors."
+msgstr "단색: 소유 토지. 빗금: 예약된 확장 영역. 회색: 공공 도로 및 전력 통로."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Starting funds"
+msgstr "시작 자금"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Starting handicap"
+msgstr "시작 핸디캡"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Starting handicap updated. Everyone must confirm Ready again."
+msgstr "시작 핸디캡이 갱신되었습니다. 모두 준비 완료를 다시 확인해야 합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Starting land (0 = automatic)"
+msgstr "시작 토지 (0 = 자동)"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Starting land"
+msgstr "시작 토지"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Statistics"
+msgstr "통계"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "There is no decision to resolve."
+msgstr "처리할 결정이 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "This city view is read-only. Return to your own city to make changes."
+msgstr "이 도시 화면은 읽기 전용입니다. 변경하려면 내 도시로 돌아가세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Total price"
+msgstr "총 가격"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Total price · the other player must confirm"
+msgstr "총 가격 · 상대 플레이어의 확인 필요"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Victory: %s. Leave or let the host continue without scoring."
+msgstr "승리: %s. 나가거나 호스트가 점수 집계 없이 계속하도록 하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "You pay"
+msgstr "지불액"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "You receive"
+msgstr "수령액"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Disaster administration"
+msgstr "재해 관리"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Debug · add funds"
+msgstr "디버그 · 자금 추가"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Debug · set funds"
+msgstr "디버그 · 자금 설정"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Debug · unlock"
+msgstr "디버그 · 잠금 해제"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Debug · no disasters"
+msgstr "디버그 · 재해 없음"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Debug · end disaster"
+msgstr "디버그 · 재해 종료"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Debug · military"
+msgstr "디버그 · 군대"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Debug · remove things"
+msgstr "디버그 · 물체 제거"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Debug · maxis"
+msgstr "디버그 · maxis"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Debug · spawn"
+msgstr "디버그 · 생성"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Debug · nessie"
+msgstr "디버그 · nessie"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Debug · run to date"
+msgstr "디버그 · 지정 날짜까지 진행"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Any player"
+msgstr "모든 플레이어"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Your response required"
+msgstr "응답 필요"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Choose a parcel"
+msgstr "필지 선택"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"This selection contains several owners. Choose one parcel to negotiate."
+msgstr "선택 영역에 여러 소유자가 있습니다. 거래할 필지 하나를 선택하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Funds: $%d · Start tiles: %d (0 = automatic)"
+msgstr "자금: $%d · 시작 타일: %d (0 = 자동)"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid saved military proposal."
+msgstr "저장된 군사 제안이 잘못되었습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Enabled"
+msgstr "활성화됨"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Disabled"
+msgstr "비활성화됨"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Progression: %d · Reward flags: %d"
+msgstr "진행도: %d · 보상 플래그: %d"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "%d game years"
+msgstr "게임 시간 %d년"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "%d land · %d water"
+msgstr "육지 %d · 수역 %d"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "%d land · %d water · %d reserved tiles"
+msgstr "육지 %d · 수역 %d · 예약 타일 %d"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Accumulate %d years as sole leader. Earned time is kept. Late cities are "
+"unranked."
+msgstr "단독 선두로 %d년을 누적하세요. 획득한 시간은 유지됩니다. 늦게 설립된 도시는 순위에서 제외됩니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"All cities merge: shared terrain once, combined funds and bank bonds, "
+"internal player loans cancel. Host tax and funding settings apply. More than"
+" 50 bank bonds are repaid from combined funds."
+msgstr ""
+"모든 도시를 합칩니다. 공유 지형은 한 번만 포함하고, 자금과 은행 채권은 합산하며, 플레이어 간 내부 대출은 상쇄됩니다. 호스트의 "
+"세율과 예산 설정을 적용합니다. 은행 채권이 50개를 초과하면 합산 자금으로 초과분을 상환합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Below target"
+msgstr "목표 미달"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Choose a new filename; existing cities are kept."
+msgstr "새 파일 이름을 선택하세요. 기존 도시는 유지됩니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Choose a new filename; the multiplayer save stays unchanged."
+msgstr "새 파일 이름을 선택하세요. 멀티플레이 저장 파일은 변경되지 않습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "City copy saved."
+msgstr "도시 복사본을 저장했습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Collapse chat"
+msgstr "채팅 접기"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Continue multiplayer"
+msgstr "멀티플레이 계속"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Each Region player has a separate city map."
+msgstr "지역 모드에서는 각 플레이어가 별도의 도시 지도를 갖습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Free starting territory: %d land equivalents. Two water tiles count as one "
+"land tile. Treasury unchanged."
+msgstr "무료 시작 영토: 육지 환산 %d타일. 수역 2타일은 육지 1타일로 계산합니다. 자금은 변경되지 않습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Host set starting funds for %s to %s."
+msgstr "호스트가 %s 님의 시작 자금을 %s(으)로 설정했습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Host set starting territory for %s to %s."
+msgstr "호스트가 %s 님의 시작 영토를 %s(으)로 설정했습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Leadership: %d / %d game days"
+msgstr "선두 유지: %d / %d 게임일"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Leadership: %s / %d years"
+msgstr "선두 유지: %s / %d년"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Leading"
+msgstr "선두"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Message…"
+msgstr "메시지…"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "New land trade · response requested"
+msgstr "새 토지 거래 · 응답 요청"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Land trade: %d tiles · %s"
+msgstr "토지 거래: %d타일 · %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "No confirmed copy of your city is available."
+msgstr "확인된 내 도시 복사본이 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Only the sole leader at or above the target earns time. Earned time is kept;"
+" ties pause all clocks."
+msgstr "목표 이상에 도달한 단독 선두만 시간을 얻습니다. 획득한 시간은 유지되며 동점이면 모든 시계가 멈춥니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Open a single-player copy or continue multiplayer."
+msgstr "싱글플레이 복사본을 열거나 멀티플레이를 계속하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Open chat"
+msgstr "채팅 열기"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Open multiplayer save"
+msgstr "멀티플레이 저장 파일 열기"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Open single-player copy"
+msgstr "싱글플레이 복사본 열기"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Overtaken"
+msgstr "추월당함"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Reach the target and accumulate %d years as sole leader. Earned time is "
+"kept."
+msgstr "목표에 도달하고 단독 선두로 %d년을 누적하세요. 획득한 시간은 유지됩니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Reach the target and accumulate the selected number of years as sole leader."
+" Earned time is kept when overtaken; ties pause all clocks."
+msgstr ""
+"목표에 도달하고 선택한 연수만큼 단독 선두 시간을 누적하세요. 추월당해도 획득한 시간은 유지되며 동점이면 모든 시계가 멈춥니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Required leadership"
+msgstr "필요한 선두 유지 기간"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Save city copy"
+msgstr "도시 복사본 저장"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Sell land"
+msgstr "토지 매각"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Send message"
+msgstr "메시지 보내기"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Session ended"
+msgstr "세션 종료됨"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Starting territory"
+msgstr "시작 영토"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Target reached"
+msgstr "목표 달성"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The host ended the game. Save a single-player copy before leaving."
+msgstr "호스트가 게임을 종료했습니다. 나가기 전에 싱글플레이 복사본을 저장하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Tied lead"
+msgstr "공동 선두"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "↓ %d new messages"
+msgstr "↓ 새 메시지 %d개"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Very small"
+msgstr "매우 작음"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Medium · standard"
+msgstr "중간 · 기본"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Generous"
+msgstr "넉넉함"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Custom…"
+msgstr "사용자 지정…"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid multiplayer save."
+msgstr "잘못된 멀티플레이 저장 파일입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Choose a city from this save."
+msgstr "이 저장 파일에서 도시를 선택하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Cannot compose the shared city."
+msgstr "공동 도시를 구성할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Combined funds exceed the single-player limit."
+msgstr "합산 자금이 싱글플레이 한도를 초과합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Single-player copy opened. Save it as a new city."
+msgstr "싱글플레이 복사본을 열었습니다. 새 도시로 저장하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Points after game time"
+msgstr "게임 시간 종료 시 점수"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Points"
+msgstr "점수"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"1 point per 100 residents + 1 point per $1,000 net wealth (funds minus "
+"debt). Highest score at the deadline wins; ties share victory. Late cities "
+"are unranked."
+msgstr ""
+"주민 100명당 1점 + 순자산(자금에서 부채 차감) $1,000당 1점입니다. 마감 시 최고 점수가 승리하며 동점은 공동 승리입니다. "
+"늦게 설립된 도시는 순위에서 제외됩니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Duration in game years"
+msgstr "기간 (게임 연도)"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Starts when the host starts the game. The lobby shows the end year. Paused "
+"game time does not count."
+msgstr "호스트가 게임을 시작하면 진행됩니다. 대기실에 종료 연도가 표시됩니다. 일시 정지된 시간은 계산하지 않습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "%d game years · End year %d"
+msgstr "게임 시간 %d년 · 종료 연도 %d"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "End year %d · %d years, %d days remaining"
+msgstr "종료 연도 %d · 남은 기간 %d년 %d일"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "%s points"
+msgstr "%s점"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Bar relative to the leading positive score."
+msgstr "양수인 최고 점수에 대한 상대 막대입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Another player's reservation and public corridors cannot be traded."
+msgstr "다른 플레이어의 예약 토지와 공공 통로는 거래할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Reserved land has a fixed field price payable to the game."
+msgstr "예약 토지는 게임에 지불하는 고정 타일 가격이 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid land reservation request."
+msgstr "잘못된 토지 예약 요청입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Select another player's reserved land."
+msgstr "다른 플레이어가 예약한 토지를 선택하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The reservation changed; nothing was charged."
+msgstr "예약이 변경되었습니다. 비용은 청구되지 않았습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Reservation release requested. The buyer pays the game only after approval."
+msgstr "예약 해제를 요청했습니다. 구매자는 승인 후에만 게임에 비용을 지불합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The field price changed; send a new request."
+msgstr "타일 가격이 변경되었습니다. 새 요청을 보내세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Reservation released and land purchased. Payment went to the game."
+msgstr "예약을 해제하고 토지를 구입했습니다. 비용은 게임에 지불했습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Release reserved land"
+msgstr "예약 토지 해제"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Payment to game"
+msgstr "게임에 지불"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Release only this parcel. The buyer pays the game; you receive no money."
+msgstr "이 필지만 해제합니다. 구매자는 게임에 지불하며 나는 돈을 받지 않습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Approve release"
+msgstr "해제 승인"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Reserved"
+msgstr "예약됨"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"The reserving player must approve. Payment goes to the game after approval."
+msgstr "예약한 플레이어가 승인해야 합니다. 승인 후 비용은 게임에 지불합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Fields with a pencil can be edited."
+msgstr "연필이 표시된 필드는 편집할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Change starting funds"
+msgstr "시작 자금 변경"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Change starting territory"
+msgstr "시작 영토 변경"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Day & Night"
+msgstr "낮과 밤"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Set the time of day and the appearance of the night."
+msgstr "시간대와 야간 모습을 설정합니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Lighting"
+msgstr "조명"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Building, vehicle and street lights. Keep lights on during the day with the "
+"daytime override."
+msgstr "건물, 차량 및 가로등 조명입니다. 주간 유지 옵션으로 낮에도 조명을 켤 수 있습니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Seasons"
+msgstr "계절"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Follow the city calendar, run a visual cycle or choose one season."
+msgstr "도시 달력을 따르거나, 시각적 주기를 실행하거나, 계절 하나를 선택합니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Weather & Clouds"
+msgstr "날씨와 구름"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Weather and clouds have separate switches. Fog is part of Clouds. Fixed "
+"weather can show snow in any season."
+msgstr "날씨와 구름은 별도로 켜고 끕니다. 안개는 구름에 포함됩니다. 고정 날씨에서는 모든 계절에 눈이 내릴 수 있습니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Environment"
+msgstr "환경"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Forests, subtle terrain variation and water appearance. Seasonal water "
+"colors require Seasons."
+msgstr "숲, 은은한 지면 변화 및 물의 모습을 설정합니다. 계절별 물 색상을 사용하려면 계절을 켜야 합니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Traffic & Movement"
+msgstr "교통과 움직임"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Decorative cars and pedestrians, plus smoother movement for existing "
+"vehicles."
+msgstr "장식용 자동차와 보행자, 기존 이동체의 부드러운 움직임을 설정합니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Disaster Effects"
+msgstr "재해 효과"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Extra effects for disasters and demolition. These settings do not change "
+"disaster frequency, damage or emergency response."
+msgstr "재해와 철거의 추가 효과입니다. 재해 빈도, 피해 또는 긴급 대응은 변경하지 않습니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Animation"
+msgstr "애니메이션"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Cycle durations use Turtle speed when linked; otherwise they use real time. "
+"Weather and clouds always pause with the game. The pause option below "
+"controls the other environment cycles."
+msgstr ""
+"속도 연동 시 주기 시간은 거북이 속도를 기준으로 하며, 그렇지 않으면 실제 시간을 사용합니다. 날씨와 구름은 게임과 함께 항상 일시 "
+"정지됩니다. 아래 일시 정지 옵션은 다른 환경 주기를 제어합니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Enhanced disaster visuals"
+msgstr "재해 시각 효과 강화"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Additional effect intensity"
+msgstr "추가 효과 강도"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Animated riot crowds"
+msgstr "폭동 군중 애니메이션"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Fire and impact lighting"
+msgstr "화재 및 충돌 조명"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Earthquake camera shake"
+msgstr "지진 카메라 흔들림"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Pause environment cycles with the game"
+msgstr "게임과 함께 환경 주기 일시 정지"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Time source"
+msgstr "시간 기준"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Fixed time (HH:MM)"
+msgstr "고정 시간 (HH:MM)"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Day cycle duration"
+msgstr "하루 주기 시간"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Time-of-day color strength"
+msgstr "시간대 색상 강도"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Night darkness"
+msgstr "야간 어둡기"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Building and vehicle lights"
+msgstr "건물 및 차량 조명"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Light brightness"
+msgstr "조명 밝기"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Year cycle duration"
+msgstr "1년 주기 시간"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Season blend duration"
+msgstr "계절 전환 기간"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Season color strength"
+msgstr "계절 색상 강도"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Weather change interval"
+msgstr "날씨 변경 간격"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Weather blend duration"
+msgstr "날씨 전환 시간"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Weather intensity"
+msgstr "날씨 강도"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Weather color strength"
+msgstr "날씨 색상 강도"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Car density"
+msgstr "자동차 밀도"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Pedestrian density"
+msgstr "보행자 밀도"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Custom color filter (LUT PNG)"
+msgstr "사용자 지정 색상 필터 (LUT PNG)"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Custom light masks (brightmaps)"
+msgstr "사용자 지정 조명 마스크 (브라이트맵)"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Varied tree shapes and connected forest edges follow the existing tree "
+"density. Empty ground and clearings stay open. Does not change tree counts "
+"or the simulation."
+msgstr ""
+"다양한 나무 모양과 이어지는 숲 가장자리가 기존 나무 밀도를 따릅니다. 빈 땅과 공터는 그대로 둡니다. 나무 수나 시뮬레이션은 변경하지 "
+"않습니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Quiet, continuous variations across natural ground. Terrain height, water "
+"and zoning markings stay unchanged."
+msgstr "자연 지면에 은은하고 연속적인 변화를 줍니다. 지형 높이, 수역 및 구역 표시는 변경하지 않습니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Blend the terrain variation over the original ground. 0% shows the original "
+"colors; 100% applies the full variation. Seasons still apply."
+msgstr ""
+"원래 지면 위에 지형 변화를 혼합합니다. 0%는 원래 색상이며 100%는 변화를 완전히 적용합니다. 계절 효과도 계속 적용됩니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Smooth palette color cycles across city graphics, including water and power "
+"warnings, and blend sprite frames for fire, toxic clouds, floods, tornadoes,"
+" smoke, explosion clouds and demolition dust. Palette colors are blended "
+"once, separately from sprite frames. Fire also fades in and out. Disaster "
+"blending requires Enhanced disaster visuals. Power warnings always stay "
+"fullbright. The initial explosion flash stays immediate."
+msgstr ""
+"수도 및 전력 경고를 포함한 도시 그래픽의 팔레트 색상 순환을 부드럽게 하고, 화재, 유독 구름, 홍수, 토네이도, 연기, 폭발 구름 및"
+" 철거 먼지의 스프라이트 프레임을 혼합합니다. 팔레트 색상은 스프라이트 프레임과 별도로 한 번만 혼합합니다. 불도 서서히 나타나고 "
+"사라집니다. 재해 혼합에는 재해 시각 효과 강화가 필요합니다. 전력 경고는 항상 최대 밝기를 유지합니다. 최초 폭발 섬광은 즉시 "
+"표시됩니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Keep building brightmaps, glow, street lamps, junction signals and vehicle "
+"lights on at any hour, even with the day-night cycle off. Daylight colors "
+"and individual light strengths stay unchanged."
+msgstr ""
+"낮과 밤 주기가 꺼져 있어도 건물 브라이트맵, 빛 번짐, 가로등, 교차로 신호 및 차량 조명을 항상 켭니다. 주간 색상과 개별 조명 "
+"강도는 변경하지 않습니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Cool fill light reveals dark surfaces at night. Window and vehicle light "
+"brightness stays separate."
+msgstr "차가운 보조광으로 밤의 어두운 표면을 드러냅니다. 창문과 차량 조명의 밝기는 별도입니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Soft colored light around visible brightmaps. Zero keeps only the sharp "
+"original lights."
+msgstr "보이는 브라이트맵 주위에 부드러운 색조 빛을 표시합니다. 0이면 선명한 원래 조명만 유지합니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Street lamps, warm road lighting, cosmetic junction signals and selected "
+"shop approaches. Signals do not control traffic. Zero disables these lights."
+msgstr ""
+"가로등, 따뜻한 도로 조명, 장식용 교차로 신호 및 일부 상점 진입로입니다. 신호는 교통을 제어하지 않습니다. 0이면 이 조명을 끕니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Show street, junction and vehicle lights at this zoom or closer. Below it, "
+"their light rendering and preparation stop. Building lights remain "
+"available."
+msgstr ""
+"이 배율 이상으로 확대하면 도로, 교차로 및 차량 조명을 표시합니다. 그보다 축소하면 해당 조명의 렌더링과 준비를 중지합니다. 건물 "
+"조명은 계속 사용할 수 있습니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Smooth movement of helicopters, airplanes, ships, sailboats and trains."
+msgstr "헬리콥터, 비행기, 선박, 범선 및 열차의 움직임을 부드럽게 합니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Moving waves and breaking surf along the terrain shoreline. Turn off for a "
+"still water surface."
+msgstr "움직이는 파도와 지형 해안선을 따라 부서지는 파도입니다. 끄면 수면이 정지합니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Enable additional presentation effects. Turning this off restores the "
+"original disaster visuals; disasters still occur."
+msgstr "추가 시각 효과를 켭니다. 끄면 원래 재해 모습으로 돌아가지만 재해는 계속 발생합니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Intensity of added visual effects. At 0%, added crowds, dust and lighting "
+"are off. Tornado smoothing and camera shake remain separate."
+msgstr "추가 시각 효과의 강도입니다. 0%이면 추가 군중, 먼지 및 조명을 끕니다. 토네이도 보간과 카메라 흔들림은 별도입니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Animated riot crowds use the city pedestrian artwork. Does not change "
+"population, riot spread or treatment targets."
+msgstr "폭동 군중 애니메이션에 도시 보행자 이미지를 사용합니다. 인구, 폭동 확산 또는 대응 대상은 변경하지 않습니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Dust from demolition and damage. Dust from player demolition continues to "
+"settle while the game is paused."
+msgstr "철거와 피해로 인한 먼지입니다. 플레이어가 철거하면서 생긴 먼지는 게임이 일시 정지되어도 계속 가라앉습니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Smooth the displayed tornado movement between completed simulation "
+"positions. Does not change its route or damage."
+msgstr "완료된 시뮬레이션 위치 사이에서 토네이도의 표시 움직임을 부드럽게 합니다. 이동 경로나 피해는 변경하지 않습니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Local fire and impact lighting. Requires enhanced disaster visuals and "
+"effect intensity above 0%."
+msgstr "국소적인 화재 및 충돌 조명입니다. 재해 시각 효과 강화가 켜져 있고 효과 강도가 0%보다 높아야 합니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Strength of earthquake camera movement. Set to 0% to remove camera shake "
+"while enhanced disaster visuals are enabled."
+msgstr "지진 카메라 움직임의 강도입니다. 재해 시각 효과 강화를 켠 상태에서 카메라 흔들림을 없애려면 0%로 설정하세요."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Pause day, season, water and enhanced disaster animations. Weather, clouds "
+"and weather sounds always pause with the game. Dust from player demolition "
+"can continue."
+msgstr ""
+"낮, 계절, 물 및 강화된 재해 애니메이션을 일시 정지합니다. 날씨, 구름 및 날씨 소리는 항상 게임과 함께 일시 정지됩니다. 플레이어 "
+"철거 먼지는 계속 움직일 수 있습니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Fixed weather can show snow in any season. Game weather and automatic "
+"weather show snow only in winter."
+msgstr "고정 날씨에서는 모든 계절에 눈이 내릴 수 있습니다. 게임 날씨와 자동 날씨에서는 겨울에만 눈이 내립니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Enter a 24-hour time, for example 07:30. Up and Down adjust by 15 minutes."
+msgstr "07:30과 같은 24시간제 시간을 입력하세요. 위아래 키로 15분씩 조정합니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Seconds for one complete day/night cycle. The Animation section controls "
+"speed and pause behavior."
+msgstr "낮과 밤 한 주기의 시간(초)입니다. 애니메이션 항목에서 속도 및 일시 정지 동작을 제어합니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Seconds for one complete visual year. The city calendar is unchanged."
+msgstr "시각적 1년 주기의 시간(초)입니다. 도시 달력은 변경하지 않습니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Part of each season used to blend into the next season. Higher values make "
+"the transition longer."
+msgstr "각 계절에서 다음 계절로 전환하는 데 사용하는 비율입니다. 값이 높을수록 전환 기간이 길어집니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Time between automatic weather selections. The Animation section controls "
+"speed; weather always stops while the game is paused."
+msgstr "자동 날씨 선택 사이의 시간입니다. 애니메이션 항목에서 속도를 제어하며, 게임이 일시 정지되면 날씨도 항상 멈춥니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Strength of the time-of-day color filter. 0% disables this filter."
+msgstr "시간대 색상 필터의 강도입니다. 0%이면 이 필터를 끕니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Strength of seasonal color filters. 0% disables these filters."
+msgstr "계절 색상 필터의 강도입니다. 0%이면 이 필터를 끕니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Strength of weather color filters. 0% disables these filters."
+msgstr "날씨 색상 필터의 강도입니다. 0%이면 이 필터를 끕니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Strength of the seasonal water tint. Enable Seasons to use this setting."
+msgstr "계절별 물 색조의 강도입니다. 사용하려면 계절을 켜세요."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Enable clouds, their shadows and ground-level fog together. Weather effects "
+"have their own switch."
+msgstr "구름, 구름 그림자 및 지면 안개를 함께 켭니다. 날씨 효과는 별도로 켜고 끕니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Automatic follows the weather. Choose Cumulus for puffy clouds, Stratus for "
+"low sheets, Altostratus for higher sheets, Cirrus for wisps, Cirrocumulus "
+"for small cloudlets, or Fog for ground-level clouds. Fog fades above low "
+"terrain, leaving hilltops clear. Fixed types stay selected during rain, snow"
+" and storms."
+msgstr ""
+"자동은 날씨를 따릅니다. 뭉게구름은 적운, 낮게 깔린 구름은 층운, 높게 깔린 구름은 고층운, 실 모양 구름은 권운, 작은 구름 덩어리는"
+" 권적운, 지면 구름은 안개를 선택하세요. 안개는 낮은 지형 위에서 옅어져 언덕 꼭대기는 맑게 유지됩니다. 고정 유형은 비, 눈 및 폭풍"
+" 중에도 유지됩니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Amount of decorative cloud and fog coverage. With aerial clouds enabled, "
+"rain, snow and storms keep minimum cloud coverage, even at 0%."
+msgstr "장식용 구름과 안개의 양입니다. 상공 구름이 켜져 있으면 비, 눈 및 폭풍 중에는 0%에서도 최소 구름량을 유지합니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Multiplier for cloud and fog movement. 1× is the standard speed; 0× stops "
+"movement."
+msgstr "구름과 안개 이동 속도의 배율입니다. 1×는 기본 속도이며 0×는 이동을 멈춥니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Decorative car density. 1× is the standard amount; does not change simulated"
+" traffic."
+msgstr "장식용 자동차 밀도입니다. 1×는 기본 수량이며 교통 시뮬레이션은 변경하지 않습니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Decorative pedestrian density. 1× is the standard amount; does not change "
+"population."
+msgstr "장식용 보행자 밀도입니다. 1×는 기본 수량이며 인구는 변경하지 않습니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Brightness of building and vehicle lights. 100% uses the original "
+"brightness; 0% turns the lights off without changing night colors."
+msgstr "건물 및 차량 조명의 밝기입니다. 100%는 원래 밝기이며 0%는 야간 색상을 변경하지 않고 조명만 끕니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Leave empty for the included standard light masks. Custom folders replace "
+"the standard set. Relative to the data folder, for example brightmaps-"
+"standard. Absolute paths are also supported. Requires active lighting."
+msgstr ""
+"포함된 기본 조명 마스크를 사용하려면 비워 두세요. 사용자 지정 폴더는 기본 세트를 대체합니다. brightmaps-standard처럼 "
+"데이터 폴더 기준 상대 경로를 사용하며 절대 경로도 지원합니다. 조명이 활성화되어 있어야 합니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Optional PNG lookup table (LUT) for custom color grading. Leave empty for "
+"standard colors."
+msgstr "사용자 지정 색 보정용 PNG 룩업 테이블(LUT)입니다. 기본 색상을 사용하려면 비워 두세요."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Visual Enhancements"
+msgstr "시각 효과"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Visual effects only. Changes apply immediately."
+msgstr "시각 효과만 변경합니다. 변경 사항은 즉시 적용됩니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Clouds & Fog"
+msgstr "구름과 안개"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Disable all"
+msgstr "모두 끄기"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Reset this category"
+msgstr "이 항목 초기화"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Reset all visual settings"
+msgstr "모든 시각 설정 초기화"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Turn off all visual enhancements. Keep effect strengths and custom file "
+"paths."
+msgstr "모든 시각 효과를 끕니다. 효과 강도와 사용자 지정 파일 경로는 유지합니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Reset only the open category."
+msgstr "열려 있는 항목만 초기화합니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Reset every category, including custom file paths. Undo restores the "
+"previous values."
+msgstr "사용자 지정 파일 경로를 포함하여 모든 항목을 초기화합니다. 실행 취소로 이전 값을 복원할 수 있습니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Undo the last reset or Disable all, before making another edit."
+msgstr "다른 편집을 하기 전에 마지막 초기화 또는 모두 끄기를 취소합니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Undo restores the last reset or Disable all."
+msgstr "실행 취소는 마지막 초기화 또는 모두 끄기를 되돌립니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Automatic cycle"
+msgstr "자동 주기"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Visual automation"
+msgstr "시각적 자동화"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Optional - leave empty for standard effects"
+msgstr "선택 사항 — 기본 효과를 사용하려면 비워 두세요"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "All effects disabled. Undo restores previous settings."
+msgstr "모든 효과를 껐습니다. 실행 취소로 이전 설정을 복원합니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "%s reset. Other categories unchanged."
+msgstr "%s 항목을 초기화했습니다. 다른 항목은 변경하지 않았습니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "All settings reset, including custom paths. Undo is available."
+msgstr "사용자 지정 경로를 포함한 모든 설정을 초기화했습니다. 실행 취소가 가능합니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Previous visual settings restored."
+msgstr "이전 시각 설정을 복원했습니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Automatic follows rain, snow and storms."
+msgstr "자동은 비, 눈 및 폭풍을 따릅니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "This cloud type stays fixed during rain, snow and storms."
+msgstr "이 구름 유형은 비, 눈 및 폭풍 중에도 고정됩니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Weather is off. Automatic shows calm Cumulus clouds."
+msgstr "날씨가 꺼져 있습니다. 자동은 잔잔한 적운을 표시합니다."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Enable terrain variation to adjust its strength."
+msgstr "강도를 조정하려면 지면 변화를 켜세요."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Enable Day and night to adjust the time and night appearance."
+msgstr "시간과 야간 모습을 조정하려면 낮과 밤을 켜세요."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Enable Seasons to use these settings."
+msgstr "이 설정을 사용하려면 계절을 켜세요."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Enable Weather to adjust weather effects."
+msgstr "날씨 효과를 조정하려면 날씨를 켜세요."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Enable Clouds and fog to adjust their appearance."
+msgstr "모습을 조정하려면 구름과 안개를 켜세요."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Enable Building and vehicle lights to use lighting controls."
+msgstr "조명 설정을 사용하려면 건물 및 차량 조명을 켜세요."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Enable Building and vehicle lights in Lighting."
+msgstr "조명 항목에서 건물 및 차량 조명을 켜세요."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Enable Day and night or Keep lights on during daytime."
+msgstr "낮과 밤 또는 주간에도 조명 유지를 켜세요."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Enable Day and night to adjust ambient night light."
+msgstr "야간 환경광을 조정하려면 낮과 밤을 켜세요."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Raise Light brightness above 0% to use glow and street lighting."
+msgstr "빛 번짐과 가로등을 사용하려면 조명 밝기를 0%보다 높이세요."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Enable Individual cars to adjust car density."
+msgstr "자동차 밀도를 조정하려면 개별 자동차를 켜세요."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Enable Pedestrians to adjust pedestrian density."
+msgstr "보행자 밀도를 조정하려면 보행자를 켜세요."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Enable Enhanced disaster visuals to adjust additional effects."
+msgstr "추가 효과를 조정하려면 재해 시각 효과 강화를 켜세요."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid ""
+"Raise Additional effect intensity above 0% to use crowds, dust and lighting."
+msgstr "군중, 먼지 및 조명을 사용하려면 추가 효과 강도를 0%보다 높이세요."
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Connected forests and tree variants"
+msgstr "연결된 숲과 다양한 나무"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Subtle terrain variation"
+msgstr "은은한 지면 변화"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Terrain overlay strength"
+msgstr "지형 덧씌우기 강도"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Disaster effects"
+msgstr "재해 효과"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Effect strength"
+msgstr "효과 강도"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Use city pedestrians for riots"
+msgstr "폭동에 도시 보행자 사용"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Demolition and damage dust"
+msgstr "철거 및 피해 먼지"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Smooth tornado movement"
+msgstr "부드러운 토네이도 움직임"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Smooth effect transitions"
+msgstr "부드러운 효과 전환"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Fire and impact light strength"
+msgstr "화재 및 충돌 조명 강도"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Earthquake shake strength"
+msgstr "지진 흔들림 강도"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Water reflections"
+msgstr "수면 반사"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Subtle"
+msgstr "은은함"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Underwater terrain"
+msgstr "수중 지형"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Waves and coastal surf"
+msgstr "파도와 해안 쇄파"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Clouds and fog"
+msgstr "구름과 안개"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Cloud type"
+msgstr "구름 유형"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Automatic (weather)"
+msgstr "자동 (날씨)"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Cumulus"
+msgstr "적운"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Stratus"
+msgstr "층운"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Altostratus"
+msgstr "고층운"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Cirrus"
+msgstr "권운"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Cirrocumulus"
+msgstr "권적운"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Fog"
+msgstr "안개"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Cloud and fog coverage"
+msgstr "구름과 안개량"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Cloud shadow strength"
+msgstr "구름 그림자 강도"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Cloud and fog movement"
+msgstr "구름과 안개 이동"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Individual cars"
+msgstr "개별 자동차"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Car amount"
+msgstr "자동차 수량"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Pedestrians"
+msgstr "보행자"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Pedestrian amount"
+msgstr "보행자 수량"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Smooth vehicles"
+msgstr "부드러운 이동체"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Transparent aircraft shadows"
+msgstr "반투명 항공기 그림자"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Day and night"
+msgstr "낮과 밤"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Time of day"
+msgstr "시간대"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Cycle"
+msgstr "주기"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Fixed time"
+msgstr "고정 시간"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Fixed hour"
+msgstr "고정 시각"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Full cycle (seconds at Turtle)"
+msgstr "전체 주기 (거북이 속도 기준 초)"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Time of day LUT strength"
+msgstr "시간대 LUT 강도"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Follow game speed"
+msgstr "게임 속도에 연동"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Freeze environment cycles while paused"
+msgstr "일시 정지 시 환경 주기 정지"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Night strength"
+msgstr "야간 강도"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Night ambient light"
+msgstr "야간 환경광"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Lights and brightmaps"
+msgstr "조명과 브라이트맵"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Keep lights on during daytime"
+msgstr "주간에도 조명 유지"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Night light strength"
+msgstr "야간 조명 강도"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Light glow strength"
+msgstr "빛 번짐 강도"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Street and junction lighting"
+msgstr "도로 및 교차로 조명"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Detail lights from zoom"
+msgstr "세부 조명 최소 확대 배율"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "10% (all zoom levels)"
+msgstr "10% (모든 확대 배율)"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Brightmap folder"
+msgstr "브라이트맵 폴더"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Optional color LUT (PNG strip)"
+msgstr "추가 색상 LUT (PNG 띠)"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Custom LUT profile folder (empty = built-in)"
+msgstr "사용자 지정 LUT 프로필 폴더 (비어 있으면 기본값)"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Season source"
+msgstr "계절 기준"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "City calendar"
+msgstr "도시 달력"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Visual cycle"
+msgstr "시각적 주기"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Fixed season"
+msgstr "고정 계절"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Spring"
+msgstr "봄"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Summer"
+msgstr "여름"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Autumn"
+msgstr "가을"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Winter"
+msgstr "겨울"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Full year (seconds at Turtle)"
+msgstr "1년 전체 (거북이 속도 기준 초)"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Season transition (fraction)"
+msgstr "계절 전환 (비율)"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Season LUT strength"
+msgstr "계절 LUT 강도"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Seasonal water color strength"
+msgstr "계절별 물 색상 강도"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Weather source"
+msgstr "날씨 기준"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Game weather"
+msgstr "게임 날씨"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Fixed weather"
+msgstr "고정 날씨"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Sunny"
+msgstr "맑음"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Light rain"
+msgstr "약한 비"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Heavy rain"
+msgstr "강한 비"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Rain and thunderstorm"
+msgstr "비와 뇌우"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Dry thunderstorm"
+msgstr "마른 뇌우"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Light snow"
+msgstr "약한 눈"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Heavy snow"
+msgstr "강한 눈"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Weather interval (seconds at Turtle)"
+msgstr "날씨 간격 (거북이 속도 기준 초)"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Weather transition (seconds)"
+msgstr "날씨 전환 (초)"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Weather strength"
+msgstr "날씨 강도"
+
+#. OpenSC2K visual UI; supplementary translation from English feature source.
+msgid "Weather LUT strength"
+msgstr "날씨 LUT 강도"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Cities"
+msgstr "도시"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Shared sign"
+msgstr "공동 표지판"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Leave the session? Unsaved changes on the host will be lost.\n"
+"As host, you will disconnect all other players."
+msgstr ""
+"세션을 나가시겠습니까? 호스트의 저장하지 않은 변경 사항이 사라집니다.\n"
+"호스트가 나가면 모든 플레이어의 연결이 끊깁니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Game running on port %d. Choose a game speed."
+msgstr "게임이 %d 포트에서 실행 중입니다. 게임 속도를 선택하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Connecting to the host…"
+msgstr "호스트에 연결 중…"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid city state from the host. Leave the session and reconnect."
+msgstr "호스트가 보낸 도시 상태가 잘못되었습니다. 세션을 종료하고 다시 연결하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Multiplayer connected"
+msgstr "멀티플레이 연결됨"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The host saves the shared game."
+msgstr "공동 게임은 호스트가 저장합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Multiplayer game saved: %s"
+msgstr "멀티플레이 게임 저장됨: %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Left multiplayer"
+msgstr "멀티플레이에서 나감"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Finish creating the terrain with Start City first."
+msgstr "먼저 도시 시작으로 지형 생성을 완료하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Use a player name of 1–32 characters and an optional password of at most 64 "
+"characters."
+msgstr "플레이어 이름은 1~32자, 선택 사항인 비밀번호는 최대 64자로 입력하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Cannot listen on TCP port %d: %s"
+msgstr "TCP 포트 %d에서 수신할 수 없습니다: %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Leave the hosted session first."
+msgstr "먼저 호스트 중인 세션을 나가세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Cannot connect: %s"
+msgstr "연결할 수 없습니다: %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "This is a different session. Leave before joining it."
+msgstr "다른 세션입니다. 참가하기 전에 현재 세션을 나가세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid command identifier."
+msgstr "잘못된 명령 식별자입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "This command was already handled; it was not applied again."
+msgstr "이미 처리된 명령이므로 다시 적용하지 않았습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Command order changed. Reconnect to synchronize."
+msgstr "명령 순서가 변경되었습니다. 동기화하려면 다시 연결하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid speed."
+msgstr "잘못된 속도입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Your requested speed was updated."
+msgstr "요청한 속도가 갱신되었습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Disconnected. Reconnect before making changes."
+msgstr "연결이 끊겼습니다. 변경하려면 다시 연결하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Cannot synchronize the city."
+msgstr "도시를 동기화할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Connection lost or refused. Check host, port and password, then reconnect. "
+"The view is frozen."
+msgstr "연결이 끊겼거나 거부되었습니다. 호스트, 포트 및 비밀번호를 확인한 뒤 다시 연결하세요. 화면이 정지되었습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Only the host saves the shared session."
+msgstr "호스트만 공동 세션을 저장합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Cannot encode city."
+msgstr "도시를 인코딩할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Cannot write session: %s"
+msgstr "세션을 기록할 수 없습니다: %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The session could not be written and verified."
+msgstr "세션을 기록하고 검증하지 못했습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Cannot replace the session backup."
+msgstr "세션 백업을 교체할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Cannot preserve the previous session."
+msgstr "이전 세션을 보존할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Cannot install the new session file (%s). The previous save was retained."
+msgstr "새 세션 파일을 적용할 수 없습니다(%s). 이전 저장 파일은 보존했습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The session file is missing or too large."
+msgstr "세션 파일이 없거나 너무 큽니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Unsupported session file."
+msgstr "지원하지 않는 세션 파일입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid session identities."
+msgstr "잘못된 세션 식별 정보입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid session member."
+msgstr "잘못된 세션 참가자입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Missing session city."
+msgstr "세션의 도시가 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The session has no complete simulation checkpoint."
+msgstr "세션에 완전한 시뮬레이션 체크포인트가 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid emergency service state."
+msgstr "잘못된 긴급 구조대 상태입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid emergency service cycle."
+msgstr "잘못된 긴급 구조대 주기입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Only the host saves the game."
+msgstr "호스트만 게임을 저장합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Cannot write the city."
+msgstr "도시를 기록할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Cannot verify the saved city."
+msgstr "저장된 도시를 검증할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Cannot replace the previous backup."
+msgstr "이전 백업을 교체할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Cannot back up the previous city."
+msgstr "이전 도시를 백업할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Cannot install the saved city; the previous save was retained."
+msgstr "저장된 도시를 적용할 수 없습니다. 이전 저장 파일은 보존했습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid multiplayer city data."
+msgstr "잘못된 멀티플레이 도시 데이터입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid multiplayer identities."
+msgstr "잘못된 멀티플레이 식별 정보입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid multiplayer member."
+msgstr "잘못된 멀티플레이 참가자입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid dispatch state."
+msgstr "잘못된 출동 상태입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid dispatch cycle."
+msgstr "잘못된 출동 주기입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid multiplayer statistics."
+msgstr "잘못된 멀티플레이 통계입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Saved municipalities do not match session members."
+msgstr "저장된 도시와 세션 참가자가 일치하지 않습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Missing municipality member."
+msgstr "도시 참가자가 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Cannot initialize the city simulation."
+msgstr "도시 시뮬레이션을 초기화할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The city view is out of date. Wait for synchronization."
+msgstr "도시 화면이 최신 상태가 아닙니다. 동기화를 기다리세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid command."
+msgstr "잘못된 명령입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Undo expired: another edit or simulation step occurred."
+msgstr "실행 취소가 만료되었습니다. 다른 편집 또는 시뮬레이션 단계가 진행되었습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Your last edit was undone."
+msgstr "마지막 편집을 취소했습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid map position."
+msgstr "잘못된 지도 위치입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "This area changed. Review it and try again."
+msgstr "이 영역이 변경되었습니다. 확인한 뒤 다시 시도하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "A sign can contain at most 120 characters."
+msgstr "표지판에는 최대 120자를 입력할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid construction choice."
+msgstr "잘못된 건설 선택입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid tool."
+msgstr "잘못된 도구입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "This tool is not available in the city."
+msgstr "이 도시에서는 해당 도구를 사용할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The tool path is too long."
+msgstr "도구 경로가 너무 깁니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid tool path."
+msgstr "잘못된 도구 경로입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "This path changed. Review it and try again."
+msgstr "이 경로가 변경되었습니다. 확인한 뒤 다시 시도하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "This tool is not yet available in Koop."
+msgstr "이 도구는 아직 협동 모드에서 사용할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Choose a bridge. The host will check the site and cost again."
+msgstr "다리를 선택하세요. 호스트가 위치와 비용을 다시 확인합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Connect to the neighboring city?"
+msgstr "이웃 도시와 연결하시겠습니까?"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Connect and review total cost"
+msgstr "연결 및 총비용 확인"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Build without connection"
+msgstr "연결 없이 건설"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Build this tunnel?"
+msgstr "이 터널을 건설하시겠습니까?"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Build — $%d"
+msgstr "건설 — $%d"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Choose the stadium team."
+msgstr "경기장의 팀을 선택하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The edit could not be applied."
+msgstr "편집을 적용하지 못했습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Confirm the complete route cost."
+msgstr "전체 경로의 비용을 확인하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The construction price changed. Select the site again to review it."
+msgstr "건설 가격이 변경되었습니다. 확인하려면 위치를 다시 선택하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Another player changed part of this building or terrain. Try again."
+msgstr "다른 플레이어가 이 건물이나 지형의 일부를 변경했습니다. 다시 시도하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Applied by the host. Cost: $%d."
+msgstr "호스트가 적용했습니다. 비용: $%d."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "City settings changed. Reopen Multiplayer and try again."
+msgstr "도시 설정이 변경되었습니다. 멀티플레이를 다시 열고 시도하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid city option."
+msgstr "잘못된 도시 옵션입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid disaster request."
+msgstr "잘못된 재해 요청입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Cannot change disaster settings."
+msgstr "재해 설정을 변경할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid budget."
+msgstr "잘못된 예산입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid budget percentage."
+msgstr "잘못된 예산 비율입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid industry tax rate."
+msgstr "잘못된 공업 세율입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid ordinance."
+msgstr "잘못된 조례입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Unknown command."
+msgstr "알 수 없는 명령입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "City settings updated."
+msgstr "도시 설정이 갱신되었습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid emergency service positions."
+msgstr "잘못된 긴급 구조대 위치 목록입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid emergency service position."
+msgstr "잘못된 긴급 구조대 위치입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Duplicate emergency service position."
+msgstr "긴급 구조대 위치가 중복됩니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Single-player city"
+msgstr "싱글플레이 도시"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Choose a date after the current date."
+msgstr "현재 날짜 이후의 날짜를 선택하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Debug · %s"
+msgstr "디버그 · %s"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Chat (%d)"
+msgstr "채팅 (%d)"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid emergency service target."
+msgstr "잘못된 긴급 구조대 대상입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "This area changed. Review it before building."
+msgstr "이 영역이 변경되었습니다. 건설 전에 확인하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The parcel must include each building's complete footprint."
+msgstr "필지에 각 건물의 전체 면적이 포함되어야 합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Wait for moving objects to leave this parcel or recall its emergency units."
+msgstr "이동 물체가 필지를 벗어날 때까지 기다리거나 해당 긴급 구조대를 복귀시키세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The buyer's sign table is full."
+msgstr "구매자의 표지판 목록이 가득 찼습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The shared map already has eight municipalities."
+msgstr "공유 지도에 이미 8개의 도시가 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "City %d"
+msgstr "도시 %d"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "No municipality is assigned to this player."
+msgstr "이 플레이어에게 지정된 도시가 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid map revision."
+msgstr "잘못된 지도 버전입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Your emergency units were recalled."
+msgstr "긴급 구조대를 복귀시켰습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Manual disasters can only be started in your own municipality."
+msgstr "수동 재해는 내 도시에서만 시작할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Buy this land before building here."
+msgstr "이곳에 건설하려면 먼저 토지를 구입하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The complete path must stay on your own land."
+msgstr "전체 경로가 내 토지 안에 있어야 합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "The complete building or terrain edit must fit on your land."
+msgstr "건물 전체 또는 지형 편집 전체가 내 토지 안에 있어야 합니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Undo is unavailable after ownership transactions in Shared."
+msgstr "공유 모드에서는 소유권 거래 후 실행 취소를 사용할 수 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "This land has no municipality to assist."
+msgstr "이 토지에는 지원할 도시가 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Emergency assistance is available during a disaster."
+msgstr "긴급 지원은 재해 중에 이용할 수 있습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Your city has no available units of this type."
+msgstr "도시에 사용 가능한 해당 유형의 부대가 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"Your available units are already deployed. Recall them before redeploying."
+msgstr "사용 가능한 부대가 이미 배치되어 있습니다. 재배치 전에 복귀시키세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Emergency service deployed."
+msgstr "긴급 구조대를 배치했습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid shared municipalities."
+msgstr "잘못된 공유 도시 정보입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid shared host."
+msgstr "잘못된 공유 호스트입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid municipality identity."
+msgstr "잘못된 도시 식별 정보입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Missing municipality city."
+msgstr "도시 데이터가 없습니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid municipality service state."
+msgstr "잘못된 도시 구조대 상태입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid municipality dispatch cycle."
+msgstr "잘못된 도시 출동 주기입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid municipality checkpoint."
+msgstr "잘못된 도시 체크포인트입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid land owner."
+msgstr "잘못된 토지 소유자입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid shared terrain."
+msgstr "잘못된 공유 지형입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid land offers."
+msgstr "잘못된 토지 매물 목록입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid land offer."
+msgstr "잘못된 토지 매물입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Invalid land offer area."
+msgstr "잘못된 토지 매물 영역입니다."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid ""
+"The proposed military base extends outside your land. Buy its land first or "
+"decline the proposal."
+msgstr "제안된 군사 기지가 내 토지 밖까지 걸쳐 있습니다. 먼저 토지를 구입하거나 제안을 거절하세요."
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Multiplayer"
+msgstr "멀티플레이"
+
+#. OpenSC2K multiplayer UI; supplementary translation from English feature
+#. source.
+msgid "Choose"
+msgstr "선택"

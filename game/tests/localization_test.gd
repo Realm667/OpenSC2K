@@ -14,6 +14,7 @@ func _initialize() -> void:
 func _run() -> void:
 	var previous := TranslationServer.get_locale()
 	_check_placeholders()
+	_check_feature_messages()
 
 	AppLocalization.select("ko")
 	assert(TranslationServer.get_locale() == "ko")
@@ -131,6 +132,23 @@ func _run() -> void:
 	await process_frame
 	print("PASS: interface language")
 	quit()
+
+
+# Each translation has the format placeholders of its source text, in order.
+func _check_feature_messages() -> void:
+	var source := "Buy %d tiles for $%d? Balance afterwards: $%d."
+	var name := "Funds 서울 %s"
+	for language: String in AppLocalization.TRANSLATIONS:
+		AppLocalization.select(language)
+		assert(tr(source) != source, "%s needs multiplayer translations" % language)
+		assert(AppLocalization.message(source % [4, 40, 10]) == tr(source) % [4, 40, 10])
+		assert(AppLocalization.message("%s joined the game." % name) == tr("%s joined the game.") % name)
+		var percent := "%s → %s · %s · %d%% annually"
+		assert(AppLocalization.message(percent % ["Alice", "Bob", "$10000", 5]) == tr(percent) % ["Alice", "Bob", "$10000", 5])
+		assert(tr("Building and vehicle lights") != "Building and vehicle lights")
+		assert(AppLocalization.message("Unrecognized feedback stays intact") == "Unrecognized feedback stays intact")
+	AppLocalization.select("en")
+	assert(AppLocalization.message(source % [4, 40, 10]) == source % [4, 40, 10])
 
 
 # Each translation has the format placeholders of its source text, in order.

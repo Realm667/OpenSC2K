@@ -1,5 +1,11 @@
 [
   {
+    "id": "localization_catalogs_test",
+    "python": "tools/check_localization.py",
+    "domain": "ui",
+    "lane": "product"
+  },
+  {
     "id": "sc2x_edge_render_test",
     "script": "tests/sc2x_edge_render_test.gd",
     "domain": "rendering",

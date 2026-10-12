@@ -1,0 +1,7280 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenSC2K\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid " %d buildings still need records; the table is full."
+msgstr ""
+
+msgid " %d links or records that SC2X cannot describe were kept unchanged."
+msgstr ""
+
+msgid " (oldest)"
+msgstr ""
+
+msgid " Restored facility records for %d buildings."
+msgstr ""
+
+msgid " Route stopped: %s."
+msgstr ""
+
+msgid " The bridge was not built: %s."
+msgstr ""
+
+msgid "% of CITY"
+msgstr ""
+
+msgid "%d eq"
+msgstr ""
+
+msgid "%d yrs"
+msgstr ""
+
+msgid ""
+"%s\n"
+"$%s total\n"
+"$%s for each %s"
+msgstr ""
+
+msgid ""
+"%s\n"
+"Free in Place & Print"
+msgstr ""
+
+msgid "%s %s."
+msgstr ""
+
+msgid "%s advisor"
+msgstr ""
+
+msgid "%s counts %d residents"
+msgstr ""
+
+msgid ""
+"%s has a recorded population of %d. City services and transport must keep "
+"pace as new neighborhoods develop. Residents need connections to employment,"
+" electricity and water. This edition records conditions on %s."
+msgstr ""
+
+msgid "%s is not available in this city."
+msgstr ""
+
+msgid ""
+"%s pack saved, but could not be loaded. The previous pack is still active."
+msgstr ""
+
+msgid "%s placement was rejected by nearby residents."
+msgstr ""
+
+msgid "%s preview: %d charged %s for $%s."
+msgstr ""
+
+msgid "%s preview: %d tiles; free in SCURK."
+msgstr ""
+
+msgid "%s speed selected."
+msgstr ""
+
+msgid "%s started."
+msgstr ""
+
+msgid "... (continued on pg %d)"
+msgstr ""
+
+msgid "1 Year"
+msgstr ""
+
+msgid "10 Years"
+msgstr ""
+
+msgid "100 Yrs"
+msgstr ""
+
+msgid "11 demand tiles"
+msgstr ""
+
+msgid "111 demand tiles"
+msgstr ""
+
+msgid "1x - Small"
+msgstr ""
+
+msgid "2 by 2 water section"
+msgstr ""
+
+msgid "2 by 2 water sections"
+msgstr ""
+
+msgid "2x - Medium"
+msgstr ""
+
+msgid "355 demand tiles"
+msgstr ""
+
+msgid "40 demand tiles"
+msgstr ""
+
+msgid "44 demand tiles"
+msgstr ""
+
+msgid "48 demand tiles"
+msgstr ""
+
+msgid "4x - Large"
+msgstr ""
+
+msgid "5 to 14 demand tiles; varies with rain"
+msgstr ""
+
+msgid "50 years"
+msgstr ""
+
+msgid "555 demand tiles"
+msgstr ""
+
+msgid "A Single Penny"
+msgstr ""
+
+msgid "A closer look at city services"
+msgstr ""
+
+msgid "A microwave disaster can start at this plant."
+msgstr ""
+
+msgid "ACRES"
+msgstr ""
+
+msgid "About"
+msgstr ""
+
+msgid "About OpenSC2K"
+msgstr ""
+
+msgid "Above Ground"
+msgstr ""
+
+msgid "Actual"
+msgstr ""
+
+msgid "Add layer"
+msgstr ""
+
+msgid "Advisor"
+msgstr ""
+
+msgid "Aerospace"
+msgstr ""
+
+msgid "African Swallow"
+msgstr ""
+
+msgid "After copy: source graphics"
+msgstr ""
+
+msgid "Air Crash"
+msgstr ""
+
+msgid "Airport"
+msgstr ""
+
+msgid "Airport or Seaport"
+msgstr ""
+
+msgid "All"
+msgstr ""
+
+msgid ""
+"All keyboard and mouse bindings will return to their default values. Your "
+"custom bindings will be lost."
+msgstr ""
+
+msgid "Allow different destination"
+msgstr ""
+
+msgid "An empty value removes the sign."
+msgstr ""
+
+msgid "An open-source SimCity 2000 remake"
+msgstr ""
+
+msgid "Animating I"
+msgstr ""
+
+msgid "Animating II"
+msgstr ""
+
+msgid "Apply"
+msgstr ""
+
+msgid "Arcologies"
+msgstr ""
+
+msgid "Ask advisor"
+msgstr ""
+
+msgid "Ask the %s advisor"
+msgstr ""
+
+msgid "Assigned %s to the new stadium."
+msgstr ""
+
+msgid ""
+"At full funding, each college supplies 50 units of capacity to the education"
+" phase. Serves the college-age population group."
+msgstr ""
+
+msgid ""
+"At full funding, each hospital supplies 25 units of capacity to the health "
+"phase. Funding cuts reduce capacity proportionally."
+msgstr ""
+
+msgid ""
+"At full funding, each school supplies 15 units of capacity to the education "
+"phase. Serves younger population groups."
+msgstr ""
+
+msgid "Audio"
+msgstr ""
+
+msgid "Author"
+msgstr ""
+
+msgid "Auto-Budget"
+msgstr ""
+
+msgid "Auto-Goto"
+msgstr ""
+
+msgid "Automatic"
+msgstr ""
+
+msgid "Automatic (%s)"
+msgstr ""
+
+msgid "Automotive"
+msgstr ""
+
+msgid "Background"
+msgstr ""
+
+msgid "Balance"
+msgstr ""
+
+msgid "Before: current working graphics"
+msgstr ""
+
+msgid "Below Ground"
+msgstr ""
+
+msgid "Big Park"
+msgstr ""
+
+msgid "Black and White"
+msgstr ""
+
+msgid "Blizzard"
+msgstr ""
+
+msgid "Bond"
+msgstr ""
+
+msgid "Bond payments"
+msgstr ""
+
+msgid "Bonds"
+msgstr ""
+
+msgid "Box"
+msgstr ""
+
+msgid "Braun Llama Dome"
+msgstr ""
+
+msgid "Browse"
+msgstr ""
+
+msgid "Browse tiles"
+msgstr ""
+
+msgid "Browse..."
+msgstr ""
+
+msgid "Browse…"
+msgstr ""
+
+msgid "Brush"
+msgstr ""
+
+msgid "Brush size"
+msgstr ""
+
+msgid "Brush size in tiles (1–15)"
+msgstr ""
+
+msgid "Budget"
+msgstr ""
+
+msgid "Build %s"
+msgstr ""
+
+msgid ""
+"Build a %s connection to a neighboring city for $%s?\n"
+"The %d-tile route costs $%s and remains if you cancel."
+msgstr ""
+
+msgid ""
+"Build a %s connection to a neighboring city?\n"
+"The route and connection are free in Place & Print."
+msgstr ""
+
+msgid "Building Zone"
+msgstr ""
+
+msgid "Buildings"
+msgstr ""
+
+msgid "Built %d %s tiles and %d bridges for $%s."
+msgstr ""
+
+msgid "Built %d %s tiles and a %s across %d water tiles for $%s."
+msgstr ""
+
+msgid "Built %d %s tiles and a neighboring-city connection for $%s."
+msgstr ""
+
+msgid "Built %d %s tiles for $%s."
+msgstr ""
+
+msgid "Built %d highway sections and %d bridges for $%s."
+msgstr ""
+
+msgid "Built %d highway sections and a %s across %d water sections for $%s."
+msgstr ""
+
+msgid "Built %d highway sections and a neighboring-city connection for $%s."
+msgstr ""
+
+msgid "Built %d highway sections for $%s."
+msgstr ""
+
+msgid "Built %s for $%s."
+msgstr ""
+
+msgid "Built a %d-tile tunnel for $%s."
+msgstr ""
+
+msgid "Built a %s across %d water sections for $%s."
+msgstr ""
+
+msgid "Built a %s across %d water tiles for $%s."
+msgstr ""
+
+msgid "Bulldozer"
+msgstr ""
+
+msgid "Bus Depot"
+msgstr ""
+
+msgid "Can be blocked by nearby residential zones."
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Cancel Dispatch"
+msgstr ""
+
+msgid "Cannot analyze city: %s"
+msgstr ""
+
+msgid "Cannot apply the annual budget: %s"
+msgstr ""
+
+msgid "Cannot assign stadium team: %s"
+msgstr ""
+
+msgid "Cannot build %s: %s"
+msgstr ""
+
+msgid "Cannot build highway: %s"
+msgstr ""
+
+msgid "Cannot build tunnel: %s"
+msgstr ""
+
+msgid "Cannot calculate mayor approval: %s"
+msgstr ""
+
+msgid "Cannot change sign: %s"
+msgstr ""
+
+msgid "Cannot convert %s to SC2X version 4: %s"
+msgstr ""
+
+msgid "Cannot convert the city to SC2X: %s"
+msgstr ""
+
+msgid "Cannot create a new city: %s"
+msgstr ""
+
+msgid "Cannot dispatch unit: %s"
+msgstr ""
+
+msgid "Cannot export the city: %s"
+msgstr ""
+
+msgid "Cannot finish the military proposal: %s"
+msgstr ""
+
+msgid "Cannot generate terrain: %s"
+msgstr ""
+
+msgid "Cannot issue a bond: %s"
+msgstr ""
+
+msgid "Cannot open ordinances: %s"
+msgstr ""
+
+msgid "Cannot prepare the city for export: %s"
+msgstr ""
+
+msgid "Cannot query tile: %s"
+msgstr ""
+
+msgid "Cannot rename facility: %s"
+msgstr ""
+
+msgid "Cannot repay a bond: %s"
+msgstr ""
+
+msgid "Cannot resolve the military proposal: %s"
+msgstr ""
+
+msgid "Cannot rotate city: %s"
+msgstr ""
+
+msgid "Cannot save the budget: %s"
+msgstr ""
+
+msgid "Cannot start the PNG export: %s"
+msgstr ""
+
+msgid "Cannot start the disaster: %s"
+msgstr ""
+
+msgid "Cannot start zone selection: %s"
+msgstr ""
+
+msgid "Cannot undo the last edit: %s"
+msgstr ""
+
+msgid "Cannot update bonds: %s"
+msgstr ""
+
+msgid "Cannot update the %s option."
+msgstr ""
+
+msgid "Capacity"
+msgstr ""
+
+msgid "Cash Flow"
+msgstr ""
+
+msgid "Center"
+msgstr ""
+
+msgid "Center View"
+msgstr ""
+
+msgid "Center the map view on the active disaster."
+msgstr ""
+
+msgid "Centered the map on tile %d, %d."
+msgstr ""
+
+msgid "Changed pixels (pink)"
+msgstr ""
+
+msgid "Check GitHub for a newer release now."
+msgstr ""
+
+msgid "Check for updates"
+msgstr ""
+
+msgid "Check for updates periodically"
+msgstr ""
+
+msgid "Check now"
+msgstr ""
+
+msgid "Checking..."
+msgstr ""
+
+msgid "Cheetah"
+msgstr ""
+
+msgid "Chilly"
+msgstr ""
+
+msgid "Choose File…"
+msgstr ""
+
+msgid "Choose Folder…"
+msgstr ""
+
+msgid ""
+"Choose the graphics size for each zoom level. Larger graphics show more "
+"detail. Higher zoom levels cannot use a smaller size."
+msgstr ""
+
+msgid "Chronicle"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+msgid "City Analysis"
+msgstr ""
+
+msgid "City Budget"
+msgstr ""
+
+msgid "City Details"
+msgstr ""
+
+msgid "City Hall"
+msgstr ""
+
+msgid "City Industry"
+msgstr ""
+
+msgid "City Map"
+msgstr ""
+
+msgid "City Map: %s"
+msgstr ""
+
+msgid "City Name"
+msgstr ""
+
+msgid "City Name:"
+msgstr ""
+
+msgid "City Services"
+msgstr ""
+
+msgid "City Size"
+msgstr ""
+
+msgid "City Size graph (S)"
+msgstr ""
+
+msgid "City Sounds"
+msgstr ""
+
+msgid "City View"
+msgstr ""
+
+msgid "City artwork"
+msgstr ""
+
+msgid "City budget"
+msgstr ""
+
+msgid "City renamed to %s."
+msgstr ""
+
+msgid "City report"
+msgstr ""
+
+msgid "City view centered at %d, %d."
+msgstr ""
+
+msgid "Clear"
+msgstr ""
+
+msgid "Clear All"
+msgstr ""
+
+msgid "Clear Object"
+msgstr ""
+
+msgid "Clear ramp"
+msgstr ""
+
+msgid "Clip to tile"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Close SCURK"
+msgstr ""
+
+msgid "Close article"
+msgstr ""
+
+msgid "Close newspaper"
+msgstr ""
+
+msgid "Coal Power Plant"
+msgstr ""
+
+msgid "Cold"
+msgstr ""
+
+msgid "College"
+msgstr ""
+
+msgid "Color"
+msgstr ""
+
+msgid "Commentary"
+msgstr ""
+
+msgid "Commerce"
+msgstr ""
+
+msgid "Commerce graph (C)"
+msgstr ""
+
+msgid "Commercial"
+msgstr ""
+
+msgid "Compare"
+msgstr ""
+
+msgid ""
+"Confirmed bond actions take effect immediately. Cancel does not undo them."
+msgstr ""
+
+msgid "Connections keep the city moving"
+msgstr ""
+
+msgid "Construction"
+msgstr ""
+
+msgid "Continue City"
+msgstr ""
+
+msgid ""
+"Continue to play music and sounds when OpenSC2K is not the active window."
+msgstr ""
+
+msgid "Controls"
+msgstr ""
+
+msgid ""
+"Converted %s to SC2X version 4. Save a new copy; the original file stays "
+"unchanged."
+msgstr ""
+
+msgid "Copy"
+msgstr ""
+
+msgid "Copy All"
+msgstr ""
+
+msgid "Copy Object Group"
+msgstr ""
+
+msgid "Copy Selected"
+msgstr ""
+
+msgid "Copy from All Layers"
+msgstr ""
+
+msgid "Cost: %s"
+msgstr ""
+
+msgid "Courier"
+msgstr ""
+
+msgid ""
+"Created %s in %d on %s difficulty with generated terrain. Map view: %s."
+msgstr ""
+
+msgid "Crime"
+msgstr ""
+
+msgid "Crime graph (X)"
+msgstr ""
+
+msgid "Current city date"
+msgstr ""
+
+msgid "Current city date: %s"
+msgstr ""
+
+msgid "Current city funds"
+msgstr ""
+
+msgid "Current city funds: %s"
+msgstr ""
+
+msgid "Current city population is not available."
+msgstr ""
+
+msgid "Current city population: %s"
+msgstr ""
+
+msgid ""
+"Current demand readings are %d for homes, %d for commerce and %d for "
+"industry. Positive readings indicate room for growth. Tax rates, transport "
+"access and city conditions affect development. Zoned land still needs "
+"suitable services before it can grow."
+msgstr ""
+
+msgid "Current rendered frames per second"
+msgstr ""
+
+msgid "Current simulation speed: %s."
+msgstr ""
+
+msgid "Current weather: %s."
+msgstr ""
+
+msgid "Cut"
+msgstr ""
+
+msgid "Cut from All Layers"
+msgstr ""
+
+msgid "Cycle colors"
+msgstr ""
+
+msgid "Darco Arcology"
+msgstr ""
+
+msgid "Dark Theme"
+msgstr ""
+
+msgid "Dark underground view"
+msgstr ""
+
+msgid "Data"
+msgstr ""
+
+msgid "Data pack"
+msgstr ""
+
+msgid "Data view: off"
+msgstr ""
+
+msgid "De-zone"
+msgstr ""
+
+msgid "Debug"
+msgstr ""
+
+msgid "Decimal"
+msgstr ""
+
+msgid "Default"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Delete Selection"
+msgstr ""
+
+msgid "Delete layer"
+msgstr ""
+
+msgid "Demand"
+msgstr ""
+
+msgid "Demolish"
+msgstr ""
+
+msgid "Dense Commercial"
+msgstr ""
+
+msgid "Dense Industrial"
+msgstr ""
+
+msgid "Dense Residential"
+msgstr ""
+
+msgid "Deployed %s unit %d of %d."
+msgstr ""
+
+msgid "Desalinization Plant"
+msgstr ""
+
+msgid "Deselect"
+msgstr ""
+
+msgid "Destination group"
+msgstr ""
+
+msgid "Development demand in focus"
+msgstr ""
+
+msgid "Diamond"
+msgstr ""
+
+msgid "Difficulty"
+msgstr ""
+
+msgid "Disasters"
+msgstr ""
+
+msgid "Dispatch"
+msgstr ""
+
+msgid "Done"
+msgstr ""
+
+msgid "Drier weather increases grid capacity."
+msgstr ""
+
+msgid "Duplicate Selection"
+msgstr ""
+
+msgid "Earthquake"
+msgstr ""
+
+msgid "Easy — $20,000"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Edit Tools"
+msgstr ""
+
+msgid "Editor's Corner"
+msgstr ""
+
+msgid "Education"
+msgstr ""
+
+msgid "Education graph (e)"
+msgstr ""
+
+msgid "Electronics"
+msgstr ""
+
+msgid "Ellipse"
+msgstr ""
+
+msgid "Enter a new name for the city."
+msgstr ""
+
+msgid "Enter sign text..."
+msgstr ""
+
+msgid "Entire City"
+msgstr ""
+
+msgid "Eraser"
+msgstr ""
+
+msgid "Exit"
+msgstr ""
+
+msgid "Expenses"
+msgstr ""
+
+msgid "Export City as PNG"
+msgstr ""
+
+msgid "Export Image"
+msgstr ""
+
+msgid "Export Tile Set"
+msgstr ""
+
+msgid "Export folder"
+msgstr ""
+
+msgid "Export image"
+msgstr ""
+
+msgid "Exported a %d by %d city image to %s."
+msgstr ""
+
+msgid "Exporting %s"
+msgstr ""
+
+msgid "Exporting the city to %s…"
+msgstr ""
+
+msgid "Extra! Extra!"
+msgstr ""
+
+msgid "Extra!!!"
+msgstr ""
+
+msgid "Features"
+msgstr ""
+
+msgid "Fed Rate"
+msgstr ""
+
+msgid "Fed Rate graph (%)"
+msgstr ""
+
+msgid "Field"
+msgstr ""
+
+msgid "File"
+msgstr ""
+
+msgid "File name"
+msgstr ""
+
+msgid "Fill"
+msgstr ""
+
+msgid "Filled shapes"
+msgstr ""
+
+msgid "Filter tiles"
+msgstr ""
+
+msgid "Finance"
+msgstr ""
+
+msgid "Fire"
+msgstr ""
+
+msgid "Fire Station"
+msgstr ""
+
+msgid ""
+"Fire coverage scales with funding. Unpowered stations have half strength. "
+"Supports emergency fire dispatch."
+msgstr ""
+
+msgid "Firestorm"
+msgstr ""
+
+msgid "Fit canvas"
+msgstr ""
+
+msgid "Five Cents"
+msgstr ""
+
+msgid "Five Dollars"
+msgstr ""
+
+msgid "Flood"
+msgstr ""
+
+msgid "Foggy"
+msgstr ""
+
+msgid "Folder"
+msgstr ""
+
+msgid "Food"
+msgstr ""
+
+msgid "Footprint: %d x %d tiles"
+msgstr ""
+
+msgid "Forest"
+msgstr ""
+
+msgid "Forest Arcology"
+msgstr ""
+
+msgid "Format"
+msgstr ""
+
+msgid "Fred's Opinion"
+msgstr ""
+
+msgid "Free"
+msgstr ""
+
+msgid "From palette index"
+msgstr ""
+
+msgid "Fullscreen"
+msgstr ""
+
+msgid "Funding"
+msgstr ""
+
+msgid "Fusion Power Plant"
+msgstr ""
+
+msgid "GNP"
+msgstr ""
+
+msgid "GNP graph (g)"
+msgstr ""
+
+msgid "GPU (recommended)"
+msgstr ""
+
+msgid "Game data"
+msgstr ""
+
+msgid "Game folder or file"
+msgstr ""
+
+msgid "Gas Power Plant"
+msgstr ""
+
+msgid "General"
+msgstr ""
+
+msgid "Generating terrain..."
+msgstr ""
+
+msgid "Graph Window"
+msgstr ""
+
+msgid "Graphics"
+msgstr ""
+
+msgid "Graphics Size"
+msgstr ""
+
+msgid "Graphics pack"
+msgstr ""
+
+msgid "Graphs"
+msgstr ""
+
+msgid "Grid capacity: %s"
+msgstr ""
+
+msgid "Grid height"
+msgstr ""
+
+msgid "Grid width"
+msgstr ""
+
+msgid "Hard — $10,000 bond at 3%"
+msgstr ""
+
+msgid "Health"
+msgstr ""
+
+msgid "Health & welfare"
+msgstr ""
+
+msgid "Health graph (h)"
+msgstr ""
+
+msgid "Height"
+msgstr ""
+
+msgid "Height Map"
+msgstr ""
+
+msgid "Helicopter Crash"
+msgstr ""
+
+msgid "Help"
+msgstr ""
+
+msgid "Herald"
+msgstr ""
+
+msgid "Hex"
+msgstr ""
+
+msgid "Higher land and stronger wind increase grid capacity."
+msgstr ""
+
+msgid "Highlight differences"
+msgstr ""
+
+msgid "Highway"
+msgstr ""
+
+msgid "Hills"
+msgstr ""
+
+msgid "Hospital"
+msgstr ""
+
+msgid "Hot"
+msgstr ""
+
+msgid "Hurricane"
+msgstr ""
+
+msgid "Hydroelectric Power Plant"
+msgstr ""
+
+msgid "Illustrated"
+msgstr ""
+
+msgid "Image size"
+msgstr ""
+
+msgid "Import"
+msgstr ""
+
+msgid "Import Assets"
+msgstr ""
+
+msgid "Import Image"
+msgstr ""
+
+msgid "Import Original Assets"
+msgstr ""
+
+msgid "Import SimCity 2000 assets"
+msgstr ""
+
+msgid "Import image"
+msgstr ""
+
+msgid "Import only a %s pack from your copy of SimCity 2000."
+msgstr ""
+
+msgid ""
+"Import your SimCity 2000 game files again to update them. The import keeps "
+"your other packs."
+msgstr ""
+
+msgid "Import..."
+msgstr ""
+
+msgid ""
+"In Tax Rates view, drag a bar to set its surcharge. Hold Alt to set all "
+"industries."
+msgstr ""
+
+msgid "Include"
+msgstr ""
+
+msgid "Income"
+msgstr ""
+
+msgid "Industrial"
+msgstr ""
+
+msgid "Industry"
+msgstr ""
+
+msgid "Industry graph (I)"
+msgstr ""
+
+msgid "Infrastructure"
+msgstr ""
+
+msgid "Isometric guides"
+msgstr ""
+
+msgid "Issue $10,000 bond…"
+msgstr ""
+
+msgid "Issue a $10,000 bond at %d%%?"
+msgstr ""
+
+msgid "Issued a $10,000 bond at %d%%."
+msgstr ""
+
+msgid "Journal"
+msgstr ""
+
+msgid "Just A Dollar"
+msgstr ""
+
+msgid "Keep %s"
+msgstr ""
+
+msgid "LAND USE"
+msgstr ""
+
+msgid "Land value"
+msgstr ""
+
+msgid "Landscape"
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Large"
+msgstr ""
+
+msgid "Launch Arcology"
+msgstr ""
+
+msgid "Layer name"
+msgstr ""
+
+msgid "Layers"
+msgstr ""
+
+msgid "Left wall"
+msgstr ""
+
+msgid "Level Terrain"
+msgstr ""
+
+msgid "Library"
+msgstr ""
+
+msgid "Light Commercial"
+msgstr ""
+
+msgid "Light Industrial"
+msgstr ""
+
+msgid "Light Residential"
+msgstr ""
+
+msgid "Light Theme"
+msgstr ""
+
+msgid "Line"
+msgstr ""
+
+msgid "Llama"
+msgstr ""
+
+msgid "Load Tile Set"
+msgstr ""
+
+msgid "Loaded %s. Map view: %s."
+msgstr ""
+
+msgid "Locate"
+msgstr ""
+
+msgid "Location"
+msgstr ""
+
+msgid "Lock transparent pixels"
+msgstr ""
+
+msgid "Locked"
+msgstr ""
+
+msgid "Lower Sea Level"
+msgstr ""
+
+msgid "Lower Terrain"
+msgstr ""
+
+msgid "Magnification"
+msgstr ""
+
+msgid "Main Menu"
+msgstr ""
+
+msgid "Make a random city name."
+msgstr ""
+
+msgid "Make new terrain with the same settings."
+msgstr ""
+
+msgid "Map"
+msgstr ""
+
+msgid "Map Size"
+msgstr ""
+
+msgid "Map view: %s"
+msgstr ""
+
+msgid "Marina"
+msgstr ""
+
+msgid "Mass Floods"
+msgstr ""
+
+msgid "Mass Riots"
+msgstr ""
+
+msgid "Mayor"
+msgstr ""
+
+msgid "Mayor Name"
+msgstr ""
+
+msgid "Mayor Name:"
+msgstr ""
+
+msgid "Mayor name"
+msgstr ""
+
+msgid "Mayor's House"
+msgstr ""
+
+msgid "Media"
+msgstr ""
+
+msgid "Medium"
+msgstr ""
+
+msgid "Medium — $10,000"
+msgstr ""
+
+msgid "Meltdown"
+msgstr ""
+
+msgid "Merely Five Bucks"
+msgstr ""
+
+msgid "Microwave"
+msgstr ""
+
+msgid "Microwave Power Plant"
+msgstr ""
+
+msgid "Military"
+msgstr ""
+
+msgid "MisSim's Advice"
+msgstr ""
+
+msgid "Misc"
+msgstr ""
+
+msgid ""
+"Mixed rates stay unchanged until you edit the group. History shows recorded "
+"and projected months."
+msgstr ""
+
+msgid "Monster"
+msgstr ""
+
+msgid "Move layer down"
+msgstr ""
+
+msgid "Move layer up"
+msgstr ""
+
+msgid "Moving things"
+msgstr ""
+
+msgid "Museum"
+msgstr ""
+
+msgid "Music"
+msgstr ""
+
+msgid "Music SoundFont"
+msgstr ""
+
+msgid "Music pack"
+msgstr ""
+
+msgid "Must be built on an unused waterfall tile."
+msgstr ""
+
+msgid "Nat'n Pop."
+msgstr ""
+
+msgid "Nat'n Pop. graph (n)"
+msgstr ""
+
+msgid "Nat. Pop: %d000"
+msgstr ""
+
+msgid "Neighbors"
+msgstr ""
+
+msgid "Networks"
+msgstr ""
+
+msgid "New City"
+msgstr ""
+
+msgid "Newspaper"
+msgstr ""
+
+msgid "Newspaper %s %s."
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "No Disasters"
+msgstr ""
+
+msgid "No Disasters %s."
+msgstr ""
+
+msgid "No age limit"
+msgstr ""
+
+msgid "No city loaded"
+msgstr ""
+
+msgid "Nominal output: %d MW"
+msgstr ""
+
+msgid "None"
+msgstr ""
+
+msgid "Not yet available."
+msgstr ""
+
+msgid "Notes"
+msgstr ""
+
+msgid "Nuclear Power Plant"
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "Object Group"
+msgstr ""
+
+msgid "Object Selector"
+msgstr ""
+
+msgid "Object details"
+msgstr ""
+
+msgid "Ocean"
+msgstr ""
+
+msgid "Off"
+msgstr ""
+
+msgid "Oil Power Plant"
+msgstr ""
+
+msgid "On"
+msgstr ""
+
+msgid "On-ramp"
+msgstr ""
+
+msgid "One Cent"
+msgstr ""
+
+msgid "One Dollar"
+msgstr ""
+
+msgid "Only A Nickel"
+msgstr ""
+
+msgid "Open"
+msgstr ""
+
+msgid "Open City"
+msgstr ""
+
+msgid "Open the %s tab"
+msgstr ""
+
+msgid "OpenSC2K Settings"
+msgstr ""
+
+msgid "Opinion"
+msgstr ""
+
+msgid "Opinion Poll"
+msgstr ""
+
+msgid "Optional tile name"
+msgstr ""
+
+msgid "Options"
+msgstr ""
+
+msgid "Ordinance changes take effect immediately. Cancel does not undo them."
+msgstr ""
+
+msgid "Ordinances"
+msgstr ""
+
+msgid "Original"
+msgstr ""
+
+msgid "Output"
+msgstr ""
+
+msgid ""
+"Outstanding: %s   ·   Credit: %s   ·   Bank rate: %d%%   ·   Next bond: %d%%"
+"   ·   City value: %s"
+msgstr ""
+
+msgid "Overcast"
+msgstr ""
+
+msgid "Overview"
+msgstr ""
+
+msgid "Packs active. Imported %d cities and %d scenarios."
+msgstr ""
+
+msgid "Paste"
+msgstr ""
+
+msgid "Paste on New Layer"
+msgstr ""
+
+msgid "Pause"
+msgstr ""
+
+msgid "Petrochemical"
+msgstr ""
+
+msgid "Picayune"
+msgstr ""
+
+msgid "Pipes"
+msgstr ""
+
+msgid "Pixel resolution"
+msgstr ""
+
+msgid "Pixel-perfect pencil"
+msgstr ""
+
+msgid "Place & Print Work Area"
+msgstr ""
+
+msgid "Place Forest"
+msgstr ""
+
+msgid "Place Sign"
+msgstr ""
+
+msgid "Place Stream"
+msgstr ""
+
+msgid "Plane Crash"
+msgstr ""
+
+msgid "Play Scenario"
+msgstr ""
+
+msgid "Play a click sound when you select a toolbar or main menu button."
+msgstr ""
+
+msgid ""
+"Play all 19 tracks, including menu and special music, once per shuffle "
+"cycle."
+msgstr ""
+
+msgid "Play interface sounds"
+msgstr ""
+
+msgid "Play music and sounds in background"
+msgstr ""
+
+msgid "Plymouth Arcology"
+msgstr ""
+
+msgid "Police"
+msgstr ""
+
+msgid "Police Station"
+msgstr ""
+
+msgid ""
+"Police coverage scales with funding and the prison bonus. Unpowered stations"
+" have half strength. Coverage reduces local crime."
+msgstr ""
+
+msgid ""
+"Police, fire protection, schools and health services depend on facilities "
+"and their funding. The city maps show local coverage. The Budget window lets"
+" the mayor review service spending, while Query provides details for "
+"individual facilities."
+msgstr ""
+
+msgid "Pollution"
+msgstr ""
+
+msgid "Pollution factor: %d"
+msgstr ""
+
+msgid "Pollution graph (P)"
+msgstr ""
+
+msgid "Population"
+msgstr ""
+
+msgid "Population: %s"
+msgstr ""
+
+msgid "Population: --"
+msgstr ""
+
+msgid "Ports"
+msgstr ""
+
+msgid "Power"
+msgstr ""
+
+msgid "Power %"
+msgstr ""
+
+msgid "Power % graph (p)"
+msgstr ""
+
+msgid "Power Lines"
+msgstr ""
+
+msgid "Power Plants"
+msgstr ""
+
+msgid "Powered"
+msgstr ""
+
+msgid "Preview in Context..."
+msgstr ""
+
+msgid "Preview in context"
+msgstr ""
+
+msgid "Preview size"
+msgstr ""
+
+msgid "Previous"
+msgstr ""
+
+msgid "Price $1"
+msgstr ""
+
+msgid "Price $5"
+msgstr ""
+
+msgid "Price 1¢"
+msgstr ""
+
+msgid "Price 25¢"
+msgstr ""
+
+msgid "Price 5¢"
+msgstr ""
+
+msgid "Print City..."
+msgstr ""
+
+msgid "Print What"
+msgstr ""
+
+msgid "Prints of the City"
+msgstr ""
+
+msgid "Prison"
+msgstr ""
+
+msgid ""
+"Prison facilities contribute to the police-strength bonus. Query shows "
+"annual prison statistics."
+msgstr ""
+
+msgid "Project title"
+msgstr ""
+
+msgid "Projected"
+msgstr ""
+
+msgid "Property Taxes"
+msgstr ""
+
+msgid "Property taxes"
+msgstr ""
+
+msgid "Query"
+msgstr ""
+
+msgid "Query — %s"
+msgstr ""
+
+msgid "Rail"
+msgstr ""
+
+msgid "Rail Depot"
+msgstr ""
+
+msgid "Rain"
+msgstr ""
+
+msgid "Raise Sea Level"
+msgstr ""
+
+msgid "Raise Terrain"
+msgstr ""
+
+msgid "Rate: %d%%"
+msgstr ""
+
+msgid "Ratios"
+msgstr ""
+
+msgid "Ready."
+msgstr ""
+
+msgid ""
+"Recorded months use saved costs and rates. Projected months use the proposed"
+" budget."
+msgstr ""
+
+msgid "Recover Autosave"
+msgstr ""
+
+msgid "Recover SCURK project"
+msgstr ""
+
+msgid "Recreation"
+msgstr ""
+
+msgid ""
+"Recreation facility. Choose the team name after placement. Query shows "
+"annual attendance and financial statistics."
+msgstr ""
+
+msgid "Redo"
+msgstr ""
+
+msgid "Reduced"
+msgstr ""
+
+msgid "Regenerate Terrain"
+msgstr ""
+
+msgid "Removed the last building and restored %d tiles."
+msgstr ""
+
+msgid "Rename"
+msgstr ""
+
+msgid "Rename City"
+msgstr ""
+
+msgid "Rename Tile"
+msgstr ""
+
+msgid "Renderer"
+msgstr ""
+
+msgid "Repaid the oldest $10,000 bond at %d%%."
+msgstr ""
+
+msgid "Repay oldest bond…"
+msgstr ""
+
+msgid "Repay the oldest $10,000 bond at %d%%?"
+msgstr ""
+
+msgid "Replace Color"
+msgstr ""
+
+msgid "Replace color"
+msgstr ""
+
+msgid ""
+"Requires power and pipes. Each adjacent salt-water tile adds 20 supply "
+"units. Coastal placement improves output."
+msgstr ""
+
+msgid ""
+"Requires power and pipes. Output depends on weather and nearby water; each "
+"adjacent fresh-water tile adds 10 supply units."
+msgstr ""
+
+msgid "Reset Controls"
+msgstr ""
+
+msgid "Reset all controls?"
+msgstr ""
+
+msgid "Resident Age"
+msgstr ""
+
+msgid "Residential"
+msgstr ""
+
+msgid "Residents"
+msgstr ""
+
+msgid ""
+"Residents are concerned about %s. The mayor can review current city "
+"conditions in the graphs and city maps."
+msgstr ""
+
+msgid "Residents graph (R)"
+msgstr ""
+
+msgid "Restore Original Tile Set"
+msgstr ""
+
+msgid "Restored %d demolished tiles and the previous funds value."
+msgstr ""
+
+msgid "Restored %d landscape actions and the previous funds value."
+msgstr ""
+
+msgid "Restored %d terrain tiles and the previous funds value."
+msgstr ""
+
+msgid "Restored %d tiles and the previous funds value."
+msgstr ""
+
+msgid "Restored the previous highway route across %d tiles."
+msgstr ""
+
+msgid "Restored the previous route across %d tiles."
+msgstr ""
+
+msgid "Return every keyboard and mouse binding to its default"
+msgstr ""
+
+msgid "Revert Object"
+msgstr ""
+
+msgid "Revert name"
+msgstr ""
+
+msgid "Review income, services and the year-end forecast."
+msgstr ""
+
+msgid "Rewards"
+msgstr ""
+
+msgid "Right wall"
+msgstr ""
+
+msgid "Riot"
+msgstr ""
+
+msgid "River"
+msgstr ""
+
+msgid "Road"
+msgstr ""
+
+msgid "Roads"
+msgstr ""
+
+msgid "Roads & transit"
+msgstr ""
+
+msgid ""
+"Roads, rail and subway routes connect neighborhoods with jobs. Gaps and "
+"disconnected stations can prevent trips. The City Map transport views show "
+"where the network is busy and where better connections may help."
+msgstr ""
+
+msgid "Rotate Clockwise"
+msgstr ""
+
+msgid "Rotate Counter-Clockwise"
+msgstr ""
+
+msgid "Round"
+msgstr ""
+
+msgid "Round brush"
+msgstr ""
+
+msgid ""
+"Run the game in full screen mode when enabled, otherwise run in a resizable "
+"window."
+msgstr ""
+
+msgid "SCURK Place & Print"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Save As"
+msgstr ""
+
+msgid "Save City"
+msgstr ""
+
+msgid "Save City As"
+msgstr ""
+
+msgid "Save Printable PDF..."
+msgstr ""
+
+msgid "Save SCURK project"
+msgstr ""
+
+msgid "Save selection"
+msgstr ""
+
+msgid "Save tile set"
+msgstr ""
+
+msgid "Saved city: %s"
+msgstr ""
+
+msgid "Saved reports are unavailable."
+msgstr ""
+
+msgid "Saving city: %s"
+msgstr ""
+
+msgid "Scenario"
+msgstr ""
+
+msgid "Scenario Goals"
+msgstr ""
+
+msgid "School"
+msgstr ""
+
+msgid "Seaport"
+msgstr ""
+
+msgid "Select %s"
+msgstr ""
+
+msgid "Select %s pack.json"
+msgstr ""
+
+msgid "Select All"
+msgstr ""
+
+msgid "Select Bridge"
+msgstr ""
+
+msgid "Select Building"
+msgstr ""
+
+msgid "Select Stadium Team"
+msgstr ""
+
+msgid "Select Tile"
+msgstr ""
+
+msgid "Select a SoundFont"
+msgstr ""
+
+msgid "Select a bridge for %d %s."
+msgstr ""
+
+msgid "Select a bridge type."
+msgstr ""
+
+msgid "Select a building type."
+msgstr ""
+
+msgid "Select an object."
+msgstr ""
+
+msgid "Select an unused team and edit its name."
+msgstr ""
+
+msgid "Select the print options."
+msgstr ""
+
+msgid "Selected Group"
+msgstr ""
+
+msgid "Selected Pages"
+msgstr ""
+
+msgid "Service life: %s"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Settings applied, but the settings file could not be saved."
+msgstr ""
+
+msgid "Settings saved."
+msgstr ""
+
+msgid "Show Buildings"
+msgstr ""
+
+msgid "Show Networks"
+msgstr ""
+
+msgid "Show Pipes"
+msgstr ""
+
+msgid "Show Scenario Goals"
+msgstr ""
+
+msgid "Show Signs"
+msgstr ""
+
+msgid "Show Subways"
+msgstr ""
+
+msgid "Show Trees"
+msgstr ""
+
+msgid "Show Tunnels"
+msgstr ""
+
+msgid "Show Vehicles"
+msgstr ""
+
+msgid "Show Water"
+msgstr ""
+
+msgid "Show Water Mains"
+msgstr ""
+
+msgid "Show all views"
+msgstr ""
+
+msgid "Show clip region"
+msgstr ""
+
+msgid "Show differences only"
+msgstr ""
+
+msgid "Show grid"
+msgstr ""
+
+msgid "Show individual tax and funding rates"
+msgstr ""
+
+msgid "Show monthly history for %s"
+msgstr ""
+
+msgid ""
+"Show or hide airplanes, helicopters, ships, boats and trains. Hidden "
+"vehicles make no sound and cannot crash."
+msgstr ""
+
+msgid "Show or hide buildings in the city view."
+msgstr ""
+
+msgid "Show or hide networks in the city view."
+msgstr ""
+
+msgid "Show or hide pipes beneath buildings in the underground view."
+msgstr ""
+
+msgid "Show or hide road tunnels in the underground view."
+msgstr ""
+
+msgid "Show or hide signs in the city view."
+msgstr ""
+
+msgid "Show or hide subways in the underground view."
+msgstr ""
+
+msgid "Show or hide trees in the city view."
+msgstr ""
+
+msgid "Show or hide water in the city view."
+msgstr ""
+
+msgid "Show or hide water mains in the underground view."
+msgstr ""
+
+msgid "Show terrain"
+msgstr ""
+
+msgid "Show terrain height and transparent water."
+msgstr ""
+
+msgid "Show the city isometric view."
+msgstr ""
+
+msgid "Show the underground isometric view."
+msgstr ""
+
+msgid "Shuffle all music"
+msgstr ""
+
+msgid "Sign saved as label %d."
+msgstr ""
+
+msgid "Signs"
+msgstr ""
+
+msgid "SimNation"
+msgstr ""
+
+msgid "Simulation stopped: %s"
+msgstr ""
+
+msgid "Size"
+msgstr ""
+
+msgid ""
+"Size of menus, windows, and text. 2.0 is the standard size. Smaller values "
+"show more of the city. The city map keeps its own sharp pixel size."
+msgstr ""
+
+msgid "Small"
+msgstr ""
+
+msgid "Small Park"
+msgstr ""
+
+msgid "Snap lines"
+msgstr ""
+
+msgid "Snap shapes"
+msgstr ""
+
+msgid "Snow"
+msgstr ""
+
+msgid "Solar Power Plant"
+msgstr ""
+
+msgid "Sound Effects"
+msgstr ""
+
+msgid "Sound pack"
+msgstr ""
+
+msgid "Sounds"
+msgstr ""
+
+msgid "Spacing"
+msgstr ""
+
+msgid "Spacing (pixels)"
+msgstr ""
+
+msgid "Special"
+msgstr ""
+
+msgid "Speed"
+msgstr ""
+
+msgid "Speed: %s"
+msgstr ""
+
+msgid "Speed: --"
+msgstr ""
+
+msgid "Square"
+msgstr ""
+
+msgid "Stadium"
+msgstr ""
+
+msgid "Stamp name"
+msgstr ""
+
+msgid "Start City"
+msgstr ""
+
+msgid "Start New City"
+msgstr ""
+
+msgid "Starting Year"
+msgstr ""
+
+msgid "Statue"
+msgstr ""
+
+msgid "Status: Not available in this city."
+msgstr ""
+
+msgid "Steel/Mining"
+msgstr ""
+
+msgid "Still A Quarter"
+msgstr ""
+
+msgid ""
+"Stores 100 water units per tower tile. Stores surplus supply and releases "
+"stored water when needed. Requires a pipe connection."
+msgstr ""
+
+msgid "Stretch Terrain"
+msgstr ""
+
+msgid "Subscription"
+msgstr ""
+
+msgid "Subway"
+msgstr ""
+
+msgid "Subway Station"
+msgstr ""
+
+msgid "Subway-to-Rail Connection"
+msgstr ""
+
+msgid "Subways"
+msgstr ""
+
+msgid ""
+"Supports education and city services. Query shows the annual museum "
+"statistic."
+msgstr ""
+
+msgid ""
+"Supports education. Query shows its annual education statistic. Ruminate "
+"opens the library reports."
+msgstr ""
+
+msgid "Survey"
+msgstr ""
+
+msgid "Tax Rates"
+msgstr ""
+
+msgid "Taxes"
+msgstr ""
+
+msgid "Team name"
+msgstr ""
+
+msgid "Technical details"
+msgstr ""
+
+msgid "Terrain"
+msgstr ""
+
+msgid "Terrain Preview"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Textiles"
+msgstr ""
+
+msgid "Textures"
+msgstr ""
+
+msgid "The Nuclear-Free ordinance disables this plant."
+msgstr ""
+
+msgid ""
+"The city treasury holds $%d. Construction draws from this balance, while "
+"taxes and service spending affect the annual budget. The Budget window "
+"contains current funding levels and projected totals."
+msgstr ""
+
+msgid ""
+"The first year of the city. The year sets the buildings and inventions that "
+"you can use."
+msgstr ""
+
+msgid "The mayor name for new cities."
+msgstr ""
+
+msgid "The money at the start. Difficulty also sets the national economy."
+msgstr ""
+
+msgid "The name of the city."
+msgstr ""
+
+msgid "The name of the mayor."
+msgstr ""
+
+msgid "The volume of the music."
+msgstr ""
+
+msgid "The volume of the sound effects."
+msgstr ""
+
+msgid "Theme"
+msgstr ""
+
+msgid ""
+"These imported packs are missing or out of date: %s.\n"
+"\n"
+msgstr ""
+
+msgid "This plant becomes available after its invention."
+msgstr ""
+
+msgid "Tile Inspector"
+msgstr ""
+
+msgid "Tile name"
+msgstr ""
+
+msgid "Time Scale"
+msgstr ""
+
+msgid "Times"
+msgstr ""
+
+msgid "To palette index"
+msgstr ""
+
+msgid "Today's Weather"
+msgstr ""
+
+msgid "Tornado"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Tourism"
+msgstr ""
+
+msgid "Toxic Spill"
+msgstr ""
+
+msgid "Traffic"
+msgstr ""
+
+msgid "Traffic graph (T)"
+msgstr ""
+
+msgid "Translucent interface"
+msgstr ""
+
+msgid "Transportation"
+msgstr ""
+
+msgid "Treasury"
+msgstr ""
+
+msgid "Treasury reports $%d"
+msgstr ""
+
+msgid ""
+"Treats 2,000 watered consumers per plant. Sufficient treatment improves the "
+"pollution calculation. It does not generate water."
+msgstr ""
+
+msgid "Trees"
+msgstr ""
+
+msgid "Trip Query"
+msgstr ""
+
+msgid "Tunnel"
+msgstr ""
+
+msgid "Tunnels"
+msgstr ""
+
+msgid "Tunnels %s."
+msgstr ""
+
+msgid "Turn to pg %d for the full column"
+msgstr ""
+
+msgid "Turn to pg %d for the full forecast"
+msgstr ""
+
+msgid "Turn to pg %d for the full story"
+msgstr ""
+
+msgid "Turtle"
+msgstr ""
+
+msgid "Twenty-Five Cents"
+msgstr ""
+
+msgid "UI scale"
+msgstr ""
+
+msgid "Unavailable"
+msgstr ""
+
+msgid "Underground"
+msgstr ""
+
+msgid "Underground View"
+msgstr ""
+
+msgid "Underground pipes %s."
+msgstr ""
+
+msgid "Underground subways %s."
+msgstr ""
+
+msgid "Undo"
+msgstr ""
+
+msgid "Unemployment"
+msgstr ""
+
+msgid "Unemployment graph (u)"
+msgstr ""
+
+msgid "Unsaved SCURK changes"
+msgstr ""
+
+msgid "Use Defaults"
+msgstr ""
+
+msgid ""
+"Use cool slate colors, clean greens, and softer shading while keeping the "
+"original shapes."
+msgstr ""
+
+msgid "Use light or dark colors for menus and windows."
+msgstr ""
+
+msgid "Use this budget automatically next year"
+msgstr ""
+
+msgid ""
+"Use this renderer now and for new cities. If GPU setup fails, use the CPU "
+"renderer."
+msgstr ""
+
+msgid "Use translucent backgrounds with a frosted glass effect."
+msgstr ""
+
+msgid "Value"
+msgstr ""
+
+msgid "Value graph (V)"
+msgstr ""
+
+msgid "Varies with altitude and wind"
+msgstr ""
+
+msgid "Vehicles"
+msgstr ""
+
+msgid "Vehicles %s."
+msgstr ""
+
+msgid "View"
+msgstr ""
+
+msgid "View layers"
+msgstr ""
+
+msgid "Visible Layers"
+msgstr ""
+
+msgid "Volcano"
+msgstr ""
+
+msgid "Water"
+msgstr ""
+
+msgid "Water %"
+msgstr ""
+
+msgid "Water % graph (w)"
+msgstr ""
+
+msgid "Water Pipes"
+msgstr ""
+
+msgid "Water Pump"
+msgstr ""
+
+msgid "Water Tower"
+msgstr ""
+
+msgid "Water Treatment Plant"
+msgstr ""
+
+msgid "Water mains"
+msgstr ""
+
+msgid "Water mains %s."
+msgstr ""
+
+msgid "Water: %s tiles   Trees: %s tiles   Height: %s–%s"
+msgstr ""
+
+msgid "Watered"
+msgstr ""
+
+msgid "Weather"
+msgstr ""
+
+msgid "Weather Corner"
+msgstr ""
+
+msgid "Weather Forecast"
+msgstr ""
+
+msgid "Weather Report"
+msgstr ""
+
+msgid "Weather Talk"
+msgstr ""
+
+msgid "Weather with Merle"
+msgstr ""
+
+msgid "Weather: %s"
+msgstr ""
+
+msgid "Weather: --"
+msgstr ""
+
+msgid "Width"
+msgstr ""
+
+msgid "Wind Power Plant"
+msgstr ""
+
+msgid "Windows"
+msgstr ""
+
+msgid "Windy"
+msgstr ""
+
+msgid "Work Force %% = %d"
+msgstr ""
+
+msgid "Work Force EQ = %d"
+msgstr ""
+
+msgid "Work Force LE = %d"
+msgstr ""
+
+msgid "Workspace"
+msgstr ""
+
+msgid "X offset"
+msgstr ""
+
+msgid "Y offset"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "Zones"
+msgstr ""
+
+msgid "Zoo"
+msgstr ""
+
+msgid "Zoom In (E / +)"
+msgstr ""
+
+msgid "Zoom Out (Q / -)"
+msgstr ""
+
+msgid "Zoom: %d%%"
+msgstr ""
+
+msgid "Zoom: 100%"
+msgstr ""
+
+msgid "crime"
+msgstr ""
+
+msgid "data"
+msgstr ""
+
+msgid "disabled"
+msgstr ""
+
+msgid "education"
+msgstr ""
+
+msgid "enabled"
+msgstr ""
+
+msgid "extra editions"
+msgstr ""
+
+msgid "graphics"
+msgstr ""
+
+msgid "health"
+msgstr ""
+
+msgid "hidden"
+msgstr ""
+
+msgid "music"
+msgstr ""
+
+msgid "pollution"
+msgstr ""
+
+msgid "shown"
+msgstr ""
+
+msgid "sound"
+msgstr ""
+
+msgid "subscription"
+msgstr ""
+
+msgid "taxes"
+msgstr ""
+
+msgid "tile"
+msgstr ""
+
+msgid "tiles"
+msgstr ""
+
+msgid "traffic"
+msgstr ""
+
+msgid "unemployment"
+msgstr ""
+
+msgid "water tile"
+msgstr ""
+
+msgid "water tiles"
+msgstr ""
+
+msgctxt "budget"
+msgid "Police"
+msgstr ""
+
+msgctxt "budget"
+msgid "Fire"
+msgstr ""
+
+msgctxt "budget"
+msgid "Health"
+msgstr ""
+
+msgid "A neighborhood watch program would take a bite out of crime."
+msgstr ""
+
+msgid "A public smoking ban would benefit everyone."
+msgstr ""
+
+msgid "Annual Budget"
+msgstr ""
+
+msgid "Annual interest"
+msgstr ""
+
+msgid "April"
+msgstr ""
+
+msgid "Ask the bond advisor"
+msgstr ""
+
+msgid "August"
+msgstr ""
+
+msgid "Bridge"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Crime is out of control.  We need more police stations."
+msgstr ""
+
+msgid "Current funds"
+msgstr ""
+
+msgid "Current health care is adequate to our needs."
+msgstr ""
+
+msgid "Cut back on City Services to cover the budget deficit."
+msgstr ""
+
+msgid "Cut back on services until our funds increase."
+msgstr ""
+
+msgid "December"
+msgstr ""
+
+msgid "Educational services are adequate to our city's need."
+msgstr ""
+
+msgid "February"
+msgstr ""
+
+msgid "Funds after settlement"
+msgstr ""
+
+msgid "General CPR training will assuredly save lives."
+msgstr ""
+
+msgid "Hospital services are trim, efficient and responsive."
+msgstr ""
+
+msgid "I have no advice at this time."
+msgstr ""
+
+msgid "I'm proud to report that crime is at an all time low."
+msgstr ""
+
+msgid "Interest"
+msgstr ""
+
+msgid "Interest rate"
+msgstr ""
+
+msgid "Issue Bond"
+msgstr ""
+
+msgid "January"
+msgstr ""
+
+msgid "July"
+msgstr ""
+
+msgid "June"
+msgstr ""
+
+msgid "Legalized Gambling has attracted an upleasant element."
+msgstr ""
+
+msgid "Let's raise taxes to increase total funds."
+msgstr ""
+
+msgid "March"
+msgstr ""
+
+msgid "May"
+msgstr ""
+
+msgid "Mixed"
+msgstr ""
+
+msgid "Mixed rates"
+msgstr ""
+
+msgid "Month"
+msgstr ""
+
+msgid "Monthly history"
+msgstr ""
+
+msgid "November"
+msgstr ""
+
+msgid "October"
+msgstr ""
+
+msgid "Ordinance income and costs"
+msgstr ""
+
+msgid "Our crime rate is comparable to the national average."
+msgstr ""
+
+msgid "Our fire coverage is excellent."
+msgstr ""
+
+msgid "Our fire response is adequate."
+msgstr ""
+
+msgid "Principal"
+msgstr ""
+
+msgid "Projected annual flow"
+msgstr ""
+
+msgid "Rate"
+msgstr ""
+
+msgid "Rate / funding"
+msgstr ""
+
+msgid "Rates are good right now.  Float a bond to take advantage."
+msgstr ""
+
+msgid "Recorded"
+msgstr ""
+
+msgid "Repay Bond"
+msgstr ""
+
+msgid "Review income, service funding and the year-end forecast."
+msgstr ""
+
+msgid "Review last year’s totals."
+msgstr ""
+
+msgid "Running total"
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "The people are asking for a pollution ordinance."
+msgstr ""
+
+msgid "The power plants are overworked.  Let's push energy conservation."
+msgstr ""
+
+msgid "The transit lanes are inadequate.  Float a bond and build more."
+msgstr ""
+
+msgid "These outstanding bonds are killing us.  Raise taxes to pay them off."
+msgstr ""
+
+msgid "This city needs more firemen."
+msgstr ""
+
+msgid "We could use more hospitals."
+msgstr ""
+
+msgid "We have too many roads.  Remove some to save on maintenance."
+msgstr ""
+
+msgid "We need an Anti-Drug campaign to help our kids."
+msgstr ""
+
+msgid "We need more adequately funded colleges."
+msgstr ""
+
+msgid "We need more adequately funded grade schools."
+msgstr ""
+
+msgid "We should float a bond to pay for city expansion."
+msgstr ""
+
+msgid "While expensive, Free Clinics will make you popular."
+msgstr ""
+
+msgid "YOU CAN'T CUT BACK ON FUNDING!  YOU WILL REGRET THIS!"
+msgstr ""
+
+msgid "Year to date"
+msgstr ""
+
+msgid "Year-end cash flow"
+msgstr ""
+
+msgid "Year-end estimate"
+msgstr ""
+
+msgid "Year-end funds"
+msgstr ""
+
+msgid "You should drop the 1% income tax to give Residents a break."
+msgstr ""
+
+msgid "You should drop the 1% sales tax to give Commerce a break."
+msgstr ""
+
+msgid "You should lower taxes to encourage growth."
+msgstr ""
+
+msgid "{city} · {month} {year}"
+msgstr ""
+
+msgid "Cannot build here: %s"
+msgstr ""
+
+msgid "Clear the existing structure first."
+msgstr ""
+
+msgid "Hydroelectric power requires a waterfall tile."
+msgstr ""
+
+msgid "Insufficient funds for this tunnel."
+msgstr ""
+
+msgid "Insufficient funds."
+msgstr ""
+
+msgid "Select a tile inside the map."
+msgstr ""
+
+msgid "The 2 by 2 highway section extends outside the map."
+msgstr ""
+
+msgid "The object footprint extends outside the map."
+msgstr ""
+
+msgid "Raised Wires"
+msgstr ""
+
+msgid "Rail Bridge"
+msgstr ""
+
+msgid "Causeway"
+msgstr ""
+
+msgid "Raising Bridge"
+msgstr ""
+
+msgid "Suspension Bridge"
+msgstr ""
+
+msgid "Highway Bridge"
+msgstr ""
+
+msgid "Reinforced Bridge"
+msgstr ""
+
+msgid "Unknown Bridge"
+msgstr ""
+
+msgid "Meandering River"
+msgstr ""
+
+msgid "River Delta"
+msgstr ""
+
+msgid "Peninsula"
+msgstr ""
+
+msgid "Intersecting rivers"
+msgstr ""
+
+msgid "Forked River"
+msgstr ""
+
+msgid "Split and rejoin river"
+msgstr ""
+
+msgid "Ocean bay"
+msgstr ""
+
+msgid "Single Island"
+msgstr ""
+
+msgid "Two islands"
+msgstr ""
+
+msgid "Plateau"
+msgstr ""
+
+msgid "Mountain Ridge"
+msgstr ""
+
+msgid "River Valley"
+msgstr ""
+
+msgid "Rolling Hills"
+msgstr ""
+
+msgid "Basin"
+msgstr ""
+
+msgid "Canyon"
+msgstr ""
+
+msgid "Coastal Cliffs"
+msgstr ""
+
+msgid "Single Lake"
+msgstr ""
+
+msgid "Two Lakes"
+msgstr ""
+
+msgid "Maintain SimCity 2000 Compatibility"
+msgstr ""
+
+msgid "Hold the right mouse button to hide this dialog."
+msgstr ""
+
+msgid ""
+"This patch requires complete imported graphics, game data, sound and music.\n"
+"\n"
+"%s\n"
+"\n"
+"Choose OK to import your original game resources."
+msgstr ""
+
+msgid "NEWSPAPER"
+msgstr ""
+
+msgid "Zoom: %s%%"
+msgstr ""
+
+msgid "HD sprite"
+msgstr ""
+
+msgid "HD sprite pack"
+msgstr ""
+
+msgid ""
+"The language of menus and windows. Original game text, such as newspapers, "
+"uses the language of the imported game."
+msgstr ""
+
+msgid ""
+"The pack.json file of an HD sprite pack. It replaces the look of the city "
+"sprites with full-color art. The GPU renderer shows it. Leave this empty to "
+"show the sprites of the graphics pack."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Unused"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Filter records, fields, or values…"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Include empty"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Live refresh"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Refresh now"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Console"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Large x2"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Show the background terrain beneath the artwork."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Compare with saved artwork. Hold Backslash for a quick view of the saved "
+"artwork."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Open SCURK project or tile set"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Import indexed PNG, GIF, or BMP"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "SCURK error"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Indexed formats keep the palette indices. The animated GIF shows the palette"
+" color cycle."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Generate smaller sizes"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Generate from the Large artwork:"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Medium (half size)"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Small (quarter size)"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Replaces artwork and layers in the selected sizes.\n"
+"You can edit the results or undo generation."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Pencil: [ / ] size, hold Alt/Option to pick a color"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Pick color: hold Alt/Option with any painting tool"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Shade along the palette ramp: click to lighten, Shift-click to darken"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Stamp brush: choose a stamp in the Stamps tab"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Rectangle selection: Shift adds, Ctrl/Cmd subtracts"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Lasso selection: Shift adds, Ctrl/Cmd subtracts"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Magic wand: select connected palette colors"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Move selection: drag or use arrow keys; Shift moves 10 pixels"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Rotate selection counterclockwise"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Rotate selection clockwise"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Flip selection horizontally"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Flip selection vertically"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Fit canvas; Space-drag or middle-drag pans; wheel zooms at the cursor"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Constrain lines to horizontal, vertical, or 2:1 isometric directions."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Preserve the active layer silhouette when painting, erasing, or editing a "
+"selection. New-layer paste is not affected."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Remove extra corner pixels from a 1-pixel pencil stroke."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Shift-click palette colors from dark to light to build a shade ramp."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Choose all, used, recent, or favorite colors, or the ordered shade ramp.\n"
+"Shift-click colors from dark to light to build a ramp.\n"
+"Ctrl/Cmd-click a color to add or remove a favorite."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Clear the shade ramp. Shift-click palette colors from dark to light to build"
+" a new ramp."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Step"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Uses the selection when one is active. Locked layers stay unchanged."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Pick & Copy..."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Generate Smaller Sizes..."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Open a source MIF file. Its graphics are copied into the working set."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Open Source Tileset"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Off: copy matching tile IDs. On: choose one source and any destination with "
+"the same map footprint, such as 3×3."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Compare matching tile IDs in both tilesets. Show tiles whose graphics differ"
+" in Large, Medium, or Small."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Show changed pixels in pink in the bottom comparison. Compare palette "
+"indices and transparency, with sprites aligned at their bottom center."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "1. Source — select graphics to copy"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "2. Working — matching objects to replace"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Select source objects to preview their matching replacements."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Preview the previous selected object."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Preview the next selected object."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Differences found in other tile sizes."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Replace the matching working objects in all three sizes. You can undo this "
+"change."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Replace all matching objects in this group, in all three sizes."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Open Source Graphics (MIF)"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Select an object. Then click its anchor tile in the city. SCURK placement "
+"does not use city funds or normal development gates."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Select the saved zone type for transitional Residential, Commercial, or "
+"Industrial objects. Other objects use their fixed zone type."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Orientation"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Place the object as a mirror image."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Flip"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Export BMP..."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Choose the city pages, detail, view, layers, and output color."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Import the original game files\n"
+"to see the scene."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Keep autosaves of the last 10 minutes"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"An SF2, SF3 or DLS General MIDI SoundFont file. OpenSC2K reads it in place "
+"and does not copy or change it."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "SF2, SF3 or DLS file"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Show the art of the HD graphics pack. Load an HD graphics pack in the Data "
+"tab to use it."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "HD graphics"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "sc2kfix sprite corrections"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"The pack.json file of a data pack. The data pack supplies text, newspapers, "
+"the city template, cities, and scenarios. Leave this empty to use the "
+"imported data pack."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Automatic (user://packs/data/pack.json)"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"The pack.json file of a graphics pack. Leave this empty to use the imported "
+"graphics pack."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Automatic (user://packs/graphics/pack.json)"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"The pack.json file of a sound pack. Leave this empty to use the imported "
+"sound pack."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Automatic (user://packs/sound/pack.json)"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"The pack.json file of a music pack. Leave this empty to use the imported "
+"music pack."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Automatic (user://packs/music/pack.json)"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Import graphics, sounds, music, and game data from your copy of SimCity "
+"2000."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Choose an installed game folder, a macOS .app, extracted game files, or a "
+"mounted game disc. Install GOG downloads first. Select all asset types or "
+"only those you want. Each import creates separate packs. Other packs stay "
+"active."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Text, newspapers, the city template, cities, and scenarios."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Importing… Please keep this window open."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Imported packs and any missing assets will be listed here."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Update Available"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Save Changes"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Detail"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Original sprites, or the art of the HD sprite pack at 1, 2 or 4 image pixels"
+" for each pixel of the graphics size."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "North points lower-right."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Replace structures with current tile values."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Map compass: no city loaded."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Scenario: %s"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Portable data folder"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Graphics source"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Cannot import SimCity 2000"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Update imported packs"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Later"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Imported packs saved."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Bond action canceled. No bond balance changed."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Annual budget applied. The simulation can continue."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Budget funding saved."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "The Army base site is reserved."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "The Air Force base site is reserved."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "The Navy base site is reserved."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "The missile silo sites are reserved."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Review the scenario briefing before the simulation starts."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Scenario started."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Rotated counterclockwise"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Placement stopped. Use Undo to remove the last placement."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "The disaster could not be located."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Stretch Terrain applied for $0."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Restored the previous sign."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Removed the last hydroelectric plant."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Removed the last subway-to-rail connection."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Removed the last on-ramp."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Removed the last tunnel."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Restored the previous dispatched unit."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Upgrade City to SC2X"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Upgrade city to SC2X?"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Upgrade to SC2X"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Return to Main Menu"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "All emergency services recalled."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Save Check"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "The simulation paused on the target date."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Main menu."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "City ready."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Show Underground Pipes"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Map view: Zones"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Bridge selection canceled. No action was taken."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Terrain preview is not available."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Cannot start terrain generation."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Landscape editor: terrain changes are free. Select Start City when ready."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "City started. Build zones, roads, and services."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "The stadium was built without a team."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Sign removed."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Ordinance selection saved."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Industry tax rates saved."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Game Over"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Tunnel construction canceled. No action was taken."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Run Script File"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Closed SCURK Place & Print."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Loaded tile set %s: %d graphic replacements and %d names."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "%s Loaded %d of %d sc2kfix tile sets."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Restored the original tile set."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Show Tile Values"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Tile Grid and Coordinates"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Take Change Snapshot"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Region Bounds"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Region Repaints"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Occlusion Rectangles"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Sprite Bounds"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Draw Order"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Moving Thing Paths"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Freeze Palette Cycling"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Check Missing Artwork"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Repair Bad Terrain"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Find Orphaned Labels"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Remove Orphaned Labels"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Advance One Phase"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Advance One Day"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Verify Save"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Undo Debug Edit"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Performance HUD"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Capture Screenshot and State"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Debug Window"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Reset Script Runtime"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Script Inspector"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Detailed per-tile timing"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Enable debug mode"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "%s of the date to pause on. Days run from 1 to 25 in each month."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "The amount for Set funds. It can be 0 or negative."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "The moving thing to add."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "The kind of moving thing to delete."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "The disaster to start."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Disable random disasters"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Visible terrain levels"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "32 shows all terrain levels. Lower values hide higher terrain."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "No target date"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "File: %s"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Undo edit"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Put back the record bytes from before the last debug edit."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "The city can hold %d records. Record 0 is not used."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Isometric View"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Show the selected map in the isometric city view."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Estimated Annual Cost"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Estimated annual amount"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Offset"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Select a chunk."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "%s: %d bytes, %s"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Filter fields…"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Disaster preview"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Ticks"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Disaster ticks to run in the copy. The first tick runs with the start."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "This city has no active scenario."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "%d months left. Scenario disaster: %s%s. %s"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Next step: "
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Filter"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Show only the entries that contain this text."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Type a command. Type help to list the commands. Shift+Enter starts a new "
+"line."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Save Console"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Sprite %d is missing."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Color %d (0x%02X)"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Selected color: %d (0x%02X)"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Select color %d"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Favorite"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Shade ramp step"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Clear shade ramp"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Move up"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Move down"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Visible"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Earlier state"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "SCURK Pick & Copy"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Source group"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "%d changed pixels (pink)"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "%d of %d selected · %s (object %03d) · %s preview"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Select one source tile, then choose its destination on the right."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "No compatible tiles in this destination group. Choose another group."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"This sprite has no map footprint. Choose the same tile ID as its "
+"destination."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Source %03d · Choose a %s destination on the right."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Source %03d (%s) → Working %03d (%s) · %s"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Copy Selected (%d) →"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Copy to Destination →"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Copy All in %s…"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "%d tiles"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Version %s"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Binding in use"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "%s (fixed)"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Add a key or mouse button for %s"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Remove %s"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Open Mods Folder"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Reload Mods"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Stop all mods, find the mods in the folder again, and start the enabled "
+"ones."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Open %s. Each folder in it with an info.json file is a mod."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"No mods installed. To add a mod, copy its folder into the mods folder, then "
+"click Reload Mods."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Select SimCity 2000 game files"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "The import did not return a result."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Choose a game folder or file and at least one asset type."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Reading game files and creating packs…"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Cannot start the import: "
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Download"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Notice"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Military Base Proposal"
+msgstr ""
+
+msgid "Accept"
+msgstr ""
+
+msgid "Decline"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "FPS: --"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "FPS: %d"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Select Export Folder"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "The height of the hills."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"The sea level and the number of streams. With terrain features, rivers are "
+"wider and there is more ocean."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "The number of tree groups."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Settings changed. Click Regenerate Terrain."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Generating…"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "1% Sales Tax"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "1% Income Tax"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Legalized Gambling"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Parking Fines"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Volunteer Fire Dept."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Public Smoking Ban"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Free Clinics"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Junior Sports"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Pro-Reading Campaign"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Anti-Drug Campaign"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "CPR Training"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Neighborhood Watch"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Tourist Advertising"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Business Advertising"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "City Beautification"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Annual Carnival"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Energy Conservation"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Nuclear Free Zone"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Homeless Shelter"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Pollution Controls"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Safety & Health"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Promotional"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Other"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Raises revenue. Adds one point to the commercial tax rate used by demand, "
+"which reduces commercial demand."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Raises revenue. Adds one point to the residential tax rate used by demand, "
+"which reduces residential demand."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Raises revenue. Adds 16 to the local crime calculation before smoothing."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Raises revenue. No additional traffic or demand effect is implemented."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Costs money. Adds fire coverage around developed residential, commercial and"
+" industrial tiles."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Costs money. Adds five years to the newborn life-expectancy input."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Costs money. Adds health capacity based on the residential budget base."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Costs money. No additional health or education effect is implemented."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Costs money. Prevents the education loss applied when population moves "
+"between age groups."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Costs money. Adds police coverage around developed residential, commercial "
+"and industrial tiles, reducing crime."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Costs money. Reduces the effective commercial tax rate by one point, "
+"increasing commercial demand."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Costs money. Reduces the effective industrial tax rate by one point, "
+"increasing industrial demand."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Costs money. Reduces the effective residential tax rate by one point, "
+"increasing residential demand."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Costs money. Adds one twelfth to available power-grid capacity, allowing "
+"more consumers to be supplied."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Costs money. Prevents new nuclear power plants from being selected."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Costs money. Reduces pollution and demand from polluting industries. Adds "
+"one point to the effective industrial tax rate, reducing industrial demand."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgctxt "budget"
+msgid "Residential"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgctxt "budget"
+msgid "Commercial"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgctxt "budget"
+msgid "Highway"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgctxt "budget"
+msgid "Rail"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgctxt "budget"
+msgid "Ordinances"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "The adjacent amount shows the estimated annual budget effect."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Sunday "
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "{weekday}{month} {day}, {year}"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Begin Scenario"
+msgstr ""
+
+msgid "Day & Night"
+msgstr ""
+
+msgid "Set the time of day and the appearance of the night."
+msgstr ""
+
+msgid "Lighting"
+msgstr ""
+
+msgid ""
+"Building, vehicle and street lights. Keep lights on during the day with the "
+"daytime override."
+msgstr ""
+
+msgid "Seasons"
+msgstr ""
+
+msgid "Follow the city calendar, run a visual cycle or choose one season."
+msgstr ""
+
+msgid "Weather & Clouds"
+msgstr ""
+
+msgid ""
+"Weather and clouds have separate switches. Fog is part of Clouds. Fixed "
+"weather can show snow in any season."
+msgstr ""
+
+msgid "Environment"
+msgstr ""
+
+msgid ""
+"Forests, subtle terrain variation and water appearance. Seasonal water "
+"colors require Seasons."
+msgstr ""
+
+msgid "Traffic & Movement"
+msgstr ""
+
+msgid ""
+"Decorative cars and pedestrians, plus smoother movement for existing "
+"vehicles."
+msgstr ""
+
+msgid "Disaster Effects"
+msgstr ""
+
+msgid ""
+"Extra effects for disasters and demolition. These settings do not change "
+"disaster frequency, damage or emergency response."
+msgstr ""
+
+msgid "Animation"
+msgstr ""
+
+msgid ""
+"Cycle durations use Turtle speed when linked; otherwise they use real time. "
+"Weather and clouds always pause with the game. The pause option below "
+"controls the other environment cycles."
+msgstr ""
+
+msgid "Enhanced disaster visuals"
+msgstr ""
+
+msgid "Additional effect intensity"
+msgstr ""
+
+msgid "Animated riot crowds"
+msgstr ""
+
+msgid "Fire and impact lighting"
+msgstr ""
+
+msgid "Earthquake camera shake"
+msgstr ""
+
+msgid "Pause environment cycles with the game"
+msgstr ""
+
+msgid "Time source"
+msgstr ""
+
+msgid "Fixed time (HH:MM)"
+msgstr ""
+
+msgid "Day cycle duration"
+msgstr ""
+
+msgid "Time-of-day color strength"
+msgstr ""
+
+msgid "Night darkness"
+msgstr ""
+
+msgid "Building and vehicle lights"
+msgstr ""
+
+msgid "Light brightness"
+msgstr ""
+
+msgid "Year cycle duration"
+msgstr ""
+
+msgid "Season blend duration"
+msgstr ""
+
+msgid "Season color strength"
+msgstr ""
+
+msgid "Weather change interval"
+msgstr ""
+
+msgid "Weather blend duration"
+msgstr ""
+
+msgid "Weather intensity"
+msgstr ""
+
+msgid "Weather color strength"
+msgstr ""
+
+msgid "Car density"
+msgstr ""
+
+msgid "Pedestrian density"
+msgstr ""
+
+msgid "Custom color filter (LUT PNG)"
+msgstr ""
+
+msgid "Custom light masks (brightmaps)"
+msgstr ""
+
+msgid ""
+"Varied tree shapes and connected forest edges follow the existing tree "
+"density. Empty ground and clearings stay open. Does not change tree counts "
+"or the simulation."
+msgstr ""
+
+msgid ""
+"Quiet, continuous variations across natural ground. Terrain height, water "
+"and zoning markings stay unchanged."
+msgstr ""
+
+msgid ""
+"Blend the terrain variation over the original ground. 0% shows the original "
+"colors; 100% applies the full variation. Seasons still apply."
+msgstr ""
+
+msgid ""
+"Smooth palette color cycles across city graphics, including water and power "
+"warnings, and blend sprite frames for fire, toxic clouds, floods, tornadoes,"
+" smoke, explosion clouds and demolition dust. Palette colors are blended "
+"once, separately from sprite frames. Fire also fades in and out. Disaster "
+"blending requires Enhanced disaster visuals. Power warnings always stay "
+"fullbright. The initial explosion flash stays immediate."
+msgstr ""
+
+msgid ""
+"Keep building brightmaps, glow, street lamps, junction signals and vehicle "
+"lights on at any hour, even with the day-night cycle off. Daylight colors "
+"and individual light strengths stay unchanged."
+msgstr ""
+
+msgid ""
+"Cool fill light reveals dark surfaces at night. Window and vehicle light "
+"brightness stays separate."
+msgstr ""
+
+msgid ""
+"Soft colored light around visible brightmaps. Zero keeps only the sharp "
+"original lights."
+msgstr ""
+
+msgid ""
+"Street lamps, warm road lighting, cosmetic junction signals and selected "
+"shop approaches. Signals do not control traffic. Zero disables these lights."
+msgstr ""
+
+msgid ""
+"Show street, junction and vehicle lights at this zoom or closer. Below it, "
+"their light rendering and preparation stop. Building lights remain "
+"available."
+msgstr ""
+
+msgid ""
+"Smooth movement of helicopters, airplanes, ships, sailboats and trains."
+msgstr ""
+
+msgid ""
+"Moving waves and breaking surf along the terrain shoreline. Turn off for a "
+"still water surface."
+msgstr ""
+
+msgid ""
+"Enable additional presentation effects. Turning this off restores the "
+"original disaster visuals; disasters still occur."
+msgstr ""
+
+msgid ""
+"Intensity of added visual effects. At 0%, added crowds, dust and lighting "
+"are off. Tornado smoothing and camera shake remain separate."
+msgstr ""
+
+msgid ""
+"Animated riot crowds use the city pedestrian artwork. Does not change "
+"population, riot spread or treatment targets."
+msgstr ""
+
+msgid ""
+"Dust from demolition and damage. Dust from player demolition continues to "
+"settle while the game is paused."
+msgstr ""
+
+msgid ""
+"Smooth the displayed tornado movement between completed simulation "
+"positions. Does not change its route or damage."
+msgstr ""
+
+msgid ""
+"Local fire and impact lighting. Requires enhanced disaster visuals and "
+"effect intensity above 0%."
+msgstr ""
+
+msgid ""
+"Strength of earthquake camera movement. Set to 0% to remove camera shake "
+"while enhanced disaster visuals are enabled."
+msgstr ""
+
+msgid ""
+"Pause day, season, water and enhanced disaster animations. Weather, clouds "
+"and weather sounds always pause with the game. Dust from player demolition "
+"can continue."
+msgstr ""
+
+msgid ""
+"Fixed weather can show snow in any season. Game weather and automatic "
+"weather show snow only in winter."
+msgstr ""
+
+msgid ""
+"Enter a 24-hour time, for example 07:30. Up and Down adjust by 15 minutes."
+msgstr ""
+
+msgid ""
+"Seconds for one complete day/night cycle. The Animation section controls "
+"speed and pause behavior."
+msgstr ""
+
+msgid "Seconds for one complete visual year. The city calendar is unchanged."
+msgstr ""
+
+msgid ""
+"Part of each season used to blend into the next season. Higher values make "
+"the transition longer."
+msgstr ""
+
+msgid ""
+"Time between automatic weather selections. The Animation section controls "
+"speed; weather always stops while the game is paused."
+msgstr ""
+
+msgid "Strength of the time-of-day color filter. 0% disables this filter."
+msgstr ""
+
+msgid "Strength of seasonal color filters. 0% disables these filters."
+msgstr ""
+
+msgid "Strength of weather color filters. 0% disables these filters."
+msgstr ""
+
+msgid ""
+"Strength of the seasonal water tint. Enable Seasons to use this setting."
+msgstr ""
+
+msgid ""
+"Enable clouds, their shadows and ground-level fog together. Weather effects "
+"have their own switch."
+msgstr ""
+
+msgid ""
+"Automatic follows the weather. Choose Cumulus for puffy clouds, Stratus for "
+"low sheets, Altostratus for higher sheets, Cirrus for wisps, Cirrocumulus "
+"for small cloudlets, or Fog for ground-level clouds. Fog fades above low "
+"terrain, leaving hilltops clear. Fixed types stay selected during rain, snow"
+" and storms."
+msgstr ""
+
+msgid ""
+"Amount of decorative cloud and fog coverage. With aerial clouds enabled, "
+"rain, snow and storms keep minimum cloud coverage, even at 0%."
+msgstr ""
+
+msgid ""
+"Multiplier for cloud and fog movement. 1× is the standard speed; 0× stops "
+"movement."
+msgstr ""
+
+msgid ""
+"Decorative car density. 1× is the standard amount; does not change simulated"
+" traffic."
+msgstr ""
+
+msgid ""
+"Decorative pedestrian density. 1× is the standard amount; does not change "
+"population."
+msgstr ""
+
+msgid ""
+"Brightness of building and vehicle lights. 100% uses the original "
+"brightness; 0% turns the lights off without changing night colors."
+msgstr ""
+
+msgid ""
+"Leave empty for the included standard light masks. Custom folders replace "
+"the standard set. Relative to the data folder, for example brightmaps-"
+"standard. Absolute paths are also supported. Requires active lighting."
+msgstr ""
+
+msgid ""
+"Optional PNG lookup table (LUT) for custom color grading. Leave empty for "
+"standard colors."
+msgstr ""
+
+msgid "Visual Enhancements"
+msgstr ""
+
+msgid "Visual effects only. Changes apply immediately."
+msgstr ""
+
+msgid "Clouds & Fog"
+msgstr ""
+
+msgid "Disable all"
+msgstr ""
+
+msgid "Reset this category"
+msgstr ""
+
+msgid "Reset all visual settings"
+msgstr ""
+
+msgid ""
+"Turn off all visual enhancements. Keep effect strengths and custom file "
+"paths."
+msgstr ""
+
+msgid "Reset only the open category."
+msgstr ""
+
+msgid ""
+"Reset every category, including custom file paths. Undo restores the "
+"previous values."
+msgstr ""
+
+msgid "Undo the last reset or Disable all, before making another edit."
+msgstr ""
+
+msgid "Undo restores the last reset or Disable all."
+msgstr ""
+
+msgid "Automatic cycle"
+msgstr ""
+
+msgid "Visual automation"
+msgstr ""
+
+msgid "Optional - leave empty for standard effects"
+msgstr ""
+
+msgid "All effects disabled. Undo restores previous settings."
+msgstr ""
+
+msgid "%s reset. Other categories unchanged."
+msgstr ""
+
+msgid "All settings reset, including custom paths. Undo is available."
+msgstr ""
+
+msgid "Previous visual settings restored."
+msgstr ""
+
+msgid "Automatic follows rain, snow and storms."
+msgstr ""
+
+msgid "This cloud type stays fixed during rain, snow and storms."
+msgstr ""
+
+msgid "Weather is off. Automatic shows calm Cumulus clouds."
+msgstr ""
+
+msgid "Enable terrain variation to adjust its strength."
+msgstr ""
+
+msgid "Enable Day and night to adjust the time and night appearance."
+msgstr ""
+
+msgid "Enable Seasons to use these settings."
+msgstr ""
+
+msgid "Enable Weather to adjust weather effects."
+msgstr ""
+
+msgid "Enable Clouds and fog to adjust their appearance."
+msgstr ""
+
+msgid "Enable Building and vehicle lights to use lighting controls."
+msgstr ""
+
+msgid "Enable Building and vehicle lights in Lighting."
+msgstr ""
+
+msgid "Enable Day and night or Keep lights on during daytime."
+msgstr ""
+
+msgid "Enable Day and night to adjust ambient night light."
+msgstr ""
+
+msgid "Raise Light brightness above 0% to use glow and street lighting."
+msgstr ""
+
+msgid "Enable Individual cars to adjust car density."
+msgstr ""
+
+msgid "Enable Pedestrians to adjust pedestrian density."
+msgstr ""
+
+msgid "Enable Enhanced disaster visuals to adjust additional effects."
+msgstr ""
+
+msgid ""
+"Raise Additional effect intensity above 0% to use crowds, dust and lighting."
+msgstr ""
+
+msgid "Connected forests and tree variants"
+msgstr ""
+
+msgid "Subtle terrain variation"
+msgstr ""
+
+msgid "Terrain overlay strength"
+msgstr ""
+
+msgid "Disaster effects"
+msgstr ""
+
+msgid "Effect strength"
+msgstr ""
+
+msgid "Use city pedestrians for riots"
+msgstr ""
+
+msgid "Demolition and damage dust"
+msgstr ""
+
+msgid "Smooth tornado movement"
+msgstr ""
+
+msgid "Smooth effect transitions"
+msgstr ""
+
+msgid "Fire and impact light strength"
+msgstr ""
+
+msgid "Earthquake shake strength"
+msgstr ""
+
+msgid "Water reflections"
+msgstr ""
+
+msgid "Subtle"
+msgstr ""
+
+msgid "Underwater terrain"
+msgstr ""
+
+msgid "Waves and coastal surf"
+msgstr ""
+
+msgid "Clouds and fog"
+msgstr ""
+
+msgid "Cloud type"
+msgstr ""
+
+msgid "Automatic (weather)"
+msgstr ""
+
+msgid "Cumulus"
+msgstr ""
+
+msgid "Stratus"
+msgstr ""
+
+msgid "Altostratus"
+msgstr ""
+
+msgid "Cirrus"
+msgstr ""
+
+msgid "Cirrocumulus"
+msgstr ""
+
+msgid "Fog"
+msgstr ""
+
+msgid "Cloud and fog coverage"
+msgstr ""
+
+msgid "Cloud shadow strength"
+msgstr ""
+
+msgid "Cloud and fog movement"
+msgstr ""
+
+msgid "Individual cars"
+msgstr ""
+
+msgid "Car amount"
+msgstr ""
+
+msgid "Pedestrians"
+msgstr ""
+
+msgid "Pedestrian amount"
+msgstr ""
+
+msgid "Smooth vehicles"
+msgstr ""
+
+msgid "Transparent aircraft shadows"
+msgstr ""
+
+msgid "Day and night"
+msgstr ""
+
+msgid "Time of day"
+msgstr ""
+
+msgid "Cycle"
+msgstr ""
+
+msgid "Fixed time"
+msgstr ""
+
+msgid "Fixed hour"
+msgstr ""
+
+msgid "Full cycle (seconds at Turtle)"
+msgstr ""
+
+msgid "Time of day LUT strength"
+msgstr ""
+
+msgid "Follow game speed"
+msgstr ""
+
+msgid "Freeze environment cycles while paused"
+msgstr ""
+
+msgid "Night strength"
+msgstr ""
+
+msgid "Night ambient light"
+msgstr ""
+
+msgid "Lights and brightmaps"
+msgstr ""
+
+msgid "Keep lights on during daytime"
+msgstr ""
+
+msgid "Night light strength"
+msgstr ""
+
+msgid "Light glow strength"
+msgstr ""
+
+msgid "Street and junction lighting"
+msgstr ""
+
+msgid "Detail lights from zoom"
+msgstr ""
+
+msgid "10% (all zoom levels)"
+msgstr ""
+
+msgid "Brightmap folder"
+msgstr ""
+
+msgid "Optional color LUT (PNG strip)"
+msgstr ""
+
+msgid "Custom LUT profile folder (empty = built-in)"
+msgstr ""
+
+msgid "Season source"
+msgstr ""
+
+msgid "City calendar"
+msgstr ""
+
+msgid "Visual cycle"
+msgstr ""
+
+msgid "Fixed season"
+msgstr ""
+
+msgid "Spring"
+msgstr ""
+
+msgid "Summer"
+msgstr ""
+
+msgid "Autumn"
+msgstr ""
+
+msgid "Winter"
+msgstr ""
+
+msgid "Full year (seconds at Turtle)"
+msgstr ""
+
+msgid "Season transition (fraction)"
+msgstr ""
+
+msgid "Season LUT strength"
+msgstr ""
+
+msgid "Seasonal water color strength"
+msgstr ""
+
+msgid "Weather source"
+msgstr ""
+
+msgid "Game weather"
+msgstr ""
+
+msgid "Fixed weather"
+msgstr ""
+
+msgid "Sunny"
+msgstr ""
+
+msgid "Light rain"
+msgstr ""
+
+msgid "Heavy rain"
+msgstr ""
+
+msgid "Rain and thunderstorm"
+msgstr ""
+
+msgid "Dry thunderstorm"
+msgstr ""
+
+msgid "Light snow"
+msgstr ""
+
+msgid "Heavy snow"
+msgstr ""
+
+msgid "Weather interval (seconds at Turtle)"
+msgstr ""
+
+msgid "Weather transition (seconds)"
+msgstr ""
+
+msgid "Weather strength"
+msgstr ""
+
+msgid "Weather LUT strength"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Return to the main menu? You can use Continue City to resume this city."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Discard the unsaved SCURK changes?"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Discard the unsaved SCURK changes and open another tile set?"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Close SCURK and return to the main menu?"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Discard the unsaved changes and recover another project?"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "An autosaved SCURK project is available."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Pond, Lake, or River"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Seaport Zone"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Airport Zone"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Military Zone"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Power Line"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Subway-to-Rail Connector"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"OpenSC2K is an open-source reimplementation of SimCity 2000 for Windows 95."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Save a copy of the open city each minute to the OpenSC2K Autosaves folder\n"
+"in the temporary folder, and keep the copies of the last 10 minutes.\n"
+"File > Open Autosave Folder shows them. The city file does not change."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"When OpenSC2K starts, not more than one time each day, it sends a request to GitHub\n"
+"to find a newer release of the OpenSC2K project. The request contains only the data\n"
+"that is necessary to make the request. OpenSC2K shares no other information."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"How often the city plays vehicle sounds such as trains, aircraft, ships, and boats.\n"
+"Reduced plays no more than one vehicle sound every 30 seconds. Off plays none.\n"
+"Disaster sounds always play."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"The General MIDI SoundFont that plays the MIDI music.\n"
+"A custom SoundFont that fails to load falls back to the system sound set."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Use the sc2kfix corrections of the original Windows sprites:\n"
+"aligned buildings and the animated colours of the DOS and Macintosh versions.\n"
+"They do not apply while a SCURK tile set is loaded or HD graphics show."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"Show the underground view on a dark background,\n"
+"with brighter lines for pipes, water mains, and subways."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "%s is already bound to %s. Reassign it?"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid "Save changes to %s before you continue?"
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"The number of tiles on each side of the map.\n"
+"SimCity 2000 compatibility uses only 128 × 128."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"On: make an SC2 city that the original SimCity 2000 can open.\n"
+"The map is 128 × 128.\n"
+"\n"
+"Off: make an SC2X city. The map can use other sizes, and data maps\n"
+"such as land value and pollution have one value for each tile.\n"
+"The original SimCity 2000 cannot open SC2X cities."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"The language of menus, windows and bundled original-game text. Custom text "
+"stays as entered."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"The graphics size at 10% zoom. Larger graphics show more detail.\n"
+"Higher zoom levels cannot use a smaller size."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"The graphics size at 200% zoom. Larger graphics show more detail.\n"
+"This size cannot be smaller than the size at 100% zoom."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"The graphics size at 25% zoom. Larger graphics show more detail.\n"
+"This size cannot be smaller than the size at 10% zoom."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"The graphics size at 300% zoom. Larger graphics show more detail.\n"
+"This size cannot be smaller than the size at 200% zoom."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"The graphics size at 50% zoom. Larger graphics show more detail.\n"
+"This size cannot be smaller than the size at 25% zoom."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"The graphics size at 400% zoom. Larger graphics show more detail.\n"
+"This size cannot be smaller than the size at 300% zoom."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"The graphics size at 100% zoom. Larger graphics show more detail.\n"
+"This size cannot be smaller than the size at 50% zoom."
+msgstr ""
+
+#. legacy-ko-fallback: pre-existing base-game gap; new feature text must not
+#. use this exception.
+msgid ""
+"[b]OpenSC2K[/b]\n"
+"An open-source reimplementation and modernization of SimCity 2000.\n"
+"\n"
+"[b]Copyright © 2026 Nicholas Ochoa[/b]\n"
+"\n"
+"OpenSC2K code is available under the MIT License. See Licenses and Credits for full license terms and third-party notices.\n"
+"\n"
+"OpenSC2K incorporates fixes and implementation details adapted from the [url=https://github.com/sc2kfix/sc2kfix]sc2kfix project[/url], licensed under the [url=https://github.com/sc2kfix/sc2kfix/blob/main/LICENSE]MIT License[/url].\n"
+"\n"
+"Built with Godot Engine.\n"
+"Title typography: Rajdhani by Indian Type Foundry.\n"
+"\n"
+"[b]This project is unofficial and independent.[/b]\n"
+"Not affiliated with, sponsored by, or endorsed by Electronic Arts or Maxis.\n"
+"\n"
+"SimCity and SimCity 2000 are trademarks of their respective owners. Original game assets remain the property of their respective owners."
+msgstr ""
+
+msgid "Scoreboard"
+msgstr ""
+
+msgid "Chat"
+msgstr ""
+
+msgid "Host / Join game"
+msgstr ""
+
+msgid "Release disconnect pause"
+msgstr ""
+
+msgid "Leave game"
+msgstr ""
+
+msgid "Buy land"
+msgstr ""
+
+msgid "Offer land"
+msgstr ""
+
+msgid "Land offers"
+msgstr ""
+
+msgid "Multiplayer chat"
+msgstr ""
+
+msgid "Hide chat"
+msgstr ""
+
+msgid "Message all players…"
+msgstr ""
+
+msgid "%s joined the game."
+msgstr ""
+
+msgid "%s left the game."
+msgstr ""
+
+msgid "%s lost the connection. The game is paused."
+msgstr ""
+
+msgid "The host ended the session."
+msgstr ""
+
+msgid "Finances"
+msgstr ""
+
+msgid "Land & building"
+msgstr ""
+
+msgid "Emergency services"
+msgstr ""
+
+msgid "Player"
+msgstr ""
+
+msgid "Connection"
+msgstr ""
+
+msgid "Funds"
+msgstr ""
+
+msgid "Year-to-date balance"
+msgstr ""
+
+msgid "Debt"
+msgstr ""
+
+msgid "Owned tiles"
+msgstr ""
+
+msgid "Build actions"
+msgstr ""
+
+msgid "Build spending"
+msgstr ""
+
+msgid "Developed tiles"
+msgstr ""
+
+msgid "Residential tiles"
+msgstr ""
+
+msgid "Commercial tiles"
+msgstr ""
+
+msgid "Industrial tiles"
+msgstr ""
+
+msgid "Land purchases"
+msgstr ""
+
+msgid "Land sales"
+msgstr ""
+
+msgid "Active units"
+msgstr ""
+
+msgid "Helping neighbours"
+msgstr ""
+
+msgid "Not available"
+msgstr ""
+
+msgid "You"
+msgstr ""
+
+msgid "Host"
+msgstr ""
+
+msgid "Connected"
+msgstr ""
+
+msgid "Disconnected"
+msgstr ""
+
+msgid "Statistics are host-confirmed. Select a column heading to sort."
+msgstr ""
+
+msgid ""
+"Shared city: %s · Population %s · Funds %s · Year-to-date balance %s · Debt "
+"%s"
+msgstr ""
+
+msgid ""
+"Recorded budget balance in the current city year; excludes construction and "
+"land transactions."
+msgstr ""
+
+msgid ""
+"Personal confirmed construction contributions recorded by this multiplayer "
+"session."
+msgstr ""
+
+msgid ""
+"Cumulative confirmed land transactions since tracking began. Older untracked"
+" totals are unavailable."
+msgstr ""
+
+msgid ""
+"Number of map tiles in this municipality; developed tiles include "
+"infrastructure."
+msgstr ""
+
+msgid "Own active emergency units deployed in another municipality."
+msgstr ""
+
+msgid "Current host-confirmed value."
+msgstr ""
+
+msgid "Land offers & requests"
+msgstr ""
+
+msgid "Land offers updated: %s — %s"
+msgstr ""
+
+msgid ""
+"Inspect the highlighted tiles before buying. Foreign land requires its "
+"owner's approval."
+msgstr ""
+
+msgid "Offers"
+msgstr ""
+
+msgid "Purchase requests"
+msgstr ""
+
+msgid "Recent activity"
+msgstr ""
+
+msgid "%s → %s"
+msgstr ""
+
+msgid "%s · %s tiles · %s · %s"
+msgstr ""
+
+msgid "Area: (%d, %d) to (%d, %d)"
+msgstr ""
+
+msgid "Show on map"
+msgstr ""
+
+msgid "Approve request"
+msgstr ""
+
+msgid "Buy"
+msgstr ""
+
+msgid "Withdraw request"
+msgstr ""
+
+msgid "Withdraw offer"
+msgstr ""
+
+msgid "No entries."
+msgstr ""
+
+msgid "Transfer %d tiles for %s between %s and %s?"
+msgstr ""
+
+msgid "Withdrawn"
+msgstr ""
+
+msgid "Declined"
+msgstr ""
+
+msgid "Sold"
+msgstr ""
+
+msgid "Ownership changed"
+msgstr ""
+
+msgid "Only the responsible player can change this land entry."
+msgstr ""
+
+msgid "Land entry updated. No money was charged."
+msgstr ""
+
+msgid "Only the owner can approve this purchase request."
+msgstr ""
+
+msgid ""
+"Send a purchase request for %d tiles at $%d? The owner must approve before "
+"any transfer."
+msgstr ""
+
+msgid "Send request"
+msgstr ""
+
+msgid "This purchase request is already open."
+msgstr ""
+
+msgid "Close an existing land entry before creating another."
+msgstr ""
+
+msgid "Purchase request sent. The owner can review it in Land offers."
+msgstr ""
+
+msgid "This offer is no longer available."
+msgstr ""
+
+msgid "You already own this land."
+msgstr ""
+
+msgid "Land ownership changed; nothing was charged."
+msgstr ""
+
+msgid "The seller's balance would exceed the supported limit."
+msgstr ""
+
+msgid "Finish disaster response before transferring a municipality's land."
+msgstr ""
+
+msgid "Land purchased from its owner."
+msgstr ""
+
+msgid "Invalid land selection."
+msgstr ""
+
+msgid "The entire selection must have the same owner. Nothing was charged."
+msgstr ""
+
+msgid "Invalid offer price."
+msgstr ""
+
+msgid "Land offer published. Another player can accept it."
+msgstr ""
+
+msgid "Buy %d tiles for $%d? Balance afterwards: $%d."
+msgstr ""
+
+msgid "Buy — $%d"
+msgstr ""
+
+msgid "Land purchased."
+msgstr ""
+
+msgid ""
+"Drag to select land. Purchases require confirmation; foreign land requires "
+"the owner's consent."
+msgstr ""
+
+msgid "Land trading is available in Shared mode."
+msgstr ""
+
+msgid ""
+"Select an area. Confirm the price before buying or sending a purchase "
+"request."
+msgstr ""
+
+msgid "Sale price"
+msgstr ""
+
+msgid "Set price and select area"
+msgstr ""
+
+msgid ""
+"Disaster in your city: deploy emergency services from the normal toolbar."
+msgstr ""
+
+msgid "The annual budget awaits confirmation under Windows → Budget."
+msgstr ""
+
+msgid "Acknowledge the military administration notice to continue."
+msgstr ""
+
+msgid ""
+"The simulation has a final notice. Acknowledge it to continue viewing the "
+"city."
+msgstr ""
+
+msgid "Neighbouring city"
+msgstr ""
+
+msgid "Disaster at %s — area (%d, %d). Your emergency services can help."
+msgstr ""
+
+msgid "Invalid land history."
+msgstr ""
+
+msgid "Invalid land statistics."
+msgstr ""
+
+msgid "Invalid land request buyer."
+msgstr ""
+
+msgid "Open land entry"
+msgstr ""
+
+msgid "Player seats"
+msgstr ""
+
+msgid "Disconnected seats remain reserved until you approve a replacement."
+msgstr ""
+
+msgid "%s requests the seat of %s."
+msgstr ""
+
+msgid "Approve takeover"
+msgstr ""
+
+msgid "Decline takeover"
+msgstr ""
+
+msgid ""
+"Choose a new player seat or request an unoccupied seat. The host must "
+"approve takeovers."
+msgstr ""
+
+msgid "Waiting for the host to approve your seat request."
+msgstr ""
+
+msgid "Create new player seat"
+msgstr ""
+
+msgid "Request seat: %s"
+msgstr ""
+
+msgid "Cancel joining"
+msgstr ""
+
+msgid "Unoccupied"
+msgstr ""
+
+msgid "Reserved for reconnection"
+msgstr ""
+
+msgid "%s took over an unoccupied player seat."
+msgstr ""
+
+msgid "This player seat is already connected."
+msgstr ""
+
+msgid "This identity is already waiting to join."
+msgstr ""
+
+msgid "All player seats are occupied. Request an unoccupied seat instead."
+msgstr ""
+
+msgid "This seat is no longer available."
+msgstr ""
+
+msgid "The host declined the seat request."
+msgstr ""
+
+msgid "Invalid saved player seats."
+msgstr ""
+
+msgid "Land ownership"
+msgstr ""
+
+msgid "Zoning"
+msgstr ""
+
+msgid "Multiplayer requires a valid SC2X city with a supported map size."
+msgstr ""
+
+msgid "LAN / direct IP · up to 8 players · matching game versions required."
+msgstr ""
+
+msgid "Host game"
+msgstr ""
+
+msgid "Join / Reconnect"
+msgstr ""
+
+msgid "Player name"
+msgstr ""
+
+msgid "Player colour"
+msgstr ""
+
+msgid "Custom colour…"
+msgstr ""
+
+msgid "Game mode"
+msgstr ""
+
+msgid "Co-op"
+msgstr ""
+
+msgid "Competitive Shared"
+msgstr ""
+
+msgid "Competitive Region (coming later)"
+msgstr ""
+
+msgid "New city"
+msgstr ""
+
+msgid "Saved city"
+msgstr ""
+
+msgid "Create a copy"
+msgstr ""
+
+msgid "Keep the selected save unchanged and save this game separately."
+msgstr ""
+
+msgid "Neutral land price per tile"
+msgstr ""
+
+msgid ""
+"Each city receives a separate starter land allowance for up to 1,024 tiles "
+"(at most a quarter of the map). City funds stay intact. Saved games retain "
+"their rules."
+msgstr ""
+
+msgid "Host address"
+msgstr ""
+
+msgid "TCP port"
+msgstr ""
+
+msgid "Password (optional)"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Create game"
+msgstr ""
+
+msgid "Land only"
+msgstr ""
+
+msgid "Include water"
+msgstr ""
+
+msgid ""
+"No land tiles in this selection. Choose Include water to buy water tiles."
+msgstr ""
+
+msgid ""
+"This land purchase exceeds the supported transaction limit. Select a smaller"
+" area."
+msgstr ""
+
+msgid "Buy %d tiles: $%d from land allowance and $%d from city funds?"
+msgstr ""
+
+msgid "Invalid saved land purchase rules."
+msgstr ""
+
+msgid "Name of your new city"
+msgstr ""
+
+msgid "Invalid city name."
+msgstr ""
+
+msgid "Purchase request"
+msgstr ""
+
+msgid "Land sale offer"
+msgstr ""
+
+msgid "The city snapshot could not be prepared for transfer."
+msgstr ""
+
+msgid "Remaining land allowance: %s · Price per tile: %s"
+msgstr ""
+
+msgid "Competitive Region"
+msgstr ""
+
+msgid "Victory goal"
+msgstr ""
+
+msgid "Endless game"
+msgstr ""
+
+msgid "Wealth (funds minus debt)"
+msgstr ""
+
+msgid "Invalid saved victory goal."
+msgstr ""
+
+msgid "Only the host can continue the completed game without scoring."
+msgstr ""
+
+msgid "The game continues without scoring."
+msgstr ""
+
+msgid "The victory target was reached. The host can continue without scoring."
+msgstr ""
+
+msgid "This city is not available."
+msgstr ""
+
+msgid "City view changed."
+msgstr ""
+
+msgid "Your city view changed. Review the target before acting."
+msgstr ""
+
+msgid "Invalid region command."
+msgstr ""
+
+msgid ""
+"You are visiting another city. Only your emergency services may assist here."
+msgstr ""
+
+msgid ""
+"Region cities own their entire map. Land trading is available in Shared "
+"mode."
+msgstr ""
+
+msgid "Neighbouring cities"
+msgstr ""
+
+msgid "Victory"
+msgstr ""
+
+msgid "Continue without scoring (endless)"
+msgstr ""
+
+msgid "Neighbouring cities are available in Region mode."
+msgstr ""
+
+msgid ""
+"Visit any city to watch. During disasters you may deploy your own emergency "
+"services; other changes remain with its owner."
+msgstr ""
+
+msgid "Return to your city"
+msgstr ""
+
+msgid "Visit city"
+msgstr ""
+
+msgid ""
+"Victory: %s. The game is paused. Leave or let the host continue without "
+"scoring."
+msgstr ""
+
+msgid "Visiting another city: watch or deploy your own emergency services."
+msgstr ""
+
+msgid "Readiness can only be changed in the lobby."
+msgstr ""
+
+msgid "Readiness updated."
+msgstr ""
+
+msgid "Only the host can start when all connected players are ready."
+msgstr ""
+
+msgid "The game has started."
+msgstr ""
+
+msgid "Wait until the host starts the game."
+msgstr ""
+
+msgid "Game lobby"
+msgstr ""
+
+msgid "Ready"
+msgstr ""
+
+msgid "Not ready"
+msgstr ""
+
+msgid "Offline"
+msgstr ""
+
+msgid "Start game"
+msgstr ""
+
+msgid ""
+"At least two players must join. Everyone confirms Ready; the host then "
+"starts the game. Changes to the player list reset readiness."
+msgstr ""
+
+msgid "Simulation and construction begin together after the host starts."
+msgstr ""
+
+msgid "Net wealth"
+msgstr ""
+
+msgid "Open scoreboard"
+msgstr ""
+
+msgid "Endless game · no scoring"
+msgstr ""
+
+msgid "Victory target: %s"
+msgstr ""
+
+msgid "You: %s / %s"
+msgstr ""
+
+msgid "Leading: %s · %s"
+msgstr ""
+
+msgid "Net wealth = city funds minus outstanding debt."
+msgstr ""
+
+msgid "Population of your own city."
+msgstr ""
+
+msgid "History"
+msgstr ""
+
+msgid "Unranked"
+msgstr ""
+
+msgid ""
+"History begins when the game starts; a new sample is recorded each month."
+msgstr ""
+
+msgid "Month %d"
+msgstr ""
+
+msgid "Player colours · hover over a line for exact values"
+msgstr ""
+
+msgid "Rematch · rotate starts"
+msgstr ""
+
+msgid ""
+"No unused fair starting positions remain. Create a new game with new "
+"terrain."
+msgstr ""
+
+msgid "Only the host can propose a rematch after the result."
+msgstr ""
+
+msgid ""
+"Rematch prepared with new starting positions. Everyone must confirm Ready "
+"again."
+msgstr ""
+
+msgid "Target held: %d / %d game days"
+msgstr ""
+
+msgid "Unranked · city founded after the start"
+msgstr ""
+
+msgid ""
+"Stay at or above the target for one full game year. Dropping below resets "
+"the timer."
+msgstr ""
+
+msgid ""
+"Rules are fixed at start: hold the target for one game year; late-founded "
+"cities are unranked. Shared starts receive equal land grants."
+msgstr ""
+
+msgid "Player loans"
+msgstr ""
+
+msgid ""
+"Both players confirm the terms. Interest is paid each year; principal is due"
+" at maturity. Unpaid amounts remain debt; interest does not compound."
+msgstr ""
+
+msgid "Proposal"
+msgstr ""
+
+msgid "Request a loan"
+msgstr ""
+
+msgid "Offer a loan"
+msgstr ""
+
+msgid "Fixed annual interest (%)"
+msgstr ""
+
+msgid "Term (game years)"
+msgstr ""
+
+msgid "Confirm and send proposal"
+msgstr ""
+
+msgid "%s → %s · %s · %d%% annually · %d years"
+msgstr ""
+
+msgid "Accept fixed terms"
+msgstr ""
+
+msgid "Outstanding: %s · Unpaid interest: %s · Maturity: game day %d"
+msgstr ""
+
+msgid "Invalid loan terms or contract limit reached."
+msgstr ""
+
+msgid "Loan proposal sent. The other player must confirm the fixed terms."
+msgstr ""
+
+msgid "Loan proposal withdrawn or declined."
+msgstr ""
+
+msgid "The lender cannot fund this loan or the receiving treasury is full."
+msgstr ""
+
+msgid "Loan accepted. Annual interest and the maturity date are fixed."
+msgstr ""
+
+msgid "This loan action is no longer available."
+msgstr ""
+
+msgid "Player loans require separate city finances."
+msgstr ""
+
+msgid "Invalid saved competition data."
+msgstr ""
+
+msgid "Awaiting host confirmation…"
+msgstr ""
+
+msgid "Region %d"
+msgstr ""
+
+msgid ""
+"Scored competitions require undeveloped starting terrain. Create a new city."
+msgstr ""
+
+msgid "Withdraw"
+msgstr ""
+
+msgid "Quit multiplayer"
+msgstr ""
+
+msgid ""
+"Save the multiplayer game before quitting? All connected players will be "
+"disconnected."
+msgstr ""
+
+msgid "Save and quit"
+msgstr ""
+
+msgid "Quit without saving"
+msgstr ""
+
+msgid "Only the host can change the game speed."
+msgstr ""
+
+msgid ""
+"Select a city to visit. You can watch every city and send emergency "
+"assistance during disasters."
+msgstr ""
+
+msgid "Apply colour"
+msgstr ""
+
+msgid ""
+"Price for additional neutral land. At the shared start, every city receives "
+"an equal free starting area; its treasury stays intact. Saved games retain "
+"their rules."
+msgstr ""
+
+msgid "Host a game on this computer, or connect to an existing host."
+msgstr ""
+
+msgid "Your name in the lobby, chat and scoreboard."
+msgstr ""
+
+msgid ""
+"Choose a custom colour for your cursor, territory and statistics, then Apply"
+" colour."
+msgstr ""
+
+msgid "Enter the host computer's LAN address or reachable IP address."
+msgstr ""
+
+msgid "The host and joining players must use the same TCP port."
+msgstr ""
+
+msgid ""
+"Co-op: one shared city. Shared: separate cities on one map. Region: "
+"independent neighbouring city maps."
+msgstr ""
+
+msgid ""
+"Generate new terrain, or continue a saved multiplayer game. Saved games keep"
+" their rules and player seats."
+msgstr ""
+
+msgid "Leave empty to allow joining without a password."
+msgstr ""
+
+msgid "Enter the game's password if the host set one; otherwise leave empty."
+msgstr ""
+
+msgid "Configure the city, then wait in the lobby until everyone is ready."
+msgstr ""
+
+msgid ""
+"Connect and select a new or reserved player seat. The host controls the game"
+" rules."
+msgstr ""
+
+msgid ""
+"Population: residents of your own city. Suggested targets: 2,000 for a short"
+" development goal, 10,000 for a medium goal, 50,000 for a long goal."
+msgstr ""
+
+msgid ""
+"Net wealth: treasury minus bank bonds and outstanding player debt. Suggested"
+" targets: $50,000, $100,000 or $500,000 for increasingly long economic "
+"goals."
+msgstr ""
+
+msgid "Build without a victory target or time limit."
+msgstr ""
+
+msgid ""
+"The target must then be held for one full game year (300 game days). At "
+"uninterrupted simulation speed, that year takes about 4 minutes at Turtle, 2"
+" at Llama or 1 at Cheetah. Swallow advances one day per processed frame "
+"(about 5 seconds per year at 60 simulation frames/s). Development time is "
+"additional and depends on difficulty, terrain, experience, pauses and "
+"computer performance; these are not match-duration guarantees."
+msgstr ""
+
+msgid ""
+"Choose the lender and principal. The game sets the bond rate. Interest "
+"settles with the annual budget; there is no maturity date. Repay when funds "
+"permit."
+msgstr ""
+
+msgid "Lender"
+msgstr ""
+
+msgid "%s → %s · %s · %d%% annually"
+msgstr ""
+
+msgid "Approve loan"
+msgstr ""
+
+msgid "Outstanding: %s · Unpaid interest: %s"
+msgstr ""
+
+msgid "Repay principal"
+msgstr ""
+
+msgid "Choose a lender and a principal in $10,000 bond units."
+msgstr ""
+
+msgid "The normal bond credit limit does not permit this loan."
+msgstr ""
+
+msgid "Loan requested. The lender must approve the game's bond rate."
+msgstr ""
+
+msgid "The bond rate or credit limit changed. Send a new request."
+msgstr ""
+
+msgid ""
+"Loan accepted. Interest follows the bond budget; repay the principal when "
+"funds permit."
+msgstr ""
+
+msgid "Insufficient funds to repay this loan."
+msgstr ""
+
+msgid "Loan principal repaid."
+msgstr ""
+
+msgid "City names can only be changed in the lobby."
+msgstr ""
+
+msgid "City name updated."
+msgstr ""
+
+msgid "Click your city name to rename it before the game starts."
+msgstr ""
+
+msgid "Only the host can control disasters."
+msgstr ""
+
+msgid "Only the host can control disasters and simulation time."
+msgstr ""
+
+msgid "No purchasable tiles selected. Nothing was charged."
+msgstr ""
+
+msgid "Select land belonging to another player to send a purchase request."
+msgstr ""
+
+msgid "Request land"
+msgstr ""
+
+msgid ""
+"Select neutral tiles to buy at the displayed price. Owned tiles are skipped."
+msgstr ""
+
+msgid "Set a price, then select your land to offer."
+msgstr ""
+
+msgid "Land: %d tiles · Total %s · Allowance %s · City funds %s"
+msgstr ""
+
+msgid "Invalid debug value."
+msgstr ""
+
+msgid "Invalid debug action."
+msgstr ""
+
+msgid "Debug action applied to your city."
+msgstr ""
+
+msgid "Wait for the connection to be restored."
+msgstr ""
+
+msgid "Debug request sent to the host."
+msgstr ""
+
+msgid "%d tiles · %s: %s"
+msgstr ""
+
+msgid "%d tiles · %s: %s · %s per tile"
+msgstr ""
+
+msgid "%s lost the connection."
+msgstr ""
+
+msgid "%s · %d tiles"
+msgstr ""
+
+msgid "%s · %d tiles · %s"
+msgstr ""
+
+msgid "Administration · %s · %s: %s (%s → %s)"
+msgstr ""
+
+msgid "Awaiting response"
+msgstr ""
+
+msgid "Balance after transfer: %s"
+msgstr ""
+
+msgid "Buildings: %d · Moving objects: %d"
+msgstr ""
+
+msgid "Change price"
+msgstr ""
+
+msgid "City territories"
+msgstr ""
+
+msgid "Counteroffer"
+msgstr ""
+
+msgid "Counteroffer sent. The other player must confirm the new price."
+msgstr ""
+
+msgid "Game goal"
+msgstr ""
+
+msgid "Invalid administration history."
+msgstr ""
+
+msgid "Invalid land protection map."
+msgstr ""
+
+msgid "Invalid starting handicap."
+msgstr ""
+
+msgid "Land trade"
+msgstr ""
+
+msgid "Inbox"
+msgstr ""
+
+msgid "Outbox"
+msgstr ""
+
+msgid ""
+"Not enough connected land for these starts and reserved expansion areas. "
+"Adjust handicaps or generate new terrain."
+msgstr ""
+
+msgid "Offer price updated. Previous confirmations are no longer valid."
+msgstr ""
+
+msgid "Only the host can assign handicaps before a new game starts."
+msgstr ""
+
+msgid "Only the host can use debug actions."
+msgstr ""
+
+msgid "Publish offer"
+msgstr ""
+
+msgid "Reserved land and public corridors cannot be traded."
+msgstr ""
+
+msgid "This parcel does not connect to the buyer's city."
+msgstr ""
+
+msgid "This sale would split the seller's remaining land."
+msgstr ""
+
+msgid "Review"
+msgstr ""
+
+msgid "Review land trade"
+msgstr ""
+
+msgid ""
+"Rules are fixed at start: hold the target for one game year; late-founded "
+"cities are unranked. Starting handicaps are visible in the lobby."
+msgstr ""
+
+msgid ""
+"Select a city to visit. Other cities are read-only; their dialogs remain "
+"private."
+msgstr ""
+
+msgid "Select a parcel to review its owner, price and available trade action."
+msgstr ""
+
+msgid "Send counteroffer"
+msgstr ""
+
+msgid ""
+"Solid: owned land. Hatched: reserved expansion. Grey: public road and power "
+"corridors."
+msgstr ""
+
+msgid "Starting funds"
+msgstr ""
+
+msgid "Starting handicap"
+msgstr ""
+
+msgid "Starting handicap updated. Everyone must confirm Ready again."
+msgstr ""
+
+msgid "Starting land (0 = automatic)"
+msgstr ""
+
+msgid "Starting land"
+msgstr ""
+
+msgid "Statistics"
+msgstr ""
+
+msgid "There is no decision to resolve."
+msgstr ""
+
+msgid "This city view is read-only. Return to your own city to make changes."
+msgstr ""
+
+msgid "Total price"
+msgstr ""
+
+msgid "Total price · the other player must confirm"
+msgstr ""
+
+msgid "Victory: %s. Leave or let the host continue without scoring."
+msgstr ""
+
+msgid "You pay"
+msgstr ""
+
+msgid "You receive"
+msgstr ""
+
+msgid "Disaster administration"
+msgstr ""
+
+msgid "Debug · add funds"
+msgstr ""
+
+msgid "Debug · set funds"
+msgstr ""
+
+msgid "Debug · unlock"
+msgstr ""
+
+msgid "Debug · no disasters"
+msgstr ""
+
+msgid "Debug · end disaster"
+msgstr ""
+
+msgid "Debug · military"
+msgstr ""
+
+msgid "Debug · remove things"
+msgstr ""
+
+msgid "Debug · maxis"
+msgstr ""
+
+msgid "Debug · spawn"
+msgstr ""
+
+msgid "Debug · nessie"
+msgstr ""
+
+msgid "Debug · run to date"
+msgstr ""
+
+msgid "Any player"
+msgstr ""
+
+msgid "Your response required"
+msgstr ""
+
+msgid "Choose a parcel"
+msgstr ""
+
+msgid ""
+"This selection contains several owners. Choose one parcel to negotiate."
+msgstr ""
+
+msgid "Funds: $%d · Start tiles: %d (0 = automatic)"
+msgstr ""
+
+msgid "Invalid saved military proposal."
+msgstr ""
+
+msgid "Enabled"
+msgstr ""
+
+msgid "Disabled"
+msgstr ""
+
+msgid "Progression: %d · Reward flags: %d"
+msgstr ""
+
+msgid "%d game years"
+msgstr ""
+
+msgid "%d land · %d water"
+msgstr ""
+
+msgid "%d land · %d water · %d reserved tiles"
+msgstr ""
+
+msgid ""
+"Accumulate %d years as sole leader. Earned time is kept. Late cities are "
+"unranked."
+msgstr ""
+
+msgid ""
+"All cities merge: shared terrain once, combined funds and bank bonds, "
+"internal player loans cancel. Host tax and funding settings apply. More than"
+" 50 bank bonds are repaid from combined funds."
+msgstr ""
+
+msgid "Below target"
+msgstr ""
+
+msgid "Choose a new filename; existing cities are kept."
+msgstr ""
+
+msgid "Choose a new filename; the multiplayer save stays unchanged."
+msgstr ""
+
+msgid "City copy saved."
+msgstr ""
+
+msgid "Collapse chat"
+msgstr ""
+
+msgid "Continue multiplayer"
+msgstr ""
+
+msgid "Each Region player has a separate city map."
+msgstr ""
+
+msgid ""
+"Free starting territory: %d land equivalents. Two water tiles count as one "
+"land tile. Treasury unchanged."
+msgstr ""
+
+msgid "Host set starting funds for %s to %s."
+msgstr ""
+
+msgid "Host set starting territory for %s to %s."
+msgstr ""
+
+msgid "Leadership: %d / %d game days"
+msgstr ""
+
+msgid "Leadership: %s / %d years"
+msgstr ""
+
+msgid "Leading"
+msgstr ""
+
+msgid "Message…"
+msgstr ""
+
+msgid "New land trade · response requested"
+msgstr ""
+
+msgid "Land trade: %d tiles · %s"
+msgstr ""
+
+msgid "No confirmed copy of your city is available."
+msgstr ""
+
+msgid ""
+"Only the sole leader at or above the target earns time. Earned time is kept;"
+" ties pause all clocks."
+msgstr ""
+
+msgid "Open a single-player copy or continue multiplayer."
+msgstr ""
+
+msgid "Open chat"
+msgstr ""
+
+msgid "Open multiplayer save"
+msgstr ""
+
+msgid "Open single-player copy"
+msgstr ""
+
+msgid "Overtaken"
+msgstr ""
+
+msgid ""
+"Reach the target and accumulate %d years as sole leader. Earned time is "
+"kept."
+msgstr ""
+
+msgid ""
+"Reach the target and accumulate the selected number of years as sole leader."
+" Earned time is kept when overtaken; ties pause all clocks."
+msgstr ""
+
+msgid "Required leadership"
+msgstr ""
+
+msgid "Save city copy"
+msgstr ""
+
+msgid "Sell land"
+msgstr ""
+
+msgid "Send message"
+msgstr ""
+
+msgid "Session ended"
+msgstr ""
+
+msgid "Starting territory"
+msgstr ""
+
+msgid "Target reached"
+msgstr ""
+
+msgid "The host ended the game. Save a single-player copy before leaving."
+msgstr ""
+
+msgid "Tied lead"
+msgstr ""
+
+msgid "↓ %d new messages"
+msgstr ""
+
+msgid "Very small"
+msgstr ""
+
+msgid "Medium · standard"
+msgstr ""
+
+msgid "Generous"
+msgstr ""
+
+msgid "Custom…"
+msgstr ""
+
+msgid "Invalid multiplayer save."
+msgstr ""
+
+msgid "Choose a city from this save."
+msgstr ""
+
+msgid "Cannot compose the shared city."
+msgstr ""
+
+msgid "Combined funds exceed the single-player limit."
+msgstr ""
+
+msgid "Single-player copy opened. Save it as a new city."
+msgstr ""
+
+msgid "Points after game time"
+msgstr ""
+
+msgid "Points"
+msgstr ""
+
+msgid ""
+"1 point per 100 residents + 1 point per $1,000 net wealth (funds minus "
+"debt). Highest score at the deadline wins; ties share victory. Late cities "
+"are unranked."
+msgstr ""
+
+msgid "Duration in game years"
+msgstr ""
+
+msgid ""
+"Starts when the host starts the game. The lobby shows the end year. Paused "
+"game time does not count."
+msgstr ""
+
+msgid "%d game years · End year %d"
+msgstr ""
+
+msgid "End year %d · %d years, %d days remaining"
+msgstr ""
+
+msgid "%s points"
+msgstr ""
+
+msgid "Bar relative to the leading positive score."
+msgstr ""
+
+msgid "Another player's reservation and public corridors cannot be traded."
+msgstr ""
+
+msgid "Reserved land has a fixed field price payable to the game."
+msgstr ""
+
+msgid "Invalid land reservation request."
+msgstr ""
+
+msgid "Select another player's reserved land."
+msgstr ""
+
+msgid "The reservation changed; nothing was charged."
+msgstr ""
+
+msgid ""
+"Reservation release requested. The buyer pays the game only after approval."
+msgstr ""
+
+msgid "The field price changed; send a new request."
+msgstr ""
+
+msgid "Reservation released and land purchased. Payment went to the game."
+msgstr ""
+
+msgid "Release reserved land"
+msgstr ""
+
+msgid "Payment to game"
+msgstr ""
+
+msgid ""
+"Release only this parcel. The buyer pays the game; you receive no money."
+msgstr ""
+
+msgid "Approve release"
+msgstr ""
+
+msgid "Reserved"
+msgstr ""
+
+msgid ""
+"The reserving player must approve. Payment goes to the game after approval."
+msgstr ""
+
+msgid "Fields with a pencil can be edited."
+msgstr ""
+
+msgid "Change starting funds"
+msgstr ""
+
+msgid "Change starting territory"
+msgstr ""
+
+msgid "Cities"
+msgstr ""
+
+msgid "Shared sign"
+msgstr ""
+
+msgid ""
+"Leave the session? Unsaved changes on the host will be lost.\n"
+"As host, you will disconnect all other players."
+msgstr ""
+
+msgid "Game running on port %d. Choose a game speed."
+msgstr ""
+
+msgid "Connecting to the host…"
+msgstr ""
+
+msgid "Invalid city state from the host. Leave the session and reconnect."
+msgstr ""
+
+msgid "Multiplayer connected"
+msgstr ""
+
+msgid "The host saves the shared game."
+msgstr ""
+
+msgid "Multiplayer game saved: %s"
+msgstr ""
+
+msgid "Left multiplayer"
+msgstr ""
+
+msgid "Finish creating the terrain with Start City first."
+msgstr ""
+
+msgid ""
+"Use a player name of 1–32 characters and an optional password of at most 64 "
+"characters."
+msgstr ""
+
+msgid "Cannot listen on TCP port %d: %s"
+msgstr ""
+
+msgid "Leave the hosted session first."
+msgstr ""
+
+msgid "Cannot connect: %s"
+msgstr ""
+
+msgid "This is a different session. Leave before joining it."
+msgstr ""
+
+msgid "Invalid command identifier."
+msgstr ""
+
+msgid "This command was already handled; it was not applied again."
+msgstr ""
+
+msgid "Command order changed. Reconnect to synchronize."
+msgstr ""
+
+msgid "Invalid speed."
+msgstr ""
+
+msgid "Your requested speed was updated."
+msgstr ""
+
+msgid "Disconnected. Reconnect before making changes."
+msgstr ""
+
+msgid "Cannot synchronize the city."
+msgstr ""
+
+msgid ""
+"Connection lost or refused. Check host, port and password, then reconnect. "
+"The view is frozen."
+msgstr ""
+
+msgid "Only the host saves the shared session."
+msgstr ""
+
+msgid "Cannot encode city."
+msgstr ""
+
+msgid "Cannot write session: %s"
+msgstr ""
+
+msgid "The session could not be written and verified."
+msgstr ""
+
+msgid "Cannot replace the session backup."
+msgstr ""
+
+msgid "Cannot preserve the previous session."
+msgstr ""
+
+msgid ""
+"Cannot install the new session file (%s). The previous save was retained."
+msgstr ""
+
+msgid "The session file is missing or too large."
+msgstr ""
+
+msgid "Unsupported session file."
+msgstr ""
+
+msgid "Invalid session identities."
+msgstr ""
+
+msgid "Invalid session member."
+msgstr ""
+
+msgid "Missing session city."
+msgstr ""
+
+msgid "The session has no complete simulation checkpoint."
+msgstr ""
+
+msgid "Invalid emergency service state."
+msgstr ""
+
+msgid "Invalid emergency service cycle."
+msgstr ""
+
+msgid "Only the host saves the game."
+msgstr ""
+
+msgid "Cannot write the city."
+msgstr ""
+
+msgid "Cannot verify the saved city."
+msgstr ""
+
+msgid "Cannot replace the previous backup."
+msgstr ""
+
+msgid "Cannot back up the previous city."
+msgstr ""
+
+msgid "Cannot install the saved city; the previous save was retained."
+msgstr ""
+
+msgid "Invalid multiplayer city data."
+msgstr ""
+
+msgid "Invalid multiplayer identities."
+msgstr ""
+
+msgid "Invalid multiplayer member."
+msgstr ""
+
+msgid "Invalid dispatch state."
+msgstr ""
+
+msgid "Invalid dispatch cycle."
+msgstr ""
+
+msgid "Invalid multiplayer statistics."
+msgstr ""
+
+msgid "Saved municipalities do not match session members."
+msgstr ""
+
+msgid "Missing municipality member."
+msgstr ""
+
+msgid "Cannot initialize the city simulation."
+msgstr ""
+
+msgid "The city view is out of date. Wait for synchronization."
+msgstr ""
+
+msgid "Invalid command."
+msgstr ""
+
+msgid "Undo expired: another edit or simulation step occurred."
+msgstr ""
+
+msgid "Your last edit was undone."
+msgstr ""
+
+msgid "Invalid map position."
+msgstr ""
+
+msgid "This area changed. Review it and try again."
+msgstr ""
+
+msgid "A sign can contain at most 120 characters."
+msgstr ""
+
+msgid "Invalid construction choice."
+msgstr ""
+
+msgid "Invalid tool."
+msgstr ""
+
+msgid "This tool is not available in the city."
+msgstr ""
+
+msgid "The tool path is too long."
+msgstr ""
+
+msgid "Invalid tool path."
+msgstr ""
+
+msgid "This path changed. Review it and try again."
+msgstr ""
+
+msgid "This tool is not yet available in Koop."
+msgstr ""
+
+msgid "Choose a bridge. The host will check the site and cost again."
+msgstr ""
+
+msgid "Connect to the neighboring city?"
+msgstr ""
+
+msgid "Connect and review total cost"
+msgstr ""
+
+msgid "Build without connection"
+msgstr ""
+
+msgid "Build this tunnel?"
+msgstr ""
+
+msgid "Build — $%d"
+msgstr ""
+
+msgid "Choose the stadium team."
+msgstr ""
+
+msgid "The edit could not be applied."
+msgstr ""
+
+msgid "Confirm the complete route cost."
+msgstr ""
+
+msgid "The construction price changed. Select the site again to review it."
+msgstr ""
+
+msgid "Another player changed part of this building or terrain. Try again."
+msgstr ""
+
+msgid "Applied by the host. Cost: $%d."
+msgstr ""
+
+msgid "City settings changed. Reopen Multiplayer and try again."
+msgstr ""
+
+msgid "Invalid city option."
+msgstr ""
+
+msgid "Invalid disaster request."
+msgstr ""
+
+msgid "Cannot change disaster settings."
+msgstr ""
+
+msgid "Invalid budget."
+msgstr ""
+
+msgid "Invalid budget percentage."
+msgstr ""
+
+msgid "Invalid industry tax rate."
+msgstr ""
+
+msgid "Invalid ordinance."
+msgstr ""
+
+msgid "Unknown command."
+msgstr ""
+
+msgid "City settings updated."
+msgstr ""
+
+msgid "Invalid emergency service positions."
+msgstr ""
+
+msgid "Invalid emergency service position."
+msgstr ""
+
+msgid "Duplicate emergency service position."
+msgstr ""
+
+msgid "Single-player city"
+msgstr ""
+
+msgid "Choose a date after the current date."
+msgstr ""
+
+msgid "Debug · %s"
+msgstr ""
+
+msgid "Chat (%d)"
+msgstr ""
+
+msgid "Invalid emergency service target."
+msgstr ""
+
+msgid "This area changed. Review it before building."
+msgstr ""
+
+msgid "The parcel must include each building's complete footprint."
+msgstr ""
+
+msgid ""
+"Wait for moving objects to leave this parcel or recall its emergency units."
+msgstr ""
+
+msgid "The buyer's sign table is full."
+msgstr ""
+
+msgid "The shared map already has eight municipalities."
+msgstr ""
+
+msgid "City %d"
+msgstr ""
+
+msgid "No municipality is assigned to this player."
+msgstr ""
+
+msgid "Invalid map revision."
+msgstr ""
+
+msgid "Your emergency units were recalled."
+msgstr ""
+
+msgid "Manual disasters can only be started in your own municipality."
+msgstr ""
+
+msgid "Buy this land before building here."
+msgstr ""
+
+msgid "The complete path must stay on your own land."
+msgstr ""
+
+msgid "The complete building or terrain edit must fit on your land."
+msgstr ""
+
+msgid "Undo is unavailable after ownership transactions in Shared."
+msgstr ""
+
+msgid "This land has no municipality to assist."
+msgstr ""
+
+msgid "Emergency assistance is available during a disaster."
+msgstr ""
+
+msgid "Your city has no available units of this type."
+msgstr ""
+
+msgid ""
+"Your available units are already deployed. Recall them before redeploying."
+msgstr ""
+
+msgid "Emergency service deployed."
+msgstr ""
+
+msgid "Invalid shared municipalities."
+msgstr ""
+
+msgid "Invalid shared host."
+msgstr ""
+
+msgid "Invalid municipality identity."
+msgstr ""
+
+msgid "Missing municipality city."
+msgstr ""
+
+msgid "Invalid municipality service state."
+msgstr ""
+
+msgid "Invalid municipality dispatch cycle."
+msgstr ""
+
+msgid "Invalid municipality checkpoint."
+msgstr ""
+
+msgid "Invalid land owner."
+msgstr ""
+
+msgid "Invalid shared terrain."
+msgstr ""
+
+msgid "Invalid land offers."
+msgstr ""
+
+msgid "Invalid land offer."
+msgstr ""
+
+msgid "Invalid land offer area."
+msgstr ""
+
+msgid ""
+"The proposed military base extends outside your land. Buy its land first or "
+"decline the proposal."
+msgstr ""
+
+msgid "Multiplayer"
+msgstr ""
+
+msgid "Choose"
+msgstr ""

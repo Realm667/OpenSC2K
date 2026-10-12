@@ -9,7 +9,10 @@ fork, based directly on upstream OpenSC2K 0.3.0.
 ## What this branch adds
 
 - Menus, settings, tool names, tooltips, city dialogs, budget labels,
-  ordinances and month names in all five languages (1,486 UI entries each).
+  ordinances and month names in all five languages (2,051 UI entries each,
+  including the additional Visual and Multiplayer source texts).
+- Visual and Multiplayer translations in Korean, alongside its existing base
+  catalog. The remaining 328 legacy Korean base-UI gaps are documented explicitly.
 - Localized newspaper templates, original text resources, matched scenario
   briefings and library text, available from the bundled text catalogs.
 - Terminology and wording from the supplied original SimCity 2000 editions.
@@ -18,8 +21,9 @@ fork, based directly on upstream OpenSC2K 0.3.0.
 - Toolbar sizing that accommodates long translated names and the original
   artwork, plus localized formatted labels and dialog updates.
 
-The [language catalogs](game/assets/localization) separate interface text
-(`LANGUAGE.po`) from original-game text and its supplements (`LANGUAGE_original.po`).
+The [central translation workspace](game/assets/localization/README.md) contains
+one `LANGUAGE.po` per language, covering UI and original-game text. Its shared
+English template and validation instructions support future features and languages.
 See the [source and coverage overview](docs/localization-sources.md).
 Historical spelling and original newspaper price labels are retained. Displayed
 Pf/DM labels are text; they do not change the city's economy or numeric values.

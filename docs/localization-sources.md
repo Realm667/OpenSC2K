@@ -15,20 +15,23 @@ Normal gameplay still requires the supported original assets.
 
 | Language | UI entries | Game-text entries | Supplied source |
 | --- | ---: | ---: | --- |
-| German (`de`) | 1,486 | 1,942 | German CD Collection (1994), supplied DOS installation |
-| Spanish (`es`) | 1,486 | 2,236 | Spanish DOS `Disk1.img` and `Disk2.img` |
-| Italian (`it`) | 1,486 | 1,747 | `dos_simcity_2000_ita/SC2000` installation |
-| French (`fr`) | 1,486 | 2,165 | `SIMCITY2K_CD_COL_FR.mdf`, Windows 95 edition |
-| Brazilian Portuguese (`pt_BR`) | 1,486 | 2,150 | Brazilian `Sc2ksepc.iso`, mixed Windows editions |
-| Korean (`ko`) | 963, upstream catalog | Imported game text | Existing upstream translation, retained |
+| German (`de`) | 2,051 | 1,942 | German CD Collection (1994), supplied DOS installation |
+| Spanish (`es`) | 2,051 | 2,236 | Spanish DOS `Disk1.img` and `Disk2.img` |
+| Italian (`it`) | 2,051 | 1,747 | `dos_simcity_2000_ita/SC2000` installation |
+| French (`fr`) | 2,051 | 2,165 | `SIMCITY2K_CD_COL_FR.mdf`, Windows 95 edition |
+| Brazilian Portuguese (`pt_BR`) | 2,051 | 2,150 | Brazilian `Sc2ksepc.iso`, mixed Windows editions |
+| Korean (`ko`) | 1,723 | Imported game text | Upstream base plus supplementary Visual/Multiplayer text |
 
 English remains the source language. Counts are catalog entries, not words or
 complete sentences: newspaper entries include words, grammar fragments and
 articles. No entry in the five added language catalogs is empty or fuzzy.
-Coverage refers to this standalone OpenSC2K 0.3.0 branch and its localization
-changes. Separate Visual Enhancements and Multiplayer features may add messages
-outside this branch. The German catalog retains previously contributed Visual
-Enhancements labels. No original Korean edition was supplied for this work.
+All Visual and Multiplayer interface messages audited in the integrated build are included
+in the central catalogs, including status/error messages and Korean additions.
+The localization branch carries these text entries without importing the feature code.
+Korean still has 328 explicitly recorded legacy base-UI gaps and no supplied original
+Korean edition. The other five languages cover all 2,051 shared UI template entries.
+Each language uses one PO file for UI and original-game text; source contexts and
+provenance are preserved. See the [central translation workflow](../game/assets/localization/README.md).
 
 ## Original resources and supplements
 
