@@ -123,6 +123,25 @@ Stationary cursors use a heartbeat. Weather descriptions travel on changes with 
 periodic phase anchor; clouds, particles, lightning and transition animation run
 locally. Reliable command order and the authoritative simulation remain on the host.
 
+The capture cache classifies changed raw pages once and reuses their versions for
+each recipient. Delta construction and reconstruction run in isolated workers.
+Large city displays prepare an immutable document off-thread, retain only the
+latest waiting checkpoint, and commit at most one complete transaction per frame.
+Separate changed sprite bounds avoid invalidating the space between distant edits.
+Commands use the displayed revision; changing city views cannot reuse old targets.
+
+Clients advertise a bounded viewport with an elevation/prefetch margin. Visible
+changes, city switches, policy changes, open detail windows and the client's own
+actions take priority. Distant city checkpoints have a one-second scheduling
+deadline; transport congestion can add delay. Global standings and trade summaries
+have a separate coalesced channel. Every city checkpoint remains complete; the
+host still simulates all cities and applies every command in order.
+
+State streams use small slices so acknowledgements can pass between them. Control
+messages can be handled while a state worker runs. A pending building footprint
+appears immediately and stays until the authoritative display catches up, or the
+host rejects the action. This preview never spends money or predicts simulation.
+
 ## Saves, shutdown and single-player copies
 
 File > Save saves the complete match on the host, including private reconnect

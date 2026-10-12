@@ -39,6 +39,13 @@ var identity_signature := ""
 var selection_revision := 0
 var exit_action := ""
 var ended_dialog: Window
+var display_job: MultiplayerDisplayJob
+var pending_display: Dictionary = {}
+var display_revision := -1
+var display_policy := -1
+var display_prepare_usec := 0
+var display_apply_usec := 0
+var display_coalesced := 0
 
 
 func _init(application: CityApplication) -> void:
@@ -55,6 +62,20 @@ func setup() -> void:
 	session.environment_received.connect(app.visual_environment.receive_network_weather)
 	app.add_child(session)
 	session.state_received.connect(receive_state)
+	session.interest_source = func() -> Dictionary:
+		return MultiplayerInterest.local_view(app) if mirrored else {}
+	session.summary_received.connect(func(summary: Dictionary) -> void:
+		if mirrored:
+			var current := windows.state.duplicate()
+			current.merge(summary, true)
+			windows.update_state(current))
+	app.get_tree().process_frame.connect(poll_display)
+	app.tree_exiting.connect(func() -> void:
+		app.get_tree().process_frame.disconnect(poll_display)
+		close_display())
+	session.connection_changed.connect(func() -> void:
+		if not session.active:
+			close_display())
 	session.session_ended.connect(func() -> void: MultiplayerCopyDialog.host_ended(self))
 	session.cursor_source = func() -> Vector2:
 		return MultiplayerMapOverlay.local_cursor(app) if mirrored and app.map_view.visible else Vector2(-1, -1)
@@ -237,6 +258,60 @@ static func city_fields(state: Dictionary) -> Dictionary:
 
 
 func receive_state(state: Dictionary) -> void:
+	# First activation and legacy archives retain the synchronous loading path.
+	# Afterwards there is one immutable worker and one replaceable latest state.
+	# Original-sized maps use the low-latency fast path; large maps move their
+	# preparation off-thread rather than adding worker latency to tiny updates.
+	if mirrored and state.get("document") is Dictionary and int(state.document.get("size", 0)) > 128:
+		if not pending_display.is_empty():
+			display_coalesced += 1
+		pending_display = state
+		return
+	apply_display(state)
+
+
+func close_display() -> void:
+	if display_job != null:
+		display_job.finish()
+		display_job = null
+	pending_display.clear()
+	display_revision = -1
+	display_policy = -1
+
+
+func poll_display() -> void:
+	if display_job != null:
+		if not display_job.ready():
+			return
+		var ready := display_job
+		display_job = null
+		ready.finish()
+		display_prepare_usec += ready.elapsed_usec
+		# Never publish a prepared old city after the player changed views.
+		if ready.state.get("view_owner") == session.latest.get("view_owner"):
+			var began := Time.get_ticks_usec()
+			apply_display(ready.state, ready)
+			display_apply_usec += Time.get_ticks_usec() - began
+		# At most one expensive commit per frame; the next job starts next frame.
+		return
+	if pending_display.is_empty() or not active() or not mirrored:
+		return
+	var state := pending_display
+	pending_display = {}
+	if last_live_state == city_fields(state):
+		apply_display(state)
+		return
+	display_job = MultiplayerDisplayJob.new()
+	display_job.start(state, last_live_state, app.document_state.current_document)
+
+
+func apply_display(state: Dictionary, prepared: MultiplayerDisplayJob = null) -> void:
+	if int(state.get("summary_sequence", -1)) < int(session.latest.get("summary_sequence", -1)):
+		state = state.duplicate()
+		for field: String in CoopSession.SUMMARY_FIELDS:
+			if session.latest.has(field):
+				state[field] = session.latest[field]
+		state["summary_sequence"] = session.latest.summary_sequence
 	var same_view: bool = windows.state.get("view_owner") == state.get("view_owner")
 	windows.update_state(state)
 	if not str(state.get("error", "")).is_empty():
@@ -244,17 +319,21 @@ func receive_state(state: Dictionary) -> void:
 	var live: bool = state.get("document") is Dictionary
 	var unchanged: bool = last_live_state == city_fields(state) if live else last_city_bytes == state.get("city", "")
 	if unchanged:
+		display_revision = int(state.revision)
+		display_policy = int(state.get("policy", 0))
 		app.simulation_state.speed_controller.speed = int(state.get("speed", 1))
 		app.frame.sync_speed_ui()
 		refresh_budget_view()
 		receive_newspaper(state)
 		return
-	var document := MultiplayerDocument.restore(state, last_live_state, app.document_state.current_document) if live else Sc2File.new()
+	var document := prepared.document if prepared != null else MultiplayerDocument.restore(state, last_live_state, app.document_state.current_document) if live else Sc2File.new()
 	if document == null or (not live and not document.parse(Marshalls.base64_to_raw(state.city))) or not document.is_sc2x() or document.map_size not in Sc2File.MAP_SIZES:
 		show_message("Ungültiger Stadtzustand vom Host. Sitzung beenden und neu verbinden.")
 		return
 	last_city_bytes = str(state.get("city", ""))
 	last_live_state = city_fields(state) if live else {}
+	display_revision = int(state.revision)
+	display_policy = int(state.get("policy", 0))
 	if mirrored:
 		# Camera-follow and audio choices belong to this player.
 		var local_city := CityState.new()
@@ -281,12 +360,16 @@ func receive_state(state: Dictionary) -> void:
 			var old := previous.find_chunk(chunk.chunk_id)
 			if old != null:
 				chunk.mutation_revision = old.mutation_revision
-			if old == null or old.decoded_payload != chunk.decoded_payload:
+			var changed: bool = chunk.chunk_id in prepared.edit.changed_ids if prepared != null else old == null or old.decoded_payload != chunk.decoded_payload
+			# MISC may have local sound/camera preferences applied above.
+			if chunk.chunk_id == "MISC" and old != null:
+				changed = old.decoded_payload != chunk.decoded_payload
+			if changed:
 				chunk.mark_mutated()
 				edit.changed_ids.append(chunk.chunk_id)
 				edit.old_payloads[chunk.chunk_id] = old.decoded_payload if old != null else PackedByteArray()
 				edit.new_payloads[chunk.chunk_id] = chunk.decoded_payload
-				if chunk.chunk_id not in ["MISC", "XTHG", "XGRP", "CNAM"]:
+				if chunk.chunk_id in ["ALTM", "XTER", "XBLD", "XZON", "XBIT", "XTXT", "XUND", "XLAB", "XTRF"] or (CityViewMode.is_data(app.view_state.overlay_mode) and chunk.chunk_id not in ["MISC", "XTHG", "XGRP", "CNAM"]):
 					map_changed = true
 			elif old != null:
 				document.chunks[index] = old
@@ -320,6 +403,10 @@ func receive_state(state: Dictionary) -> void:
 
 
 func apply_selection(start: Vector2i, finish: Vector2i, path: Array[Vector2i], dragged: bool) -> void:
+	# A newly requested city can arrive before its prepared display transaction.
+	# Never interpret coordinates from the previous city's still-visible map.
+	if windows.state.get("view_owner") != session.latest.get("view_owner"):
+		return
 	if windows.land_action != "":
 		windows.market.select_parcel(start, finish)
 		return
@@ -337,13 +424,13 @@ func apply_selection(start: Vector2i, finish: Vector2i, path: Array[Vector2i], d
 	for target in path:
 		positions.append([target.x, target.y])
 	var command := {"kind": "build", "group": group, "tool": app.tool_state.selected_subtool,
+		"revision": display_revision if display_revision >= 0 else session.local_revision,
 		"start": [start.x, start.y], "finish": [finish.x, finish.y], "path": positions,
 		"dragged": dragged, "underground": app.view_state.overlay_mode == CityViewMode.Mode.UNDERGROUND}
 	if dragged:
 		command["revision"] = selection_revision
 	if group == CityToolIds.Group.SIGNS:
 		command["kind"] = "sign"
-		command["revision"] = session.local_revision
 		pending_sign = command
 		sign_text.max_length = mini(120, app.document_state.current_document.name_limit())
 		sign_text.text = CitySignTable.text_at(app.document_state.city, finish)
@@ -353,8 +440,11 @@ func apply_selection(start: Vector2i, finish: Vector2i, path: Array[Vector2i], d
 
 
 func bulldoze(point: Vector2i) -> void:
+	if windows.state.get("view_owner") != session.latest.get("view_owner") or session.latest.get("visiting", false):
+		return
 	session.request({"kind": "build", "group": 0, "tool": 0, "start": [point.x, point.y],
-		"finish": [point.x, point.y], "path": [[point.x, point.y]], "dragged": false})
+		"finish": [point.x, point.y], "path": [[point.x, point.y]], "dragged": false,
+		"revision": display_revision if display_revision >= 0 else session.local_revision})
 
 
 func request_speed(value: int) -> void:
@@ -366,7 +456,7 @@ func request_speed(value: int) -> void:
 
 
 func refresh_budget() -> void:
-	policy_at_open = session.local_policy
+	policy_at_open = display_policy if display_policy >= 0 else session.local_policy
 	budget_at_open = BudgetPhase.funding_values(app.document_state.city)
 
 var budget_at_open := PackedInt32Array()
@@ -384,7 +474,7 @@ func refresh_budget_view() -> void:
 		for index in [3, 4]:
 			current[index] = budget_at_open[index]
 	if current == budget_at_open:
-		policy_at_open = session.local_policy
+		policy_at_open = display_policy if display_policy >= 0 else session.local_policy
 	dialog.set_city(app.document_state.city)
 	app.budget._update_bond_controls()
 

@@ -25,7 +25,7 @@ func run() -> void:
 	var channel := CityTcpChannel.new(StreamPeerTCP.new())
 	check(sender.open_output(source), "large stream spooled")
 	var result: Dictionary = {}
-	for part in 110:
+	for part in ceili(float(sender.size) / MultiplayerStateStream.CHUNK_BYTES) + 2:
 		var done := sender.pump(channel)
 		check(channel.output.size() < 128 * 1024, "queue remains bounded independently of map size")
 		var packet: Dictionary = JSON.parse_string(channel.output.slice(4).get_string_from_utf8())

@@ -7,6 +7,13 @@ var bytes := PackedByteArray()
 var decoded: Dictionary = {}
 var failed := false
 var full := false
+var delta: MultiplayerDelta
+var baseline_failed := false
+
+
+func start_state(value: Dictionary, codec: MultiplayerDelta, decoding := false) -> void:
+	delta = codec
+	start(value, decoding)
 
 
 func start(value: Dictionary, decoding := false) -> void:
@@ -27,6 +34,9 @@ func finish() -> void:
 
 
 func pack() -> void:
+	if delta != null:
+		input = delta.encode(input)
+		full = input.get("type") == "state"
 	var raw := JSON.stringify(input).to_utf8_buffer()
 	if raw.size() > MultiplayerStateStream.MAX_BYTES:
 		failed = true
@@ -40,6 +50,9 @@ func pack() -> void:
 
 
 func unpack() -> void:
+	if input.get("type") in ["state", "state_delta"]:
+		decode_state(input)
+		return
 	if not CoopWorld.whole_number(input.get("bytes"), 2, MultiplayerStateStream.MAX_BYTES) or not input.get("data") is String or input.data.length() > MultiplayerStateStream.MAX_BYTES or not input.get("sha256") is String:
 		failed = true
 		return
@@ -51,7 +64,12 @@ func unpack() -> void:
 	if not value is Dictionary or value.get("type") not in ["state", "state_delta"]:
 		failed = true
 		return
-	decoded = value
+	decode_state(value)
+
+
+func decode_state(value: Dictionary) -> void:
+	decoded = delta.decode(value) if delta != null else value
+	baseline_failed = delta != null and delta.failed
 
 
 static func digest(value: PackedByteArray) -> String:

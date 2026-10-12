@@ -19,6 +19,9 @@ var ephemeral: Dictionary = {}
 func send_latest(message: Dictionary) -> void:
 	# Cursor/environment updates supersede older unsent values. Reliable commands
 	# retain their order; never splice a new frame into a partially sent frame.
+	if message.get("type") == "summary" and ephemeral.has("summary"):
+		message = message.duplicate()
+		message.values = ephemeral.summary.values.merged(message.values, true)
 	ephemeral[str(message.type)] = message
 
 

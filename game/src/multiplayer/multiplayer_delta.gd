@@ -33,7 +33,16 @@ func encode(state: Dictionary) -> Dictionary:
 				var changed: Array = []
 				var length: int = value.length() if value is String else value.size()
 				var old_length: int = old.length() if old is String else old.size()
+				var stamp: Dictionary = state.get("chunk_pages", {}).get(field, {})
+				var old_stamp: Dictionary = previous.get("chunk_pages", {}).get(field, {})
+				var versions: Array = stamp.get("pages", [])
+				var old_versions: Array = old_stamp.get("pages", [])
 				for start in range(0, length, PAGE):
+					# Capture classifies raw pages once before recipient fan-out.
+					@warning_ignore("integer_division")
+					var page := start / PAGE
+					if stamp.get("epoch", "") == old_stamp.get("epoch", "") and start + PAGE <= mini(length, old_length) and page < versions.size() and page < old_versions.size() and versions[page] == old_versions[page]:
+						continue
 					var chunk: Variant = value.substr(start, PAGE) if value is String else value.slice(start, start + PAGE)
 					var before: Variant = old.substr(start, PAGE) if old is String else old.slice(start, start + PAGE)
 					if start >= old_length or chunk != before:
