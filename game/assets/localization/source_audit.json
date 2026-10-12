@@ -7,7 +7,9 @@
     "game/src/application/tool_picker.gd",
     "game/src/ui/settings/music_box_dialog.gd",
     "game/src/ui/shared/qol_dialog.gd",
-    "game/src/ui/shared/window_layout_memory.gd"
+    "game/src/ui/shared/window_layout_memory.gd",
+    "game/src/audio/music_box_library.gd",
+    "game/src/audio/mp3_title.gd"
   ],
   "non_display_literals": {
     "OpenSC2K Koop": "Saved session format signature; never translate.",
@@ -40,6 +42,7 @@
     "Melancholic Mayor": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
     "The Construction: HAPPYLAND": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
     "Misty Lake": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
-    "Key of Success": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names."
+    "Key of Success": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
+    "Standalone Music": "Existing package name used only to identify the legacy standalone soundtrack."
   }
 }

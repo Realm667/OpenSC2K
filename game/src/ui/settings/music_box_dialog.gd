@@ -3,6 +3,8 @@ extends QolDialog
 ## A local playlist player. The original music controller retains its timing
 ## and reports to the simulation while its audible output is faded out.
 
+@warning_ignore_start("integer_division")
+
 # Soundtrack titles, keyed by Windows MIDI resource ID, not album track order.
 # These proper names stay unchanged across locales. See docs/quality-of-life.md.
 const ORIGINAL_TRACK_TITLES: Dictionary[int, String] = {
@@ -33,14 +35,17 @@ var config := ConfigFile.new()
 var storage_path := ""
 var library: ItemList
 var queue_list: ItemList
-var collection: OptionButton
+var collection: ItemList
+var progress: ProgressBar
+var elapsed: Label
+var track_tabs: TabContainer
+var music_library := MusicBoxLibrary.new()
+var playing_title := ""
 var custom_music := CustomMusicLibrary.new()
 var favorites_only: CheckBox
 var favorites: Array = []
 var playlist: Array = []
 var playlist_index := -1
-var playlist_names: OptionButton
-var playlist_name: LineEdit
 var now_playing: Label
 var status: Label
 var play_button: Button
@@ -51,6 +56,7 @@ var _switch_serial := 0
 var _refresh_elapsed := 0.0
 var _effects_dirty := false
 var _effects_save_delay := 0.0
+var _highlighted_key: Variant = null
 
 
 func _init(application: CityApplication) -> void:
@@ -63,55 +69,77 @@ func _init(application: CityApplication) -> void:
 	favorites = _track_ids(config.get_value("player", "favorites", []))
 	playlist = _track_ids(config.get_value("player", "queue", []))
 	now_playing = label("", "SectionHeading")
-	label("Choose a track or create a playlist. Automatic music keeps the original game selection.", "HelpLabel")
-	favorites_only = CheckBox.new()
-	favorites_only.text = "Favorites only"
-	favorites_only.toggled.connect(func(_enabled: bool) -> void: _refresh_library())
-	var sources := row()
-	collection = OptionButton.new()
-	collection.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	collection.fit_to_longest_item = false
-	collection.item_selected.connect(func(_index: int) -> void: _refresh_library())
-	sources.add_child(collection)
-	button(sources, "Open music folder", _open_music_folder)
-	button(sources, "Rescan", rescan)
-	label("Add MP3 files to this folder or its subfolders, then select Rescan.", "HelpLabel")
-	column.add_child(favorites_only)
+	now_playing.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	now_playing.autowrap_mode = TextServer.AUTOWRAP_OFF
+	now_playing.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	now_playing.clip_text = true
 	var lists := row()
 	lists.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	collection = ItemList.new()
+	collection.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	collection.custom_minimum_size = Vector2(170, 210)
+	collection.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	collection.size_flags_stretch_ratio = 0.38
+	collection.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	collection.item_selected.connect(func(_index: int) -> void: _refresh_library())
+	lists.add_child(collection)
+	track_tabs = TabContainer.new()
+	track_tabs.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	track_tabs.custom_minimum_size.x = 270
+	lists.add_child(track_tabs)
 	library = ItemList.new()
+	library.name = "Tracks"
 	library.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
-	library.custom_minimum_size = Vector2(245, 160)
-	library.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	library.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	library.item_activated.connect(func(index: int) -> void: play_track(library.get_item_metadata(index)))
-	lists.add_child(library)
+	track_tabs.add_child(library)
 	queue_list = ItemList.new()
+	queue_list.name = "Queue"
 	queue_list.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
-	queue_list.custom_minimum_size = Vector2(245, 160)
-	queue_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	queue_list.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	queue_list.item_activated.connect(func(index: int) -> void:
 		playlist_index = index
 		play_track(playlist[index]))
-	lists.add_child(queue_list)
+	track_tabs.add_child(queue_list)
+	# Retain the existing queue and favorites in preferences. The reference layout
+	# uses actual folders, not a new favorites collection.
+	favorites_only = CheckBox.new()
+	favorites_only.visible = false
+	column.add_child(favorites_only)
 	var edit := row()
 	button(edit, "Add to playlist", _add_selected)
-	button(edit, "Favorite", _favorite_selected)
 	button(edit, "Remove", _remove_selected)
 	button(edit, "Move up", _move_up)
-	var transport := row()
+	var controls := row()
+	var transport_panel := VBoxContainer.new()
+	transport_panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	controls.add_child(transport_panel)
+	var transport := HBoxContainer.new()
+	transport_panel.add_child(transport)
 	button(transport, "Previous", func() -> void: step(-1))
 	play_button = button(transport, "Play / Pause", _toggle_pause)
 	button(transport, "Next", func() -> void: step(1))
-	button(transport, "Automatic music", automatic)
-	label("Music volume")
+	progress = ProgressBar.new()
+	progress.show_percentage = false
+	transport_panel.add_child(progress)
+	elapsed = Label.new()
+	elapsed.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	transport_panel.add_child(elapsed)
+	var levels := VBoxContainer.new()
+	levels.custom_minimum_size.x = 180
+	levels.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	controls.add_child(levels)
+	var music_label := Label.new()
+	music_label.text = "Music volume"
+	levels.add_child(music_label)
 	volume = HSlider.new()
-	volume.min_value = 0.0
 	volume.max_value = 100.0
-	volume.step = 1.0
 	volume.value = clampf(float(config.get_value("player", "gain", 1.0)), 0.0, 1.0) * 100.0
 	volume.value_changed.connect(_volume_changed)
-	column.add_child(volume)
-	label("Sound effects volume")
+	levels.add_child(volume)
+	var effects_label := Label.new()
+	effects_label.text = "Sound effects volume"
+	levels.add_child(effects_label)
 	var effects := HSlider.new()
 	effects.max_value = 100.0
 	effects.value = app.preferences.effects_volume * 100.0
@@ -120,21 +148,12 @@ func _init(application: CityApplication) -> void:
 		app.audio_controller.set_volumes(app.preferences.music_volume, app.preferences.effects_volume)
 		_effects_dirty = true
 		_effects_save_delay = 0.5)
-	column.add_child(effects)
-	var names := row()
-	playlist_names = OptionButton.new()
-	playlist_names.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
-	playlist_names.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	names.add_child(playlist_names)
-	button(names, "Load playlist", _load_playlist)
-	playlist_name = LineEdit.new()
-	playlist_name.placeholder_text = "Playlist name"
-	playlist_name.max_length = 48
-	playlist_name.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	names.add_child(playlist_name)
-	button(names, "Save playlist", _save_playlist)
+	levels.add_child(effects)
+	button(row(), "Automatic music", automatic)
+	var folders := row()
+	button(folders, "Open music folder", _open_music_folder)
+	button(folders, "Rescan", rescan)
 	status = label("", "HelpLabel")
-	_refresh_names()
 	close_requested.connect(_save)
 
 
@@ -158,33 +177,89 @@ static func _track_ids(value: Variant) -> Array:
 		for id: Variant in value:
 			if id is int and id >= MusicDirector.FIRST_TRACK_ID and id < MusicDirector.FIRST_TRACK_ID + MusicDirector.TRACK_COUNT and id not in result:
 				result.append(id)
-			elif id is String and CustomMusicLibrary.valid_id(id) and id not in result:
+			elif id is String and (CustomMusicLibrary.valid_id(id) or MusicBoxLibrary.valid_key(id)) and id not in result:
 				result.append(id)
 	return result
 
 
+func _source_name(source: String) -> String:
+	if source == "original":
+		return tr("SC2000 original music")
+	if source == "reticulating":
+		return "Reticulating Splines"
+	return music_library.sources.get(source, tr("My music"))
+
+
 func track_name(id: Variant) -> String:
-	if id is String:
-		return id.get_basename()
-	return ORIGINAL_TRACK_TITLES.get(id, tr("Track %d") % id)
+	if music_library.tracks.has(id):
+		var entry: Dictionary = music_library.tracks[id]
+		var name: String = ORIGINAL_TRACK_TITLES.get(entry.id, entry.title) if entry.source == "original" else entry.title
+		return _source_name(entry.source) + " — " + name
+	if id is int:
+		return tr("SC2000 original music") + " — " + ORIGINAL_TRACK_TITLES.get(id, tr("Track %d") % id)
+	if MusicBoxLibrary.valid_key(str(id)):
+		return _source_name(str(id).get_slice(":", 0)) + " — " + tr("Track %d") % int(str(id).get_slice(":", 1))
+	return tr("My music") + " — " + Mp3Title.read(custom_music.resolve(str(id))) if not custom_music.resolve(str(id)).is_empty() else tr("My music") + " — " + str(id).get_basename()
+
+
+func song_title(id: Variant) -> String:
+	if music_library.tracks.has(id):
+		var entry: Dictionary = music_library.tracks[id]
+		return ORIGINAL_TRACK_TITLES.get(entry.id, entry.title) if entry.source == "original" else entry.title
+	if id is String and CustomMusicLibrary.valid_id(id):
+		var path := custom_music.resolve(id)
+		return Mp3Title.read(path) if not path.is_empty() else id.get_file().get_basename()
+	return track_name(id)
+
+
+func _list_title(id: Variant) -> String:
+	var selected := collection.get_selected_items()
+	return track_name(id) if selected.is_empty() or collection.get_item_metadata(selected[0]) == "all" else song_title(id)
+
+
+func _available(id: Variant) -> bool:
+	if music_library.tracks.has(id):
+		return music_library.available(id)
+	return id is String and CustomMusicLibrary.valid_id(id) and not custom_music.resolve(id).is_empty()
+
+
+func _automatic_track_name(player: CityAudioController) -> String:
+	var id := player.current_track_id
+	if id < MusicDirector.FIRST_TRACK_ID:
+		return tr("No track playing")
+	# The automatic controller may use a different pack from the manual player.
+	var pack := player.music_pack
+	var path := str(pack.files.get(id, ""))
+	if not path.is_empty():
+		var source := MusicBoxLibrary.source_for(pack)
+		var source_name := _source_name(source) if source != "pack" else pack.pack_name
+		var name: String = ORIGINAL_TRACK_TITLES.get(id, player.current_track_name) if source == "original" else Mp3Title.read(path)
+		return source_name + " — " + name
+	var recordings := RecordedSoundtrack.find_tracks(player.soundtrack_folder, id)
+	if not recordings.is_empty():
+		return tr("My music") + " — " + player.current_track_name
+	return tr("SC2000 original music") + " — " + ORIGINAL_TRACK_TITLES.get(id, player.current_track_name) if player.original_media_enabled else tr("No track playing")
 
 
 func _refresh_library() -> void:
+	_highlighted_key = null
 	var selected: Variant = library.get_item_metadata(library.get_selected_items()[0]) if not library.get_selected_items().is_empty() else null
 	library.clear()
-	var source := str(collection.get_selected_metadata()) if collection.selected >= 0 else "all"
+	var source := str(collection.get_item_metadata(collection.get_selected_items()[0])) if not collection.get_selected_items().is_empty() else "all"
 	var ids: Array = []
-	if source in ["all", "original"]:
-		ids.assign(range(MusicDirector.FIRST_TRACK_ID, MusicDirector.FIRST_TRACK_ID + MusicDirector.TRACK_COUNT))
-	if source != "original":
-		for id in custom_music.tracks:
-			if source in ["all", "custom"] or source == "folder:" + id.get_base_dir():
-				ids.append(id)
+	for key in music_library.tracks:
+		if source == "all" or source == music_library.tracks[key].source:
+			ids.append(key)
+	for id in custom_music.tracks:
+		if source in ["all", "custom"] or source == "folder:" + id.get_base_dir():
+			ids.append(id)
 	for id: Variant in ids:
 		if favorites_only.button_pressed and id not in favorites:
 			continue
-		var index := library.add_item(("★ " if id in favorites else "") + track_name(id))
+		var index := library.add_item(_list_title(id))
 		library.set_item_metadata(index, id)
+		var path: String = music_library.tracks[id].path if music_library.tracks.has(id) else custom_music.resolve(id)
+		library.set_item_tooltip(index, track_name(id) + "\n" + path)
 		if typeof(id) == typeof(selected) and id == selected:
 			library.select(index)
 
@@ -192,7 +267,7 @@ func _refresh_library() -> void:
 func _refresh_queue() -> void:
 	queue_list.clear()
 	for id in playlist:
-		queue_list.add_item(track_name(id))
+		queue_list.add_item(track_name(id) + ("" if _available(id) else " — " + tr("This music track is not available.")))
 	if playlist_index >= 0 and playlist_index < playlist.size():
 		queue_list.select(playlist_index)
 
@@ -249,10 +324,6 @@ func _move_up() -> void:
 
 func _sync_source() -> void:
 	var original := app.audio_controller
-	playback.music_pack = original.music_pack
-	playback.reference_root = original.reference_root
-	playback.original_media_enabled = original.original_media_enabled
-	playback.soundtrack_folder = original.soundtrack_folder
 	playback.set_music_soundfont(app.preferences.music_soundfont, app.preferences.music_soundfont_path)
 	playback.set_background_audio(original.background_audio)
 	playback.application_has_focus = original.application_has_focus
@@ -261,6 +332,10 @@ func _sync_source() -> void:
 
 func play_track(id: Variant) -> void:
 	status.text = ""
+	if not _available(id):
+		automatic()
+		status.text = tr("This music track is not available.")
+		return
 	if app.document_state.city != null and not app.document_state.city.music_enabled():
 		status.text = tr("Enable Music in Options to play a track.")
 		return
@@ -278,9 +353,14 @@ func play_track(id: Variant) -> void:
 	await _fade.finished
 	if serial != _switch_serial:
 		return
-	var started := playback.play_custom(id, custom_music.resolve(id)) if id is String else playback.play_music_track(id, false, true)
+	if not _available(id):
+		automatic()
+		status.text = tr("This music track is not available.")
+		return
+	var started := playback.play_pack(id, music_library.tracks[id]) if music_library.tracks.has(id) else playback.play_custom(id, custom_music.resolve(id))
+	playing_title = track_name(id)
 	if not started:
-		if id is String:
+		if id is String and CustomMusicLibrary.valid_id(id):
 			_custom_failed()
 		else:
 			automatic()
@@ -293,7 +373,7 @@ func play_track(id: Variant) -> void:
 
 
 func step(direction: int, finished_track: Variant = null) -> void:
-	var ids := playlist.duplicate()
+	var ids := playlist.duplicate() if track_tabs.current_tab == 1 else []
 	if ids.is_empty():
 		for index in library.item_count:
 			ids.append(library.get_item_metadata(index))
@@ -307,7 +387,7 @@ func step(direction: int, finished_track: Variant = null) -> void:
 	# Keep removed files in saved playlists, but skip them during playback.
 	for offset in range(1, ids.size() + 1):
 		var next: Variant = ids[posmod(index + direction * offset, ids.size())]
-		if next is int or not custom_music.resolve(next).is_empty():
+		if _available(next):
 			play_track(next)
 			return
 	_custom_failed()
@@ -374,11 +454,23 @@ func _process(delta: float) -> void:
 		return
 	_refresh_elapsed = 0.0
 	var player: CityAudioController = playback if active else app.audio_controller
-	var key: Variant = playback.track_key() if active else player.current_track_id
-	var track := track_name(key) if key is String or key >= 10000 else tr("No track playing")
+	var track := playing_title if active else _automatic_track_name(player)
+	var current: Variant = playback.track_key() if active else MusicBoxLibrary.key_for(player.music_pack, player.current_track_id)
+	if typeof(current) != typeof(_highlighted_key) or current != _highlighted_key:
+		_highlighted_key = current
+		for index in library.item_count:
+			var id: Variant = library.get_item_metadata(index)
+			library.set_item_text(index, ("▶ " if typeof(id) == typeof(current) and id == current else "") + _list_title(id))
+	var stream := player.recording_player.stream
+	var duration := stream.get_length() if stream != null else 0.0
+	var position := player.recording_player.get_playback_position() if stream != null else 0.0
+	progress.max_value = maxf(duration, 1.0)
+	progress.value = position
+	elapsed.text = "%d:%02d / %d:%02d" % [int(position) / 60, int(position) % 60, int(duration) / 60, int(duration) % 60] if duration > 0.0 else "— / —"
 	now_playing.text = tr("Paused: %s") % track if player.music_paused else tr("Playing: %s") % track
 	if not active:
 		now_playing.text = tr("Automatic music") + " — " + now_playing.text
+	now_playing.tooltip_text = now_playing.text
 
 
 func _save() -> void:
@@ -388,34 +480,6 @@ func _save() -> void:
 	var error := config.save(storage_path)
 	if error != OK:
 		status.text = tr("Cannot save music preferences: %s") % error_string(error)
-
-
-func _refresh_names() -> void:
-	playlist_names.clear()
-	if config.has_section("playlists"):
-		for name in config.get_section_keys("playlists"):
-			playlist_names.add_item(name)
-
-
-func _save_playlist() -> void:
-	var name := playlist_name.text.strip_edges()
-	if name.is_empty():
-		status.text = tr("Enter a playlist name first.")
-		return
-	config.set_value("playlists", name, playlist.duplicate())
-	_save()
-	_refresh_names()
-
-
-func _load_playlist() -> void:
-	if playlist_names.selected < 0:
-		return
-	var name := playlist_names.get_item_text(playlist_names.selected)
-	playlist = _track_ids(config.get_value("playlists", name, []))
-	playlist_name.text = name
-	playlist_index = playlist.find(playback.track_key())
-	_refresh_queue()
-	_save()
 
 
 func _exit_tree() -> void:
@@ -450,25 +514,36 @@ func handle_media_key(key: int) -> bool:
 
 
 func rescan() -> void:
-	var selected := str(collection.get_selected_metadata()) if collection.selected >= 0 else "all"
+	var selected := str(collection.get_item_metadata(collection.get_selected_items()[0])) if not collection.get_selected_items().is_empty() else "all"
 	custom_music.refresh()
+	music_library.refresh(app.asset_state.data_pack, app.audio_controller.music_pack, AppPaths.path("packs/standalone-audio/music"))
+	if active and playback.pack_key != null and not _available(playback.pack_key):
+		automatic()
 	collection.clear()
-	for entry in [["All music", "all"], ["Original music", "original"], ["My music", "custom"]]:
+	var entries := [[tr("All music"), "all"]]
+	for source in ["original", "reticulating", "pack"]:
+		if music_library.sources.has(source):
+			entries.append([_source_name(source), source])
+	if custom_music.tracks.any(func(id: String) -> bool: return id.get_base_dir().is_empty()):
+		entries.append([custom_music.folder.get_file(), "folder:"])
+	for entry in entries:
 		collection.add_item(entry[0])
 		collection.set_item_metadata(collection.item_count - 1, entry[1])
-	var folders: Array[String] = []
-	for id in custom_music.tracks:
-		var folder := id.get_base_dir()
-		if not folder.is_empty() and folder not in folders:
-			folders.append(folder)
+	var folders := custom_music.folders
 	for folder in folders:
 		collection.add_item(folder)
+		collection.set_item_tooltip(collection.item_count - 1, folder)
 		collection.set_item_metadata(collection.item_count - 1, "folder:" + folder)
 	for index in collection.item_count:
 		if collection.get_item_metadata(index) == selected:
 			collection.select(index)
+	if collection.get_selected_items().is_empty() and collection.item_count > 0:
+		collection.select(0)
 	collection.tooltip_text = custom_music.folder
+	track_tabs.set_tab_title(0, tr("Tracks"))
+	track_tabs.set_tab_title(1, tr("Queue"))
 	_refresh_library()
+	_refresh_queue()
 	status.text = tr("My music: %d MP3 files") % custom_music.tracks.size()
 
 
@@ -483,3 +558,8 @@ func _open_music_folder() -> void:
 func _custom_failed() -> void:
 	automatic()
 	status.text = tr("This MP3 is missing or cannot be played. Automatic music resumed.")
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+		rescan()
