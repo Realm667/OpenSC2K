@@ -113,6 +113,7 @@ func _run() -> void:
 	assert(box.playlist == [10002, 10003])
 	assert(reread.load(box.storage_path) == OK and reread.get_value("player", "favorites") == [10003])
 	assert(MusicBoxDialog._track_ids([1, 10002, 10002, "10003", 10018, 10019]) == [10002, 10018])
+	await _custom_music(box, audio, activity)
 	for locale in ["de", "es", "fr", "it", "ko", "pt_BR"]:
 		TranslationServer.add_translation(load("res://assets/localization/" + locale + ".po") as Translation)
 		TranslationServer.set_locale(locale)
@@ -130,6 +131,100 @@ func _run() -> void:
 	await process_frame
 	print("PASS: tool pipette, unchanged city, local window recovery, workspaces and simulation-independent music playlists")
 	quit()
+
+
+func _custom_music(box: MusicBoxDialog, audio: CityAudioController, activity: Array[bool]) -> void:
+	var folder := "user://custom-music-%d" % OS.get_process_id()
+	assert(DirAccess.make_dir_recursive_absolute(folder.path_join("Evening/Nested")) == OK)
+	assert(DirAccess.make_dir_recursive_absolute(folder.path_join("Other")) == OK)
+	var fixture := "res://tests/fixtures/audio/silence.mp3"
+	var first := "Evening/Grüße aus der Stadt.MP3"
+	var second := "Evening/Nested/Second.mp3"
+	for id in [first, second, "Other/Second.mp3", "Root.mp3", "ignored.ogg"]:
+		assert(DirAccess.copy_absolute(fixture, folder.path_join(id)) == OK)
+	box.custom_music = CustomMusicLibrary.new(folder)
+	box.rescan()
+	assert(box.custom_music.tracks.size() == 4)
+	assert(box.library.item_count == 23)
+	assert(box.custom_music.resolve("../outside.mp3").is_empty())
+	assert(box.custom_music.resolve("C:/outside.mp3").is_empty())
+	assert(box.custom_music.resolve("Evening\\bad.mp3").is_empty())
+	assert(MusicBoxDialog._track_ids([10002, first, first, second, "../bad.mp3", "wrong.ogg"]) == [10002, first, second])
+	# A folder is a playable collection, with stable relative paths in metadata.
+	for index in box.collection.item_count:
+		if box.collection.get_item_metadata(index) == "folder:Evening":
+			box.collection.select(index)
+	box._refresh_library()
+	assert(box.library.item_count == 1 and box.library.get_item_metadata(0) == first)
+	box.library.select(0)
+	box._favorite_selected()
+	assert(first in box.favorites)
+	box.playlist.assign([10002, first, second])
+	box.playlist_name.text = "Mixed MP3"
+	box._save_playlist()
+	box.playlist.clear()
+	box.playlist_names.select(box.playlist_names.item_count - 1)
+	box._load_playlist()
+	assert(box.playlist == [10002, first, second])
+	var saved := MusicBoxDialog.new(box.app)
+	assert(saved.playlist == box.playlist and first in saved.favorites)
+	saved.free()
+	var original_track := audio.current_track_id
+	var original_director := audio.music_director.general_track_index
+	box.play_track(first)
+	await create_timer(0.45).timeout
+	assert(box.active and box.playback.track_key() == first)
+	assert(box.playback.recording_player.stream is AudioStreamMP3)
+	assert(box.playback.recording_player.stream.get_length() > 1.0)
+	box._toggle_pause()
+	assert(box.playback.music_paused and box.playback.recording_player.stream_paused)
+	box._toggle_pause()
+	box.playback.application_has_focus = false
+	box.playback.set_background_audio(false)
+	assert(box.playback.recording_player.stream_paused)
+	box.playback.application_has_focus = true
+	box.playback.set_background_audio(true)
+	box.volume.value = 40.0
+	assert(is_equal_approx(box.playback.recording_player.volume_linear, audio.music_volume * 0.4))
+	box.volume.value = 100.0
+	box.rescan()
+	assert(box.playback.track_key() == first, "Rescan must not restart the playing song")
+	box.playback.recording_player.finished.emit()
+	await create_timer(0.35).timeout
+	assert(box.playback.track_key() == second)
+	box.step(1)
+	await create_timer(0.3).timeout
+	assert(box.playback.track_key() == 10002, "Mixed playlists wrap to original tracks")
+	assert(DirAccess.remove_absolute(folder.path_join(first)) == OK)
+	box.step(1)
+	await create_timer(0.3).timeout
+	assert(box.playback.track_key() == second, "Removed files are skipped without losing saved entries")
+	box.play_track(first)
+	await create_timer(0.3).timeout
+	assert(not box.active and not box.status.text.is_empty())
+	# Cancel during decoding: a late result must never restart custom playback.
+	assert(box.playback.play_custom(second, box.custom_music.resolve(second)))
+	box.playback._process(0.0)
+	box.automatic()
+	await create_timer(0.3).timeout
+	assert(box.playback.custom_track.is_empty() and box.playback.recording_player.stream == null)
+	assert(audio.current_track_id == original_track and audio.music_director.general_track_index == original_director)
+	assert(activity.is_empty(), "Custom MP3 playback must not signal the simulation")
+	box.rescan()
+	assert(box.custom_music.tracks.size() == 3 and first in box.playlist)
+	box.playlist.clear()
+	box.collection.select(2)
+	box._refresh_library()
+	box.play_track(second)
+	await create_timer(0.3).timeout
+	for id in box.custom_music.tracks:
+		assert(DirAccess.remove_absolute(folder.path_join(id)) == OK)
+	box.rescan()
+	assert(box.library.item_count == 0)
+	box.playback.recording_player.finished.emit()
+	await create_timer(0.3).timeout
+	assert(not box.active and is_equal_approx(audio.music_output_gain, 1.0))
+	print("PASS: MP3 folders, decoding, mixed playlists, persistence, pause, next, deletion and cancellation")
 
 
 func _picker() -> void:

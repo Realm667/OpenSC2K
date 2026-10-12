@@ -44,6 +44,28 @@ Window layouts and music preferences live beside the local settings file in
 `.layouts.cfg` and `.music-box.cfg` files. They are not stored in cities. Playlists
 and favorites persist; custom playback does not start automatically at launch.
 
+### Add your own MP3 music
+
+1. Open **Windows → Music box → Open music folder**. This creates and opens the
+   `music` folder in the game's user data directory. In a portable installation
+   it is `data/music` beside the executable.
+2. Create your own subfolders, for example `music/Evening`, and put MP3 files
+   inside them. Nested folders and MP3 files directly in `music` also work.
+3. Select **Rescan**, or reopen the music box. Choose **My music** or a folder
+   from the collection selector, then double-click a track to play it.
+
+Each folder containing MP3s appears as a collection. With an empty playlist,
+playback continues through the visible collection. Original and personal tracks
+can share favorites and named playlists. File names are displayed as track names;
+files are read in place and are never copied, renamed or modified.
+
+Personal tracks use paths relative to `music` so playlists survive moving the
+whole user data directory. Renaming a song or folder requires adding it to the
+playlist again. Removed files remain in saved playlists and are skipped by Next
+and automatic progression. An unreadable MP3 returns playback to automatic game
+music with a notice. Folder links are not followed. No pack manifest, original
+resource number, restart or external audio converter is required for MP3s.
+
 New interface strings are in the central language catalogs and `messages.pot`.
 Language availability follows the application's registered language set. No
 original game assets are included in this feature.

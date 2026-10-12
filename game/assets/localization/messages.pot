@@ -175,3 +175,39 @@ msgstr ""
 #. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
 msgid "Enter a playlist name first."
 msgstr ""
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "Open music folder"
+msgstr ""
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "Rescan"
+msgstr ""
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "Add MP3 files to this folder or its subfolders, then select Rescan."
+msgstr ""
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "All music"
+msgstr ""
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "Original music"
+msgstr ""
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "My music"
+msgstr ""
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "My music: %d MP3 files"
+msgstr ""
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "Cannot open music folder: %s"
+msgstr ""
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "This MP3 is missing or cannot be played. Automatic music resumed."
+msgstr ""

@@ -175,3 +175,39 @@ msgstr "No se pudieron guardar las preferencias de música: %s"
 #. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
 msgid "Enter a playlist name first."
 msgstr "Introduce primero un nombre para la lista."
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "Open music folder"
+msgstr "Abrir carpeta de música"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "Rescan"
+msgstr "Volver a buscar"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "Add MP3 files to this folder or its subfolders, then select Rescan."
+msgstr "Añade archivos MP3 a esta carpeta o sus subcarpetas y selecciona «Volver a buscar»."
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "All music"
+msgstr "Toda la música"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "Original music"
+msgstr "Música original"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "My music"
+msgstr "Mi música"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "My music: %d MP3 files"
+msgstr "Mi música: %d archivos MP3"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "Cannot open music folder: %s"
+msgstr "No se puede abrir la carpeta de música: %s"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "This MP3 is missing or cannot be played. Automatic music resumed."
+msgstr "Este MP3 no existe o no se puede reproducir. Se ha reanudado la música automática."

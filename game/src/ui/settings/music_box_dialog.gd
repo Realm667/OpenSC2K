@@ -9,9 +9,11 @@ var config := ConfigFile.new()
 var storage_path := ""
 var library: ItemList
 var queue_list: ItemList
+var collection: OptionButton
+var custom_music := CustomMusicLibrary.new()
 var favorites_only: CheckBox
-var favorites: Array[int] = []
-var playlist: Array[int] = []
+var favorites: Array = []
+var playlist: Array = []
 var playlist_index := -1
 var playlist_names: OptionButton
 var playlist_name: LineEdit
@@ -41,13 +43,22 @@ func _init(application: CityApplication) -> void:
 	favorites_only = CheckBox.new()
 	favorites_only.text = "Favorites only"
 	favorites_only.toggled.connect(func(_enabled: bool) -> void: _refresh_library())
+	var sources := row()
+	collection = OptionButton.new()
+	collection.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	collection.fit_to_longest_item = false
+	collection.item_selected.connect(func(_index: int) -> void: _refresh_library())
+	sources.add_child(collection)
+	button(sources, "Open music folder", _open_music_folder)
+	button(sources, "Rescan", rescan)
+	label("Add MP3 files to this folder or its subfolders, then select Rescan.", "HelpLabel")
 	column.add_child(favorites_only)
 	var lists := row()
 	lists.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	library = ItemList.new()
 	library.custom_minimum_size = Vector2(245, 160)
 	library.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	library.item_activated.connect(func(index: int) -> void: play_track(int(library.get_item_metadata(index))))
+	library.item_activated.connect(func(index: int) -> void: play_track(library.get_item_metadata(index)))
 	lists.add_child(library)
 	queue_list = ItemList.new()
 	queue_list.custom_minimum_size = Vector2(245, 160)
@@ -105,24 +116,29 @@ func _ready() -> void:
 	add_child(playback)
 	playback.setup(app.audio_controller.reference_root, app.preferences.music_volume, 0.0, app.audio_controller.original_media_enabled)
 	app.audio_controller.set_music_output_gain(volume.value / 100.0)
-	playback.song_finished.connect(func(id: int) -> void: step(1, id))
+	playback.song_finished.connect(func(id: Variant) -> void: step(1, id))
+	playback.custom_failed.connect(_custom_failed)
 	playback.music_activity_changed.connect(func(playing: bool) -> void:
 		if not playing and playback.current_track_id >= 0:
 			_recover_failed_playback.call_deferred())
-	_refresh_library()
+	rescan()
 	_refresh_queue()
 
 
-static func _track_ids(value: Variant) -> Array[int]:
-	var result: Array[int] = []
+static func _track_ids(value: Variant) -> Array:
+	var result: Array = []
 	if value is Array or value is PackedInt32Array:
 		for id: Variant in value:
 			if id is int and id >= MusicDirector.FIRST_TRACK_ID and id < MusicDirector.FIRST_TRACK_ID + MusicDirector.TRACK_COUNT and id not in result:
 				result.append(id)
+			elif id is String and CustomMusicLibrary.valid_id(id) and id not in result:
+				result.append(id)
 	return result
 
 
-func track_name(id: int) -> String:
+func track_name(id: Variant) -> String:
+	if id is String:
+		return id.get_basename()
 	var source := str(app.audio_controller.music_pack.files.get(id, ""))
 	if source.is_empty():
 		var recordings := RecordedSoundtrack.find_tracks(app.audio_controller.soundtrack_folder, id)
@@ -133,12 +149,23 @@ func track_name(id: int) -> String:
 
 
 func _refresh_library() -> void:
+	var selected: Variant = library.get_item_metadata(library.get_selected_items()[0]) if not library.get_selected_items().is_empty() else null
 	library.clear()
-	for id in range(MusicDirector.FIRST_TRACK_ID, MusicDirector.FIRST_TRACK_ID + MusicDirector.TRACK_COUNT):
+	var source := str(collection.get_selected_metadata()) if collection.selected >= 0 else "all"
+	var ids: Array = []
+	if source in ["all", "original"]:
+		ids.assign(range(MusicDirector.FIRST_TRACK_ID, MusicDirector.FIRST_TRACK_ID + MusicDirector.TRACK_COUNT))
+	if source != "original":
+		for id in custom_music.tracks:
+			if source in ["all", "custom"] or source == "folder:" + id.get_base_dir():
+				ids.append(id)
+	for id: Variant in ids:
 		if favorites_only.button_pressed and id not in favorites:
 			continue
 		var index := library.add_item(("★ " if id in favorites else "") + track_name(id))
 		library.set_item_metadata(index, id)
+		if typeof(id) == typeof(selected) and id == selected:
+			library.select(index)
 
 
 func _refresh_queue() -> void:
@@ -150,14 +177,14 @@ func _refresh_queue() -> void:
 
 
 func open() -> void:
-	_refresh_library()
+	rescan()
 	_refresh_queue()
-	popup_centered(Vector2i(720, 540))
+	popup_centered(Vector2i(760, 620))
 
 
 func _add_selected() -> void:
 	for index in library.get_selected_items():
-		var id := int(library.get_item_metadata(index))
+		var id: Variant = library.get_item_metadata(index)
 		if id not in playlist:
 			playlist.append(id)
 	_refresh_queue()
@@ -166,7 +193,7 @@ func _add_selected() -> void:
 
 func _favorite_selected() -> void:
 	for index in library.get_selected_items():
-		var id := int(library.get_item_metadata(index))
+		var id: Variant = library.get_item_metadata(index)
 		if id in favorites:
 			favorites.erase(id)
 		else:
@@ -180,7 +207,7 @@ func _remove_selected() -> void:
 	if selected.is_empty():
 		return
 	playlist.remove_at(selected[0])
-	playlist_index = playlist.find(playback.current_track_id)
+	playlist_index = playlist.find(playback.track_key())
 	_refresh_queue()
 	_save()
 
@@ -190,10 +217,10 @@ func _move_up() -> void:
 	if selected.is_empty() or selected[0] == 0:
 		return
 	var index := selected[0]
-	var id := playlist[index]
+	var id: Variant = playlist[index]
 	playlist[index] = playlist[index - 1]
 	playlist[index - 1] = id
-	playlist_index = playlist.find(playback.current_track_id)
+	playlist_index = playlist.find(playback.track_key())
 	_refresh_queue()
 	queue_list.select(index - 1)
 	_save()
@@ -211,7 +238,7 @@ func _sync_source() -> void:
 	playback.set_volumes(original.music_volume * volume.value / 100.0, 0.0)
 
 
-func play_track(id: int) -> void:
+func play_track(id: Variant) -> void:
 	status.text = ""
 	if app.document_state.city != null and not app.document_state.city.music_enabled():
 		status.text = tr("Enable Music in Options to play a track.")
@@ -230,9 +257,13 @@ func play_track(id: int) -> void:
 	await _fade.finished
 	if serial != _switch_serial:
 		return
-	if not playback.play_music_track(id, false, true):
-		automatic()
-		status.text = tr("This music track is not available.")
+	var started := playback.play_custom(id, custom_music.resolve(id)) if id is String else playback.play_music_track(id, false, true)
+	if not started:
+		if id is String:
+			_custom_failed()
+		else:
+			automatic()
+			status.text = tr("This music track is not available.")
 		return
 	playlist_index = playlist.find(id)
 	_refresh_queue()
@@ -240,24 +271,32 @@ func play_track(id: int) -> void:
 	_fade.tween_method(playback.set_music_output_gain, 0.0, 1.0, 0.2)
 
 
-func step(direction: int, finished_track := -1) -> void:
+func step(direction: int, finished_track: Variant = null) -> void:
 	var ids := playlist.duplicate()
 	if ids.is_empty():
 		for index in library.item_count:
-			ids.append(int(library.get_item_metadata(index)))
+			ids.append(library.get_item_metadata(index))
 	if ids.is_empty():
+		if finished_track != null:
+			automatic()
 		return
-	var index := ids.find(finished_track if finished_track >= 0 else playback.current_track_id)
+	var index := ids.find(finished_track if finished_track != null else playback.track_key())
 	if index < 0:
 		index = playlist_index
-	play_track(ids[posmod(index + direction, ids.size())])
+	# Keep removed files in saved playlists, but skip them during playback.
+	for offset in range(1, ids.size() + 1):
+		var next: Variant = ids[posmod(index + direction * offset, ids.size())]
+		if next is int or not custom_music.resolve(next).is_empty():
+			play_track(next)
+			return
+	_custom_failed()
 
 
 func _toggle_pause() -> void:
 	if not active:
 		var selected := library.get_selected_items()
 		if not selected.is_empty():
-			play_track(int(library.get_item_metadata(selected[0])))
+			play_track(library.get_item_metadata(selected[0]))
 		else:
 			step(1)
 	else:
@@ -314,7 +353,8 @@ func _process(delta: float) -> void:
 		return
 	_refresh_elapsed = 0.0
 	var player: CityAudioController = playback if active else app.audio_controller
-	var track := track_name(player.current_track_id) if player.current_track_id >= 10000 else tr("No track playing")
+	var key: Variant = playback.track_key() if active else player.current_track_id
+	var track := track_name(key) if key is String or key >= 10000 else tr("No track playing")
 	now_playing.text = tr("Paused: %s") % track if player.music_paused else tr("Playing: %s") % track
 	if not active:
 		now_playing.text = tr("Automatic music") + " — " + now_playing.text
@@ -352,7 +392,7 @@ func _load_playlist() -> void:
 	var name := playlist_names.get_item_text(playlist_names.selected)
 	playlist = _track_ids(config.get_value("playlists", name, []))
 	playlist_name.text = name
-	playlist_index = playlist.find(playback.current_track_id)
+	playlist_index = playlist.find(playback.track_key())
 	_refresh_queue()
 	_save()
 
@@ -386,3 +426,39 @@ func handle_media_key(key: int) -> bool:
 		_:
 			return false
 	return true
+
+
+func rescan() -> void:
+	var selected := str(collection.get_selected_metadata()) if collection.selected >= 0 else "all"
+	custom_music.refresh()
+	collection.clear()
+	for entry in [["All music", "all"], ["Original music", "original"], ["My music", "custom"]]:
+		collection.add_item(entry[0])
+		collection.set_item_metadata(collection.item_count - 1, entry[1])
+	var folders: Array[String] = []
+	for id in custom_music.tracks:
+		var folder := id.get_base_dir()
+		if not folder.is_empty() and folder not in folders:
+			folders.append(folder)
+	for folder in folders:
+		collection.add_item(folder)
+		collection.set_item_metadata(collection.item_count - 1, "folder:" + folder)
+	for index in collection.item_count:
+		if collection.get_item_metadata(index) == selected:
+			collection.select(index)
+	collection.tooltip_text = custom_music.folder
+	_refresh_library()
+	status.text = tr("My music: %d MP3 files") % custom_music.tracks.size()
+
+
+func _open_music_folder() -> void:
+	var error := DirAccess.make_dir_recursive_absolute(custom_music.folder)
+	if error == OK:
+		error = OS.shell_open(ProjectSettings.globalize_path(custom_music.folder))
+	if error != OK:
+		status.text = tr("Cannot open music folder: %s") % error_string(error)
+
+
+func _custom_failed() -> void:
+	automatic()
+	status.text = tr("This MP3 is missing or cannot be played. Automatic music resumed.")
