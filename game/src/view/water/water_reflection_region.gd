@@ -11,6 +11,7 @@ var reflected: Image
 var emission: Image
 var seasons: Image
 var seabed: Image
+var lights: Image
 var textures: Dictionary = {}
 var moving_signature: Array = []
 var moving_textures: Dictionary = {}
@@ -27,13 +28,15 @@ static func from_native(data: Dictionary, area: Rect2i, scale_divisor: int) -> W
 	result.emission = data.emission
 	result.seasons = data.seasons
 	result.seabed = data.get("seabed")
+	result.lights = data.get("lights")
 	return result
 
 
 func upload() -> void:
 	if not textures.is_empty():
 		return
-	for pair in [["surface", surface], ["reflected", reflected], ["emission", emission], ["seasons", seasons], ["seabed", seabed]]:
+	for pair in [["surface", surface], ["reflected", reflected], ["emission", emission],
+			["seasons", seasons], ["seabed", seabed], ["lights", lights]]:
 		if pair[1] != null:
 			textures[pair[0]] = ImageTexture.create_from_image(pair[1])
 
@@ -47,6 +50,8 @@ func prepare(material: ShaderMaterial) -> void:
 	material.set_shader_parameter("environment_has_seasons", true)
 	material.set_shader_parameter("water_seabed", textures.get("seabed"))
 	material.set_shader_parameter("water_has_seabed", textures.has("seabed"))
+	material.set_shader_parameter("water_lights", textures.get("lights"))
+	material.set_shader_parameter("water_has_lights", textures.has("lights"))
 	material.set_shader_parameter("water_origin", Vector2(bounds.position * divisor))
 	material.set_shader_parameter("water_divisor", float(divisor))
 	material.set_shader_parameter("water_padding", float(PADDING))

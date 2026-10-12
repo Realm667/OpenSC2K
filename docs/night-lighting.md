@@ -15,8 +15,8 @@ sources for this pass. The original brightmap pixels stay sharp.
 
 Street and entrance lighting adds short warm pools only to projected road/deck
 receivers. Each deck's foreground mask clips the pool. It does not perform general
-3D shadow casting or illuminate arbitrary facades. No water reflection effect is
-added. Street locations use a stable coordinate pattern, never simulation RNG.
+3D shadow casting or illuminate arbitrary facades. These road pools do not feed
+water reflections. Street locations use a stable coordinate pattern, never simulation RNG.
 
 `game/src/view/environment/night_light_profiles.json` contains the street color,
 radius (in tiles), intensity and spacing, plus optional building-ID profiles.
@@ -56,6 +56,22 @@ An explicit custom folder replaces it. The catalog checks decoded source-index
 hashes before applying a mask, so other artwork cannot receive misplaced lights.
 Original sprites and palettes are not included. The PNG masks are imported as
 textures and the catalog is included in every export preset.
+
+### Waterfront light reflections
+
+Water reflections use the existing building brightmaps to create narrow light
+trails at night. A cached field preserves each lit facade column's authored color
+and alpha, projected from its footprint to nearby visible water at the correct
+altitude. Distance softens the trail; another bank or water level blocks it.
+Inland buildings, empty masks and unpowered buildings do not create trails.
+
+The water shader breaks this field into short horizontal glints using map-space
+waves. It follows the existing water clock, pause and Waves switch. Reflections
+Off and disabled visual enhancements remove the effect; daytime light activation
+follows the same value as the building brightmaps. The original geometric mirror,
+ship contact and seabed pass retain their separate masks. Regions without light
+trails allocate no extra GPU texture. This is a stylized sprite-based effect, not
+a three-dimensional light simulation.
 
 ### Main menu
 

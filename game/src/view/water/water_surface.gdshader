@@ -8,6 +8,8 @@ uniform sampler2D animated_palette : source_color, filter_nearest, repeat_disabl
 uniform sampler2D water_surface : filter_nearest, repeat_disable;
 uniform sampler2D water_seabed : filter_nearest, repeat_disable;
 uniform bool water_has_seabed = false;
+uniform sampler2D water_lights : source_color, filter_nearest, repeat_disable;
+uniform bool water_has_lights = false;
 uniform float water_clock = 0.0;
 uniform float water_rain = 0.0;
 uniform vec2 water_origin = vec2(0.0);
@@ -33,6 +35,14 @@ vec4 mirror_sample(vec4 source, vec2 uv, float level, float shade) {
 			|| abs(receiver.r - level) > 0.001 || receiver.a < 0.5) { return vec4(0.0); }
 	if (source.a <= 0.0) { return vec4(0.0); }
 	return vec4(environment_color(palette_color(source.r) * shade, uv) * source.a, source.a);
+}
+
+vec4 shore_light(vec2 uv, float level) {
+	vec4 receiver = texture(water_surface, uv);
+	if (any(lessThan(uv, vec2(0.0))) || any(greaterThanEqual(uv, vec2(1.0)))
+			|| abs(receiver.r - level) > 0.001 || receiver.a < 0.5) { return vec4(0.0); }
+	vec4 light = texture(water_lights, uv);
+	return vec4(light.rgb * light.a, light.a);
 }
 
 // Reflected trees and lights keep their own masks and authored emission colors.
@@ -83,6 +93,26 @@ void fragment() {
 			if (!water_geometry_preview && water_waves_enabled) { strength *= 1.0 - swell.z * 0.25; }
 			if (!water_geometry_preview) { mirror_color *= vec3(0.78, 0.87, 1.0); }
 			combined = mix(base, mirror_color, reflected.a * strength);
+		}
+		if (water_has_lights && environment_enabled && environment_night > 0.0 && !water_geometry_preview) {
+			// Narrow horizontal glints break a vertical envelope derived from the
+			// real building brightmap. The wave field stays anchored in map space.
+			float time = water_waves_enabled ? water_clock : 0.0;
+			float wave = sin(world.y * 2.2 + sin(world.x * 0.18 - time * 0.7) * 1.8 - time * 2.4);
+			float offset = (water_waves_enabled ? clamp(swell.y, -1.5, 1.5) : 0.0) / water_divisor;
+			vec2 uv = UV + vec2(floor(offset), 0.0) / dimensions;
+			vec4 light = mix(shore_light(uv, surface.r), shore_light(uv + vec2(1.0, 0.0) / dimensions, surface.r), fract(offset));
+			float detail = 1.0 - smoothstep(1.0, 4.0, length(fwidth(world)));
+			float glint = mix(0.32, 0.08 + 0.72 * smoothstep(-0.12, 0.90, wave), detail);
+			glint *= 0.72 + 0.28 * sin(world.y * 0.29 + world.x * 0.17 + time * 0.55);
+			// Emission is not tinted blue by the night LUT or dimmed by clouds.
+			// The authored RGB is decoded by source_color in linear HDR canvases.
+			if (light.a > 0.0) {
+				// Mix the reflection's coverage rather than adding encoded RGB;
+				// additive sRGB turns warm lights purple over saturated blue water.
+				float coverage = min(light.a * glint * environment_night * 1.35, 0.7);
+				combined = mix(combined, light.rgb / light.a, coverage);
+			}
 		}
 	}
 	COLOR = vec4(combined, 1.0);

@@ -68,6 +68,7 @@ func _run() -> void:
 	await RenderingServer.frame_post_draw
 	var night := viewport.get_texture().get_image()
 	assert(night.get_pixel(8, 8).r > original.get_pixel(8, 8).r * 0.28, "Colored reflected brightmaps disappeared")
+	await _check_shore_lights(viewport, material)
 	material.set_shader_parameter("environment_enabled", false)
 	mirror.fill(Color(0, 0, 0, 0))
 	(sprite.texture as ImageTexture).update(mirror)
@@ -107,8 +108,12 @@ func _run() -> void:
 		"Water and reflected artwork must receive the same cloud shadow")
 	material.set_shader_parameter("water_geometry_preview", false)
 	material.set_shader_parameter("water_enabled", false)
+	material.set_shader_parameter("water_has_lights", true)
+	material.set_shader_parameter("environment_enabled", true)
 	await RenderingServer.frame_post_draw
 	assert(viewport.get_texture().get_image().get_data() == original.get_data(), "Off did not restore exact original pixels")
+	material.set_shader_parameter("water_has_lights", false)
+	material.set_shader_parameter("environment_enabled", false)
 	material.set_shader_parameter("cloud_enabled", false)
 	await _check_surface_details(viewport, sprite, material, mirror, bottom)
 	await _check_waves(viewport, sprite, material, mirror, bottom)
@@ -160,6 +165,64 @@ func _run() -> void:
 	await process_frame
 	print("PASS: GPU reflection source colors, static occlusion, region clipping, subtle attenuation, brightmaps, depth-dependent transmission and exact Off output")
 	quit()
+
+
+func _check_shore_lights(viewport: SubViewport, material: ShaderMaterial) -> void:
+	var lights := Image.create(32, 32, false, Image.FORMAT_RGBA8)
+	lights.fill(Color(0.95, 0.45, 0.08, 0.8))
+	material.set_shader_parameter("water_lights", ImageTexture.create_from_image(lights))
+	material.set_shader_parameter("water_waves_enabled", false)
+	for hdr in [false, true]:
+		viewport.use_hdr_2d = hdr
+		material.set_shader_parameter("environment_lut_linear_canvas", hdr)
+		material.set_shader_parameter("water_has_lights", false)
+		await RenderingServer.frame_post_draw
+		var baseline := viewport.get_texture().get_image()
+		material.set_shader_parameter("water_has_lights", true)
+		await RenderingServer.frame_post_draw
+		var lit := viewport.get_texture().get_image()
+		assert(lit.get_pixel(8, 8).r > baseline.get_pixel(8, 8).r + 0.01,
+			"Waterfront emission missing in HDR=%s" % hdr)
+		assert(lit.get_pixel(8, 8).b < baseline.get_pixel(8, 8).b,
+			"Warm light added a blue cast instead of preserving the authored color")
+		assert(lit.get_pixel(24, 8) == baseline.get_pixel(24, 8), "Light trail escaped the water mask")
+		assert(lit.get_pixel(1, 8) == baseline.get_pixel(1, 8), "Light trail drew the region padding")
+		material.set_shader_parameter("water_clock", 6.5)
+		await RenderingServer.frame_post_draw
+		assert(viewport.get_texture().get_image().get_data() == lit.get_data(), "Waves Off still animated light trails")
+		material.set_shader_parameter("environment_night", 0.0)
+		await RenderingServer.frame_post_draw
+		var day := viewport.get_texture().get_image()
+		material.set_shader_parameter("water_has_lights", false)
+		await RenderingServer.frame_post_draw
+		assert(viewport.get_texture().get_image().get_data() == day.get_data(), "Light trail remained during daytime")
+		material.set_shader_parameter("environment_night", 1.0)
+	viewport.use_hdr_2d = false
+	material.set_shader_parameter("environment_lut_linear_canvas", false)
+	material.set_shader_parameter("water_waves_enabled", true)
+	await RenderingServer.frame_post_draw
+	var first_base := viewport.get_texture().get_image().get_pixel(8, 8)
+	material.set_shader_parameter("water_has_lights", true)
+	await RenderingServer.frame_post_draw
+	var first_light := viewport.get_texture().get_image().get_pixel(8, 8)
+	material.set_shader_parameter("water_clock", 2.0)
+	material.set_shader_parameter("water_has_lights", false)
+	await RenderingServer.frame_post_draw
+	var second_base := viewport.get_texture().get_image().get_pixel(8, 8)
+	material.set_shader_parameter("water_has_lights", true)
+	await RenderingServer.frame_post_draw
+	var second_light := viewport.get_texture().get_image().get_pixel(8, 8)
+	assert(absf((first_light.r - first_base.r) - (second_light.r - second_base.r)) > 0.001,
+		"Waterfront glints did not move independently of the base water")
+	material.set_shader_parameter("water_reflections_enabled", false)
+	await RenderingServer.frame_post_draw
+	var disabled := viewport.get_texture().get_image()
+	material.set_shader_parameter("water_has_lights", false)
+	await RenderingServer.frame_post_draw
+	assert(viewport.get_texture().get_image().get_data() == disabled.get_data(), "Reflection Off left light trails")
+	material.set_shader_parameter("water_reflections_enabled", true)
+	material.set_shader_parameter("water_waves_enabled", false)
+	material.set_shader_parameter("water_clock", 0.0)
 
 
 func _check_surface_details(viewport: SubViewport, sprite: Sprite2D, material: ShaderMaterial, mirror: Image, bottom: Image) -> void:
