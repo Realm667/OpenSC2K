@@ -1,0 +1,700 @@
+{
+  "version": 1,
+  "approved_on": "2026-10-12",
+  "assets": [
+    {
+      "id": 500,
+      "file": "sound/500.wav",
+      "sha256": "c0e7b8174fe95748c01783c5713f54652b07e5cb66eb7bad81da661c58eb3991",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/500.wav",
+      "license_status": "Matches documented CC0 / Public Domain replacement",
+      "documented_sources": [
+        "bsb-3128"
+      ]
+    },
+    {
+      "id": 501,
+      "file": "sound/501.wav",
+      "sha256": "c3ee343615338451aab7f1b596f1f5510ed056a8878ce0741ce33b8756a7f4a0",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/501.wav",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 502,
+      "file": "sound/502.wav",
+      "sha256": "f07c91caaae61fc8a5ad6134e852cf8cc48fa5ddeba2e2a88bb08e74746bc348",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/502.wav",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 503,
+      "file": "sound/503.wav",
+      "sha256": "1acff57eaeeb8fbaebc2ddad6266ce30a1e15d3a8c856a324822269ca55a5475",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/503.wav",
+      "license_status": "Matches documented CC0 / Public Domain replacement",
+      "documented_sources": [
+        "bsb-1074"
+      ]
+    },
+    {
+      "id": 504,
+      "file": "sound/504.wav",
+      "sha256": "e82192e777a77d0fb949a4f374abc653f8ac0c3042a00d2883ee98337d37ad05",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/504.wav",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 505,
+      "file": "sound/505.wav",
+      "sha256": "9bf298295f390c83e5f9c67cf916d154a4f63daefdd551f282c99447612b9c07",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/505.wav",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 506,
+      "file": "sound/506.wav",
+      "sha256": "149c51cd47e138c7669a737e4a90c857186be9381d93dc8a108cf94152ca2c25",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/506.wav",
+      "license_status": "Matches documented CC0 / Public Domain replacement",
+      "documented_sources": [
+        "whelen-us"
+      ]
+    },
+    {
+      "id": 507,
+      "file": "sound/507.wav",
+      "sha256": "786a4a2d7e804335005592e4cb25e928942cd923c5d88bc563b89dea1ace4e19",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/507.wav",
+      "license_status": "Matches documented CC0 / Public Domain replacement",
+      "documented_sources": [
+        "bsb-1341",
+        "bsb-0987"
+      ]
+    },
+    {
+      "id": 508,
+      "file": "sound/508.wav",
+      "sha256": "3387201accd9ca9039b88ccd1192eb17a40a1d7efde99d1cae7eefd7d5d6d78f",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/508.wav",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 509,
+      "file": "sound/509.wav",
+      "sha256": "93b5148a694f0daf68bd965fc338e8234fc3760ed3913a8398797eb90d8e3023",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/509.wav",
+      "license_status": "Matches documented CC0 / Public Domain replacement",
+      "documented_sources": [
+        "whelen-us",
+        "bsb-1145"
+      ]
+    },
+    {
+      "id": 510,
+      "file": "sound/510.wav",
+      "sha256": "229be7f5c2cb0114797e4400159a57ef6332e01f869e576ca796784eb1c999ec",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/510.wav",
+      "license_status": "Matches documented CC0 / Public Domain replacement",
+      "documented_sources": [
+        "bsb-0264"
+      ]
+    },
+    {
+      "id": 511,
+      "file": "sound/511.wav",
+      "sha256": "d2339ad6bbf4cb62de03da2ed9a8b00fa3b707dd2eb73180480d759d913ec4f3",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/511.wav",
+      "license_status": "Matches documented CC0 / Public Domain replacement",
+      "documented_sources": [
+        "water"
+      ]
+    },
+    {
+      "id": 512,
+      "file": "sound/512.wav",
+      "sha256": "f4ff040e7034c15c95331ede7f1559717defb9470419283d8611388ecc2c780b",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/512.wav",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 513,
+      "file": "sound/513.wav",
+      "sha256": "6d701201bae3a3a944817f7262b2d4ff512c80224067ce77a9960e200ab62f13",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/513.wav",
+      "license_status": "Matches documented CC0 / Public Domain replacement",
+      "documented_sources": [
+        "bsb-0021",
+        "bsb-0237"
+      ]
+    },
+    {
+      "id": 514,
+      "file": "sound/514.wav",
+      "sha256": "a8654c2e9d64480a77acc5b408a4b598ef4d138dedbe018b23d8a3301e2f8f58",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/514.wav",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 515,
+      "file": "sound/515.wav",
+      "sha256": "904ef2ef0533e761adcf747b5ab143c99ea672f147adeadd3e7ffa2d920057be",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/515.wav",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 516,
+      "file": "sound/516.wav",
+      "sha256": "6f77a478324ba88eed97ffd83d33b83f854be62ae2c9ab8a14e72569befb8bd0",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/516.wav",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 517,
+      "file": "sound/517.wav",
+      "sha256": "8956bdecc2963c2513ae65ad4bf92ac07ae797cd621a990abc3bdc9fc2180074",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/517.wav",
+      "license_status": "Matches documented CC0 / Public Domain replacement",
+      "documented_sources": [
+        "bsb-0261"
+      ]
+    },
+    {
+      "id": 518,
+      "file": "sound/518.wav",
+      "sha256": "8f288ca25bbddeb8c84492228c1cad247ebfeec2dbdf48b18574be5c71369ea0",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/518.wav",
+      "license_status": "Matches documented CC0 / Public Domain replacement",
+      "documented_sources": [
+        "boeing777-takeoff"
+      ]
+    },
+    {
+      "id": 519,
+      "file": "sound/519.wav",
+      "sha256": "93eb8b92da97b340dca52b92ac3327a35834554b00033b88e36265a9565e25df",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/519.wav",
+      "license_status": "Matches documented CC0 / Public Domain replacement",
+      "documented_sources": [
+        "jet-landing-262753"
+      ]
+    },
+    {
+      "id": 520,
+      "file": "sound/520.wav",
+      "sha256": "421dfd629b0a8bab4046c4136cbcf9c09eebaaf2bae496e2e3bf4337771ea56c",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/520.wav",
+      "license_status": "Matches documented CC0 / Public Domain replacement",
+      "documented_sources": [
+        "us-civil-siren"
+      ]
+    },
+    {
+      "id": 521,
+      "file": "sound/521.wav",
+      "sha256": "061a93f0d194ad835d79029e42a412f9757e6f0a94cd23254e7ea1198362e6d5",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/521.wav",
+      "license_status": "Matches documented CC0 / Public Domain replacement",
+      "documented_sources": [
+        "bsb-3594"
+      ]
+    },
+    {
+      "id": 522,
+      "file": "sound/522.wav",
+      "sha256": "f4891fe56aa22a83526b60bc9f5353edb0e0839b499ad38100fac868f10d8c20",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/522.wav",
+      "license_status": "Matches documented CC0 / Public Domain replacement",
+      "documented_sources": [
+        "bsb-2355"
+      ]
+    },
+    {
+      "id": 523,
+      "file": "sound/523.wav",
+      "sha256": "127c750e7174823add23b42edb68d4a4baaa4041a4ad0c9c221e08a31b401cbf",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/523.wav",
+      "license_status": "Matches documented CC0 / Public Domain replacement",
+      "documented_sources": [
+        "bsb-1269"
+      ]
+    },
+    {
+      "id": 524,
+      "file": "sound/524.wav",
+      "sha256": "9d50a08832fc03b7e04d8e8c0513969bf57c378a5fd64edf4704d2336c9d66ed",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/524.wav",
+      "license_status": "Matches documented CC0 / Public Domain replacement",
+      "documented_sources": [
+        "bsb-0277"
+      ]
+    },
+    {
+      "id": 525,
+      "file": "sound/525.wav",
+      "sha256": "4e8356c4862b2dc5f6f72510d40496a95ff26dee6b70dd29911eb8154590aea3",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/525.wav",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 526,
+      "file": "sound/526.wav",
+      "sha256": "a4dc8fe89af4174932474735ef1ad78290b3f9d63d431e9441fd83abee9bdc29",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/526.wav",
+      "license_status": "Matches documented CC0 / Public Domain replacement",
+      "documented_sources": [
+        "arcology"
+      ]
+    },
+    {
+      "id": 527,
+      "file": "sound/527.wav",
+      "sha256": "3c46909ba52646eed2e3f6965479b702af89e321b6b920a3d0c1c90890a45628",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/527.wav",
+      "license_status": "Matches documented CC0 / Public Domain replacement",
+      "documented_sources": [
+        "lion-roar"
+      ]
+    },
+    {
+      "id": 528,
+      "file": "sound/528.wav",
+      "sha256": "2df7f36d8900aa4dc2a81c6a0c183f4f1def59189a99f913f506525d77efd903",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/528.wav",
+      "license_status": "Matches documented CC0 / Public Domain replacement",
+      "documented_sources": [
+        "bsb-1145"
+      ]
+    },
+    {
+      "id": 529,
+      "file": "sound/529.wav",
+      "sha256": "80b0ce6908fd3ae8ebe2c6d68d7a2c6f8a5f4e5145f1cc2638c9015616de87e6",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/effects/529.wav",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 10000,
+      "file": "music/10000.mp3",
+      "sha256": "bc88e1ed3e61d764ce81d08032b9f180825e9c1495293086f3c050fac9ccaa10",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/music/10000.mp3",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 10001,
+      "file": "music/10001.mp3",
+      "sha256": "fd49116bf67039d3d43521816a82e80fa3e88a548250d53c330e94459eb8cc52",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/music/10001.mp3",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 10002,
+      "file": "music/10002.mp3",
+      "sha256": "5ed21e27a2571ddf38ab12d1cf36ad26b2bb1c0753b5bf1036c8ffdef38950a5",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/music/10002.mp3",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 10003,
+      "file": "music/10003.mp3",
+      "sha256": "18cd990f541c95cf6b2a36d124fd6a4b0ed0577e95027a0e46ee4762ed16d764",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/music/10003.mp3",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 10004,
+      "file": "music/10004.mp3",
+      "sha256": "f532cf2fd4331320678ec56c9245cec9d6d72413706d3ec02a7985e45b758cbb",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/music/10004.mp3",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 10005,
+      "file": "music/10005.mp3",
+      "sha256": "86c7c0231ba578a9c3da8e4498712d20b3b41d695b83c986812cd3b1d66701d6",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/music/10005.mp3",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 10006,
+      "file": "music/10006.mp3",
+      "sha256": "c66294bd921b566e0c296e56c5ed1086783f7fc15c7d60ed7362683188d7df7d",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/music/10006.mp3",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 10007,
+      "file": "music/10007.mp3",
+      "sha256": "71bf8e9096f2942a46329357ef0d71e93d7fb01908329759b56721f0f94d810a",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/music/10007.mp3",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 10008,
+      "file": "music/10008.mp3",
+      "sha256": "4d813010c0bab72c3c26ca0f12ef9da35dfc95b54cd44adabf0d8d073d7cbbe1",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/music/10008.mp3",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 10009,
+      "file": "music/10009.mp3",
+      "sha256": "d280280d64cafa5cfd95afc9a8accdb2a8748427a6345cd508c1012069d7d37b",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/music/10009.mp3",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 10010,
+      "file": "music/10010.mp3",
+      "sha256": "a1c5ecdecbfcb3dcfc63334b3db4d65808f6a9cdc0a87634c84cdfa02d06cc30",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/music/10010.mp3",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 10011,
+      "file": "music/10011.mp3",
+      "sha256": "8880277c3018dcd0f1d33d25b7b9bb1400d752fb71f8a1c2f7345fb7cb6a7dd4",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/music/10011.mp3",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 10012,
+      "file": "music/10012.mp3",
+      "sha256": "a6c3476890896177a6980fc0b82e3c8407237591cfd151c04babe7ffc8375862",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/music/10012.mp3",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 10013,
+      "file": "music/10013.mp3",
+      "sha256": "ad8b55fba0d3c161fd1536e46f96ec6981c1c1d0456f69368ac57388d94393cd",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/music/10013.mp3",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 10014,
+      "file": "music/10014.mp3",
+      "sha256": "95e4bdf7585aea7ada8a35d5a39fb851dcc4aa8dfc5333922f5e6aa5bb4d0779",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/music/10014.mp3",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 10015,
+      "file": "music/10015.mp3",
+      "sha256": "b0b8819d525b26cb3a0b4fe376f96bd742c1cbabe003da417121f99c5abcece2",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/music/10015.mp3",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 10016,
+      "file": "music/10016.mp3",
+      "sha256": "7a4e1e53a4bab14fea89411f28a39ecc67f5c1b78fad770f039f2f001910c182",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/music/10016.mp3",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 10017,
+      "file": "music/10017.mp3",
+      "sha256": "c8692df0f95c6b2e30a1d1fb4413e225e7d4d0d76c97a24c977d3d31d571d870",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/music/10017.mp3",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    },
+    {
+      "id": 10018,
+      "file": "music/10018.mp3",
+      "sha256": "90421ca8c46dabbeb6e3ee38e255c7be6731407f969fecf7293acf87a379a2f5",
+      "source": "Daniel-approved final audio",
+      "source_file": "Sound/music/10018.mp3",
+      "license_status": "Owner-supplied; redistribution license not established by this integration"
+    }
+  ],
+  "documented_sources": [
+    {
+      "key": "arcology",
+      "file": "arcology.ogg",
+      "title": "computerNoise_000.ogg",
+      "url": "https://kenney.nl/assets/sci-fi-sounds",
+      "author": "Kenney",
+      "license": "CC0-1.0",
+      "kind": "External sound design",
+      "container": "Original OGG",
+      "sha256": "1527944e16eb14b48ee03fe3e7ce6aae94262833a4e1f83928d451a7414fe4e1"
+    },
+    {
+      "key": "boeing777-takeoff",
+      "file": "boeing777-takeoff.mp3",
+      "title": "Boeing 777 takeoff.wav",
+      "author": "Sonicwave32",
+      "url": "https://freesound.org/people/Sonicwave32/sounds/433581/",
+      "download_url": "https://raw.githubusercontent.com/snbd-app/automobiles/main/Boeing%20777.mp3",
+      "license": "CC0-1.0",
+      "container": "MP3-Kopie aus dem oeffentlichen Snbd/Aubo-Soundboard (256 kbps); kein verlustfreies Original",
+      "kind": "Field recording",
+      "metadata": "Boeing 777-200ER taking off; Rolls-Royce Trent 800. Quellenidentitaet und CC0 durch Soundboard-metadata.json und Freesound bestaetigt.",
+      "sha256": "c83492465d97310e624bc4c2422ba1da8228f3a162635dd643be2431f67e9c6f"
+    },
+    {
+      "key": "bsb-0021",
+      "url": "https://bigsoundbank.com/applause-600-people-s0021.html",
+      "file": "bsb-0021.wav",
+      "license": "CC0-1.0",
+      "sha256": "b3299662a9dce6d73e22ab299659a7196ab05bd73ecefe9bd7d55e9a88380fe1",
+      "metadata": "Technical details Length : 00:28 UCS Category : Crowds / Applause ( CRWDApls ) Type : Alone sound Channels : Stereo Conditions : Studio Realism : Idealized Sampling Rate : 44,100 Hz Bit Depth : 16 bits Author : Joseph SARDIN Sound number : 21 ",
+      "author": "Joseph SARDIN",
+      "kind": "Field recording / Foley",
+      "container": "Original WAV",
+      "title": "applause-600-people-s0021"
+    },
+    {
+      "key": "bsb-0237",
+      "url": "https://bigsoundbank.com/shouts-and-applauses-of-teens-2-s0237.html",
+      "file": "bsb-0237.wav",
+      "license": "CC0-1.0",
+      "sha256": "7eb9866268b69348a96435ed33d0e922e790971f86c03abe789f39a46d3e0617",
+      "metadata": "Technical details Length : 00:06 UCS Category : Crowds / Cheering ( CRWDCheer ) Type : Alone sound Channels : Stereo Conditions : Studio Sampling Rate : 44,100 Hz Bit Depth : 16 bits Author : DenisChardonnet Sound number : 237 ",
+      "author": "DenisChardonnet",
+      "kind": "Field recording / Foley",
+      "container": "Original WAV",
+      "title": "shouts-and-applauses-of-teens-2-s0237"
+    },
+    {
+      "key": "bsb-0261",
+      "url": "https://bigsoundbank.com/horn-of-a-ship-1-s0261.html",
+      "file": "bsb-0261.wav",
+      "license": "CC0-1.0",
+      "sha256": "815d8cc325950af6c98da6059631bf54f6ce65417426470d4cd8efb252bc26f5",
+      "metadata": "Technical details Length : 00:09 UCS Category : Boats / Horn ( BOATHorn ) Type : Alone sound Channels : Stereo Conditions : Outdoor Realism : Realistic Sampling Rate : 44,100 Hz Bit Depth : 16 bits Author : DenisChardonnet Sound number : 261 ",
+      "author": "DenisChardonnet",
+      "kind": "Field recording",
+      "container": "Original WAV",
+      "title": "horn-of-a-ship-1-s0261"
+    },
+    {
+      "key": "bsb-0264",
+      "url": "https://bigsoundbank.com/helicopter-2-s0264.html",
+      "file": "bsb-0264.wav",
+      "license": "CC0-1.0",
+      "sha256": "84808da6718f04b8bfaa2f99b5031b25b0915ea7354c6b2d7d4c028db34eda65",
+      "metadata": "Technical details Length : 00:05 UCS Category : Aircraft / Helicopter ( AEROHeli ) Type : Alone sound Channels : Stereo Conditions : Outdoor Sampling Rate : 44,100 Hz Bit Depth : 16 bits Author : DenisChardonnet Sound number : 264 ",
+      "author": "DenisChardonnet",
+      "kind": "Field recording",
+      "container": "Original WAV",
+      "title": "helicopter-2-s0264"
+    },
+    {
+      "key": "bsb-0277",
+      "url": "https://bigsoundbank.com/train-horn-s0277.html",
+      "file": "bsb-0277.wav",
+      "license": "CC0-1.0",
+      "sha256": "87d1ebd73f147cdffdfdfad37e6d24d3953aae59a93b027c4225c8bc0025d072",
+      "metadata": "Technical details Length : 00:02 UCS Category : Trains / Horn ( TRNHorn ) Type : Alone sound Channels : Stereo Conditions : Outdoor Sampling Rate : 44,100 Hz Bit Depth : 16 bits Author : DenisChardonnet Sound number : 277 ",
+      "author": "DenisChardonnet",
+      "kind": "Field recording / Foley",
+      "container": "Original WAV",
+      "title": "train-horn-s0277"
+    },
+    {
+      "key": "bsb-0987",
+      "url": "https://bigsoundbank.com/big-branching-fire-1-s0987.html",
+      "file": "bsb-0987.wav",
+      "license": "CC0-1.0",
+      "sha256": "f8812d764b197775e10411adafa14b921d8d6af0697447b4494fd7d00654c80d",
+      "metadata": "Technical details Length : 00:39 UCS Category : Fire / Burning ( FIREBurn ) Type : Alone sound Channels : Monophonic Conditions : Outdoor Realism : Realistic Sampling Rate : 48,000 Hz Bit Depth : 16 bits Equipment : Tascam DR-40 + Sennheiser ME66 Author : JosephSardin Sound number : 987 ",
+      "author": "JosephSardin",
+      "kind": "Field recording",
+      "container": "Original WAV",
+      "title": "big-branching-fire-1-s0987"
+    },
+    {
+      "key": "bsb-1074",
+      "url": "https://bigsoundbank.com/bubbles-burst-s1074.html",
+      "file": "bsb-1074.wav",
+      "license": "CC0-1.0",
+      "sha256": "78a5174c5c3d3568ef49c22af49de92384d106c4c97e1c67aab1947a1626b8b6",
+      "metadata": "Technical details Length : 00:41 UCS Category : Cartoon / Pop ( TOONPop ) Type : Foley Channels : Monophonic Conditions : Studio Realism : Foley Sampling Rate : 48,000 Hz Bit Depth : 16 bits Equipment : Tascam DR-40 + Sennheiser ME66 Author : Joseph SARDIN Sound number : 1,074 ",
+      "author": "Joseph SARDIN",
+      "kind": "Field recording / Foley",
+      "container": "Original WAV",
+      "title": "bubbles-burst-s1074"
+    },
+    {
+      "key": "bsb-1145",
+      "url": "https://bigsoundbank.com/truck-engine-s1145.html",
+      "file": "bsb-1145.wav",
+      "license": "CC0-1.0",
+      "sha256": "1c89ce25f7926544ac2cac655a8b0d090ffa1423e92c33bf67ee2b3ae9750513",
+      "metadata": "Technical details Length : 00:36 UCS Category : Vehicles / Car ( VEHCar ) Type : Alone sound Channels : Monophonic Conditions : Outdoor Realism : Realistic Sampling Rate : 48,000 Hz Bit Depth : 16 bits Equipment : Tascam DR-40 + Sennheiser ME66 Author : Joseph SARDIN Sound number : 1,145 ",
+      "author": "Joseph SARDIN",
+      "kind": "Field recording",
+      "container": "Original WAV",
+      "title": "truck-engine-s1145"
+    },
+    {
+      "key": "bsb-1269",
+      "url": "https://bigsoundbank.com/industrial-doorbell-s1269.html",
+      "file": "bsb-1269.wav",
+      "license": "CC0-1.0",
+      "sha256": "49476ed2e7625825250f979e27aafb9ff58bee13650b05d05a7c30bfb190650c",
+      "metadata": "Technical details Length : 00:11 UCS Category : Bells / Doorbell ( BELLDoor ) Type : Alone sound Channels : Monophonic Conditions : Studio Realism : Realistic Sampling Rate : 48,000 Hz Bit Depth : 24 bits Equipment : SoundDevices MixPre-3 + Sennheiser ME66 Author : Joseph SARDIN Sound number : 1,269 ",
+      "author": "Joseph SARDIN",
+      "kind": "Field recording",
+      "container": "Original WAV",
+      "title": "industrial-doorbell-s1269"
+    },
+    {
+      "key": "bsb-1341",
+      "url": "https://bigsoundbank.com/gasoline-fire-2-s1341.html",
+      "file": "bsb-1341.wav",
+      "license": "CC0-1.0",
+      "sha256": "828c16943d1bd1c2990c1cb56867b501ef650fda281f67d9da086b502e0a788f",
+      "metadata": "Technical details Length : 00:29 UCS Category : Fire / Ignite ( FIREIgn ) Type : Alone sound Channels : Monophonic Conditions : Outdoor Realism : Realistic Sampling Rate : 48,000 Hz Bit Depth : 24 bits Equipment : SoundDevices MixPre-3 + Sennheiser ME66 Author : Joseph SARDIN Sound number : 1,341 ",
+      "author": "Joseph SARDIN",
+      "kind": "Field recording / Foley",
+      "container": "Original WAV",
+      "title": "gasoline-fire-2-s1341"
+    },
+    {
+      "key": "bsb-2355",
+      "url": "https://bigsoundbank.com/grinding-metal-barrier-opening-1-s2355.html",
+      "file": "bsb-2355.wav",
+      "license": "CC0-1.0",
+      "sha256": "1d2e0b7eb4f6e29fcf6c372dd0fac56067f604fa02ad7ce1887652bdd7c61c1d",
+      "metadata": "Technical details Length : 00:03 UCS Category : Doors / Gate ( DOORGate ), Metal / Friction ( METLFric ) Type : Alone sound Channels : Monophonic Conditions : Indoor Realism : Realistic Sampling Rate : 48,000 Hz Bit Depth : 24 bits Equipment : SoundDevices MixPre-3 + Sennheiser ME66 Author : Joseph SARDIN Sound number : 2,355 ",
+      "author": "Joseph SARDIN",
+      "kind": "Field recording",
+      "container": "Original WAV",
+      "title": "grinding-metal-barrier-opening-1-s2355"
+    },
+    {
+      "key": "bsb-3128",
+      "url": "https://bigsoundbank.com/pneumatic-jackhammer-4-s3128.html",
+      "file": "bsb-3128.wav",
+      "license": "CC0-1.0",
+      "sha256": "78d7e4a094a7eecde433a2b30bf6c9442d4f286cab7e72193fa9e120ca896e8e",
+      "metadata": "Technical details Length : 00:04 UCS Category : Tools / Power ( TOOLPowr ) Type : Soundscape Channels : Monophonic Conditions : Outdoor Realism : Realistic Sampling Rate : 48,000 Hz Bit Depth : 24 bits Equipment : SoundDevices MixPre-3 + Sennheiser ME66 Author : Joseph SARDIN Sound number : 3,128 ",
+      "author": "Joseph SARDIN",
+      "kind": "Field recording / Foley",
+      "container": "Original WAV",
+      "title": "pneumatic-jackhammer-4-s3128"
+    },
+    {
+      "key": "bsb-3594",
+      "url": "https://bigsoundbank.com/bus-horn-s3594.html",
+      "file": "bsb-3594.wav",
+      "license": "CC0-1.0",
+      "sha256": "13fd59f253e10886511ca45a491efb1ebed6851d9fb13500a77d2fc9b8b07b89",
+      "metadata": "Technical details Length : 00:02 UCS Category : Vehicles / Horn ( VEHHorn ) Type : Alone sound Channels : Monophonic Conditions : Outdoor Realism : Realistic Sampling Rate : 48,000 Hz Bit Depth : 24 bits Equipment : Zoom H4e Author : Joseph SARDIN Sound number : 3,594 ",
+      "author": "Joseph SARDIN",
+      "kind": "Field recording",
+      "container": "Original WAV",
+      "title": "bus-horn-s3594"
+    },
+    {
+      "key": "jet-landing-262753",
+      "file": "jet-landing-262753.wav",
+      "title": "Stereo Jet Landing Sample 1.wav",
+      "author": "bigpickle51",
+      "url": "https://freesound.org/people/bigpickle51/sounds/262753/",
+      "download_url": "https://huggingface.co/datasets/Fhrozen/FSD50k/resolve/main/clips/dev/262753.wav",
+      "license": "CC0-1.0",
+      "container": "FSD50K WAV-Kopie: 44.1 kHz, Mono, 16 Bit; Originalaufnahme 96 kHz Stereo",
+      "kind": "Field recording",
+      "metadata": "Jet-Landeaufnahme mit zwei Rode NTG3 und Fostex FR2-LE. Konkreter Flugzeugtyp nicht angegeben. Individuelle CC0-Lizenz in Freesound und FSD50K-Metadaten bestaetigt. FSD50K-Datensatz als Sammlung: CC BY 4.0; Einzelclip weiterhin CC0.",
+      "sha256": "d072e58f22f02dccc701bb233600246b63214a639595c322403f10832561cb51"
+    },
+    {
+      "key": "lion-roar",
+      "title": "Lion_raring-sound1TamilNadu178.ogg",
+      "author": "Uzhavan / Info-farmer",
+      "license": "Public domain (PD-self)",
+      "url": "https://commons.wikimedia.org/wiki/File:Lion_raring-sound1TamilNadu178.ogg",
+      "download_url": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Lion_raring-sound1TamilNadu178.ogg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+      "file": "lion-roar.ogg",
+      "container": "Published OGG/Vorbis original",
+      "kind": "Field recording",
+      "sha256": "ab237d0f960e83412251d0c11f69959f3c2e8d3b14595f7181c3056f7fa18bf7"
+    },
+    {
+      "key": "us-civil-siren",
+      "title": "Civil-defense-siren-waver.ogg",
+      "author": "Techtonic",
+      "license": "Public domain (PD-self)",
+      "url": "https://commons.wikimedia.org/wiki/File:Civil-defense-siren-waver.ogg",
+      "download_url": "https://upload.wikimedia.org/wikipedia/commons/6/69/Civil-defense-siren-waver.ogg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+      "file": "us-civil-siren.ogg",
+      "container": "Published OGG/Vorbis original",
+      "kind": "Field recording",
+      "sha256": "b5b68e742939dc5b493fc4eb3961a1da78076eeac4996d16ae1cb77f5b0455f1"
+    },
+    {
+      "key": "water",
+      "file": "water.flac",
+      "url": "https://opengameart.org/node/11174",
+      "author": "jasinski; edit qubodup",
+      "license": "CC0-1.0",
+      "kind": "Field recording",
+      "container": "Original .flac",
+      "title": "Beach Ocean Waves",
+      "sha256": "fcfca178eca2eac536e8c2a4ed5cf8096e44c921acd587047b3d9f1d7845435c"
+    },
+    {
+      "key": "whelen-us",
+      "title": "Whelen.ogg",
+      "author": "Heggyhomolit",
+      "license": "CC0-1.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Whelen.ogg",
+      "download_url": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Whelen.ogg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+      "file": "whelen-us.ogg",
+      "container": "Published OGG/Vorbis original",
+      "kind": "Field recording",
+      "sha256": "3262ec3727d7847313238c12ea1a6db550f09219d1c0540bbb49af3e091fa433"
+    }
+  ]
+}
