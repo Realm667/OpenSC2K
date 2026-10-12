@@ -7,16 +7,20 @@ extends Node2D
 const SHADER := preload("res://src/view/city_life/city_life.gdshader")
 const MAX_TEXTURE_EDGE := 4096
 var atlas := CityLifeAtlas.new()
+var gpu: CityLifeGpu
+var gpu_enabled := DisplayServer.get_name() != "headless"
+var interpolation := 1.0
+var _entries: Array[Dictionary] = []
 var image: Image:
 	get: return atlas.image
 var texture: ImageTexture:
-	get: return atlas.texture
+	get: return gpu.artwork if gpu != null else atlas.texture
 var source_bounds := Rect2i()
 var lights := CityLifeLights.new()
 var emission: Image:
 	get: return atlas.emission
 var emission_texture: ImageTexture:
-	get: return atlas.emission_texture
+	get: return gpu.emission if gpu != null else atlas.emission_texture
 var road_layer: Node2D
 var _light_night := -1.0
 var _light_occluders: Dictionary[Vector3i, Array] = {}
@@ -37,7 +41,7 @@ func _init() -> void:
 
 
 func _draw() -> void:
-	if texture != null:
+	if gpu == null and texture != null:
 		for index in atlas.destinations.size():
 			draw_texture_rect_region(texture, atlas.destinations[index], atlas.sources[index])
 
@@ -60,9 +64,6 @@ func render(app: CityApplication, figures: Array, sprites: CityLifeSprites) -> v
 	var city := app.document_state.city
 	if light_active:
 		lights.sync_geometry(city)
-	if lights.roads.size() > 4096:
-		lights.roads.clear()
-		lights.clear_surfaces()
 	# Region publications also change while panning an unchanged city. Their
 	# affected silhouettes are invalidated separately by the map renderer.
 	var regions := app.render_caches.region_cache
@@ -72,20 +73,22 @@ func render(app: CityApplication, figures: Array, sprites: CityLifeSprites) -> v
 	var layout: Variant = regions._layout_generation if regions != null else app.render_caches.static_visual_signature
 	var signature := [app.document_state.city.document.get_instance_id(), app.static_render_state.epoch,
 		source, app.static_render.city_view_size(), layout]
-	if signature != _occlusion_signature or _occluders.size() > 4096:
+	if signature != _occlusion_signature:
 		_occluders.clear()
 		_occluder_bounds.clear()
 		_light_occluders.clear()
 		lights.clear_surfaces()
 		_occlusion_signature = signature
 	_sync_visible_regions(app.render_caches.region_cache)
+	_trim_working_set()
 	figures.sort_custom(func(a: CityLifeController.Figure, b: CityLifeController.Figure) -> bool:
 		return a.position.y < b.position.y)
 	road_layer.visible = light_active
 	if light_active:
 		(road_layer as CityLifeHeadlights).render(city, figures, lights, source_bounds.position,
 			func(tile: Vector2i, enter: int) -> Array: return _light_candidates(app, tile, enter))
-	var entries: Array[Dictionary] = []
+	_entries.clear()
+	var entries := _entries
 	for figure: CityLifeController.Figure in figures:
 		var sprite := sprites.sprite(figure.walking, figure.variant, figure.direction, int(figure.distance * 8.0) % 2, figure.vehicle_kind)
 		var origin := Vector2i(figure.position.round()) - Vector2i(sprite.get_width() / 2, sprite.get_height() - 1)
@@ -94,9 +97,15 @@ func render(app: CityApplication, figures: Array, sprites: CityLifeSprites) -> v
 		var candidates := _candidates(app, figure.tile, figure.enter)
 		var opacity := figure.opacity()
 		var mask: Image = lights.lamp_mask(sprite, figure.vehicle_kind, figure.direction) if light_active and not figure.walking else null
-		entries.append({"sprite": sprite, "origin": origin, "occluders": candidates, "opacity": opacity, "lamps": mask})
-	atlas.compose(bounds, entries, light_active)
-	if light_active:
+		entries.append({"sprite": sprite, "origin": origin, "occluders": candidates, "opacity": opacity, "lamps": mask, "figure": figure})
+	if gpu_enabled:
+		if gpu == null:
+			gpu = CityLifeGpu.new()
+			gpu.prepare(sprites, lights)
+		gpu.render(self, entries)
+	else:
+		atlas.compose(bounds, entries, light_active)
+	if light_active and gpu == null:
 		(material as ShaderMaterial).set_shader_parameter("vehicle_emission", emission_texture)
 	sync_view(app)
 	show()
@@ -113,6 +122,8 @@ func sync_view(app: CityApplication) -> void:
 	position = Vector2(source_bounds.position) * view_scale + app.map_view.camera._draw_offset(view_scale)
 	scale = Vector2(view_scale, view_scale)
 	app.map_view.layers._apply_environment(material as ShaderMaterial)
+	if gpu != null:
+		gpu.sync(app, _emission_active, interpolation)
 	var allowed := VisualEnhancementOptions.detail_lights_visible(app.preferences.visual_enhancements, app.map_view.zoom_factor)
 	(material as ShaderMaterial).set_shader_parameter("vehicle_has_emission", allowed and _emission_active)
 	if road_layer != null:
@@ -314,3 +325,28 @@ static func hidden_at(point: Vector2i, occluders: Array) -> bool:
 				and mask.get_pixel(sample.x, sample.y).a > 0.0:
 			return true
 	return false
+
+
+func _trim_working_set() -> void:
+	if _occluders.size() > 4096:
+		var removed := 0
+		for key in _occluder_bounds.keys():
+			if source_bounds.grow(96).intersects(_occluder_bounds[key]):
+				continue
+			_occluders.erase(key)
+			_occluder_bounds.erase(key)
+			_light_occluders.erase(key)
+			removed += 1
+			if removed >= 64:
+				break
+	for cache: Dictionary in [lights.roads, lights.visible_roads, _light_occluders]:
+		if cache.size() <= 4096:
+			continue
+		var removed := 0
+		for key in cache.keys():
+			if _occluder_bounds.has(key) and source_bounds.grow(96).intersects(_occluder_bounds[key]):
+				continue
+			cache.erase(key)
+			removed += 1
+			if removed >= 64:
+				break

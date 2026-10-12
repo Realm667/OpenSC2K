@@ -30,6 +30,11 @@ var collection := 0
 var texture_users: Dictionary[int, Dictionary] = {}
 var texture_bytes := 0
 var texture_budget := MAX_TEXTURE_BYTES
+var discovery_active := false
+var discovery_indices := PackedInt32Array()
+var discovery_cursor := 0
+var discovered: Array[Vector2i] = []
+var fixture_points: Dictionary[Vector2i, Vector2] = {}
 var fixtures := Node2D.new()
 var signals := Node2D.new()
 var signal_tiles: Array[Vector2i] = []
@@ -65,6 +70,10 @@ func _init() -> void:
 
 
 func reset() -> void:
+	fixture_points.clear()
+	discovery_active = false
+	discovery_indices.clear()
+	discovered.clear()
 	unseen.clear()
 	fade_revision = -1
 	cache.clear()
@@ -118,14 +127,14 @@ func sync(app: CityApplication, strength: float, elapsed := 0.0, prepare := fals
 	var changed := roads.sync_geometry(city)
 	var shape := [app.view_state.surface_visibility.duplicate()]
 	if roads.geometry_reset or geometry != shape:
+		fixture_points.clear()
 		geometry = shape
 		invalidate_all()
 		bounds = Rect2i()
 		if resident and not prepare_entire_city:
 			# Large replacements can exceed the geometry tracker's local delta.
 			# Only that reset needs another city-wide discovery pass.
-			bounds = _city_bounds(city)
-			_collect(city)
+			begin_city_discovery(city)
 	elif not changed.is_empty():
 		_update_tiles(city, changed)
 	var next := Rect2i(map.visible_source_rect().grow(BUFFER_MARGIN))
@@ -134,9 +143,11 @@ func sync(app: CityApplication, strength: float, elapsed := 0.0, prepare := fals
 	if not bounds.encloses(next.grow(-BUFFER_MARGIN * 0.5)) or bounds.get_area() > next.get_area() * 2:
 		bounds = next
 		_collect(city)
+	var started := Time.get_ticks_usec()
+	if discovery_active:
+		discover_city_step(city, maxi(100, budget_usec / 4))
 	var built := 0
 	var attempts := mini(BUILD_BUDGET, pending.size())
-	var started := Time.get_ticks_usec()
 	# Refresh in place: an old complete texture remains until its replacement is ready.
 	while attempts > 0:
 		var tile := pending[cursor]
@@ -181,9 +192,10 @@ func _update_tiles(city: CityState, changed: Dictionary[Vector2i, bool]) -> void
 	for tile in changed:
 		if cache.has(tile):
 			_mark_dirty(tile, true)
-		var has_fixture := (city.index_of(tile.x, tile.y) >= 0 and CityLifePaths.ports(city, tile) != 0
-			and city.land_altitude(tile.x, tile.y) < city.visible_altitude_levels and not sources(city, tile).is_empty())
-		var in_view := has_fixture and bounds.has_point(Vector2i(CityLifePaths.point(city, tile, 0, 2, 0.5, false)))
+		fixture_points.erase(tile)
+		var point := fixture_point(city, tile)
+		var has_fixture := point.is_finite()
+		var in_view := has_fixture and bounds.has_point(Vector2i(point))
 		if in_view and not visible_keys.has(tile):
 			visible_tiles.append(tile)
 			visible_keys[tile] = true
@@ -225,10 +237,8 @@ func _collect(city: CityState) -> void:
 		var tile := Vector2i(index / city.map_size, index % city.map_size)
 		# Collect every fixture in this area at every zoom. The cache budget may
 		# evict offscreen receivers, but must never change the street layout.
-		if CityLifePaths.ports(city, tile) == 0 or city.land_altitude(tile.x, tile.y) >= city.visible_altitude_levels:
-			continue
-		var point := CityLifePaths.point(city, tile, 0, 2, 0.5, false)
-		if bounds.has_point(Vector2i(point)) and not sources(city, tile).is_empty():
+		var point := fixture_point(city, tile)
+		if point.is_finite() and bounds.has_point(Vector2i(point)):
 			visible_tiles.append(tile)
 			visible_keys[tile] = true
 			points[tile] = point
@@ -485,3 +495,34 @@ func start_visible_fades(view: Rect2) -> void:
 		fixtures.queue_redraw()
 		signals.queue_redraw()
 	fade_revision = fades.revision
+
+
+func begin_city_discovery(city: CityState) -> void:
+	discovery_indices = CityLifePaths.candidate_indices(city, Vector2i.ZERO, Vector2i.ONE * (city.map_size - 1))
+	discovery_cursor = 0
+	discovered.clear()
+	discovery_active = true
+
+
+func discover_city_step(city: CityState, budget_usec: int) -> void:
+	var deadline := Time.get_ticks_usec() + budget_usec
+	while discovery_cursor < discovery_indices.size():
+		var index := discovery_indices[discovery_cursor]
+		discovery_cursor += 1
+		var tile := Vector2i(index / city.map_size, index % city.map_size)
+		if fixture_point(city, tile).is_finite():
+			discovered.append(tile)
+			last_used[tile] = collection
+			if not cache.has(tile) or dirty.has(tile):
+				_enqueue(tile)
+		if Time.get_ticks_usec() >= deadline:
+			return
+	discovery_active = false
+	discovery_indices.clear()
+
+
+func fixture_point(city: CityState, tile: Vector2i) -> Vector2:
+	if not fixture_points.has(tile):
+		var eligible := city.index_of(tile.x, tile.y) >= 0 and CityLifePaths.ports(city, tile) != 0 and city.land_altitude(tile.x, tile.y) < city.visible_altitude_levels and not sources(city, tile).is_empty()
+		fixture_points[tile] = CityLifePaths.point(city, tile, 0, 2, 0.5, false) if eligible else Vector2.INF
+	return fixture_points[tile]

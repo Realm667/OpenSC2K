@@ -424,6 +424,18 @@ func _check_night_mesh_reuse(viewport: SubViewport, map: CityMapControl, lightin
 			await RenderingServer.frame_post_draw
 		assert(viewport.get_texture().get_image().get_data() == cached.get_data(),
 			"Reused night geometry must exactly match a fresh rebuild after emission and position changes")
+	var retained_id := lighting.copies[0].get_instance_id()
+	for count in [3, 1, 2]:
+		var next := CityMapSource.new(source.size)
+		for index in count:
+			next.meshes.append(first)
+		map.city_source = next
+		lighting.process(true, 1.0, options)
+		assert(lighting.copies[0].get_instance_id() == retained_id, "Panning must retain existing light nodes")
+		for index in lighting.copies.size():
+			var copy := lighting.copies[index] as MeshInstance2D
+			assert(copy.visible == (index < count))
+			assert(copy.mesh == (first.mesh if index < count else null), "Hidden pool slots retain geometry or visible slots lose it")
 	map.city_source = original
 	lighting.process(true, 1.0, options)
 	for frame in 4:

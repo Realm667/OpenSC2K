@@ -10,6 +10,9 @@ const WIND := Vector2(0.32, 0.20)
 const WEATHER_COVERAGE := [0.65, 1.05, 1.35, 1.55, 1.3, 1.0, 1.4]
 const FAIR_WEATHER_COVERAGE := [0.85, 0.6, 0.45, 0.7, 0.85, 1.25, 1.0, 1.0, 0.8]
 
+var shadow_viewport: SubViewport
+var shadow_material: ShaderMaterial
+var shadow_signature: Array = []
 var app: CityApplication
 var drift := Vector2.ZERO
 var opacity := 0.0
@@ -57,6 +60,9 @@ func process(delta: float, phase_elapsed: float, active: bool, light: Color, dar
 	parameters = {"cloud_enabled": enabled and clouds_enabled}
 	if not enabled:
 		parameters["cloud_fog_density"] = 0.0
+		parameters["cloud_cover_cached"] = false
+		if shadow_viewport != null:
+			shadow_viewport.render_target_update_mode = SubViewport.UPDATE_DISABLED
 		if layer != null:
 			layer.hide()
 		opacity = 0.0
@@ -144,6 +150,7 @@ func process(delta: float, phase_elapsed: float, active: bool, light: Color, dar
 		"cloud_opacity": opacity,
 		"cloud_light": Vector3(light.r, light.g, light.b),
 	})
+	_sync_shadow_field()
 	_sync_layer(source_to_canvas, edge, rotation)
 	fog_overlay.process(phase_elapsed * speed, enabled, fog, light)
 
@@ -229,3 +236,31 @@ static func make_field() -> Texture2D:
 	# Authored cloud colors and alpha are shared by tops, shadows and water.
 	# Placement is deterministic; no city RNG or per-frame image work is used.
 	return CUMULUS
+
+
+func _sync_shadow_field() -> void:
+	if DisplayServer.get_name() == "headless":
+		return
+	if shadow_viewport == null:
+		shadow_viewport = SubViewport.new()
+		shadow_viewport.disable_3d = true
+		shadow_viewport.size = Vector2i(512, 512)
+		shadow_viewport.world_2d = World2D.new()
+		app.map_view.add_child(shadow_viewport)
+		var rect := ColorRect.new()
+		rect.size = Vector2(512, 512)
+		shadow_material = ShaderMaterial.new()
+		shadow_material.shader = load("res://src/view/clouds/cloud_shadow_field.gdshader")
+		rect.material = shadow_material
+		shadow_viewport.add_child(rect)
+	var signature: Array = [field, parameters.cloud_field_next, parameters.cloud_type_blend,
+		parameters.cloud_appearance, parameters.cloud_projection, density, parameters.cloud_formation]
+	if signature != shadow_signature:
+		for key in parameters:
+			shadow_material.set_shader_parameter(key, parameters[key])
+		shadow_material.set_shader_parameter("cloud_drift", Vector2.ZERO)
+		shadow_material.set_shader_parameter("cloud_cover_cached", false)
+		shadow_viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
+		shadow_signature = signature
+	parameters["cloud_cover_cached"] = true
+	parameters["cloud_cover_field"] = shadow_viewport.get_texture()

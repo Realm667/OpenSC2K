@@ -13,6 +13,8 @@ func _initialize() -> void:
 	_check_path_segments()
 	_check_local_tiles()
 	_check_atlas_pixels()
+	_check_incremental_eviction()
+	_check_publication_budget()
 	print("PASS: exact city-life artwork/emission pixels, road coordinates, local occlusion invalidation and bounded light reuse")
 	quit()
 
@@ -308,3 +310,38 @@ func _check_network_search() -> void:
 	app.city_life._refresh_bus_area(city)
 	assert(not app.city_life._bus_tiles.has(Vector2i(127, 126)), "A removed depot retained its coverage")
 	app.free()
+
+
+func _check_incremental_eviction() -> void:
+	var canvas := CityLifeCanvas.new()
+	canvas.source_bounds = Rect2i(0, 0, 100, 100)
+	var visible := Vector3i(0, 0, 0)
+	for i in 4200:
+		var key := Vector3i(i, 0, 0)
+		canvas._occluders[key] = []
+		canvas._occluder_bounds[key] = Rect2i(0 if i == 0 else 2000 + i, 0, 64, 48)
+		canvas.lights.roads[key] = []
+	canvas._trim_working_set()
+	assert(canvas._occluders.has(visible) and canvas.lights.roads.has(visible), "Eviction discarded visible masks")
+	assert(canvas._occluders.size() == 4200 - 64, "A cache overflow caused a global clear")
+	for i in 5:
+		canvas._trim_working_set()
+	assert(canvas._occluders.size() <= 4096 and canvas._occluders.size() > 4000)
+	canvas.free()
+
+
+func _check_publication_budget() -> void:
+	var worker := CityRegionCache.RegionWorker.new()
+	for i in 3:
+		var region := CityGpuRegionResult.new()
+		region.atlas_image = Image.create(64, 64, false, Image.FORMAT_RGBA8)
+		worker.outbox.append(region)
+	assert(worker.take_regions(4, 64 * 64 * 4).size() == 1)
+	assert(worker.has_regions(), "Byte budget dropped unpublished regions")
+	assert(worker.take_regions(4, 1).size() == 1, "One indivisible upload must make progress")
+	assert(worker.take_regions(4, 1).size() == 1 and not worker.has_regions())
+	var budget := VisualWorkBudget.new()
+	budget.begin_frame(0.04)
+	assert(budget.allowance_usec < 1500)
+	budget.upload_bytes = VisualWorkBudget.UPLOAD_LIMIT
+	assert(not budget.available())

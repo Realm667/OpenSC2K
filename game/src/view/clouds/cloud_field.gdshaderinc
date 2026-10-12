@@ -1,6 +1,8 @@
 // A shared, deterministic aerial plane. Tile coordinates are canonical; the
 // projection turns billboard artwork with the camera without stretching it.
 uniform bool cloud_enabled = false;
+uniform bool cloud_cover_cached = false;
+uniform sampler2D cloud_cover_field : filter_linear, repeat_enable;
 uniform sampler2D cloud_field : source_color, filter_linear_mipmap, repeat_disable;
 uniform sampler2D cloud_field_next : source_color, filter_linear_mipmap, repeat_disable;
 uniform float cloud_type_blend = 0.0;
@@ -118,6 +120,7 @@ vec4 cloud_sample(vec2 grid_position, float softness, float map_edge) {
 float cloud_cover(vec2 grid_position) {
 	// A prefiltered alpha gives diffuse shadow edges with one shared lookup
 	// per candidate instead of multiplying the full cloud search five times.
+	if (cloud_cover_cached) { return texture(cloud_cover_field, (grid_position - cloud_drift) / cloud_span).r; }
 	return cloud_sample(grid_position, 5.0, -1.0).a;
 }
 
