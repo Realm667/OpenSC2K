@@ -1,5 +1,12 @@
 [
   {
+    "id": "quality_of_life_test",
+    "script": "tests/quality_of_life_test.gd",
+    "domain": "ui",
+    "lane": "product",
+    "requires": ["ext/graphics/pack.json", "ext/data/pack.json", "ext/music/pack.json", "ext/sound/pack.json"]
+  },
+  {
     "id": "sc2x_edge_render_test",
     "script": "tests/sc2x_edge_render_test.gd",
     "domain": "rendering",

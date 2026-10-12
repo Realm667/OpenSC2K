@@ -2,6 +2,7 @@ class_name ApplicationQualityOfLife
 extends Node
 
 const MENU_LAYOUTS := 0x8400
+const MENU_MUSIC_BOX := 0x8401
 const WORKSPACES := ["Building", "Finances", "City analysis"]
 
 var app: CityApplication
@@ -9,6 +10,7 @@ var memory: WindowLayoutMemory
 var layouts: QolDialog
 var workspace_choice: OptionButton
 var layout_status: Label
+var music_box: MusicBoxDialog
 var report_windows: Dictionary[int, Window] = {}
 
 
@@ -28,13 +30,18 @@ func _ready() -> void:
 	var popup := app.city_menu_bar.windows_menu.get_popup()
 	popup.add_separator()
 	popup.add_item("Workspaces", MENU_LAYOUTS)
+	popup.add_item("Music box", MENU_MUSIC_BOX)
 	app.city_menu_bar.windows_menu_requested.connect(_menu)
 	_build_layout_dialog()
+	music_box = MusicBoxDialog.new(app)
+	app.add_child(music_box)
 
 
 func _menu(id: int) -> void:
 	if id == MENU_LAYOUTS:
 		layouts.popup_centered(Vector2i(500, 290))
+	elif id == MENU_MUSIC_BOX:
+		music_box.open()
 
 
 func _build_layout_dialog() -> void:

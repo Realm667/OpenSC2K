@@ -79,3 +79,99 @@ msgstr "Chiudi la finestra di dialogo corrente prima di ripristinare uno spazio 
 #. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
 msgid "Cannot save window layouts: %s"
 msgstr "Impossibile salvare la disposizione delle finestre: %s"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Music box"
+msgstr "Jukebox"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Choose a track or create a playlist. Automatic music keeps the original game selection."
+msgstr "Scegli un brano o crea una playlist. La musica automatica mantiene la selezione originale del gioco."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Favorites only"
+msgstr "Solo preferiti"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Add to playlist"
+msgstr "Aggiungi alla playlist"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Favorite"
+msgstr "Attiva/disattiva preferito"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Remove"
+msgstr "Rimuovi"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Move up"
+msgstr "Sposta su"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Previous"
+msgstr "Precedente"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Play / Pause"
+msgstr "Riproduci / Pausa"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Next"
+msgstr "Successivo"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Automatic music"
+msgstr "Musica automatica"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Music volume"
+msgstr "Volume musica"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Sound effects volume"
+msgstr "Volume effetti sonori"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Playlist name"
+msgstr "Nome playlist"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Save playlist"
+msgstr "Salva playlist"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Load playlist"
+msgstr "Carica playlist"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Track %d"
+msgstr "Brano %d"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Enable Music in Options to play a track."
+msgstr "Attiva Musica in Opzioni per riprodurre un brano."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "This music track is not available."
+msgstr "Questo brano non è disponibile."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "No track playing"
+msgstr "Nessun brano in riproduzione"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Paused: %s"
+msgstr "In pausa: %s"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Playing: %s"
+msgstr "In riproduzione: %s"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Cannot save music preferences: %s"
+msgstr "Impossibile salvare le preferenze musicali: %s"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Enter a playlist name first."
+msgstr "Inserisci prima un nome per la playlist."

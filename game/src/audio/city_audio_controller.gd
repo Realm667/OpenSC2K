@@ -16,6 +16,8 @@ var music_pack := MediaPack.new()
 var reference_root := ""
 var original_media_enabled := true
 var music_volume := 0.8
+# Presentation-only gain; the logical music state continues unchanged.
+var music_output_gain := 1.0
 var effects_volume := 0.8
 var music_director := Music.new()
 var music_player: MidiSynthPlayer
@@ -119,13 +121,18 @@ func set_volumes(new_music_volume: float, new_effects_volume: float) -> void:
 	effects_volume = clampf(new_effects_volume, 0.0, 1.0)
 
 	if music_player != null:
-		music_player.set_volume_linear(music_volume)
+		music_player.set_volume_linear(music_volume * music_output_gain)
 
 	if recording_player != null:
-		recording_player.volume_linear = music_volume
+		recording_player.volume_linear = music_volume * music_output_gain
 
 	if is_instance_valid(sound_loop_player):
 		sound_loop_player.volume_linear = effects_volume
+
+
+func set_music_output_gain(value: float) -> void:
+	music_output_gain = clampf(value, 0.0, 1.0)
+	set_volumes(music_volume, effects_volume)
 
 
 ## Selects the music SoundFont. See SoundFontCatalog. The SoundFont loads when
