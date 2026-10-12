@@ -211,3 +211,19 @@ msgstr "Impossible d’ouvrir le dossier musical : %s"
 #: src/ui/settings/music_box_dialog.gd
 msgid "This MP3 is missing or cannot be played. Automatic music resumed."
 msgstr "Ce MP3 est introuvable ou illisible. La musique automatique a repris."
+
+#. Music source label; AI-assisted translation from English.
+msgid "SC2000 original music"
+msgstr "Musique originale de SC2000"
+
+#. Music box UI; AI-assisted translation from English.
+msgid "Tracks"
+msgstr "Titres"
+
+#. Music box UI; AI-assisted translation from English.
+msgid "Queue"
+msgstr "File d’attente"
+
+#. Music box UI; AI-assisted translation from English.
+msgid "Reticulating Splines"
+msgstr "Reticulating Splines"

@@ -4,6 +4,7 @@ extends RefCounted
 
 var folder: String
 var tracks: Array[String] = []
+var folders: Array[String] = []
 
 
 func _init(root_folder := "") -> void:
@@ -21,8 +22,10 @@ static func valid_id(id: String) -> bool:
 
 func refresh() -> void:
 	tracks.clear()
+	folders.clear()
 	_scan("")
 	tracks.sort()
+	folders.sort()
 
 
 func _scan(relative: String) -> void:
@@ -35,7 +38,9 @@ func _scan(relative: String) -> void:
 			tracks.append(id)
 	for name in directory.get_directories():
 		if not directory.is_link(name):
-			_scan(name if relative.is_empty() else relative.path_join(name))
+			var child := name if relative.is_empty() else relative.path_join(name)
+			folders.append(child)
+			_scan(child)
 
 
 func resolve(id: String) -> String:

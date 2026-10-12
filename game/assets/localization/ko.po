@@ -3096,3 +3096,19 @@ msgstr "음악 폴더를 열 수 없습니다: %s"
 #: src/ui/settings/music_box_dialog.gd
 msgid "This MP3 is missing or cannot be played. Automatic music resumed."
 msgstr "이 MP3 파일이 없거나 재생할 수 없습니다. 자동 음악 재생을 다시 시작했습니다."
+
+#. Music source label; AI-assisted translation from English.
+msgid "SC2000 original music"
+msgstr "SC2000 오리지널 음악"
+
+#. Music box UI; AI-assisted translation from English.
+msgid "Tracks"
+msgstr "곡"
+
+#. Music box UI; AI-assisted translation from English.
+msgid "Queue"
+msgstr "재생 대기열"
+
+#. Music box UI; AI-assisted translation from English.
+msgid "Reticulating Splines"
+msgstr "Reticulating Splines"

@@ -19,27 +19,49 @@ city does not reopen a budget decision or other modal prompt.
 
 ## Music box
 
-Windows → Music box uses the selected music pack, recordings and SoundFont.
-Double-click a track to play it. Add tracks to an ordered playlist, mark favorites,
-and filter the library. Previous, Play / Pause and
+Windows → Music box distinguishes **SC2000 original music**, **Reticulating
+Splines**, other selected replacement packs, and personal music folders. Original music
+requires a loaded imported SC2000 data pack and available imported music files.
+The sibling music pack from that import remains selectable when a replacement
+pack is selected for automatic music. Installed `packs/standalone-audio/music`
+and the selected music pack are also checked. Missing sources are not offered.
+Manual choices use the exact source file and the selected SoundFont; they never
+fall through to another pack with the same numeric slot.
+Choose a source or personal folder on the left, then double-click a title on the
+right. The current song has a play marker; tooltips show its source and file path.
+The optional Queue tab retains the existing ordered queue. Tracks advances within
+the selected collection; Queue advances within that queue. Previous, Play / Pause and
 Next also work through the configured media keys while the music box is active.
 Automatic music returns to the original game selection. Closing the window keeps
 the current playback. Disabling Music in Options stops custom playback.
 
 Music changes fade briefly. The music-box volume controls the audible output
 without changing the original controller's music activity or simulation timing.
-The effects slider changes the existing effects preference. The 19 original music
-slots use the soundtrack titles from *SIM-MELODY from SIM CITY2000*, matched to
+The effects slider changes the existing effects preference. Only imported original music
+uses the soundtrack titles from *SIM-MELODY from SIM CITY2000*, matched to
 Windows MIDI resource IDs (10000–10018), independently of installed file names.
-The same titles appear in the library, favorites, playlists and current-track
-display, and remain unchanged across interface languages. Personal MP3s retain
-their file names. The [title-to-MIDI reference](https://w.atwiki.jp/gamemusicbest100/pages/2869.html)
+These proper names remain unchanged across interface languages. Replacement and
+personal MP3s use the ID3 song title, falling back to their filename. The shipped
+legacy "Standalone Music" pack is labeled Reticulating Splines; replacement files
+are never assigned SC2000 soundtrack titles. Source labels also appear during
+automatic playback, whose selection and timing remain unchanged. The [title-to-MIDI reference](https://w.atwiki.jp/gamemusicbest100/pages/2869.html)
 lists both the game cue names and the soundtrack titles used here. In particular,
 10016 is “The Construction: HAPPYLAND”; the album order differs from MIDI order.
 
 Window layouts and music preferences live beside the local settings file in
 `.layouts.cfg` and `.music-box.cfg` files. They are not stored in cities. Playlists
-and favorites persist; custom playback does not start automatically at launch.
+and favorites persist; legacy named lists and workspace sections are retained
+as inactive data, with no load/save UI; custom playback does not start automatically at launch.
+Music and effects have separate volume sliders. Progress and elapsed/total time
+are shown for decoded recordings. MIDI playback has no recorded duration and
+shows a dash instead of a fabricated time. The progress bar does not seek.
+
+The bounded read-only metadata reader supports ID3v1 and ID3v2.2/2.3/2.4 title
+frames, including Latin-1, UTF-8 and UTF-16. It reads at most 1 MiB of tag data and
+keeps up to 512 title characters. Unsupported, empty or corrupt tags fall back
+to the filename. Song identity remains the source/path, even for duplicate titles.
+References: [ID3v2.3](https://id3.org/id3v2.3.0) and
+[ID3v2.4 structure](https://id3.org/id3v2.4.0-structure).
 
 ### Add your own MP3 music
 
@@ -48,12 +70,13 @@ and favorites persist; custom playback does not start automatically at launch.
    it is `data/music` beside the executable.
 2. Create your own subfolders, for example `music/Evening`, and put MP3 files
    inside them. Nested folders and MP3 files directly in `music` also work.
-3. Select **Rescan**, or reopen the music box. Choose **My music** or a folder
-   from the collection selector, then double-click a track to play it.
+3. Select **Rescan**, or reopen the music box. Choose a folder on the left,
+   then double-click a track to play it.
 
-Each folder containing MP3s appears as a collection. With an empty playlist,
+Each real subfolder appears as a collection, including empty folders. The root
+music folder appears when it contains MP3s directly. In the Tracks tab,
 playback continues through the visible collection. Original and personal tracks
-can share favorites and the current queue. File names are displayed as track names;
+can share the current queue. ID3 titles or fallback filenames are displayed;
 files are read in place and are never copied, renamed or modified.
 
 Personal tracks use paths relative to `music` so playlists survive moving the

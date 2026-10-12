@@ -6,10 +6,22 @@ signal song_finished(track_id: Variant)
 signal custom_failed
 
 var custom_track := ""
+var pack_key: Variant = null
 
 
 func track_key() -> Variant:
-	return custom_track if not custom_track.is_empty() else current_track_id
+	return pack_key if pack_key != null else (custom_track if not custom_track.is_empty() else current_track_id)
+
+
+func play_pack(key: Variant, entry: Dictionary) -> bool:
+	# Manual selection never falls through to another pack or the reference OST.
+	music_pack = entry.pack
+	original_media_enabled = false
+	soundtrack_folder = ""
+	var started := play_music_track(entry.id, false, true)
+	if started:
+		pack_key = key
+	return started
 
 
 func play_custom(id: String, path: String) -> bool:
@@ -49,6 +61,7 @@ func music_playback_is_active() -> bool:
 
 func stop_music(clear_gap := true) -> void:
 	custom_track = ""
+	pack_key = null
 	super(clear_gap)
 
 

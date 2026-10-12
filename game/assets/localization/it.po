@@ -211,3 +211,19 @@ msgstr "Impossibile aprire la cartella musica: %s"
 #: src/ui/settings/music_box_dialog.gd
 msgid "This MP3 is missing or cannot be played. Automatic music resumed."
 msgstr "Questo MP3 è assente o non riproducibile. La musica automatica è ripresa."
+
+#. Music source label; AI-assisted translation from English.
+msgid "SC2000 original music"
+msgstr "Musica originale di SC2000"
+
+#. Music box UI; AI-assisted translation from English.
+msgid "Tracks"
+msgstr "Brani"
+
+#. Music box UI; AI-assisted translation from English.
+msgid "Queue"
+msgstr "Coda"
+
+#. Music box UI; AI-assisted translation from English.
+msgid "Reticulating Splines"
+msgstr "Reticulating Splines"

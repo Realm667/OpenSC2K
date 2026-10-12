@@ -7,6 +7,7 @@ func _initialize() -> void:
 
 func _run() -> void:
 	_picker()
+	_id3_titles()
 	var settings_path := "user://qol-%d.cfg" % OS.get_process_id()
 	var settings := ConfigFile.new()
 	for kind in ["music", "sound"]:
@@ -62,6 +63,7 @@ func _run() -> void:
 	var activity: Array[bool] = []
 	audio.music_activity_changed.connect(func(value: bool) -> void: activity.append(value))
 	var box := qol.music_box
+	box.track_tabs.current_tab = 1
 	box.playlist.assign([10002, 10003])
 	box.play_track(10002)
 	await create_timer(0.5).timeout
@@ -84,6 +86,7 @@ func _run() -> void:
 	box.volume.value = 40.0
 	assert(is_equal_approx(audio.music_output_gain, 0.4) and audio.music_volume == original_volume)
 	box.volume.value = 100.0
+	box.track_tabs.current_tab = 0
 	box.playlist.clear()
 	box.play_track(10005)
 	await create_timer(0.3).timeout
@@ -91,6 +94,7 @@ func _run() -> void:
 	await create_timer(0.3).timeout
 	assert(box.playback.current_track_id == 10006, "The library advances after a track finishes without a playlist")
 	box.automatic()
+	box.track_tabs.current_tab = 1
 	box.playlist.assign([10002, 10003])
 	box.favorites.assign([10003])
 	box.config.set_value("playlists", "Legacy", [10002])
@@ -99,6 +103,7 @@ func _run() -> void:
 	assert(reread.get_value("playlists", "Legacy") == [10002], "Removing controls must preserve old saved lists")
 	assert(reread.load(box.storage_path) == OK and reread.get_value("player", "favorites") == [10003])
 	assert(MusicBoxDialog._track_ids([1, 10002, 10002, "10003", 10018, 10019]) == [10002, 10018])
+	await _music_sources(box, audio, activity)
 	await _custom_music(box, audio, activity)
 	for locale in ["de", "es", "fr", "it", "ko", "pt_BR"]:
 		TranslationServer.add_translation(load("res://assets/localization/" + locale + ".po") as Translation)
@@ -119,6 +124,171 @@ func _run() -> void:
 	quit()
 
 
+func _size_bytes(value: int, count: int, sync := false) -> PackedByteArray:
+	var result := PackedByteArray()
+	for i in count:
+		result.append((value >> ((count - i - 1) * (7 if sync else 8))) & (127 if sync else 255))
+	return result
+
+
+func _title_tag(version: int, payload: PackedByteArray) -> PackedByteArray:
+	var frame := ("TT2" if version == 2 else "TIT2").to_ascii_buffer()
+	frame.append_array(_size_bytes(payload.size(), 3 if version == 2 else 4, version == 4))
+	if version >= 3:
+		frame.append_array(PackedByteArray([0, 0]))
+	frame.append_array(payload)
+	var header := PackedByteArray([73, 68, 51, version, 0, 0])
+	header.append_array(_size_bytes(frame.size(), 4, true))
+	header.append_array(frame)
+	return header
+
+
+func _write_bytes(path: String, bytes: PackedByteArray) -> void:
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	assert(file != null)
+	file.store_buffer(bytes)
+	file.close()
+
+
+func _id3_titles() -> void:
+	var folder := "user://id3-%d" % OS.get_process_id()
+	assert(DirAccess.make_dir_recursive_absolute(folder) == OK)
+	var utf8 := PackedByteArray([3])
+	utf8.append_array("Grüße 서울 🎵".to_utf8_buffer())
+	var latin := PackedByteArray([0, 67, 97, 102, 233])
+	var utf16 := PackedByteArray([1, 255, 254, 71, 0, 114, 0, 252, 0, 223, 0, 101, 0])
+	var big := PackedByteArray([2, 0xC1, 0x1C, 0xC6, 0xB8])
+	var cases := [
+		[_title_tag(4, utf8), "Grüße 서울 🎵"], [_title_tag(3, utf16), "Grüße"],
+		[_title_tag(2, latin), "Café"], [_title_tag(4, big), "서울"],
+		[_title_tag(4, PackedByteArray([3, 32, 32, 0])), ""],
+		[_title_tag(4, PackedByteArray([3, 255, 254])), ""],
+		[_title_tag(3, PackedByteArray([1, 255, 254, 0, 216])), ""],
+		[PackedByteArray([73, 68, 51, 4, 0, 0, 127, 127, 127, 127]), ""],
+		[_title_tag(4, utf8).slice(0, 12), ""], [PackedByteArray([1, 2, 3]), ""]]
+	var legacy := PackedByteArray()
+	legacy.resize(128)
+	legacy[0] = 84
+	legacy[1] = 65
+	legacy[2] = 71
+	legacy[3] = 67
+	legacy[4] = 97
+	legacy[5] = 102
+	legacy[6] = 233
+	cases.append([legacy, "Café"])
+	for i in cases.size():
+		var path := folder.path_join("Fallback-%d.mp3" % i)
+		_write_bytes(path, cases[i][0])
+		var before := FileAccess.get_sha256(path)
+		assert(Mp3Title.read(path) == (cases[i][1] if not cases[i][1].is_empty() else "Fallback-%d" % i))
+		assert(FileAccess.get_sha256(path) == before)
+	assert(Mp3Title.read(folder.path_join("Missing.mp3")) == "Missing")
+	var long_title := PackedByteArray([3])
+	long_title.append_array("Long title ".repeat(100).to_utf8_buffer())
+	_write_bytes(folder.path_join("Long.mp3"), _title_tag(4, long_title))
+	assert(Mp3Title.read(folder.path_join("Long.mp3")).length() == 512)
+	print("PASS: bounded read-only ID3 v1/v2.2/v2.3/v2.4 titles, Unicode and corrupt-tag fallbacks")
+
+
+func _tagged_mp3(path: String, title: String) -> void:
+	var audio := FileAccess.get_file_as_bytes("res://tests/fixtures/audio/silence.mp3")
+	if audio.slice(0, 3).get_string_from_ascii() == "ID3":
+		audio = audio.slice(10 + Mp3Title._number(audio, 6, 4, true))
+	var payload := PackedByteArray([3])
+	payload.append_array(title.to_utf8_buffer())
+	var tagged := _title_tag(4, payload)
+	tagged.append_array(audio)
+	_write_bytes(path, tagged)
+
+
+func _choose_source(box: MusicBoxDialog, source: String) -> void:
+	for index in box.collection.item_count:
+		if box.collection.get_item_metadata(index) == source:
+			box.collection.select(index)
+			box._refresh_library()
+			return
+	assert(false, "Missing music source: " + source)
+
+
+func _music_sources(box: MusicBoxDialog, audio: CityAudioController, activity: Array[bool]) -> void:
+	box.open()
+	var data := box.app.asset_state.data_pack
+	var original := audio.music_pack
+	var original_track := audio.current_track_id
+	var director := audio.music_director.general_track_index
+	var folder := "user://music-source-%d" % OS.get_process_id()
+	assert(DirAccess.make_dir_recursive_absolute(folder) == OK)
+	assert(DirAccess.copy_absolute("res://tests/fixtures/audio/silence.mp3", folder.path_join("Buildings.mp3")) == OK)
+	var manifest := FileAccess.open(folder.path_join("pack.json"), FileAccess.WRITE)
+	manifest.store_string(JSON.stringify({"format": "opensc2k-music", "version": 1,
+		"name": "Standalone Music", "files": {"10014": "Buildings.mp3"}}))
+	manifest.close()
+	var replacement := MediaPack.load_folder(folder, "music")
+	assert(replacement.error.is_empty())
+	box.favorites_only.button_pressed = false
+	# An imported music pack alone must not expose originals without the data pack.
+	box.app.asset_state.data_pack = DataPack.new()
+	box.rescan()
+	assert(not box.music_library.sources.has("original"))
+	box.play_track(10014)
+	assert(not box.active)
+	# Standalone files remain available without original imports.
+	audio.music_pack = replacement
+	box.rescan()
+	assert(box.music_library.tracks.size() == 1)
+	assert(box.music_library.tracks.has("reticulating:10014"))
+	assert(not box.music_library.tracks.has(10014))
+	_choose_source(box, "reticulating")
+	assert(box.library.item_count == 1)
+	# Both sources coexist; equal slot numbers select different files.
+	box.app.asset_state.data_pack = data
+	box.rescan()
+	assert(box.music_library.tracks.has(10014))
+	assert(box.music_library.tracks[10014].path != box.music_library.tracks["reticulating:10014"].path)
+	for locale in AppLocalization.codes():
+		AppLocalization.select(locale)
+		await process_frame
+		assert(box.track_name("reticulating:10014") == "Reticulating Splines — Buildings")
+		assert(box.track_name(10014).ends_with(" — Buildings"))
+	assert(box.library.auto_translate_mode == Node.AUTO_TRANSLATE_MODE_DISABLED)
+	AppLocalization.select("en")
+	box.track_tabs.current_tab = 1
+	box.playlist.assign([10014, "reticulating:10014"])
+	box.play_track(10014)
+	await create_timer(0.3).timeout
+	assert(box.playback.music_pack.import_revision >= 0 and box.playback.track_key() == 10014)
+	box.step(1)
+	await create_timer(0.3).timeout
+	assert(box.playback.track_key() == "reticulating:10014")
+	assert(box.playback.music_pack == replacement)
+	assert(box.playback.soundtrack_folder.is_empty() and not box.playback.original_media_enabled)
+	box.volume.value = 50.0
+	assert(box.playback.music_pack == replacement, "Volume must not change the selected source")
+	box.volume.value = 100.0
+	box._save()
+	var saved := MusicBoxDialog.new(box.app)
+	assert(saved.playlist == [10014, "reticulating:10014"])
+	saved.free()
+	assert(audio.current_track_id == original_track and audio.music_director.general_track_index == director)
+	assert(activity.is_empty())
+	box.automatic()
+	# A generic replacement is not mislabeled as either official collection.
+	replacement.pack_name = "User replacement"
+	box.rescan()
+	assert(box.music_library.tracks.has("pack:10014"))
+	assert(box.track_name("pack:10014") == "User replacement — Buildings")
+	assert(DirAccess.remove_absolute(folder.path_join("Buildings.mp3")) == OK)
+	box.rescan()
+	assert(not box.music_library.sources.has("pack"))
+	box.play_track("reticulating:10014")
+	assert(not box.active)
+	audio.music_pack = original
+	box.rescan()
+	_choose_source(box, "all")
+	box.playlist.clear()
+	print("PASS: imported-data gate, distinct original/replacement files, source titles, languages and persistent source keys")
+
+
 func _custom_music(box: MusicBoxDialog, audio: CityAudioController, activity: Array[bool]) -> void:
 	var folder := "user://custom-music-%d" % OS.get_process_id()
 	assert(DirAccess.make_dir_recursive_absolute(folder.path_join("Evening/Nested")) == OK)
@@ -128,9 +298,19 @@ func _custom_music(box: MusicBoxDialog, audio: CityAudioController, activity: Ar
 	var second := "Evening/Nested/Second.mp3"
 	for id in [first, second, "Other/Second.mp3", "Root.mp3", "ignored.ogg"]:
 		assert(DirAccess.copy_absolute(fixture, folder.path_join(id)) == OK)
+	_tagged_mp3(folder.path_join(first), "Abend in Köln — 서울 " + "Long title ".repeat(60))
+	_tagged_mp3(folder.path_join(second), "Same title")
+	_tagged_mp3(folder.path_join("Other/Second.mp3"), "Same title")
+	assert(DirAccess.make_dir_recursive_absolute(folder.path_join("Empty")) == OK)
 	box.custom_music = CustomMusicLibrary.new(folder)
 	box.rescan()
 	assert(box.custom_music.tracks.size() == 4)
+	assert("Empty" in box.custom_music.folders)
+	assert(box.song_title(second) == box.song_title("Other/Second.mp3"))
+	assert(box.custom_music.resolve(second) != box.custom_music.resolve("Other/Second.mp3"))
+	_choose_source(box, "folder:Empty")
+	assert(box.library.item_count == 0)
+	_choose_source(box, "all")
 	assert(box.library.item_count == 23)
 	assert(box.custom_music.resolve("../outside.mp3").is_empty())
 	assert(box.custom_music.resolve("C:/outside.mp3").is_empty())
@@ -145,6 +325,7 @@ func _custom_music(box: MusicBoxDialog, audio: CityAudioController, activity: Ar
 	box.library.select(0)
 	box._favorite_selected()
 	assert(first in box.favorites)
+	box.track_tabs.current_tab = 1
 	box.playlist.assign([10002, first, second])
 	box._save()
 	var saved := MusicBoxDialog.new(box.app)
@@ -157,6 +338,7 @@ func _custom_music(box: MusicBoxDialog, audio: CityAudioController, activity: Ar
 	assert(box.active and box.playback.track_key() == first)
 	assert(box.playback.recording_player.stream is AudioStreamMP3)
 	assert(box.playback.recording_player.stream.get_length() > 1.0)
+	assert(box.size.x <= root.get_visible_rect().size.x and box.size.y <= root.get_visible_rect().size.y)
 	box._toggle_pause()
 	assert(box.playback.music_paused and box.playback.recording_player.stream_paused)
 	box._toggle_pause()
@@ -194,8 +376,8 @@ func _custom_music(box: MusicBoxDialog, audio: CityAudioController, activity: Ar
 	box.rescan()
 	assert(box.custom_music.tracks.size() == 3 and first in box.playlist)
 	box.playlist.clear()
-	box.collection.select(2)
-	box._refresh_library()
+	box.track_tabs.current_tab = 0
+	_choose_source(box, "folder:Evening/Nested")
 	box.play_track(second)
 	await create_timer(0.3).timeout
 	for id in box.custom_music.tracks:

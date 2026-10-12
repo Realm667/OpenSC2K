@@ -211,3 +211,19 @@ msgstr ""
 #: src/ui/settings/music_box_dialog.gd
 msgid "This MP3 is missing or cannot be played. Automatic music resumed."
 msgstr ""
+
+#. Music source label; AI-assisted translation from English.
+msgid "SC2000 original music"
+msgstr ""
+
+#. Music box UI; AI-assisted translation from English.
+msgid "Tracks"
+msgstr ""
+
+#. Music box UI; AI-assisted translation from English.
+msgid "Queue"
+msgstr ""
+
+#. Music box UI; AI-assisted translation from English.
+msgid "Reticulating Splines"
+msgstr ""
