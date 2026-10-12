@@ -37,8 +37,14 @@ the current playback. Disabling Music in Options stops custom playback.
 
 Music changes fade briefly. The music-box volume controls the audible output
 without changing the original controller's music activity or simulation timing.
-The effects slider changes the existing effects preference. Track names come from
-the installed files; numeric-only files use their track number.
+The effects slider changes the existing effects preference. The 19 original music
+slots use the soundtrack titles from *SIM-MELODY from SIM CITY2000*, matched to
+Windows MIDI resource IDs (10000–10018), independently of installed file names.
+The same titles appear in the library, favorites, playlists and current-track
+display, and remain unchanged across interface languages. Personal MP3s retain
+their file names. The [title-to-MIDI reference](https://w.atwiki.jp/gamemusicbest100/pages/2869.html)
+lists both the game cue names and the soundtrack titles used here. In particular,
+10016 is “The Construction: HAPPYLAND”; the album order differs from MIDI order.
 
 Window layouts and music preferences live beside the local settings file in
 `.layouts.cfg` and `.music-box.cfg` files. They are not stored in cities. Playlists

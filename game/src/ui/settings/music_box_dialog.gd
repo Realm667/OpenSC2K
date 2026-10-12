@@ -3,6 +3,30 @@ extends QolDialog
 ## A local playlist player. The original music controller retains its timing
 ## and reports to the simulation while its audible output is faded out.
 
+# Soundtrack titles, keyed by Windows MIDI resource ID, not album track order.
+# These proper names stay unchanged across locales. See docs/quality-of-life.md.
+const ORIGINAL_TRACK_TITLES: Dictionary[int, String] = {
+	10000: "Dawn of City",
+	10001: "Dancing Megalopolis",
+	10002: "The SIM Magic for (ENIAC)",
+	10003: "The SIM Magic: Experience MODE",
+	10004: "The Construction: MAXIS",
+	10005: "The Construction: LAKELAND",
+	10006: "Selfish Citizen",
+	10007: "Skyscrapers",
+	10008: "Tax & Money",
+	10009: "Pale City",
+	10010: "Growing Up Town ~ Prologue",
+	10011: "Growing Up Town ~ Theme",
+	10012: "Work Work Work!",
+	10013: "Ultimate City",
+	10014: "Buildings",
+	10015: "Melancholic Mayor",
+	10016: "The Construction: HAPPYLAND",
+	10017: "Misty Lake",
+	10018: "Key of Success",
+}
+
 var app: CityApplication
 var playback: MusicBoxPlayback
 var config := ConfigFile.new()
@@ -139,13 +163,7 @@ static func _track_ids(value: Variant) -> Array:
 func track_name(id: Variant) -> String:
 	if id is String:
 		return id.get_basename()
-	var source := str(app.audio_controller.music_pack.files.get(id, ""))
-	if source.is_empty():
-		var recordings := RecordedSoundtrack.find_tracks(app.audio_controller.soundtrack_folder, id)
-		if not recordings.is_empty():
-			source = recordings[0]
-	var text := source.get_file().get_basename().trim_prefix("%d - " % id)
-	return tr("Track %d") % id if text.is_empty() or text == str(id) else text
+	return ORIGINAL_TRACK_TITLES.get(id, tr("Track %d") % id)
 
 
 func _refresh_library() -> void:
