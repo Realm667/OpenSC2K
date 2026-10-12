@@ -305,154 +305,211 @@
     {
       "id": 10000,
       "file": "music/10000.mp3",
-      "sha256": "bc88e1ed3e61d764ce81d08032b9f180825e9c1495293086f3c050fac9ccaa10",
+      "sha256": "07d66a323b8c16a5d3450ba918a0025a472fdc125c53285b06d30eddbc863f97",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10000.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "source_sha256": "bc88e1ed3e61d764ce81d08032b9f180825e9c1495293086f3c050fac9ccaa10",
+      "title": "First Light on the Grid",
+      "audio_payload_sha256": "d14ca850e704c9b7d019405c6695239d131c2821ff4b21a3292e9f3d641948c7"
     },
     {
       "id": 10001,
       "file": "music/10001.mp3",
-      "sha256": "fd49116bf67039d3d43521816a82e80fa3e88a548250d53c330e94459eb8cc52",
+      "sha256": "b07f39f2281e6fd3679e5baa85bd80f3ee0cacc6475a8dfcb5ada3803f9d3776",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10001.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "source_sha256": "fd49116bf67039d3d43521816a82e80fa3e88a548250d53c330e94459eb8cc52",
+      "title": "Megalopolis After Dark",
+      "audio_payload_sha256": "1bb9e768aa22b51d1108dbc2ad8e88902e1a255c1d5c3706ddcaec6c35d3ed88"
     },
     {
       "id": 10002,
       "file": "music/10002.mp3",
-      "sha256": "5ed21e27a2571ddf38ab12d1cf36ad26b2bb1c0753b5bf1036c8ffdef38950a5",
+      "sha256": "d4eb22628c7793108c31cb1b644622c978c6d9cc9b9574c66f5862190878c021",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10002.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "source_sha256": "5ed21e27a2571ddf38ab12d1cf36ad26b2bb1c0753b5bf1036c8ffdef38950a5",
+      "title": "Reticulating Splines",
+      "audio_payload_sha256": "dc725af97b265b525c7d0c83f70ca99e32f1d8203a4cd41ab96d7c6ca48719a3"
     },
     {
       "id": 10003,
       "file": "music/10003.mp3",
-      "sha256": "18cd990f541c95cf6b2a36d124fd6a4b0ed0577e95027a0e46ee4762ed16d764",
+      "sha256": "be164ccdc1589738a03914196212a15460060e0b6c2c03e0462b4e6d02649578",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10003.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "source_sha256": "18cd990f541c95cf6b2a36d124fd6a4b0ed0577e95027a0e46ee4762ed16d764",
+      "title": "Welcome to SimNation",
+      "audio_payload_sha256": "f3cb37cd437c7380d026b10c5b5a7cd6f45b56e2b0ba73027ca4c8736834dbc0"
     },
     {
       "id": 10004,
       "file": "music/10004.mp3",
-      "sha256": "f532cf2fd4331320678ec56c9245cec9d6d72413706d3ec02a7985e45b758cbb",
+      "sha256": "5160c5c3d7eaa1a662fcf46ffeffcae70857a2fd63b4b10d3b33ae66eae5a478",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10004.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "source_sha256": "f532cf2fd4331320678ec56c9245cec9d6d72413706d3ec02a7985e45b758cbb",
+      "title": "Industrial Avenue",
+      "audio_payload_sha256": "377d1240c6ac2c5952416578c669c895ad2552aea7dc2756d5aff6295116ea0c"
     },
     {
       "id": 10005,
       "file": "music/10005.mp3",
-      "sha256": "86c7c0231ba578a9c3da8e4498712d20b3b41d695b83c986812cd3b1d66701d6",
+      "sha256": "117e66214ff7ebb9ff7e0252aa8695ff84c19976122e1cb5ff8e2a31e1cbf829",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10005.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "source_sha256": "86c7c0231ba578a9c3da8e4498712d20b3b41d695b83c986812cd3b1d66701d6",
+      "title": "Lakeside Zoning",
+      "audio_payload_sha256": "7a4f130ad92d60c4827b2785ae07772c21f27ae75361d95289ce006256685664"
     },
     {
       "id": 10006,
       "file": "music/10006.mp3",
-      "sha256": "c66294bd921b566e0c296e56c5ed1086783f7fc15c7d60ed7362683188d7df7d",
+      "sha256": "97129e3e2c95cdf47646d5aed80c45643fada7ed4159317517a588ae7f4fd843",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10006.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "source_sha256": "c66294bd921b566e0c296e56c5ed1086783f7fc15c7d60ed7362683188d7df7d",
+      "title": "Citizens Have Opinions",
+      "audio_payload_sha256": "59d5b7dd2cd7d0c64396c71651689ac118615fcd82cd11feb9782875bb504233"
     },
     {
       "id": 10007,
       "file": "music/10007.mp3",
-      "sha256": "71bf8e9096f2942a46329357ef0d71e93d7fb01908329759b56721f0f94d810a",
+      "sha256": "2b61d732e08406040983c0b2607c8884545f2fa7d12d268cd1bea488d5f2604c",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10007.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "source_sha256": "71bf8e9096f2942a46329357ef0d71e93d7fb01908329759b56721f0f94d810a",
+      "title": "High-Rise Horizons",
+      "audio_payload_sha256": "9ebd8e04e69e21a6c19d2bda49e017269cbdcca15794bd4c4babaf0361c8e248"
     },
     {
       "id": 10008,
       "file": "music/10008.mp3",
-      "sha256": "4d813010c0bab72c3c26ca0f12ef9da35dfc95b54cd44adabf0d8d073d7cbbe1",
+      "sha256": "16aa1b7576e3de52b4acd80cc62ac3784fcbaf38341255865a5949d137ca19a4",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10008.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "source_sha256": "4d813010c0bab72c3c26ca0f12ef9da35dfc95b54cd44adabf0d8d073d7cbbe1",
+      "title": "Simoleon Shuffle",
+      "audio_payload_sha256": "2e6e6276399db1c06163a740ddd1d627fd9e644342480c26dc0cd20e158b241c"
     },
     {
       "id": 10009,
       "file": "music/10009.mp3",
-      "sha256": "d280280d64cafa5cfd95afc9a8accdb2a8748427a6345cd508c1012069d7d37b",
+      "sha256": "a65df3f5156f7bb0e778228aec6baefa17584f193cbbf38f22005e3fa393ad63",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10009.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "source_sha256": "d280280d64cafa5cfd95afc9a8accdb2a8748427a6345cd508c1012069d7d37b",
+      "title": "Urban Haze",
+      "audio_payload_sha256": "a9141a2c2eb486e8f8e6af3ada5718ea3ba6acade86d5447959cb93d726ca1d7"
     },
     {
       "id": 10010,
       "file": "music/10010.mp3",
-      "sha256": "a1c5ecdecbfcb3dcfc63334b3db4d65808f6a9cdc0a87634c84cdfa02d06cc30",
+      "sha256": "a0d5352f783a537fca4b4dd949d02ebe6e0b7ed70edf090fba791b9db2a0a239",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10010.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "source_sha256": "a1c5ecdecbfcb3dcfc63334b3db4d65808f6a9cdc0a87634c84cdfa02d06cc30",
+      "title": "A Town Takes Shape",
+      "audio_payload_sha256": "150685e35f5512e2270704c42d3627f4a5368197ae731bd7b589c66da60a0a20"
     },
     {
       "id": 10011,
       "file": "music/10011.mp3",
-      "sha256": "8880277c3018dcd0f1d33d25b7b9bb1400d752fb71f8a1c2f7345fb7cb6a7dd4",
+      "sha256": "dc16fe2ef8bdc2cc0e456fc89b54fafc060ac717f3cf4d1ec9699485b34a067d",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10011.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "source_sha256": "8880277c3018dcd0f1d33d25b7b9bb1400d752fb71f8a1c2f7345fb7cb6a7dd4",
+      "title": "From Town to Metropolis",
+      "audio_payload_sha256": "c797d811f01795dcaa6afa12117419c81b18269a390c3958cc7166c23acb2210"
     },
     {
       "id": 10012,
       "file": "music/10012.mp3",
-      "sha256": "a6c3476890896177a6980fc0b82e3c8407237591cfd151c04babe7ffc8375862",
+      "sha256": "986ce793492bea570e098aa3f11ae9ccde016ee3c57948828524c8c9a6c81ad8",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10012.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "source_sha256": "a6c3476890896177a6980fc0b82e3c8407237591cfd151c04babe7ffc8375862",
+      "title": "Rush Hour Rhythm",
+      "audio_payload_sha256": "6968d65ea30bfadd4d8cf63fbe9563bd906c452635b59070aa08a344e1643d37"
     },
     {
       "id": 10013,
       "file": "music/10013.mp3",
-      "sha256": "ad8b55fba0d3c161fd1536e46f96ec6981c1c1d0456f69368ac57388d94393cd",
+      "sha256": "653c8aa256ac4edf0e1c61dc13f9688d707e767b467d60aa2c4c95d9a4541918",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10013.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "source_sha256": "ad8b55fba0d3c161fd1536e46f96ec6981c1c1d0456f69368ac57388d94393cd",
+      "title": "Arcology Dreams",
+      "audio_payload_sha256": "3b9d0fe4d665b80662ad196e9977d113c9133e9c6fe0311476712d484d87d867"
     },
     {
       "id": 10014,
       "file": "music/10014.mp3",
-      "sha256": "95e4bdf7585aea7ada8a35d5a39fb851dcc4aa8dfc5333922f5e6aa5bb4d0779",
+      "sha256": "9e6e7e62953060f5162678131bc3ae86fcb8e68a3423c3e46432e8da9aa4a4c7",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10014.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "source_sha256": "95e4bdf7585aea7ada8a35d5a39fb851dcc4aa8dfc5333922f5e6aa5bb4d0779",
+      "title": "Brick by Brick",
+      "audio_payload_sha256": "1b7ed58e370d2e6eb103e10a25042a79e39eafb7ac90c85e148f96581b8242c6"
     },
     {
       "id": 10015,
       "file": "music/10015.mp3",
-      "sha256": "b0b8819d525b26cb3a0b4fe376f96bd742c1cbabe003da417121f99c5abcece2",
+      "sha256": "d2a378d4c43b674c20c1f2512d937f173249f56a2d64d53b1ee9578577ba1808",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10015.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "source_sha256": "b0b8819d525b26cb3a0b4fe376f96bd742c1cbabe003da417121f99c5abcece2",
+      "title": "The Mayor's Midnight Blues",
+      "audio_payload_sha256": "b760f77e9b6fcd6a4435ed35058ae6ad304633e7ce64a21cf0e6d51e4150a7d1"
     },
     {
       "id": 10016,
       "file": "music/10016.mp3",
-      "sha256": "7a4e1e53a4bab14fea89411f28a39ecc67f5c1b78fad770f039f2f001910c182",
+      "sha256": "cfe2a9bbe5d0afc2de205011a485abb3e32c4e8367862c1fa375e512cfe3992d",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10016.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "source_sha256": "7a4e1e53a4bab14fea89411f28a39ecc67f5c1b78fad770f039f2f001910c182",
+      "title": "Llama Boulevard",
+      "audio_payload_sha256": "785932346cc4084a0123e1e2c30c59ce29728ab1701cbca9c0851091f48f6360"
     },
     {
       "id": 10017,
       "file": "music/10017.mp3",
-      "sha256": "c8692df0f95c6b2e30a1d1fb4413e225e7d4d0d76c97a24c977d3d31d571d870",
+      "sha256": "c43d1015daef2263d9d464da0606062df285acd2dbc1199be07c49e3ce80608f",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10017.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "source_sha256": "c8692df0f95c6b2e30a1d1fb4413e225e7d4d0d76c97a24c977d3d31d571d870",
+      "title": "Still Waters, Sleeping City",
+      "audio_payload_sha256": "ea765a5e30d5327f8c8ba115f4dd10d1bfa62a291de31d6538438bb1d935981c"
     },
     {
       "id": 10018,
       "file": "music/10018.mp3",
-      "sha256": "90421ca8c46dabbeb6e3ee38e255c7be6731407f969fecf7293acf87a379a2f5",
+      "sha256": "e53b7f32bfd1aec48c16caf9a53d7eb88f96a041319d28c4030d762c6eb950bd",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10018.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "source_sha256": "90421ca8c46dabbeb6e3ee38e255c7be6731407f969fecf7293acf87a379a2f5",
+      "title": "Keys to the City",
+      "audio_payload_sha256": "76ba5fcd3f22645be256ce7ee070a8569a27db667cc678b541fdfd9173e150d4"
     }
   ],
   "documented_sources": [
@@ -696,5 +753,13 @@
       "kind": "Field recording",
       "sha256": "3262ec3727d7847313238c12ea1a6db550f09219d1c0540bbb49af3e091fa433"
     }
-  ]
+  ],
+  "music_title_metadata": {
+    "date": "2026-10-12",
+    "field": "ID3v2.4 TIT2 (UTF-8)",
+    "change": "Local addition of project-approved Reticulating Splines song titles to package copies only.",
+    "preserved": "All pre-existing ID3 frames and the entire post-ID3 payload remain byte-identical; no re-encoding.",
+    "source_hash": "source_sha256 retains the hash of the supplied file before this metadata-only edit.",
+    "rights": "Existing rights statements remain unchanged. Preserved C2PA data was not cryptographically revalidated."
+  }
 }

@@ -12,6 +12,16 @@ For a portable installation, copy this directory to data/packs/standalone-audio.
 sind bereits eingemischt. Die Zuordnung der Soundnummern bleibt erhalten.
 In den vorhandenen Paketeinstellungen sound/pack.json und music/pack.json auswaehlen.
 
+SONG TITLES / SONGTITEL
+The package copies now include the 19 Reticulating Splines song titles as ID3
+TIT2 metadata. Numeric filenames, all existing ID3 frames and MP3 audio frames
+are unchanged. No re-encoding; supplied source files were not modified.
+provenance.json records the current file hashes and original source hashes.
+
+Die Paketkopien enthalten die 19 Reticulating-Splines-Songtitel als ID3-Metadaten.
+Numerische Dateinamen, vorhandene Tags und Audioframes bleiben unveraendert.
+Nur die Paketkopien wurden bearbeitet; Herkunft und Rechte bleiben dokumentiert.
+
 ASSET RIGHTS / AUDIORECHTE
 These final files were supplied and selected by Daniel. The MIT license for
 OpenSC2K code does not automatically apply to these recordings. provenance.json
