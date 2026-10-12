@@ -2912,3 +2912,63 @@ msgstr "이 도시에서는 아직 이 건설 도구를 사용할 수 없습니�
 #. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
 msgid "Selected: %s"
 msgstr "선택: %s"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Workspaces"
+msgstr "작업 공간"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Building"
+msgstr "건설"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Finances"
+msgstr "재정"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "City analysis"
+msgstr "도시 분석"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Window positions are remembered automatically."
+msgstr "창 위치는 자동으로 저장됩니다."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Arrange your city windows, then save their positions and visibility in a workspace."
+msgstr "도시 창을 배치한 후 위치와 표시 상태를 작업 공간에 저장하세요."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Save workspace"
+msgstr "작업 공간 저장"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Restore workspace"
+msgstr "작업 공간 복원"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Reset window positions"
+msgstr "창 위치 초기화"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Workspace saved."
+msgstr "작업 공간을 저장했습니다."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Workspace restored."
+msgstr "작업 공간을 복원했습니다."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Save this workspace first."
+msgstr "먼저 이 작업 공간을 저장하세요."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Load a city before restoring a workspace."
+msgstr "작업 공간을 복원하기 전에 도시를 불러오세요."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Close the current dialog before restoring a workspace."
+msgstr "작업 공간을 복원하기 전에 현재 대화 상자를 닫으세요."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Cannot save window layouts: %s"
+msgstr "창 배치를 저장할 수 없습니다: %s"

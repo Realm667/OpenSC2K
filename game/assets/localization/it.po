@@ -19,3 +19,63 @@ msgstr "Questo strumento di costruzione non è ancora disponibile in questa citt
 #. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
 msgid "Selected: %s"
 msgstr "Selezionato: %s"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Workspaces"
+msgstr "Spazi di lavoro"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Building"
+msgstr "Costruzione"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Finances"
+msgstr "Finanze"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "City analysis"
+msgstr "Analisi della città"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Window positions are remembered automatically."
+msgstr "Le posizioni delle finestre vengono salvate automaticamente."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Arrange your city windows, then save their positions and visibility in a workspace."
+msgstr "Disponi le finestre della città e salva le loro posizioni e visibilità in uno spazio di lavoro."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Save workspace"
+msgstr "Salva spazio"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Restore workspace"
+msgstr "Ripristina spazio"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Reset window positions"
+msgstr "Reimposta posizioni finestre"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Workspace saved."
+msgstr "Spazio di lavoro salvato."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Workspace restored."
+msgstr "Spazio di lavoro ripristinato."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Save this workspace first."
+msgstr "Salva prima questo spazio di lavoro."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Load a city before restoring a workspace."
+msgstr "Carica una città prima di ripristinare uno spazio di lavoro."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Close the current dialog before restoring a workspace."
+msgstr "Chiudi la finestra di dialogo corrente prima di ripristinare uno spazio di lavoro."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Cannot save window layouts: %s"
+msgstr "Impossibile salvare la disposizione delle finestre: %s"
