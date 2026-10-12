@@ -1,0 +1,21 @@
+msgid ""
+msgstr ""
+"Language: it\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Pick building tool"
+msgstr "Seleziona strumento di costruzione"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "No building tool at this location."
+msgstr "Nessuno strumento di costruzione in questa posizione."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "This building tool is not available in this city."
+msgstr "Questo strumento di costruzione non è ancora disponibile in questa città."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Selected: %s"
+msgstr "Selezionato: %s"

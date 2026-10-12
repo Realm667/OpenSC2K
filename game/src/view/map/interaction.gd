@@ -277,7 +277,7 @@ func _run_button_action(action: String, position: Vector2, wheel: bool) -> void:
 				map.camera.wheel_zoom(-1, position)
 			else:
 				map.camera.zoom_out(position)
-		"map_context_menu", "map_center_on_tile":
+		"map_context_menu", "map_center_on_tile", "map_pick_tool":
 			var tile := map.camera._tile_at(position)
 
 			if tile.x < 0:
@@ -285,6 +285,8 @@ func _run_button_action(action: String, position: Vector2, wheel: bool) -> void:
 
 			if action == "map_context_menu":
 				map.context_menu.open_at(tile, position)
+			elif action == "map_pick_tool":
+				map.tool_pick_requested.emit(tile)
 			else:
 				map.center_requested.emit(tile)
 		_:

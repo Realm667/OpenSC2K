@@ -176,7 +176,8 @@ static func _build() -> void:
 
 	_add("map_use_tool", "Use tool", "Mouse", SCOPE_FIXED, KIND_CLICK, ["mouse:Left"])
 	_add("map_context_menu", "Context menu", "Mouse", SCOPE_MAP, KIND_CLICK, ["mouse:Right"])
-	_add("map_center_on_tile", "Center on tile", "Mouse", SCOPE_MAP, KIND_CLICK, ["mouse:Middle"])
+	_add("map_center_on_tile", "Center on tile", "Mouse", SCOPE_MAP, KIND_CLICK, [])
+	_add("map_pick_tool", "Pick building tool", "Mouse", SCOPE_MAP, KIND_CLICK, ["mouse:Middle"])
 	_add("map_pan", "Move map (drag)", "Mouse", SCOPE_MAP, KIND_DRAG, ["mouse:Right", "mouse:Middle"])
 	_add("button_help_modifier", "Toolbar and status bar help (hold)", "Mouse", SCOPE_MAP, KIND_MODIFIER, ["key:Shift"])
 

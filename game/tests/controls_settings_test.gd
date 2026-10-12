@@ -122,7 +122,7 @@ func _test_capture_and_conflicts() -> void:
 	# a mouse button capture
 	list.start_capture("rotate_clockwise")
 	list.capture_input(_mouse(MOUSE_BUTTON_MIDDLE))
-	assert(not list.is_capturing() and list.conflict_dialog.visible, "Middle is already Center on tile")
+	assert(not list.is_capturing() and list.conflict_dialog.visible, "Middle is already Pick building tool")
 	list.conflict_dialog.hide()
 	assert(not list.pending.has_mouse_button("rotate_clockwise", MOUSE_BUTTON_MIDDLE), "Cancel keeps the old binding")
 	# a used key asks to reassign

@@ -158,11 +158,11 @@ func _test_mouse_buttons() -> void:
 	var map := main.map_view
 	var interaction := map.interaction
 	var centers: Array[Vector2i] = []
-	map.center_requested.connect(func(point: Vector2i) -> void: centers.append(point))
+	map.tool_pick_requested.connect(func(point: Vector2i) -> void: centers.append(point))
 	var middle := _mouse(MOUSE_BUTTON_MIDDLE, map.size * 0.5, true)
 	interaction._handle_mouse_button(middle)
 	interaction._handle_mouse_button(_mouse(MOUSE_BUTTON_MIDDLE, map.size * 0.5, false))
-	assert(centers.size() == 1, "A middle click centers the map")
+	assert(centers.size() == 1, "A middle click picks the building tool")
 	interaction._handle_mouse_button(_mouse(MOUSE_BUTTON_RIGHT, map.size * 0.5, true))
 	interaction._handle_mouse_button(_mouse(MOUSE_BUTTON_RIGHT, map.size * 0.5, false))
 	assert(map.context_menu.visible, "A right click opens the context menu")

@@ -2896,3 +2896,19 @@ msgstr "메뉴와 창의 언어입니다. 신문 같은 원본 게임 텍스트�
 
 msgid "The pack.json file of an HD sprite pack. It replaces the look of the city sprites with full-color art. The GPU renderer shows it. Leave this empty to show the sprites of the graphics pack."
 msgstr "HD 스프라이트 팩의 pack.json 파일입니다. 도시 스프라이트를 풀컬러 그림으로 바꿔 보여 줍니다. GPU 렌더러에서만 표시됩니다. 비워 두면 그래픽 팩의 스프라이트를 표시합니다."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Pick building tool"
+msgstr "건설 도구 선택"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "No building tool at this location."
+msgstr "이 위치에는 선택할 건설 도구가 없습니다."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "This building tool is not available in this city."
+msgstr "이 도시에서는 아직 이 건설 도구를 사용할 수 없습니다."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Selected: %s"
+msgstr "선택: %s"

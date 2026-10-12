@@ -77,6 +77,7 @@ func build_interface(original_assets: OriginalGameAssets) -> void:
 	app.map_view.selection_canceled.connect(app.camera_input.on_map_selection_canceled)
 	app.map_view.query_requested.connect(app.query_choices.open_query)
 	app.map_view.center_requested.connect(app.camera_input.center_map_on_tile)
+	app.map_view.tool_pick_requested.connect(func(point: Vector2i) -> void: ApplicationToolPicker.pick(app, point))
 	app.map_view.control_action_requested.connect(func(action: String) -> void:
 		if app.controls.action_allowed(action):
 			app.controls.run(action))

@@ -134,6 +134,12 @@ static func load_bindings(config: ConfigFile) -> ControlBindings:
 	if version < 2:
 		_migrate_budget_key(result)
 
+	# Move the former default middle click to the pipette. Explicit custom
+	# bindings keep precedence, including deliberately unassigned actions.
+	if not config.has_section_key("controls", BINDING_PREFIX + "map_pick_tool") \
+			and result.to_texts("map_center_on_tile") == PackedStringArray(["mouse:Middle"]):
+		result.remove_binding("map_center_on_tile", ControlBinding.mouse(MOUSE_BUTTON_MIDDLE))
+
 	_drop_used_defaults(config, result)
 
 	return result
@@ -177,6 +183,7 @@ static func _migrate_mouse_buttons(config: ConfigFile, result: ControlBindings) 
 		return
 
 	result.remove_binding("map_center_on_tile", ControlBinding.mouse(MOUSE_BUTTON_MIDDLE))
+	result.remove_binding("map_pick_tool", ControlBinding.mouse(MOUSE_BUTTON_MIDDLE))
 	result.add("map_context_menu", ControlBinding.mouse(MOUSE_BUTTON_MIDDLE))
 
 
