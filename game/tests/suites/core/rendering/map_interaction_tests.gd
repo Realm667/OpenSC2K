@@ -101,6 +101,8 @@ func run(
 		and map_control.layers.dynamic_canvas is Node2D,
 		"Map control batches 1,500 dynamic sprites in one render node",
 	)
+	# Center remains available as an explicit user binding; the default is the pipette.
+	map_control.control_bindings = _rebound(MOUSE_BUTTON_MIDDLE, "map_pick_tool", "map_center_on_tile")
 	var center_requests: Array[Vector2i] = []
 	map_control.center_requested.connect(func(point: Vector2i) -> void:
 		center_requests.append(point))
@@ -515,7 +517,7 @@ func _test_context_menu(
 	var menu := RecordingContextMenu.new()
 	menu.map = map_control
 	map_control.context_menu = menu
-	map_control.control_bindings = ControlBindings.defaults()
+	map_control.control_bindings = _rebound(MOUSE_BUTTON_MIDDLE, "map_pick_tool", "map_center_on_tile")
 	var query_requests: Array[Vector2i] = []
 	var bulldoze_requests: Array[Vector2i] = []
 	map_control.query_requested.connect(func(point: Vector2i) -> void:
@@ -545,7 +547,7 @@ func _test_context_menu(
 	click.pressed = false
 	map_control.interaction._handle_mouse_button(click)
 	_check(menu.opened == 1 and center_requests.size() == 4, "Middle click keeps its own Center Map action")
-	map_control.control_bindings = _rebound(MOUSE_BUTTON_MIDDLE, "map_center_on_tile", "map_context_menu")
+	map_control.control_bindings = _rebound(MOUSE_BUTTON_MIDDLE, "map_pick_tool", "map_context_menu")
 	click.pressed = true
 	map_control.interaction._handle_mouse_button(click)
 	click.pressed = false

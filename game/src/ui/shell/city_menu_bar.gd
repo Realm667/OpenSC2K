@@ -21,6 +21,8 @@ const MENU_UPGRADE_SC2X := 0x8303
 const MENU_CHECK_FOR_UPDATES := 0x8304
 const MENU_OPEN_AUTOSAVES := 0x8305
 const MENU_CONSOLE := 0x8306
+const MENU_WORKSPACES := 0x8400
+const MENU_MUSIC_BOX := 0x8401
 const MENU_ABOUT := 0
 const MENU_AUTO_BUDGET := 0x8004
 const MENU_AUTO_GOTO := 0x8005
@@ -386,6 +388,9 @@ func set_scenario_available(available: bool) -> void:
 	popup.add_separator()
 	popup.add_item("Console", MENU_CONSOLE)
 	popup.add_item("Debug", 7)
+	popup.add_separator()
+	popup.add_item("Workspaces", MENU_WORKSPACES)
+	popup.add_item("Music box", MENU_MUSIC_BOX)
 	refresh_shortcut_hints(bindings)
 
 

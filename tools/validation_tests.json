@@ -1,5 +1,17 @@
 [
   {
+    "id": "quality_of_life_test",
+    "script": "tests/quality_of_life_test.gd",
+    "domain": "ui",
+    "lane": "product",
+    "requires": [
+      "ext/graphics/pack.json",
+      "ext/data/pack.json",
+      "ext/music/pack.json",
+      "ext/sound/pack.json"
+    ]
+  },
+  {
     "id": "localization_catalogs_test",
     "python": "tools/check_localization.py",
     "domain": "ui",

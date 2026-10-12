@@ -2,7 +2,12 @@
   "paths": [
     "game/src/multiplayer/*.gd",
     "game/src/ui/settings/visual*.gd",
-    "game/src/**/visual_enhancement_options.gd"
+    "game/src/**/visual_enhancement_options.gd",
+    "game/src/application/quality_of_life.gd",
+    "game/src/application/tool_picker.gd",
+    "game/src/ui/settings/music_box_dialog.gd",
+    "game/src/ui/shared/qol_dialog.gd",
+    "game/src/ui/shared/window_layout_memory.gd"
   ],
   "non_display_literals": {
     "OpenSC2K Koop": "Saved session format signature; never translate.",
@@ -14,6 +19,27 @@
     "TooltipPanel": "Godot theme type, not display text.",
     "TooltipLabel": "Godot theme type, not display text.",
     "ErrorLabel": "Godot theme type, not display text.",
-    "HelpLabel": "Godot theme type, not display text."
+    "HelpLabel": "Godot theme type, not display text.",
+    "SectionHeading": "Godot theme variation, not display text.",
+    "UtilityPanel": "Godot theme variation, not display text.",
+    "Dawn of City": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
+    "Dancing Megalopolis": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
+    "The SIM Magic for (ENIAC)": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
+    "The SIM Magic: Experience MODE": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
+    "The Construction: MAXIS": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
+    "The Construction: LAKELAND": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
+    "Selfish Citizen": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
+    "Skyscrapers": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
+    "Tax & Money": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
+    "Pale City": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
+    "Growing Up Town ~ Prologue": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
+    "Growing Up Town ~ Theme": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
+    "Work Work Work!": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
+    "Ultimate City": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
+    "Buildings": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
+    "Melancholic Mayor": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
+    "The Construction: HAPPYLAND": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
+    "Misty Lake": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
+    "Key of Success": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names."
   }
 }

@@ -19,10 +19,7 @@ theme_type_variation = "PanelPadding5_3_5_3"
 
 [node name="Margin" type="MarginContainer" parent="Background"]
 layout_mode = 2
-theme_override_constants/margin_left = 6
-theme_override_constants/margin_top = 6
-theme_override_constants/margin_right = 6
-theme_override_constants/margin_bottom = 6
+theme_type_variation = "DialogMargin"
 
 [node name="CityMapWindowControl" type="VBoxContainer" parent="Background/Margin"]
 layout_mode = 2

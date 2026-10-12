@@ -87,6 +87,9 @@ func handle_music_key(event: InputEventKey) -> bool:
 	if (focus is LineEdit or focus is TextEdit) and event.unicode != 0:
 		return false
 
+	for child in app.get_children():
+		if child is ApplicationQualityOfLife and child.music_box != null and child.music_box.active:
+			return child.music_box.handle_media_key(ControlActions.MUSIC_KEYS[action])
 	return app.audio_controller.handle_media_key(ControlActions.MUSIC_KEYS[action])
 
 

@@ -1,7 +1,7 @@
 # Central translation workspace
 
 Edit translations here. Each locale has **one PO file** containing interface,
-Visual Enhancements, Multiplayer and available original-game text translations:
+Visual Enhancements, Multiplayer, Quality of Life and available original-game text translations:
 `de.po`, `es.po`, `fr.po`, `it.po`, `ko.po`, `pt_BR.po`.
 AppLocalization is the only catalog loader. Features use `tr()` or
 `AppLocalization.message()` for legacy feedback that arrives already formatted.
@@ -33,7 +33,7 @@ Their complete translations and provenance remain in each locale's PO file.
    The catalog check is included in the UI, headless and release suites. Verify
    runtime language switching, placeholders and representative dialog/tooltip fit.
 
-`source_audit.json` also scans Visual and Multiplayer source literals, including
+`source_audit.json` also scans Visual, Multiplayer and Quality of Life source literals, including
 data-driven labels. Add new feature source paths here. Its exclusions identify
 only internal IDs and theme names; they must never hide untranslated display text.
 
@@ -48,8 +48,8 @@ the English feature source, assisted by AI. Existing original-game translations
 retain their source comments unchanged. No game data package is needed to select
 a language; original gameplay assets are still required to play.
 
-Korean now includes the Visual and Multiplayer additions. The older base-game
-catalog still has 328 missing shared UI entries, explicitly marked
+Korean now includes the Visual, Multiplayer and Quality of Life additions. The older base-game
+catalog still has 326 missing shared UI entries, explicitly marked
 `legacy-ko-fallback` in the template. These are pre-existing gaps, not permission
 to omit translations for new features. The checker tolerates only these named
 Korean gaps. No Korean original-game text edition has been supplied. Entry

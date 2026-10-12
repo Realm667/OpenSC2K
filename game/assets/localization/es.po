@@ -27339,3 +27339,191 @@ msgstr "Multijugador"
 #. source.
 msgid "Choose"
 msgstr "Elegir"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Pick building tool"
+msgstr "Seleccionar herramienta de construcción"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "No building tool at this location."
+msgstr "No hay ninguna herramienta de construcción en esta ubicación."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "This building tool is not available in this city."
+msgstr "Esta herramienta de construcción aún no está disponible en esta ciudad."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Selected: %s"
+msgstr "Seleccionado: %s"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Workspaces"
+msgstr "Espacios de trabajo"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Building"
+msgstr "Construcción"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "City analysis"
+msgstr "Análisis de la ciudad"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Window positions are remembered automatically."
+msgstr "Las posiciones de las ventanas se guardan automáticamente."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Arrange your city windows, then save their positions and visibility in a workspace."
+msgstr "Organiza las ventanas de la ciudad y guarda sus posiciones y visibilidad en un espacio de trabajo."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Save workspace"
+msgstr "Guardar espacio"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Restore workspace"
+msgstr "Restaurar espacio"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Reset window positions"
+msgstr "Restablecer posiciones de ventanas"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Workspace saved."
+msgstr "Espacio de trabajo guardado."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Workspace restored."
+msgstr "Espacio de trabajo restaurado."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Save this workspace first."
+msgstr "Guarda primero este espacio de trabajo."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Load a city before restoring a workspace."
+msgstr "Carga una ciudad antes de restaurar un espacio de trabajo."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Close the current dialog before restoring a workspace."
+msgstr "Cierra el diálogo actual antes de restaurar un espacio de trabajo."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Cannot save window layouts: %s"
+msgstr "No se pudo guardar la disposición de ventanas: %s"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Music box"
+msgstr "Caja de música"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Choose a track or create a playlist. Automatic music keeps the original game selection."
+msgstr "Elige una pista o crea una lista. La música automática mantiene la selección original del juego."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Favorites only"
+msgstr "Solo favoritas"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Add to playlist"
+msgstr "Añadir a la lista"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Remove"
+msgstr "Eliminar"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Play / Pause"
+msgstr "Reproducir / Pausa"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Automatic music"
+msgstr "Música automática"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Music volume"
+msgstr "Volumen de música"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Sound effects volume"
+msgstr "Volumen de efectos"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Playlist name"
+msgstr "Nombre de la lista"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Save playlist"
+msgstr "Guardar lista"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Load playlist"
+msgstr "Cargar lista"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Track %d"
+msgstr "Pista %d"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Enable Music in Options to play a track."
+msgstr "Activa Música en Opciones para reproducir una pista."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "This music track is not available."
+msgstr "Esta pista no está disponible."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "No track playing"
+msgstr "No hay ninguna pista en reproducción"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Paused: %s"
+msgstr "En pausa: %s"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Playing: %s"
+msgstr "Reproduciendo: %s"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Cannot save music preferences: %s"
+msgstr "No se pudieron guardar las preferencias de música: %s"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Enter a playlist name first."
+msgstr "Introduce primero un nombre para la lista."
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "Open music folder"
+msgstr "Abrir carpeta de música"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "Rescan"
+msgstr "Volver a buscar"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "Add MP3 files to this folder or its subfolders, then select Rescan."
+msgstr "Añade archivos MP3 a esta carpeta o sus subcarpetas y selecciona «Volver a buscar»."
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "All music"
+msgstr "Toda la música"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "Original music"
+msgstr "Música original"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "My music"
+msgstr "Mi música"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "My music: %d MP3 files"
+msgstr "Mi música: %d archivos MP3"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "Cannot open music folder: %s"
+msgstr "No se puede abrir la carpeta de música: %s"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "This MP3 is missing or cannot be played. Automatic music resumed."
+msgstr "Este MP3 no existe o no se puede reproducir. Se ha reanudado la música automática."

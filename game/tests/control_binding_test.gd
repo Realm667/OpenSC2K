@@ -105,7 +105,7 @@ func _test_catalog_defaults() -> void:
 	for pair in [["speed_turtle", "key:1"], ["speed_llama", "key:2"], ["speed_cheetah", "key:3"],
 			["speed_african_swallow", "key:4"], ["speed_toggle_pause", "key:Space"], ["tool_query", "key:Z"],
 			["tool_bulldozer", "key:X"], ["tool_center", "key:C"], ["camera_up", "key:Up"], ["zoom_out", "mouse:WheelDown"],
-			["map_context_menu", "mouse:Right"], ["map_center_on_tile", "mouse:Middle"], ["map_pan", "mouse:Right"],
+			["map_context_menu", "mouse:Right"], ["map_pick_tool", "mouse:Middle"], ["map_pan", "mouse:Right"],
 			["map_pan", "mouse:Middle"], ["undo", "key:Command+Z"], ["window_debug", "key:F12"]]:
 		assert(pair[1] in defaults.to_texts(pair[0]), "%s is not a default of %s" % [pair[1], pair[0]])
 

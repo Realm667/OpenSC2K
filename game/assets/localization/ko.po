@@ -6898,3 +6898,199 @@ msgstr "멀티플레이"
 #. source.
 msgid "Choose"
 msgstr "선택"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Pick building tool"
+msgstr "건설 도구 선택"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "No building tool at this location."
+msgstr "이 위치에는 선택할 건설 도구가 없습니다."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "This building tool is not available in this city."
+msgstr "이 도시에서는 아직 이 건설 도구를 사용할 수 없습니다."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Selected: %s"
+msgstr "선택: %s"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Workspaces"
+msgstr "작업 공간"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Building"
+msgstr "건설"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "City analysis"
+msgstr "도시 분석"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Window positions are remembered automatically."
+msgstr "창 위치는 자동으로 저장됩니다."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Arrange your city windows, then save their positions and visibility in a workspace."
+msgstr "도시 창을 배치한 후 위치와 표시 상태를 작업 공간에 저장하세요."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Save workspace"
+msgstr "작업 공간 저장"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Restore workspace"
+msgstr "작업 공간 복원"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Reset window positions"
+msgstr "창 위치 초기화"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Workspace saved."
+msgstr "작업 공간을 저장했습니다."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Workspace restored."
+msgstr "작업 공간을 복원했습니다."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Save this workspace first."
+msgstr "먼저 이 작업 공간을 저장하세요."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Load a city before restoring a workspace."
+msgstr "작업 공간을 복원하기 전에 도시를 불러오세요."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Close the current dialog before restoring a workspace."
+msgstr "작업 공간을 복원하기 전에 현재 대화 상자를 닫으세요."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Cannot save window layouts: %s"
+msgstr "창 배치를 저장할 수 없습니다: %s"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Music box"
+msgstr "뮤직박스"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Choose a track or create a playlist. Automatic music keeps the original game selection."
+msgstr "곡을 선택하거나 재생 목록을 만드세요. 자동 음악은 게임의 원래 선곡 방식을 유지합니다."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Favorites only"
+msgstr "즐겨찾기만"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Add to playlist"
+msgstr "재생 목록에 추가"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Favorite"
+msgstr "즐겨찾기 전환"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Remove"
+msgstr "제거"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Move up"
+msgstr "위로 이동"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Play / Pause"
+msgstr "재생 / 일시 정지"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Automatic music"
+msgstr "자동 음악"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Music volume"
+msgstr "음악 음량"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Sound effects volume"
+msgstr "효과음 음량"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Playlist name"
+msgstr "재생 목록 이름"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Save playlist"
+msgstr "재생 목록 저장"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Load playlist"
+msgstr "재생 목록 불러오기"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Track %d"
+msgstr "곡 %d"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Enable Music in Options to play a track."
+msgstr "곡을 재생하려면 옵션에서 음악을 켜세요."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "This music track is not available."
+msgstr "이 곡을 재생할 수 없습니다."
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "No track playing"
+msgstr "재생 중인 곡 없음"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Paused: %s"
+msgstr "일시 정지: %s"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Playing: %s"
+msgstr "재생 중: %s"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Cannot save music preferences: %s"
+msgstr "음악 설정을 저장할 수 없습니다: %s"
+
+#. Supplementary OpenSC2K QoL UI translation; AI-assisted from English source.
+msgid "Enter a playlist name first."
+msgstr "먼저 재생 목록 이름을 입력하세요."
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "Open music folder"
+msgstr "음악 폴더 열기"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "Rescan"
+msgstr "다시 검색"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "Add MP3 files to this folder or its subfolders, then select Rescan."
+msgstr "이 폴더나 하위 폴더에 MP3 파일을 넣은 다음 다시 검색을 선택하세요."
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "All music"
+msgstr "모든 음악"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "Original music"
+msgstr "원본 음악"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "My music"
+msgstr "내 음악"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "My music: %d MP3 files"
+msgstr "내 음악: MP3 파일 %d개"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "Cannot open music folder: %s"
+msgstr "음악 폴더를 열 수 없습니다: %s"
+
+#: src/ui/settings/music_box_dialog.gd
+msgid "This MP3 is missing or cannot be played. Automatic music resumed."
+msgstr "이 MP3 파일이 없거나 재생할 수 없습니다. 자동 음악 재생을 다시 시작했습니다."
