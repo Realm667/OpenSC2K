@@ -252,6 +252,8 @@ static func any_window_visible(windows: Array[Node]) -> bool:
 
 
 func _register(window: Node, group_name: String, modality: Modality) -> void:
+	if window is Window:
+		window.theme = AppUiTheme.current()
 	_dialog_parent(group_name).add_child(window)
 
 	if modality == Modality.BLOCKING:

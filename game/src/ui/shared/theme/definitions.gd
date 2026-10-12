@@ -129,7 +129,37 @@ static func build(value: String, files := false, translucent_menus := true) -> T
 	status_bar.border_width_right = 0
 	result.set_stylebox("panel", "CityStatusBarPanel", status_bar)
 
+	_apply_shared_layout(result, dark)
 	return result
+
+
+static func _apply_shared_layout(result: Theme, dark: bool) -> void:
+	# Common rhythm, readable fields and keyboard focus across both themes.
+	for type_name in ["HBoxContainer", "VBoxContainer"]:
+		result.set_constant("separation", type_name, 8)
+	result.set_constant("h_separation", "GridContainer", 10)
+	result.set_constant("v_separation", "GridContainer", 8)
+	result.set_type_variation("DialogMargin", "MarginContainer")
+	for side in ["left", "top", "right", "bottom"]:
+		result.set_constant("margin_" + side, "DialogMargin", 12)
+	result.set_type_variation("SectionHeading", "Label")
+	result.set_font("font", "SectionHeading", result.get_font("title_font", "Window"))
+	result.set_font_size("font_size", "SectionHeading", 16)
+	result.set_color("font_color", "SectionHeading", result.get_color("ink", "AppPalette"))
+	result.set_type_variation("UtilityPanel", "PanelContainer")
+	result.set_stylebox("panel", "UtilityPanel", create_box(result.get_color("canvas", "AppPalette"),
+		result.get_color("border", "AppPalette"), 1, 14, 14))
+	var focus := create_box(Color.TRANSPARENT, Color("9dcaff") if dark else Color("164b83"), 2, 0, 0)
+	for type_name in ["Button", "OptionButton", "LineEdit", "TextEdit", "ItemList", "Tree"]:
+		result.set_stylebox("focus", type_name, focus)
+	for type_name in ["Button", "OptionButton"]:
+		for state in ["normal", "hover", "pressed", "hover_pressed", "disabled"]:
+			var box := _copy_style(result, type_name, state)
+			box.content_margin_left = 8
+			box.content_margin_right = 8
+			box.content_margin_top = 5
+			box.content_margin_bottom = 5
+			result.set_stylebox(state, type_name, box)
 
 
 static func _light_theme() -> Theme:

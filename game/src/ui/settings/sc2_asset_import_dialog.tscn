@@ -19,10 +19,7 @@ grow_vertical = 2
 
 [node name="Margin" type="MarginContainer" parent="Background"]
 layout_mode = 2
-theme_override_constants/margin_left = 18
-theme_override_constants/margin_top = 18
-theme_override_constants/margin_right = 18
-theme_override_constants/margin_bottom = 18
+theme_type_variation = "DialogMargin"
 
 [node name="Content" type="VBoxContainer" parent="Background/Margin"]
 layout_mode = 2
