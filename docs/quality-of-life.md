@@ -21,7 +21,7 @@ city does not reopen a budget decision or other modal prompt.
 
 Windows → Music box uses the selected music pack, recordings and SoundFont.
 Double-click a track to play it. Add tracks to an ordered playlist, mark favorites,
-filter the library, and save or load named playlists. Previous, Play / Pause and
+and filter the library. Previous, Play / Pause and
 Next also work through the configured media keys while the music box is active.
 Automatic music returns to the original game selection. Closing the window keeps
 the current playback. Disabling Music in Options stops custom playback.
@@ -53,7 +53,7 @@ and favorites persist; custom playback does not start automatically at launch.
 
 Each folder containing MP3s appears as a collection. With an empty playlist,
 playback continues through the visible collection. Original and personal tracks
-can share favorites and named playlists. File names are displayed as track names;
+can share favorites and the current queue. File names are displayed as track names;
 files are read in place and are never copied, renamed or modified.
 
 Personal tracks use paths relative to `music` so playlists survive moving the

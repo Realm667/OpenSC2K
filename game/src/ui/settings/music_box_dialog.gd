@@ -39,8 +39,6 @@ var favorites_only: CheckBox
 var favorites: Array = []
 var playlist: Array = []
 var playlist_index := -1
-var playlist_names: OptionButton
-var playlist_name: LineEdit
 var now_playing: Label
 var status: Label
 var play_button: Button
@@ -119,19 +117,7 @@ func _init(application: CityApplication) -> void:
 		_effects_dirty = true
 		_effects_save_delay = 0.5)
 	column.add_child(effects)
-	var names := row()
-	playlist_names = OptionButton.new()
-	playlist_names.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	names.add_child(playlist_names)
-	button(names, "Load playlist", _load_playlist)
-	playlist_name = LineEdit.new()
-	playlist_name.placeholder_text = "Playlist name"
-	playlist_name.max_length = 48
-	playlist_name.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	names.add_child(playlist_name)
-	button(names, "Save playlist", _save_playlist)
 	status = label("", "HelpLabel")
-	_refresh_names()
 	close_requested.connect(_save)
 
 
@@ -385,34 +371,6 @@ func _save() -> void:
 	var error := config.save(storage_path)
 	if error != OK:
 		status.text = tr("Cannot save music preferences: %s") % error_string(error)
-
-
-func _refresh_names() -> void:
-	playlist_names.clear()
-	if config.has_section("playlists"):
-		for name in config.get_section_keys("playlists"):
-			playlist_names.add_item(name)
-
-
-func _save_playlist() -> void:
-	var name := playlist_name.text.strip_edges()
-	if name.is_empty():
-		status.text = tr("Enter a playlist name first.")
-		return
-	config.set_value("playlists", name, playlist.duplicate())
-	_save()
-	_refresh_names()
-
-
-func _load_playlist() -> void:
-	if playlist_names.selected < 0:
-		return
-	var name := playlist_names.get_item_text(playlist_names.selected)
-	playlist = _track_ids(config.get_value("playlists", name, []))
-	playlist_name.text = name
-	playlist_index = playlist.find(playback.track_key())
-	_refresh_queue()
-	_save()
 
 
 func _exit_tree() -> void:
