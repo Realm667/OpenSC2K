@@ -101,7 +101,7 @@ func _process(delta: float) -> void:
 		if config.get_value("windows", key, Rect2i()) != rect:
 			config.set_value("windows", key, rect)
 			_dirty = true
-	# Write on close, workspace save or application exit, not on every drag.
+	# Write on close or application exit, not on every drag.
 
 
 func capture() -> Dictionary:
@@ -113,14 +113,6 @@ func capture() -> Dictionary:
 	return result
 
 
-func apply_geometry(layout: Dictionary) -> void:
-	for key: Variant in layout:
-		if key is String and layout[key] is Rect2i:
-			config.set_value("windows", key, layout[key])
-			_restore(str(key))
-	_dirty = true
-
-
 func flush() -> void:
 	if not _dirty or storage_path.is_empty():
 		return
@@ -129,24 +121,6 @@ func flush() -> void:
 		save_failed.emit(tr("Cannot save window layouts: %s") % error_string(error))
 	else:
 		_dirty = false
-
-
-func save_workspace(name: String, geometry: Dictionary, visible_ids: Array[int]) -> bool:
-	config.set_value("workspaces", name, {"geometry": geometry, "visible": visible_ids})
-	_dirty = true
-	flush()
-	return not _dirty
-
-
-func reset_positions() -> void:
-	if config.has_section("windows"):
-		config.erase_section("windows")
-	for window: Window in windows.values():
-		if is_instance_valid(window) and window.visible:
-			window.position = Vector2i(get_tree().root.get_visible_rect().size - Vector2(window.size)) / 2
-			_clamp(window)
-	_dirty = true
-	flush()
 
 
 func _exit_tree() -> void:

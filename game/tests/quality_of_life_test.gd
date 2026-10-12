@@ -34,41 +34,28 @@ func _run() -> void:
 	var window_menu := app.city_menu_bar.windows_menu.get_popup()
 	for scenario_available in [false, true, false]:
 		app.city_menu_bar.set_scenario_available(scenario_available)
-		assert(window_menu.get_item_index(ApplicationQualityOfLife.MENU_LAYOUTS) >= 0)
+		assert(window_menu.get_item_index(0x8400) < 0)
 		assert(window_menu.get_item_index(ApplicationQualityOfLife.MENU_MUSIC_BOX) >= 0)
 	window_menu.id_pressed.emit(ApplicationQualityOfLife.MENU_MUSIC_BOX)
 	assert(qol.music_box.visible, "The real Windows menu must open the music box after loading a city")
 	qol.music_box.hide()
-	window_menu.id_pressed.emit(ApplicationQualityOfLife.MENU_LAYOUTS)
-	assert(qol.layouts.visible)
-	qol.layouts.popup_centered(Vector2i(500, 300))
-	await process_frame
-	await process_frame
-	qol.layouts.position = Vector2i(70, 85)
-	qol.memory._process(1.0)
-	qol.layouts.hide()
-	qol.layouts.popup_centered()
-	await process_frame
-	assert(qol.layouts.position == Vector2i(70, 85), "Window did not retain its position")
-	qol.layouts.hide()
-	var bounds := Rect2i(0, 0, 800, 600)
-	assert(WindowLayoutMemory.fit_position(Vector2i(2000, -300), Vector2i(300, 200), bounds) == Vector2i(500, 30))
-	assert(WindowLayoutMemory.fit_position(Vector2i(400, 200), Vector2i(1000, 900), bounds) == Vector2i(0, 30))
-	qol.workspace_choice.select(0)
-	qol._save_layout()
-	var reread := ConfigFile.new()
-	assert(reread.load(qol.memory.storage_path) == OK and reread.has_section_key("workspaces", "Building"))
 	app.reports.on_windows_menu(4)
 	await process_frame
 	await process_frame
 	app.city_dialogs.graph_window.position = Vector2i(80, 90)
-	qol._save_layout()
+	qol.memory._process(1.0)
 	app.city_dialogs.graph_window.hide()
-	qol._restore_layout()
+	app.reports.on_windows_menu(4)
 	await process_frame
 	await process_frame
-	assert(app.city_dialogs.graph_window.visible and app.city_dialogs.graph_window.position == Vector2i(80, 90))
+	assert(app.city_dialogs.graph_window.position == Vector2i(80, 90))
 	app.city_dialogs.graph_window.hide()
+	var reread := ConfigFile.new()
+	assert(reread.load(qol.memory.storage_path) == OK)
+	assert(not reread.has_section("workspaces"))
+	var bounds := Rect2i(0, 0, 800, 600)
+	assert(WindowLayoutMemory.fit_position(Vector2i(2000, -300), Vector2i(300, 200), bounds) == Vector2i(500, 30))
+	assert(WindowLayoutMemory.fit_position(Vector2i(400, 200), Vector2i(1000, 900), bounds) == Vector2i(0, 30))
 	var audio := app.audio_controller
 	var old_track := audio.current_track_id
 	var old_director := audio.music_director.general_track_index
@@ -129,7 +116,7 @@ func _run() -> void:
 	assert(TranslationServer.translate("Music box") == "Musikbox")
 	app.queue_free()
 	await process_frame
-	print("PASS: tool pipette, unchanged city, local window recovery, workspaces and simulation-independent music playlists")
+	print("PASS: tool pipette, unchanged city, local window recovery and simulation-independent music playlists")
 	quit()
 
 

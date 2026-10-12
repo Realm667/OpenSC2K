@@ -11,20 +11,11 @@ select their zone and density. Underground view picks pipes or subway tools.
 Unavailable inventions and rewards remain unavailable. A middle-button drag
 still pans the map. The action can be rebound in Settings → Controls.
 
-## Window positions and workspaces
+## Window positions
 
 In-game windows remember their positions and resizable dimensions locally.
 Positions outside the current screen are brought back into view. Opening a new
 city does not reopen a budget decision or other modal prompt.
-
-Windows → Workspaces saves three arrangements: Building, Finances and City
-analysis. Arrange the report windows, select a slot and save it. Restoring a slot
-opens its reports with fresh city data and restores their positions. Close a
-blocking decision before restoring a workspace. Reset window positions centers
-the open windows and clears their remembered positions.
-
-Workspaces contain window arrangements. They do not rotate the city or change
-vehicle visibility, which can affect the original simulation.
 
 ## Music box
 
