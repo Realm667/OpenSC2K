@@ -1,5 +1,16 @@
 [
   {
+    "id": "standalone_first_import_test",
+    "script": "tests/standalone_first_import_test.gd",
+    "domain": "ui",
+    "lane": "product",
+    "requires": [
+      "packs/standalone-graphics/graphics/pack.json",
+      "packs/standalone-audio/sound/pack.json",
+      "packs/standalone-audio/music/pack.json"
+    ]
+  },
+  {
     "id": "pack_library_test",
     "script": "tests/pack_library_test.gd",
     "domain": "ui",

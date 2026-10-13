@@ -519,7 +519,11 @@ func stale_pack_kinds() -> PackedStringArray:
 			if ImportedPackRevision.is_outdated(pair[0], (pair[1] as MediaPack).import_revision):
 				kinds.append(pair[0])
 
-	if not app.asset_state.data_pack.is_loaded() or app.asset_state.data_pack.is_outdated():
+	# Original data is optional in a fresh standalone installation. An empty
+	# automatic choice with no imported default is not a broken import.
+	var data_selected := not data_pack_folder().strip_edges().is_empty()
+	var default_data_exists := FileAccess.file_exists(DataPack.default_folder().path_join("pack.json"))
+	if app.asset_state.data_pack.is_outdated() or (not app.asset_state.data_pack.is_loaded() and (data_selected or default_data_exists)):
 		kinds.append("data")
 
 	return kinds
