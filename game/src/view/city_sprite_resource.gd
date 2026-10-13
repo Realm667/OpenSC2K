@@ -44,7 +44,12 @@ func light_texture() -> ImageTexture:
 
 func reflection(origin: Vector2i, level: int, palette: Sc2Palette, lights_enabled := true) -> WaterReflectionSprite:
 	if _reflection == null or _reflection_palette != palette:
-		_reflection = WaterReflectionSprite.create(floating_source if floating_source != null else image, _light_mask, Vector2i.ZERO, 0, palette)
+		# The moving compositor consumes large-view world pixels. HD display
+		# rasters cover native_size; their texels are not extra world pixels.
+		# Normalize the hull/wake and light mask together before finding contact.
+		var source := _reflection_raster(floating_source if floating_source != null else image)
+		var lights := _reflection_raster(_light_mask)
+		_reflection = WaterReflectionSprite.create(source, lights, Vector2i.ZERO, 0, palette)
 		_reflection_palette = palette
 	var result := WaterReflectionSprite.new()
 	result.position = origin
@@ -55,4 +60,14 @@ func reflection(origin: Vector2i, level: int, palette: Sc2Palette, lights_enable
 	if not lights_enabled and (_unlit_reflection_emission == null or _unlit_reflection_emission.get_size() != _reflection.image.get_size()):
 		_unlit_reflection_emission = Image.create(_reflection.image.get_width(), _reflection.image.get_height(), false, Image.FORMAT_RGBA8)
 	result.emission = _reflection.emission if lights_enabled else _unlit_reflection_emission
+	return result
+
+
+func _reflection_raster(source: Image) -> Image:
+	if source == null or native_size == Vector2i.ZERO or source.get_size() == native_size:
+		return source
+	var result := source.duplicate() as Image
+	# Hull data contains palette indices: interpolating their numeric values
+	# changes both color and the foam classification used by hull_columns.
+	result.resize(native_size.x, native_size.y, Image.INTERPOLATE_NEAREST)
 	return result

@@ -90,9 +90,53 @@ func _initialize() -> void:
 	assert(boat.emission.get_pixel(0, 5) == lights.get_pixel(0, 0))
 	assert(boat.image.get_pixel(0, 0).a == 0)
 	_check_ship_wakes()
+	_check_hd_ship_scale()
 	_check_moving_composition()
 	print("PASS: indexed native water geometry at all artwork sizes, water-only clipping, deterministic cache output and Off/Subtle preferences")
 	quit()
+
+
+func _check_hd_ship_scale() -> void:
+	var hull := Image.create(5, 7, false, Image.FORMAT_RGBA8)
+	var lights := Image.create(5, 7, false, Image.FORMAT_RGBA8)
+	for x in range(1, 5):
+		for y in range(1, 3 + x):
+			hull.set_pixel(x, y, Color8(40 + x, 0, 0, 255))
+		lights.set_pixel(x, 2 + x, Color(1, 0.6, 0.2, 1))
+	for flipped in [false, true]:
+		var expected := WaterReflectionSprite.create(hull, lights, Vector2i(210, 320), 4)
+		for factor in [1, 2, 4]:
+			var resource := CitySpriteResource.new()
+			resource.native_size = hull.get_size()
+			resource.image = hull.duplicate()
+			resource.image.resize(5 * factor, 7 * factor, Image.INTERPOLATE_NEAREST)
+			var mask := lights.duplicate() as Image
+			mask.resize(5 * factor, 7 * factor, Image.INTERPOLATE_NEAREST)
+			resource.light_mask(mask, false)
+			var original_bytes := resource.image.get_data()
+			var actual := resource.reflection(Vector2i(210, 320), 4, null)
+			assert(actual.image.get_size() == Vector2i(5, 14), "HD water reflection uses texture pixels as world pixels")
+			assert(actual.image.get_data() == expected.image.get_data(), "HD hull waterline or reflection scale changed")
+			assert(actual.emission.get_data() == expected.emission.get_data(), "HD reflected lights lost their hull alignment")
+			assert(actual.position == expected.position and actual.level == expected.level)
+			assert(resource.reflection(Vector2i(220, 330), 4, null, false).emission.is_invisible())
+			assert(resource.reflection(Vector2i(220, 330), 4, null).emission.get_data() == expected.emission.get_data())
+			assert(resource.image.get_data() == original_bytes, "Reflection rescaled the visible sprite in place")
+			# Enhanced ships display full-color artwork but reflect the separate
+			# indexed hull. Both paths must use the same logical waterline.
+			var artwork := CitySpriteResource.new()
+			artwork.native_size = hull.get_size()
+			artwork.floating_source = resource.image.duplicate()
+			artwork.image = resource.image.duplicate()
+			artwork.image.fill(Color(0.8, 0.3, 0.1, 1.0))
+			artwork.light_mask(mask, false)
+			var indexed_bytes := artwork.floating_source.get_data()
+			var enhanced := artwork.reflection(Vector2i(210, 320), 4, null)
+			assert(enhanced.image.get_data() == expected.image.get_data(), "HD artwork replaced the indexed reflection hull")
+			assert(enhanced.emission.get_data() == expected.emission.get_data())
+			assert(artwork.floating_source.get_data() == indexed_bytes)
+		hull.flip_x()
+		lights.flip_x()
 
 
 func _check_moving_composition() -> void:

@@ -389,7 +389,7 @@ func _check_moving_texture_reuse() -> void:
 
 func _check_unlit_ship_regions() -> void:
 	var viewport := SubViewport.new()
-	viewport.size = Vector2i(64, 32)
+	viewport.size = Vector2i(256, 128)
 	viewport.transparent_bg = true
 	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	root.add_child(viewport)
@@ -408,9 +408,11 @@ func _check_unlit_ship_regions() -> void:
 		entry.water = region
 		source.tiles.append(entry)
 	var resource := CitySpriteResource.new()
-	resource.image = Image.create(4, 4, false, Image.FORMAT_RGBA8)
+	# Four-times artwork still occupies a four-pixel hull in world space.
+	resource.native_size = Vector2i(4, 4)
+	resource.image = Image.create(16, 16, false, Image.FORMAT_RGBA8)
 	resource.image.fill(Color(40.0 / 255.0, 0, 0, 1))
-	var light := Image.create(4, 4, false, Image.FORMAT_RGBA8)
+	var light := Image.create(16, 16, false, Image.FORMAT_RGBA8)
 	light.fill(Color(1.0, 0.2, 0.1))
 	resource.light_mask(light, false)
 	var original := resource.reflection(Vector2i(8, 8), 0, null)
@@ -428,7 +430,7 @@ func _check_unlit_ship_regions() -> void:
 	visual.water_reflection = unlit
 	# A ship can already overlap a region when its water node is first created.
 	layer.set_moving([visual])
-	for zoom in [0.25, 0.5, 1.0]:
+	for zoom in [0.25, 0.5, 1.0, 2.0, 4.0]:
 		layer.sync(source, zoom, Vector2.ZERO, palette_texture)
 		for lit in [false, true, false]:
 			for x in [8, 30, 40]:
