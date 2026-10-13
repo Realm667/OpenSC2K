@@ -3,6 +3,7 @@ extends RefCounted
 ## Presentation-only light buffers. Shares static meshes and authored brightmaps.
 
 const EMISSION := preload("res://src/view/environment/night_emission.gdshader")
+const EMISSION_PAGES := preload("res://src/view/environment/night_emission_pages.gdshader")
 const BLUR := preload("res://src/view/environment/night_blur.gdshader")
 const GLOW := preload("res://src/view/environment/night_glow.gdshader")
 const PADDING := 24.0
@@ -193,7 +194,7 @@ func _rebuild(value: CityMapSource) -> void:
 				# Retain the cheap node, release hidden geometry and atlas references.
 				mesh.mesh = null
 				mesh.texture = null
-				(mesh.material as ShaderMaterial).set_shader_parameter("emission", null)
+				apply_region_emission(mesh.material as ShaderMaterial, null)
 				continue
 			var entry := value.meshes[index]
 			if index < previous.meshes.size() and entry == previous.meshes[index] and entry.immutable:
@@ -202,9 +203,7 @@ func _rebuild(value: CityMapSource) -> void:
 			mesh.texture = entry.texture
 			mesh.position = entry.position
 			mesh.scale = Vector2.ONE * entry.divisor
-			var shader := mesh.material as ShaderMaterial
-			shader.set_shader_parameter("emission", entry.emission)
-			shader.set_shader_parameter("has_emission", entry.emission != null)
+			apply_region_emission(mesh.material as ShaderMaterial, entry)
 		scene.move_child(moving, -1)
 		scene.move_child(life, -1)
 		return
@@ -222,8 +221,23 @@ func _rebuild(value: CityMapSource) -> void:
 		mesh.position = entry.position
 		mesh.scale = Vector2.ONE * entry.divisor
 		_register(mesh, entry.emission)
+		apply_region_emission(mesh.material as ShaderMaterial, entry)
 	scene.move_child(moving, -1)
 	scene.move_child(life, -1)
+
+
+static func apply_region_emission(material: ShaderMaterial, entry: CityMapSource.MeshEntry) -> void:
+	if entry != null and entry.texture_pages != null:
+		entry.texture_pages.apply(material, EMISSION_PAGES)
+		material.set_shader_parameter("has_emission", entry.texture_pages.emission != null)
+		material.set_shader_parameter("emission", null)
+	else:
+		material.shader = EMISSION
+		# Hidden/replaced regions must release the resident texture arrays too.
+		for parameter in ["region_atlas_pages", "region_emission_pages", "region_season_pages"]:
+			material.set_shader_parameter(parameter, null)
+		material.set_shader_parameter("emission", entry.emission if entry != null else null)
+		material.set_shader_parameter("has_emission", entry != null and entry.emission != null)
 
 
 func _sync_moving() -> void:

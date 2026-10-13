@@ -27,10 +27,21 @@ func run() -> void:
 		var expected: Image = await draw_image(art, light, seasons, null, mirrored)
 		var actual: Image = await draw_image(art, light, seasons, pages, mirrored)
 		assert(expected.get_data() == actual.get_data(), "Texture page boundaries or auxiliary shading differ from the full atlas")
+	for tag in [Color(2.0 / 255, 0, 0, 1), Color(130.0 / 255, 0, 0, 1), Color(64.0 / 255, 2.0 / 255, 0, 64.0 / 255)]:
+		var expected: Image = await draw_image(art, light, seasons, null, false, true, tag)
+		var actual: Image = await draw_image(art, light, seasons, pages, false, true, tag)
+		assert(expected.get_data() == actual.get_data(), "Paged night glow must preserve emission, foreground occlusion and animated UVs")
+		assert(actual.get_pixel(128, 128).a > 0.0, "Night mask must retain foreground coverage")
+	var retained := ShaderMaterial.new()
+	var entry := CityMapSource.MeshEntry.new(Vector2.ZERO, null, null, 1)
+	entry.texture_pages = pages
+	CityNightLighting.apply_region_emission(retained, entry)
+	CityNightLighting.apply_region_emission(retained, null)
+	assert(retained.get_shader_parameter("region_atlas_pages") == null, "Hidden night regions must release page resources")
 	print("PASS: GPU pages match full atlas exactly across all four page edges, transparency, mirroring and emission")
 	quit()
 
-func draw_image(art: Image, light: Image, seasons: Image, pages: CityGpuTexturePages, mirrored: bool) -> Image:
+func draw_image(art: Image, light: Image, seasons: Image, pages: CityGpuTexturePages, mirrored: bool, night := false, tag := Color(2.0 / 255, 0, 0, 1)) -> Image:
 	var viewport := SubViewport.new()
 	viewport.size = Vector2i(256, 256)
 	viewport.transparent_bg = true
@@ -44,7 +55,7 @@ func draw_image(art: Image, light: Image, seasons: Image, pages: CityGpuTextureP
 	if mirrored:
 		for index in 4:
 			arrays[Mesh.ARRAY_TEX_UV][index].x = 1.0 - arrays[Mesh.ARRAY_TEX_UV][index].x
-	arrays[Mesh.ARRAY_COLOR] = PackedColorArray([Color(2.0 / 255, 0, 0, 1), Color(2.0 / 255, 0, 0, 1), Color(2.0 / 255, 0, 0, 1), Color(2.0 / 255, 0, 0, 1)])
+	arrays[Mesh.ARRAY_COLOR] = PackedColorArray([tag, tag, tag, tag])
 	arrays[Mesh.ARRAY_INDEX] = PackedInt32Array([0, 1, 2, 0, 2, 3])
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays, [], {}, Mesh.ARRAY_FLAG_USE_2D_VERTICES)
@@ -62,6 +73,12 @@ func draw_image(art: Image, light: Image, seasons: Image, pages: CityGpuTextureP
 		material.set_shader_parameter("environment_season_mask", ImageTexture.create_from_image(seasons))
 	else:
 		pages.apply(material)
+	if night:
+		var entry := CityMapSource.MeshEntry.new(Vector2.ZERO, mesh, instance.texture, 1)
+		entry.texture_pages = pages
+		entry.emission = ImageTexture.create_from_image(light) if pages == null else null
+		CityNightLighting.apply_region_emission(material, entry)
+		material.set_shader_parameter("artwork_animation_seconds", 0.15)
 	instance.material = material
 	viewport.add_child(instance)
 	await process_frame

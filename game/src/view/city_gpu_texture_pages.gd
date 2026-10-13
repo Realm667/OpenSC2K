@@ -30,8 +30,8 @@ func publish(data: Dictionary) -> bool:
 	return true
 
 
-func apply(material: ShaderMaterial) -> void:
-	material.shader = preload("res://src/view/map/palette_cycle_pages.gdshader")
+func apply(material: ShaderMaterial, shader: Shader = preload("res://src/view/map/palette_cycle_pages.gdshader")) -> void:
+	material.shader = shader
 	material.set_shader_parameter("region_atlas_edge", float(atlas_edge))
 	material.set_shader_parameter("region_atlas_pages", art)
 	material.set_shader_parameter("region_emission_pages", emission)
