@@ -39,6 +39,10 @@ func _scan(relative: String) -> void:
 	for name in directory.get_directories():
 		if not directory.is_link(name):
 			var child := name if relative.is_empty() else relative.path_join(name)
+			# Installed music packs have their own source in the music box.
+			# Keep old custom IDs resolvable without listing the same songs twice.
+			if PackLibrary.is_music_package(folder.path_join(child)):
+				continue
 			folders.append(child)
 			_scan(child)
 

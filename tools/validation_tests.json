@@ -1,5 +1,11 @@
 [
   {
+    "id": "pack_library_test",
+    "script": "tests/pack_library_test.gd",
+    "domain": "ui",
+    "lane": "product"
+  },
+  {
     "id": "quality_of_life_test",
     "script": "tests/quality_of_life_test.gd",
     "domain": "ui",

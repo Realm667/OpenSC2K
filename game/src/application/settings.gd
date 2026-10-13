@@ -93,6 +93,9 @@ func open_settings_dialog() -> void:
 	app.main_overlays.settings_dialog.music_pack_edit.text = AppSettingsDialog.pack_file_path(preferences.music_pack_folder)
 	app.main_overlays.settings_dialog.data_pack_edit.text = AppSettingsDialog.pack_file_path(preferences.data_pack_folder)
 	app.main_overlays.settings_dialog.hd_pack_edit.text = AppSettingsDialog.pack_file_path(preferences.hd_pack_folder)
+	app.main_overlays.settings_dialog.cities_folder_edit.text = preferences.cities_folder
+	app.main_overlays.settings_dialog.mods_folder_edit.text = preferences.mods_folder
+	app.main_overlays.settings_dialog.brightmaps_folder_edit.text = str(preferences.visual_enhancements.brightmap_folder)
 	app.main_overlays.settings_dialog.show_control_bindings(preferences.control_bindings)
 	app.main_overlays.settings_dialog.show_values(
 		preferences.music_volume, preferences.effects_volume, preferences.fullscreen,
@@ -202,6 +205,7 @@ func apply_settings() -> void:
 		return
 	var values: AppSettingsStore.Values = dialog.selected_values()
 	var saved_before := _saved_settings_text()
+	_apply_library_folders(dialog, values)
 	_apply_visual_options(values.visual_enhancements)
 	var media_packs_changed := (not _same_pack(values.sound_pack_folder, preferences.sound_pack_folder)
 			or not _same_pack(values.music_pack_folder, preferences.music_pack_folder))
@@ -258,6 +262,8 @@ func apply_settings() -> void:
 			app.assets.show_graphics_source_error(hd_error, "HD sprite pack")
 			_show_saved_pack(dialog.hd_pack_edit, preferences.hd_pack_folder)
 
+	for selector: PackSourceSelector in dialog.pack_selectors.values():
+		selector.sync_selection()
 	preferences.check_for_updates = bool(values.check_for_updates)
 
 	if not preferences.control_bindings.equals(values.control_bindings):
@@ -423,6 +429,34 @@ func _saved_settings_text() -> String:
 	return var_to_str(parts)
 
 
+func _apply_library_folders(dialog: AppSettingsDialog, values: AppSettingsStore.Values) -> void:
+	for kind in ["cities", "mods", "brightmaps"]:
+		var selected: String = values.visual_enhancements.brightmap_folder if kind == "brightmaps" else values.get(kind + "_folder")
+		var previous: String = preferences.visual_enhancements.brightmap_folder if kind == "brightmaps" else preferences.get(kind + "_folder")
+		if selected == previous:
+			continue
+		var problem := "" if selected.is_empty() else str(PackLibrary.inspect(kind, selected).error)
+		if not problem.is_empty():
+			dialog.show_pack_error(problem)
+			if kind == "brightmaps":
+				values.visual_enhancements.brightmap_folder = previous
+				dialog.brightmaps_folder_edit.text = previous
+			else:
+				values.set(kind + "_folder", previous)
+				(dialog.get(kind + "_folder_edit") as LineEdit).text = previous
+			continue
+		if kind == "brightmaps":
+			dialog.visual_tab.last_values.brightmap_folder = selected
+			var control: Control = dialog.visual_tab.controls.get("brightmap_folder")
+			if control is LineEdit:
+				control.text = selected
+		else:
+			preferences.set(kind + "_folder", selected)
+			if kind == "mods":
+				app.scripting.mods.load_all(ModCatalog.default_folder() if selected.is_empty() else selected, preferences.settings_path)
+				show_mods()
+
+
 func load_app_settings() -> void:
 	var values := SettingsStore.load_values(
 		preferences.settings_path,
@@ -438,6 +472,8 @@ func load_app_settings() -> void:
 	preferences.city_sounds = values.city_sounds
 	preferences.sound_pack_folder = str(values.sound_pack_folder)
 	preferences.music_pack_folder = str(values.music_pack_folder)
+	preferences.cities_folder = values.cities_folder
+	preferences.mods_folder = values.mods_folder
 	preferences.data_pack_folder = str(values.data_pack_folder)
 	preferences.hd_pack_folder = str(values.hd_pack_folder)
 	preferences.dark_underground = bool(values.dark_underground)

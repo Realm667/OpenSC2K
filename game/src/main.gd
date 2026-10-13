@@ -108,6 +108,7 @@ var scripting: ApplicationScripting = ApplicationScripting.new(self)
 
 
 func _ready() -> void:
+	var first_start := OriginalImportPrompt.first_start(preferences.settings_path, AppPaths.root())
 	effects_audio.disaster_effects = disaster_effects
 	# the window samples embedded dialogs with nearest filtering. keep the
 	# earlier linear default for the application contents
@@ -129,10 +130,16 @@ func _ready() -> void:
 		asset_state.reference_root = DataPack.default_folder()
 
 	settings.load_app_settings()
-	scripting.mods.load_all(ModCatalog.default_folder(), preferences.settings_path)
+	scripting.mods.load_all(preferences.mods_folder if not preferences.mods_folder.is_empty() else ModCatalog.default_folder(), preferences.settings_path)
 	get_window().size_changed.connect(_on_window_size_changed)
 	assets.build_reference_import_dialogs()
 	assets.initialize_runtime()
+	if OS.has_feature("template") and DisplayServer.get_name() != "headless":
+		var folder_error := PackLibrary.ensure_folders()
+		if folder_error != OK:
+			push_warning("Cannot create package folders: " + error_string(folder_error))
+		if first_start:
+			assets.show_reference_import_dialog.call_deferred()
 	updates.check_on_startup()
 
 	if not AppPaths.error().is_empty():

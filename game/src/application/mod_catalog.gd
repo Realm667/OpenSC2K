@@ -23,8 +23,10 @@ static func scan(folder: String, game_version: String) -> Array[ModManifest]:
 	var names := DirAccess.get_directories_at(folder)
 	names.sort()
 	var folders := PackedStringArray()
+	if FileAccess.file_exists(folder.path_join(ModManifest.FILE_NAME)):
+		folders.append(folder)
 
-	for folder_name in names:
+	for folder_name in ([] if not folders.is_empty() else names):
 		if not folder_name.begins_with("."):
 			folders.append(folder.path_join(folder_name))
 
