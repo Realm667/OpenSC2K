@@ -73,7 +73,9 @@ func run() -> void:
 	main.assets.apply_graphics_source(selected)
 	assert(main.asset_state.assets_ready and not main.main_menu.import_button.visible)
 	assert(main.audio_controller.set_media_packs(result.sound, result.music))
-	assert(main.assets.stale_pack_kinds() == PackedStringArray(["data"]), "A missing data pack needs an import")
+	assert(main.assets.stale_pack_kinds().is_empty(), "Importing graphics and audio alone must not require optional game data")
+	main.preferences.data_pack_folder = result.data
+	assert(main.assets.stale_pack_kinds() == PackedStringArray(["data"]), "An explicitly selected missing data pack still needs an import")
 	main.assets.apply_data_pack(DataPack.load_folder(result.data))
 	assert(main.asset_state.reference_root == result.data.get_base_dir())
 	assert(main.original_text_resources.newspaper_data != null and main.asset_state.base_large_sprites != null)
