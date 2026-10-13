@@ -45,8 +45,12 @@ Manual choices use the exact source file and the selected SoundFont; they never
 fall through to another pack with the same numeric slot.
 Choose a source or personal folder on the left, then double-click a title on the
 right. The current song has a play marker; tooltips show its source and file path.
-The optional Queue tab retains the existing ordered queue. Tracks advances within
-the selected collection; Queue advances within that queue. Previous, Play / Pause and
+The Favorites tab stores an ordered collection across restarts. Select a track and
+use Add to favorites; duplicates are ignored and a star marks favorites in Tracks.
+Remove and Move up edit the saved collection. Double-click a favorite or press
+Play / Pause in Favorites to play that collection. Playback stays within Favorites
+even while browsing another tab or folder; missing entries are retained but skipped.
+An empty Favorites collection never falls through to all tracks. Previous, Play / Pause and
 Next also work through the configured media keys while the music box is active.
 Automatic music returns to the original game selection. Closing the window keeps
 the current playback. Disabling Music in Options stops custom playback.
@@ -65,8 +69,9 @@ lists both the game cue names and the soundtrack titles used here. In particular
 10016 is “The Construction: HAPPYLAND”; the album order differs from MIDI order.
 
 Window layouts and music preferences live beside the local settings file in
-`.layouts.cfg` and `.music-box.cfg` files. They are not stored in cities. Playlists
-and favorites persist; legacy named lists and workspace sections are retained
+`.layouts.cfg` and `.music-box.cfg` files. They are not stored in cities. Favorites
+persist; the old queue is merged into favorites once without duplicates. Legacy
+queue, named lists and workspace sections are retained
 as inactive data, with no load/save UI; custom playback does not start automatically at launch.
 Music and effects have separate volume sliders. Progress and elapsed/total time
 are shown for decoded recordings. MIDI playback has no recorded duration and
@@ -92,12 +97,12 @@ References: [ID3v2.3](https://id3.org/id3v2.3.0) and
 Each real subfolder appears as a collection, including empty folders. The root
 music folder appears when it contains MP3s directly. In the Tracks tab,
 playback continues through the visible collection. Original and personal tracks
-can share the current queue. ID3 titles or fallback filenames are displayed;
+can share the Favorites collection. ID3 titles or fallback filenames are displayed;
 files are read in place and are never copied, renamed or modified.
 
-Personal tracks use paths relative to `music` so playlists survive moving the
+Personal tracks use paths relative to `music` so favorites survive moving the
 whole user data directory. Renaming a song or folder requires adding it to the
-playlist again. Removed files remain in saved playlists and are skipped by Next
+favorites again. Removed files remain in saved favorites and are skipped by Next
 and automatic progression. An unreadable MP3 returns playback to automatic game
 music with a notice. Folder links are not followed. No pack manifest, original
 resource number, restart or external audio converter is required for MP3s.

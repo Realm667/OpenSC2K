@@ -29549,6 +29549,21 @@ msgstr "Ampliar"
 msgid "Zoom out"
 msgstr "Reduzir"
 
+#. Supplementary Musicbox favorites translation; AI-assisted.
+#: game/src/ui/settings/music_box_dialog.gd
+msgid "Favorites"
+msgstr "Favoritos"
+
+#. Supplementary Musicbox favorites translation; AI-assisted.
+#: game/src/ui/settings/music_box_dialog.gd
+msgid "Add to favorites"
+msgstr "Adicionar aos favoritos"
+
+#. Supplementary Musicbox favorites translation; AI-assisted.
+#: game/src/ui/settings/music_box_dialog.gd
+msgid "Add tracks to your favorites to play them."
+msgstr "Adicione faixas aos favoritos para reproduzi-las."
+
 #. Supplementary QOL controls translation, AI-assisted from English source.
 msgid "Reassign"
 msgstr "Reatribuir"

@@ -17,10 +17,12 @@ The package copies now include the 19 Reticulating Splines song titles as ID3
 TIT2 metadata. Numeric filenames, all existing ID3 frames and MP3 audio frames
 are unchanged. No re-encoding; supplied source files were not modified.
 provenance.json records the current file hashes and original source hashes.
+The titles for 10003 and 10008 are Welcome to SplineNation and Reticulated Shuffle.
 
 Die Paketkopien enthalten die 19 Reticulating-Splines-Songtitel als ID3-Metadaten.
 Numerische Dateinamen, vorhandene Tags und Audioframes bleiben unveraendert.
 Nur die Paketkopien wurden bearbeitet; Herkunft und Rechte bleiben dokumentiert.
+Die Titel von 10003 und 10008 lauten Welcome to SplineNation und Reticulated Shuffle.
 
 ASSET RIGHTS / AUDIORECHTE
 These final files were supplied and selected by Daniel. The MIT license for

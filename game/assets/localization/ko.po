@@ -7779,6 +7779,21 @@ msgstr "확대"
 msgid "Zoom out"
 msgstr "축소"
 
+#. Supplementary Musicbox favorites translation; AI-assisted.
+#: game/src/ui/settings/music_box_dialog.gd
+msgid "Favorites"
+msgstr "즐겨찾기"
+
+#. Supplementary Musicbox favorites translation; AI-assisted.
+#: game/src/ui/settings/music_box_dialog.gd
+msgid "Add to favorites"
+msgstr "즐겨찾기에 추가"
+
+#. Supplementary Musicbox favorites translation; AI-assisted.
+#: game/src/ui/settings/music_box_dialog.gd
+msgid "Add tracks to your favorites to play them."
+msgstr "재생할 곡을 즐겨찾기에 추가하세요."
+
 #. Supplementary QOL controls translation, AI-assisted from English source.
 msgid "Reassign"
 msgstr "다시 지정"

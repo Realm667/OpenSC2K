@@ -1,6 +1,6 @@
 class_name MusicBoxDialog
 extends QolDialog
-## A local playlist player. The original music controller retains its timing
+## A local favorites player. The original music controller retains its timing
 ## and reports to the simulation while its audible output is faded out.
 
 @warning_ignore_start("integer_division")
@@ -34,7 +34,7 @@ var playback: MusicBoxPlayback
 var config := ConfigFile.new()
 var storage_path := ""
 var library: ItemList
-var queue_list: ItemList
+var favorites_list: ItemList
 var collection: ItemList
 var progress: ProgressBar
 var elapsed: Label
@@ -42,15 +42,14 @@ var track_tabs: TabContainer
 var music_library := MusicBoxLibrary.new()
 var playing_title := ""
 var custom_music := CustomMusicLibrary.new()
-var favorites_only: CheckBox
 var favorites: Array = []
-var playlist: Array = []
-var playlist_index := -1
+var favorite_index := -1
 var now_playing: Label
 var status: Label
 var play_button: Button
 var volume: HSlider
 var active := false
+var _playing_favorites := false
 var _fade: Tween
 var _switch_serial := 0
 var _refresh_elapsed := 0.0
@@ -66,8 +65,7 @@ func _init(application: CityApplication) -> void:
 	min_size = Vector2i(590, 470)
 	storage_path = app.preferences.settings_path + ".music-box.cfg"
 	config.load(storage_path)
-	favorites = _track_ids(config.get_value("player", "favorites", []))
-	playlist = _track_ids(config.get_value("player", "queue", []))
+	favorites = _saved_favorites(config)
 	now_playing = label("", "SectionHeading")
 	now_playing.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
 	now_playing.autowrap_mode = TextServer.AUTOWRAP_OFF
@@ -93,21 +91,16 @@ func _init(application: CityApplication) -> void:
 	library.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	library.item_activated.connect(func(index: int) -> void: play_track(library.get_item_metadata(index)))
 	track_tabs.add_child(library)
-	queue_list = ItemList.new()
-	queue_list.name = "Queue"
-	queue_list.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
-	queue_list.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	queue_list.item_activated.connect(func(index: int) -> void:
-		playlist_index = index
-		play_track(playlist[index]))
-	track_tabs.add_child(queue_list)
-	# Retain the existing queue and favorites in preferences. The reference layout
-	# uses actual folders, not a new favorites collection.
-	favorites_only = CheckBox.new()
-	favorites_only.visible = false
-	column.add_child(favorites_only)
+	favorites_list = ItemList.new()
+	favorites_list.name = "Favorites"
+	favorites_list.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	favorites_list.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	favorites_list.item_activated.connect(func(index: int) -> void:
+		favorite_index = index
+		play_track(favorites[index], true))
+	track_tabs.add_child(favorites_list)
 	var edit := row()
-	button(edit, "Add to playlist", _add_selected)
+	button(edit, "Add to favorites", _add_selected)
 	button(edit, "Remove", _remove_selected)
 	button(edit, "Move up", _move_up)
 	var controls := row()
@@ -168,7 +161,16 @@ func _ready() -> void:
 		if not playing and playback.current_track_id >= 0:
 			_recover_failed_playback.call_deferred())
 	rescan()
-	_refresh_queue()
+	_refresh_favorites()
+
+
+static func _saved_favorites(saved: ConfigFile) -> Array:
+	var result := _track_ids(saved.get_value("player", "favorites", []))
+	if int(saved.get_value("player", "favorites_version", 0)) < 1:
+		for id: Variant in _track_ids(saved.get_value("player", "queue", [])):
+			if id not in result:
+				result.append(id)
+	return result
 
 
 static func _track_ids(value: Variant) -> Array:
@@ -214,7 +216,8 @@ func song_title(id: Variant) -> String:
 
 func _list_title(id: Variant) -> String:
 	var selected := collection.get_selected_items()
-	return track_name(id) if selected.is_empty() or collection.get_item_metadata(selected[0]) == "all" else song_title(id)
+	var name := track_name(id) if selected.is_empty() or collection.get_item_metadata(selected[0]) == "all" else song_title(id)
+	return ("★ " if id in favorites else "") + name
 
 
 func _available(id: Variant) -> bool:
@@ -254,8 +257,6 @@ func _refresh_library() -> void:
 		if source in ["all", "custom"] or source == "folder:" + id.get_base_dir():
 			ids.append(id)
 	for id: Variant in ids:
-		if favorites_only.button_pressed and id not in favorites:
-			continue
 		var index := library.add_item(_list_title(id))
 		library.set_item_metadata(index, id)
 		var path: String = music_library.tracks[id].path if music_library.tracks.has(id) else custom_music.resolve(id)
@@ -264,61 +265,55 @@ func _refresh_library() -> void:
 			library.select(index)
 
 
-func _refresh_queue() -> void:
-	queue_list.clear()
-	for id in playlist:
-		queue_list.add_item(track_name(id) + ("" if _available(id) else " — " + tr("This music track is not available.")))
-	if playlist_index >= 0 and playlist_index < playlist.size():
-		queue_list.select(playlist_index)
+func _refresh_favorites() -> void:
+	favorites_list.clear()
+	for id in favorites:
+		favorites_list.add_item(track_name(id) + ("" if _available(id) else " — " + tr("This music track is not available.")))
+	if favorite_index >= 0 and favorite_index < favorites.size():
+		favorites_list.select(favorite_index)
 
 
 func open() -> void:
 	rescan()
-	_refresh_queue()
+	_refresh_favorites()
 	popup_centered(Vector2i(760, 620))
 
 
 func _add_selected() -> void:
 	for index in library.get_selected_items():
 		var id: Variant = library.get_item_metadata(index)
-		if id not in playlist:
-			playlist.append(id)
-	_refresh_queue()
-	_save()
-
-
-func _favorite_selected() -> void:
-	for index in library.get_selected_items():
-		var id: Variant = library.get_item_metadata(index)
-		if id in favorites:
-			favorites.erase(id)
-		else:
+		if id not in favorites:
 			favorites.append(id)
+	_refresh_favorites()
 	_refresh_library()
 	_save()
 
 
 func _remove_selected() -> void:
-	var selected := queue_list.get_selected_items()
+	var selected := favorites_list.get_selected_items()
 	if selected.is_empty():
 		return
-	playlist.remove_at(selected[0])
-	playlist_index = playlist.find(playback.track_key())
-	_refresh_queue()
+	var removed: Variant = favorites[selected[0]]
+	favorites.remove_at(selected[0])
+	favorite_index = selected[0] - 1 if removed == playback.track_key() else favorites.find(playback.track_key())
+	_refresh_library()
+	if favorites.is_empty() and active and _playing_favorites:
+		automatic()
+	_refresh_favorites()
 	_save()
 
 
 func _move_up() -> void:
-	var selected := queue_list.get_selected_items()
+	var selected := favorites_list.get_selected_items()
 	if selected.is_empty() or selected[0] == 0:
 		return
 	var index := selected[0]
-	var id: Variant = playlist[index]
-	playlist[index] = playlist[index - 1]
-	playlist[index - 1] = id
-	playlist_index = playlist.find(playback.track_key())
-	_refresh_queue()
-	queue_list.select(index - 1)
+	var id: Variant = favorites[index]
+	favorites[index] = favorites[index - 1]
+	favorites[index - 1] = id
+	favorite_index = favorites.find(playback.track_key())
+	_refresh_favorites()
+	favorites_list.select(index - 1)
 	_save()
 
 
@@ -330,7 +325,7 @@ func _sync_source() -> void:
 	playback.set_volumes(original.music_volume * volume.value / 100.0, 0.0)
 
 
-func play_track(id: Variant) -> void:
+func play_track(id: Variant, from_favorites := false) -> void:
 	status.text = ""
 	if not _available(id):
 		automatic()
@@ -345,6 +340,7 @@ func play_track(id: Variant) -> void:
 		_fade.kill()
 	_sync_source()
 	active = true
+	_playing_favorites = from_favorites
 	playback.music_paused = false
 	_fade = create_tween()
 	_fade.set_parallel(true)
@@ -366,39 +362,48 @@ func play_track(id: Variant) -> void:
 			automatic()
 			status.text = tr("This music track is not available.")
 		return
-	playlist_index = playlist.find(id)
-	_refresh_queue()
+	favorite_index = favorites.find(id)
+	_refresh_favorites()
 	_fade = create_tween()
 	_fade.tween_method(playback.set_music_output_gain, 0.0, 1.0, 0.2)
 
 
 func step(direction: int, finished_track: Variant = null) -> void:
-	var ids := playlist.duplicate() if track_tabs.current_tab == 1 else []
-	if ids.is_empty():
+	var use_favorites := _playing_favorites if active else track_tabs.current_tab == 1
+	var ids := favorites.duplicate() if use_favorites else []
+	if not use_favorites:
 		for index in library.item_count:
 			ids.append(library.get_item_metadata(index))
 	if ids.is_empty():
-		if finished_track != null:
+		if finished_track != null or use_favorites:
 			automatic()
+		if use_favorites:
+			status.text = tr("Add tracks to your favorites to play them.")
 		return
 	var index := ids.find(finished_track if finished_track != null else playback.track_key())
 	if index < 0:
-		index = playlist_index
-	# Keep removed files in saved playlists, but skip them during playback.
+		index = favorite_index if use_favorites and active else (-1 if direction > 0 else 0)
+	# Unavailable favorites remain saved, but are skipped without playing other music.
 	for offset in range(1, ids.size() + 1):
 		var next: Variant = ids[posmod(index + direction * offset, ids.size())]
 		if _available(next):
-			play_track(next)
+			play_track(next, use_favorites)
 			return
-	_custom_failed()
+	automatic()
+	status.text = tr("This music track is not available.")
 
 
 func _toggle_pause() -> void:
-	if not active:
-		var selected := library.get_selected_items()
+	if not active or (track_tabs.current_tab == 1 and not _playing_favorites):
+		var use_favorites := track_tabs.current_tab == 1
+		var list := favorites_list if use_favorites else library
+		var selected := list.get_selected_items()
 		if not selected.is_empty():
-			play_track(library.get_item_metadata(selected[0]))
+			var id: Variant = favorites[selected[0]] if use_favorites else library.get_item_metadata(selected[0])
+			play_track(id, use_favorites)
 		else:
+			if use_favorites:
+				_playing_favorites = true
 			step(1)
 	else:
 		playback._set_music_paused(not playback.music_paused)
@@ -475,7 +480,7 @@ func _process(delta: float) -> void:
 
 func _save() -> void:
 	config.set_value("player", "favorites", favorites.duplicate())
-	config.set_value("player", "queue", playlist.duplicate())
+	config.set_value("player", "favorites_version", 1)
 	config.set_value("player", "gain", volume.value / 100.0)
 	var error := config.save(storage_path)
 	if error != OK:
@@ -541,9 +546,9 @@ func rescan() -> void:
 		collection.select(0)
 	collection.tooltip_text = custom_music.folder
 	track_tabs.set_tab_title(0, tr("Tracks"))
-	track_tabs.set_tab_title(1, tr("Queue"))
+	track_tabs.set_tab_title(1, tr("Favorites"))
 	_refresh_library()
-	_refresh_queue()
+	_refresh_favorites()
 	status.text = tr("My music: %d MP3 files") % custom_music.tracks.size()
 
 

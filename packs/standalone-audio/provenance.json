@@ -338,12 +338,12 @@
     {
       "id": 10003,
       "file": "music/10003.mp3",
-      "sha256": "be164ccdc1589738a03914196212a15460060e0b6c2c03e0462b4e6d02649578",
+      "sha256": "5ec4d0bc4a045cd859d34b5445dd581fb67fcaa0ca15043f2fdf10ff96da9e02",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10003.mp3",
       "license_status": "Owner-supplied; redistribution license not established by this integration",
       "source_sha256": "18cd990f541c95cf6b2a36d124fd6a4b0ed0577e95027a0e46ee4762ed16d764",
-      "title": "Welcome to SimNation",
+      "title": "Welcome to SplineNation",
       "audio_payload_sha256": "f3cb37cd437c7380d026b10c5b5a7cd6f45b56e2b0ba73027ca4c8736834dbc0"
     },
     {
@@ -393,12 +393,12 @@
     {
       "id": 10008,
       "file": "music/10008.mp3",
-      "sha256": "16aa1b7576e3de52b4acd80cc62ac3784fcbaf38341255865a5949d137ca19a4",
+      "sha256": "7712ff684f1c06159509ac6dd1fc985a59ed1b319e68be936d19e1cf24b7c30f",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10008.mp3",
       "license_status": "Owner-supplied; redistribution license not established by this integration",
       "source_sha256": "4d813010c0bab72c3c26ca0f12ef9da35dfc95b54cd44adabf0d8d073d7cbbe1",
-      "title": "Simoleon Shuffle",
+      "title": "Reticulated Shuffle",
       "audio_payload_sha256": "2e6e6276399db1c06163a740ddd1d627fd9e644342480c26dc0cd20e158b241c"
     },
     {
@@ -761,5 +761,33 @@
     "preserved": "All pre-existing ID3 frames and the entire post-ID3 payload remain byte-identical; no re-encoding.",
     "source_hash": "source_sha256 retains the hash of the supplied file before this metadata-only edit.",
     "rights": "Existing rights statements remain unchanged. Preserved C2PA data was not cryptographically revalidated."
-  }
+  },
+  "music_title_revisions": [
+    {
+      "date": "2026-10-13",
+      "changes": [
+        {
+          "id": 10003,
+          "title_before": "Welcome to SimNation",
+          "title_after": "Welcome to SplineNation",
+          "sha256_before": "be164ccdc1589738a03914196212a15460060e0b6c2c03e0462b4e6d02649578",
+          "sha256_after": "5ec4d0bc4a045cd859d34b5445dd581fb67fcaa0ca15043f2fdf10ff96da9e02",
+          "audio_sha256": "f3cb37cd437c7380d026b10c5b5a7cd6f45b56e2b0ba73027ca4c8736834dbc0",
+          "audio_bytes_unchanged": true,
+          "other_frames_unchanged": true
+        },
+        {
+          "id": 10008,
+          "title_before": "Simoleon Shuffle",
+          "title_after": "Reticulated Shuffle",
+          "sha256_before": "16aa1b7576e3de52b4acd80cc62ac3784fcbaf38341255865a5949d137ca19a4",
+          "sha256_after": "7712ff684f1c06159509ac6dd1fc985a59ed1b319e68be936d19e1cf24b7c30f",
+          "audio_sha256": "2e6e6276399db1c06163a740ddd1d627fd9e644342480c26dc0cd20e158b241c",
+          "audio_bytes_unchanged": true,
+          "other_frames_unchanged": true
+        }
+      ],
+      "scope": "Package title metadata only; other ID3 frames and all audio bytes unchanged."
+    }
+  ]
 }

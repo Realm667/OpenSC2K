@@ -8123,6 +8123,21 @@ msgstr ""
 msgid "Zoom out"
 msgstr ""
 
+#. Supplementary Musicbox favorites translation; AI-assisted.
+#: game/src/ui/settings/music_box_dialog.gd
+msgid "Favorites"
+msgstr ""
+
+#. Supplementary Musicbox favorites translation; AI-assisted.
+#: game/src/ui/settings/music_box_dialog.gd
+msgid "Add to favorites"
+msgstr ""
+
+#. Supplementary Musicbox favorites translation; AI-assisted.
+#: game/src/ui/settings/music_box_dialog.gd
+msgid "Add tracks to your favorites to play them."
+msgstr ""
+
 #. Supplementary QOL controls translation, AI-assisted from English source.
 msgid "Reassign"
 msgstr ""

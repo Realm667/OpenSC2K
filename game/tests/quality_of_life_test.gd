@@ -8,6 +8,7 @@ func _initialize() -> void:
 func _run() -> void:
 	_picker()
 	_id3_titles()
+	_favorites_migration()
 	var settings_path := "user://qol-%d.cfg" % OS.get_process_id()
 	var settings := ConfigFile.new()
 	for kind in ["music", "sound"]:
@@ -64,8 +65,8 @@ func _run() -> void:
 	audio.music_activity_changed.connect(func(value: bool) -> void: activity.append(value))
 	var box := qol.music_box
 	box.track_tabs.current_tab = 1
-	box.playlist.assign([10002, 10003])
-	box.play_track(10002)
+	box.favorites.assign([10002, 10003])
+	box.play_track(10002, true)
 	await create_timer(0.5).timeout
 	assert(box.active and box.playback.current_track_id == 10002)
 	assert(audio.current_track_id == old_track and audio.music_director.general_track_index == old_director)
@@ -87,15 +88,14 @@ func _run() -> void:
 	assert(is_equal_approx(audio.music_output_gain, 0.4) and audio.music_volume == original_volume)
 	box.volume.value = 100.0
 	box.track_tabs.current_tab = 0
-	box.playlist.clear()
+	box.favorites.clear()
 	box.play_track(10005)
 	await create_timer(0.3).timeout
 	box.playback._on_music_track_finished(10005)
 	await create_timer(0.3).timeout
-	assert(box.playback.current_track_id == 10006, "The library advances after a track finishes without a playlist")
+	assert(box.playback.current_track_id == 10006, "The library advances after a track finishes without a favorites")
 	box.automatic()
 	box.track_tabs.current_tab = 1
-	box.playlist.assign([10002, 10003])
 	box.favorites.assign([10003])
 	box.config.set_value("playlists", "Legacy", [10002])
 	box._save()
@@ -103,6 +103,33 @@ func _run() -> void:
 	assert(reread.get_value("playlists", "Legacy") == [10002], "Removing controls must preserve old saved lists")
 	assert(reread.load(box.storage_path) == OK and reread.get_value("player", "favorites") == [10003])
 	assert(MusicBoxDialog._track_ids([1, 10002, 10002, "10003", 10018, 10019]) == [10002, 10018])
+	box.favorites.clear()
+	box._refresh_favorites()
+	box._toggle_pause()
+	await create_timer(0.3).timeout
+	assert(not box.active and not box.status.text.is_empty(), "Empty favorites must not fall through to all music")
+	box.library.select(0)
+	box._add_selected()
+	box._add_selected()
+	assert(box.favorites.size() == 1, "Adding a favorite is idempotent")
+	box.library.select(1)
+	box._add_selected()
+	var second_favorite: Variant = box.favorites[1]
+	box.favorites_list.select(1)
+	box._toggle_pause()
+	await create_timer(0.3).timeout
+	assert(box.playback.track_key() == second_favorite, "Play uses the selected favorite, not a hidden library selection")
+	box._move_up()
+	assert(box.favorites[0] == second_favorite)
+	box.favorites_list.select(0)
+	box._remove_selected()
+	assert(second_favorite not in box.favorites)
+	assert(reread.load(box.storage_path) == OK)
+	assert(reread.get_value("player", "favorites") == box.favorites)
+	assert(reread.get_value("player", "favorites_version") == 1)
+	box.favorites_list.select(0)
+	box._remove_selected()
+	assert(box.favorites.is_empty() and not box.active, "Removing the last playing favorite restores automatic music")
 	await _music_sources(box, audio, activity)
 	await _custom_music(box, audio, activity)
 	for locale in ["de", "es", "fr", "it", "ko", "pt_BR"]:
@@ -120,8 +147,19 @@ func _run() -> void:
 	assert(TranslationServer.translate("Music box") == "Musikbox")
 	app.queue_free()
 	await process_frame
-	print("PASS: tool pipette, unchanged city, local window recovery and simulation-independent music playlists")
+	print("PASS: tool pipette, unchanged city, local window recovery and simulation-independent music favorites")
 	quit()
+
+
+func _favorites_migration() -> void:
+	var legacy := ConfigFile.new()
+	legacy.set_value("player", "favorites", [10003, "reticulating:10003"])
+	legacy.set_value("player", "queue", [10003, 10004, "Evening/Track.mp3", "../bad.mp3"])
+	assert(MusicBoxDialog._saved_favorites(legacy) == [10003, "reticulating:10003", 10004, "Evening/Track.mp3"])
+	legacy.set_value("player", "favorites_version", 1)
+	legacy.set_value("player", "favorites", [])
+	assert(MusicBoxDialog._saved_favorites(legacy).is_empty(), "Cleared favorites must not reimport an old queue")
+	assert(legacy.get_value("player", "queue").size() == 4, "Reading migration must not alter legacy data")
 
 
 func _size_bytes(value: int, count: int, sync := false) -> PackedByteArray:
@@ -225,7 +263,6 @@ func _music_sources(box: MusicBoxDialog, audio: CityAudioController, activity: A
 	manifest.close()
 	var replacement := MediaPack.load_folder(folder, "music")
 	assert(replacement.error.is_empty())
-	box.favorites_only.button_pressed = false
 	# An imported music pack alone must not expose originals without the data pack.
 	box.app.asset_state.data_pack = DataPack.new()
 	box.rescan()
@@ -253,8 +290,8 @@ func _music_sources(box: MusicBoxDialog, audio: CityAudioController, activity: A
 	assert(box.library.auto_translate_mode == Node.AUTO_TRANSLATE_MODE_DISABLED)
 	AppLocalization.select("en")
 	box.track_tabs.current_tab = 1
-	box.playlist.assign([10014, "reticulating:10014"])
-	box.play_track(10014)
+	box.favorites.assign([10014, "reticulating:10014"])
+	box.play_track(10014, true)
 	await create_timer(0.3).timeout
 	assert(box.playback.music_pack.import_revision >= 0 and box.playback.track_key() == 10014)
 	box.step(1)
@@ -267,7 +304,7 @@ func _music_sources(box: MusicBoxDialog, audio: CityAudioController, activity: A
 	box.volume.value = 100.0
 	box._save()
 	var saved := MusicBoxDialog.new(box.app)
-	assert(saved.playlist == [10014, "reticulating:10014"])
+	assert(saved.favorites == [10014, "reticulating:10014"])
 	saved.free()
 	assert(audio.current_track_id == original_track and audio.music_director.general_track_index == director)
 	assert(activity.is_empty())
@@ -285,7 +322,7 @@ func _music_sources(box: MusicBoxDialog, audio: CityAudioController, activity: A
 	audio.music_pack = original
 	box.rescan()
 	_choose_source(box, "all")
-	box.playlist.clear()
+	box.favorites.clear()
 	print("PASS: imported-data gate, distinct original/replacement files, source titles, languages and persistent source keys")
 
 
@@ -323,17 +360,17 @@ func _custom_music(box: MusicBoxDialog, audio: CityAudioController, activity: Ar
 	box._refresh_library()
 	assert(box.library.item_count == 1 and box.library.get_item_metadata(0) == first)
 	box.library.select(0)
-	box._favorite_selected()
+	box._add_selected()
 	assert(first in box.favorites)
 	box.track_tabs.current_tab = 1
-	box.playlist.assign([10002, first, second])
+	box.favorites.assign([10002, first, second])
 	box._save()
 	var saved := MusicBoxDialog.new(box.app)
-	assert(saved.playlist == box.playlist and first in saved.favorites)
+	assert(saved.favorites == box.favorites and first in saved.favorites)
 	saved.free()
 	var original_track := audio.current_track_id
 	var original_director := audio.music_director.general_track_index
-	box.play_track(first)
+	box.play_track(first, true)
 	await create_timer(0.45).timeout
 	assert(box.active and box.playback.track_key() == first)
 	assert(box.playback.recording_player.stream is AudioStreamMP3)
@@ -352,12 +389,14 @@ func _custom_music(box: MusicBoxDialog, audio: CityAudioController, activity: Ar
 	box.volume.value = 100.0
 	box.rescan()
 	assert(box.playback.track_key() == first, "Rescan must not restart the playing song")
+	box.track_tabs.current_tab = 0
+	_choose_source(box, "folder:Other")
 	box.playback.recording_player.finished.emit()
 	await create_timer(0.35).timeout
 	assert(box.playback.track_key() == second)
 	box.step(1)
 	await create_timer(0.3).timeout
-	assert(box.playback.track_key() == 10002, "Mixed playlists wrap to original tracks")
+	assert(box.playback.track_key() == 10002, "Mixed favorites wrap to original tracks")
 	assert(DirAccess.remove_absolute(folder.path_join(first)) == OK)
 	box.step(1)
 	await create_timer(0.3).timeout
@@ -374,8 +413,8 @@ func _custom_music(box: MusicBoxDialog, audio: CityAudioController, activity: Ar
 	assert(audio.current_track_id == original_track and audio.music_director.general_track_index == original_director)
 	assert(activity.is_empty(), "Custom MP3 playback must not signal the simulation")
 	box.rescan()
-	assert(box.custom_music.tracks.size() == 3 and first in box.playlist)
-	box.playlist.clear()
+	assert(box.custom_music.tracks.size() == 3 and first in box.favorites)
+	box.favorites.clear()
 	box.track_tabs.current_tab = 0
 	_choose_source(box, "folder:Evening/Nested")
 	box.play_track(second)
@@ -387,7 +426,7 @@ func _custom_music(box: MusicBoxDialog, audio: CityAudioController, activity: Ar
 	box.playback.recording_player.finished.emit()
 	await create_timer(0.3).timeout
 	assert(not box.active and is_equal_approx(audio.music_output_gain, 1.0))
-	print("PASS: MP3 folders, decoding, mixed playlists, persistence, pause, next, deletion and cancellation")
+	print("PASS: MP3 folders, decoding, mixed favorites, persistence, pause, next, deletion and cancellation")
 
 
 func _picker() -> void:
