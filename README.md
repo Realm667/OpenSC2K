@@ -1,10 +1,19 @@
-# OpenSC2K — Integrated Runtime
+# Reticulating Splines
 
-OpenSC2K is an open-source remake of SimCity 2000, built with Godot.
-This integration branch combines Visual Enhancements, centralized Localization and
-playable Koop/Competitive Shared/Competitive Region multiplayer on the upstream 0.3.0 base.
+Reticulating Splines is a community remaster of
+[OpenSC2K](https://github.com/nicholas-ochoa/OpenSC2K), the open-source remake of
+SimCity 2000 built with Godot. This fork combines Visual Enhancements, replacement
+graphics and audio packs, Quality of Life improvements, centralized localization
+and playable Koop/Competitive Shared/Competitive Region multiplayer on the
+upstream 0.3.0 base.
 Visual effects preserve simulation rules; multiplayer adds shared control and
 municipal ownership/account rules. See [the multiplayer guide](docs/multiplayer.md).
+
+The default branch, **`reticulating-splines`**, is the shared development source.
+Original changes are reviewed from `upstream/main` and integrated directly here.
+The retained `main` and older feature branches are historical references.
+The OpenSC2K project identity and existing user profiles remain compatible;
+Windows exports use **`ReticulatingSplines.exe`**.
 
 ## Included features
 
@@ -13,6 +22,16 @@ Portuguese for the base-game interface and original-game text. See the
 [translation sources and coverage](docs/localization-sources.md). Visual and Multiplayer messages are translated in every supported locale, including
 Korean. All translations share [one workspace and workflow](game/assets/localization/README.md).
 The remaining 328 legacy Korean base-UI gaps are listed in the shared template.
+
+The [package library](docs/package-library.md) provides separate graphics, sound,
+music, brightmap, HD sprite, city and mod sources, including the Reticulating
+Splines replacement graphics and audio. Original assets can be imported without
+activation, or imported and activated, through the same first-start and Data menu
+dialog. Failed source changes retain the previous source.
+
+[Quality of Life improvements](docs/quality-of-life.md) include compact sidebar
+tool flyouts, middle-button tool picking, remembered window positions and a music
+box with selectable packs and personal music folders.
 
 Open **Settings > Visual Enhancements**. The settings are grouped as follows:
 
@@ -85,9 +104,9 @@ this branch does not promise a fixed frame rate.
 
 Preferences are local presentation settings, not changes to city documents.
 The package includes the water-surface/depth work and its related rendering fixes.
-This integration branch includes
-[German Translation](https://github.com/Realm667/OpenSC2K/tree/feature/german-translation)
-and [Multiplayer](https://github.com/Realm667/OpenSC2K/tree/feature/multiplayer).
+The shared branch includes [localization](docs/localization-sources.md)
+and [multiplayer](docs/multiplayer.md); separate historical feature branches are
+retained in [this fork](https://github.com/Realm667/Reticulating-Splines).
 The underlying upstream SC2/SC2X compatibility rules still apply.
 
 ## Multiplayer
@@ -108,8 +127,8 @@ ownership, chat, scoreboard and disaster assistance. Region supports independent
 - Toolbar sizing that accommodates long translated names and the original
   artwork, plus localized formatted labels and dialog updates.
 
-The catalogs are [de.po](game/assets/localization/de.po) for the interface and
-[de_original.po](game/assets/localization/de_original.po) for original-game text.
+The central [de.po](game/assets/localization/de.po) catalog includes both the
+interface and original-game text.
 Historical spelling and original newspaper price labels are retained. Displayed
 Pf/DM labels are text; they do not change the city's economy or numeric values.
 
@@ -121,8 +140,9 @@ Pf/DM labels are text; they do not change the city's economy or numeric values.
    local to your installation; cities do not need conversion.
 
 The bundled German text does **not** require a separate German graphics or data
-pack. You still need the supported original game for artwork, sound and music,
-as described below. User-written city names and signs remain as entered.
+pack. Original artwork, sound and music require an import of the supported game;
+replacement packs are separate sources. User-written city names and signs remain
+as entered.
 
 ## Screenshots
 
@@ -148,7 +168,7 @@ Real application captures. Click an image to open it at full size.
 
 [![German newspaper using the bundled text catalog](.github/screenshots/german-translation/newspaper.png)](.github/screenshots/german-translation/newspaper.png)
 
-## Run this branch
+## Run Reticulating Splines
 
 Build this branch from source, or use a package explicitly built from it. The
 [upstream releases](https://github.com/nicholas-ochoa/OpenSC2K/releases) are the
@@ -160,8 +180,8 @@ requires CMake. See [installation](docs/install.md) and
 [native build details](docs/native-simulation.md) for platform requirements.
 
 ```sh
-git clone --branch integration/runtime --single-branch https://github.com/Realm667/OpenSC2K.git OpenSC2K-runtime
-cd OpenSC2K-runtime
+git clone --branch reticulating-splines --single-branch https://github.com/Realm667/Reticulating-Splines.git Reticulating-Splines
+cd Reticulating-Splines
 python3 tools/build_native.py
 godot --headless --audio-driver Dummy --path game --editor --import
 godot --path game
@@ -172,9 +192,11 @@ path to your Godot executable if `godot` is not on PATH. Wait for the native bui
 and resource import to finish before starting the game. Opening
 `game/project.godot` in the Godot editor also imports resources.
 
-You must provide your own **SimCity 2000 Special Edition for Windows 95 (1996)**.
-At the import prompt, select that copy's `SIMCITY.EXE`. The importer checks the
-supported version and imports the graphics, text, sound and music locally.
+To use original game assets, provide your own **SimCity 2000 Special Edition for
+Windows 95 (1996)**. At the import prompt, select that copy's `SIMCITY.EXE`. The
+importer checks the supported version and imports resources locally. You can
+decline the initial import and use the available replacement graphics and audio;
+original data, scenarios and SCURK resources still require their supported import.
 Original game data is not included in the source checkout.
 
 ## Upstream project
@@ -224,9 +246,9 @@ The tests use silent audio. Generated city fixtures are committed. Original-data
 
 ## AI-Assisted Development
 
-OpenSC2K is developed with the assistance of AI tools, including large language models (LLMs).
+Reticulating Splines uses AI-assisted development, including OpenAI Codex.
 AI is used for tasks such as code generation, refactoring, research, documentation, testing, and debugging.
-All architectural decisions, implementations, and contributions are reviewed and directed by the project maintainer.
+The fork maintainer directs the work and is responsible for its review and testing.
 
 See [AI-POLICY.md](AI-POLICY.md) for the project's AI usage and contribution policy.
 
@@ -245,4 +267,5 @@ OpenSC2K is an independently written re-implementation. Compatibility and simula
 have been determined through observation, testing, analysis of game data, publicly available
 research, and reverse engineering of the original executable.
 
-No original SimCity 2000 source code or assets is included in OpenSC2K.
+Original SimCity 2000 source code and imported game assets are not distributed
+with Reticulating Splines. Replacement packs retain their own notices and provenance.
