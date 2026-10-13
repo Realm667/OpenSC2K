@@ -8,6 +8,7 @@ uniform sampler2D animated_palette : source_color, filter_nearest, repeat_disabl
 uniform bool palette_cycle_enabled = false;
 uniform bool palette_lookup_all = false;
 uniform bool dark_underground = false;
+#include "res://src/view/map/terrain_elevation.gdshaderinc"
 uniform sampler2D dark_underground_palette : source_color, filter_nearest, repeat_disable;
 // Seconds of HD sprite animation. They stop while the game is paused.
 uniform float artwork_animation_seconds = 0.0;
@@ -27,6 +28,9 @@ const float GRID_TAG = 48.0;
 const float WATERFALL_TAG = 49.0;
 // The indexed sprite under underground HD art, for the water in its pipes.
 const float PIPE_FLOW_TAG = 52.0;
+// Green carries the actual ground altitude; other sprite classes are unchanged.
+const float TERRAIN_ARTWORK_TAG = 53.0;
+const float TERRAIN_INDEXED_TAG = 54.0;
 const vec3 GRID_COLOR = vec3(0.22, 0.19, 0.10);
 const float GRID_OPACITY = 0.36;
 const float GRID_WIDTH = 0.45;
@@ -94,6 +98,7 @@ void vertex() {
 	// Native building quads reserve red bit 7; plain indexed white (255) is unchanged.
 	building_emission = float(tag < 128.0 || tag == 255.0);
 	if (building_emission < 0.5) { tag -= 128.0; }
+	terrain_elevation = (tag == TERRAIN_ARTWORK_TAG || tag == TERRAIN_INDEXED_TAG) ? bytes.g : -1.0;
 	artwork_kind = 0.0;
 	power_warning = 0.0;
 	artwork_frames = vec3(1.0, 8.0, 0.0);
@@ -103,7 +108,7 @@ void vertex() {
 	waterfall_local = vec2(0.0);
 	world_position = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy / max(length(MODEL_MATRIX[0].xy), 0.00001);
 
-	if (tag == ARTWORK_TAG || tag == POWER_WARNING_TAG) {
+	if (tag == ARTWORK_TAG || tag == POWER_WARNING_TAG || tag == TERRAIN_ARTWORK_TAG) {
 		artwork_kind = 1.0;
 		power_warning = tag == POWER_WARNING_TAG ? 1.0 : 0.0;
 	} else if (tag == ANIMATION_TAG || tag == SLOW_ANIMATION_TAG) {
@@ -420,6 +425,10 @@ void fragment() {
 			vec3 phase = texture(animated_palette, vec2((POWER_WARNING_INDEX + 0.5) / 256.0, 0.5)).rgb;
 			COLOR.rgb = mix(COLOR.rgb, phase, 0.3);
 		}
+	}
+	if (terrain_elevation >= 0.0 && environment_has_seasons) {
+		float soil = environment_season_sample(UV).g;
+		COLOR.rgb = terrain_elevation_color(COLOR.rgb, soil * clamp(nature_terrain_strength * 2.0, 0.0, 1.0));
 	}
 }
 

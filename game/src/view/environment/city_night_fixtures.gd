@@ -113,9 +113,21 @@ static func build(app: CityApplication, tile: Vector2i, origin: Vector2i, layout
 			_pixel(art, origin, Vector2i(foot.x, y), Color("687075"), occluders)
 			if raster_scale > 1:
 				_pixel(art, origin, Vector2i(foot.x + 1, y), Color("929a9a"), occluders)
-		for x in range(-raster_scale, 2 * raster_scale):
-			for y in range(-raster_scale, 4 * raster_scale):
-				_pixel(art, origin, head + Vector2i(x, y), Color("24292e"), occluders)
+		if raster_scale > 1:
+			# A narrow metal housing, recessed unlit lenses and a shaded rim.
+			# All three lenses remain recognizable when only one is illuminated.
+			for x in range(-2, 4):
+				for y in range(-3, 12):
+					if x in [-2, 3] and y in [-3, 11]:
+						continue
+					var rim := x == -2 or y == -3
+					_pixel(art, origin, head + Vector2i(x, y), Color("737975") if rim else Color("293438"), occluders)
+			for lens in 3:
+				_disc(art, origin, head + Vector2i(0, lens * raster_scale), SIGNAL_COLORS[lens].darkened(0.82), 1.3, occluders)
+		else:
+			for x in range(-raster_scale, 2 * raster_scale):
+				for y in range(-raster_scale, 4 * raster_scale):
+					_pixel(art, origin, head + Vector2i(x, y), Color("24292e"), occluders)
 		var lenses: Array[Texture2D] = []
 		var lamp_origin := head - Vector2i(4, 4) * raster_scale
 		for lens in 3:
@@ -123,9 +135,7 @@ static func build(app: CityApplication, tile: Vector2i, origin: Vector2i, layout
 			var point := head + Vector2i(0, lens * raster_scale)
 			_halo(image, lamp_origin, point, SIGNAL_COLORS[lens], 2.5 * raster_scale, occluders)
 			if raster_scale > 1:
-				for y in range(-1, 2):
-					for x in range(-1, 2):
-						_pixel(image, lamp_origin, point + Vector2i(x, y), SIGNAL_COLORS[lens], occluders)
+				_disc(image, lamp_origin, point, SIGNAL_COLORS[lens], 1.3, occluders)
 			_pixel(image, lamp_origin, point, SIGNAL_COLORS[lens], occluders)
 			lenses.append(_texture(image, texture_lookup))
 		signals.append({"origin": Vector2(lamp_origin) / raster_scale, "lenses": lenses, "axis": direction % 2})
@@ -172,6 +182,15 @@ static func _halo(image: Image, origin: Vector2i, center: Vector2i, color: Color
 			var glow := color
 			glow.a = 0.28 * pow(maxf(0.0, 1.0 - Vector2(x, y).length() / radius), 1.5)
 			_pixel(image, origin, center + Vector2i(x, y), glow, occluders)
+
+
+static func _disc(image: Image, origin: Vector2i, center: Vector2i, color: Color, radius: float, occluders: Array) -> void:
+	var extent := ceili(radius + 0.5)
+	for y in range(-extent, extent + 1):
+		for x in range(-extent, extent + 1):
+			var lens := color
+			lens.a *= clampf(radius + 0.5 - Vector2(x, y).length(), 0.0, 1.0)
+			_pixel(image, origin, center + Vector2i(x, y), lens, occluders)
 
 
 static func _pixel(image: Image, origin: Vector2i, point: Vector2i, color: Color, occluders: Array) -> void:

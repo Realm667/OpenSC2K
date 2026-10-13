@@ -65,6 +65,7 @@ func _init() -> void:
 	add_child(fixtures)
 	fixtures.draw.connect(_draw_fixtures)
 	fixtures.add_child(signals)
+	signals.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	signals.use_parent_material = true
 	signals.draw.connect(_draw_signals)
 

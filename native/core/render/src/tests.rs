@@ -782,6 +782,60 @@ fn tag(region: &region::Region, quad: usize) -> [u8; 4] {
 }
 
 #[test]
+fn terrain_elevation_follows_world_height_in_indexed_and_hd_regions() {
+    for view in 0..3 {
+        for hd in [false, true] {
+            let mut b = fixture(4, view);
+            b.config.natural_terrain = true;
+            for x in 0..4 {
+                for y in 0..4 {
+                    let i = b.city.index(x, y);
+                    b.city.altitude[i] = x * 8 + y;
+                }
+            }
+            let bounds = Rect::new(0, 0, 4096, 4096);
+            let initial = b.region(bounds).unwrap();
+            if hd {
+                for draw in &initial.draws {
+                    b.sprites.artwork.insert(draw.image & !1, artwork(8, 8, 1, 2));
+                }
+            }
+            let region = b.region(bounds).unwrap();
+            assert!(!region.draws.is_empty());
+            for (quad, draw) in region.draws.iter().enumerate() {
+                let y = draw.depth % 4;
+                let x = draw.depth / 4 - y;
+                assert_eq!(tag(&region, quad), [if hd { 53 } else { 54 }, (x * 8 + y) as u8, 0, 255]);
+            }
+            // Region clipping must retain the same height as its full-map draw.
+            let draw = &region.draws[5];
+            let clipped = b.region(draw.rect).unwrap();
+            for (quad, part) in clipped.draws.iter().enumerate() {
+                let full = region
+                    .draws
+                    .iter()
+                    .position(|d| d.depth == part.depth && d.sprite == part.sprite)
+                    .unwrap();
+                assert_eq!(tag(&clipped, quad), tag(&region, full));
+            }
+            b.config.natural_terrain = false;
+            let classic = b.region(bounds).unwrap();
+            assert!(
+                classic
+                    .colors
+                    .iter()
+                    .all(|c| (c[0] * 255.0).round() == if hd { 2.0 } else { 255.0 })
+            );
+            b.config.natural_terrain = true;
+            b.config.underground = true;
+            b.tiles.clear();
+            let underground = b.region(bounds).unwrap();
+            assert!(underground.colors.iter().all(|c| ![53.0, 54.0].contains(&(c[0] * 255.0).round())));
+        }
+    }
+}
+
+#[test]
 fn artwork_replaces_its_draw_in_painter_order_and_keeps_indexed_draws() {
     let mut b = fixture(4, 2);
     let key = b.region(Rect::new(0, 0, 600, 700)).unwrap().draws[0].image & !1;

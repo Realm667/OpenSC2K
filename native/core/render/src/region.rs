@@ -20,6 +20,9 @@ const POWER_WARNING_SPRITE: i32 = 386;
 const WATERFALL_TAG: u8 = 49;
 /// The indexed sprite under underground HD art: the shader draws pipe water.
 const PIPE_FLOW_TAG: u8 = 52;
+/// Natural ground altitude in green, shared by every zoom/view of a tile.
+const TERRAIN_ARTWORK_TAG: u8 = 53;
+const TERRAIN_INDEXED_TAG: u8 = 54;
 const WATERFALL_SPRITE: i32 = 284;
 
 // The least recently used tiles leave the cache above this count. Regions keep
@@ -67,6 +70,26 @@ fn ceil(a: i32, b: i32) -> i32 {
 }
 
 impl Builder {
+    fn terrain_color(&self, draw: &Draw, artwork: bool) -> Option<[f32; 4]> {
+        if !self.config.natural_terrain || self.config.underground || draw.moving || draw.shadow || draw.depth < 0 || self.city.edge <= 0 {
+            return None;
+        }
+        // Terrain, slopes and shores only. Natural variants retain their base
+        // offset. The shader's soil mask excludes water, paint and vegetation.
+        if !matches!(draw.sprite.rem_euclid(500), 256..=283 | 285..=299) {
+            return None;
+        }
+        let edge = i64::from(self.city.edge);
+        let y = draw.depth % edge;
+        let x = draw.depth / edge - y;
+        if x < 0 || x >= edge || y < 0 || y >= edge {
+            return None;
+        }
+        let height = self.city.land(self.city.index(x as i32, y as i32));
+        let tag = if artwork { TERRAIN_ARTWORK_TAG } else { TERRAIN_INDEXED_TAG };
+        Some([byte(i32::from(tag)), byte(height), 0.0, 1.0])
+    }
+
     fn anchor(&self, x: i32, y: i32) -> (i32, i32) {
         let c = self.config;
         (
@@ -327,7 +350,8 @@ impl Builder {
         } else if !draw.moving && draw.sprite.rem_euclid(500) == POWER_WARNING_SPRITE {
             [byte(i32::from(POWER_WARNING_TAG)), 0.0, 0.0, 1.0]
         } else {
-            [byte(i32::from(ARTWORK_TAG)), 0.0, 0.0, 1.0]
+            self.terrain_color(draw, true)
+                .unwrap_or([byte(i32::from(ARTWORK_TAG)), 0.0, 0.0, 1.0])
         };
 
         if draw.emission_disabled {
@@ -421,7 +445,9 @@ impl Builder {
                         clipped.h as f32,
                     ];
                     // Red bit 7 disables emission on this building, not its shared atlas sprite.
-                    let color = if draw.emission_disabled {
+                    let color = if let Some(terrain) = self.terrain_color(&draw, false) {
+                        terrain
+                    } else if draw.emission_disabled {
                         [byte(128), 1.0, 1.0, 1.0]
                     } else {
                         INDEXED

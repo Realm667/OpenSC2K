@@ -7,6 +7,8 @@ func _initialize() -> void:
 func _run() -> void:
 	await _check_building_power()
 	await _check_hd_environment()
+	await _check_terrain_elevation()
+	await _check_terrain_elevation(true)
 	await _check_hd_animation_masks()
 	await _check_dispatch_lights()
 	await _check_power_warnings()
@@ -88,6 +90,8 @@ func _run() -> void:
 	await _check_city_life_glow(true)
 	await _check_street_fixtures(false)
 	await _check_street_fixtures(true)
+	await _check_street_fixtures(false, 4)
+	await _check_street_fixtures(true, 4)
 	print("PASS: GPU uniform morning/evening tint, colored graded brightmaps and original pixels when disabled")
 	quit()
 
@@ -442,9 +446,10 @@ func _check_night_mesh_reuse(viewport: SubViewport, map: CityMapControl, lightin
 		await RenderingServer.frame_post_draw
 
 
-func _check_street_fixtures(hdr: bool) -> void:
+func _check_street_fixtures(hdr: bool, raster_scale := 1) -> void:
 	var viewport := SubViewport.new()
-	viewport.size = Vector2i(96, 80)
+	var zoom := 4 if raster_scale > 1 else 1
+	viewport.size = Vector2i(96, 80) * zoom
 	viewport.use_hdr_2d = hdr
 	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	root.add_child(viewport)
@@ -457,12 +462,14 @@ func _check_street_fixtures(hdr: bool) -> void:
 	var app := CityApplication.new()
 	app.document_state.city = load("res://tests/city_life_test.gd").fixture()
 	var ground := CityNightGround.new()
+	ground.roads.set_raster_scale(raster_scale)
+	ground.scale = Vector2.ONE * zoom
 	viewport.add_child(ground)
 	var tile := Vector2i(64, 64)
 	for axis in 2:
 		ground.masker._occluders[Vector3i(tile.x, tile.y, axis)] = []
 	var surface := ground._build(app, tile)
-	ground.position = Vector2(16, 8) - Vector2(surface.origin)
+	ground.position = (Vector2(16, 8) - Vector2(surface.origin)) * zoom
 	ground.cache[tile] = surface
 	ground.visible_tiles = [tile]
 	(ground.material as ShaderMaterial).set_shader_parameter("strength", 0.45)
@@ -750,6 +757,66 @@ func _check_hd_environment() -> void:
 	assert(viewport.get_texture().get_image().get_data() == original.get_data(), "Disabling effects must restore HD pixels")
 	viewport.queue_free()
 	await process_frame
+
+
+func _check_terrain_elevation(paged := false) -> void:
+	var viewport := SubViewport.new()
+	viewport.size = Vector2i(32, 16)
+	viewport.transparent_bg = true
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	root.add_child(viewport)
+	var art := Image.create(8, 8, false, Image.FORMAT_RGBA8)
+	art.fill(Color(0.4, 0.6, 0.3))
+	var soil := Image.create(8, 8, false, Image.FORMAT_RGBA8)
+	soil.fill_rect(Rect2i(0, 0, 4, 8), Color(0, 1, 0, 1))
+	var material := ShaderMaterial.new()
+	material.shader = preload("res://src/view/map/palette_cycle_pages.gdshader") if paged else CityMapControl.PALETTE_CYCLE_SHADER
+	material.set_shader_parameter("environment_has_seasons", true)
+	material.set_shader_parameter("environment_season_mask", ImageTexture.create_from_image(soil))
+	material.set_shader_parameter("terrain_elevation_enabled", true)
+	if paged:
+		var art_pages := Texture2DArray.new()
+		var soil_pages := Texture2DArray.new()
+		art_pages.create_from_images([art])
+		soil_pages.create_from_images([soil])
+		material.set_shader_parameter("region_atlas_edge", 8.0)
+		material.set_shader_parameter("region_atlas_pages", art_pages)
+		material.set_shader_parameter("region_season_pages", soil_pages)
+	var sprites: Array[Sprite2D] = []
+	for height in [0, 31]:
+		var sprite := Sprite2D.new()
+		sprite.centered = false
+		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		sprite.texture = ImageTexture.create_from_image(art)
+		sprite.material = material
+		sprite.position.x = sprites.size() * 8
+		sprite.self_modulate = Color(53.0 / 255.0, height / 255.0, 0, 1)
+		viewport.add_child(sprite)
+		sprites.append(sprite)
+	for zoom in [1, 2]:
+		for sprite in sprites:
+			sprite.scale = Vector2.ONE * zoom
+			sprite.position.x = sprites.find(sprite) * 8 * zoom
+		await process_frame
+		await RenderingServer.frame_post_draw
+		var image := viewport.get_texture().get_image()
+		var low := image.get_pixel(2 * zoom, 2 * zoom)
+		var high := image.get_pixel(10 * zoom, 2 * zoom)
+		assert(high.r > low.r and high.g > low.g and high.b > low.b, "Terrain elevation must rise monotonically in every color channel")
+		assert(absf(low.r / low.g - high.r / high.g) < 0.025, "Elevation changed the terrain hue")
+		assert(image.get_pixel(6 * zoom, 2 * zoom).is_equal_approx(image.get_pixel(14 * zoom, 2 * zoom)), "Elevation affected unmasked paths or water")
+	material.set_shader_parameter("terrain_elevation_enabled", false)
+	await RenderingServer.frame_post_draw
+	var disabled := viewport.get_texture().get_image()
+	assert(disabled.get_pixel(4, 4).is_equal_approx(disabled.get_pixel(20, 4)), "Disabled terrain shading retained a height tint")
+	material.set_shader_parameter("terrain_elevation_enabled", true)
+	material.set_shader_parameter("dark_underground", true)
+	await RenderingServer.frame_post_draw
+	var underground := viewport.get_texture().get_image()
+	assert(underground.get_pixel(4, 4).is_equal_approx(underground.get_pixel(20, 4)), "Surface elevation changed underground tones")
+	viewport.queue_free()
+	await process_frame
+	print("PASS: terrain elevation preserves hue, masks, zoom and underground fallback; paged=", paged)
 
 
 func _check_hd_animation_masks() -> void:

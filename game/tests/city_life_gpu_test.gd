@@ -247,8 +247,9 @@ func _check_headlight_batches(hdr: bool, raster_scale := 1) -> void:
 			shader.set_shader_parameter("forward", CityLifePaths.forward(figure.direction))
 			shader.set_shader_parameter("front", float([3, 4, 5][figure.vehicle_kind]))
 			shader.set_shader_parameter("opacity", figure.opacity())
+			shader.set_shader_parameter("smooth_receiver", raster_scale > 1)
 			sprite.material = shader
-			sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+			sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR if raster_scale > 1 else CanvasItem.TEXTURE_FILTER_NEAREST
 			reference.add_child(sprite)
 		batch.hide()
 		await RenderingServer.frame_post_draw
