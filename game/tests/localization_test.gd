@@ -50,14 +50,7 @@ func _run() -> void:
 		dialog.language_selector.select(index)
 		assert(dialog.selected_values().ui_language == AppLocalization.codes()[index])
 
-	# The logo is not translated. A tool button changes with the language.
-	var menu := (load("res://src/ui/startup/main_menu_control.tscn") as PackedScene).instantiate()
-	root.add_child(menu)
-	var title := menu.get_node("Center/Panel/Content/GameTitle") as Control
-
-	for label: Label in title.get_children():
-		assert(not label.can_auto_translate(), "The logo letters keep their text")
-
+	# A tool button changes with the language.
 	var palette := CityChildToolPalette.new()
 	root.add_child(palette)
 	palette.show_tool_group(CityToolIds.Group.WATER, null)
@@ -127,7 +120,6 @@ func _run() -> void:
 	TranslationServer.set_locale(previous)
 	dialog.queue_free()
 	palette.queue_free()
-	menu.queue_free()
 	DirAccess.remove_absolute(path)
 	await process_frame
 	print("PASS: interface language")

@@ -3,8 +3,7 @@
 [ext_resource type="Script" path="res://src/ui/startup/main_menu_control.gd" id="1_h28vu"]
 [ext_resource type="Script" path="res://src/ui/startup/main_menu_city_background.gd" id="2_lsbxt"]
 
-[ext_resource type="FontFile" path="res://assets/fonts/rajdhani/Rajdhani-Light.ttf" id="3_title_light"]
-[ext_resource type="FontFile" path="res://assets/fonts/rajdhani/Rajdhani-Bold.ttf" id="4_title_bold"]
+[ext_resource type="Texture2D" path="res://assets/branding/reticulating-splines-logo.png" id="3_logo"]
 [ext_resource type="Shader" path="res://src/ui/shared/frosted_panel.gdshader" id="5_glass"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_glass"]
@@ -43,32 +42,15 @@ theme_type_variation = "MainMenuPanel"
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="GameTitle" type="HBoxContainer" parent="Center/Panel/Content"]
+[node name="GameTitle" type="TextureRect" parent="Center/Panel/Content"]
 auto_translate_mode = 2
+texture_filter = 4
+custom_minimum_size = Vector2(0, 140)
 layout_mode = 2
-alignment = 1
-theme_override_constants/separation = 0
 mouse_filter = 2
-
-[node name="Open" type="Label" parent="Center/Panel/Content/GameTitle"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("3_title_light")
-theme_override_font_sizes/font_size = 64
-text = "Open"
-vertical_alignment = 2
-
-[node name="SC2K" type="Label" parent="Center/Panel/Content/GameTitle"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("4_title_bold")
-theme_override_font_sizes/font_size = 70
-text = "SC2K"
-vertical_alignment = 2
-
-[node name="Subtitle" type="Label" parent="Center/Panel/Content"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "An open-source SimCity 2000 remake"
-horizontal_alignment = 1
+texture = ExtResource("3_logo")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="TitleDivider" type="HSeparator" parent="Center/Panel/Content"]
 layout_mode = 2
