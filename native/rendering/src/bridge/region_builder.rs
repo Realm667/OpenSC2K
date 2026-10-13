@@ -20,6 +20,9 @@ pub struct NativeCityRegionBuilder {
     base: Base<RefCounted>,
     core: Option<Builder>,
     images: HashMap<u64, Gd<Image>>,
+    auxiliary: HashMap<i64, (HashMap<u64, Sprite>, sc2k_render::visual_auxiliary::AtlasCache)>,
+    paged: bool,
+    page_edge: i32,
 }
 
 #[godot_api]
@@ -29,6 +32,9 @@ impl IRefCounted for NativeCityRegionBuilder {
             base,
             core: None,
             images: HashMap::new(),
+            auxiliary: HashMap::new(),
+            paged: false,
+            page_edge: 0,
         }
     }
 }
@@ -214,6 +220,74 @@ fn auxiliary_images(images: &VarDictionary) -> HashMap<u64, Sprite> {
 #[godot_api]
 impl NativeCityRegionBuilder {
     #[func]
+    fn enable_paged_atlas(&mut self) {
+        self.paged = true;
+    }
+
+    /// Transfer only modified fixed-size pages. A resize publishes a new set;
+    /// old meshes keep their previous set and normalized UV dimensions.
+    #[func]
+    fn take_atlas_pages(&mut self, emission: VarDictionary, seasons: VarDictionary) -> VarDictionary {
+        let mut result = VarDictionary::new();
+        let Some(core) = self.core.as_mut() else {
+            return result;
+        };
+        let edge = core.atlas.edge;
+        if self.page_edge == edge && core.atlas.dirty_pages.is_empty() {
+            return result;
+        }
+        let span = (edge + 1023) / 1024;
+        let full = self.page_edge != edge;
+        let pages: Vec<(i32, i32)> = if full {
+            (0..span).flat_map(|y| (0..span).map(move |x| (x, y))).collect()
+        } else {
+            core.atlas.dirty_pages.iter().copied().collect()
+        };
+        let indices: PackedInt32Array = pages.iter().map(|&(x, y)| y * span + x).collect();
+        let art: Array<Gd<Image>> = pages.iter().map(|&(x, y)| atlas_page(&core.atlas.data, edge, x, y)).collect();
+        result.set("indices", &indices);
+        result.set("art", &art);
+        result.set("edge", edge);
+        result.set("full", full);
+        for (channel, name, images) in [(0, "emission", emission), (1, "seasons", seasons)] {
+            if images.is_empty() {
+                continue;
+            }
+            let (sources, cache) = self
+                .auxiliary
+                .entry(channel)
+                .or_insert_with(|| (auxiliary_images(&images), Default::default()));
+            let pixels = cache.update(edge, &core.atlas.slots, &core.sprites, sources);
+            let masks: Array<Gd<Image>> = pages.iter().map(|&(x, y)| atlas_page(pixels, edge, x, y)).collect();
+            result.set(name, &masks);
+        }
+        core.atlas.dirty_pages.clear();
+        self.page_edge = edge;
+        result
+    }
+
+    /// A channel's masks are immutable until configure replaces the artwork.
+    #[func]
+    fn cached_auxiliary_atlas(&mut self, channel: i64, images: VarDictionary) -> Option<Gd<Image>> {
+        if images.is_empty() {
+            return None;
+        }
+        let core = self.core.as_ref()?;
+        let (sources, cache) = self
+            .auxiliary
+            .entry(channel)
+            .or_insert_with(|| (auxiliary_images(&images), Default::default()));
+        let pixels = cache.update(core.atlas.edge, &core.atlas.slots, &core.sprites, sources);
+        Image::create_from_data(
+            core.atlas.edge,
+            core.atlas.edge,
+            false,
+            Format::RGBA8,
+            &PackedByteArray::from(pixels),
+        )
+    }
+
+    #[func]
     fn auxiliary_atlas(&self, images: VarDictionary) -> Option<Gd<Image>> {
         if images.is_empty() {
             return None;
@@ -297,6 +371,8 @@ impl NativeCityRegionBuilder {
         let previous_revision = self.core.as_ref().map_or(0, |core| core.atlas.revision + 1);
         self.core = None;
         self.images.clear();
+        self.auxiliary.clear();
+        self.page_edge = 0;
         let result: Result<(), String> = (|| {
             let city = city(&request)?;
             let view = int(&request, "view", -1) as i32;
@@ -444,7 +520,7 @@ impl NativeCityRegionBuilder {
         result.set("atlas_revision", core.atlas.revision);
         result.set("atlas_edge", core.atlas.edge);
 
-        if atlas_revision != core.atlas.revision {
+        if atlas_revision != core.atlas.revision && !self.paged {
             let image = Image::create_from_data(
                 core.atlas.edge,
                 core.atlas.edge,
@@ -459,6 +535,16 @@ impl NativeCityRegionBuilder {
         result.set("bounds", Rect2i::from_components(clipped.x, clipped.y, clipped.w, clipped.h));
         result
     }
+}
+
+fn atlas_page(pixels: &[u8], edge: i32, x: i32, y: i32) -> Gd<Image> {
+    let mut page = vec![0_u8; 1024 * 1024 * 4];
+    let width = (edge - x * 1024).clamp(0, 1024) as usize * 4;
+    for row in 0..(edge - y * 1024).clamp(0, 1024) as usize {
+        let source = ((y as usize * 1024 + row) * edge as usize + x as usize * 1024) * 4;
+        page[row * 4096..row * 4096 + width].copy_from_slice(&pixels[source..source + width]);
+    }
+    Image::create_from_data(1024, 1024, false, Format::RGBA8, &PackedByteArray::from(page.as_slice())).expect("fixed atlas page")
 }
 
 #[godot_api(secondary)]

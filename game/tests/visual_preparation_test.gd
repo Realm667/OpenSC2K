@@ -40,6 +40,9 @@ func _run() -> void:
 	main.preferences.visual_enhancements.life_cars_enabled = true
 	assert(not prepare.process())
 	assert(prepare.busy and not main.frame._simulation_suspended())
+	assert(prepare.owns(main.render_caches.region_cache), "Visible renderer must use the preparation bank before preload completes")
+	assert(main.static_render.sprite_archive_for_view(main.static_render.city_view_size()) == prepare.archive_for_view(main.static_render.city_view_size()),
+		"Visible renderer decoded a separate archive during preparation")
 	assert(main.city_dialogs.visual_preparation_progress.mouse_filter == Control.MOUSE_FILTER_IGNORE)
 	for window_size in [Vector2i(1280, 800), Vector2i(1024, 720)]:
 		root.size = window_size
@@ -72,6 +75,7 @@ func _run() -> void:
 			for zoom in [0.25, 0.5]:
 				main.map_view.zoom_factor = zoom
 				main.camera_input.on_city_zoom_changed(roundi(zoom * 100))
+				assert(main.render_caches.region_cache == prepare.selected_cache(main.static_render.city_view_size()), "Loading zoom used a disposable cache")
 			main.map_render.refresh_map(false)
 			assert(prepare.busy and prepare.banks[0] == retained, "Zoom restarted background preparation")
 		main.frame.process(0.016)
@@ -152,6 +156,24 @@ func _run() -> void:
 		assert(ground.cache[Vector2i(64, 64)].texture.get_image().is_invisible(), "Removed street retained its light")
 		assert(ground.cache.has(added) and not ground.cache[added].texture.get_image().is_invisible(), "New offscreen street was not prepared")
 		assert(is_same(snapshots[view][Vector2i(12, 18)], ground.cache[Vector2i(12, 18)]), "Local edit rebuilt a distant light")
+	# Memory pressure may retire hidden banks, but must keep the active view.
+	var active_cache := main.render_caches.region_cache
+	prepare._trim_banks(0)
+	assert(active_cache.ready() and not active_cache.entries.is_empty())
+	assert(not prepare.evicted_banks.is_empty())
+	var retired: int = prepare.evicted_banks.keys()[0]
+	prepare.preparing_traffic = retired % 2
+	assert(prepare.selected_cache(retired / 2) == prepare.banks[retired])
+	prepare.preparing_traffic = -1
+	prepare._configure(retired)
+	var restored := prepare.banks[retired]
+	restored.update_viewport(main.map_view.visible_source_rect())
+	var restore_started := Time.get_ticks_msec()
+	while not restored.covered():
+		prepare.work_budget.begin_frame(0.016)
+		restored.tick()
+		await process_frame
+		assert(Time.get_ticks_msec() - restore_started < 10000, "Retired bank did not reload")
 	var old_layout := prepare._layout()
 	main.asset_state.large_sprites.visual_nature_enabled = false
 	assert(prepare._layout() != old_layout, "Nature switch retained stale prepared views")

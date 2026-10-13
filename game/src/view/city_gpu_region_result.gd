@@ -14,6 +14,8 @@ var atlas_edge := 0
 var atlas_image: Image
 var mesh: ArrayMesh
 var atlas_texture: ImageTexture
+var page_update: Dictionary = {}
+var texture_pages: CityGpuTexturePages
 # Meshes and bounds stay fixed after publication. Views share this descriptor.
 var source_entry: CityMapSource.MeshEntry
 # Uncut draws in painter order: x, y, width, height, image, sprite, flip, depth

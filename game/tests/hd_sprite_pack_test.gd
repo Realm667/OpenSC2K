@@ -7,7 +7,32 @@ extends SceneTree
 var _root := ""
 
 
+func _prepared_cache() -> void:
+	var source := Image.create(128, 128, false, Image.FORMAT_RGBA8)
+	source.fill(Color(0.8, 0.3, 0.1, 0.5))
+	var size := Vector2i(64, 64)
+	var first := HdSprite.scaled(source, size)
+	var key := HdPreparedCache.key(source, size)
+	HdPreparedCache._images.clear()
+	HdPreparedCache._bytes = 0
+	var disk := HdPreparedCache.load_image(key, size)
+	assert(disk != null and disk.get_data() == first.get_data(), "Prepared pixels did not survive a cache reload")
+	disk.fill(Color.BLUE)
+	assert(HdSprite.scaled(source, size).get_data() == first.get_data(), "Caller modified shared prepared pixels")
+	source.set_pixel(2, 2, Color.GREEN)
+	assert(HdPreparedCache.key(source, size) != key, "Source edit reused stale prepared pixels")
+	var tiny := Image.create(8, 8, false, Image.FORMAT_RGB8)
+	tiny.fill(Color.RED)
+	assert(HdSprite.scaled(tiny, tiny.get_size()).get_format() == Image.FORMAT_RGBA8)
+	var small := HdSprite.scaled(tiny, Vector2i(4, 4))
+	var small_key := HdPreparedCache.key(tiny, small.get_size())
+	assert(HdPreparedCache._images.has(small_key), "Small frames must remain reusable in RAM")
+	assert(not FileAccess.file_exists(AppPaths.path("cache/" + HdPreparedCache.VERSION).path_join(small_key + ".rgba")),
+		"Small frames caused per-frame disk files")
+
+
 func _initialize() -> void:
+	_prepared_cache()
 	_root = "user://hd-sprite-pack-test-%d" % Time.get_ticks_usec()
 	assert(DirAccess.make_dir_recursive_absolute(_root) == OK)
 	var large := FixtureGraphics.pack().large_sprites

@@ -185,6 +185,8 @@ pub struct Atlas {
     pub revision: i64,
     pub data: Vec<u8>,
     pub slots: HashMap<u64, Rect>,
+    /// Stable texel pages touched since the preceding publication.
+    pub dirty_pages: BTreeSet<(i32, i32)>,
     free: Vec<Rect>,
 }
 
@@ -195,6 +197,7 @@ impl Atlas {
             revision: 0,
             data: vec![0; edge as usize * edge as usize * 4],
             slots: HashMap::new(),
+            dirty_pages: BTreeSet::new(),
             free: vec![Rect::new(0, 0, edge, edge)],
         }
     }
@@ -380,6 +383,11 @@ impl Atlas {
 
         self.revision += 1;
         self.slots.insert(key, rect);
+        for y in padded.y / 1024..=(padded.y + padded.h - 1) / 1024 {
+            for x in padded.x / 1024..=(padded.x + padded.w - 1) / 1024 {
+                self.dirty_pages.insert((x, y));
+            }
+        }
         Ok(rect)
     }
 

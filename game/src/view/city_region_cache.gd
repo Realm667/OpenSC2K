@@ -29,6 +29,7 @@ var fit_zoom := false
 var gpu_enabled := gpu_supported()
 # A city preparation bank keeps complete region resources between camera moves.
 var resident := false
+var prepare_entire_city := false
 # Limit background uploads and worker queues while the player uses another view.
 var background_preparation := false
 var work_budget: VisualWorkBudget
@@ -64,6 +65,7 @@ var _show_subways := true
 var _show_tunnels := true
 var _prepared := false
 var _published_source: CityMapSource
+var transition_source: CityMapSource
 var _published_viewport := -1
 var _published_indices: Dictionary[Vector2i, int] = {}
 var _source_updates: Dictionary[Vector2i, bool] = {}
@@ -258,7 +260,7 @@ func _wanted_region_edge(view: int) -> int:
 	if view != CityIsometricRenderer.VIEW_SMALL:
 		return GPU_REGION_EDGE
 
-	return GPU_FIT_REGION_EDGE if fit_zoom else GPU_SMALL_REGION_EDGE
+	return GPU_FIT_REGION_EDGE if fit_zoom and not resident else GPU_SMALL_REGION_EDGE
 
 
 func update_viewport(source_rect: Rect2) -> void:
@@ -428,6 +430,10 @@ static func _same_command(left: CityStaticCommand, right: CityStaticCommand) -> 
 
 
 func texture() -> CityMapSource:
+	if transition_source != null:
+		if not covered():
+			return transition_source
+		transition_source = null
 	if gpu_enabled and _published_source != null and _published_viewport == _viewport_serial:
 		var incremental := _updated_source()
 		if incremental != null:
@@ -482,6 +488,7 @@ func _overlay_tag() -> Color:
 func _mesh_entry(gpu: CityGpuRegionResult) -> CityMapSource.MeshEntry:
 	if gpu.source_entry == null:
 		gpu.source_entry = CityMapSource.MeshEntry.new(Vector2(gpu.bounds.position * divisor), gpu.mesh, gpu.atlas_texture, divisor)
+		gpu.source_entry.texture_pages = gpu.texture_pages
 		gpu.source_entry.emission = gpu.emission_texture
 		gpu.source_entry.seasons = gpu.season_texture
 		gpu.source_entry.water = gpu.water
@@ -647,6 +654,13 @@ func prefetch_ready() -> bool:
 	return not wanted.is_empty()
 
 
+func prefetch_covered() -> bool:
+	for key in wanted:
+		if not entries.has(key):
+			return false
+	return not wanted.is_empty()
+
+
 func metrics() -> Dictionary:
 	var bytes := 0
 	for entry: CityRegionResult in entries.values():
@@ -664,6 +678,7 @@ func metrics() -> Dictionary:
 
 func close() -> void:
 	_close_gpu_workers()
+	transition_source = null
 
 	if _task != null:
 		_task.finish()
@@ -714,6 +729,7 @@ class RegionWorker extends RefCounted:
 	var seasons: ImageTexture
 	var emission: ImageTexture
 	var atlas: ImageTexture
+	var texture_pages: CityGpuTexturePages
 	var atlas_revision := -1
 	var layout := -1
 	var generation := -1
@@ -774,6 +790,8 @@ class RegionWorker extends RefCounted:
 			for index in count:
 				var region := outbox[index]
 				var cost := 0
+				for field in ["art", "emission", "seasons"]:
+					cost += region.page_update.get(field, []).size() * CityGpuTexturePages.EDGE ** 2 * 4
 				for image: Image in [region.atlas_image, region.emission_image, region.season_image]:
 					if image != null:
 						cost += image.get_width() * image.get_height() * 4

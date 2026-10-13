@@ -42,4 +42,30 @@ func _initialize() -> void:
 				"Batch UV sampled the wrong pixel after atlas growth",
 			)
 	print("PASS: atlas growth preserves normalized UVs across a region batch")
+	_check_pages(city, sprites, center)
 	quit()
+
+
+func _check_pages(city: CityState, sprites: Sc2SpriteArchive, center: Vector2i) -> void:
+	var plain := CityGpuBuildContext.new()
+	var palette := Sc2Palette.index_encoding()
+	var paged := CityGpuBuildContext.new()
+	paged.paged = true
+	var image: Image
+	for key in [center, center + Vector2i.ONE, center]:
+		var bounds := Rect2i(key * 256, Vector2i(256, 256))
+		var expected := plain.render(city, palette, sprites, bounds, 2, CityViewMode.Mode.CITY, true, true, 0, -1, true, true)
+		var actual := paged.render(city, palette, sprites, bounds, 2, CityViewMode.Mode.CITY, true, true, 0, -1, true, true)
+		assert(expected.ok and actual.ok)
+		var update := actual.page_update
+		if not update.is_empty():
+			if update.full:
+				image = Image.create(update.edge, update.edge, false, Image.FORMAT_RGBA8)
+			var span := ceili(float(update.edge) / 1024)
+			for index in update.indices.size():
+				var layer: int = update.indices[index]
+				image.blit_rect(update.art[index], Rect2i(0, 0, 1024, 1024), Vector2i(layer % span, layer / span) * 1024)
+		assert(image.get_data() == plain.atlas.get_data(), "Paged atlas changed decoded pixels")
+	var unchanged := paged.render(city, palette, sprites, Rect2i(center * 256, Vector2i(256, 256)), 2, CityViewMode.Mode.CITY, true, true, 0, -1, true, true)
+	assert(unchanged.page_update.is_empty(), "Unchanged region reuploaded atlas pages")
+	print("PASS: paged atlas matches full atlas and suppresses unchanged uploads")

@@ -48,7 +48,7 @@ func refresh_map(force := true) -> void:
 	# the static view has no HD art; the CPU regions have it
 	var hd := app.asset_state.large_sprites != null and not app.asset_state.large_sprites.high_resolution.is_empty()
 
-	if ((app.visual_preparation.ready or app.document_state.city.map_size > 128 or CityRegionCache.gpu_supported(app.preferences.city_renderer) or hd)
+	if ((app.visual_preparation.ready or app.visual_preparation.busy or app.document_state.city.map_size > 128 or CityRegionCache.gpu_supported(app.preferences.city_renderer) or hd)
 			and CityViewMode.is_map(app.view_state.overlay_mode)):
 		refresh_region_map(force)
 
@@ -217,13 +217,16 @@ func close_region_cache() -> void:
 
 
 func refresh_region_map(force: bool, dirty := Rect2i()) -> void:
-	var prepared := app.visual_preparation.ready and app.view_state.overlay_mode == CityViewMode.Mode.CITY
+	var prepared := (app.visual_preparation.ready or app.visual_preparation.busy) and app.view_state.overlay_mode == CityViewMode.Mode.CITY
 	if prepared:
 		app.visual_preparation.refresh(dirty)
 		var selected := app.visual_preparation.selected_cache(app.static_render.city_view_size())
 		if caches.region_cache != selected:
+			var previous_source := caches.region_cache.texture() if caches.region_cache != null and caches.region_cache.covered() else null
 			close_region_cache()
 			caches.region_cache = selected
+			if not selected.covered():
+				selected.transition_source = previous_source
 		caches.region_cache.background_preparation = false
 	if caches.region_cache == null:
 		caches.region_cache = CityRegionCache.new()

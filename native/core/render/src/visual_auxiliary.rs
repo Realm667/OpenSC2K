@@ -3,7 +3,37 @@ use crate::{
     Draw, Rect,
     sprites::{ARTWORK_PADDING, ARTWORK_SLOT, Artwork, Sprite, Sprites},
 };
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
+
+/// One worker's immutable mask sources and incrementally populated atlas.
+/// New sprite slots do not repaint masks that have already been prepared.
+#[derive(Default)]
+pub struct AtlasCache {
+    edge: i32,
+    slots: HashSet<u64>,
+    pixels: Vec<u8>,
+}
+
+impl AtlasCache {
+    pub fn update(&mut self, edge: i32, slots: &HashMap<u64, Rect>, sprites: &Sprites, artwork: &HashMap<u64, Sprite>) -> &[u8] {
+        if edge != self.edge {
+            let mut pixels = vec![0; edge as usize * edge as usize * 4];
+            let width = self.edge.min(edge) as usize * 4;
+            for row in 0..self.edge.min(edge) as usize {
+                pixels[row * edge as usize * 4..row * edge as usize * 4 + width]
+                    .copy_from_slice(&self.pixels[row * self.edge as usize * 4..row * self.edge as usize * 4 + width]);
+            }
+            self.pixels = pixels;
+            self.edge = edge;
+        }
+        for (&key, rect) in slots {
+            if self.slots.insert(key) {
+                paint_slot(&mut self.pixels, edge, key, rect, sprites, artwork);
+            }
+        }
+        &self.pixels
+    }
+}
 
 fn sample(key: u64, sprite: &Sprite, artwork: &HashMap<u64, Sprite>, x: i32, y: i32) -> [u8; 4] {
     let base = if key & (1 << 32) != 0 { (key >> 16) & 0xffff } else { key };
@@ -64,27 +94,31 @@ fn artwork_sample(key: u64, source: &Artwork, sprite: &Sprite, masks: &HashMap<u
 pub fn atlas(edge: i32, slots: &HashMap<u64, Rect>, sprites: &Sprites, artwork: &HashMap<u64, Sprite>) -> Vec<u8> {
     let mut out = vec![0; edge as usize * edge as usize * 4];
     for (&key, rect) in slots {
-        let original_key = key & !ARTWORK_SLOT;
-        let Some(sprite) = sprites.images.get(&original_key) else {
-            continue;
-        };
-        let hd = if key & ARTWORK_SLOT != 0 {
-            sprites.artwork.get(&original_key)
-        } else {
-            None
-        };
-        for y in 0..rect.h {
-            for x in 0..rect.w {
-                let color = match hd {
-                    Some(source) => artwork_sample(original_key, source, sprite, artwork, x, y),
-                    None => sample(key, sprite, artwork, x, y),
-                };
-                let at = (((rect.y + y) * edge + rect.x + x) * 4) as usize;
-                out[at..at + 4].copy_from_slice(&color);
-            }
-        }
+        paint_slot(&mut out, edge, key, rect, sprites, artwork);
     }
     out
+}
+
+fn paint_slot(out: &mut [u8], edge: i32, key: u64, rect: &Rect, sprites: &Sprites, artwork: &HashMap<u64, Sprite>) {
+    let original_key = key & !ARTWORK_SLOT;
+    let Some(sprite) = sprites.images.get(&original_key) else {
+        return;
+    };
+    let hd = if key & ARTWORK_SLOT != 0 {
+        sprites.artwork.get(&original_key)
+    } else {
+        None
+    };
+    for y in 0..rect.h {
+        for x in 0..rect.w {
+            let color = match hd {
+                Some(source) => artwork_sample(original_key, source, sprite, artwork, x, y),
+                None => sample(key, sprite, artwork, x, y),
+            };
+            let at = (((rect.y + y) * edge + rect.x + x) * 4) as usize;
+            out[at..at + 4].copy_from_slice(&color);
+        }
+    }
 }
 
 pub fn raster(bounds: Rect, draws: &[Draw], sprites: &HashMap<u64, Sprite>, artwork: &HashMap<u64, Sprite>, emission: bool) -> Vec<u8> {
@@ -121,6 +155,19 @@ pub fn raster(bounds: Rect, draws: &[Draw], sprites: &HashMap<u64, Sprite>, artw
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn incremental_atlas_matches_full_after_additions_and_growth() {
+        let red = sprite(vec![255, 0, 0, 255], &[255]);
+        let blue = sprite(vec![0, 0, 255, 255], &[255]);
+        let sprites = Sprites::new(HashMap::from([(2, red.clone()), (4, blue.clone())]), [0; 4]);
+        let masks = HashMap::from([(2, red), (4, blue)]);
+        let mut slots = HashMap::from([(2, Rect::new(1, 1, 1, 1))]);
+        let mut cache = AtlasCache::default();
+        assert_eq!(cache.update(8, &slots, &sprites, &masks), atlas(8, &slots, &sprites, &masks));
+        slots.insert(4, Rect::new(9, 2, 1, 1));
+        assert_eq!(cache.update(16, &slots, &sprites, &masks), atlas(16, &slots, &sprites, &masks));
+        assert_eq!(cache.update(16, &slots, &sprites, &masks), atlas(16, &slots, &sprites, &masks));
+    }
     fn sprite(rgba: Vec<u8>, alpha: &[u8]) -> Sprite {
         Sprite {
             w: alpha.len() as i32,

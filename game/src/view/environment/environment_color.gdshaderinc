@@ -20,6 +20,22 @@ uniform float environment_day_lut_strength = 0.0;
 uniform float environment_season_lut_strength = 0.0;
 uniform float environment_weather_lut_strength = 0.0;
 uniform sampler2D environment_season_mask : filter_nearest, repeat_disable;
+
+vec4 environment_season_sample(vec2 uv) {
+#ifdef USE_PAGED_ATLAS
+	return region_page_sample(region_season_pages, uv);
+#else
+	return texture(environment_season_mask, uv);
+#endif
+}
+
+vec4 environment_emission_sample(vec2 uv) {
+#ifdef USE_PAGED_ATLAS
+	return region_page_sample(region_emission_pages, uv);
+#else
+	return texture(environment_emission, uv);
+#endif
+}
 uniform bool environment_has_seasons = false;
 uniform vec4 environment_seasons = vec4(0.0, 1.0, 0.0, 0.0);
 uniform vec3 environment_weather = vec3(1.0);
@@ -77,7 +93,7 @@ vec3 nature_foliage_color(vec3 base, float strength) {
 
 vec3 season_color(vec3 base, vec2 uv) {
 	if (!environment_has_seasons) { return base; }
-	vec4 mask = texture(environment_season_mask, uv);
+	vec4 mask = environment_season_sample(uv);
 	float amount = clamp((mask.r + mask.g) * mask.a, 0.0, 1.0);
 	if (amount <= 0.0) { return base; }
 	float shade = dot(base, vec3(0.2126, 0.7152, 0.0722));
@@ -140,7 +156,7 @@ vec3 environment_color_emission(vec3 base, vec2 uv, float emission_amount) {
 	if (!environment_enabled) { return base; }
 	vec3 color = environment_ambient(season_color(base, uv));
 	if (environment_has_emission) {
-		vec4 emission = texture(environment_emission, uv);
+		vec4 emission = environment_emission_sample(uv);
 		color = mix(color, emission.rgb, emission.a * environment_night * emission_amount);
 	}
 	return color;

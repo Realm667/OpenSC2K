@@ -24,6 +24,7 @@ var emission_atlas: Image
 var _emission: Dictionary = {}
 var atlas: Image
 var atlas_revision := -1
+var paged := false
 var tile_builds := 0
 var tile_reuses := 0
 # A set error fails every later region. Tests use it to force the CPU fallback.
@@ -57,8 +58,8 @@ func render(city: CityState, palette: Sc2Palette, sprites: Sc2SpriteArchive,
 
 	if data.has("atlas"):
 		atlas = data.atlas
-		emission_atlas = builder.auxiliary_atlas(_emission)
-		season_atlas = builder.auxiliary_atlas(_seasons)
+		emission_atlas = builder.cached_auxiliary_atlas(0, _emission)
+		season_atlas = builder.cached_auxiliary_atlas(1, _seasons)
 
 	atlas_edge = data.atlas_edge
 	atlas_revision = data.atlas_revision
@@ -66,6 +67,8 @@ func render(city: CityState, palette: Sc2Palette, sprites: Sc2SpriteArchive,
 	tile_builds = data.total_builds
 	tile_reuses = data.total_reuses
 	var result := CityGpuRegionResult.new()
+	if paged:
+		result.page_update = builder.take_atlas_pages(_emission, _seasons)
 	result.ok = true
 	result.bounds = data.bounds
 	result.background = Color.WHITE if mode == CityViewMode.Mode.UNDERGROUND else Color.TRANSPARENT
@@ -152,6 +155,8 @@ func prepare(city: CityState, palette: Sc2Palette, sprites: Sc2SpriteArchive, vi
 			# an HD pack shows every effect on its art
 			"shadow_colors": shadow_colors(palette), "hd_effects": ALL_HD_EFFECTS})
 		var failure := builder.configure(request, artwork, palette.color(0xa1).to_rgba32())
+		if paged:
+			builder.enable_paged_atlas()
 		atlas = null
 		atlas_revision = -1
 		tile_builds = 0

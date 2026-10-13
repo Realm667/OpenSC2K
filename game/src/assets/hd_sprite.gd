@@ -22,10 +22,15 @@ var emission_animation: Image
 # `source` at `size`. The filter averages premultiplied colors, so transparent
 # pixels add no dark edge. The result has straight alpha.
 static func scaled(source: Image, size: Vector2i) -> Image:
+	if source.get_size() == size:
+		var unchanged: Image = source.duplicate()
+		unchanged.convert(Image.FORMAT_RGBA8)
+		return unchanged
+	var identifier := HdPreparedCache.key(source, size)
+	var cached := HdPreparedCache.load_image(identifier, size)
+	if cached != null:
+		return cached
 	var result: Image = source.duplicate()
-
-	if result.get_size() == size:
-		return result
 
 	result.convert(Image.FORMAT_RGBA8)
 	result.premultiply_alpha()
@@ -40,4 +45,5 @@ static func scaled(source: Image, size: Vector2i) -> Image:
 			else:
 				result.set_pixel(x, y, Color.TRANSPARENT)
 
+	HdPreparedCache.store_image(identifier, result)
 	return result

@@ -4,6 +4,7 @@ extends RefCounted
 @warning_ignore_start("integer_division")
 
 const VARIANTS := 6
+const RETAINED_GPU_LIMIT := 1024 * 1024 * 1024
 var work_budget := VisualWorkBudget.new()
 var app: CityApplication
 var banks: Array[CityRegionCache] = []
@@ -24,6 +25,10 @@ var progress := 0.0
 var lighting_started := false
 var preparing_lights: Array[Vector2i] = []
 var light_rescan: Dictionary[int, bool] = {}
+var evicted_banks: Dictionary[int, bool] = {}
+var bank_visits: Dictionary[int, int] = {}
+var visit_serial := 0
+var trim_frames := 0
 
 
 func _init(application: CityApplication) -> void:
@@ -44,6 +49,8 @@ func reset() -> void:
 	stages.clear()
 	prepared_light_views.clear()
 	light_rescan.clear()
+	evicted_banks.clear()
+	bank_visits.clear()
 	preparing_lights.clear()
 	layout.clear()
 	if app.city_dialogs != null and app.city_dialogs.visual_preparation_progress != null:
@@ -85,18 +92,21 @@ func _index(view: int) -> int:
 
 
 func archive_for_view(view: int) -> Sc2SpriteArchive:
-	return archives[_index(view)] if archives.size() == VARIANTS and (ready or preparing_view >= 0) else null
+	return archives[_index(view)] if archives.size() == VARIANTS and (ready or busy) else null
 
 
 func selected_cache(view: int) -> CityRegionCache:
-	return banks[_index(view)]
+	var index := _index(view)
+	visit_serial += 1
+	bank_visits[index] = visit_serial
+	evicted_banks.erase(index)
+	return banks[index]
 
 
 func begin() -> void:
 	# Initialize presentation clocks while the previous render source is still
 	# attached. A detached regional source must never enter the whole-image path.
 	app.visual_environment.process(0.0)
-	var replace_active := owns(app.render_caches.region_cache)
 	reset()
 	app.city_life.sprites.prepare_frames()
 	layout = _layout()
@@ -137,8 +147,8 @@ func begin() -> void:
 		cache.work_budget = work_budget
 		banks.append(cache)
 	busy = true
-	if replace_active:
-		app.map_render.refresh_map(false)
+	# The visible renderer and the preloader own the same resources immediately.
+	app.map_render.refresh_map(false)
 	_progress(0.0, "Preparing city graphics…")
 
 
@@ -179,6 +189,8 @@ func process() -> bool:
 	preparing_view = previous_view
 	preparing_traffic = previous_traffic
 	app.render_caches.region_cache = active
+	if active != null:
+		active.background_preparation = false
 	if not failure.is_empty():
 		var message := failure
 		var failed_layout := layout
@@ -194,7 +206,12 @@ func process() -> bool:
 func _prepare_step() -> void:
 	var cache := banks[stages[stage]]
 	_configure(stages[stage])
-	cache.update_viewport(Rect2(Vector2.ZERO, Vector2(cache.native_size * cache.divisor)))
+	if not cache.prepare_entire_city:
+		cache.prepare_entire_city = true
+		cache._viewport_valid = false
+	# Keep actual camera regions first, including when this is the active bank.
+	cache.update_viewport(app.map_view.visible_source_rect())
+	cache.background_preparation = true
 	cache.tick()
 	# An edit can arrive while a bank is loading. Publish its changed silhouettes
 	# to retained light masks, just as the ordinary visible renderer does.
@@ -208,7 +225,7 @@ func _prepare_step() -> void:
 		"individual cars" if preparing_traffic == 1 else "classic traffic", cache.entries.size(), cache.wanted.size()]
 	# Ongoing simulation repaints must not starve initial preparation. Every
 	# area must exist; newer generations continue through the normal updater.
-	if cache.covered():
+	if cache.prefetch_covered():
 		if not prepared_light_views.has(preparing_view) and VisualEnhancementOptions.detail_lights_visible(app.preferences.visual_enhancements, app.map_view.zoom_factor):
 			var lighting := app.visual_environment.night_lighting
 			lighting._select_ground(preparing_view)
@@ -233,9 +250,10 @@ func _prepare_step() -> void:
 				_progress((stage + fraction) / total, detail)
 				return
 		prepared_light_views[preparing_view] = true
+		cache.prepare_entire_city = false
+		cache._viewport_valid = false
 		cache.update_viewport(app.map_view.visible_source_rect())
-		cache._close_gpu_workers()
-		cache._gpu_has_work = false
+		# Keep the native geometry/atlas context for later edits and zoom returns.
 		cache.background_preparation = true
 		stage += 1
 		completed = stage
@@ -270,6 +288,8 @@ func _configure(index: int, dirty := Rect2i()) -> void:
 func refresh(dirty := Rect2i()) -> void:
 	var divisor := CityIsometricRenderer.view_configuration(app.static_render.city_view_size()).divisor
 	for index in banks.size():
+		if evicted_banks.has(index) and banks[index] != app.render_caches.region_cache:
+			continue
 		if index not in stages and banks[index].entries.is_empty() and banks[index] != app.render_caches.region_cache:
 			continue
 		var converted := Rect2i(dirty.position * divisor / banks[index].divisor, dirty.size * divisor / banks[index].divisor)
@@ -277,9 +297,14 @@ func refresh(dirty := Rect2i()) -> void:
 
 
 func _background() -> void:
+	trim_frames += 1
+	if trim_frames % 120 == 0:
+		_trim_banks()
 	# Visible work has its normal frame budget. One hidden bank catches up per
 	# frame, updating only regions whose source tiles changed.
 	background_cursor = (background_cursor + 1) % VARIANTS
+	if evicted_banks.has(background_cursor):
+		return
 	var cache := banks[background_cursor]
 	if cache == app.render_caches.region_cache:
 		# The active lighting layer checks its geometry in the ordinary frame.
@@ -314,3 +339,21 @@ func _background() -> void:
 	preparing_view = -1
 	preparing_traffic = -1
 	app.render_caches.region_cache = previous_cache
+
+
+func _trim_banks(limit := RETAINED_GPU_LIMIT) -> void:
+	var bytes := 0
+	var ranked: Array[int] = []
+	for index in banks.size():
+		bytes += banks[index]._gpu_atlas_bytes()
+		if banks[index] != app.render_caches.region_cache and not banks[index]._gpu_pending():
+			ranked.append(index)
+	if bytes <= limit:
+		return
+	ranked.sort_custom(func(a: int, b: int) -> bool: return bank_visits.get(a, 0) < bank_visits.get(b, 0))
+	for index in ranked:
+		if bytes <= limit:
+			break
+		bytes -= banks[index]._gpu_atlas_bytes()
+		banks[index].close()
+		evicted_banks[index] = true

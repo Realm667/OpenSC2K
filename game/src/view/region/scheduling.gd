@@ -58,6 +58,13 @@ static func update_viewport(cache: CityRegionCache, source_rect: Rect2) -> void:
 	cache.wanted.append_array(cache.visible)
 	cache.wanted.append_array(nearby.slice(0, CityRegionCache.GPU_PREFETCH_LIMIT if cache.gpu_enabled else CityRegionCache.OFFSCREEN_LIMIT))
 	_index_wanted(cache)
+	if cache.prepare_entire_city:
+		for y in ceili(float(cache.native_size.y) / cache.region_edge):
+			for x in ceili(float(cache.native_size.x) / cache.region_edge):
+				var key := Vector2i(x, y)
+				if not cache.wanted_keys.has(key):
+					cache.wanted.append(key)
+					cache.wanted_keys[key] = true
 	if cache.resident:
 		# Retained offscreen regions also receive edits, before the camera returns.
 		for key in cache.entries:
@@ -152,7 +159,7 @@ static func _tick_gpu(cache: CityRegionCache) -> bool:
 		cache._changed = false
 		return changed
 	if cache.gpu_workers.is_empty():
-		for index in mini(1 if cache.background_preparation else CityRegionCache.GPU_WORKERS, maxi(1, OS.get_processor_count() - 2)):
+		for index in mini(1 if cache.background_preparation or cache.resident else CityRegionCache.GPU_WORKERS, maxi(1, OS.get_processor_count() - 2)):
 			cache.gpu_workers.append(CityRegionCache.RegionWorker.new())
 
 	for worker in cache.gpu_workers:
@@ -174,6 +181,8 @@ static func _tick_gpu(cache: CityRegionCache) -> bool:
 			regions = worker.take_regions(limit, maxi(1, VisualWorkBudget.UPLOAD_LIMIT - budget.upload_bytes) if budget != null else VisualWorkBudget.UPLOAD_LIMIT)
 		if budget != null:
 			for region in regions:
+				for field in ["art", "emission", "seasons"]:
+					budget.upload_bytes += region.page_update.get(field, []).size() * CityGpuTexturePages.EDGE ** 2 * 4
 				for image: Image in [region.atlas_image, region.emission_image, region.season_image]:
 					if image != null:
 						budget.upload_bytes += image.get_width() * image.get_height() * 4
@@ -191,6 +200,13 @@ static func _tick_gpu(cache: CityRegionCache) -> bool:
 			var pending: Image = null
 
 			for region in regions:
+				if not region.page_update.is_empty():
+					if region.page_update.full or worker.texture_pages == null:
+						worker.texture_pages = CityGpuTexturePages.new()
+					if not worker.texture_pages.publish(region.page_update):
+						_disable_gpu(cache, "GPU atlas page upload failed")
+						return true
+					worker.atlas_revision = int(region.atlas_revision)
 				if region.atlas_image != null:
 					if worker.atlas == null or worker.atlas.get_size() != Vector2(region.atlas_image.get_size()):
 						if pending != null:
@@ -344,6 +360,7 @@ static func _tick_gpu(cache: CityRegionCache) -> bool:
 
 		if worker.layout != cache._layout_generation:
 			worker.context = CityGpuBuildContext.new()
+			worker.context.paged = not cache._sprites.high_resolution.is_empty()
 			worker.atlas = null
 			worker.atlas_revision = -1
 
@@ -400,6 +417,8 @@ static func _publish_region(cache: CityRegionCache, worker: CityRegionCache.Regi
 
 	region.mesh = mesh
 	region.atlas_texture = worker.atlas
+	region.texture_pages = worker.texture_pages
+	region.page_update = {}
 	region.emission_texture = worker.emission
 	region.season_texture = worker.seasons
 	region.season_image = null
@@ -470,15 +489,21 @@ static func _gpu_atlas_bytes(cache: CityRegionCache) -> int:
 	var seen := {}
 	for entry: CityRegionResult in cache.entries.values():
 		var gpu := entry as CityGpuRegionResult
-		var texture: Texture2D = gpu.atlas_texture if gpu != null else null
-
-		if texture != null and not seen.has(texture.get_instance_id()):
-			seen[texture.get_instance_id()] = true
-			bytes += texture.get_width() * texture.get_height() * 4
+		if gpu != null and gpu.texture_pages != null and not seen.has(gpu.texture_pages.get_instance_id()):
+			seen[gpu.texture_pages.get_instance_id()] = true
+			bytes += gpu.texture_pages.bytes()
+		for texture: Texture2D in [gpu.atlas_texture if gpu != null else null, entry.emission_texture, entry.season_texture]:
+			if texture != null and not seen.has(texture.get_instance_id()):
+				seen[texture.get_instance_id()] = true
+				bytes += texture.get_width() * texture.get_height() * 4
 
 	for worker in cache.gpu_workers:
-		if worker.atlas != null and not seen.has(worker.atlas.get_instance_id()):
-			seen[worker.atlas.get_instance_id()] = true
-			bytes += worker.atlas.get_width() * worker.atlas.get_height() * 4
+		if worker.texture_pages != null and not seen.has(worker.texture_pages.get_instance_id()):
+			seen[worker.texture_pages.get_instance_id()] = true
+			bytes += worker.texture_pages.bytes()
+		for texture: Texture2D in [worker.atlas, worker.emission, worker.seasons]:
+			if texture != null and not seen.has(texture.get_instance_id()):
+				seen[texture.get_instance_id()] = true
+				bytes += texture.get_width() * texture.get_height() * 4
 
 	return bytes

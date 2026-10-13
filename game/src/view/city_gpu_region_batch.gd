@@ -27,6 +27,9 @@ static func build(request: Request, context: CityGpuBuildContext, uploaded_revis
 
 	# a later region can grow the shared atlas after earlier uvs were built
 	for region in regions:
+		# Streamed page sets retain the dimensions of each region's publication.
+		if context.paged:
+			continue
 		if int(region.atlas_edge) != context.atlas_edge:
 			var uvs: PackedVector2Array = region.gpu_arrays[Mesh.ARRAY_TEX_UV]
 
@@ -83,6 +86,8 @@ static func stream(request: Request, worker: CityRegionCache.RegionWorker, uploa
 			result.atlas_image = context.atlas.duplicate()
 			result.emission_image = context.emission_atlas
 			result.season_image = context.season_atlas
+			published = context.atlas_revision
+		if context.paged:
 			published = context.atlas_revision
 
 		result.atlas_revision = published

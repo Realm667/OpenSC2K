@@ -64,6 +64,7 @@ class MeshEntry:
 	var seasons: Texture2D
 	var emission: Texture2D
 	var texture: Texture2D
+	var texture_pages: CityGpuTexturePages
 	var divisor: int
 
 

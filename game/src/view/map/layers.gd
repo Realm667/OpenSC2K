@@ -46,16 +46,19 @@ func _apply_environment(material: ShaderMaterial) -> void:
 	_environment.apply(material)
 
 
-func visual_material(emission: Texture2D, seasons: Texture2D) -> ShaderMaterial:
-	if emission == null and seasons == null:
+func visual_material(emission: Texture2D, seasons: Texture2D, pages: CityGpuTexturePages = null) -> ShaderMaterial:
+	if emission == null and seasons == null and pages == null:
 		return _base_material
 	var key := "%d/%d" % [emission.get_instance_id() if emission != null else 0, seasons.get_instance_id() if seasons != null else 0]
+	key += "/%d" % (pages.get_instance_id() if pages != null else 0)
 	if not _visual_materials.has(key):
 		var material := _base_material.duplicate() as ShaderMaterial
 		material.set_shader_parameter("environment_emission", emission)
 		material.set_shader_parameter("environment_has_emission", emission != null)
 		material.set_shader_parameter("environment_season_mask", seasons)
 		material.set_shader_parameter("environment_has_seasons", seasons != null)
+		if pages != null:
+			pages.apply(material)
 		_apply_environment(material)
 		_visual_materials[key] = material
 	return _visual_materials[key]
@@ -375,7 +378,7 @@ func _sync_base_nodes() -> void:
 			mesh.set_meta("source_position", entry.position)
 			mesh.set_meta("divisor", entry.divisor)
 			mesh.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-			mesh.material = visual_material(entry.emission, entry.seasons)
+			mesh.material = visual_material(entry.emission, entry.seasons, entry.texture_pages)
 			_mesh_layers.append(mesh)
 		for mesh: MeshInstance2D in retained_meshes.values():
 			mesh.hide()
@@ -445,7 +448,7 @@ func _update_region_meshes(scale: float) -> bool:
 		mesh.scale = Vector2.ONE * scale * entry.divisor
 		mesh.mesh = entry.mesh
 		mesh.texture = entry.texture
-		mesh.material = visual_material(entry.emission, entry.seasons)
+		mesh.material = visual_material(entry.emission, entry.seasons, entry.texture_pages)
 		mesh.set_meta("divisor", entry.divisor)
 
 	_tiled_source = after
