@@ -1,10 +1,13 @@
 extends SceneTree
 
+@warning_ignore_start("integer_division")
+
 const Fixture = preload("res://tests/indexed_png_test.gd")
 const Pack = preload("res://src/assets/graphics_pack.gd")
 
 
 func _initialize() -> void:
+	_check_master_registration()
 	var pack_root := "user://graphics-pack-test-%d" % Time.get_ticks_usec()
 	assert(DirAccess.make_dir_recursive_absolute(pack_root) == OK)
 	var png := FileAccess.open(pack_root.path_join("sprite.png"), FileAccess.WRITE)
@@ -120,3 +123,48 @@ func _write_manifest(pack_root: String, manifest: Dictionary) -> void:
 	var file := FileAccess.open(pack_root.path_join("pack.json"), FileAccess.WRITE)
 	file.store_string(JSON.stringify(manifest))
 	file.close()
+
+
+func _check_master_registration() -> void:
+	var palette := Sc2Palette.index_encoding()
+	var decoded := IndexedImageResult.new()
+	decoded.ok = true
+	decoded.width = 160
+	decoded.height = 96
+	decoded.palette = palette
+	decoded.pixels.resize(160 * 96)
+	decoded.pixels.fill(1)
+	var reader := func(_path: Variant) -> IndexedImageResult: return decoded
+	var translucent := Image.create(160, 96, false, Image.FORMAT_RGBA8)
+	translucent.fill(Color(0.2, 0.5, 0.8, 0.65))
+	var rgba_reader := func(_path: Variant) -> Image: return translucent
+	var record := {"id": 1112, "png": "master.png", "logical_size": [40, 24],
+		"visual_registration": [32, 4, 4], "artwork_rgba": "full.png"}
+	var master := MasterSpriteSource.new()
+	assert(master.load_records([record], reader, palette, rgba_reader), master.error)
+	var context := CityGpuBuildContext.new()
+	var city := CityState.from_document(EmptyCityTemplate.create(64))
+	assert(context.prepare(city, palette, master.large, 2).is_empty(), "Native bridge must accept typed pack registration")
+	assert(IsometricGeometry.maximum_sprite_size(master.large) == Vector2i(56, 24), "Bounds must include added bottom padding")
+	for view in 3:
+		var divisor := 4 >> view
+		var archive: Sc2SpriteArchive = master.large if view == 2 else master.small_medium
+		var id := view * 500 + 112
+		assert(archive.visual_registration[id] == Vector3i(32 / divisor, 4 / divisor, 4 / divisor))
+		assert(archive.high_resolution[id].image.get_pixel(80, 48).a8 == translucent.get_pixel(80, 48).a8)
+	var classic := Sc2SpriteArchive.new()
+	classic.entries.append(master.large.find_sprite(1112))
+	classic.entries_by_id[1112] = classic.entries[0]
+	assert(Sc2SpriteArchive.combine([master.large, classic]).visual_registration.is_empty(), "replacement pack leaked old registration")
+	assert(Sc2SpriteArchive.combine([classic, master.large]).visual_registration[1112] == Vector3i(32, 4, 4))
+	assert(classic.visual_registration.is_empty(), "combining packs mutated the original archive")
+	for invalid in [[31, 4, 4], [32, -4, 4], [32, 12, 4], [32, 4, 24], [32, 4.5, 4], [32, 4]]:
+		var bad := record.duplicate(true)
+		bad.visual_registration = invalid
+		assert(not MasterSpriteSource.new().load_records([bad], reader, palette, rgba_reader))
+	var network := record.duplicate(true)
+	network.id = 1029
+	assert(not MasterSpriteSource.new().load_records([network], reader, palette, rgba_reader))
+	assert(not MasterSpriteSource.new().load_records([record], reader, palette), "RGBA requires a validated reader")
+	assert(master.large.parse(PackedByteArray([0, 0])))
+	assert(master.large.visual_registration.is_empty(), "archive reload leaked previous pack registration")

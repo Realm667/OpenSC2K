@@ -240,10 +240,16 @@ impl Builder {
             let altitude = self.city.object(i);
             let building = self.city.buildings[i];
             self.water_lights(&mut out, bounds, draw, emission, &levels);
+            let footprint = self.sprites.footprint_draw(draw);
+            let (left, _) = self.sprites.canvas_padding(draw.image);
             let contacts: Vec<_> = (0..sprite.w)
                 .map(|x| {
-                    let axis = contact_twice(draw, x, building);
-                    let foot = contact_twice_at_foot(draw, x, building, sprite);
+                    let axis = contact_twice(&footprint, x - left, building);
+                    let foot = if bridge(building) {
+                        contact_twice_at_foot(draw, x, building, sprite)
+                    } else {
+                        axis
+                    };
                     // Only the connected pier uses its drawn water contact. A
                     // disconnected cable or truss above it keeps the deck axis.
                     // Shifting the entire column used to tear that upper artwork.
@@ -327,8 +333,10 @@ impl Builder {
             return;
         }
         let c = self.config;
+        let footprint = self.sprites.footprint_draw(draw);
+        let (left, _) = self.sprites.canvas_padding(draw.image);
         for sx in (bounds.x - draw.rect.x).max(0)..(bounds.x + bounds.w - draw.rect.x).min(sprite.w) {
-            let contact = contact_row(draw, sx, true);
+            let contact = contact_row(&footprint, sx - left, true);
             let mut color = [0.0_f32; 3];
             let mut energy = 0.0_f32;
             let mut height = 0;
@@ -520,6 +528,40 @@ fn seabed_triangle(out: &mut [u8], bounds: Rect, p: [[f32; 2]; 3], h: [f32; 3]) 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn padded_buildings_keep_reflection_and_light_contact_axes() {
+        for view in 0..3 {
+            for flip in [false, true] {
+                let mut builder = fixture(view);
+                let divisor = builder.config.divisor();
+                let (width, height, left, right, top, bottom) =
+                    (64 / divisor, 80 / divisor, 4 / divisor, 8 / divisor, 12 / divisor, 4 / divisor);
+                let key = (view * 500 + 112) as u64 * 2;
+                let image = key + u64::from(flip);
+                let sprite = Sprite {
+                    w: width + left + right,
+                    h: height + top + bottom,
+                    rgba: vec![],
+                    la: vec![],
+                };
+                builder.sprites.images.insert(image, sprite);
+                builder.sprites.registration.insert(key, [width, left, bottom]);
+                let offset = if flip { right } else { left };
+                let original = Draw::new(image, Rect::new(100, 50, width, height));
+                let padded = Draw::new(
+                    image,
+                    Rect::new(100 - offset, 50 - top, width + left + right, height + top + bottom),
+                );
+                let footprint = builder.sprites.footprint_draw(&padded);
+                for x in 0..width {
+                    assert_eq!(contact_twice(&original, x, 112), contact_twice(&footprint, x, 112));
+                    assert_eq!(contact_row(&original, x, true), contact_row(&footprint, x, true));
+                    assert_eq!(padded.rect.x + x + offset, original.rect.x + x);
+                }
+            }
+        }
+    }
 
     #[test]
     fn coastal_distance_is_scaled_and_saturates_offshore() {

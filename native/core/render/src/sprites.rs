@@ -42,6 +42,9 @@ pub struct Artwork {
 
 pub struct Sprites {
     pub images: HashMap<u64, Sprite>,
+    /// Pack-local footprint width and added left/bottom canvas padding.
+    /// Indexed geometry and full-color artwork share this registration.
+    pub registration: HashMap<u64, [i32; 3]>,
     /// Full-color art of unflipped sprite keys. Indexed pixels still give the
     /// draw geometry, the masks and the silhouettes.
     pub artwork: HashMap<u64, Artwork>,
@@ -58,12 +61,35 @@ impl Sprites {
     pub fn new(images: HashMap<u64, Sprite>, target: [u8; 4]) -> Self {
         Self {
             images,
+            registration: HashMap::new(),
             artwork: HashMap::new(),
             traffic_masks: HashMap::new(),
             target,
             placeholders: false,
             missing: BTreeSet::new(),
         }
+    }
+
+    pub fn footprint_width(&self, key: u64) -> i32 {
+        self.registration.get(&(key & !1)).map_or(self.images[&key].w, |v| v[0])
+    }
+
+    pub fn canvas_padding(&self, key: u64) -> (i32, i32) {
+        let Some(&[width, left, bottom]) = self.registration.get(&(key & !1)) else {
+            return (0, 0);
+        };
+        let horizontal = if key & 1 == 0 { left } else { self.images[&key].w - width - left };
+        (horizontal, bottom)
+    }
+
+    /// Reconstruct the original ground envelope for reflection contacts.
+    pub fn footprint_draw(&self, draw: &Draw) -> Draw {
+        let mut footprint = draw.clone();
+        let (left, bottom) = self.canvas_padding(draw.image);
+        footprint.rect.x += left;
+        footprint.rect.w = self.footprint_width(draw.image);
+        footprint.rect.h -= bottom;
+        footprint
     }
 
     /// The unflipped key of the artwork that a draw shows, and whether the draw

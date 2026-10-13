@@ -16,7 +16,7 @@ var error := ""
 var _animation_bytes := 0
 
 
-func load_records(records: Variant, read_png: Callable, palette: Sc2Palette) -> bool:
+func load_records(records: Variant, read_png: Callable, palette: Sc2Palette, read_rgba := Callable()) -> bool:
 	error = ""
 	large = Sc2SpriteArchive.new()
 	small_medium = Sc2SpriteArchive.new()
@@ -49,6 +49,17 @@ func load_records(records: Variant, read_png: Callable, palette: Sc2Palette) -> 
 			if not is_finite(float(side)) or side != int(side) or side < 1 or side > 4096 / SCALE:
 				return _fail("Unsupported graphics pack format or version")
 		var logical := Vector2i(int(size[0]), int(size[1]))
+		var registration := Vector3i(logical.x, 0, 0)
+		if record.has("visual_registration"):
+			var values: Variant = record.visual_registration
+			if id < 1112 or id > 1255 or not values is Array or values.size() != 3:
+				return _fail("Unsupported graphics pack format or version")
+			for value: Variant in values:
+				if not (value is int or value is float) or not is_finite(float(value)) or value != int(value) or value < 0 or value > 1024 or int(value) % 4 != 0:
+					return _fail("Unsupported graphics pack format or version")
+			registration = Vector3i(int(values[0]), int(values[1]), int(values[2]))
+			if registration.x < 32 or registration.x % 32 != 0 or registration.x + registration.y > logical.x or logical.x % 4 != 0 or registration.z >= logical.y:
+				return _fail("Unsupported graphics pack format or version")
 		var decoded: IndexedImageResult = read_png.call(record.get("png"))
 		if decoded == null or not decoded.ok:
 			return _fail("Invalid PNG pixels or palette")
@@ -63,6 +74,16 @@ func load_records(records: Variant, read_png: Callable, palette: Sc2Palette) -> 
 		var rendered := master.create_image(palette)
 		if not rendered.ok:
 			return _fail(rendered.error)
+		if record.has("artwork_rgba"):
+			if not read_rgba.is_valid() or record.has("animation"):
+				return _fail("Unsupported graphics pack format or version")
+			var full_color: Image = read_rgba.call(record.artwork_rgba)
+			if full_color == null or full_color.get_size() != logical * SCALE:
+				return _fail("Unsupported graphics pack format or version")
+			decoded_bytes += full_color.get_width() * full_color.get_height() * 4
+			if decoded_bytes > MAX_DECODED_BYTES:
+				return _fail("Unsupported graphics pack format or version")
+			rendered.image = full_color
 		var emission: Image
 		if record.has("lightmap"):
 			var light: IndexedImageResult = read_png.call(record.lightmap)
@@ -120,6 +141,8 @@ func load_records(records: Variant, read_png: Callable, palette: Sc2Palette) -> 
 			var archive := large if view == 2 else small_medium
 			archive.entries.append(entry)
 			archive.entries_by_id[view_id] = entry
+			if record.has("visual_registration"):
+				archive.visual_registration[view_id] = Vector3i(registration.x / divisor, registration.y / divisor, registration.z / divisor)
 			var artwork := HdSprite.new()
 			artwork.image = rendered.image
 			artwork.height = view_size.y

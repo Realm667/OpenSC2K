@@ -427,6 +427,31 @@ impl NativeCityRegionBuilder {
             core.atlas.revision += previous_revision;
 
             configure_artwork(&mut core, &request)?;
+            if let Some(value) = request.get("visual_registration") {
+                let registrations = value.try_to::<AnyDictionary>().map_err(|_| "invalid sprite canvas registration")?;
+                for (key, value) in registrations.iter_shared() {
+                    let id = key.try_to::<i64>().map_err(|_| "invalid sprite canvas registration")?;
+                    let padding = value.try_to::<Vector3i>().map_err(|_| "invalid sprite canvas registration")?;
+                    if !(i64::from(view * 500) + 112..=i64::from(view * 500) + 255).contains(&id) {
+                        return Err("invalid sprite canvas registration".into());
+                    }
+                    let key = id as u64 * 2;
+                    let sprite = core.sprites.images.get(&key).ok_or("missing registered sprite")?;
+                    let tile_width = 32 / config.divisor();
+                    if padding.x < tile_width
+                        || padding.x % tile_width != 0
+                        || padding.y < 0
+                        || padding.z < 0
+                        || padding.x + padding.y > sprite.w
+                        || padding.z >= sprite.h
+                    {
+                        return Err("invalid sprite canvas registration".into());
+                    }
+                    core.sprites.registration.insert(key, [padding.x, padding.y, padding.z]);
+                    // Candidate bounds reserve width / 4 below the baseline.
+                    core.sprite_limit.0 = core.sprite_limit.0.max(sprite.w + 4 * padding.z);
+                }
+            }
 
             // Shadow pairs: each packed RGBA color and the color that a shadow makes of it.
             for pair in ints(&request, "shadow_colors").chunks_exact(2) {

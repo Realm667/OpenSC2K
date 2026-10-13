@@ -22,6 +22,8 @@ var draw_building_ground := false
 # full-color art from an HD sprite pack, by sprite ID. It changes only the look
 # of a sprite, never its indexed pixels
 var high_resolution: Dictionary[int, HdSprite] = {}
+# Pack-local canvas registration: footprint width, left padding, bottom padding.
+var visual_registration: Dictionary[int, Vector3i] = {}
 
 
 static func load_path(path: String) -> Sc2SpriteArchive:
@@ -61,6 +63,7 @@ static func combine(archives: Array[Sc2SpriteArchive]) -> Sc2SpriteArchive:
 			result.entries.clear()
 			result.entries_by_id.clear()
 			result.high_resolution.clear()
+			result.visual_registration.clear()
 
 			return result
 
@@ -72,8 +75,10 @@ static func combine(archives: Array[Sc2SpriteArchive]) -> Sc2SpriteArchive:
 			result.entries.append(entry)
 			result.entries_by_id[entry.sprite_id] = entry
 			result.high_resolution.erase(entry.sprite_id)
+			result.visual_registration.erase(entry.sprite_id)
 
 		result.high_resolution.merge(archive.high_resolution, true)
+		result.visual_registration.merge(archive.visual_registration, true)
 
 	return result
 
@@ -87,6 +92,7 @@ func parse(bytes: PackedByteArray) -> bool:
 	visual_emission_artwork.clear()
 	draw_building_ground = false
 	high_resolution.clear()
+	visual_registration.clear()
 	parse_error = ""
 	redraw_small_highway_ground = false
 

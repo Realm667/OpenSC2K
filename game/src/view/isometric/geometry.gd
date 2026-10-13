@@ -58,7 +58,9 @@ static func maximum_sprite_size(sprites: Sc2SpriteArchive) -> Vector2i:
 		return result
 
 	for entry in sprites.entries:
-		result.x = maxi(result.x, entry.width)
+		var padding: Vector3i = sprites.visual_registration.get(entry.sprite_id, Vector3i.ZERO)
+		# The conservative lower bound uses one quarter of this width.
+		result.x = maxi(result.x, entry.width + 4 * padding.z)
 		result.y = maxi(result.y, entry.height)
 
 	# HD art can be taller than its indexed sprite

@@ -168,7 +168,8 @@ impl Builder {
     fn add(&mut self, draws: &mut Vec<Draw>, id: i32, flip: bool, x: i32, baseline: i32) -> Result<u64, String> {
         let key = self.sprites.get(id, flip)?;
         let sprite = &self.sprites.images[&key];
-        let mut draw = Draw::new(key, Rect::new(x, baseline - sprite.h, sprite.w, sprite.h));
+        let (left, bottom) = self.sprites.canvas_padding(key);
+        let mut draw = Draw::new(key, Rect::new(x - left, baseline + bottom - sprite.h, sprite.w, sprite.h));
         draw.sprite = id;
         draw.flip = flip;
         draws.push(draw);
@@ -280,7 +281,7 @@ impl Builder {
             let flip =
                 sprite < crate::nature::FIRST && ((self.city.flags[i] & flags::FLIPPED != 0) ^ (developed && self.city.rotation & 1 != 0));
             let image = self.sprites.get(sprite, flip)?;
-            let width = self.sprites.images[&image].w;
+            let width = self.sprites.footprint_width(image);
             if developed && c.building_ground {
                 // Paint the whole footprint before its one anchored building.
                 // Per-cell draws can cover the building's front in later tiles.

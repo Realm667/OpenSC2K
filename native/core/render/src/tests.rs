@@ -3,6 +3,49 @@ use super::painter::TRAFFIC;
 use super::*;
 
 #[test]
+fn registered_canvases_preserve_parcel_and_baseline_in_every_view_and_flip() {
+    for view in 0..3 {
+        for flip in [false, true] {
+            let mut b = fixture(8, view);
+            b.config.building_ground = true;
+            let divisor = b.config.divisor();
+            let (width, height, left, right, top, bottom) =
+                (64 / divisor, 80 / divisor, 4 / divisor, 8 / divisor, 12 / divisor, 4 / divisor);
+            let id = view * 500 + 112;
+            let key = id as u64 * 2;
+            let solid = |w: i32, h: i32| Sprite {
+                w,
+                h,
+                rgba: vec![255; (w * h * 4) as usize],
+                la: vec![255; (w * h * 2) as usize],
+            };
+            b.sprites.images.insert(key, solid(width, height));
+            let i = b.city.index(3, 3);
+            b.city.buildings[i] = 112;
+            b.city.zones[i] = 0x80;
+            b.city.flags[i] = if flip { ids::sc2tile_flags::FLIPPED } else { 0 };
+            let original = b.paint(3, 3).unwrap();
+            let original_draw = original.iter().find(|d| d.sprite == id).unwrap();
+            b.sprites.images.remove(&(key + 1));
+            b.sprites.images.insert(key, solid(width + left + right, height + top + bottom));
+            b.sprites.registration.insert(key, [width, left, bottom]);
+            let registered = b.paint(3, 3).unwrap();
+            assert_eq!(original.len(), registered.len(), "padding changed the parcel's ground tile count");
+            for (before, after) in original.iter().zip(&registered).filter(|(d, _)| d.sprite != id) {
+                assert_eq!(before.rect, after.rect, "padding changed terrain or markers");
+            }
+            let draw = registered.iter().find(|d| d.sprite == id).unwrap();
+            assert_eq!(draw.rect.x, original_draw.rect.x - if flip { right } else { left });
+            assert_eq!(draw.rect.y, original_draw.rect.y - top);
+            let foot = b.sprites.footprint_draw(draw);
+            assert_eq!(foot.rect.x, original_draw.rect.x);
+            assert_eq!(foot.rect.w, original_draw.rect.w);
+            assert_eq!(foot.rect.y + foot.rect.h, original_draw.rect.y + original_draw.rect.h);
+        }
+    }
+}
+
+#[test]
 fn forests_keep_density_clearings_and_local_cache_invalidation() {
     for view in 0..3 {
         let mut b = fixture(16, view);

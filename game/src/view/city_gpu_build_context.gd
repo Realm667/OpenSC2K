@@ -139,6 +139,11 @@ func prepare(city: CityState, palette: Sc2Palette, sprites: Sc2SpriteArchive, vi
 					artwork[id] = CityIsometricRenderer.sprite_image(sprites, palette, images, id, false)
 
 		var request := _snapshot(city)
+		var registrations: Dictionary[int, Vector3i] = {}
+		for id: int in sprites.visual_registration:
+			if artwork.has(id):
+				registrations[id] = sprites.visual_registration[id]
+		request["visual_registration"] = registrations
 
 		# GPU regions and `raster_artwork` draw full-color art
 		if pack_atlas or with_artwork:
