@@ -2,6 +2,8 @@ shader_type canvas_item;
 render_mode blend_add;
 
 uniform float night = 0.0;
+uniform float interpolation = 1.0;
+uniform bool encoded_surfaces = false;
 uniform sampler2DArray surfaces : filter_nearest, repeat_disable;
 uniform sampler2D headlight_data : filter_nearest, repeat_disable;
 varying flat float layer;
@@ -9,11 +11,13 @@ varying flat vec2 vehicle_world;
 varying flat vec2 forward;
 varying flat float front;
 varying flat float opacity;
+varying flat vec2 world_origin;
 
 void vertex() {
 	layer = float(INSTANCE_ID);
 	vec4 data = texelFetch(headlight_data, ivec2(INSTANCE_ID, 0), 0);
-	vehicle_world = data.xy;
+	vehicle_world = data.xy + texelFetch(headlight_data, ivec2(INSTANCE_ID, 1), 0).xy * (1.0 - interpolation);
+	world_origin = texelFetch(headlight_data, ivec2(INSTANCE_ID, 1), 0).zw;
 	int packed = int(data.z);
 	int direction = packed % 8;
 	forward = vec2(direction == 1 ? 1.0 : (direction == 3 ? -1.0 : 0.0),
@@ -29,6 +33,10 @@ void vertex() {
 void fragment() {
 	// QuadMesh has the opposite vertical UV orientation to Sprite2D.
 	vec4 road = texture(surfaces, vec3(UV.x, 1.0 - UV.y, layer));
+	if (encoded_surfaces) {
+		vec3 bytes = round(road.rgb * 255.0);
+		road.rg = vec2(bytes.r * 16.0 + floor(bytes.g / 16.0), mod(bytes.g, 16.0) * 256.0 + bytes.b) / 512.0 - vec2(4.0) + world_origin;
+	}
 	vec2 relative = (road.rg - vehicle_world) * 16.0;
 	float distance = dot(relative, forward) - front;
 	float across = abs(dot(relative, vec2(-forward.y, forward.x)));

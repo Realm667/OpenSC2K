@@ -48,6 +48,12 @@ func _draw() -> void:
 
 func render(app: CityApplication, figures: Array, sprites: CityLifeSprites) -> void:
 	var source_art := app.asset_state.asset_source.assets.visual_artwork if app.asset_state.asset_source != null else null
+	var raster_scale := 4 if source_art != null else 1
+	if lights.raster_scale != raster_scale:
+		lights.set_raster_scale(raster_scale)
+		if road_layer != null:
+			road_layer.free()
+			road_layer = null
 	if sprites.set_artwork(source_art):
 		if gpu != null:
 			for node in gpu.groups + gpu.emissions:
@@ -63,6 +69,7 @@ func render(app: CityApplication, figures: Array, sprites: CityLifeSprites) -> v
 	var light_active := app.visual_environment.night > 0.0 and VisualEnhancementOptions.detail_lights_visible(app.preferences.visual_enhancements, map.zoom_factor)
 	if road_layer == null:
 		road_layer = CityLifeHeadlights.new()
+		(road_layer as CityLifeHeadlights).raster_scale = raster_scale
 		road_layer.show_behind_parent = true
 		add_child(road_layer)
 	if light_active != _emission_active:
@@ -137,6 +144,7 @@ func sync_view(app: CityApplication) -> void:
 	(material as ShaderMaterial).set_shader_parameter("vehicle_has_emission", allowed and _emission_active)
 	if road_layer != null:
 		road_layer.visible = allowed and app.visual_environment.night > 0.0
+		(road_layer as CityLifeHeadlights).set_interpolation(interpolation)
 	if road_layer != null and (app.visual_environment.night if allowed else 0.0) != _light_night:
 		_light_night = app.visual_environment.night if allowed else 0.0
 		(road_layer as CityLifeHeadlights).set_night(_light_night)
@@ -324,6 +332,17 @@ static func visible_sprite(sprite: Image, origin: Vector2i, occluders: Array) ->
 		var clear := Image.create(overlap.size.x, overlap.size.y, false, sprite.get_format())
 		visible.blit_rect_mask(clear, mask, Rect2i(Vector2i.ZERO, overlap.size), overlap.position - origin)
 	return visible
+
+
+static func scaled_occluders(occluders: Array, raster_scale: int) -> Array:
+	if raster_scale == 1:
+		return occluders
+	var result: Array = []
+	for occluder: Dictionary in occluders:
+		var mask: Image = occluder.image.duplicate()
+		mask.resize(mask.get_width() * raster_scale, mask.get_height() * raster_scale, Image.INTERPOLATE_NEAREST)
+		result.append({"image": mask, "origin": occluder.origin * raster_scale})
+	return result
 
 
 static func hidden_at(point: Vector2i, occluders: Array) -> bool:

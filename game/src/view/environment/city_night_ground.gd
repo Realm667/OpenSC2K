@@ -124,6 +124,7 @@ func sync(app: CityApplication, strength: float, elapsed := 0.0, prepare := fals
 	if signature != revision:
 		reset()
 		signature = revision
+		roads.set_raster_scale(4 if archive != null and not archive.high_resolution.is_empty() else 1)
 	var changed := roads.sync_geometry(city)
 	var shape := [app.view_state.surface_visibility.duplicate()]
 	if roads.geometry_reset or geometry != shape:
@@ -417,16 +418,18 @@ func _build(app: CityApplication, tile: Vector2i) -> Dictionary:
 	var city := app.document_state.city
 	var center := CityLifePaths.point(city, tile, 0, 2, 0.5, false)
 	var origin := Vector2i(center) - Vector2i(32, 32)
-	var image := Image.create(64, 64, false, Image.FORMAT_RGBA8)
+	var edge := 64 * roads.raster_scale
+	var image := Image.create(edge, edge, false, Image.FORMAT_RGBA8)
 	var parts := templates.receiver(city, tile, origin, sources(city, tile), roads)
 	# Earlier approaches own overlapping pixels, unless their own deck is hidden.
 	# Clip each approach before composition to preserve stacked road crossings.
 	for index in range(parts.size() - 1, -1, -1):
 		var part: Dictionary = parts[index]
-		var visible := CityLifeCanvas.visible_sprite(part.image, origin, masker._candidates(app, tile, part.enter))
-		image.blit_rect_mask(visible, visible, Rect2i(0, 0, 64, 64), Vector2i.ZERO)
+		var occluders := CityLifeCanvas.scaled_occluders(masker._candidates(app, tile, part.enter), roads.raster_scale)
+		var visible := CityLifeCanvas.visible_sprite(part.image, origin * roads.raster_scale, occluders)
+		image.blit_rect_mask(visible, visible, Rect2i(0, 0, edge, edge), Vector2i.ZERO)
 	var result := CityNightFixtures.build(app, tile, origin,
-		CityNightFixtures.street_layout(city, tile, int(profiles.street.spacing)), masker, templates.texture)
+		CityNightFixtures.street_layout(city, tile, int(profiles.street.spacing)), masker, templates.texture, roads.raster_scale)
 	result.merge({"texture": templates.texture(image), "origin": origin})
 	return result
 
@@ -434,7 +437,8 @@ func _build(app: CityApplication, tile: Vector2i) -> Dictionary:
 func _draw() -> void:
 	for tile in visible_tiles:
 		if cache.has(tile):
-			draw_texture(cache[tile].texture, cache[tile].origin, _fade_color(tile))
+			var texture: Texture2D = cache[tile].texture
+			draw_texture_rect(texture, Rect2(cache[tile].origin, texture.get_size() / roads.raster_scale), false, _fade_color(tile))
 
 
 func _draw_fixtures() -> void:
@@ -442,7 +446,7 @@ func _draw_fixtures() -> void:
 		if not cache.has(tile):
 			continue
 		var entry: Dictionary = cache[tile]
-		fixtures.draw_texture(entry.fixtures, entry.origin, _fade_color(tile))
+		fixtures.draw_texture_rect(entry.fixtures, Rect2(entry.origin, entry.fixtures.get_size() / roads.raster_scale), false, _fade_color(tile))
 
 
 func _refresh_signals() -> void:
@@ -457,7 +461,7 @@ func _draw_signals() -> void:
 	for tile in signal_tiles:
 		for signal_light: Dictionary in cache[tile].signals:
 			var lens := CityNightFixtures.signal_lens(tile, signal_light.axis, clock)
-			signals.draw_texture(signal_light.lenses[lens], signal_light.origin, _fade_color(tile))
+			signals.draw_texture_rect(signal_light.lenses[lens], Rect2(signal_light.origin, Vector2(9, 11)), false, _fade_color(tile))
 
 
 func sync_fade_clock() -> void:

@@ -18,6 +18,8 @@ func _initialize() -> void:
 			assert(CityLifePaths.edge_height(city, tile, high) == 4 + raised)
 			assert(CityLifePaths.edge_height(city, tile, low) == 3 + raised)
 			_check_surface(city, tile, high, raised)
+			if rotation == 0:
+				_check_surface(city, tile, high, raised, 4)
 			_check_lamp(city, tile, high, raised)
 			assert(State.capture(city.document) == before, "Slope display queries changed the city")
 			for walking in [false, true]:
@@ -37,8 +39,9 @@ func _initialize() -> void:
 	quit()
 
 
-func _check_surface(city: CityState, tile: Vector2i, high: int, raised: float) -> void:
+func _check_surface(city: CityState, tile: Vector2i, high: int, raised: float, raster_scale := 1) -> void:
 	var lights := CityLifeLights.new()
+	lights.set_raster_scale(raster_scale)
 	var seen := 0
 	for patch: Dictionary in lights._road_patches(city, tile, high):
 		for y in patch.image.get_height():
@@ -52,7 +55,7 @@ func _check_surface(city: CityState, tile: Vector2i, high: int, raised: float) -
 				var height := 3.5 + raised + local.dot(Vector2(CityLifePaths.DIRECTIONS[high]))
 				var expected := Vector2(48 + city.map_size * 16, 520 + 128 * 8) \
 					+ Vector2((local.x - local.y) * 16, (local.x + local.y) * 8 - height * 12)
-				var actual := Vector2(patch.origin) + Vector2(x + 0.5, y + 0.5)
+				var actual := (Vector2(patch.origin) + Vector2(x + 0.5, y + 0.5)) / raster_scale
 				assert(expected.distance_to(actual) < 0.001, "Light receiver is flat or misaligned with sloping asphalt")
 	assert(seen > 8, "Slope has no light receiver")
 

@@ -16,7 +16,7 @@ func clear() -> void:
 func receiver(city: CityState, tile: Vector2i, origin: Vector2i, lights: Array[Dictionary], roads: CityLifeLights) -> Array:
 	var height := CityLifePaths.edge_height(city, tile, 0)
 	var key: Array = [CityLifePaths.ports(city, tile), CityLifePaths.diagonal(city, tile),
-		CityLifeLights._project(city, tile, Vector2.ZERO, height) - Vector2(origin)]
+		CityLifeLights._project(city, tile, Vector2.ZERO, height) - Vector2(origin), roads.raster_scale]
 	for enter in 4:
 		key.append(CityLifePaths.edge_height(city, tile, enter) - height)
 		for exit in 4:
@@ -54,10 +54,12 @@ func texture(image: Image) -> Texture2D:
 
 static func _rasterize(city: CityState, tile: Vector2i, origin: Vector2i, lights: Array[Dictionary], roads: CityLifeLights) -> Array:
 	var parts: Array = []
+	var edge := 64 * roads.raster_scale
+	origin *= roads.raster_scale
 	for enter in 4:
 		if not CityLifePaths.ports(city, tile) & (1 << enter):
 			continue
-		var image := Image.create(64, 64, false, Image.FORMAT_RGBA8)
+		var image := Image.create(edge, edge, false, Image.FORMAT_RGBA8)
 		var seen := {}
 		for patch: Dictionary in roads._road_patches(city, tile, enter):
 			var pixels: Image = patch.image
@@ -67,7 +69,7 @@ static func _rasterize(city: CityState, tile: Vector2i, origin: Vector2i, lights
 					if sample.a <= 0.0:
 						continue
 					var local: Vector2i = patch.origin + Vector2i(x, y) - origin
-					if seen.has(local) or not Rect2i(0, 0, 64, 64).has_point(local):
+					if seen.has(local) or not Rect2i(0, 0, edge, edge).has_point(local):
 						continue
 					seen[local] = true
 					var color := Color(0, 0, 0, 1)

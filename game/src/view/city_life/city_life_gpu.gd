@@ -106,7 +106,10 @@ func render(canvas: CityLifeCanvas, entries: Array[Dictionary]) -> void:
 			upload_bytes += 128 * 128 * 4
 		var rect := rectangles[entry.sprite.get_instance_id()]
 		var at := slot * STRIDE
-		var destination: Vector2i = entry.origin - origin
+		var visual_origin := Vector2(entry.origin)
+		if artwork_scale > 1:
+			visual_origin += figure.position - figure.position.round()
+		var destination := visual_origin - Vector2(origin)
 		buffers[group][at] = rect.size.x / artwork_scale
 		buffers[group][at + 3] = destination.x
 		buffers[group][at + 5] = rect.size.y / artwork_scale
@@ -116,8 +119,8 @@ func render(canvas: CityLifeCanvas, entries: Array[Dictionary]) -> void:
 		data[group][offset + 1] = rect.position.y
 		data[group][offset + 2] = rect.size.x
 		data[group][offset + 3] = rect.size.y
-		data[group][GROUP * 4 + offset] = entry.origin.x
-		data[group][GROUP * 4 + offset + 1] = entry.origin.y
+		data[group][GROUP * 4 + offset] = visual_origin.x
+		data[group][GROUP * 4 + offset + 1] = visual_origin.y
 		var previous := figure.previous_position if figure.has_previous_position else figure.position
 		data[group][GROUP * 4 + offset + 2] = previous.x - figure.position.x
 		data[group][GROUP * 4 + offset + 3] = previous.y - figure.position.y

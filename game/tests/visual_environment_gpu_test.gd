@@ -786,6 +786,17 @@ func _check_hd_animation_masks() -> void:
 	await RenderingServer.frame_post_draw
 	var second := viewport.get_texture().get_image().get_pixel(4, 4)
 	assert(second.b > 0.9 and second.r < 0.1, "HD animation must advance the emission UV together with its artwork")
+	material.shader = CityNightLighting.EMISSION
+	material.set_shader_parameter("has_emission", true)
+	material.set_shader_parameter("emission", ImageTexture.create_from_image(masks))
+	material.set_shader_parameter("artwork_animation_seconds", 0.125)
+	await RenderingServer.frame_post_draw
+	var glow := viewport.get_texture().get_image().get_pixel(4, 4)
+	assert(glow.b > 0.9 and glow.r < 0.1, "Bloom must use the same animated lightmap frame as the city artwork")
+	# Native grid UVs are distances, not atlas coordinates. They cannot occlude lights.
+	sprite.self_modulate = Color(48.0 / 255.0, 0, 0, 1)
+	await RenderingServer.frame_post_draw
+	assert(viewport.get_texture().get_image().is_invisible(), "The HD grid erased underlying emission")
 	viewport.queue_free()
 	await process_frame
 

@@ -66,9 +66,11 @@ func process(active: bool, night: float, options: Dictionary, elapsed := 0.0, pr
 	var map := app.map_view
 	var bounds := map.camera._camera_rect()
 	var padded := bounds.grow(PADDING)
-	# Keep crisp emitters at half resolution. Only the two diffuse blur passes
-	# use a quarter-resolution surface, preserving small moving lamps.
-	var emission_reduction := minf(0.5, 1024.0 / maxf(padded.size.x, padded.size.y))
+	# Master windows can be smaller than a logical SC2K pixel. Retain their
+	# screen resolution before the diffuse blur instead of dropping thin lamps.
+	var archive := app.static_render.original_archive_for_view(app.static_render.city_view_size())
+	var master_art := archive != null and not archive.high_resolution.is_empty()
+	var emission_reduction := minf(1.0 if master_art else 0.5, (2048.0 if master_art else 1024.0) / maxf(padded.size.x, padded.size.y))
 	var reduction := emission_reduction * 0.5
 	var size := Vector2i((padded.size * reduction).ceil())
 	buffers[0].size = Vector2i((padded.size * emission_reduction).ceil())
@@ -83,6 +85,8 @@ func process(active: bool, night: float, options: Dictionary, elapsed := 0.0, pr
 	scene.position = (map.camera._draw_offset(view_scale) - padded.position) * emission_reduction
 	if source != map.city_source:
 		_rebuild(map.city_source)
+	for copy in copies:
+		(copy.material as ShaderMaterial).set_shader_parameter("artwork_animation_seconds", map.artwork_animation_seconds)
 	_sync_moving()
 	output.position = bounds.position
 	output.size = bounds.size

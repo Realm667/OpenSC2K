@@ -137,7 +137,10 @@ func underground_animation_image(base_ticks: int) -> Image:
 		var low := minf(source.r, minf(source.g, source.b))
 		var remapped: Color
 
-		if index >= 200 and index <= 207:
+		if index == CityUndergroundView.WHITE_PALETTE_INDEX:
+			# This is a semantic background address, even in a custom palette.
+			remapped = Color(0.125, 0.157, 0.188)
+		elif index >= 200 and index <= 207:
 			remapped = Color(0.22, 0.66, 0.82).lerp(Color(0.66, 0.94, 1.0), source.g)
 		elif index >= 140 and index <= 147:
 			# the fixed blue pipe ramp means no water

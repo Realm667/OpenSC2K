@@ -15,6 +15,13 @@ var images: Array[Image] = []
 var slots: Dictionary[int, int] = {}
 var free_slots: Array[int] = []
 var night := 0.0
+var raster_scale := 1
+var previous_world: Dictionary[int, Vector2] = {}
+
+
+func set_interpolation(value: float) -> void:
+	for group in groups:
+		(group.material as ShaderMaterial).set_shader_parameter("interpolation", value if raster_scale > 1 else 1.0)
 
 
 func set_night(value: float) -> void:
@@ -32,6 +39,7 @@ func render(city: CityState, figures: Array, lights: CityLifeLights, offset: Vec
 		if not seen.has(id):
 			var slot := slots[id]
 			slots.erase(id)
+			previous_world.erase(id)
 			free_slots.append(slot)
 			images[slot] = null
 			var group := slot / GROUP_SIZE
@@ -65,13 +73,19 @@ func render(city: CityState, figures: Array, lights: CityLifeLights, offset: Vec
 		parameters[group][layer * 4 + 1] = world.y
 		parameters[group][layer * 4 + 2] = figure.direction + figure.vehicle_kind * 8
 		parameters[group][layer * 4 + 3] = figure.opacity()
+		var delta: Vector2 = previous_world.get(figure.id, world) - world
+		parameters[group][GROUP_SIZE * 4 + layer * 4] = delta.x
+		parameters[group][GROUP_SIZE * 4 + layer * 4 + 1] = delta.y
+		parameters[group][GROUP_SIZE * 4 + layer * 4 + 2] = surface.world_origin.x
+		parameters[group][GROUP_SIZE * 4 + layer * 4 + 3] = surface.world_origin.y
+		previous_world[figure.id] = world
 	for index in groups.size():
 		groups[index].multimesh.buffer = buffers[index]
-		parameter_textures[index].update(Image.create_from_data(GROUP_SIZE, 1, false, Image.FORMAT_RGBAF, parameters[index].to_byte_array()))
+		parameter_textures[index].update(Image.create_from_data(GROUP_SIZE, 2, false, Image.FORMAT_RGBAF, parameters[index].to_byte_array()))
 
 
 func _add_group() -> void:
-	var blank := Image.create(96, 96, false, Image.FORMAT_RGBAF)
+	var blank := Image.create(96 * raster_scale, 96 * raster_scale, false, Image.FORMAT_RGBA8 if raster_scale > 1 else Image.FORMAT_RGBAF)
 	var layers: Array[Image] = []
 	layers.resize(GROUP_SIZE)
 	layers.fill(blank)
@@ -88,9 +102,10 @@ func _add_group() -> void:
 	shader.shader = SHADER
 	shader.set_shader_parameter("surfaces", texture)
 	shader.set_shader_parameter("night", night)
+	shader.set_shader_parameter("encoded_surfaces", raster_scale > 1)
 	var values := PackedFloat32Array()
-	values.resize(GROUP_SIZE * 4)
-	var parameter_texture := ImageTexture.create_from_image(Image.create_from_data(GROUP_SIZE, 1, false, Image.FORMAT_RGBAF, values.to_byte_array()))
+	values.resize(GROUP_SIZE * 8)
+	var parameter_texture := ImageTexture.create_from_image(Image.create_from_data(GROUP_SIZE, 2, false, Image.FORMAT_RGBAF, values.to_byte_array()))
 	shader.set_shader_parameter("headlight_data", parameter_texture)
 	var group := MultiMeshInstance2D.new()
 	group.multimesh = multi

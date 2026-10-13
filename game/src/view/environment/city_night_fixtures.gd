@@ -77,45 +77,58 @@ static func signal_lens(tile: Vector2i, axis: int, seconds: float) -> int:
 
 
 static func build(app: CityApplication, tile: Vector2i, origin: Vector2i, layout: Array[Dictionary], masker: CityLifeCanvas,
-		texture_lookup := Callable()) -> Dictionary:
+		texture_lookup := Callable(), raster_scale := 1) -> Dictionary:
 	var city := app.document_state.city
-	var art := Image.create(64, 64, false, Image.FORMAT_RGBA8)
+	origin *= raster_scale
+	var art := Image.create(64 * raster_scale, 64 * raster_scale, false, Image.FORMAT_RGBA8)
 	for fixture in layout:
-		var occluders := masker._candidates(app, tile, fixture.enter)
-		var foot := _foot(city, tile, fixture.offset, fixture.enter)
-		var head := foot + Vector2i(0, -7)
+		var occluders := CityLifeCanvas.scaled_occluders(masker._candidates(app, tile, fixture.enter), raster_scale)
+		var foot := _foot(city, tile, fixture.offset, fixture.enter, raster_scale)
+		var head := foot + Vector2i(0, -7 * raster_scale)
 		for y in range(head.y, foot.y + 1):
 			_pixel(art, origin, Vector2i(foot.x, y), Color("6d7378"), occluders)
+			if raster_scale > 1:
+				_pixel(art, origin, Vector2i(foot.x + 1, y), Color("929a9a"), occluders)
 		# A short arm bends toward the carriageway.
 		var inward := (Vector2(fixture.get("center", Vector2.ZERO)) - Vector2(fixture.offset)).normalized() * 0.12
-		var arm := Vector2i(roundi((inward.x - inward.y) * 16.0), roundi((inward.x + inward.y) * 8.0))
-		for step in 4:
-			_pixel(art, origin, head + Vector2i(Vector2(arm) * step / 3.0), Color("8c8d80"), occluders)
+		var arm := Vector2i(roundi((inward.x - inward.y) * 16.0 * raster_scale), roundi((inward.x + inward.y) * 8.0 * raster_scale))
+		for step in 4 * raster_scale:
+			_pixel(art, origin, head + Vector2i(Vector2(arm) * step / (4.0 * raster_scale - 1.0)), Color("8c8d80"), occluders)
 		head += arm
-		_halo(art, origin, head, Color("ffd890"), 3.0, occluders)
+		_halo(art, origin, head, Color("ffd890"), 3.0 * raster_scale, occluders)
+		if raster_scale > 1:
+			for x in range(-2, 5):
+				for y in range(-1, 2):
+					_pixel(art, origin, head + Vector2i(x, y), Color("ffe5a2") if y == 1 else Color("6d7378"), occluders)
 		_pixel(art, origin, head, Color("fff4d4"), occluders)
 		_pixel(art, origin, head + Vector2i.RIGHT, Color("ffe5a2"), occluders)
 	var signals: Array[Dictionary] = []
 	for direction in signal_directions(city, tile):
 		var forward := Vector2(CityLifePaths.DIRECTIONS[direction])
 		var side := Vector2(-forward.y, forward.x)
-		var foot := _foot(city, tile, forward * 0.36 + side * 0.30, direction)
-		var head := foot + Vector2i(0, -6)
-		var occluders := masker._candidates(app, tile, direction)
+		var foot := _foot(city, tile, forward * 0.36 + side * 0.30, direction, raster_scale)
+		var head := foot + Vector2i(0, -6 * raster_scale)
+		var occluders := CityLifeCanvas.scaled_occluders(masker._candidates(app, tile, direction), raster_scale)
 		for y in range(head.y, foot.y + 1):
 			_pixel(art, origin, Vector2i(foot.x, y), Color("687075"), occluders)
-		for x in range(-1, 2):
-			for y in range(-1, 4):
+			if raster_scale > 1:
+				_pixel(art, origin, Vector2i(foot.x + 1, y), Color("929a9a"), occluders)
+		for x in range(-raster_scale, 2 * raster_scale):
+			for y in range(-raster_scale, 4 * raster_scale):
 				_pixel(art, origin, head + Vector2i(x, y), Color("24292e"), occluders)
 		var lenses: Array[Texture2D] = []
-		var lamp_origin := head - Vector2i(4, 4)
+		var lamp_origin := head - Vector2i(4, 4) * raster_scale
 		for lens in 3:
-			var image := Image.create(9, 11, false, Image.FORMAT_RGBA8)
-			var point := head + Vector2i(0, lens)
-			_halo(image, lamp_origin, point, SIGNAL_COLORS[lens], 2.5, occluders)
+			var image := Image.create(9 * raster_scale, 11 * raster_scale, false, Image.FORMAT_RGBA8)
+			var point := head + Vector2i(0, lens * raster_scale)
+			_halo(image, lamp_origin, point, SIGNAL_COLORS[lens], 2.5 * raster_scale, occluders)
+			if raster_scale > 1:
+				for y in range(-1, 2):
+					for x in range(-1, 2):
+						_pixel(image, lamp_origin, point + Vector2i(x, y), SIGNAL_COLORS[lens], occluders)
 			_pixel(image, lamp_origin, point, SIGNAL_COLORS[lens], occluders)
 			lenses.append(_texture(image, texture_lookup))
-		signals.append({"origin": lamp_origin, "lenses": lenses, "axis": direction % 2})
+		signals.append({"origin": Vector2(lamp_origin) / raster_scale, "lenses": lenses, "axis": direction % 2})
 	return {"fixtures": _texture(art, texture_lookup), "signals": signals}
 
 
@@ -123,14 +136,14 @@ static func _texture(image: Image, lookup: Callable) -> Texture2D:
 	return lookup.call(image) if lookup.is_valid() else ImageTexture.create_from_image(image)
 
 
-static func _foot(city: CityState, tile: Vector2i, offset: Vector2, enter: int) -> Vector2i:
+static func _foot(city: CityState, tile: Vector2i, offset: Vector2, enter: int, raster_scale := 1) -> Vector2i:
 	if CityLifePaths.diagonal(city, tile):
 		var exit := CityLifePaths.paired_exit(city, tile, enter)
 		var a := Vector2(CityLifePaths.DIRECTIONS[enter]) * 0.5
 		var b := Vector2(CityLifePaths.DIRECTIONS[exit]) * 0.5
 		var progress := clampf((offset - a).dot(b - a) / a.distance_squared_to(b), 0, 1)
 		var height := lerpf(CityLifePaths.edge_height(city, tile, enter), CityLifePaths.edge_height(city, tile, exit), progress)
-		return Vector2i(CityLifeLights._project(city, tile, offset, height).round())
+		return Vector2i((CityLifeLights._project(city, tile, offset, height) * raster_scale).round())
 	var ports := CityLifePaths.ports(city, tile)
 	var exit := (enter + 2) % 4
 	if not ports & (1 << exit):
@@ -149,7 +162,7 @@ static func _foot(city: CityState, tile: Vector2i, offset: Vector2, enter: int) 
 		if along > progress:
 			progress = along
 			height = lerpf(middle, CityLifePaths.edge_height(city, tile, direction), progress)
-	return Vector2i(CityLifeLights._project(city, tile, offset, height).round())
+	return Vector2i((CityLifeLights._project(city, tile, offset, height) * raster_scale).round())
 
 
 static func _halo(image: Image, origin: Vector2i, center: Vector2i, color: Color, radius: float, occluders: Array) -> void:

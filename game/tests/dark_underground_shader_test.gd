@@ -35,6 +35,11 @@ func _run() -> void:
 		source_indices.set_pixel(index, 0, Color8(index, index, index))
 
 	var underground_texture := ImageTexture.create_from_image(source_palette.underground_animation_image(0))
+	# Replacement packs may use palette slot 255 for a warm artwork color.
+	# The native underground background still addresses that same semantic slot.
+	source_palette.colors[255] = Color("eeca7f")
+	var custom_background := source_palette.underground_animation_image(0).get_pixel(255, 0)
+	assert(custom_background.b > custom_background.r and custom_background.v < 0.25)
 	material.set_shader_parameter("palette_indices", ImageTexture.create_from_image(source_indices))
 	material.set_shader_parameter("dark_underground_palette", underground_texture)
 	material.set_shader_parameter("dark_underground", true)

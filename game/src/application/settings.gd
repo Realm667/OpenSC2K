@@ -7,6 +7,10 @@ var app: CityApplication
 var preferences: AppPreferences
 var _visual_save_timer: Timer
 var _visual_save_pending := false
+var graphics_loading := false
+var _graphics_load: GraphicsSourceLoad
+var _prepared_graphics: GameAssetSource
+var graphics_progress: ProgressOverlay
 
 
 func _init(application: CityApplication) -> void:
@@ -131,6 +135,60 @@ func _refresh_settings_pack_names() -> void:
 # apply the values in the Settings dialog. the dialog calls this for each
 # change, so apply and save only what changed. a pack that does not load keeps
 # the earlier pack and does not stop the other settings
+func request_apply_settings() -> void:
+	if graphics_loading:
+		return
+	var dialog := app.main_overlays.settings_dialog
+	var values := dialog.selected_values()
+	if dialog.visual_change_in_progress or (values.graphics_source == preferences.graphics_source
+			and (values.graphics_source != "folder" or _same_pack(values.graphics_folder, preferences.graphics_folder))):
+		apply_settings()
+		return
+	graphics_loading = true
+	var reopen_dialog := dialog.visible
+	# Embedded Window content is above the main canvas regardless of z_index.
+	# Close that surface temporarily so it cannot cover the loading indicator.
+	dialog.hide()
+	if graphics_progress == null:
+		graphics_progress = preload("res://src/ui/shared/progress_overlay.tscn").instantiate()
+		app.main_overlays._register(graphics_progress, app.main_overlays, CityDialogRegistry.Modality.BLOCKING)
+		app.tree_exiting.connect(_finish_graphics_worker)
+	graphics_progress.show_progress("Preparing Visual Enhancements", "Preparing city graphics…", 0.0)
+	# Draw the existing progress component before starting any expensive decode.
+	await app.get_tree().process_frame
+	_graphics_load = GraphicsSourceLoad.new()
+	var started := _graphics_load.start(app.asset_state.reference_root, values.graphics_source, values.graphics_folder)
+	if started == OK:
+		while _graphics_load != null and _graphics_load.thread.is_alive():
+			graphics_progress.show_progress("Preparing Visual Enhancements", "Preparing city graphics…", _graphics_load.fraction() * 0.9)
+			await app.get_tree().process_frame
+		if _graphics_load == null:
+			return
+		_prepared_graphics = _graphics_load.finish()
+		_graphics_load = null
+	else:
+		_prepared_graphics = GameAssetSource.new()
+		_prepared_graphics.error = error_string(started)
+		_graphics_load = null
+	graphics_progress.show_progress("Preparing Visual Enhancements", "Preparing city graphics…", 0.9)
+	await app.get_tree().process_frame
+	apply_settings()
+	_prepared_graphics = null
+	graphics_progress.show_progress("Preparing Visual Enhancements", "Preparing city graphics…", 1.0)
+	await app.get_tree().process_frame
+	graphics_progress.hide()
+	graphics_loading = false
+	if reopen_dialog:
+		dialog.popup_centered()
+	# The existing city pre-cache owns the remaining per-region preparation.
+
+
+func _finish_graphics_worker() -> void:
+	if _graphics_load != null and _graphics_load.thread.is_started():
+		_graphics_load.finish()
+	_graphics_load = null
+
+
 func apply_settings() -> void:
 	var dialog := app.main_overlays.settings_dialog
 	# Visual controls have their own signal. Do not revisit audio, packs, input
@@ -176,15 +234,19 @@ func apply_settings() -> void:
 
 	if (values.graphics_source != preferences.graphics_source
 			or (values.graphics_source == "folder" and not _same_pack(values.graphics_folder, preferences.graphics_folder))):
-		var selected := GameAssetSource.load_source(app.asset_state.reference_root, values.graphics_source, values.graphics_folder)
+		var selected := _prepared_graphics if _prepared_graphics != null else GameAssetSource.load_source(app.asset_state.reference_root, values.graphics_source, values.graphics_folder)
 
 		if selected.error.is_empty():
+			dialog.pack_error_label.hide()
 			media_packs_changed = media_packs_changed or not app.asset_state.assets_ready
 			app.assets.apply_graphics_source(selected)
 			preferences.graphics_source = values.graphics_source
 			preferences.graphics_folder = values.graphics_folder
 		else:
-			app.assets.show_graphics_source_error(selected.error)
+			if graphics_loading:
+				dialog.show_pack_error(selected.error)
+			else:
+				app.assets.show_graphics_source_error(selected.error)
 			_show_saved_pack(dialog.folder_edit, preferences.graphics_folder if preferences.graphics_source == "folder" else "")
 
 	if not _same_pack(values.hd_pack_folder, preferences.hd_pack_folder):

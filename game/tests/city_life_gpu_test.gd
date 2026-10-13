@@ -55,12 +55,57 @@ func _run() -> void:
 	await process_frame
 	await _check_headlight_batches(false)
 	await _check_headlight_batches(true)
+	await _check_headlight_batches(false, 4)
 	await _check_sparse_artwork(false)
 	await _check_sparse_artwork(true)
 	await _check_instances(false)
 	await _check_instances(true)
+	await _check_hd_subpixel_motion()
 	print("PASS: GPU city-life colors, transparent background, cloud shadows and environment lighting")
 	quit()
+
+
+func _check_hd_subpixel_motion() -> void:
+	var viewport := SubViewport.new()
+	viewport.size = Vector2i(128, 64)
+	viewport.transparent_bg = true
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	root.add_child(viewport)
+	var canvas := CityLifeCanvas.new()
+	canvas.scale = Vector2.ONE * 4
+	canvas.source_bounds = Rect2i(0, 0, 32, 16)
+	viewport.add_child(canvas)
+	var sprites := CityLifeSprites.new()
+	sprites.set_artwork(VisualArtwork.new())
+	canvas.gpu = CityLifeGpu.new()
+	canvas.gpu.prepare(sprites, canvas.lights)
+	var sprite := sprites.sprite(false, 0, 1, 0)
+	var figure := CityLifeController.Figure.new()
+	figure.position = Vector2(12.25, 7)
+	figure.previous_position = figure.position - Vector2.RIGHT
+	figure.has_previous_position = true
+	var entries: Array[Dictionary] = [{"figure": figure, "sprite": sprite, "origin": Vector2i(6, 3), "opacity": 1.0, "occluders": []}]
+	canvas.gpu.render(canvas, entries)
+	assert(is_equal_approx(canvas.gpu.buffers[0][3], 6.25), "HD origin was rounded to the original grid")
+	var previous := -1.0
+	for fraction in [0.0, 0.25, 0.5, 0.75, 1.0]:
+		(canvas.gpu.groups[0].material as ShaderMaterial).set_shader_parameter("interpolation", fraction)
+		await RenderingServer.frame_post_draw
+		var pixels := viewport.get_texture().get_image()
+		var weight := 0.0
+		var center := 0.0
+		for y in pixels.get_height():
+			for x in pixels.get_width():
+				var alpha := pixels.get_pixel(x, y).a
+				weight += alpha
+				center += x * alpha
+		assert(weight > 0)
+		center /= weight
+		if previous >= 0:
+			assert(absf(center - previous - 1.0) < 0.05, "HD vehicle did not advance one high-resolution pixel per quarter step")
+		previous = center
+	viewport.queue_free()
+	await process_frame
 
 
 func _check_sparse_artwork(hdr: bool) -> void:
@@ -118,7 +163,7 @@ func _check_sparse_artwork(hdr: bool) -> void:
 	await process_frame
 
 
-func _check_headlight_batches(hdr: bool) -> void:
+func _check_headlight_batches(hdr: bool, raster_scale := 1) -> void:
 	var city := CityState.from_document(EmptyCityTemplate.create(128))
 	for x in range(57, 73):
 		for y in range(57, 73):
@@ -126,7 +171,7 @@ func _check_headlight_batches(hdr: bool) -> void:
 			city.set_land_altitude(x, y, 0)
 			city.set_terrain_id(x, y, 0)
 	var figures: Array = []
-	for i in 130:
+	for i in (6 if raster_scale > 1 else 130):
 		var figure := CityLifeController.Figure.new()
 		figure.id = i
 		@warning_ignore("integer_division")
@@ -151,8 +196,10 @@ func _check_headlight_batches(hdr: bool) -> void:
 	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	root.add_child(viewport)
 	var batch := CityLifeHeadlights.new()
+	batch.raster_scale = raster_scale
 	viewport.add_child(batch)
 	var lights := CityLifeLights.new()
+	lights.set_raster_scale(raster_scale)
 	var offset := Vector2i(CityLifePaths.point(city, Vector2i(64, 64), 0, 2, 0.5, false)) - Vector2i(256, 150)
 	for phase in 3:
 		if phase == 1:
@@ -170,13 +217,28 @@ func _check_headlight_batches(hdr: bool) -> void:
 		var scale_value: float = [0.5, 1.0, 2.0][phase]
 		reference.scale = Vector2.ONE * scale_value
 		batch.scale = reference.scale
-		reference.position = Vector2(0.375, 0.125)
+		# Avoid sampling exactly between two HD receiver texels: Sprite2D and
+		# QuadMesh interpolate opposite UV directions at that undefined boundary.
+		reference.position = Vector2(0.375, 0.1875) if raster_scale > 1 else Vector2(0.375, 0.125)
 		batch.position = reference.position
 		for figure: CityLifeController.Figure in figures:
 			var surface := lights.surface(city, figure.tile, figure.enter, figure.direction)
 			var sprite := Sprite2D.new()
 			sprite.centered = false
 			sprite.texture = surface.texture
+			if raster_scale > 1:
+				var decoded := Image.create(surface.image.get_width(), surface.image.get_height(), false, Image.FORMAT_RGBAF)
+				for y in decoded.get_height():
+					for x in decoded.get_width():
+						var encoded: Color = surface.image.get_pixel(x, y)
+						if encoded.a <= 0:
+							continue
+						var u := (encoded.r8 << 4) | (encoded.g8 >> 4)
+						var v := ((encoded.g8 & 15) << 8) | encoded.b8
+						var world: Vector2 = Vector2(u, v) / 512.0 - Vector2(4, 4) + surface.world_origin
+						decoded.set_pixel(x, y, Color(world.x, world.y, 0, 1))
+				sprite.texture = ImageTexture.create_from_image(decoded)
+			sprite.scale = Vector2.ONE / raster_scale
 			sprite.position = Vector2(surface.origin - offset)
 			var shader := ShaderMaterial.new()
 			shader.shader = preload("res://src/view/city_life/city_life_road_light.gdshader")
@@ -197,8 +259,20 @@ func _check_headlight_batches(hdr: bool) -> void:
 		batch.show()
 		await RenderingServer.frame_post_draw
 		var actual := viewport.get_texture().get_image()
+		if actual.get_data() != expected.get_data():
+			var differing := 0
+			var maximum := 0.0
+			for y in actual.get_height():
+				for x in actual.get_width():
+					var a := actual.get_pixel(x, y)
+					var b := expected.get_pixel(x, y)
+					var delta := maxf(absf(a.r - b.r), maxf(absf(a.g - b.g), absf(a.b - b.b)))
+					if delta > 0:
+						differing += 1
+						maximum = maxf(maximum, delta)
+			print("Headlight difference: pixels=%d maximum=%s scale=%d" % [differing, maximum, raster_scale])
 		assert(actual.get_data() == expected.get_data(), "Batched headlights differ from individual lights: hdr=%s phase=%d" % [hdr, phase])
-		assert(batch.groups.size() == 3 and batch.slots.size() == figures.size())
+		assert(batch.groups.size() == (1 if raster_scale > 1 else 3) and batch.slots.size() == figures.size())
 		reference.free()
 	viewport.queue_free()
 	await process_frame

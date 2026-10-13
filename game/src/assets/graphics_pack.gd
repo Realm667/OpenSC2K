@@ -20,10 +20,14 @@ var desktop_graphics: DesktopGraphics
 var scenario_graphics: ScenarioGraphics
 var visual_artwork: VisualArtwork
 var _root := ""
+var _progress := Callable()
+var _files_read := 0
+var _file_count := 1
 
 
-static func load_root(root: String) -> GraphicsPack:
+static func load_root(root: String, progress := Callable()) -> GraphicsPack:
 	var pack := GraphicsPack.new()
+	pack._progress = progress
 	pack._root = (root.get_base_dir() if root.get_file() == "pack.json" else root).simplify_path()
 	pack._load()
 
@@ -91,6 +95,7 @@ func _load() -> void:
 		return
 
 	var manifest: Dictionary = json.data
+	_file_count = maxi(1, _count_images(manifest))
 
 	if manifest.get("format") != "opensc2k-graphics" or manifest.get("version") != 1:
 		_fail("Unsupported graphics pack format or version")
@@ -270,6 +275,7 @@ func _load_sprites(records: Variant, archive: Sc2SpriteArchive) -> bool:
 
 
 func _read_png(relative_path: Variant) -> IndexedImageResult:
+	_report_progress()
 	var path := _png_path(relative_path)
 	if path.is_empty():
 		return null
@@ -281,6 +287,7 @@ func _read_png(relative_path: Variant) -> IndexedImageResult:
 
 
 func _read_rgba_png(relative_path: Variant) -> Image:
+	_report_progress()
 	var path := _png_path(relative_path)
 	if path.is_empty():
 		return null
@@ -328,6 +335,22 @@ func _png_path(relative_path: Variant) -> String:
 
 		return ""
 	return path
+
+
+static func _count_images(value: Variant) -> int:
+	if value is String:
+		return int(value.get_extension().to_lower() == "png")
+	var count := 0
+	if value is Dictionary or value is Array:
+		for child in (value.values() if value is Dictionary else value):
+			count += _count_images(child)
+	return count
+
+
+func _report_progress() -> void:
+	if _progress.is_valid():
+		_progress.call(clampf(float(_files_read) / _file_count, 0.0, 1.0))
+	_files_read += 1
 
 
 func _fail(message: String) -> bool:

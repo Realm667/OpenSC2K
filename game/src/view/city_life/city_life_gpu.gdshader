@@ -23,7 +23,8 @@ void vertex() {
 	vec4 rect = texelFetch(parameters, ivec2(int(slot), 0), 0);
 	vec4 world = texelFetch(parameters, ivec2(int(slot), 1), 0);
 	vec4 mask = texelFetch(parameters, ivec2(int(slot), 2), 0);
-	vec2 shift = round(world.zw * (1.0 - interpolation));
+	vec2 shift = world.zw * (1.0 - interpolation);
+	if (artwork_scale <= 1.0) shift = round(shift);
 	// Extend the lower/right raster edge by one texel. The fragment clips it;
 	// half-scale pixel centers on that edge must still sample the last texel.
 	vec2 logical_size = rect.zw / artwork_scale;

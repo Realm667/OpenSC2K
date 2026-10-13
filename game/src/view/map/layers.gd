@@ -287,6 +287,14 @@ func _sync_base_layer() -> void:
 
 
 func _sync_base_nodes() -> void:
+	# Packs and retained sources may arrive after the environment canvases.
+	# Base art must always precede water, moving art and all later overlays.
+	var position := 0
+	for layer: Node in [base_layer, water_layer, dynamic_canvas]:
+		if layer != null:
+			if layer.get_index() != position:
+				map.move_child(layer, position)
+			position += 1
 	if not map.data_view_mode == CityViewMode.Mode.NONE:
 		if map.data_view_layer != null:
 			var data_scale := map.camera._view_scale()

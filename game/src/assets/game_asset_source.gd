@@ -15,7 +15,7 @@ var pack_root := ""
 var warnings := PackedStringArray()
 
 
-static func load_source(_base_root: String, mode: String, folder := "", override_folder := "") -> GameAssetSource:
+static func load_source(_base_root: String, mode: String, folder := "", override_folder := "", progress := Callable()) -> GameAssetSource:
 	var result := GameAssetSource.new()
 
 	if mode not in MODES:
@@ -31,7 +31,7 @@ static func load_source(_base_root: String, mode: String, folder := "", override
 	if root.get_file() == "pack.json":
 		root = root.get_base_dir()
 
-	var pack := GraphicsPack.load_root(root)
+	var pack := GraphicsPack.load_root(root, progress)
 
 	if not pack.error.is_empty():
 		result.error = "Import assets or select a valid graphics pack. " + pack.error

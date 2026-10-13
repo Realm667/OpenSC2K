@@ -14,6 +14,15 @@ var surfaces: Dictionary[Vector4i, Dictionary] = {}
 var visible_roads: Dictionary[Vector3i, Array] = {}
 var geometry_reset := false
 var _geometry := CityLifeGeometry.new()
+var raster_scale := 1
+
+
+func set_raster_scale(value: int) -> void:
+	if raster_scale == value:
+		return
+	raster_scale = value
+	roads.clear()
+	clear_surfaces()
 
 
 # Global revisions decide when to compare. Only changed road geometry and its
@@ -70,14 +79,22 @@ func surface(city: CityState, tile: Vector2i, enter: int, direction: int, lookup
 		surfaces[key] = cached
 		return cached
 	var center := CityLifePaths.point(city, tile, enter, (enter + 2) % 4, 0.5, false)
+	var world_origin := Vector2(tile)
 	var bounds := Rect2i(Vector2i(center) - Vector2i(48, 48), Vector2i(96, 96))
 	# Numeric world coordinates let the GPU draw the cone on sloping roads and decks.
-	var image := Image.create(96, 96, false, Image.FORMAT_RGBAF)
+	# HD receivers encode two local 12-bit coordinates in RGB and coverage in A.
+	# This avoids a 16-byte float texel for every high-resolution light sample.
+	var format := Image.FORMAT_RGBA8 if raster_scale > 1 else Image.FORMAT_RGBAF
+	var image := Image.create(96 * raster_scale, 96 * raster_scale, false, format)
 	var occlusion_keys: Array[Vector3i] = []
 	for step in 3:
 		occlusion_keys.append(Vector3i(tile.x, tile.y, enter % 2))
 		for road: Dictionary in _visible_road_patches(city, tile, enter, lookup):
-			image.blit_rect_mask(road.image, road.image, Rect2i(Vector2i.ZERO, road.image.get_size()), road.origin - bounds.position)
+			var destination: Vector2i = road.origin - bounds.position * raster_scale
+			if raster_scale == 1:
+				image.blit_rect_mask(road.image, road.image, Rect2i(Vector2i.ZERO, road.image.get_size()), destination)
+			else:
+				_encode_receiver(image, road.image, destination, world_origin)
 		var exit := direction
 		if CityLifePaths.diagonal(city, tile):
 			exit = CityLifePaths.paired_exit(city, tile, enter)
@@ -89,11 +106,26 @@ func surface(city: CityState, tile: Vector2i, enter: int, direction: int, lookup
 		tile += CityLifePaths.DIRECTIONS[exit]
 		enter = (exit + 2) % 4
 	var result := {"image": image, "texture": ImageTexture.create_from_image(image), "origin": bounds.position,
-		"occlusion_keys": occlusion_keys}
-	if surfaces.size() >= SURFACE_LIMIT:
+		"occlusion_keys": occlusion_keys, "world_origin": world_origin}
+	# RGBA8 uses one quarter of the classic float receiver's bytes per texel.
+	var surface_limit := SURFACE_LIMIT * (4 if raster_scale > 1 else 1) / (raster_scale * raster_scale)
+	if surfaces.size() >= surface_limit:
 		surfaces.erase(surfaces.keys()[0])
 	surfaces[key] = result
 	return result
+
+
+static func _encode_receiver(target: Image, source: Image, destination: Vector2i, world_origin: Vector2) -> void:
+	var overlap := Rect2i(destination, source.get_size()).intersection(Rect2i(Vector2i.ZERO, target.get_size()))
+	for y in range(overlap.position.y, overlap.end.y):
+		for x in range(overlap.position.x, overlap.end.x):
+			var sample := source.get_pixel(x - destination.x, y - destination.y)
+			if sample.a <= 0.0:
+				continue
+			var local := Vector2(sample.r, sample.g) - world_origin + Vector2(4, 4)
+			var u := clampi(roundi(local.x * 512.0), 0, 4095)
+			var v := clampi(roundi(local.y * 512.0), 0, 4095)
+			target.set_pixel(x, y, Color8(u >> 4, ((u & 15) << 4) | (v >> 8), v & 255, 255))
 
 
 func _visible_road_patches(city: CityState, tile: Vector2i, enter: int, lookup: Callable) -> Array:
@@ -101,6 +133,7 @@ func _visible_road_patches(city: CityState, tile: Vector2i, enter: int, lookup: 
 	if visible_roads.has(key):
 		return visible_roads[key]
 	var occluders: Array = lookup.call(tile, enter) if lookup.is_valid() else []
+	occluders = CityLifeCanvas.scaled_occluders(occluders, raster_scale)
 	var result: Array = []
 	for road: Dictionary in _road_patches(city, tile, enter):
 		var pixels: Image = road.image.duplicate()
@@ -130,7 +163,7 @@ func _road_patches(city: CityState, tile: Vector2i, enter: int) -> Array:
 		return roads[key]
 	var patches: Array = []
 	if CityLifePaths.diagonal(city, tile):
-		patches = _diagonal_patch(city, tile, enter)
+		patches = _diagonal_patch(city, tile, enter, raster_scale)
 		roads[key] = patches
 		return patches
 	var ports := CityLifePaths.ports(city, tile)
@@ -157,10 +190,11 @@ func _road_patches(city: CityState, tile: Vector2i, enter: int) -> Array:
 			bounds = bounds.expand(transform * uv)
 		var inverse := transform.affine_inverse()
 		var raster := Rect2i(bounds.grow(1.0))
+		raster = Rect2i(raster.position * raster_scale, raster.size * raster_scale)
 		var pixels := Image.create(raster.size.x, raster.size.y, false, Image.FORMAT_RGBAF)
 		for y in range(raster.position.y, raster.end.y):
 			for x in range(raster.position.x, raster.end.x):
-				var uv: Vector2 = inverse * Vector2(x + 0.5, y + 0.5)
+				var uv: Vector2 = inverse * (Vector2(x + 0.5, y + 0.5) / raster_scale)
 				if uv.x >= 0.0 and uv.x <= 1.0 and uv.y >= 0.0 and uv.y <= 1.0:
 					var world := Vector2(tile) + forward * uv.x * 0.5 + side * (uv.y - 0.5) * 0.5
 					pixels.set_pixel(x - raster.position.x, y - raster.position.y, Color(world.x, world.y, 0.0, 1.0))
@@ -174,7 +208,7 @@ static func road_key(city: CityState, tile: Vector2i, enter: int) -> Vector3i:
 	return Vector3i(tile.x, tile.y, enter if CityLifePaths.diagonal(city, tile) else enter % 2)
 
 
-static func _diagonal_patch(city: CityState, tile: Vector2i, enter: int) -> Array:
+static func _diagonal_patch(city: CityState, tile: Vector2i, enter: int, raster_scale := 1) -> Array:
 	var exit := CityLifePaths.paired_exit(city, tile, enter)
 	var a := Vector2(CityLifePaths.DIRECTIONS[enter]) * 0.5
 	var b := Vector2(CityLifePaths.DIRECTIONS[exit]) * 0.5
@@ -190,11 +224,12 @@ static func _diagonal_patch(city: CityState, tile: Vector2i, enter: int) -> Arra
 	for uv in [Vector2(2, 0), Vector2(2, 1), Vector2(-1, 1)]:
 		bounds = bounds.expand(transform * uv)
 	var raster := Rect2i(bounds.grow(1.0))
+	raster = Rect2i(raster.position * raster_scale, raster.size * raster_scale)
 	var inverse := transform.affine_inverse()
 	var pixels := Image.create(raster.size.x, raster.size.y, false, Image.FORMAT_RGBAF)
 	for y in range(raster.position.y, raster.end.y):
 		for x in range(raster.position.x, raster.end.x):
-			var uv: Vector2 = inverse * Vector2(x + 0.5, y + 0.5)
+			var uv: Vector2 = inverse * (Vector2(x + 0.5, y + 0.5) / raster_scale)
 			var local := a + along * uv.x + side * (uv.y - 0.5)
 			if uv.y >= 0.0 and uv.y <= 1.0 \
 					and absf(local.x) <= 0.5 and absf(local.y) <= 0.5:
