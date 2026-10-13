@@ -27,6 +27,9 @@ func _run() -> void:
 		assert(logo_rect.get_center().distance_to(view.get_center()) < 1.0, "Startup logo stays centered when resizing")
 		assert(is_equal_approx(logo_rect.size.aspect(), boot.logo.texture.get_size().aspect()), "Startup logo keeps its aspect ratio")
 		assert(boot.overlay.bar.is_visible_in_tree() and boot.overlay.bar.size.y > 0.0)
+		assert(boot.overlay.bar.size.x > logo_rect.size.x * 0.5, "The loading bar must not collapse to the text's minimum width")
+		assert(absf(boot.overlay.bar.get_global_rect().get_center().x - logo_rect.get_center().x) < 1.0,
+			"The loading bar stays centered below the logo")
 		assert(view.encloses(boot.overlay.bar.get_global_rect()), "The existing loading bar must remain inside the viewport")
 	var started := Time.get_ticks_msec()
 	while is_instance_valid(boot):

@@ -4,6 +4,7 @@ extends CanvasLayer
 const MAIN_SCENE := "res://main.tscn"
 var overlay: ProgressOverlay
 var logo: TextureRect
+var progress_panel: PanelContainer
 var loading_scene := false
 
 
@@ -18,12 +19,17 @@ func _ready() -> void:
 	logo.texture = preload("res://assets/branding/reticulating-splines-logo.png")
 	logo.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	logo.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	logo.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	logo.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	overlay.add_child(logo)
 	overlay.title_label.hide()
 	overlay.detail_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	overlay.get_node("Center/Panel").custom_minimum_size = Vector2.ZERO
-	overlay.get_node("Center").set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+	# The standard overlay centers the entire panel. Here the logo is centered,
+	# and its progress panel has an independent position immediately below it.
+	progress_panel = overlay.get_node("Center/Panel")
+	progress_panel.reparent(overlay)
+	progress_panel.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+	overlay.get_node("Center").hide()
 	overlay.resized.connect(_layout_startup)
 	overlay.show_progress("Reticulating Splines", "Loading…", 0.0)
 	_layout_startup()
@@ -46,9 +52,9 @@ func _layout_startup() -> void:
 	var scale_factor := minf(viewport_size.x * 0.3 / texture_size.x, viewport_size.y * 0.3 / texture_size.y)
 	logo.size = texture_size * scale_factor
 	logo.position = (viewport_size - logo.size) * 0.5
-	var center: CenterContainer = overlay.get_node("Center")
-	center.position = Vector2(logo.position.x, logo.position.y + logo.size.y + 16.0)
-	center.size = Vector2(logo.size.x, 0.0)
+	progress_panel.custom_minimum_size = Vector2(logo.size.x, 0.0)
+	progress_panel.size = Vector2(logo.size.x, 0.0)
+	progress_panel.position = Vector2(logo.position.x, logo.position.y + logo.size.y + 16.0)
 
 
 func _load_application() -> void:
