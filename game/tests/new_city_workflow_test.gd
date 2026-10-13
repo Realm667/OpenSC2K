@@ -164,7 +164,8 @@ func _run() -> void:
 	_assert_editor_controls(main, true)
 	main.new_city.start_city()
 	assert(not main.city_toolbar.regenerate_button.visible)
-	assert(main.city_toolbar.child_palette.visible)
+	assert(main.city_toolbar.toolbar_buttons[CityToolIds.Group.ROADS].visible)
+	assert(not main.city_toolbar.hold_menu.visible, "Starting a city does not force a tool menu open")
 	main.new_city.open_new_city_dialog()
 	main.new_city.make_new_city_preview()
 	main.new_city.cancel_new_city()
@@ -192,7 +193,7 @@ func _assert_editor_controls(main: Node, expected: bool) -> void:
 
 func _test_landscape_controls(main: CityApplication) -> void:
 	assert(main.city_toolbar.regenerate_button.visible)
-	assert(not main.city_toolbar.child_palette.visible)
+	assert(not main.city_toolbar.hold_menu.visible, "The terrain editor closes the tool menu")
 	assert(main.city_toolbar.landscape_buttons.size() == 12)
 	assert(not main.city_toolbar.landscape_buttons.has(Vector2i(16, 1)))
 	assert(not main.city_toolbar.view_mode_buttons[CityViewMode.Mode.UNDERGROUND].visible)
