@@ -28202,3 +28202,27 @@ msgstr "Añade pistas a tus favoritos para reproducirlas."
 #. Supplementary QOL controls translation, AI-assisted from English source.
 msgid "Reassign"
 msgstr "Reasignar"
+
+#. Reticulating Splines import and release check; supplementary translation.
+msgid "Import Original SimCity 2000 Game Data"
+msgstr "Importar los datos originales de SimCity 2000"
+
+#. Reticulating Splines import and release check; supplementary translation.
+msgid "GitHub has no published Reticulating Splines release."
+msgstr "No hay ninguna versión de Reticulating Splines publicada en GitHub."
+
+#. Reticulating Splines import and release check; supplementary translation.
+msgid "GitHub returned release information that Reticulating Splines cannot read."
+msgstr "GitHub devolvió información de versión que Reticulating Splines no puede leer."
+
+#. Reticulating Splines import and release check; supplementary translation.
+msgid "The latest release has a version that Reticulating Splines cannot read: %s."
+msgstr "La última versión tiene un número que Reticulating Splines no puede leer: %s."
+
+#. Reticulating Splines release dialog; supplementary translation.
+msgid "Reticulating Splines %s is available. You have version %s.\n\nDownload the new release from GitHub, then install it."
+msgstr "Reticulating Splines %s está disponible. Tienes la versión %s.\n\nDescarga la nueva versión de GitHub e instálala."
+
+#. Reticulating Splines release dialog; supplementary translation.
+msgid "Reticulating Splines %s is the latest release."
+msgstr "Reticulating Splines %s es la versión más reciente."

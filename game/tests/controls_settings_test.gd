@@ -23,6 +23,7 @@ func _run() -> void:
 	dialog = main.main_overlays.settings_dialog
 
 	await _test_tab_visibility()
+	_test_reopen_reuses_controls()
 	await _test_row_layout()
 	_test_capture_and_conflicts()
 	_test_use_defaults()
@@ -51,6 +52,20 @@ func _test_language_switch() -> void:
 			assert(ControlBinding.key(KEY_LEFT).display_text() != OS.get_keycode_string(KEY_LEFT))
 			assert(ControlBinding.mouse(MOUSE_BUTTON_WHEEL_UP).display_text() != ControlBinding.MOUSE_LABELS[MOUSE_BUTTON_WHEEL_UP])
 	AppLocalization.select("en")
+
+
+func _test_reopen_reuses_controls() -> void:
+	var row := dialog.controls_list.get_node("camera_left")
+	var selector: PackSourceSelector = dialog.pack_selectors.graphics
+	selector.add_item("cached discovery sentinel")
+	var count := selector.item_count
+	dialog.hide()
+	var started := Time.get_ticks_usec()
+	main.settings.open_settings_dialog()
+	print("Settings reopen: %d usec" % (Time.get_ticks_usec() - started))
+	assert(dialog.controls_list.get_node("camera_left") == row, "Unchanged bindings reuse existing controls")
+	assert(selector.item_count == count, "Reopening Settings must not repeat package discovery")
+	selector.remove_item(count - 1)
 
 
 func _test_tab_visibility() -> void:

@@ -254,6 +254,7 @@ func activate_imported_packs(result: Sc2MediaImportResult) -> void:
 		if _save_import_preferences() != OK:
 			notes.append("The packs are active, but their preferences could not be saved.")
 
+	app.main_overlays.settings_dialog.rescan_packages()
 	app.settings._refresh_settings_pack_names()
 	app.status_label.text = "Imported packs saved." if active.is_empty() else "Imported packs active: " + ", ".join(active) + "."
 	app.reference_import_dialog.add_activation_notes(notes)

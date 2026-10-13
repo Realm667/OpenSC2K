@@ -56,6 +56,10 @@ func _release_body(tag: String, page: String) -> PackedByteArray:
 
 
 func _check_responses() -> void:
+	assert(Check.LATEST_RELEASE_API == "https://api.github.com/repos/Realm667/Reticulating-Splines/releases/latest")
+	var upstream := Check.read_response(HTTPRequest.RESULT_SUCCESS, 200, PackedStringArray(),
+		_release_body("v9.0.0", "https://github.com/nicholas-ochoa/OpenSC2K/releases/tag/v9.0.0"), "1.0.0", 0)
+	assert(upstream.url == Check.LATEST_RELEASE_PAGE, "Upstream links must not escape the fork release page")
 	var page := Check.RELEASE_PAGE_PREFIX + "v1.3.0"
 	var newer := Check.read_response(HTTPRequest.RESULT_SUCCESS, 200, PackedStringArray(), _release_body("v1.3.0", page), "1.2.3", 0)
 	assert(newer.status == Check.Status.UPDATE_AVAILABLE and newer.version == "1.3.0" and newer.url == page)
@@ -101,7 +105,7 @@ func _check_responses() -> void:
 		assert(outcome.status == Check.Status.FAILED and not outcome.message.is_empty(), str(result))
 
 	# the request identifies the app and sends no engine or system details
-	assert(Check.header_value(PackedStringArray(Check.REQUEST_HEADERS), "user-agent") == "OpenSC2K")
+	assert(Check.header_value(PackedStringArray(Check.REQUEST_HEADERS), "user-agent") == "ReticulatingSplines")
 
 
 func _check_store(path: String) -> void:

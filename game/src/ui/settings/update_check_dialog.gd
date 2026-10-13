@@ -28,15 +28,14 @@ func show_update(version: String, current_version: String, url: String) -> void:
 	release_version = version
 	release_url = url
 	title = "Update Available"
-	dialog_text = ("OpenSC2K %s is available. You have version %s.\n\n" +
-		"Download the new release from GitHub, then install it.") % [version, current_version]
+	dialog_text = tr("Reticulating Splines %s is available. You have version %s.\n\nDownload the new release from GitHub, then install it.") % [version, current_version]
 	get_ok_button().text = "Download"
 	skip_button.show()
 	_popup_above_modal()
 
 
 func show_latest(current_version: String) -> void:
-	_show_notice("No Update Available", "OpenSC2K %s is the latest release." % current_version)
+	_show_notice("No Update Available", tr("Reticulating Splines %s is the latest release.") % current_version)
 
 
 func show_failure(message: String) -> void:
@@ -47,7 +46,7 @@ func _show_notice(notice_title: String, message: String) -> void:
 	release_version = ""
 	release_url = ""
 	title = notice_title
-	dialog_text = message
+	dialog_text = AppLocalization.message(message)
 	get_ok_button().text = "OK"
 	skip_button.hide()
 	_popup_above_modal()

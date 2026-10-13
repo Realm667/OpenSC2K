@@ -53,6 +53,8 @@ func attach_capture_overlay(dialog: AcceptDialog) -> void:
 
 func show_bindings(value: ControlBindings) -> void:
 	cancel_capture()
+	if pending.equals(value):
+		return
 	pending = value.duplicate_set()
 	rebuild()
 

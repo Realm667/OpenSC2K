@@ -5,6 +5,8 @@ extends OptionButton
 var kind := ""
 var path_edit: LineEdit
 var status_label: Label
+var _scanned_choice := ""
+var _scanned_locale := ""
 
 
 func bind(source_kind: String, edit: LineEdit, label: Label) -> void:
@@ -25,6 +27,8 @@ func rescan(library_root := AppPaths.root()) -> void:
 	set_item_metadata(0, "")
 	select(0)
 	var chosen := PackLibrary.normalized(path_edit.text.strip_edges(), kind)
+	_scanned_choice = chosen
+	_scanned_locale = TranslationServer.get_locale()
 	var entries := PackLibrary.selection_entries(kind, chosen, library_root)
 	var counts := {}
 	for item in entries:
@@ -47,6 +51,16 @@ func rescan(library_root := AppPaths.root()) -> void:
 			status_label.text = item.error
 			status_label.tooltip_text = str(item.path) + "\n" + str(item.error)
 	tooltip_text = get_item_tooltip(selected)
+
+
+func refresh_selection() -> void:
+	# Reopening Settings does not need to inspect every package and sprite file.
+	# Imports and the explicit Rescan button still refresh the full library.
+	var chosen := PackLibrary.normalized(path_edit.text.strip_edges(), kind)
+	if not _same_path(chosen, _scanned_choice) or _scanned_locale != TranslationServer.get_locale():
+		rescan()
+	else:
+		sync_selection()
 
 
 func sync_selection() -> void:

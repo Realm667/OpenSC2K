@@ -309,8 +309,8 @@ func _refresh_group_icon(group_index: int) -> void:
 	var button := toolbar_buttons[group_index]
 	var tool_index := int(_group_subtools.get(group_index, -1))
 	var tool := Tools.tool(group_index, tool_index) if tool_index >= 0 else null
-	var icon: Texture2D = _icon_provider.call(group_index, tool_index) if tool != null and _icon_provider.is_valid() else null
-	button.icon = icon if icon != null else group_icon(group_index)
+	# Category artwork stays stable; selected construction sprites belong in the flyout.
+	button.icon = group_icon(group_index)
 	button.text = str(group_index + 1) if button.icon == null else ""
 	button.tooltip_text = tr(str(Tools.GROUPS[group_index].name))
 	if tool != null:

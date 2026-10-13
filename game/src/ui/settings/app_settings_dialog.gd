@@ -184,7 +184,8 @@ func _ready() -> void:
 	%ImportButton.pressed.connect(_request_original_import.bind(PackedStringArray(Sc2MediaImporter.CATEGORIES)))
 	check_updates_now_button.pressed.connect(update_check_requested.emit)
 	about_to_popup.connect(func() -> void:
-		rescan_packages()
+		for selector: PackSourceSelector in pack_selectors.values():
+			selector.refresh_selection()
 		_fit_to_viewport()
 		# Refit after popup_centered applies the content minimum size.
 		call_deferred("_fit_to_viewport"))

@@ -1,4 +1,5 @@
 [
+  "The latest release has a version that Reticulating Splines cannot read: %s.",
   "Free starting territory: %d land equivalents. Two water tiles count as one land tile. Treasury unchanged.",
   "Send a purchase request for %d tiles at $%d? The owner must approve before any transfer.",
   "Accumulate %d years as sole leader. Earned time is kept. Late cities are unranked.",

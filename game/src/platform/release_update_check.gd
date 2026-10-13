@@ -1,6 +1,6 @@
 class_name ReleaseUpdateCheck
 extends RefCounted
-## Rules for the optional check for a newer stable OpenSC2K release on GitHub.
+## Rules for the optional check for a newer stable Reticulating Splines release on GitHub.
 ## The check only reports a release. The player downloads and installs it.
 
 enum Status {
@@ -9,7 +9,7 @@ enum Status {
 	FAILED,
 }
 
-const REPOSITORY := "nicholas-ochoa/OpenSC2K"
+const REPOSITORY := "Realm667/Reticulating-Splines"
 # the latest release excludes drafts and prereleases, so nightlies never match
 const LATEST_RELEASE_API := "https://api.github.com/repos/" + REPOSITORY + "/releases/latest"
 const LATEST_RELEASE_PAGE := "https://github.com/" + REPOSITORY + "/releases/latest"
@@ -19,7 +19,7 @@ const RELEASE_PAGE_PREFIX := "https://github.com/" + REPOSITORY + "/releases/tag
 const REQUEST_HEADERS := [
 	"Accept: application/vnd.github+json",
 	"X-GitHub-Api-Version: 2022-11-28",
-	"User-Agent: OpenSC2K",
+	"User-Agent: ReticulatingSplines",
 ]
 const CHECK_INTERVAL_SECONDS := 24 * 60 * 60
 const TIMEOUT_SECONDS := 20.0

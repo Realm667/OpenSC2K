@@ -16,6 +16,15 @@ func _run() -> void:
 	await preload("res://tests/support/app_fixture.gd").wait_for_visuals(main)
 	var toolbar := main.get("city_toolbar") as CityToolbar
 	var map := main.get("map_view") as CityMapControl
+	# The selected subtool must never replace or resize its category artwork.
+	for group in toolbar.toolbar_buttons.size():
+		var expected := toolbar.group_icon(group)
+		for subtool in ToolCatalog.GROUPS[group].tools.size():
+			toolbar.sync_child_tool_selection(group, subtool)
+			var actual := toolbar.toolbar_buttons[group].icon
+			assert(actual.get_size() == expected.get_size())
+			assert(PixelArtTexture.unwrap(actual).get_image().get_data() == PixelArtTexture.unwrap(expected).get_image().get_data(),
+				"Category artwork must remain unchanged when selecting a child tool")
 	if "--interactive" in OS.get_cmdline_user_args():
 		root.title = "QoL Sidebar Review"
 		print("READY: isolated paused city, Dummy audio")

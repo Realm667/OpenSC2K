@@ -809,4 +809,4 @@ custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 0
 tooltip_text = "Import graphics, sounds, music, and game data from your copy of SimCity 2000."
-text = "Import Original Assets"
+text = "Import Original SimCity 2000 Game Data"

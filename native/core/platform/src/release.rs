@@ -1,12 +1,12 @@
-//! The optional check for a newer stable OpenSC2K release on GitHub. The
+//! The optional check for a newer stable Reticulating Splines release on GitHub. The
 //! check only reports a release; the player downloads and installs it.
 
 use crate::text::{is_valid_int, strip_edges};
 use sc2k_formats::json::{self, Value};
 
-pub const REPOSITORY: &str = "nicholas-ochoa/OpenSC2K";
-pub const LATEST_RELEASE_PAGE: &str = "https://github.com/nicholas-ochoa/OpenSC2K/releases/latest";
-const RELEASE_PAGE_PREFIX: &str = "https://github.com/nicholas-ochoa/OpenSC2K/releases/tag/";
+pub const REPOSITORY: &str = "Realm667/Reticulating-Splines";
+pub const LATEST_RELEASE_PAGE: &str = "https://github.com/Realm667/Reticulating-Splines/releases/latest";
+const RELEASE_PAGE_PREFIX: &str = "https://github.com/Realm667/Reticulating-Splines/releases/tag/";
 pub const CHECK_INTERVAL_SECONDS: i64 = 24 * 60 * 60;
 const VERSION_PART_LIMIT: i64 = 65535;
 const VERSION_PART_DIGITS: usize = 5;
@@ -164,7 +164,7 @@ pub fn read_response(transport: Transport, response_code: i64, headers: &[String
     }
 
     if response_code == 404 {
-        return Outcome::failed("GitHub has no published OpenSC2K release.");
+        return Outcome::failed("GitHub has no published Reticulating Splines release.");
     }
 
     if response_code >= 500 {
@@ -180,12 +180,14 @@ pub fn read_response(transport: Transport, response_code: i64, headers: &[String
     let data = json::parse(&String::from_utf8_lossy(body)).ok();
     let release = data.as_ref().and_then(Value::as_object);
     let Some(tag) = release.and_then(|release| release.get("tag_name")).and_then(Value::as_str) else {
-        return Outcome::failed("GitHub returned release information that OpenSC2K cannot read.");
+        return Outcome::failed("GitHub returned release information that Reticulating Splines cannot read.");
     };
     let version = normalized_version(tag);
 
     if version.is_empty() {
-        return Outcome::failed(format!("The latest release has a version that OpenSC2K cannot read: {tag}."));
+        return Outcome::failed(format!(
+            "The latest release has a version that Reticulating Splines cannot read: {tag}."
+        ));
     }
 
     // open only a release page of this project
