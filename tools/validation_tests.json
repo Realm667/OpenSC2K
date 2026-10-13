@@ -1,5 +1,11 @@
 [
   {
+    "id": "visual_raster_test",
+    "script": "tests/visual_raster_test.gd",
+    "domain": "rendering",
+    "lane": "product"
+  },
+  {
     "id": "startup_loading_test",
     "script": "tests/startup_loading_test.gd",
     "domain": "ui",

@@ -30,7 +30,7 @@ func set_night(value: float) -> void:
 		(group.material as ShaderMaterial).set_shader_parameter("night", night)
 
 
-func render(city: CityState, figures: Array, lights: CityLifeLights, offset: Vector2i, lookup: Callable) -> void:
+func render(city: CityState, figures: Array, lights: CityLifeLights, offset: Vector2i, lookup: Callable, prepared: Dictionary = {}) -> void:
 	var seen: Dictionary[int, bool] = {}
 	for figure: CityLifeController.Figure in figures:
 		if not figure.walking:
@@ -46,42 +46,57 @@ func render(city: CityState, figures: Array, lights: CityLifeLights, offset: Vec
 			var at := (slot % GROUP_SIZE) * STRIDE
 			buffers[group][at] = 0.0
 			buffers[group][at + 5] = 0.0
+	var grouped: Array[Array] = []
 	for figure: CityLifeController.Figure in figures:
 		if figure.walking:
 			continue
-		var surface := lights.surface(city, figure.tile, figure.enter, figure.direction, lookup)
 		if not slots.has(figure.id):
 			if free_slots.is_empty():
 				_add_group()
 			slots[figure.id] = free_slots.pop_back()
-		var slot := slots[figure.id]
-		var group := slot / GROUP_SIZE
-		var layer := slot % GROUP_SIZE
-		if images[slot] != surface.image:
-			textures[group].update_layer(surface.image, layer)
-			images[slot] = surface.image
-		var at := layer * STRIDE
-		var point: Vector2i = surface.origin - offset
-		var world := CityLifeLights.vehicle_world(city, figure)
-		# Keep world coordinates in a full-precision texture: Compatibility
-		# rendering can reduce instance custom data precision.
-		buffers[group][at] = 1.0
-		buffers[group][at + 3] = point.x
-		buffers[group][at + 5] = 1.0
-		buffers[group][at + 7] = point.y
-		parameters[group][layer * 4] = world.x
-		parameters[group][layer * 4 + 1] = world.y
-		parameters[group][layer * 4 + 2] = figure.direction + figure.vehicle_kind * 8
-		parameters[group][layer * 4 + 3] = figure.opacity()
-		var delta: Vector2 = previous_world.get(figure.id, world) - world
-		parameters[group][GROUP_SIZE * 4 + layer * 4] = delta.x
-		parameters[group][GROUP_SIZE * 4 + layer * 4 + 1] = delta.y
-		parameters[group][GROUP_SIZE * 4 + layer * 4 + 2] = surface.world_origin.x
-		parameters[group][GROUP_SIZE * 4 + layer * 4 + 3] = surface.world_origin.y
-		previous_world[figure.id] = world
+		var group := slots[figure.id] / GROUP_SIZE
+		while grouped.size() <= group:
+			grouped.append([])
+		grouped[group].append(figure)
+	for group in grouped.size():
+		var transforms := buffers[group]
+		var values := parameters[group]
+		for figure: CityLifeController.Figure in grouped[group]:
+			var surface: Dictionary = prepared[figure.id] if prepared.has(figure.id) else lights.surface(city, figure.tile, figure.enter, figure.direction, lookup, false)
+			var slot := slots[figure.id]
+			var layer := slot % GROUP_SIZE
+			if images[slot] != surface.image:
+				textures[group].update_layer(surface.image, layer)
+				images[slot] = surface.image
+			var at := layer * STRIDE
+			var crop: Rect2i = surface.draw_rect
+			var point := Vector2(surface.origin - offset) + Vector2(crop.position) / raster_scale
+			var world := lights.cached_vehicle_world(city, figure)
+			# Keep world coordinates in a full-precision texture: Compatibility
+			# rendering can reduce instance custom data precision.
+			transforms[at] = float(crop.size.x) / (96 * raster_scale)
+			transforms[at + 3] = point.x
+			transforms[at + 5] = float(crop.size.y) / (96 * raster_scale)
+			transforms[at + 7] = point.y
+			values[layer * 4] = world.x
+			values[layer * 4 + 1] = world.y
+			values[layer * 4 + 2] = figure.direction + figure.vehicle_kind * 8
+			values[layer * 4 + 3] = figure.opacity()
+			var delta: Vector2 = previous_world.get(figure.id, world) - world
+			values[GROUP_SIZE * 4 + layer * 4] = delta.x
+			values[GROUP_SIZE * 4 + layer * 4 + 1] = delta.y
+			values[GROUP_SIZE * 4 + layer * 4 + 2] = surface.world_origin.x
+			values[GROUP_SIZE * 4 + layer * 4 + 3] = surface.world_origin.y
+			values[GROUP_SIZE * 8 + layer * 4] = float(crop.position.x) / (96 * raster_scale)
+			values[GROUP_SIZE * 8 + layer * 4 + 1] = float(crop.position.y) / (96 * raster_scale)
+			values[GROUP_SIZE * 8 + layer * 4 + 2] = float(crop.size.x) / (96 * raster_scale)
+			values[GROUP_SIZE * 8 + layer * 4 + 3] = float(crop.size.y) / (96 * raster_scale)
+			previous_world[figure.id] = world
+		buffers[group] = transforms
+		parameters[group] = values
 	for index in groups.size():
 		groups[index].multimesh.buffer = buffers[index]
-		parameter_textures[index].update(Image.create_from_data(GROUP_SIZE, 2, false, Image.FORMAT_RGBAF, parameters[index].to_byte_array()))
+		parameter_textures[index].update(Image.create_from_data(GROUP_SIZE, 3, false, Image.FORMAT_RGBAF, parameters[index].to_byte_array()))
 
 
 func _add_group() -> void:
@@ -104,8 +119,8 @@ func _add_group() -> void:
 	shader.set_shader_parameter("night", night)
 	shader.set_shader_parameter("encoded_surfaces", raster_scale > 1)
 	var values := PackedFloat32Array()
-	values.resize(GROUP_SIZE * 8)
-	var parameter_texture := ImageTexture.create_from_image(Image.create_from_data(GROUP_SIZE, 2, false, Image.FORMAT_RGBAF, values.to_byte_array()))
+	values.resize(GROUP_SIZE * 12)
+	var parameter_texture := ImageTexture.create_from_image(Image.create_from_data(GROUP_SIZE, 3, false, Image.FORMAT_RGBAF, values.to_byte_array()))
 	shader.set_shader_parameter("headlight_data", parameter_texture)
 	var group := MultiMeshInstance2D.new()
 	group.multimesh = multi

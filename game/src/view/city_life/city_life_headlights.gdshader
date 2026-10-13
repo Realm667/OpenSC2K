@@ -12,6 +12,7 @@ varying flat vec2 forward;
 varying flat float front;
 varying flat float opacity;
 varying flat vec2 world_origin;
+varying flat vec4 receiver_rect;
 
 vec4 decoded_receiver(ivec2 point) {
 	ivec2 size = textureSize(surfaces, 0).xy;
@@ -35,6 +36,7 @@ vec4 smooth_receiver(vec2 uv) {
 
 void vertex() {
 	layer = float(INSTANCE_ID);
+	receiver_rect = texelFetch(headlight_data, ivec2(INSTANCE_ID, 2), 0);
 	vec4 data = texelFetch(headlight_data, ivec2(INSTANCE_ID, 0), 0);
 	vehicle_world = data.xy + texelFetch(headlight_data, ivec2(INSTANCE_ID, 1), 0).xy * (1.0 - interpolation);
 	world_origin = texelFetch(headlight_data, ivec2(INSTANCE_ID, 1), 0).zw;
@@ -52,9 +54,10 @@ void vertex() {
 
 void fragment() {
 	// QuadMesh has the opposite vertical UV orientation to Sprite2D.
-	vec4 road = texture(surfaces, vec3(UV.x, 1.0 - UV.y, layer));
+	vec2 receiver_uv = receiver_rect.xy + vec2(UV.x, 1.0 - UV.y) * receiver_rect.zw;
+	vec4 road = texture(surfaces, vec3(receiver_uv, layer));
 	if (encoded_surfaces) {
-		road = smooth_receiver(vec2(UV.x, 1.0 - UV.y));
+		road = smooth_receiver(receiver_uv);
 	}
 	vec2 relative = (road.rg - vehicle_world) * 16.0;
 	float distance = dot(relative, forward) - front;

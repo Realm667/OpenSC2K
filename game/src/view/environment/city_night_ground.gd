@@ -426,7 +426,7 @@ func _build(app: CityApplication, tile: Vector2i) -> Dictionary:
 	# Clip each approach before composition to preserve stacked road crossings.
 	for index in range(parts.size() - 1, -1, -1):
 		var part: Dictionary = parts[index]
-		var occluders := CityLifeCanvas.scaled_occluders(masker._candidates(app, tile, part.enter), roads.raster_scale)
+		var occluders := CityLifeCanvas.scaled_occluders(masker._candidates(app, tile, part.enter), roads.raster_scale, Rect2i(origin, Vector2i(64, 64)))
 		var visible := CityLifeCanvas.visible_sprite(part.image, origin * roads.raster_scale, occluders)
 		image.blit_rect_mask(visible, visible, Rect2i(0, 0, edge, edge), Vector2i.ZERO)
 	var result := CityNightFixtures.build(app, tile, origin,

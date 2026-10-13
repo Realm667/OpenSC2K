@@ -10,7 +10,7 @@ const DIAGONAL_CELL := Vector2i(20, 14)
 const VEHICLE_SIZES := [Vector2i(9, 6), Vector2i(12, 8), Vector2i(14, 9)]
 const VARIANTS := 18
 const CELL := Vector2i(16, 10)
-var images: Dictionary[String, Image] = {}
+var images: Dictionary[Vector4i, Image] = {}
 var authored: VisualArtwork
 var master_frames: Dictionary[int, VisualArtwork.Frame] = {}
 var logical_lamps: Dictionary[int, Image] = {}
@@ -58,7 +58,7 @@ func prepare_frames() -> void:
 func sprite(walking: bool, variant: int, direction: int, phase: int, vehicle_kind: int = Vehicle.CAR) -> Image:
 	if walking:
 		variant %= COLORS.size()
-	var key := "%d:%d:%d:%d:%d" % [int(walking), variant, direction, phase if walking else 0, vehicle_kind]
+	var key := Vector4i(int(walking) * 3 + vehicle_kind, variant, direction, phase if walking else 0)
 	if not images.has(key):
 		var source_key := "person/%d/%d/%d" % [variant % COLORS.size(), direction, phase % 2] if walking else "vehicle/%s/%d/%d" % [VisualArtwork.VEHICLES[vehicle_kind], variant, direction]
 		if authored != null and authored.frames.has(source_key):

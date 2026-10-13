@@ -293,6 +293,7 @@ class TestSprites extends ApplicationMovingSprites:
 		_flip: bool,
 		_divisor: int,
 		_factor := 1,
+		_image_only := false,
 	) -> CitySpriteResource:
 		var result := CitySpriteResource.new()
 		result.image = images[sprite_id]

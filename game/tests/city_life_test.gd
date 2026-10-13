@@ -88,6 +88,9 @@ func _check_application() -> void:
 	for step in 20:
 		app.city_life.process(0.08)
 	assert(app.city_life.canvas != null and not app.city_life.figures.is_empty())
+	assert(app.city_life.canvas.texture != null and app.city_life.canvas.visible, "Rendering must progress even when every frame advances the cosmetic figures")
+	_check_lazy_occlusion_resource(app)
+	_check_budgeted_preparation(app)
 	_check_running_cache(app)
 	_check_day_emission(app)
 	assert(app.asset_state.large_sprites.visual_city_life_traffic)
@@ -478,3 +481,33 @@ static func _check_network_sections() -> void:
 	assert(deck.get_pixel(1, 10).a == 1.0 and deck.get_pixel(1, 20).a == 0.0,
 		"Towers must remain foreground while the deck beneath a car is removed")
 	assert(source.get_pixel(1, 20) == Color.WHITE)
+
+
+func _check_budgeted_preparation(app: CityApplication) -> void:
+	var canvas := app.city_life.canvas
+	var figures := app.city_life.figures
+	var sprites := app.city_life.sprites
+	assert(canvas.render(app, figures, sprites))
+	var expected := canvas.image.get_data()
+	canvas._occlusion_signature.clear()
+	var completed := false
+	var deferred_frames := 0
+	for step in figures.size() * 4 + 64:
+		completed = canvas.render(app, figures, sprites, 1)
+		if completed:
+			break
+		deferred_frames += 1
+		assert(canvas.image.get_data() == expected, "Cold preparation must preserve the previous complete draw")
+	assert(deferred_frames > 0 and completed, "Budgeted preparation must defer cold work and eventually publish")
+	assert(canvas.image.get_data() == expected, "Budgeting must not remove figures or change their pixels")
+
+
+func _check_lazy_occlusion_resource(app: CityApplication) -> void:
+	var archive := app.asset_state.large_sprites
+	var image_only := app.moving_sprites.dynamic_sprite_resource(archive, 1001, true, 1, 3, true)
+	assert(image_only != null and image_only.image != null and image_only.texture == null)
+	var pixels := image_only.image.get_data()
+	var drawable := app.moving_sprites.dynamic_sprite_resource(archive, 1001, true, 1, 3)
+	assert(drawable == image_only and drawable.texture != null and drawable.index_texture == drawable.texture)
+	assert(drawable.image.get_data() == pixels and drawable.texture.get_image().get_data() == pixels,
+		"A mask-only cache hit must become drawable without changing its pixels or flip")

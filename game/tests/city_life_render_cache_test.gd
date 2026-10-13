@@ -264,13 +264,25 @@ func _check_local_invalidation() -> void:
 func _check_surface_budget() -> void:
 	var city := load("res://tests/city_life_test.gd").fixture() as CityState
 	var lights := CityLifeLights.new()
+	var image := Image.create(1, 1, false, Image.FORMAT_RGBA8)
+	var texture := ImageTexture.create_from_image(image)
 	for i in CityLifeLights.SURFACE_LIMIT:
-		lights.surfaces[Vector4i(i, 0, 0, 0)] = {"retained": i}
+		lights.surfaces[Vector4i(i, 0, 0, 0)] = {"retained": i, "image": image, "texture": texture}
 	var oldest := lights.surface(city, Vector2i.ZERO, 0, 0)
 	lights.surface(city, Vector2i(64, 64), 0, 2)
 	assert(lights.surfaces.size() == CityLifeLights.SURFACE_LIMIT)
 	assert(lights.surfaces[Vector4i.ZERO] == oldest and not lights.surfaces.has(Vector4i(1, 0, 0, 0)),
 		"The cache must retain recently used light surfaces when it reaches its budget")
+
+	lights.set_raster_scale(4)
+	for i in CityLifeController.MAX_FIGURES:
+		lights.surfaces[Vector4i(i, 0, 0, 0)] = {"image": image, "texture": null}
+	oldest = lights.surface(city, Vector2i.ZERO, 0, 0, Callable(), false)
+	lights.surface(city, Vector2i(64, 64), 0, 2, Callable(), false)
+	assert(lights.surfaces.size() == CityLifeController.MAX_FIGURES and lights.surfaces.has(Vector4i.ZERO),
+		"The direct GPU cache must fit an all-car working set without unbounded retention")
+	assert(oldest.texture == null, "Direct array uploads must not allocate a duplicate texture")
+	assert(lights.surface(city, Vector2i.ZERO, 0, 0).texture != null, "A later texture caller must upgrade the cached image lazily")
 
 
 func _check_network_search() -> void:

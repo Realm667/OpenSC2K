@@ -26,6 +26,7 @@ var _elapsed := 0.0
 var _spawn_elapsed := 0.0
 var _serial := 0
 var _render_elapsed := 1.0
+var _deferred_render := false
 var _buckets: Dictionary[Vector2i, Array] = {}
 var _bus_signature: Array = []
 var _bus_tiles: Dictionary[Vector2i, bool] = {}
@@ -103,7 +104,9 @@ func process(delta: float) -> void:
 	if _spawn_elapsed >= 0.8:
 		_spawn_elapsed = 0.0
 		_spawn(city, options)
+	var advanced := false
 	if _elapsed >= UPDATE_SECONDS:
+		advanced = true
 		# Catch up in bounded steps so a slow frame cannot jump across junctions.
 		var remaining := minf(_elapsed, 0.5)
 		while remaining > 0.0:
@@ -113,13 +116,21 @@ func process(delta: float) -> void:
 		_elapsed = 0.0
 	_fade(fade_elapsed)
 	_render_elapsed += maxf(delta, 0.0)
-	if _render_elapsed >= UPDATE_SECONDS or canvas.texture == null:
+	# Cold preparation may shift the publication phase. Keep full figure
+	# advancement and buffer publication on separate frames once art is present.
+	if (_render_elapsed >= UPDATE_SECONDS or canvas.texture == null) and (not advanced or canvas.texture == null or _deferred_render):
+		_deferred_render = false
 		_render_elapsed = 0.0
 		canvas.interpolation = 0.0 if elapsed > 0.0 else 1.0
-		canvas.render(app, figures, sprites)
+		if not canvas.render(app, figures, sprites, 3000):
+			_render_elapsed = UPDATE_SECONDS
 	else:
+		# At very low frame rates, defer at most once: rendering must progress.
+		_deferred_render = _render_elapsed >= UPDATE_SECONDS
 		canvas.interpolation = clampf(_render_elapsed / UPDATE_SECONDS, 0.0, 1.0) if elapsed > 0.0 else 1.0
 		canvas.sync_view(app)
+		if not advanced:
+			canvas.prepare_lights(app, figures)
 
 
 func _sync_traffic(enhanced: bool) -> void:
@@ -337,12 +348,20 @@ func _crowded(figure: Figure, position: Vector2, spawning: bool = true) -> bool:
 	var direction := figure.heading()
 	var world := CityLifePaths.forward(direction)
 	var forward := Vector2((world.x - world.y) * 16, (world.x + world.y) * 8)
+	var base_spacing := 3.0 if spawning or figure.walking else 5.0
+	if not figure.walking:
+		base_spacing += figure.extra_spacing()
 	for x in range(-1, 2):
 		for y in range(-1, 2):
 			for other: Figure in _buckets.get(center + Vector2i(x, y), EMPTY_BUCKET):
 				if other == figure or other.walking != figure.walking or other.age >= other.lifetime:
 					continue
 				var separation := other.position - position
+				var spacing := base_spacing + (other.extra_spacing() if not figure.walking else 0.0)
+				# Most objects in neighbouring buckets cannot touch this vehicle.
+				# Reject them before evaluating headings and right-of-way rules.
+				if separation.length_squared() >= spacing * spacing:
+					continue
 				if not spawning:
 					# Opposite lanes pass independently; following cars yield ahead.
 					var other_direction := other.heading()
@@ -352,11 +371,7 @@ func _crowded(figure: Figure, position: Vector2, spawning: bool = true) -> bool:
 						continue
 					if direction != other_direction and figure.id < other.id:
 						continue
-				var spacing := 3.0 if spawning or figure.walking else 5.0
-				if not figure.walking:
-					spacing += figure.extra_spacing() + other.extra_spacing()
-				if separation.length_squared() < spacing * spacing:
-					return true
+				return true
 	return false
 
 

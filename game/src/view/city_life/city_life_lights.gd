@@ -12,7 +12,9 @@ var masks: Dictionary[String, Image] = {}
 var roads: Dictionary[Vector3i, Array] = {}
 var surfaces: Dictionary[Vector4i, Dictionary] = {}
 var visible_roads: Dictionary[Vector3i, Array] = {}
+var prepared_receivers := 0
 var geometry_reset := false
+var vehicle_planes: Dictionary[Vector4i, Vector4] = {}
 var _geometry := CityLifeGeometry.new()
 var raster_scale := 1
 
@@ -32,10 +34,14 @@ func sync_geometry(city: CityState) -> Dictionary[Vector2i, bool]:
 	geometry_reset = _geometry.reset
 	if geometry_reset:
 		roads.clear()
+		vehicle_planes.clear()
 		clear_surfaces()
 		return changed
 	if changed.is_empty():
 		return changed
+	for key in vehicle_planes.keys():
+		if changed.has(Vector2i(key.x, key.y)):
+			vehicle_planes.erase(key)
 	for tile in changed:
 		for axis in 4:
 			var key := Vector3i(tile.x, tile.y, axis)
@@ -69,15 +75,18 @@ func lamp_mask(sprite: Image, kind: int, direction: int) -> Image:
 	return masks[key]
 
 
-func surface(city: CityState, tile: Vector2i, enter: int, direction: int, lookup := Callable()) -> Dictionary:
+func surface(city: CityState, tile: Vector2i, enter: int, direction: int, lookup := Callable(), upload_texture := true) -> Dictionary:
 	var key := Vector4i(tile.x, tile.y, road_key(city, tile, enter).z, direction)
 	if surfaces.has(key):
 		var cached := surfaces[key]
+		if upload_texture and cached.texture == null:
+			cached.texture = ImageTexture.create_from_image(cached.image)
 		# Dictionary order tracks recent use. Evict one old surface, not the
 		# entire working set when vehicles reach the next road tile.
 		surfaces.erase(key)
 		surfaces[key] = cached
 		return cached
+	prepared_receivers += 1
 	var center := CityLifePaths.point(city, tile, enter, (enter + 2) % 4, 0.5, false)
 	var world_origin := Vector2(tile)
 	var bounds := Rect2i(Vector2i(center) - Vector2i(48, 48), Vector2i(96, 96))
@@ -85,8 +94,9 @@ func surface(city: CityState, tile: Vector2i, enter: int, direction: int, lookup
 	# HD receivers encode two local 12-bit coordinates in RGB and coverage in A.
 	# This avoids a 16-byte float texel for every high-resolution light sample.
 	var format := Image.FORMAT_RGBA8 if raster_scale > 1 else Image.FORMAT_RGBAF
-	var image := Image.create(96 * raster_scale, 96 * raster_scale, false, format)
+	var image: Image = Image.create(96, 96, false, format) if raster_scale == 1 else null
 	var occlusion_keys: Array[Vector3i] = []
+	var patches: Array = []
 	for step in 3:
 		occlusion_keys.append(Vector3i(tile.x, tile.y, enter % 2))
 		for road: Dictionary in _visible_road_patches(city, tile, enter, lookup):
@@ -94,7 +104,7 @@ func surface(city: CityState, tile: Vector2i, enter: int, direction: int, lookup
 			if raster_scale == 1:
 				image.blit_rect_mask(road.image, road.image, Rect2i(Vector2i.ZERO, road.image.get_size()), destination)
 			else:
-				_encode_receiver(image, road.image, destination, world_origin)
+				patches.append(road)
 		var exit := direction
 		if CityLifePaths.diagonal(city, tile):
 			exit = CityLifePaths.paired_exit(city, tile, enter)
@@ -105,27 +115,29 @@ func surface(city: CityState, tile: Vector2i, enter: int, direction: int, lookup
 			break
 		tile += CityLifePaths.DIRECTIONS[exit]
 		enter = (exit + 2) % 4
-	var result := {"image": image, "texture": ImageTexture.create_from_image(image), "origin": bounds.position,
+	if raster_scale > 1:
+		image = NativeVisualRaster.headlight_receiver(Vector2i(96, 96) * raster_scale, bounds.position * raster_scale, patches, world_origin)
+	# The instanced headlight renderer uploads directly into its texture array.
+	# Avoid a second, unused GPU allocation for every prepared receiver.
+	var draw_rect := image.get_used_rect().grow(1).intersection(Rect2i(Vector2i.ZERO, image.get_size()))
+	var result := {"draw_rect": draw_rect, "image": image, "texture": ImageTexture.create_from_image(image) if upload_texture else null, "origin": bounds.position,
 		"occlusion_keys": occlusion_keys, "world_origin": world_origin}
+	# Direct array uploads avoid a duplicate ImageTexture. Reuse that saved
+	# allocation for a larger, bounded CPU working set.
 	# RGBA8 uses one quarter of the classic float receiver's bytes per texel.
-	var surface_limit := SURFACE_LIMIT * (4 if raster_scale > 1 else 1) / (raster_scale * raster_scale)
-	if surfaces.size() >= surface_limit:
+	var surface_limit := SURFACE_LIMIT * (8 if raster_scale > 1 and not upload_texture else 4 if raster_scale > 1 else 1) / (raster_scale * raster_scale)
+	if raster_scale > 1 and not upload_texture:
+		# An all-car scene must fit: otherwise cold preparation could evict
+		# its own inputs indefinitely before the complete frame is published.
+		surface_limit = maxi(surface_limit, CityLifeController.MAX_FIGURES)
+	while surfaces.size() >= surface_limit:
 		surfaces.erase(surfaces.keys()[0])
 	surfaces[key] = result
 	return result
 
 
 static func _encode_receiver(target: Image, source: Image, destination: Vector2i, world_origin: Vector2) -> void:
-	var overlap := Rect2i(destination, source.get_size()).intersection(Rect2i(Vector2i.ZERO, target.get_size()))
-	for y in range(overlap.position.y, overlap.end.y):
-		for x in range(overlap.position.x, overlap.end.x):
-			var sample := source.get_pixel(x - destination.x, y - destination.y)
-			if sample.a <= 0.0:
-				continue
-			var local := Vector2(sample.r, sample.g) - world_origin + Vector2(4, 4)
-			var u := clampi(roundi(local.x * 512.0), 0, 4095)
-			var v := clampi(roundi(local.y * 512.0), 0, 4095)
-			target.set_pixel(x, y, Color8(u >> 4, ((u & 15) << 4) | (v >> 8), v & 255, 255))
+	NativeVisualRaster.encode_receiver(target, source, destination, world_origin)
 
 
 func _visible_road_patches(city: CityState, tile: Vector2i, enter: int, lookup: Callable) -> Array:
@@ -133,21 +145,37 @@ func _visible_road_patches(city: CityState, tile: Vector2i, enter: int, lookup: 
 	if visible_roads.has(key):
 		return visible_roads[key]
 	var occluders: Array = lookup.call(tile, enter) if lookup.is_valid() else []
-	occluders = CityLifeCanvas.scaled_occluders(occluders, raster_scale)
+	var patches := _road_patches(city, tile, enter)
+	var bounds := Rect2i()
+	for road: Dictionary in patches:
+		var part := Rect2i(road.origin, road.image.get_size())
+		bounds = bounds.merge(part) if bounds.has_area() else part
+	occluders = CityLifeCanvas.scaled_occluders(occluders, raster_scale, Rect2i(bounds.position / raster_scale, bounds.size / raster_scale))
 	var result: Array = []
-	for road: Dictionary in _road_patches(city, tile, enter):
+	for road: Dictionary in patches:
 		var pixels: Image = road.image.duplicate()
-		var bounds := Rect2i(road.origin, pixels.get_size())
+		var road_bounds := Rect2i(road.origin, pixels.get_size())
 		for occluder: Dictionary in occluders:
-			var overlap := bounds.intersection(Rect2i(occluder.origin, occluder.image.get_size()))
+			var overlap := road_bounds.intersection(Rect2i(occluder.origin, occluder.image.get_size()))
 			if not overlap.has_area():
 				continue
 			var mask: Image = occluder.image.get_region(Rect2i(overlap.position - occluder.origin, overlap.size))
 			var clear := Image.create(overlap.size.x, overlap.size.y, false, Image.FORMAT_RGBAF)
-			pixels.blit_rect_mask(clear, mask, Rect2i(Vector2i.ZERO, overlap.size), overlap.position - bounds.position)
+			pixels.blit_rect_mask(clear, mask, Rect2i(Vector2i.ZERO, overlap.size), overlap.position - road_bounds.position)
 		result.append({"image": pixels, "origin": road.origin})
 	visible_roads[key] = result
 	return result
+
+
+func cached_vehicle_world(city: CityState, figure: CityLifeController.Figure) -> Vector2:
+	var key := Vector4i(figure.tile.x, figure.tile.y, figure.enter, figure.exit)
+	if not vehicle_planes.has(key):
+		var origin := _project(city, figure.tile, Vector2.ZERO, 0.0)
+		vehicle_planes[key] = Vector4(origin.x, origin.y, CityLifePaths.edge_height(city, figure.tile, figure.enter), CityLifePaths.edge_height(city, figure.tile, figure.exit))
+	var plane := vehicle_planes[key]
+	var altitude := lerpf(plane.z, plane.w, figure.progress)
+	var local := figure.position - (Vector2(plane.x, plane.y) + Vector2(0.0, -altitude * 12.0))
+	return Vector2(figure.tile) + Vector2(local.x / 32.0 + local.y / 16.0, local.y / 16.0 - local.x / 32.0)
 
 
 static func vehicle_world(city: CityState, figure: CityLifeController.Figure) -> Vector2:
@@ -191,13 +219,8 @@ func _road_patches(city: CityState, tile: Vector2i, enter: int) -> Array:
 		var inverse := transform.affine_inverse()
 		var raster := Rect2i(bounds.grow(1.0))
 		raster = Rect2i(raster.position * raster_scale, raster.size * raster_scale)
-		var pixels := Image.create(raster.size.x, raster.size.y, false, Image.FORMAT_RGBAF)
-		for y in range(raster.position.y, raster.end.y):
-			for x in range(raster.position.x, raster.end.x):
-				var uv: Vector2 = inverse * (Vector2(x + 0.5, y + 0.5) / raster_scale)
-				if uv.x >= 0.0 and uv.x <= 1.0 and uv.y >= 0.0 and uv.y <= 1.0:
-					var world := Vector2(tile) + forward * uv.x * 0.5 + side * (uv.y - 0.5) * 0.5
-					pixels.set_pixel(x - raster.position.x, y - raster.position.y, Color(world.x, world.y, 0.0, 1.0))
+		var pixels := NativeVisualRaster.road_patch(raster, inverse, raster_scale, Vector2(tile),
+			Vector2.ZERO, forward * 0.5, side * 0.5, false)
 		patches.append({"origin": raster.position, "image": pixels})
 	roads[key] = patches
 	return patches
@@ -226,15 +249,7 @@ static func _diagonal_patch(city: CityState, tile: Vector2i, enter: int, raster_
 	var raster := Rect2i(bounds.grow(1.0))
 	raster = Rect2i(raster.position * raster_scale, raster.size * raster_scale)
 	var inverse := transform.affine_inverse()
-	var pixels := Image.create(raster.size.x, raster.size.y, false, Image.FORMAT_RGBAF)
-	for y in range(raster.position.y, raster.end.y):
-		for x in range(raster.position.x, raster.end.x):
-			var uv: Vector2 = inverse * (Vector2(x + 0.5, y + 0.5) / raster_scale)
-			var local := a + along * uv.x + side * (uv.y - 0.5)
-			if uv.y >= 0.0 and uv.y <= 1.0 \
-					and absf(local.x) <= 0.5 and absf(local.y) <= 0.5:
-				var world := Vector2(tile) + local
-				pixels.set_pixel(x - raster.position.x, y - raster.position.y, Color(world.x, world.y, 0, 1))
+	var pixels := NativeVisualRaster.road_patch(raster, inverse, raster_scale, Vector2(tile), a, along, side, true)
 	return [{"origin": raster.position, "image": pixels}]
 
 

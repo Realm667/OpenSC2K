@@ -6,6 +6,8 @@ uniform sampler2D artwork : source_color, filter_nearest, repeat_disable;
 uniform sampler2D lamps : source_color, filter_nearest, repeat_disable;
 uniform sampler2D parameters : filter_nearest, repeat_disable;
 uniform sampler2DArray masks : filter_nearest, repeat_disable;
+uniform sampler2DArray masks_second : filter_nearest, repeat_disable;
+uniform sampler2DArray masks_third : filter_nearest, repeat_disable;
 uniform float interpolation = 1.0;
 uniform float artwork_scale = 1.0;
 uniform bool emission_only = false;
@@ -39,6 +41,12 @@ void vertex() {
 	opacity = mask.w;
 	cloud_ground_grid = cloud_grid_at((MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy);
 }
+float mask_coverage(vec2 uv) {
+	vec3 point = vec3(uv, mod(mask_layer, 256.0));
+	if (mask_layer < 256.0) return texture(masks, point).r;
+	if (mask_layer < 512.0) return texture(masks_second, point).r;
+	return texture(masks_third, point).r;
+}
 void fragment() {
 	// Match image-rectangle sampling at exact half-resolution texel boundaries.
 	vec2 pixel = floor(sprite_pixel * artwork_scale - vec2(0.0001));
@@ -47,7 +55,7 @@ void fragment() {
 	vec4 color = texture(artwork, source_uv);
 	if (color.a <= 0.0) discard;
 	vec2 mask_uv = ((world_pixel - sprite_pixel + floor(pixel / artwork_scale)) - mask_origin + vec2(0.5)) / 128.0;
-	if (all(greaterThanEqual(mask_uv, vec2(0.0))) && all(lessThan(mask_uv, vec2(1.0))) && texture(masks, vec3(mask_uv, mask_layer)).a > 0.0) discard;
+	if (all(greaterThanEqual(mask_uv, vec2(0.0))) && all(lessThan(mask_uv, vec2(1.0))) && mask_coverage(mask_uv) > 0.0) discard;
 	vec4 light = texture(lamps, source_uv);
 	if (emission_only) {
 		// Preserve the original emission pass: unlit opaque art covers rear lights.

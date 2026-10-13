@@ -59,27 +59,11 @@ static func _rasterize(city: CityState, tile: Vector2i, origin: Vector2i, lights
 	for enter in 4:
 		if not CityLifePaths.ports(city, tile) & (1 << enter):
 			continue
-		var image := Image.create(edge, edge, false, Image.FORMAT_RGBA8)
-		var seen := {}
-		for patch: Dictionary in roads._road_patches(city, tile, enter):
-			var pixels: Image = patch.image
-			for y in pixels.get_height():
-				for x in pixels.get_width():
-					var sample := pixels.get_pixel(x, y)
-					if sample.a <= 0.0:
-						continue
-					var local: Vector2i = patch.origin + Vector2i(x, y) - origin
-					if seen.has(local) or not Rect2i(0, 0, edge, edge).has_point(local):
-						continue
-					seen[local] = true
-					var color := Color(0, 0, 0, 1)
-					for light in lights:
-						if light.has("enter") and int(light.enter) != enter and not CityLifePaths.can_turn(city, tile, enter, int(light.enter)):
-							continue
-						var distance := Vector2(sample.r, sample.g).distance_to(light.position)
-						var falloff := pow(maxf(0.0, 1.0 - distance / float(light.radius)), 1.6)
-						color += Color(str(light.color)) * falloff * float(light.intensity)
-						color.a = 1.0
-					image.set_pixelv(local, color.clamp())
+		var lamps: Array[Dictionary] = []
+		for light in lights:
+			if light.has("enter") and int(light.enter) != enter and not CityLifePaths.can_turn(city, tile, enter, int(light.enter)):
+				continue
+			lamps.append({"position": light.position, "color": Color(str(light.color)), "radius": float(light.radius), "intensity": float(light.intensity)})
+		var image := NativeVisualRaster.night_receiver(Vector2i(edge, edge), origin, roads._road_patches(city, tile, enter), lamps)
 		parts.append({"enter": enter, "image": image})
 	return parts

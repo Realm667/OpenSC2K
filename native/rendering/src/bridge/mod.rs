@@ -9,6 +9,7 @@ mod minimap;
 mod region_builder;
 mod region_draws;
 mod view_queries;
+mod visual_raster;
 
 use godot::prelude::*;
 

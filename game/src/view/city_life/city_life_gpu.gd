@@ -7,6 +7,8 @@ extends RefCounted
 const SHADER := preload("res://src/view/city_life/city_life_gpu.gdshader")
 const GROUP := 64
 const STRIDE := 8
+const MASK_LAYERS := 256
+const MASK_CAPACITY := MASK_LAYERS * 3
 const CELL := Vector2i(32, 16)
 var artwork: ImageTexture
 var emission: ImageTexture
@@ -17,14 +19,21 @@ var buffers: Array[PackedFloat32Array] = []
 var data: Array[PackedFloat32Array] = []
 var textures: Array[ImageTexture] = []
 var masks: Array[Texture2DArray] = []
-var identities: Array = []
-var layer_keys: Array[Dictionary] = []
+var identities := PackedInt64Array()
+var mask_images: Array = []
+var mask_slots: Dictionary[Vector3i, int] = {}
+var _next_mask_slot := 0
 var cropped: Dictionary[Vector3i, Dictionary] = {}
 var blank := Image.create(128, 128, false, Image.FORMAT_RGBA8)
+var blank_mask := Image.create(128, 128, false, Image.FORMAT_R8)
 var blend := 1.0
 var origin := Vector2i.ZERO
 var upload_bytes := 0
 var artwork_scale := 1
+
+
+func _init() -> void:
+	identities.resize(MASK_CAPACITY)
 
 
 func prepare(sprites: CityLifeSprites, lights: CityLifeLights) -> void:
@@ -59,35 +68,20 @@ func render(canvas: CityLifeCanvas, entries: Array[Dictionary]) -> void:
 	var count := entries.size()
 	while groups.size() * GROUP < count:
 		add_group(canvas)
-	for group in groups:
-		group.multimesh.visible_instance_count = 0
-	# Retain each tile's texture layer when depth sorting moves instances.
-	for group_index in groups.size():
-		var wanted: Dictionary[Vector3i, bool] = {}
-		for index in range(group_index * GROUP, mini(count, (group_index + 1) * GROUP)):
-			var figure: CityLifeController.Figure = entries[index].figure
-			wanted[Vector3i(figure.tile.x, figure.tile.y, figure.enter % 2)] = true
-		var assigned: Dictionary = layer_keys[group_index]
-		for key in assigned.keys():
-			if not wanted.has(key):
-				assigned.erase(key)
-		var used := assigned.values()
-		var free := 0
-		for key in wanted:
-			if assigned.has(key):
-				continue
-			while free in used:
-				free += 1
-			assigned[key] = free
-			free += 1
+	# Mask addresses belong to world tiles, independently of painter-order groups.
+	# Reordering moving figures therefore does not upload unchanged silhouettes.
 	var live: Dictionary[Vector3i, bool] = {}
+	for entry: Dictionary in entries:
+		var figure: CityLifeController.Figure = entry.figure
+		live[Vector3i(figure.tile.x, figure.tile.y, figure.enter % 2)] = true
+	var changed_layers: Dictionary[int, Dictionary] = {}
+	var mask_origins := PackedVector2Array()
+	var mask_layers := PackedInt32Array()
 	for index in count:
 		var entry := entries[index]
-		var group := index / GROUP
-		var slot := index % GROUP
 		var figure: CityLifeController.Figure = entry.figure
 		var key := Vector3i(figure.tile.x, figure.tile.y, figure.enter % 2)
-		live[key] = true
+		var slot := _mask_slot(key, live)
 		var candidates: Array = entry.occluders
 		var version: int = candidates[0].image.get_instance_id() if not candidates.is_empty() else 0
 		var cached: Dictionary = cropped.get(key, {})
@@ -96,47 +90,43 @@ func render(canvas: CityLifeCanvas, entries: Array[Dictionary]) -> void:
 			var image := blank if candidates.is_empty() else blank.duplicate()
 			for candidate: Dictionary in candidates:
 				image.blend_rect(candidate.image, Rect2i(Vector2i.ZERO, candidate.image.get_size()), candidate.origin - point)
-			cached = {"version": version, "image": image, "origin": point}
+			cached = {"version": version, "image": blank_mask if image.is_invisible() else NativeVisualRaster.alpha_mask(image), "origin": point}
 			cropped[key] = cached
 		var identity: int = cached.image.get_instance_id()
-		var layer: int = layer_keys[group][key]
-		if identities[group][layer] != identity:
-			masks[group].update_layer(cached.image, layer)
-			identities[group][layer] = identity
-			upload_bytes += 128 * 128 * 4
-		var rect := rectangles[entry.sprite.get_instance_id()]
-		var at := slot * STRIDE
-		var visual_origin := Vector2(entry.origin)
-		if artwork_scale > 1:
-			visual_origin += figure.position - figure.position.round()
-		var destination := visual_origin - Vector2(origin)
-		buffers[group][at] = rect.size.x / artwork_scale
-		buffers[group][at + 3] = destination.x
-		buffers[group][at + 5] = rect.size.y / artwork_scale
-		buffers[group][at + 7] = destination.y
-		var offset := slot * 4
-		data[group][offset] = rect.position.x
-		data[group][offset + 1] = rect.position.y
-		data[group][offset + 2] = rect.size.x
-		data[group][offset + 3] = rect.size.y
-		data[group][GROUP * 4 + offset] = visual_origin.x
-		data[group][GROUP * 4 + offset + 1] = visual_origin.y
-		var previous := figure.previous_position if figure.has_previous_position else figure.position
-		data[group][GROUP * 4 + offset + 2] = previous.x - figure.position.x
-		data[group][GROUP * 4 + offset + 3] = previous.y - figure.position.y
-		data[group][GROUP * 8 + offset] = cached.origin.x
-		data[group][GROUP * 8 + offset + 1] = cached.origin.y
-		data[group][GROUP * 8 + offset + 2] = layer
-		data[group][GROUP * 8 + offset + 3] = entry.opacity
-		figure.previous_position = figure.position
-		figure.has_previous_position = true
-		groups[group].multimesh.visible_instance_count += 1
-	# Keep only masks used by current figures. The underlying city cache remains warm.
-	for key in cropped.keys():
-		if not live.has(key):
-			cropped.erase(key)
+		var page := slot / MASK_LAYERS
+		var layer := slot % MASK_LAYERS
+		_ensure_mask_page(page)
+		if identities[slot] != identity:
+			if not changed_layers.has(page):
+				changed_layers[page] = {}
+			changed_layers[page][layer] = cached.image
+			mask_images[page][layer] = cached.image
+			identities[slot] = identity
+			upload_bytes += 128 * 128
+		mask_origins.append(Vector2(cached.origin))
+		mask_layers.append(slot)
+	for page: int in changed_layers:
+		var changed := changed_layers[page]
+		if changed.size() >= GROUP:
+			var replacement := Texture2DArray.new()
+			var images: Array[Image] = mask_images[page]
+			replacement.create_from_images(images)
+			masks[page] = replacement
+			for node in groups + emissions:
+				if is_instance_valid(node):
+					_apply_mask_pages(node.material as ShaderMaterial)
+			upload_bytes += (MASK_LAYERS - changed.size()) * 128 * 128
+		else:
+			for layer: int in changed:
+				masks[page].update_layer(changed[layer], layer)
+	var streams := NativeVisualRaster.figure_buffers(entries, rectangles, mask_origins, mask_layers, origin, artwork_scale, GROUP)
+	for group in streams.size() / 2:
+		buffers[group] = streams[group * 2]
+		data[group] = streams[group * 2 + 1]
 	for index in groups.size():
-		groups[index].visible = groups[index].multimesh.visible_instance_count > 0
+		var visible_count := clampi(count - index * GROUP, 0, GROUP)
+		groups[index].multimesh.visible_instance_count = visible_count
+		groups[index].visible = visible_count > 0
 		if not groups[index].visible:
 			continue
 		groups[index].multimesh.buffer = buffers[index]
@@ -188,29 +178,62 @@ func add_group(parent: Node2D) -> void:
 	data.append(values)
 	var texture := ImageTexture.create_from_image(Image.create_from_data(GROUP, 3, false, Image.FORMAT_RGBAF, values.to_byte_array()))
 	textures.append(texture)
-	var layers: Array[Image] = []
-	layers.resize(GROUP)
-	layers.fill(blank)
-	var array := Texture2DArray.new()
-	array.create_from_images(layers)
-	masks.append(array)
-	var ids := PackedInt64Array()
-	ids.resize(GROUP)
-	ids.fill(blank.get_instance_id())
-	identities.append(ids)
-	layer_keys.append({})
+	_ensure_mask_page(0)
 	var shader := ShaderMaterial.new()
 	shader.shader = SHADER
 	shader.set_shader_parameter("artwork", artwork)
 	shader.set_shader_parameter("artwork_scale", float(artwork_scale))
 	shader.set_shader_parameter("lamps", emission)
-	shader.set_shader_parameter("masks", array)
+	_apply_mask_pages(shader)
 	shader.set_shader_parameter("parameters", texture)
 	var node := MultiMeshInstance2D.new()
 	node.multimesh = mesh
 	node.material = shader
 	parent.add_child(node)
 	groups.append(node)
+
+
+func _mask_slot(key: Vector3i, live: Dictionary[Vector3i, bool]) -> int:
+	if mask_slots.has(key):
+		return mask_slots[key]
+	var slot := _next_mask_slot
+	var fresh := slot < MASK_CAPACITY
+	if fresh:
+		_next_mask_slot += 1
+	else:
+		slot = -1
+		# At most 600 figure tiles are live; three portable 256-layer pages
+		# leave a bounded reserve for motion and recently visited tiles.
+		for previous in mask_slots:
+			if not live.has(previous):
+				slot = mask_slots[previous]
+				mask_slots.erase(previous)
+				cropped.erase(previous)
+				break
+		assert(slot >= 0, "Figure mask working set exceeds its fixed capacity")
+	mask_slots[key] = slot
+	# New pages are already blank. Empty silhouettes need no image upload.
+	identities[slot] = blank_mask.get_instance_id() if fresh else 0
+	return slot
+
+
+func _ensure_mask_page(page: int) -> void:
+	while masks.size() <= page:
+		var layers: Array[Image] = []
+		layers.resize(MASK_LAYERS)
+		layers.fill(blank_mask)
+		mask_images.append(layers)
+		var texture := Texture2DArray.new()
+		texture.create_from_images(layers)
+		masks.append(texture)
+		for node in groups + emissions:
+			if is_instance_valid(node):
+				_apply_mask_pages(node.material as ShaderMaterial)
+
+
+func _apply_mask_pages(shader: ShaderMaterial) -> void:
+	for page in 3:
+		shader.set_shader_parameter(["masks", "masks_second", "masks_third"][page], masks[mini(page, masks.size() - 1)])
 
 
 static func _scaled(image: Image, size: Vector2i) -> Image:

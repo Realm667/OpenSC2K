@@ -11,6 +11,8 @@ var gpu: CityLifeGpu
 var gpu_enabled := DisplayServer.get_name() != "headless"
 var interpolation := 1.0
 var _entries: Array[Dictionary] = []
+var _gpu_entries: Dictionary[CityLifeController.Figure, Dictionary] = {}
+var _sprite_sizes: Dictionary[Image, Vector2i] = {}
 var image: Image:
 	get: return atlas.image
 var texture: ImageTexture:
@@ -23,6 +25,7 @@ var emission_texture: ImageTexture:
 	get: return gpu.emission if gpu != null else atlas.emission_texture
 var road_layer: Node2D
 var _light_night := -1.0
+var _light_preparation_cursor := 0
 var _light_occluders: Dictionary[Vector3i, Array] = {}
 var _occluders: Dictionary[Vector3i, Array] = {}
 var _occluder_bounds: Dictionary[Vector3i, Rect2i] = {}
@@ -46,7 +49,9 @@ func _draw() -> void:
 			draw_texture_rect_region(texture, atlas.destinations[index], atlas.sources[index])
 
 
-func render(app: CityApplication, figures: Array, sprites: CityLifeSprites) -> void:
+func render(app: CityApplication, figures: Array, sprites: CityLifeSprites, preparation_budget_usec := 0) -> bool:
+	var previous_bounds := source_bounds
+	var preparation_usec := 0
 	var source_art := app.asset_state.asset_source.assets.visual_artwork if app.asset_state.asset_source != null else null
 	var raster_scale := 4 if source_art != null else 1
 	if lights.raster_scale != raster_scale:
@@ -55,6 +60,8 @@ func render(app: CityApplication, figures: Array, sprites: CityLifeSprites) -> v
 			road_layer.free()
 			road_layer = null
 	if sprites.set_artwork(source_art):
+		_sprite_sizes.clear()
+		_gpu_entries.clear()
 		if gpu != null:
 			for node in gpu.groups + gpu.emissions:
 				if is_instance_valid(node):
@@ -65,7 +72,7 @@ func render(app: CityApplication, figures: Array, sprites: CityLifeSprites) -> v
 	var bounds := Rect2i(map.visible_source_rect()).grow(32)
 	if not supports_view(map.visible_source_rect()):
 		hide()
-		return
+		return true
 	var light_active := app.visual_environment.night > 0.0 and VisualEnhancementOptions.detail_lights_visible(app.preferences.visual_enhancements, map.zoom_factor)
 	if road_layer == null:
 		road_layer = CityLifeHeadlights.new()
@@ -89,6 +96,7 @@ func render(app: CityApplication, figures: Array, sprites: CityLifeSprites) -> v
 	var signature := [app.document_state.city.document.get_instance_id(), app.static_render_state.epoch,
 		source, app.static_render.city_view_size(), layout]
 	if signature != _occlusion_signature:
+		_gpu_entries.clear()
 		_occluders.clear()
 		_occluder_bounds.clear()
 		_light_occluders.clear()
@@ -99,21 +107,75 @@ func render(app: CityApplication, figures: Array, sprites: CityLifeSprites) -> v
 	figures.sort_custom(func(a: CityLifeController.Figure, b: CityLifeController.Figure) -> bool:
 		return a.position.y < b.position.y)
 	road_layer.visible = light_active
-	if light_active:
-		(road_layer as CityLifeHeadlights).render(city, figures, lights, source_bounds.position,
-			func(tile: Vector2i, enter: int) -> Array: return _light_candidates(app, tile, enter))
+	if _gpu_entries.size() > CityLifeController.MAX_FIGURES + 64:
+		var active: Dictionary[CityLifeController.Figure, bool] = {}
+		for figure: CityLifeController.Figure in figures:
+			active[figure] = true
+		for figure in _gpu_entries.keys():
+			if not active.has(figure):
+				_gpu_entries.erase(figure)
 	_entries.clear()
 	var entries := _entries
+	var receiver_inputs: Dictionary[int, Dictionary] = {}
 	for figure: CityLifeController.Figure in figures:
+		var preparation_started := Time.get_ticks_usec()
+		var cold := not _occluders.has(Vector3i(figure.tile.x, figure.tile.y, figure.enter % 2))
+		var receivers := lights.prepared_receivers
+		if light_active and not figure.walking:
+			receiver_inputs[figure.id] = lights.surface(city, figure.tile, figure.enter, figure.direction,
+				func(tile: Vector2i, enter: int) -> Array: return _light_candidates(app, tile, enter), false)
 		var sprite := sprites.sprite(figure.walking, figure.variant, figure.direction, int(figure.distance * 8.0) % 2, figure.vehicle_kind)
-		var origin := Vector2i(figure.position.round()) - Vector2i(sprite.get_width() / 2, sprite.get_height() - 1)
-		if not source_bounds.intersects(Rect2i(origin, sprite.get_size())):
+		if not _sprite_sizes.has(sprite):
+			_sprite_sizes[sprite] = sprite.get_size()
+		var size := _sprite_sizes[sprite]
+		var origin := Vector2i(figure.position.round()) - Vector2i(size.x / 2, size.y - 1)
+		if not source_bounds.intersects(Rect2i(origin, size)):
+			if lights.prepared_receivers != receivers:
+				preparation_usec += Time.get_ticks_usec() - preparation_started
+			if preparation_budget_usec > 0 and preparation_usec >= preparation_budget_usec:
+				return _pending_frame(app, previous_bounds)
 			continue
 		var candidates := _candidates(app, figure.tile, figure.enter)
 		var opacity := figure.opacity()
-		var mask: Image = sprites.lamp_image(sprite, lights, figure.vehicle_kind, figure.direction) if light_active and not figure.walking else null
-		entries.append({"sprite": sprite, "origin": origin, "occluders": candidates, "opacity": opacity, "lamps": mask, "figure": figure,
-			"master": sprites.master_image(sprite), "master_lamps": sprites.lamp_image(sprite, lights, figure.vehicle_kind, figure.direction, true) if mask != null else null})
+		if gpu_enabled:
+			var entry: Dictionary = _gpu_entries.get(figure, {})
+			if entry.is_empty():
+				entry = {"figure": figure}
+				_gpu_entries[figure] = entry
+			entry.sprite = sprite
+			entry.origin = origin
+			entry.occluders = candidates
+			entry.opacity = opacity
+			entries.append(entry)
+		else:
+			var mask: Image = sprites.lamp_image(sprite, lights, figure.vehicle_kind, figure.direction) if light_active and not figure.walking else null
+			entries.append({"sprite": sprite, "origin": origin, "occluders": candidates, "opacity": opacity, "lamps": mask, "figure": figure,
+				"master": sprites.master_image(sprite), "master_lamps": sprites.lamp_image(sprite, lights, figure.vehicle_kind, figure.direction, true) if mask != null else null})
+		if cold or lights.prepared_receivers != receivers:
+			preparation_usec += Time.get_ticks_usec() - preparation_started
+		if preparation_budget_usec > 0 and preparation_usec >= preparation_budget_usec:
+			return _pending_frame(app, previous_bounds)
+	# Publish complete batches only; cold inputs and GPU pages are prepared
+	# in bounded steps while the previous draw remains available.
+	if preparation_budget_usec > 0:
+		if gpu_enabled:
+			if gpu == null:
+				gpu = CityLifeGpu.new()
+				gpu.prepare(sprites, lights)
+				return _pending_frame(app, previous_bounds)
+			if gpu.groups.size() * CityLifeGpu.GROUP < figures.size():
+				gpu.add_group(self)
+				return _pending_frame(app, previous_bounds)
+		if light_active:
+			var vehicles := 0
+			for figure: CityLifeController.Figure in figures:
+				vehicles += int(not figure.walking)
+			if (road_layer as CityLifeHeadlights).groups.size() * CityLifeHeadlights.GROUP_SIZE < vehicles:
+				(road_layer as CityLifeHeadlights)._add_group()
+				return _pending_frame(app, previous_bounds)
+	if light_active:
+		(road_layer as CityLifeHeadlights).render(city, figures, lights, source_bounds.position,
+			func(tile: Vector2i, enter: int) -> Array: return _light_candidates(app, tile, enter), receiver_inputs)
 	if gpu_enabled:
 		if gpu == null:
 			gpu = CityLifeGpu.new()
@@ -126,6 +188,14 @@ func render(app: CityApplication, figures: Array, sprites: CityLifeSprites) -> v
 	sync_view(app)
 	show()
 	queue_redraw()
+	return true
+
+
+func _pending_frame(app: CityApplication, previous_bounds: Rect2i) -> bool:
+	source_bounds = previous_bounds
+	interpolation = 1.0
+	sync_view(app)
+	return false
 
 
 static func supports_view(bounds: Rect2) -> bool:
@@ -148,6 +218,36 @@ func sync_view(app: CityApplication) -> void:
 	if road_layer != null and (app.visual_environment.night if allowed else 0.0) != _light_night:
 		_light_night = app.visual_environment.night if allowed else 0.0
 		(road_layer as CityLifeHeadlights).set_night(_light_night)
+
+
+func prepare_lights(app: CityApplication, figures: Array, budget_usec := 1500) -> void:
+	if not gpu_enabled or road_layer == null or figures.is_empty() or app.visual_environment.night > 0.0:
+		return
+	if not VisualEnhancementOptions.detail_lights_visible(app.preferences.visual_enhancements, app.map_view.zoom_factor):
+		return
+	var started := Time.get_ticks_usec()
+	var city := app.document_state.city
+	lights.sync_geometry(city)
+	var headlights := road_layer as CityLifeHeadlights
+	var vehicles := 0
+	for figure: CityLifeController.Figure in figures:
+		vehicles += int(not figure.walking)
+	if headlights.groups.size() * CityLifeHeadlights.GROUP_SIZE < vehicles:
+		headlights._add_group()
+		return
+	# Use idle presentation frames to warm the next night. A small rotating
+	# sample avoids rescanning the complete working set on every display frame.
+	for index in mini(32, figures.size()):
+		_light_preparation_cursor %= figures.size()
+		var figure: CityLifeController.Figure = figures[_light_preparation_cursor]
+		_light_preparation_cursor += 1
+		if not figure.walking:
+			var road := CityLifeLights.road_key(city, figure.tile, figure.enter)
+			if not lights.surfaces.has(Vector4i(road.x, road.y, road.z, figure.direction)):
+				lights.surface(city, figure.tile, figure.enter, figure.direction,
+					func(tile: Vector2i, enter: int) -> Array: return _light_candidates(app, tile, enter), false)
+		if Time.get_ticks_usec() - started >= budget_usec:
+			break
 
 
 func _candidates(app: CityApplication, tile: Vector2i, enter: int = 0) -> Array:
@@ -184,7 +284,7 @@ func _candidates(app: CityApplication, tile: Vector2i, enter: int = 0) -> Array:
 			continue
 		if command.depth_order <= depth and not own:
 			continue
-		var resource := app.moving_sprites.dynamic_sprite_resource(archive, command.sprite_id, command.flip, divisor)
+		var resource := app.moving_sprites.dynamic_sprite_resource(archive, command.sprite_id, command.flip, divisor, 1, true)
 		if resource != null:
 			var origin := Vector2i(command.position) * divisor
 			var mask: Image = resource.image
@@ -200,7 +300,10 @@ func _candidates(app: CityApplication, tile: Vector2i, enter: int = 0) -> Array:
 					mask = deck_foreground(mask, origin, (a + b) * 0.5, (b.y - a.y) / (b.x - a.x))
 			candidates.append({"origin": origin, "image": mask})
 	_occluder_bounds[key] = bounds
-	_occluders[key] = merged_occluders(candidates)
+	# The figure shader samples exactly this 128-pixel mask. Do not compose
+	# complete tall buildings only to crop them again in CityLifeGpu.render().
+	var clip := Rect2i(bounds.position - Vector2i(32, 32), Vector2i(128, 128)) if gpu_enabled and not include_cached_regions else Rect2i()
+	_occluders[key] = merged_occluders(candidates, clip)
 	return _occluders[key]
 
 
@@ -241,14 +344,18 @@ func invalidate_occlusion(changes: Array[Rect2i]) -> void:
 				break
 
 
-static func merged_occluders(candidates: Array) -> Array:
-	if candidates.size() <= 1:
+static func merged_occluders(candidates: Array, clip := Rect2i()) -> Array:
+	if candidates.is_empty() or (candidates.size() == 1 and not clip.has_area()):
 		return candidates
 	# Keep the complete queried silhouettes, including pixels outside the query
 	# rectangle. Cars on slopes and long buses can reach beyond that rectangle.
 	var bounds := Rect2i(candidates[0].origin, candidates[0].image.get_size())
 	for candidate: Dictionary in candidates:
 		bounds = bounds.merge(Rect2i(candidate.origin, candidate.image.get_size()))
+	if clip.has_area():
+		bounds = bounds.intersection(clip)
+	if not bounds.has_area():
+		return []
 	var mask := Image.create(bounds.size.x, bounds.size.y, false, Image.FORMAT_RGBA8)
 	for candidate: Dictionary in candidates:
 		mask.blend_rect(candidate.image, Rect2i(Vector2i.ZERO, candidate.image.get_size()), candidate.origin - bounds.position)
@@ -334,14 +441,20 @@ static func visible_sprite(sprite: Image, origin: Vector2i, occluders: Array) ->
 	return visible
 
 
-static func scaled_occluders(occluders: Array, raster_scale: int) -> Array:
+static func scaled_occluders(occluders: Array, raster_scale: int, clip := Rect2i()) -> Array:
 	if raster_scale == 1:
 		return occluders
 	var result: Array = []
 	for occluder: Dictionary in occluders:
-		var mask: Image = occluder.image.duplicate()
+		var bounds := Rect2i(occluder.origin, occluder.image.get_size())
+		var area := bounds.intersection(clip) if clip.has_area() else bounds
+		if not area.has_area():
+			continue
+		# Only enlarge pixels that the light receiver can actually sample.
+		# A large foreground building must not allocate its full 4x image here.
+		var mask: Image = occluder.image.get_region(Rect2i(area.position - bounds.position, area.size))
 		mask.resize(mask.get_width() * raster_scale, mask.get_height() * raster_scale, Image.INTERPOLATE_NEAREST)
-		result.append({"image": mask, "origin": occluder.origin * raster_scale})
+		result.append({"image": mask, "origin": area.position * raster_scale})
 	return result
 
 
@@ -367,12 +480,13 @@ func _trim_working_set() -> void:
 			removed += 1
 			if removed >= 64:
 				break
-	for cache: Dictionary in [lights.roads, lights.visible_roads, _light_occluders]:
+	for cache: Dictionary in [lights.roads, lights.visible_roads, lights.vehicle_planes, _light_occluders]:
 		if cache.size() <= 4096:
 			continue
 		var removed := 0
 		for key in cache.keys():
-			if _occluder_bounds.has(key) and source_bounds.grow(96).intersects(_occluder_bounds[key]):
+			var road := Vector3i(key.x, key.y, key.z % 2)
+			if _occluder_bounds.has(road) and source_bounds.grow(96).intersects(_occluder_bounds[road]):
 				continue
 			cache.erase(key)
 			removed += 1

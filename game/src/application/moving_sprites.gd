@@ -645,12 +645,15 @@ func demolish_brush_visual(tile: Vector2i, direction: int) -> CityDynamicVisual:
 
 
 func dynamic_sprite_resource(
-	sprite_archive: Sc2SpriteArchive, sprite_id: int, flip: bool, divisor: int, texture_factor := 1
+	sprite_archive: Sc2SpriteArchive, sprite_id: int, flip: bool, divisor: int, texture_factor := 1, image_only := false
 ) -> CitySpriteResource:
 	var key := "%d:%d:%d:%d:%d:%d" % [sprite_id, int(flip), divisor, texture_factor, sprite_archive.get_instance_id(), int(sprite_archive.water_reflections)]
 
 	if caches.dynamic_sprite_cache.has(key):
-		return caches.dynamic_sprite_cache[key]
+		var cached: CitySpriteResource = caches.dynamic_sprite_cache[key]
+		if not image_only:
+			_complete_sprite_textures(cached, sprite_archive, sprite_id, flip)
+		return cached
 
 	var entry := sprite_archive.find_sprite(sprite_id)
 
@@ -687,25 +690,28 @@ func dynamic_sprite_resource(
 	if floating_source != null and floating_source.get_size() != image.get_size():
 		floating_source.resize(image.get_width(), image.get_height(), Image.INTERPOLATE_NEAREST)
 
-	var texture := ImageTexture.create_from_image(image)
 	var resource := CitySpriteResource.new()
 	resource.image = image
 	resource.floating_source = floating_source
 	resource.native_size = native_size
-	resource.texture = texture
-	resource.index_texture = texture
+	if not image_only:
+		_complete_sprite_textures(resource, sprite_archive, sprite_id, flip)
+	caches.dynamic_sprite_cache[key] = resource
+	return resource
 
+
+func _complete_sprite_textures(resource: CitySpriteResource, sprite_archive: Sc2SpriteArchive, sprite_id: int, flip: bool) -> void:
+	if resource.texture != null:
+		return
+	# Static occlusion queries need only image coverage. Upload artwork lazily
+	# if the same cached resource later becomes an actual drawn sprite.
+	resource.texture = ImageTexture.create_from_image(resource.image)
+	resource.index_texture = resource.texture
 	if _shows_artwork(sprite_archive, sprite_id):
-		resource.artwork_image = HdSprite.scaled(sprite_archive.high_resolution[sprite_id].image, image.get_size())
-
+		resource.artwork_image = HdSprite.scaled(sprite_archive.high_resolution[sprite_id].image, resource.image.get_size())
 		if flip:
 			resource.artwork_image.flip_x()
-
 		resource.artwork_texture = ImageTexture.create_from_image(resource.artwork_image)
-
-	caches.dynamic_sprite_cache[key] = resource
-
-	return resource
 
 
 func _shows_artwork(sprite_archive: Sc2SpriteArchive, sprite_id: int) -> bool:

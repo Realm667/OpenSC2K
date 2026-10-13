@@ -58,7 +58,7 @@ func _run() -> void:
 	await _check_headlight_batches(false, 4)
 	await _check_sparse_artwork(false)
 	await _check_sparse_artwork(true)
-	await _check_instances(false)
+	await _check_instances(false, 540)
 	await _check_instances(true)
 	await _check_hd_subpixel_motion()
 	print("PASS: GPU city-life colors, transparent background, cloud shadows and environment lighting")
@@ -280,7 +280,7 @@ func _check_headlight_batches(hdr: bool, raster_scale := 1) -> void:
 	print("PASS: batched headlights match individual GPU pixels at three zooms, including HDR, fades, movement and slot reuse")
 
 
-func _check_instances(hdr: bool) -> void:
+func _check_instances(hdr: bool, count := 150) -> void:
 	var viewport := SubViewport.new()
 	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	viewport.size = Vector2i(400, 300)
@@ -296,8 +296,9 @@ func _check_instances(hdr: bool) -> void:
 	var entries: Array[Dictionary] = []
 	var mask := Image.create(400, 300, false, Image.FORMAT_RGBA8)
 	mask.fill_rect(Rect2i(90, 0, 5, 300), Color.WHITE)
-	for i in 150:
+	for i in count:
 		var figure := CityLifeController.Figure.new()
+		figure.id = i
 		figure.tile = Vector2i(i, 0)
 		var walking := i % 4 == 3
 		var sprite := sprites.sprite(walking, i % 18, i % 8, i % 2, 0 if walking else i % 3)
@@ -309,7 +310,7 @@ func _check_instances(hdr: bool) -> void:
 	reference.centered = false
 	reference.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	viewport.add_child(reference)
-	for phase in 3:
+	for phase in (4 if count > CityLifeGpu.MASK_LAYERS else 3):
 		if phase == 1:
 			entries.reverse()
 		elif phase == 2:
@@ -317,11 +318,22 @@ func _check_instances(hdr: bool) -> void:
 			mask = mask.duplicate()
 			for entry in entries:
 				entry.occluders = [{"origin":Vector2i.ZERO,"image":mask}]
+		elif phase == 3:
+			mask.fill_rect(Rect2i(120, 0, 8, 300), Color.WHITE)
+			mask = mask.duplicate()
+			for index in entries.size():
+				var entry := entries[index]
+				entry.figure.tile = Vector2i(1000 + index, 0)
+				entry.occluders = [{"origin": Vector2i.ZERO, "image": mask}]
+				canvas._occluder_bounds[Vector3i(1000 + index, 0, 0)] = Rect2i(entry.origin, Vector2i(64, 48))
 		var pixels := Image.create(400, 300, false, Image.FORMAT_RGBA8)
 		for entry in entries:
 			CityLifeCanvas.stamp(pixels, Vector2i.ZERO, entry.sprite, entry.origin, entry.occluders)
 		reference.texture = ImageTexture.create_from_image(pixels)
 		canvas.gpu.render(canvas, entries)
+		assert(canvas.gpu.mask_slots.size() <= CityLifeGpu.MASK_CAPACITY and canvas.gpu.cropped.size() <= CityLifeGpu.MASK_CAPACITY)
+		if phase == 1:
+			assert(canvas.gpu.upload_bytes <= canvas.gpu.groups.size() * CityLifeGpu.GROUP * 80, "Cross-group depth sorting must reuse global mask slots without image uploads")
 		for zoom in [0.5, 0.75, 1.0, 1.5, 2.0, 3.0]:
 			canvas.scale = Vector2.ONE * zoom
 			reference.scale = canvas.scale
@@ -335,7 +347,7 @@ func _check_instances(hdr: bool) -> void:
 			await RenderingServer.frame_post_draw
 			var actual := viewport.get_texture().get_image()
 			assert(actual.get_data() == expected.get_data(), "Instanced figures differ: phase %s zoom %s HDR %s" % [phase, zoom, hdr])
-		# Depth reorder must preserve cached mask layers, apart from group crossings.
+		# Repeated draws reuse the same world mask pages and upload only small streams.
 		canvas.gpu.render(canvas, entries)
 		assert(canvas.gpu.upload_bytes <= canvas.gpu.groups.size() * CityLifeGpu.GROUP * 96)
 	# Interpolation reads the previous published position without changing movement.
@@ -366,7 +378,7 @@ func _check_instances(hdr: bool) -> void:
 	var pixels := Image.create(400,300,false,Image.FORMAT_RGBA8)
 	var lamps := pixels.duplicate()
 	for entry in entries:
-		var index: int = entry.figure.tile.x
+		var index: int = entry.figure.id
 		var light := canvas.lights.lamp_mask(entry.sprite,index%3,index%8) if index%4!=3 else null
 		CityLifeCanvas.stamp(pixels,Vector2i.ZERO,entry.sprite,entry.origin,entry.occluders,1.0,lamps,light)
 	reference.texture = ImageTexture.create_from_image(pixels)
