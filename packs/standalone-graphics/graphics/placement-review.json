@@ -1,0 +1,5499 @@
+{
+  "format": "rs-applied-placement-review",
+  "version": 1,
+  "date": "2026-10-14",
+  "pack_specific": true,
+  "source_export_sha256": "b09a19379a79713594de3417288ea8747a5bba93fbf3d0f1ae7622c41e690391",
+  "changes": [
+    {
+      "id": 1112,
+      "note": "",
+      "source_sha256": "72ae7179756421a961084287c8001300e8e2bf1938f295a04f52a718f746b5de",
+      "result_sha256": "442a187a77e5a787048c492bf1f7ed250a44c24863f51f5f0f211e54edf24b53",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -2,
+        "y": -9
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -2,
+        -9
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "72ae7179756421a961084287c8001300e8e2bf1938f295a04f52a718f746b5de",
+      "lightmap_sha256": "6ae52bdd868b8e8af04f89da6964fa31590c72262c7aafc80f6f07af991fcac4",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1113,
+      "note": "",
+      "source_sha256": "ea3fba253ef089f25ab9002f2e62c545fc4c3ce006b422a186fbe54da2ac85e5",
+      "result_sha256": "0e5c83f9e5babfc68e87891bfa167e046bc6bb37b7a94277b6ed0559b75047b9",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -2,
+        "y": -10
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -2,
+        -10
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        16,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "ea3fba253ef089f25ab9002f2e62c545fc4c3ce006b422a186fbe54da2ac85e5",
+      "lightmap_sha256": "fd50da062f594dfe55cc36c1863d09b442dc647a19dedf66eb6a56fb16f0c92c",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1114,
+      "note": "",
+      "source_sha256": "3caa11a0317c80f7c7f83d992e16204e3e96161b804bc26c0be42b4b47071219",
+      "result_sha256": "c0c0f22231e6496651476fe88f62e2d67694582abd95a1f6384478b2ff891edf",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 1,
+        "y": -9
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        1,
+        -9
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "3caa11a0317c80f7c7f83d992e16204e3e96161b804bc26c0be42b4b47071219",
+      "lightmap_sha256": "6ae52bdd868b8e8af04f89da6964fa31590c72262c7aafc80f6f07af991fcac4",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1115,
+      "note": "",
+      "source_sha256": "c8a9791a34e24f2d4314154c9e76b4e513dcc9b840866c20a29c5d4a59a2c2b2",
+      "result_sha256": "c0b04c4b0f90c9677131eb1ea9d704833f652d795abd6cad591eff52079659ca",
+      "scale_percent": 92,
+      "offset_master_pixels": {
+        "x": 2,
+        "y": -7
+      },
+      "user_matrix": [
+        0.92,
+        0,
+        0,
+        0.92,
+        7.119999999999997,
+        -1.8800000000000026
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "c8a9791a34e24f2d4314154c9e76b4e513dcc9b840866c20a29c5d4a59a2c2b2",
+      "lightmap_sha256": "3caa02c72e39adfd1d257aadd1daae062271a762f686e90f98eff0d30ca7387d",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1116,
+      "note": "",
+      "source_sha256": "844d90a14acab6b7af46a92868175a732c7b7c0302b757331d913e7f45cacec5",
+      "result_sha256": "d5582e46191ff24575d83ef3d54dbfc6ccbc40bff7463d2b7abfe84e2d4fabb5",
+      "scale_percent": 87,
+      "offset_master_pixels": {
+        "x": -1,
+        "y": -11
+      },
+      "user_matrix": [
+        0.87,
+        0,
+        0,
+        0.87,
+        7.32,
+        -2.6799999999999997
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "844d90a14acab6b7af46a92868175a732c7b7c0302b757331d913e7f45cacec5",
+      "lightmap_sha256": "ac21d733feffb27b2216df0b01a88da8a9e8b650d0cec39001fa1773e6b7cede",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1117,
+      "note": "",
+      "source_sha256": "fab909e25cad3093f1cfeb17b4b598de5533dbbe0073a609491e7a402dfd9f24",
+      "result_sha256": "7b50aa6fddbdd8327a88f414cdee5e2f163ae63947d6ff154fce07e823e3474e",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 2,
+        "y": -19
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        2,
+        -19
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "fab909e25cad3093f1cfeb17b4b598de5533dbbe0073a609491e7a402dfd9f24",
+      "lightmap_sha256": "9700ece7098cec35af39b75f5c9fd326e28b0deaf2fe9d37214763b85d3db827",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1118,
+      "note": "",
+      "source_sha256": "b58f3605544a059ae316e34431f86b967254adc972a311b3b8ebbf9fdadf97ff",
+      "result_sha256": "9e6c1bc3f30ca7b5f70404afb1b830ed3ddcd644c48df7aa939bbeecee0fae2d",
+      "scale_percent": 108,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": -13
+      },
+      "user_matrix": [
+        1.08,
+        0,
+        0,
+        1.08,
+        -5.1200000000000045,
+        -18.120000000000005
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "b58f3605544a059ae316e34431f86b967254adc972a311b3b8ebbf9fdadf97ff",
+      "lightmap_sha256": "bbd85f1cfce5032bdc99142226fd852a494b41b836c61c7e63dade3387a9a311",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1119,
+      "note": "",
+      "source_sha256": "aa926cce20b0487680060eae18f27943b0d9a4c1f0802512bc03d30dc0b3fe33",
+      "result_sha256": "247d16f4d9c536ac4587946200e53ddbbd0648e742951f9f4c11e757738e75b0",
+      "scale_percent": 116,
+      "offset_master_pixels": {
+        "x": 4,
+        "y": -10
+      },
+      "user_matrix": [
+        1.16,
+        0,
+        0,
+        1.16,
+        -6.239999999999995,
+        -20.239999999999995
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "aa926cce20b0487680060eae18f27943b0d9a4c1f0802512bc03d30dc0b3fe33",
+      "lightmap_sha256": "0fde8bcaee05f38775f4f85232eda5276e15404004974d800367e537fa293acd",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1120,
+      "note": "",
+      "source_sha256": "cc0501621b8ecda1b1cbae9e81b57f341dde34854641ca79ffd9ccdc88b10a80",
+      "result_sha256": "fd19ec9f0ca4b5ce2f75704f1497579d77db5855e5214c51a48771f3de3646ab",
+      "scale_percent": 111,
+      "offset_master_pixels": {
+        "x": 3,
+        "y": -14
+      },
+      "user_matrix": [
+        1.11,
+        0,
+        0,
+        1.11,
+        -4.040000000000006,
+        -21.92000000000001
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "cc0501621b8ecda1b1cbae9e81b57f341dde34854641ca79ffd9ccdc88b10a80",
+      "lightmap_sha256": "ecfeeab691b509f7c41ed2b0c1616ecc500441c0109415dd499a4d6c46936450",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1121,
+      "note": "",
+      "source_sha256": "04d86a706b79913e12eb8c42b0ea6628eafd31287fddda7ecf17564b5d920504",
+      "result_sha256": "e12d0dee25c42089a1c6562d1b86550f6bad14f27d1f2bf9a6dbcc9d0d4a70f3",
+      "scale_percent": 93,
+      "offset_master_pixels": {
+        "x": 8,
+        "y": -12
+      },
+      "user_matrix": [
+        0.93,
+        0,
+        0,
+        0.93,
+        12.479999999999997,
+        -6.9600000000000035
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "04d86a706b79913e12eb8c42b0ea6628eafd31287fddda7ecf17564b5d920504",
+      "lightmap_sha256": "0165eaf3cf02a7a43b2a587c13b6077aeef79f8f8593f1e6d9fd40efd04edc4a",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1122,
+      "note": "",
+      "source_sha256": "1303a7f1239638f0ebfdaf998fa5453d83ecb2897683592d43ba41ccd09bc8b1",
+      "result_sha256": "b151f12e59ced59352093b1949237eb932f60848a92e2fbfc5f84cdf8eb8fef1",
+      "scale_percent": 89,
+      "offset_master_pixels": {
+        "x": -2,
+        "y": -13
+      },
+      "user_matrix": [
+        0.89,
+        0,
+        0,
+        0.89,
+        5.039999999999999,
+        -4.640000000000001
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "1303a7f1239638f0ebfdaf998fa5453d83ecb2897683592d43ba41ccd09bc8b1",
+      "lightmap_sha256": "07c7cc50d4abfbe5a1fcd22f82f2bb9a9ccb938ab939beed638bb2df8cd7c45d",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1123,
+      "note": "",
+      "source_sha256": "f7abf949d920fd2f77faab7adbbbaa222b64d464de9d9471d4790621fd4ce4c0",
+      "result_sha256": "e2474d4649d3ce368e73bc755e5cf64d7001294ea475212b037deb2175da8ad3",
+      "scale_percent": 116,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": -7
+      },
+      "user_matrix": [
+        1.16,
+        0,
+        0,
+        1.16,
+        -10.239999999999995,
+        -19.799999999999994
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "f7abf949d920fd2f77faab7adbbbaa222b64d464de9d9471d4790621fd4ce4c0",
+      "lightmap_sha256": "bc6d4c8a492e3c7811d47bb05f76a633f368ab623cd491c370eee5b0597f6f59",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1124,
+      "note": "",
+      "source_sha256": "dc04892c34e77f7339694e9790796e058c2e2c59124c14c7aec8e84daab18985",
+      "result_sha256": "a0438861408f0d9a1f59e683b8a2e84e179ba1451f2caeb1ea41a1df96701e2f",
+      "scale_percent": 90,
+      "offset_master_pixels": {
+        "x": -2,
+        "y": -9
+      },
+      "user_matrix": [
+        0.9,
+        0,
+        0,
+        0.9,
+        4.399999999999999,
+        -0.20000000000000284
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "dc04892c34e77f7339694e9790796e058c2e2c59124c14c7aec8e84daab18985",
+      "lightmap_sha256": "79af1920c6e12d0dff8e4dbc10ebe39bfe7c234f2b47cf564b002acc567cbeec",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1125,
+      "note": "Korrigiere die Isometrie, die diagonalen Linien entsprechen nicht dem diagonalen Raster.",
+      "source_sha256": "2fb1fe4fe8990e9ea5650f4f243a881363381ae0443dd66b0f6de50460c88a5b",
+      "result_sha256": "738f58140e52272806067075af53071bbf1c9517a2ccbfbffe88c4e36ac1818a",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -2,
+        "y": -11
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -2,
+        -11
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.018538265911379637,
+          1.1887274673790276,
+          -18.45047672204626
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "2fb1fe4fe8990e9ea5650f4f243a881363381ae0443dd66b0f6de50460c88a5b",
+      "lightmap_sha256": "03b745e7d0f6f5088ade63b20fa0a5e735bfaf705f22bb0246f6a6febc3c42e6",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1126,
+      "note": "",
+      "source_sha256": "bc5b28d86a985d6fd932495be94559919ff6947c671cf486cd8a2f40289af9c4",
+      "result_sha256": "7bffd39c1d3a1bfdb5c908fb3460d547580efb3c8260f4d469619abadb04cae1",
+      "scale_percent": 109,
+      "offset_master_pixels": {
+        "x": -1,
+        "y": -8
+      },
+      "user_matrix": [
+        1.09,
+        0,
+        0,
+        1.09,
+        -6.760000000000005,
+        -14.840000000000007
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "bc5b28d86a985d6fd932495be94559919ff6947c671cf486cd8a2f40289af9c4",
+      "lightmap_sha256": "f0d12c05fe899600fb5a5c195a12583e8fe7fffd3195f0abb928d1c10baef21b",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1127,
+      "note": "",
+      "source_sha256": "d96f9fbe4b8345d8cc73d3738e4d0921f053f40a87e034c657a681cb9b63392b",
+      "result_sha256": "e76f461b9bf6bcf867bca9ca3899e2f04f2e43c11838b27823c216f5fa7983af",
+      "scale_percent": 96,
+      "offset_master_pixels": {
+        "x": -4,
+        "y": -13
+      },
+      "user_matrix": [
+        0.96,
+        0,
+        0,
+        0.96,
+        -1.4399999999999977,
+        -10.279999999999998
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "d96f9fbe4b8345d8cc73d3738e4d0921f053f40a87e034c657a681cb9b63392b",
+      "lightmap_sha256": "3b16f6114a5a76a50e4b89f011ca91e116ba93135b0df24ab13544831ba9e084",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1129,
+      "note": "Korrigiere die Isometrie, die linke Seite des GebÃ¤udes sitzt nicht sauber an der Diagonalen des Rasters.",
+      "source_sha256": "4e999525f01da3f951dddcd654aaed07fb648c8cb9b6d6371c3d67969a2eade3",
+      "result_sha256": "769a01ac175a2abf441c7798a6c96cbe2401ed57ac660bef27768acafbc096d4",
+      "scale_percent": 102,
+      "offset_master_pixels": {
+        "x": -1,
+        "y": 0
+      },
+      "user_matrix": [
+        1.02,
+        0,
+        0,
+        1.02,
+        -2.280000000000001,
+        -3.360000000000003
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.022824655532640792,
+          0.9482046901651762,
+          10.162390006339415
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "4e999525f01da3f951dddcd654aaed07fb648c8cb9b6d6371c3d67969a2eade3",
+      "lightmap_sha256": "83fce88dfff89a8e2fa7179e6f70eae7e65e99daa213b18a808ac6734bf614e8",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1130,
+      "note": "",
+      "source_sha256": "0bf279478fc45eacdae6a73fa8dab9b042b54fccf1cb30b41c39380693cb9ff2",
+      "result_sha256": "6b8404f700d7f88fba60356aa0ce6fb07da603a3ca4553947c16df8a3f022137",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -4,
+        "y": -4
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -4,
+        -4
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        16,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "0bf279478fc45eacdae6a73fa8dab9b042b54fccf1cb30b41c39380693cb9ff2",
+      "lightmap_sha256": "c45c48f3688bf27005465bb0765954c2364c4c20c82e9f5413a162b7376a2469",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1131,
+      "note": "ErgÃ¤nze mehr Bordstein und Laternen um dass GebÃ¤ude",
+      "source_sha256": "82afed9c1324ed4a668be7ecfd6424e143c4ddc2e622677483f36d65539e39a0",
+      "result_sha256": "ab8a8e4e6b993d8789d4f6b9f352c65e7ef733142c6910f8f192a0a61a4a5282",
+      "scale_percent": 112,
+      "offset_master_pixels": {
+        "x": 2,
+        "y": -9
+      },
+      "user_matrix": [
+        1.12,
+        0,
+        0,
+        1.12,
+        -5.680000000000007,
+        -24.840000000000014
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.009834302443168852,
+          0.9809267659901099,
+          29.067703339856898
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "86d153c037e81bab984dc30a74733ba99d36d0a3adf2ad6d8285dbe97b389206",
+      "lightmap_sha256": "6afa2c4680515d6b7cf385d4948a63c8215faba44ea851c73bc56a86845842bf",
+      "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1132,
+      "note": "Korrigiere die Isometrie des GebÃ¤udes, die rechte Seite ist nicht sauber an der Diagonalen des Rasters ausgerichtet.",
+      "source_sha256": "a2db549ed1c64e2f7742acc14c5b4143abd3d291b192e7fafd956a147e364ea0",
+      "result_sha256": "49d1fd760e088fb697cf1aa5688951d46247beb3d9d891b7b8ce3fc6a46dac99",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.12125712668666433,
+          1.3289179191353973,
+          -18.552977422885263
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "a2db549ed1c64e2f7742acc14c5b4143abd3d291b192e7fafd956a147e364ea0",
+      "lightmap_sha256": "edf6f1c3db4345433b757d07a6adc529b547a5e9f147a3bfc900002b4ebde730",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1133,
+      "note": "",
+      "source_sha256": "88fb2f3452be436d210a5d7fdf029879042c3459ca0978430907ad4a41986c26",
+      "result_sha256": "63684a481060405785203a844393ffc9ef7554dfc1ac05df4dcf283d77ffda9b",
+      "scale_percent": 106,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1.06,
+        0,
+        0,
+        1.06,
+        -3.8400000000000034,
+        -6.480000000000006
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        16,
+        16,
+        16,
+        0
+      ],
+      "source_artwork_sha256": "88fb2f3452be436d210a5d7fdf029879042c3459ca0978430907ad4a41986c26",
+      "lightmap_sha256": "c1236bbd43f4f3031503878d5a4843dc934961580f154e4527f151ed006eb64c",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1134,
+      "note": "",
+      "source_sha256": "defc22e165f54aafdab31cabad19a36b213b7985f95b8218e79e44c5bb783510",
+      "result_sha256": "8cabaeed61d00e14b01a69373cbf52c569a1db0118b455f6280cb2c7308e45bd",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -4,
+        "y": -14
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -4,
+        -14
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "defc22e165f54aafdab31cabad19a36b213b7985f95b8218e79e44c5bb783510",
+      "lightmap_sha256": "a18c790dfc1962d92c09bef17b15e919dcefed51b200e2e239bf74d3f7d87bb1",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1135,
+      "note": "",
+      "source_sha256": "dd95983652b0f86de242cdc8cca160513f6eceac38815cdcd0d8dbb9ad566617",
+      "result_sha256": "32d6c3e3172587709284397566088c3503fc29b449313f6a7772e97dd1e7b6b2",
+      "scale_percent": 85,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": -6
+      },
+      "user_matrix": [
+        0.85,
+        0,
+        0,
+        0.85,
+        9.600000000000001,
+        9.000000000000002
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "dd95983652b0f86de242cdc8cca160513f6eceac38815cdcd0d8dbb9ad566617",
+      "lightmap_sha256": null,
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1136,
+      "note": "",
+      "source_sha256": "cdfb84bd2246cf6b5198d9ad3c86c71d583903b77bf3167ee2b0169778451291",
+      "result_sha256": "7d5cbf80fd5296aaaec8ad042387fe0f6214a4708cf9a19adeaa803a3202e2e5",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 1,
+        "y": -7
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        1,
+        -7
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "cdfb84bd2246cf6b5198d9ad3c86c71d583903b77bf3167ee2b0169778451291",
+      "lightmap_sha256": null,
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1137,
+      "note": "",
+      "source_sha256": "f904c504650f2fa3919355a483af607f2226827913e3a2da741f86287353f35d",
+      "result_sha256": "df2cdc0e33507b3576cb3084576c45313d2b6b449f973c3d0eac03c9231aa1d5",
+      "scale_percent": 119,
+      "offset_master_pixels": {
+        "x": 1,
+        "y": -7
+      },
+      "user_matrix": [
+        1.19,
+        0,
+        0,
+        1.19,
+        -11.159999999999997,
+        -19.919999999999995
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "f904c504650f2fa3919355a483af607f2226827913e3a2da741f86287353f35d",
+      "lightmap_sha256": null,
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1138,
+      "note": "",
+      "source_sha256": "6e4234253a5fbd2d104a76141aa733428e7e8ddf552b688ee27d5a332455ec12",
+      "result_sha256": "7e1451e83261a98276b090cd43b24ba87a7a0884fc38009f5ee6a6fcfe234f0f",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -3,
+        "y": -13
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -3,
+        -13
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "6e4234253a5fbd2d104a76141aa733428e7e8ddf552b688ee27d5a332455ec12",
+      "lightmap_sha256": null,
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1139,
+      "note": "",
+      "source_sha256": "190e12a427d5b3c99fff1dc2b259122e49d075fac4a72be6e948036ff2204f27",
+      "result_sha256": "aacf5f2dc3aecc4379f445b7a9f2a875f6ab565eaf21b167a5b0c844ac35bb3a",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": -9
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        -9
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "190e12a427d5b3c99fff1dc2b259122e49d075fac4a72be6e948036ff2204f27",
+      "lightmap_sha256": null,
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1140,
+      "note": "Korrigiere die Isometrie, die linke Seite des GebÃ¤udes ist nicht sauber an der Diagonalen des Rasters ausgerichtet.",
+      "source_sha256": "8a06a8df1c4e179a819c5b60d2056459075706724f9264e479aac1bee97cf39e",
+      "result_sha256": "48b6620d0f1a2708a03034df7f3017e2632b5c411219522e0ed2c239e6fa6897",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -2,
+        "y": -20
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -2,
+        -20
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.03317040961898543,
+          0.9294541957694485,
+          13.698950198124031
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "8a06a8df1c4e179a819c5b60d2056459075706724f9264e479aac1bee97cf39e",
+      "lightmap_sha256": "d52c9ac5594e7af4b2da909ecb3f28e1c70ed4f9006f0c8624472cbc748a9e46",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1141,
+      "note": "",
+      "source_sha256": "0a4f04df5e3db03241ea33fe9224feca7298f6dbd874b4559789969ced9ef5a7",
+      "result_sha256": "f342d16fc371bd4ea2cd2d63cffe7184157573d067ea5fb032eee36bb3f4bd26",
+      "scale_percent": 106,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": -25
+      },
+      "user_matrix": [
+        1.06,
+        0,
+        0,
+        1.06,
+        -7.680000000000007,
+        -34.120000000000005
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "0a4f04df5e3db03241ea33fe9224feca7298f6dbd874b4559789969ced9ef5a7",
+      "lightmap_sha256": "7dcc524cce789146ca5738268dd621ec467d525da3074d42c3acf7c96a80d2b5",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1142,
+      "note": "",
+      "source_sha256": "89ac4736970f260458d8572af11284b92b3be167c0d80d192b46d1af06f94fce",
+      "result_sha256": "29ba0367071342feb436aaee10d454371e66d41592adc76a560d3d6fad76d4b4",
+      "scale_percent": 109,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": -16
+      },
+      "user_matrix": [
+        1.09,
+        0,
+        0,
+        1.09,
+        -11.52000000000001,
+        -28.600000000000012
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "89ac4736970f260458d8572af11284b92b3be167c0d80d192b46d1af06f94fce",
+      "lightmap_sha256": "c436bc2ac75d959e4b7faa1383d83b0c9fca98069818ec24f6614eb57cdd95a8",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1143,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht zu den Diagonalen des Rasters.",
+      "source_sha256": "209ba536d28b1ab46c4b61bdd9b6412e81212d7425801c75d5b8c540fddc0056",
+      "result_sha256": "424ab553f4646cdf479078ad5964ea056cec7e8a14a6b8cc2d08c85afb9b364f",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -1,
+        "y": -27
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -1,
+        -27
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.0016059521873474925,
+          1.276427061310782,
+          -47.3406956415677
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        80,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "209ba536d28b1ab46c4b61bdd9b6412e81212d7425801c75d5b8c540fddc0056",
+      "lightmap_sha256": "8728990ec00c12a7a4ec147f31277c2e781b492507bd685fa482f5090a0bf607",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1144,
+      "note": "",
+      "source_sha256": "78af6a7af9a0b4b043a889241b47e099f4fd5f016c54282df9c2b9c5a397e4c4",
+      "result_sha256": "9a87dce85c12e8ba933aba98d9da2e5eb1b9193c94918e5fbeb62cfeef4a21e4",
+      "scale_percent": 116,
+      "offset_master_pixels": {
+        "x": 2,
+        "y": -18
+      },
+      "user_matrix": [
+        1.16,
+        0,
+        0,
+        1.16,
+        -18.47999999999999,
+        -51.27999999999999
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        64,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "78af6a7af9a0b4b043a889241b47e099f4fd5f016c54282df9c2b9c5a397e4c4",
+      "lightmap_sha256": "14e3bfda8fd0530cc439d91fdc99f55c8307fb26382e864356026d2e47f0c6ca",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1145,
+      "note": "",
+      "source_sha256": "fecb2b6d629a72fe7e9f635315f59adf6c13cca3e7807fe356ea2c0a180e347e",
+      "result_sha256": "11112231acac596b0ad69bf8ea2e8d7ad734df2dcc566fd97c4b0dce820c293d",
+      "scale_percent": 96,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": -25
+      },
+      "user_matrix": [
+        0.96,
+        0,
+        0,
+        0.96,
+        5.1200000000000045,
+        -16.199999999999992
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "fecb2b6d629a72fe7e9f635315f59adf6c13cca3e7807fe356ea2c0a180e347e",
+      "lightmap_sha256": "d7aa6a5fd54ee0a2334209979072e5d263032390f6976fa9ce9a6704a50fecf2",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1146,
+      "note": "",
+      "source_sha256": "849d0d1635335f1faff214985f74eff16b82732ccbc2187364bfb8a1b7f6cb56",
+      "result_sha256": "3b3bab49966bd79788cba1db90c798385a222fcbfd2ede97adc83a5a0212c9eb",
+      "scale_percent": 106,
+      "offset_master_pixels": {
+        "x": 1,
+        "y": -11
+      },
+      "user_matrix": [
+        1.06,
+        0,
+        0,
+        1.06,
+        -6.680000000000007,
+        -29.480000000000018
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "849d0d1635335f1faff214985f74eff16b82732ccbc2187364bfb8a1b7f6cb56",
+      "lightmap_sha256": "3373929c0b557199fe8e50692024a8f3ea13c64730625a4d58a0ed3390730cf4",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1147,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "708216d8013900717bb97c8f07017cd9c5198bcf3a2cca86bd33d4ba8cad2bab",
+      "result_sha256": "e6c98e89b0a8843682a70f8c44a47d860b86ca4fe7c3ad8b41897480fd552a02",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": -8
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        -8
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.013940454186355977,
+          1.1050841218413303,
+          -33.7229809485248
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        48,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "708216d8013900717bb97c8f07017cd9c5198bcf3a2cca86bd33d4ba8cad2bab",
+      "lightmap_sha256": "ac83310e2044aeaaa8eb45250ee3b9f38c173719c059894ea210cf4aacd1f30f",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1148,
+      "note": "",
+      "source_sha256": "83d9bbbb4ed66b0962b612ad72a004a830f81595195f889e8334bcf22f63a16e",
+      "result_sha256": "581513f24a8ca672dc96a5026ab6f33ed46594adb036eaed381f88c9e5fdc084",
+      "scale_percent": 118,
+      "offset_master_pixels": {
+        "x": -2,
+        "y": -3
+      },
+      "user_matrix": [
+        1.18,
+        0,
+        0,
+        1.18,
+        -25.039999999999992,
+        -26.039999999999992
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "83d9bbbb4ed66b0962b612ad72a004a830f81595195f889e8334bcf22f63a16e",
+      "lightmap_sha256": "0b84e401672ecd78b37c8db2a1eb80c07bbafcb5a9b4be7d7d36868bd09a7899",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1149,
+      "note": "",
+      "source_sha256": "126ca36b276acac5b523e5658da80eeff2cdbcaf8420fb56e3635db592291f5c",
+      "result_sha256": "d1e4ae4173fd7a79688a83ea8d568059f5c3b867fa7596ede94321f138f6d6c8",
+      "scale_percent": 119,
+      "offset_master_pixels": {
+        "x": 1,
+        "y": -26
+      },
+      "user_matrix": [
+        1.19,
+        0,
+        0,
+        1.19,
+        -23.319999999999993,
+        -53.35999999999999
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        64,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "126ca36b276acac5b523e5658da80eeff2cdbcaf8420fb56e3635db592291f5c",
+      "lightmap_sha256": "dd9b2b0f9b1308c515d15036344e16abccfd9f9c0fdef4cac1497a154173b41a",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1150,
+      "note": "",
+      "source_sha256": "25200f708f511eb620b38102001f0152c38bec00df2a3fb1538f33d3a09bce57",
+      "result_sha256": "0b1e26463cd847b596255c97cb79356dc2e7d231e6ca3142fe2f4184c65629fb",
+      "scale_percent": 128,
+      "offset_master_pixels": {
+        "x": 3,
+        "y": -14
+      },
+      "user_matrix": [
+        1.28,
+        0,
+        0,
+        1.28,
+        -32.84,
+        -59.92
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        64,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "25200f708f511eb620b38102001f0152c38bec00df2a3fb1538f33d3a09bce57",
+      "lightmap_sha256": "60bdfd95ee0686f065e1a30e419826ddd8ae6a45e6c89208350596b47f232b2d",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1151,
+      "note": "",
+      "source_sha256": "bb357a4c80e2372f7752343c3cb1e213842f8698dbe3a788032fdc267abe33d6",
+      "result_sha256": "e35d966c77e681d077feb941687285172194706a6a31e47c89628d8e9ae941a0",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -2,
+        "y": -44
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -2,
+        -44
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        48,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "bb357a4c80e2372f7752343c3cb1e213842f8698dbe3a788032fdc267abe33d6",
+      "lightmap_sha256": "c075dc31b71db8f111fe4985c546a8038535dbfa4f30a89d67a42bb9878eb581",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1152,
+      "note": "",
+      "source_sha256": "d3de8f6eb033685ba581651a68b3ef0b07d6c84371b1eda154b33232bc732866",
+      "result_sha256": "abf70b12abb203ba55d598310c5157e3fd74bebd997028df938dc7fbd485674b",
+      "scale_percent": 109,
+      "offset_master_pixels": {
+        "x": 1,
+        "y": -24
+      },
+      "user_matrix": [
+        1.09,
+        0,
+        0,
+        1.09,
+        -10.52000000000001,
+        -40.20000000000002
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        48,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "d3de8f6eb033685ba581651a68b3ef0b07d6c84371b1eda154b33232bc732866",
+      "lightmap_sha256": "7914925a9ad01d650b82e453b7660746a94a47d4c8f601b996e46a418ee6b867",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1153,
+      "note": "",
+      "source_sha256": "bfe9acd345f7e78c44129b77dee1441951758f55cf2e30597864f5ccd2ebacfb",
+      "result_sha256": "63632838327cec98dc55accf6c538490e0a389c0e566e4250e2e8a09934c393a",
+      "scale_percent": 114,
+      "offset_master_pixels": {
+        "x": -1,
+        "y": -20
+      },
+      "user_matrix": [
+        1.14,
+        0,
+        0,
+        1.14,
+        -18.919999999999987,
+        -47.99999999999998
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        48,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "bfe9acd345f7e78c44129b77dee1441951758f55cf2e30597864f5ccd2ebacfb",
+      "lightmap_sha256": "17417c6682fbdfcce35fde8c398784a5d74d78ecfe4cadeecd61379567ed9f90",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1154,
+      "note": "",
+      "source_sha256": "749e2db591d91b298e2c285a904fe2ced5ee1da433fd9d78dd1e7961b35452d0",
+      "result_sha256": "07ae91e68758b5c7cb68f9f7352bf405dd5e70da9239f429d053a5a58ded0965",
+      "scale_percent": 106,
+      "offset_master_pixels": {
+        "x": -1,
+        "y": -10
+      },
+      "user_matrix": [
+        1.06,
+        0,
+        0,
+        1.06,
+        -8.680000000000007,
+        -26.560000000000016
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "749e2db591d91b298e2c285a904fe2ced5ee1da433fd9d78dd1e7961b35452d0",
+      "lightmap_sha256": "6332c50c308efe06f7e16c747219940c6e492f762a4e34db70b9ef7edd039177",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1155,
+      "note": "",
+      "source_sha256": "de0eba2cef07e7c3831be4b340d082f17e32d1250dce5f6efe1cb9a67dbd1fa5",
+      "result_sha256": "677cb54d77c0c6ad1f41abab47d2abfda4631d9e77012199fcc9d0a1c9f41e2c",
+      "scale_percent": 112,
+      "offset_master_pixels": {
+        "x": -4,
+        "y": -34
+      },
+      "user_matrix": [
+        1.12,
+        0,
+        0,
+        1.12,
+        -19.360000000000014,
+        -65.20000000000003
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        80,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "de0eba2cef07e7c3831be4b340d082f17e32d1250dce5f6efe1cb9a67dbd1fa5",
+      "lightmap_sha256": "d1287146acb708b4bb4a0b68231e42186c0e7313199f815cc9aed4bfc71547b8",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1156,
+      "note": "",
+      "source_sha256": "ead1bc418333736136bdff9fd6dba145b457753b9b7ac1c9c6fe1312f3218f3c",
+      "result_sha256": "f4cbe76cd077d1da61dfea1d5befda1117f665356dd658b93ea3ab0810e276eb",
+      "scale_percent": 109,
+      "offset_master_pixels": {
+        "x": -2,
+        "y": -18
+      },
+      "user_matrix": [
+        1.09,
+        0,
+        0,
+        1.09,
+        -13.52000000000001,
+        -43.560000000000024
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        48,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "ead1bc418333736136bdff9fd6dba145b457753b9b7ac1c9c6fe1312f3218f3c",
+      "lightmap_sha256": "db5b44ac73ea252d86e3524c871a4425b2215317b1d2560bc75a117b7b8634a9",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1157,
+      "note": "",
+      "source_sha256": "532b80779cb4a9fda55eb28ecf692e91ce90982443f6eacc1debc5baad9ef825",
+      "result_sha256": "cb00621f54bceb588af9a6a7023ac640689eb1ad7231cb3e2914c96bb0cb5d20",
+      "scale_percent": 107,
+      "offset_master_pixels": {
+        "x": -3,
+        "y": -28
+      },
+      "user_matrix": [
+        1.07,
+        0,
+        0,
+        1.07,
+        -11.960000000000008,
+        -51.24000000000002
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        64,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "532b80779cb4a9fda55eb28ecf692e91ce90982443f6eacc1debc5baad9ef825",
+      "lightmap_sha256": "6d70d86efbdf76c872601d1f44a0dbe1a023670713fd58dff2c56e97cce045f8",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1158,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "de833a8ab41f49e227595a2d0ae8560fe3a8748aec7a6f9d18a611f4c2bd87e2",
+      "result_sha256": "134faa5435ec3960cbfac34a767bc6821cfee2c1260825380ed70223fe25cca1",
+      "scale_percent": 82,
+      "offset_master_pixels": {
+        "x": -3,
+        "y": -30
+      },
+      "user_matrix": [
+        0.82,
+        0,
+        0,
+        0.82,
+        20.040000000000006,
+        -4.079999999999991
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.024873426514821106,
+          1.1228816258555738,
+          -20.878752717099733
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "de833a8ab41f49e227595a2d0ae8560fe3a8748aec7a6f9d18a611f4c2bd87e2",
+      "lightmap_sha256": "68af2f8326d586abdb8ff0a3a2bd1ec0d91411f6f6792e16de904b118ca83a58",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1159,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "1d0547e2daabcafd929af32461252fc74ede283b54246b8f1e953ce68722d71d",
+      "result_sha256": "187cd9fe260378e813b470a6c77cf1d06f524af784317e8578ad7c9796f1b0b5",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -3,
+        "y": -14
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -3,
+        -14
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.007545231643589445,
+          1.256561800822554,
+          -37.00535687135856
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        64,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "1d0547e2daabcafd929af32461252fc74ede283b54246b8f1e953ce68722d71d",
+      "lightmap_sha256": "f8b083229a5366a12f2907496d94b2eb7617afdeaa797eebebb441fef3076590",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1160,
+      "note": "",
+      "source_sha256": "d82c735d2d6d39202caa207cefb7bc607784abb1b4cf2d3370751d40234e32ea",
+      "result_sha256": "48e21447cb27960571c4318eeb7b4607d7a34fdd6b3bdd2f4af51287f9af2cec",
+      "scale_percent": 96,
+      "offset_master_pixels": {
+        "x": -11,
+        "y": -21
+      },
+      "user_matrix": [
+        0.96,
+        0,
+        0,
+        0.96,
+        -5.8799999999999955,
+        -13.959999999999994
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "d82c735d2d6d39202caa207cefb7bc607784abb1b4cf2d3370751d40234e32ea",
+      "lightmap_sha256": "e3404f5e3f4e8a30f3f1ee844c5d66f953d403395f3f6cfbb941931cd9a985dc",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1161,
+      "note": "",
+      "source_sha256": "a0bae2892208dffc9ea5ff7c3dd723e355c374bf8ac6967574c106d805de2c5d",
+      "result_sha256": "de757227a44b43fb55b0fd6fb2c09d0c49a8cade9d0fa0af89e8c4abb8d4301a",
+      "scale_percent": 116,
+      "offset_master_pixels": {
+        "x": 2,
+        "y": -25
+      },
+      "user_matrix": [
+        1.16,
+        0,
+        0,
+        1.16,
+        -18.47999999999999,
+        -46.75999999999999
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        48,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "a0bae2892208dffc9ea5ff7c3dd723e355c374bf8ac6967574c106d805de2c5d",
+      "lightmap_sha256": "cc626c4dad576cf8ad4b5f45c4dee3a924ff79feb8d6818e41237de478140a06",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1162,
+      "note": "",
+      "source_sha256": "433223e19ab5fb0e85e23368c591e54ede723d44f3e7e7b63aab3316ba487125",
+      "result_sha256": "b685b586aeb26dff903f196aa2b9309e914a56fff501a4d8d5aba655c4b147f8",
+      "scale_percent": 110,
+      "offset_master_pixels": {
+        "x": -2,
+        "y": -30
+      },
+      "user_matrix": [
+        1.1,
+        0,
+        0,
+        1.1,
+        -14.800000000000011,
+        -47.600000000000016
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        48,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "433223e19ab5fb0e85e23368c591e54ede723d44f3e7e7b63aab3316ba487125",
+      "lightmap_sha256": "277984494bbb09cfb00bdd3e41863fa19d55f92ef3c4f9ca29ac44b1a857db35",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1163,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "6706ad907b959c1469af215bb9e2c407ccf4755f21e0d6d84737a0c43a2d3887",
+      "result_sha256": "55af056edff27d9e29919c4e23f719d4d207ca3cb5632401cb3bdb5959fae412",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -2,
+        "y": -14
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -2,
+        -14
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.013617987994487768,
+          1.1007552039601176,
+          -20.42304240793144
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "6706ad907b959c1469af215bb9e2c407ccf4755f21e0d6d84737a0c43a2d3887",
+      "lightmap_sha256": "288618a9e80eb4a86a5877a372daef5cac2f7fe4e21e258293ac3baf320a2542",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1164,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "ac270fd2a945808a25e8beb553066ed274b58aaf6727714724e9b35afa09e970",
+      "result_sha256": "d5087d2faf747359f3388ce5bb537221bd6f3c9648e932d3b33dd48af1766e94",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -3,
+        "y": -23
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -3,
+        -23
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.039685518270726194,
+          1.144083243070097,
+          -29.500231998170307
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        64,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "ac270fd2a945808a25e8beb553066ed274b58aaf6727714724e9b35afa09e970",
+      "lightmap_sha256": "2c50ec901974422d462549b41a741a6664431f0034a3729665ea3713f7f5e0ef",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1165,
+      "note": "",
+      "source_sha256": "b267fd00f32f7fc05ee5582767b13ffe25924c6a8995735460ab60d676ca6eed",
+      "result_sha256": "f981a2eec4cd4ae4f8ef533a2bbde21b8cd6ba3f3005e2df94efb44b83cd6d33",
+      "scale_percent": 90,
+      "offset_master_pixels": {
+        "x": -11,
+        "y": -26
+      },
+      "user_matrix": [
+        0.9,
+        0,
+        0,
+        0.9,
+        1.7999999999999972,
+        -7.105427357601002e-15
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "b267fd00f32f7fc05ee5582767b13ffe25924c6a8995735460ab60d676ca6eed",
+      "lightmap_sha256": "8ba86ec851d27afb860c25cccb520aaa6b86a04970bfd7fe1b783a0fff552f82",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1166,
+      "note": "",
+      "source_sha256": "5b4b6c4c2fd7daa648cc6d27a84a5be918b36b12017cb5842e37d9ceb784798d",
+      "result_sha256": "c467e7e1743989432a8318509843a254cecbcc580d2ef302060b01689a6b9866",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": -4
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        -4
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "5b4b6c4c2fd7daa648cc6d27a84a5be918b36b12017cb5842e37d9ceb784798d",
+      "lightmap_sha256": null,
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1167,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "eea8e69ce74b8629d68e32431383e3b3815d4bc0682274eb4740b69fea67b1b3",
+      "result_sha256": "9cf72d4c78cda26ef992e60c71a91388cba6f060f5289e731a13ee2d0e3b40f2",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -3,
+        "y": -16
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -3,
+        -16
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.038062737070698516,
+          1.2196232722549738,
+          -32.922203851341436
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        64,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "eea8e69ce74b8629d68e32431383e3b3815d4bc0682274eb4740b69fea67b1b3",
+      "lightmap_sha256": null,
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1168,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "93df726ffbc55aba115616ff30d4f456f60764a0c0b47867c3fa00c651d2708f",
+      "result_sha256": "ba6af0e948c8cda58708efad1119ad6bfe7db1f3775822b4a1db12c2d649eb6b",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": -16
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        -16
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.010670180092400172,
+          1.2638508460879696,
+          -44.01656247530355
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        64,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "93df726ffbc55aba115616ff30d4f456f60764a0c0b47867c3fa00c651d2708f",
+      "lightmap_sha256": null,
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1169,
+      "note": "Die Grafik passt ganicht, orientiere dich mehr am SC2000 Original.",
+      "source_sha256": "db4a8000c424208e30a3c633741d78981d7bcfcc9f227d3c10ef14788ef3ad76",
+      "result_sha256": "6cf1e9f5adf2613dc3cd9a8529dd6f7555a29f446871ea074f74bacae2938a64",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.011402415709292124,
+          1.04122117898235,
+          -55.260131729983264
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "32fa93137ec0bd5d2428cb97d5b3c78cbcdc68a0772d53bc10b1fe167940d307",
+      "lightmap_sha256": null,
+      "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1170,
+      "note": "Die Grafik muss mehr nach einem verlassenen alten GebÃ¤ude aussehen. Orientiere Dich farblich an Original SC2000 Grafik",
+      "source_sha256": "2c0648ce326589af8fd02612c00d800ecff5c5c72997146ab8938533e1eaf352",
+      "result_sha256": "0411c64f08ca35113dcaa7a17fbebc8bc27a7ac26fd95caa8c4f7e25814731a4",
+      "scale_percent": 115,
+      "offset_master_pixels": {
+        "x": -4,
+        "y": -24
+      },
+      "user_matrix": [
+        1.15,
+        0,
+        0,
+        1.15,
+        -23.19999999999999,
+        -50.999999999999986
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.03867624388095925,
+          0.9288617206300187,
+          103.29627568844973
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        48,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "49d9920bc584635f1a9bb447a882c973b8ca04e480214c80c65cc85f557fd574",
+      "lightmap_sha256": null,
+      "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1171,
+      "note": "Die Grafik muss mehr nach einem verlassenen alten GebÃ¤ude aussehen. Orientiere Dich farblich an Original SC2000 Grafik",
+      "source_sha256": "da7c8fac7772cdf93ccb295a92fc9bf03c47dd8188fd581411e47594d67753f2",
+      "result_sha256": "bab3aac99b629109fe94430c72e855ffee475e3e776f32a0fea3f6a508010bcc",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -2,
+        "y": -28
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -2,
+        -28
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.001341604263692342,
+          0.9258062555569291,
+          84.99392741726554
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "a1ae091ff06f85fb316c135d995e8b323940e4ff1abaeb7910f64044f6644242",
+      "lightmap_sha256": null,
+      "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1172,
+      "note": "Die Grafik muss mehr nach einem verlassenen alten GebÃ¤ude aussehen. Orientiere Dich farblich an Original SC2000 Grafik",
+      "source_sha256": "3417793fd62f6e6d4d00d06308916dd300b56e4e6a0aeb2725d3a0f97ceef758",
+      "result_sha256": "df5d29be1f3148bbdef31a7f32bc309929b3033f6011994ac40eaece46a007e9",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -4,
+        "y": -22
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -4,
+        -22
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.049259490205744494,
+          0.980916269045666,
+          55.079152692095576
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "0e64eada4bae25ec25e90d59bc839014e170900e476568d8a985c4b72ab8c900",
+      "lightmap_sha256": null,
+      "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1173,
+      "note": "Die Grafik muss mehr nach einem verlassenen alten GebÃ¤ude aussehen. Orientiere Dich farblich an Original SC2000 Grafik",
+      "source_sha256": "574c823f0b9cefeaa725e8501f3e0dcc4110d61ffa2bd3518010d85cd9f9ca72",
+      "result_sha256": "db8b4c4cf12981e0162a874daf80f569bf9c50650f7c1dcd208b7cb7db2567e3",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -3,
+        "y": -16
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -3,
+        -16
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.029502763909040386,
+          0.898415151876593,
+          151.03328530891932
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "646733154e359878a4001550f88588fadeb4d80f7a823d7a71c6718a749dd69e",
+      "lightmap_sha256": null,
+      "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1174,
+      "note": "",
+      "source_sha256": "74b6611bce9617c8063edde81eb9f07436cac31548cfdccf8a7e9273c3f9bef6",
+      "result_sha256": "b6a87efc494de8b50b6cb8ea587a7ce6ca4962518fc9e95e343431455180fb93",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": -44
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        -44
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "74b6611bce9617c8063edde81eb9f07436cac31548cfdccf8a7e9273c3f9bef6",
+      "lightmap_sha256": "e97da0b595db9df1ac7a9c55df4bfb88f412b6b916aa7b544401db33212013d5",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1175,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "d579a06360ffd78bccd92d3d970b5fae85335f9aae24faf0ccf7e9cfa56fc387",
+      "result_sha256": "8a56afc2ff42c1700dcb5c041815201ba193230ef4383c5f039a04c79808cf4e",
+      "scale_percent": 91,
+      "offset_master_pixels": {
+        "x": -4,
+        "y": -47
+      },
+      "user_matrix": [
+        0.91,
+        0,
+        0,
+        0.91,
+        13.279999999999994,
+        -15.68000000000001
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.006200042435642206,
+          0.8727864321806991,
+          45.46072974876003
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "d579a06360ffd78bccd92d3d970b5fae85335f9aae24faf0ccf7e9cfa56fc387",
+      "lightmap_sha256": "2c9fe24acdf3599470316b80f3160f903112f69f5bfeda71b319604a628b7429",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1176,
+      "note": "",
+      "source_sha256": "fa6aa0c79ae691c541d19cf06586e18d0ae4943f8080446c694bcca11c548661",
+      "result_sha256": "211e107606909810d80151eaa3e4049ac67f51e213e84695a86c093d095d35f9",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": -26
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        -26
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "fa6aa0c79ae691c541d19cf06586e18d0ae4943f8080446c694bcca11c548661",
+      "lightmap_sha256": "fd8be2e59e198e9a3b078b99dc8e9873e68ce6792b243711656521a9c41d6ecf",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1177,
+      "note": "",
+      "source_sha256": "2e46ad5172018f74525e336342fbfe7b8cc629e7663e2927c04378f45c344cff",
+      "result_sha256": "a406e301a3e08916608d22bcdbc623708822074c8c7c8ea4d5a775abfac128e7",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -10,
+        "y": -28
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -10,
+        -28
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "2e46ad5172018f74525e336342fbfe7b8cc629e7663e2927c04378f45c344cff",
+      "lightmap_sha256": "32f00f2a029198defbb824b0e7b99b654e8839e34da92d30d53a1bf468007e46",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1178,
+      "note": "",
+      "source_sha256": "ffaccbae39c34ac91809f5cfe2c6e971bc37dc5c5f94a3423d5375e5a4bec7b7",
+      "result_sha256": "3886cab7007ad74771c777ae72bc02520b7884b798f94e5a5bdf35f7640e7638",
+      "scale_percent": 93,
+      "offset_master_pixels": {
+        "x": -5,
+        "y": -48
+      },
+      "user_matrix": [
+        0.93,
+        0,
+        0,
+        0.93,
+        8.43999999999999,
+        -31.20000000000001
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "ffaccbae39c34ac91809f5cfe2c6e971bc37dc5c5f94a3423d5375e5a4bec7b7",
+      "lightmap_sha256": "a1feda3fe8e041c41e0ee6b40d349270e7ccdca470d2b001e109cd391a80155d",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1179,
+      "note": "",
+      "source_sha256": "045a41beb332d0e5f9eda4a1bf0c55c07184b24ad5cc8004bf3212ac4bdb76c3",
+      "result_sha256": "fcb40585f744f899eb02f1b52f65807d0758b607d0c7317016577529e529863b",
+      "scale_percent": 116,
+      "offset_master_pixels": {
+        "x": 2,
+        "y": -28
+      },
+      "user_matrix": [
+        1.16,
+        0,
+        0,
+        1.16,
+        -28.719999999999985,
+        -85.59999999999997
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        96,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "045a41beb332d0e5f9eda4a1bf0c55c07184b24ad5cc8004bf3212ac4bdb76c3",
+      "lightmap_sha256": "2c2fc898d1a9e5f0c4edb3daa4aea07d00fef35f652b259598ed33a1a13059bc",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1180,
+      "note": "",
+      "source_sha256": "fadf6b3c15d802b12005024486247db920f6b469182aa86469f8a3ad54be403b",
+      "result_sha256": "71d404d0de4531a03ec35d905638effa215183d8ffa17e007e2a0ccf4bd7de95",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -3,
+        "y": -44
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -3,
+        -44
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        16,
+        0,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "fadf6b3c15d802b12005024486247db920f6b469182aa86469f8a3ad54be403b",
+      "lightmap_sha256": "f7369cec9ec677955777f116e70561070d27d689ebb2c1850a6df15762b67430",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1181,
+      "note": "",
+      "source_sha256": "44b64790a1431ffe0ea255735df3b71d4e63d6a7897dd6f926e31baf37c8454a",
+      "result_sha256": "3dd0ccbe5cb53961be6e36f74c6b36c9e9dbd06648b2a32d2c8085af2fbc6bcb",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 1
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        1
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "44b64790a1431ffe0ea255735df3b71d4e63d6a7897dd6f926e31baf37c8454a",
+      "lightmap_sha256": "3a63ff036d72448841e43b9a5eed2ffa0997831ba7aef0873f22dc8a24aa1252",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1182,
+      "note": "",
+      "source_sha256": "607620b79fdb9cb917c20f510bb61a8beddafe67b5994b112a83a9bc975f3622",
+      "result_sha256": "6a1463e9ff71d6091747830054a7377fc84e675ffadc95d10b0dcfea98118db8",
+      "scale_percent": 116,
+      "offset_master_pixels": {
+        "x": -2,
+        "y": -3
+      },
+      "user_matrix": [
+        1.16,
+        0,
+        0,
+        1.16,
+        -32.719999999999985,
+        -39.47999999999998
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        48,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "607620b79fdb9cb917c20f510bb61a8beddafe67b5994b112a83a9bc975f3622",
+      "lightmap_sha256": "81bc461f853f2f87f89574c7601a121cd9b8ce31ed0398b45e4f84f725037780",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1183,
+      "note": "",
+      "source_sha256": "d0a62f9a2dff8a46c3fa808d8c153243ab38f389696a5b67acf4048ac423cc81",
+      "result_sha256": "332d9fc9b45915470aac566e82d54f01e385a8cd3f89901abe5b9139e43ac5d5",
+      "scale_percent": 119,
+      "offset_master_pixels": {
+        "x": -1,
+        "y": -20
+      },
+      "user_matrix": [
+        1.19,
+        0,
+        0,
+        1.19,
+        -37.47999999999999,
+        -108.15999999999997
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        112,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "d0a62f9a2dff8a46c3fa808d8c153243ab38f389696a5b67acf4048ac423cc81",
+      "lightmap_sha256": "a956e58957a19c77e5f2eeacf67135e05221422df6cd6eacf7b6458d43368a1e",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1184,
+      "note": "",
+      "source_sha256": "8226858b72248b0edfc8c39a187a80bc040d0125b60ee86745c17c816a303dd8",
+      "result_sha256": "477ef66a3283e1def9cf0376cedea8ca7c8d9fe241c70a01bfe26d090201deac",
+      "scale_percent": 116,
+      "offset_master_pixels": {
+        "x": -5,
+        "y": -28
+      },
+      "user_matrix": [
+        1.16,
+        0,
+        0,
+        1.16,
+        -35.719999999999985,
+        -106.07999999999996
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        112,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "8226858b72248b0edfc8c39a187a80bc040d0125b60ee86745c17c816a303dd8",
+      "lightmap_sha256": "30923901b506f9df3f3672de9b0ee6c258c4c475beada7e8f9957baf1ca3f137",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1185,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik auf der linken Seite passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "06c5bc85c5ed1e65adc6f4233f850d9192d4c3ab7d4b721e27f69374ee91d5f8",
+      "result_sha256": "f80cad9ccf9c02c9604bacf57dc06fb03999186aa4023a52dad059483f122cea",
+      "scale_percent": 109,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1.09,
+        0,
+        0,
+        1.09,
+        -17.280000000000015,
+        -27.720000000000024
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.022787571289098474,
+          0.9263901203388891,
+          27.194276382451278
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        16
+      ],
+      "source_artwork_sha256": "06c5bc85c5ed1e65adc6f4233f850d9192d4c3ab7d4b721e27f69374ee91d5f8",
+      "lightmap_sha256": "76025939ecebb334940f5f50cc14aa287afe649d1c710fb3f4418e9d15919ad3",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1186,
+      "note": "",
+      "source_sha256": "6f29d23ec90dec7da25c82f1f7b3d2aa9d211e56b896ebb2d5e8313dea39f268",
+      "result_sha256": "455b040343193a7dd8b237ff24d83925a7485a2815ce6e1096a800a38eb5741c",
+      "scale_percent": 113,
+      "offset_master_pixels": {
+        "x": 3,
+        "y": -24
+      },
+      "user_matrix": [
+        1.13,
+        0,
+        0,
+        1.13,
+        -21.95999999999998,
+        -79.63999999999996
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        80,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "6f29d23ec90dec7da25c82f1f7b3d2aa9d211e56b896ebb2d5e8313dea39f268",
+      "lightmap_sha256": "0255bce9e3f27c7292dbfdcc9a0fb7def89d43cab7e0fab30fe6080968dd2b71",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1187,
+      "note": "",
+      "source_sha256": "dbc068ccb48fa6036d64b52c81ba43af3ef03b78d3ff826f73b9b3caa0dc22c5",
+      "result_sha256": "cab01aaca75e803c479f65f8439a9a00ceda4907cfb1f6625f8463a40b83fd94",
+      "scale_percent": 94,
+      "offset_master_pixels": {
+        "x": -10,
+        "y": -11
+      },
+      "user_matrix": [
+        0.94,
+        0,
+        0,
+        0.94,
+        1.5200000000000102,
+        21.64000000000003
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "dbc068ccb48fa6036d64b52c81ba43af3ef03b78d3ff826f73b9b3caa0dc22c5",
+      "lightmap_sha256": "a98559b2e946e621e8b2b3256116204de2b383846c181ae4df52dbef842ee045",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1188,
+      "note": "",
+      "source_sha256": "cb10438b913c950fc3c86cd71c3f911132d7c931ae005a24afeb1fe8d83f94b8",
+      "result_sha256": "3ef6772cafbeebca25ba02356f388683580d8da2bc7d298624e671efb70194f5",
+      "scale_percent": 133,
+      "offset_master_pixels": {
+        "x": 2,
+        "y": -9
+      },
+      "user_matrix": [
+        1.33,
+        0,
+        0,
+        1.33,
+        -61.360000000000014,
+        -73.68
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        80,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "cb10438b913c950fc3c86cd71c3f911132d7c931ae005a24afeb1fe8d83f94b8",
+      "lightmap_sha256": "428dcab1a1b49c9c526cb29601e3d17bc0b3436329e969b3cc32e9bab5bfb544",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1189,
+      "note": "",
+      "source_sha256": "5e9bfa1d5c0f3fd5f72f8ddc4e035b6d68e5fed2a754994c192f801795d4ef6b",
+      "result_sha256": "25a03f62fd4cd01ccc55b88e36447bfdef4c4f4a87f5f8fa1bb46b98928a9d58",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -15,
+        "y": -16
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -15,
+        -16
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "5e9bfa1d5c0f3fd5f72f8ddc4e035b6d68e5fed2a754994c192f801795d4ef6b",
+      "lightmap_sha256": "ce3aae6bd867c13912644cdf20355bfa93a725e168b56c0371d7d07ed2d55ba8",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1190,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "bea81fe29eef6c7b3d4b5c59bb45fd3fa825fe8a0afcf36604568908258c6045",
+      "result_sha256": "916ef982725d4cd52d2de00c2a8603dab708dbad21f4c87a1bdcdb1a8b544657",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -1,
+        "y": -40
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -1,
+        -40
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.001933525501518707,
+          1.1911183174014528,
+          -40.91031966242221
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        80,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "bea81fe29eef6c7b3d4b5c59bb45fd3fa825fe8a0afcf36604568908258c6045",
+      "lightmap_sha256": "ba22e2e99b2c32e8231ec3012a0127a4411f6af3a0bc82ad76e7e7ddb5771075",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1191,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "b8c3c4ae5770c639395dc8230d4886ce3a0751c1ef6864360ce863069ecf49b9",
+      "result_sha256": "639c9237f9e8963d59d9303fdfecc69c54e878f63b2316a8623fc7c3e8ba5a01",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -1,
+        "y": -37
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -1,
+        -37
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.009534499952220887,
+          1.1564054605232095,
+          -40.61917820058236
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        64,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "b8c3c4ae5770c639395dc8230d4886ce3a0751c1ef6864360ce863069ecf49b9",
+      "lightmap_sha256": "8e0507a19b758dcb35743278ce32018949713f5b682e60e123fb08659808ed59",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1192,
+      "note": "",
+      "source_sha256": "8f679436ae6d4399581a5c8c6ef0fd7d4920a8bbe0ccbede808e814563a9f79d",
+      "result_sha256": "8ff0697682c41db2e286e62973abee51875666c7baf1f5a1d5949997126cdcee",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 7,
+        "y": -29
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        7,
+        -29
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "8f679436ae6d4399581a5c8c6ef0fd7d4920a8bbe0ccbede808e814563a9f79d",
+      "lightmap_sha256": "0221de81f5b03487e90c5179511ab3a07962f38de9e2104fbfb89fb6d31af9fa",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1193,
+      "note": "",
+      "source_sha256": "854d35a2a8dee56b2881443b8e17070d28557d1faa0861d621224ff7b77702a3",
+      "result_sha256": "3855199742339e66225e4af7d26429f741f991c7a4a4a8d0dc73105a49fdcaad",
+      "scale_percent": 127,
+      "offset_master_pixels": {
+        "x": -4,
+        "y": -6
+      },
+      "user_matrix": [
+        1.27,
+        0,
+        0,
+        1.27,
+        -55.84,
+        -57.84
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        64,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "854d35a2a8dee56b2881443b8e17070d28557d1faa0861d621224ff7b77702a3",
+      "lightmap_sha256": "8740feed2412a7df4e2982f6f33446cc1563862397e62ebc84dbb25ca8708746",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1194,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik auf der rechten Seite passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "9aef935398ff05d5da0a034dd544d63816078107929a7d88f092efe47a08fdac",
+      "result_sha256": "00cc2ddf3999f63d06383b011ccd4648b05ac64021325079ab8666a83a7f7dd0",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -13,
+        "y": -16
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -13,
+        -16
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.11259944653662712,
+          1.2163118982239123,
+          -51.11800379147043
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        96,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "9aef935398ff05d5da0a034dd544d63816078107929a7d88f092efe47a08fdac",
+      "lightmap_sha256": null,
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1195,
+      "note": "",
+      "source_sha256": "67cec8fbebfa501998dacec1364f3e31e674d887e65c4597d7590ed85526bb1c",
+      "result_sha256": "0df4287a3ff0c343c5fff676b68f3e34186dff8e67fee1db3e2ac7a624b09275",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 1,
+        "y": -32
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        1,
+        -32
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "67cec8fbebfa501998dacec1364f3e31e674d887e65c4597d7590ed85526bb1c",
+      "lightmap_sha256": null,
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1196,
+      "note": "Die Grafik muss mehr nach einem verlassenen alten GebÃ¤ude aussehen. Orientiere Dich farblich an Original SC2000 Grafik",
+      "source_sha256": "4e7a730991217a8eb5f719ae1ac8fab1a5d3fe79ccd15d0c60bc4274bf8b88ab",
+      "result_sha256": "92110efcba9d795d1da0dde936f0f2fb376ddc3d96f254410f6f01f5f5d49e36",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.003313586894495124,
+          0.9252808125399493,
+          83.06593708641876
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "source_artwork_sha256": "6bb4ad1a7d121efc932874d5580d45467d0a3aed0d19ce915e70e25bf8728e92",
+      "lightmap_sha256": null,
+      "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1197,
+      "note": "Die Grafik muss mehr nach einem verlassenen alten GebÃ¤ude aussehen. Orientiere Dich farblich an Original SC2000 Grafik",
+      "source_sha256": "383771bc62a52cb0730816ed59968a0f8f128bf5f69438f90a031850a8e0e8cb",
+      "result_sha256": "be8ed077da218c3cb60649cd346770c3a56d6145c86142893229f5883bac5988",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.001099661948649855,
+          0.8738720994666873,
+          153.83350168308968
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "source_artwork_sha256": "b64db765018affcaabcdd1d897dfec85384e2e2b505ba4ed19aa13bc7e73a9df",
+      "lightmap_sha256": null,
+      "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1198,
+      "note": "Nutze stattdessen 1199, nur gespiegelt (vertikale Spiegelkante)",
+      "source_sha256": "36b2d2883dc1479e46c67df9ce5e409b6a073df90c248417d00df7f111fdba74",
+      "result_sha256": "33177ba099011e096b0e128d339db225efd2318e4daba8baeb171d5bcbd25f92",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 1,
+        "y": -8
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        1,
+        -8
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "a1bde3dc7d09698fda9c9bd30d4e11f6b0516b69c017fc7646af3a5135f9387f",
+      "lightmap_sha256": null,
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1199,
+      "note": "",
+      "source_sha256": "a1bde3dc7d09698fda9c9bd30d4e11f6b0516b69c017fc7646af3a5135f9387f",
+      "result_sha256": "60f1d57898e8dcd6c90711072d2878a412ab0854da1fecf32afdea0dabed7835",
+      "scale_percent": 91,
+      "offset_master_pixels": {
+        "x": -2,
+        "y": -3
+      },
+      "user_matrix": [
+        0.91,
+        0,
+        0,
+        0.91,
+        3.759999999999998,
+        8.159999999999997
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "a1bde3dc7d09698fda9c9bd30d4e11f6b0516b69c017fc7646af3a5135f9387f",
+      "lightmap_sha256": null,
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1200,
+      "note": "",
+      "source_sha256": "902b045444a9bb5a6e4292163431e5a332e4664261dd19ce847f3f2959427a69",
+      "result_sha256": "56a8d6ab5c273a93130e11cf79ace6b3e90ea98cc1051a84ec3c8aed8b8280f9",
+      "scale_percent": 116,
+      "offset_master_pixels": {
+        "x": 4,
+        "y": 0
+      },
+      "user_matrix": [
+        1.16,
+        0,
+        0,
+        1.16,
+        -6.239999999999995,
+        -30.079999999999984
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        16,
+        0
+      ],
+      "source_artwork_sha256": "902b045444a9bb5a6e4292163431e5a332e4664261dd19ce847f3f2959427a69",
+      "lightmap_sha256": null,
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1202,
+      "note": "",
+      "source_sha256": "2b58185071fde51b2be925cbc69d729d8976b3ba95245048b27e7725478e5d46",
+      "result_sha256": "0cc9f3eaf59e1e4a809cae49d6326f3149e98bd7000e11b9a1063aad93007620",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": -5
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        -5
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        16,
+        0
+      ],
+      "source_artwork_sha256": "2b58185071fde51b2be925cbc69d729d8976b3ba95245048b27e7725478e5d46",
+      "lightmap_sha256": "88a58a6bd0a0cac78d876a1f9e25e645a963c199324340ec4eea92e06f0dbaf6",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1205,
+      "note": "",
+      "source_sha256": "b4d677168ccfc094fd31d19349f002e7c7ec989915d4d5af5e2848ed399565d4",
+      "result_sha256": "f64d825b6e861fb8dea2944bdd1648205bc05b5060c0831e37b349900b98cdbe",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 4,
+        "y": -6
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        4,
+        -6
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "b4d677168ccfc094fd31d19349f002e7c7ec989915d4d5af5e2848ed399565d4",
+      "lightmap_sha256": "ca3b8bc1661ce0c71fdd5714298ae88ec4572ad8746f9a01f70c2b5118c33137",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1206,
+      "note": "",
+      "source_sha256": "3d683a065304453d77491e0b897ce19cb6c2510a68916d2fdc1afe74726db4f9",
+      "result_sha256": "c60365d9bff7e2c161e3e23340ef766a9f93921dfa5cb3da99549ade4258ea54",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -2,
+        "y": -3
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -2,
+        -3
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "3d683a065304453d77491e0b897ce19cb6c2510a68916d2fdc1afe74726db4f9",
+      "lightmap_sha256": "7aec6f992b6f018f2f77aa12d7261cc8344f541d4458e7c1672ed73c1ea59c1d",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1207,
+      "note": "",
+      "source_sha256": "e5e82f52b03eba9e1adb3dac95a93c6dbcdde2d3682bf5c2cefb46dc28b6b473",
+      "result_sha256": "33e904ba4dbf7c4c8ee9c03800d4a22771aaf09165d9923c39632555916d2b02",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": -2
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        -2
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "e5e82f52b03eba9e1adb3dac95a93c6dbcdde2d3682bf5c2cefb46dc28b6b473",
+      "lightmap_sha256": "f486bbc5d8c3b271bb158a4c9aab042113a83d5ad4dee88574dd74741cb216da",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1208,
+      "note": "",
+      "source_sha256": "23b86395def3afb44b40855da86b368ca9391892ce1004a8f4abcd8edc132fd5",
+      "result_sha256": "f1491a21e1f70946d0a5ffcbbf72bf06e9218acc4abd00314081075940970061",
+      "scale_percent": 90,
+      "offset_master_pixels": {
+        "x": 3,
+        "y": -8
+      },
+      "user_matrix": [
+        0.9,
+        0,
+        0,
+        0.9,
+        22.199999999999996,
+        22.39999999999999
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "23b86395def3afb44b40855da86b368ca9391892ce1004a8f4abcd8edc132fd5",
+      "lightmap_sha256": "4b7a111f7184ce64b583f5d34b298fcc89da136e4dbdd4f7f2b5af5aa8863f61",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1210,
+      "note": "",
+      "source_sha256": "c0c2562b1e65d8d151a60b522cc1a0f9f91e5dbbf6f5d38a18c25076e4856af1",
+      "result_sha256": "3f091a033fb0afdaf73337822c3167b46d645fa342488570d6b7a2ba9a52d2e1",
+      "scale_percent": 107,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1.07,
+        0,
+        0,
+        1.07,
+        -13.440000000000012,
+        -19.880000000000017
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        16,
+        32,
+        16,
+        0
+      ],
+      "source_artwork_sha256": "c0c2562b1e65d8d151a60b522cc1a0f9f91e5dbbf6f5d38a18c25076e4856af1",
+      "lightmap_sha256": "c9422958a47fd792ba48a777309739b2e6e80b73fd542ae09ae58c31a1eb77ad",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1211,
+      "note": "",
+      "source_sha256": "8da1de98eae9dac9334a845361e89af5cd0885f108d1f834a620904d497ab921",
+      "result_sha256": "a5cf9c9c8572e7b78dbe9f20694834d9c55963a7c714688d5fa1299156cf8901",
+      "scale_percent": 119,
+      "offset_master_pixels": {
+        "x": 1,
+        "y": -1
+      },
+      "user_matrix": [
+        1.19,
+        0,
+        0,
+        1.19,
+        -35.47999999999999,
+        -49.639999999999986
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        64,
+        0,
+        16
+      ],
+      "source_artwork_sha256": "8da1de98eae9dac9334a845361e89af5cd0885f108d1f834a620904d497ab921",
+      "lightmap_sha256": "83d7cfd25b4de241cd53a20648bd6272b6fe61b37bfdee6b1676e0787f61b769",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1212,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik auf der rechten Seite passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "c8771e471bdb610482911f8605feb400a03e07fcbf1b5f114758d0331c7cf279",
+      "result_sha256": "58f8eb82eee5fe9da2307712b8781c33307359bd7863fcb7759f6df6bc560b3f",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 1,
+        "y": -6
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        1,
+        -6
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.041782022968797405,
+          1.1014618924935866,
+          -13.893620368605607
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "c8771e471bdb610482911f8605feb400a03e07fcbf1b5f114758d0331c7cf279",
+      "lightmap_sha256": "c143c7afa1852af74e80745a3eba4e5619847a70dd4308eeb7d389fc72d6c54d",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1213,
+      "note": "",
+      "source_sha256": "c838fd2c5bc7534e593ebfa19025d7150418d8cfeafc9dc2b4d31764c971ea3c",
+      "result_sha256": "3d7672d71e00b7d7bff3dbb5f56bfa4e88d8c315d0a0d5fe677f14b1523beb4b",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -9,
+        "y": -15
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -9,
+        -15
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "c838fd2c5bc7534e593ebfa19025d7150418d8cfeafc9dc2b4d31764c971ea3c",
+      "lightmap_sha256": "100aaf142003f562b2b6e17ced46d8057d08aaae806eb6dd744c9180a1090ff7",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1214,
+      "note": "Die Darstellung des GebÃ¤udes ist im Stil zu groÃŸ (zu groÃŸe TÃ¼re, zu groÃŸe Fenster, etc), orientiere dich nÃ¤her am Original.",
+      "source_sha256": "204409459d57d456780f7cb9e895f9da7ea426b492525bd1e3c45a05998b510d",
+      "result_sha256": "a53c7c7485df3b94394b3b46ef346a8a77d41b3958c7001fa24a124865d2eae3",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 4,
+        "y": -23
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        4,
+        -23
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.012178639722349227,
+          0.9881835162555916,
+          0.4020154188982836
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        16,
+        0
+      ],
+      "source_artwork_sha256": "c9647b28ed5a5d2c79d5cf9b0e9e4d714c0499ce32fa9be115af6f55cf258a68",
+      "lightmap_sha256": "cfe20de122df623c6c74734b06bac44ae4a4e0ac1f4ce0984bb5687ca4258bdd",
+      "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1217,
+      "note": "Die Darstellung des GebÃ¤udes ist im Stil zu groÃŸ (zu groÃŸe TÃ¼re, zu groÃŸe Fenster, etc), orientiere dich nÃ¤her am Original.",
+      "source_sha256": "542f1449a61dd18c0ac912f83850a3472325fea2c78fc4b9b91968258988d050",
+      "result_sha256": "d15ed4f26e71bf15669e6a938f0bd4fd2f8102f0136927fc4b475640e8a2e420",
+      "scale_percent": 105,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1.05,
+        0,
+        0,
+        1.05,
+        -12.800000000000011,
+        -16.800000000000015
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.006354586239895821,
+          0.9108469948510873,
+          81.55508395342483
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        16,
+        0,
+        16,
+        16
+      ],
+      "source_artwork_sha256": "ef88ba0e865c209804f2423b52ab04be9ca6e2039b1fe70daa6c86617821e701",
+      "lightmap_sha256": "33ca1a74de5da49f5f2c6af1b5b9782b478a4a72bd289a8fb89db29ea81c904b",
+      "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1218,
+      "note": "",
+      "source_sha256": "d7aabc09061e09d76cb6d6b3525f904ca33c3ff6788ece3b9f2f2e01b5b0b024",
+      "result_sha256": "e2ed9db10c400d512a969fcb5979e75f883571b89b3725306c9d54bad22facd8",
+      "scale_percent": 112,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1.12,
+        0,
+        0,
+        1.12,
+        -30.720000000000027,
+        -31.680000000000028
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        16
+      ],
+      "source_artwork_sha256": "d7aabc09061e09d76cb6d6b3525f904ca33c3ff6788ece3b9f2f2e01b5b0b024",
+      "lightmap_sha256": "2efaa05286014180e29c9e93f3d902b74967c9b72c98dfeb1378fce84bac25f0",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1220,
+      "note": "",
+      "source_sha256": "cb16cb7192fd279bdb43d7e24b013079f5888eed560d6facd65a981300ee59d7",
+      "result_sha256": "e7183ef3363e2687db58642fbb1a1419a0a8506be89e534ccff4bdcf8ab86cb6",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -1,
+        "y": -11
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -1,
+        -11
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "cb16cb7192fd279bdb43d7e24b013079f5888eed560d6facd65a981300ee59d7",
+      "lightmap_sha256": "64431dbba2420f38e6d399be38e954dcc1ab2a85f9fd607088409b6cbd79ab0f",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1224,
+      "note": "",
+      "source_sha256": "5429094a10130dc65274c2f8e7a015f467028d68ea23101947801f838919408b",
+      "result_sha256": "9ec411c301bbc2329c235def0695fa0549b2a26ab5f50d7dfe55d98c8e36193d",
+      "scale_percent": 123,
+      "offset_master_pixels": {
+        "x": -7,
+        "y": -1
+      },
+      "user_matrix": [
+        1.23,
+        0,
+        0,
+        1.23,
+        -21.72,
+        -36.879999999999995
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        16,
+        48,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "5429094a10130dc65274c2f8e7a015f467028d68ea23101947801f838919408b",
+      "lightmap_sha256": "9d124e3cb504f7ff38bc33c917ba4c4f4abf7f7663301c6d1c8c44de8d7e5a81",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1227,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "31854d940bcc89ca1faeda24115e8d2f57717336d3f89a617ae453eb18d27c7b",
+      "result_sha256": "2326dbb52093b6d73a748d4e05955b3c8fc8f306d7692f8aba5ac0d45615ec70",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.04345299499427835,
+          1.1642547091444684,
+          -9.702366215345783
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "31854d940bcc89ca1faeda24115e8d2f57717336d3f89a617ae453eb18d27c7b",
+      "lightmap_sha256": "78a2d269ebaa3cd59bdc9d8955473bd0c62ad34f4cd1fe8ddced23b1ccb2df84",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1228,
+      "note": "",
+      "source_sha256": "106f9dd75696980b0c9bbcbe7a4865b9e83d7a5ea1bde09b45422d9d6e8eeb48",
+      "result_sha256": "bbac628cf6d7f91edd42a0e530c4c2012d4e5e8b579f031b7f7b6c7b73159931",
+      "scale_percent": 109,
+      "offset_master_pixels": {
+        "x": 2,
+        "y": -4
+      },
+      "user_matrix": [
+        1.09,
+        0,
+        0,
+        1.09,
+        -3.760000000000005,
+        -11.920000000000007
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        16,
+        0,
+        16,
+        0
+      ],
+      "source_artwork_sha256": "106f9dd75696980b0c9bbcbe7a4865b9e83d7a5ea1bde09b45422d9d6e8eeb48",
+      "lightmap_sha256": "a7821561f9cfd21d41e38be8c345cb186c15f62b87f3994deea81fbd7db50d12",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1230,
+      "note": "",
+      "source_sha256": "6ace6ed7b35768373bdd6017032e4c1b33a058a7e241b72b25bd222a56abeb9f",
+      "result_sha256": "50cac6890a9b1c8c74ca980944df1832b0df574c306f32be3194ce7bffeee882",
+      "scale_percent": 111,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1.11,
+        0,
+        0,
+        1.11,
+        -7.040000000000006,
+        -7.040000000000006
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        16,
+        16,
+        16,
+        0
+      ],
+      "source_artwork_sha256": "6ace6ed7b35768373bdd6017032e4c1b33a058a7e241b72b25bd222a56abeb9f",
+      "lightmap_sha256": null,
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1231,
+      "note": "",
+      "source_sha256": "46033268b49ef3ab465361224efccab08d0c4f22b6a30fbf4510ab0b8feb9097",
+      "result_sha256": "7cabb71f92df54817890ac08fdb2ea86f30b42687dc97007c0fcb6db1e0573d2",
+      "scale_percent": 115,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1.15,
+        0,
+        0,
+        1.15,
+        -9.599999999999994,
+        -10.199999999999994
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        16,
+        0,
+        16,
+        0
+      ],
+      "source_artwork_sha256": "46033268b49ef3ab465361224efccab08d0c4f22b6a30fbf4510ab0b8feb9097",
+      "lightmap_sha256": null,
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1232,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "dcd69c378e8c432a00aa998fe0f0473910f51deff6973b226401172907e76100",
+      "result_sha256": "3f2c3dfe9b3f5bb9186fa10d023eba306a424436cdaac9aa9ec2bc28105849cc",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.04580585325638875,
+          0.7153557811211873,
+          19.29357739076671
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        0,
+        16
+      ],
+      "source_artwork_sha256": "dcd69c378e8c432a00aa998fe0f0473910f51deff6973b226401172907e76100",
+      "lightmap_sha256": "f897c4f36d522f8cf98478295c7b51b79842cd3fb5553325fc4baaf7fe1b5499",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1233,
+      "note": "",
+      "source_sha256": "8c0397f8ddbf157db6d98418266c010fbb5b5e37a8eebc04b2f32a4901b2d107",
+      "result_sha256": "b81222cc5212167c0a5f12f262ab5c783c02a283042fad73d2c391f15059aee6",
+      "scale_percent": 107,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1.07,
+        0,
+        0,
+        1.07,
+        -4.480000000000004,
+        -5.600000000000005
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        16,
+        16,
+        16,
+        0
+      ],
+      "source_artwork_sha256": "8c0397f8ddbf157db6d98418266c010fbb5b5e37a8eebc04b2f32a4901b2d107",
+      "lightmap_sha256": "db10fc753214a63add8cb526e4307965a7fd6d0444ca0b5361aecaabbd262894",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1234,
+      "note": "",
+      "source_sha256": "ac574009595b5e0081a479cac56cbf3b79a1587c659f4e2139650d131d9703d8",
+      "result_sha256": "56479b5cdac3b09b2aef506fd90fddc04f1549f3afcc5bb5f1a71e520e7f8ff4",
+      "scale_percent": 123,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1.23,
+        0,
+        0,
+        1.23,
+        -14.719999999999999,
+        -16.56
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        16,
+        0
+      ],
+      "source_artwork_sha256": "ac574009595b5e0081a479cac56cbf3b79a1587c659f4e2139650d131d9703d8",
+      "lightmap_sha256": null,
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1235,
+      "note": "",
+      "source_sha256": "8f6c1b19f6c3aee0e488a95d57e80f72153862fd410be35afb6ad8fbc90120fe",
+      "result_sha256": "ea1f274b4ddd0b1b89f4dbfb027162ac175886b8103d55d062afdaaf29fe88cf",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": -2,
+        "y": -12
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        -2,
+        -12
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "8f6c1b19f6c3aee0e488a95d57e80f72153862fd410be35afb6ad8fbc90120fe",
+      "lightmap_sha256": "668e224471c0fc7c9823407daa4495dde6a0ce500236f6f8da16dc28ab1fd231",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1236,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters. Orientiere dich auÃŸerdem mehr am Original, es fehlen Busse.",
+      "source_sha256": "f5758d4908758e52284545cc48fcce6f10ef3c0e85ab1af305f2c84f9f1f41fa",
+      "result_sha256": "28d38ef9527cca397ec7559cf25943d0e49f44c7409bb2895ca02ac614eb86a5",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.11427483613195744,
+          1.231090435592923,
+          -111.98290739279952
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        0,
+        16
+      ],
+      "source_artwork_sha256": "6e6661cbf4f352a1abbf655268ad64732803abe77aa189768a13c5621079b226",
+      "lightmap_sha256": "f1ce79fe9fb86a63c39ed3e8271c4d93abace24aae6615a5ca6a97af11acf7ba",
+      "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1237,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters, orientiere dich auÃŸerdem nÃ¤her am Original (auch was das Andreaskreuz links angeht)",
+      "source_sha256": "e61d8364eb049fc21bd32b1f99b7a6554375b7ade1f5f2fe4c377f45ed16c607",
+      "result_sha256": "c1458a1eac55fe6aded6930a6f12592b0b6babd57319d700ebb99449b475fc65",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.030625913242115554,
+          1.1001658507164271,
+          -120.07173860306679
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        16
+      ],
+      "source_artwork_sha256": "d810e73f75f1e392a92b57632b450a524219d263b98bbfb64df7fc55bf542a5a",
+      "lightmap_sha256": "bad56f03766a08a6c0abf626e70f6c099c8c3075d83a7b9e3ccd3236e6fc9122",
+      "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1239,
+      "note": "",
+      "source_sha256": "2d629fc729d9c408272fefca4a88f625c34dffdb8cfda17cce2010b2205910f6",
+      "result_sha256": "eafe9ca36442097aa899186b574429f407569f2413b1ec904f5c80c39b110adc",
+      "scale_percent": 104,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1.04,
+        0,
+        0,
+        1.04,
+        -5.1200000000000045,
+        -5.760000000000005
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        16
+      ],
+      "source_artwork_sha256": "2d629fc729d9c408272fefca4a88f625c34dffdb8cfda17cce2010b2205910f6",
+      "lightmap_sha256": "fb4de363c7c7b15c38824c34a46b0ad986e102ae9e6752d25ea78346067e73c9",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1240,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "995d5c9fa84bbbde92cf4dd383f4e83ab0a81422d76c8d6c7d57606a5b969982",
+      "result_sha256": "71784b98c26c77ef1a837f01ae4819bd1cef2a84ff16844c5a77bb5d074e9838",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.0005294740557715283,
+          1.2131506071666405,
+          -29.77331232419091
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "995d5c9fa84bbbde92cf4dd383f4e83ab0a81422d76c8d6c7d57606a5b969982",
+      "lightmap_sha256": "61a385b5168f3880833ed9613cf4fe4cab3f6d0d0098b21c763e3e1bb92f66d1",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1242,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "a77724dc87a95ab53e85769143a9f5a8968fd72051833e0982e6ceb98f1329ab",
+      "result_sha256": "a589a8b22c3c7de4d05d7d79eb8cb267161fdb73224c448781e02248f351063c",
+      "scale_percent": 116,
+      "offset_master_pixels": {
+        "x": 1,
+        "y": -3
+      },
+      "user_matrix": [
+        1.16,
+        0,
+        0,
+        1.16,
+        -19.47999999999999,
+        -23.47999999999999
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.004563522678921683,
+          1.129541339500084,
+          -15.99716055310877
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        16,
+        48,
+        16,
+        0
+      ],
+      "source_artwork_sha256": "a77724dc87a95ab53e85769143a9f5a8968fd72051833e0982e6ceb98f1329ab",
+      "lightmap_sha256": "3cacf90f8de92b0fd9ec7a3e441082c253afc09534635f5bbd82002d14e1e0f0",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1243,
+      "note": "Das Design und die GrÃ¶ÃŸenverhÃ¤ltnisse passen nicht ganz, orientiere Dich nÃ¤her am Original.",
+      "source_sha256": "05b3f507e1c38451d220626f60816a2f8aade3d072f660da74b90e892c9190bd",
+      "result_sha256": "97163733ce45534dc7a50bbfa6d9d5d43c7bb2a098cb28cb5bf9805932217e20",
+      "scale_percent": 118,
+      "offset_master_pixels": {
+        "x": -1,
+        "y": -8
+      },
+      "user_matrix": [
+        1.18,
+        0,
+        0,
+        1.18,
+        -24.039999999999992,
+        -33.19999999999999
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.005290585800016179,
+          1.008364330388339,
+          -11.580151248331656
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "4efbe4ba438adb5927295a6f5713f0d10e8e0af0253235c3012cf598bd24b56a",
+      "lightmap_sha256": "0a67a8e53cbfcfc30b9940359c628d730b6d73e8d301f70bd5a3e6b5b7659de9",
+      "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1244,
+      "note": "",
+      "source_sha256": "0a9e0c25efcfe4704dd674f2ab3d9b8e5e8f5221deeef9a877facf941c2874dc",
+      "result_sha256": "142eb8613f8ea820c8031f43511df656da491d0573818ec898863e8c5413b97a",
+      "scale_percent": 94,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": -21
+      },
+      "user_matrix": [
+        0.94,
+        0,
+        0,
+        0.94,
+        7.680000000000007,
+        -12.359999999999992
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "0a9e0c25efcfe4704dd674f2ab3d9b8e5e8f5221deeef9a877facf941c2874dc",
+      "lightmap_sha256": "0d1ce69875ef1ca5a7a7e02b93aede7e69642d477bc0d0cad464b1dcafab6393",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1246,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "18dc601e5f742c9031c3893037087f55342caf24a451c2083bc2c978df483a7e",
+      "result_sha256": "6f8d5f92d91b8f98a9d0b38c12951bd4869cda16cb64019a8ba79f68dafc9018",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.00985096016101894,
+          1.178604944099259,
+          -28.408874403697787
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        16,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "18dc601e5f742c9031c3893037087f55342caf24a451c2083bc2c978df483a7e",
+      "lightmap_sha256": "445d1dbcdd4a95a2044aca781bf08c4933e98aa5d777d07c8ad33a9aabd6e465",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1247,
+      "note": "",
+      "source_sha256": "8e7948f27197242fe46f4ccc5383637de07910a39d460720eb488903a646dd50",
+      "result_sha256": "7d8b37e2b34225cf7deffcc044915f5331707ec8a8cde2431866fd4552efa206",
+      "scale_percent": 119,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1.19,
+        0,
+        0,
+        1.19,
+        -24.319999999999993,
+        -35.71999999999999
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        16,
+        48,
+        0,
+        16
+      ],
+      "source_artwork_sha256": "8e7948f27197242fe46f4ccc5383637de07910a39d460720eb488903a646dd50",
+      "lightmap_sha256": "178ab6ec02dfb11024997e4f5037f2ed5f25258e89306e0c34e4b03ac52c0a7d",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1249,
+      "note": "",
+      "source_sha256": "b5978d6c9fa37ba13ef40ab3ecaf89e5fc4285a0b5c7fc9654df453903d0e337",
+      "result_sha256": "fa3a40fe8101eb3b2e32c402340f7d4fb6e48cc27dc7a5aeea02cd0973cb09ee",
+      "scale_percent": 108,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": -5
+      },
+      "user_matrix": [
+        1.08,
+        0,
+        0,
+        1.08,
+        -15.360000000000014,
+        -20.680000000000014
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        32,
+        0,
+        0
+      ],
+      "source_artwork_sha256": "b5978d6c9fa37ba13ef40ab3ecaf89e5fc4285a0b5c7fc9654df453903d0e337",
+      "lightmap_sha256": "e592de8b616014475777ebffa93a689d4fe724b1492fcd66b8beb5813242d308",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1253,
+      "note": "",
+      "source_sha256": "67601aca2a6c6d54719e9ea301067e742d033d48e38f2471f0f77bb7074a73fb",
+      "result_sha256": "a6c8f0067fc0d7272d4b822d7b09a30c61868e19cdb7b51cc107767b7dbcabf1",
+      "scale_percent": 112,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1.12,
+        0,
+        0,
+        1.12,
+        -30.720000000000027,
+        -100.32000000000009
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        16,
+        112,
+        16,
+        16
+      ],
+      "source_artwork_sha256": "67601aca2a6c6d54719e9ea301067e742d033d48e38f2471f0f77bb7074a73fb",
+      "lightmap_sha256": "ea00e6973eda2943b43b9c795bb5d65795672ffb7bd314b72b2e32d0822d6a43",
+      "method": "Shared mathematical art/lightmap transform"
+    },
+    {
+      "id": 1254,
+      "note": "Die blaue Kuppel oben bitte leicht transparent machen (Alpha Kanal)",
+      "source_sha256": "7bdc31c5eb4c03f5ea3a5cac42d916915bd1bae23d516410d5e50d754bd4b45d",
+      "result_sha256": "128528784ce7231e31de4e1450c04091b9f43886af70151762f003332bc5254c",
+      "scale_percent": 100,
+      "offset_master_pixels": {
+        "x": 0,
+        "y": 0
+      },
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "padding_master": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "source_artwork_sha256": "2873315cd7d20195b4a10bf7e4efe66045dd83473d327dc057cd5e36f5f794dd",
+      "lightmap_sha256": "12b50e6414b866bfa608867d4dad82425d13c5b1ceb54f6b0339621a9b406aed",
+      "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+    }
+  ]
+}

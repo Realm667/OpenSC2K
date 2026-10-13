@@ -1,23 +1,21 @@
-OpenSC2K Remaster graphics
+Reticulating Splines Remaster graphics — Style A, 4x
 
 Independent artwork made with OpenAI ImageGen and deterministic projection,
-compositing, palette, mask and interface drawing tools. Approved Style A;
-fourfold original large-view dimensions and the existing2:1 game projection.
-No original SimCity2000 pixel files are included. Original metadata supplied
-resource IDs, dimensions and native direction/anchor requirements.
+compositing, palette and mask tools. Muted materials and the original game's
+2:1 ground projection. Original metadata supplies IDs and footprint sizes;
+no original SimCity 2000 pixel files are included.
 
-499 city masters,112 interface masters,206 city lightmaps,293 documented unlit
-masters,408 animation images and408 matching light frames,48 road masks.
-1442 additional Visual artwork records:432 vehicles,96 pedestrian states,
-896 woodland variants,13 ground masks and5 cloud atlases. Aliases share files.
-The3444 selected PNG files do not include rejected model experiments.
+The 14 October 2026 placement pass applies 122 review records: 111 numerical
+adjustments and 38 text notes, including 14 ImageGen detail revisions.
+Art and lightmaps share the same transformation. Registration is pack-local.
+Transparent base lawn exposes terrain; paths and planting remain.
 
-Editable sources, prompts, masks and generators are retained in the local
-Codex/standalone-data-pack/production workspace. The associated provenance
-report records their source hashes; SHA256SUMS.json identifies this file set.
-Existing OpenSC2K procedural shaders, numeric LUTs and built-in vector icons
-remain separate project resources with their existing license notices.
+499 city masters, 112 UI masters, 210 city lightmap entries. Existing animation,
+vehicle, pedestrian, nature and other Visual Enhancements art is retained.
+The selected raster inventory and exact hashes are in ../provenance.json.
+placement-review.json records this pass. Editable artwork, prompts, backups and
+projection/export tools remain in the private standalone-data-pack workspace,
+under corrections/2026-10-13-placement. Original reference pixels stay private.
 
-Deutsch: Eigenstaendige4x-Grafiken im freigegebenen Stil A. Originalgrafiken
-sind nicht enthalten. Editierbare Quellen und Masken liegen im zugehoerigen
-Produktionsordner; vorhandene Projektressourcen behalten ihre Hinweise.
+Existing project code and procedural resources retain their notices.
+See LICENSE-STATUS.txt for the separate generated-artwork licensing status.

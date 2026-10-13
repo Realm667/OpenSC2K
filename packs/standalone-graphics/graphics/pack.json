@@ -953,108 +953,233 @@
       "png": "masters/1112.png",
       "logical_size": [
         32,
+        22
+      ],
+      "lightmap": "lightmaps/1112.png",
+      "review_reference_size": [
+        32,
         18
       ],
-      "lightmap": "lightmaps/1112.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1113,
       "png": "masters/1113.png",
       "logical_size": [
+        36,
+        22
+      ],
+      "lightmap": "lightmaps/1113.png",
+      "visual_registration": [
+        32,
+        4,
+        0
+      ],
+      "review_reference_size": [
         32,
         18
       ],
-      "lightmap": "lightmaps/1113.png"
+      "review_padding": [
+        4,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1114,
       "png": "masters/1114.png",
       "logical_size": [
         32,
+        22
+      ],
+      "lightmap": "lightmaps/1114.png",
+      "review_reference_size": [
+        32,
         18
       ],
-      "lightmap": "lightmaps/1114.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1115,
       "png": "masters/1115.png",
       "logical_size": [
         32,
+        21
+      ],
+      "lightmap": "lightmaps/1115.png",
+      "review_reference_size": [
+        32,
         17
       ],
-      "lightmap": "lightmaps/1115.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1116,
       "png": "masters/1116.png",
       "logical_size": [
         32,
+        21
+      ],
+      "lightmap": "lightmaps/1116.png",
+      "review_reference_size": [
+        32,
         17
       ],
-      "lightmap": "lightmaps/1116.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1117,
       "png": "masters/1117.png",
       "logical_size": [
         32,
+        25
+      ],
+      "lightmap": "lightmaps/1117.png",
+      "review_reference_size": [
+        32,
         17
       ],
-      "lightmap": "lightmaps/1117.png"
+      "review_padding": [
+        0,
+        8,
+        0,
+        0
+      ]
     },
     {
       "id": 1118,
       "png": "masters/1118.png",
       "logical_size": [
         32,
+        25
+      ],
+      "lightmap": "lightmaps/1118.png",
+      "review_reference_size": [
+        32,
         17
       ],
-      "lightmap": "lightmaps/1118.png"
+      "review_padding": [
+        0,
+        8,
+        0,
+        0
+      ]
     },
     {
       "id": 1119,
       "png": "masters/1119.png",
       "logical_size": [
         32,
+        25
+      ],
+      "lightmap": "lightmaps/1119.png",
+      "review_reference_size": [
+        32,
         17
       ],
-      "lightmap": "lightmaps/1119.png"
+      "review_padding": [
+        0,
+        8,
+        0,
+        0
+      ]
     },
     {
       "id": 1120,
       "png": "masters/1120.png",
       "logical_size": [
         32,
+        27
+      ],
+      "lightmap": "lightmaps/1120.png",
+      "review_reference_size": [
+        32,
         19
       ],
-      "lightmap": "lightmaps/1120.png"
+      "review_padding": [
+        0,
+        8,
+        0,
+        0
+      ]
     },
     {
       "id": 1121,
       "png": "masters/1121.png",
       "logical_size": [
         32,
+        23
+      ],
+      "lightmap": "lightmaps/1121.png",
+      "review_reference_size": [
+        32,
         19
       ],
-      "lightmap": "lightmaps/1121.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1122,
       "png": "masters/1122.png",
       "logical_size": [
         32,
+        24
+      ],
+      "lightmap": "lightmaps/1122.png",
+      "review_reference_size": [
+        32,
         20
       ],
-      "lightmap": "lightmaps/1122.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1123,
       "png": "masters/1123.png",
       "logical_size": [
         32,
+        29
+      ],
+      "lightmap": "lightmaps/1123.png",
+      "review_reference_size": [
+        32,
         21
       ],
-      "lightmap": "lightmaps/1123.png"
+      "review_padding": [
+        0,
+        8,
+        0,
+        0
+      ]
     },
     {
       "id": 1124,
@@ -1063,34 +1188,74 @@
         32,
         23
       ],
-      "lightmap": "lightmaps/1124.png"
+      "lightmap": "lightmaps/1124.png",
+      "review_reference_size": [
+        32,
+        23
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1125,
       "png": "masters/1125.png",
       "logical_size": [
         32,
+        35
+      ],
+      "lightmap": "lightmaps/1125.png",
+      "review_reference_size": [
+        32,
         27
       ],
-      "lightmap": "lightmaps/1125.png"
+      "review_padding": [
+        0,
+        8,
+        0,
+        0
+      ]
     },
     {
       "id": 1126,
       "png": "masters/1126.png",
       "logical_size": [
         32,
+        24
+      ],
+      "lightmap": "lightmaps/1126.png",
+      "review_reference_size": [
+        32,
         20
       ],
-      "lightmap": "lightmaps/1126.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1127,
       "png": "masters/1127.png",
       "logical_size": [
         32,
+        22
+      ],
+      "lightmap": "lightmaps/1127.png",
+      "review_reference_size": [
+        32,
         18
       ],
-      "lightmap": "lightmaps/1127.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1128,
@@ -1108,52 +1273,122 @@
         32,
         43
       ],
-      "lightmap": "lightmaps/1129.png"
+      "lightmap": "lightmaps/1129.png",
+      "review_reference_size": [
+        32,
+        43
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1130,
       "png": "masters/1130.png",
       "logical_size": [
+        36,
+        29
+      ],
+      "lightmap": "lightmaps/1130.png",
+      "visual_registration": [
+        32,
+        4,
+        0
+      ],
+      "review_reference_size": [
         32,
         25
       ],
-      "lightmap": "lightmaps/1130.png"
+      "review_padding": [
+        4,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1131,
       "png": "masters/1131.png",
       "logical_size": [
         32,
+        42
+      ],
+      "lightmap": "lightmaps/1131.png",
+      "review_reference_size": [
+        32,
         34
       ],
-      "lightmap": "lightmaps/1131.png"
+      "review_padding": [
+        0,
+        8,
+        0,
+        0
+      ]
     },
     {
       "id": 1132,
       "png": "masters/1132.png",
       "logical_size": [
         32,
+        29
+      ],
+      "lightmap": "lightmaps/1132.png",
+      "review_reference_size": [
+        32,
         21
       ],
-      "lightmap": "lightmaps/1132.png"
+      "review_padding": [
+        0,
+        8,
+        0,
+        0
+      ]
     },
     {
       "id": 1133,
       "png": "masters/1133.png",
       "logical_size": [
+        40,
+        32
+      ],
+      "lightmap": "lightmaps/1133.png",
+      "visual_registration": [
+        32,
+        4,
+        0
+      ],
+      "review_reference_size": [
         32,
         28
       ],
-      "lightmap": "lightmaps/1133.png"
+      "review_padding": [
+        4,
+        4,
+        4,
+        0
+      ]
     },
     {
       "id": 1134,
       "png": "masters/1134.png",
       "logical_size": [
         32,
+        24
+      ],
+      "lightmap": "lightmaps/1134.png",
+      "review_reference_size": [
+        32,
         20
       ],
-      "lightmap": "lightmaps/1134.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1135,
@@ -1161,6 +1396,16 @@
       "logical_size": [
         32,
         26
+      ],
+      "review_reference_size": [
+        32,
+        26
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
       ]
     },
     {
@@ -1168,7 +1413,17 @@
       "png": "masters/1136.png",
       "logical_size": [
         32,
+        22
+      ],
+      "review_reference_size": [
+        32,
         18
+      ],
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
       ]
     },
     {
@@ -1176,7 +1431,17 @@
       "png": "masters/1137.png",
       "logical_size": [
         32,
+        26
+      ],
+      "review_reference_size": [
+        32,
         18
+      ],
+      "review_padding": [
+        0,
+        8,
+        0,
+        0
       ]
     },
     {
@@ -1184,7 +1449,17 @@
       "png": "masters/1138.png",
       "logical_size": [
         32,
+        21
+      ],
+      "review_reference_size": [
+        32,
         17
+      ],
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
       ]
     },
     {
@@ -1192,7 +1467,17 @@
       "png": "masters/1139.png",
       "logical_size": [
         32,
+        21
+      ],
+      "review_reference_size": [
+        32,
         17
+      ],
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
       ]
     },
     {
@@ -1200,45 +1485,95 @@
       "png": "masters/1140.png",
       "logical_size": [
         64,
+        38
+      ],
+      "lightmap": "lightmaps/1140.png",
+      "review_reference_size": [
+        64,
         34
       ],
-      "lightmap": "lightmaps/1140.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1141,
       "png": "masters/1141.png",
       "logical_size": [
         64,
+        47
+      ],
+      "lightmap": "lightmaps/1141.png",
+      "review_reference_size": [
+        64,
         39
       ],
-      "lightmap": "lightmaps/1141.png"
+      "review_padding": [
+        0,
+        8,
+        0,
+        0
+      ]
     },
     {
       "id": 1142,
       "png": "masters/1142.png",
       "logical_size": [
         64,
+        44
+      ],
+      "lightmap": "lightmaps/1142.png",
+      "review_reference_size": [
+        64,
         36
       ],
-      "lightmap": "lightmaps/1142.png"
+      "review_padding": [
+        0,
+        8,
+        0,
+        0
+      ]
     },
     {
       "id": 1143,
       "png": "masters/1143.png",
       "logical_size": [
         64,
+        64
+      ],
+      "lightmap": "lightmaps/1143.png",
+      "review_reference_size": [
+        64,
         44
       ],
-      "lightmap": "lightmaps/1143.png"
+      "review_padding": [
+        0,
+        20,
+        0,
+        0
+      ]
     },
     {
       "id": 1144,
       "png": "masters/1144.png",
       "logical_size": [
         64,
+        69
+      ],
+      "lightmap": "lightmaps/1144.png",
+      "review_reference_size": [
+        64,
         53
       ],
-      "lightmap": "lightmaps/1144.png"
+      "review_padding": [
+        0,
+        16,
+        0,
+        0
+      ]
     },
     {
       "id": 1145,
@@ -1247,178 +1582,378 @@
         64,
         56
       ],
-      "lightmap": "lightmaps/1145.png"
+      "lightmap": "lightmaps/1145.png",
+      "review_reference_size": [
+        64,
+        56
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1146,
       "png": "masters/1146.png",
       "logical_size": [
         64,
+        86
+      ],
+      "lightmap": "lightmaps/1146.png",
+      "review_reference_size": [
+        64,
         78
       ],
-      "lightmap": "lightmaps/1146.png"
+      "review_padding": [
+        0,
+        8,
+        0,
+        0
+      ]
     },
     {
       "id": 1147,
       "png": "masters/1147.png",
       "logical_size": [
         64,
+        89
+      ],
+      "lightmap": "lightmaps/1147.png",
+      "review_reference_size": [
+        64,
         77
       ],
-      "lightmap": "lightmaps/1147.png"
+      "review_padding": [
+        0,
+        12,
+        0,
+        0
+      ]
     },
     {
       "id": 1148,
       "png": "masters/1148.png",
       "logical_size": [
         64,
+        41
+      ],
+      "lightmap": "lightmaps/1148.png",
+      "review_reference_size": [
+        64,
         33
       ],
-      "lightmap": "lightmaps/1148.png"
+      "review_padding": [
+        0,
+        8,
+        0,
+        0
+      ]
     },
     {
       "id": 1149,
       "png": "masters/1149.png",
       "logical_size": [
         64,
+        53
+      ],
+      "lightmap": "lightmaps/1149.png",
+      "review_reference_size": [
+        64,
         37
       ],
-      "lightmap": "lightmaps/1149.png"
+      "review_padding": [
+        0,
+        16,
+        0,
+        0
+      ]
     },
     {
       "id": 1150,
       "png": "masters/1150.png",
       "logical_size": [
         64,
+        58
+      ],
+      "lightmap": "lightmaps/1150.png",
+      "review_reference_size": [
+        64,
         42
       ],
-      "lightmap": "lightmaps/1150.png"
+      "review_padding": [
+        0,
+        16,
+        0,
+        0
+      ]
     },
     {
       "id": 1151,
       "png": "masters/1151.png",
       "logical_size": [
         64,
+        58
+      ],
+      "lightmap": "lightmaps/1151.png",
+      "review_reference_size": [
+        64,
         46
       ],
-      "lightmap": "lightmaps/1151.png"
+      "review_padding": [
+        0,
+        12,
+        0,
+        0
+      ]
     },
     {
       "id": 1152,
       "png": "masters/1152.png",
       "logical_size": [
         64,
+        58
+      ],
+      "lightmap": "lightmaps/1152.png",
+      "review_reference_size": [
+        64,
         46
       ],
-      "lightmap": "lightmaps/1152.png"
+      "review_padding": [
+        0,
+        12,
+        0,
+        0
+      ]
     },
     {
       "id": 1153,
       "png": "masters/1153.png",
       "logical_size": [
         64,
+        63
+      ],
+      "lightmap": "lightmaps/1153.png",
+      "review_reference_size": [
+        64,
         51
       ],
-      "lightmap": "lightmaps/1153.png"
+      "review_padding": [
+        0,
+        12,
+        0,
+        0
+      ]
     },
     {
       "id": 1154,
       "png": "masters/1154.png",
       "logical_size": [
         64,
+        78
+      ],
+      "lightmap": "lightmaps/1154.png",
+      "review_reference_size": [
+        64,
         70
       ],
-      "lightmap": "lightmaps/1154.png"
+      "review_padding": [
+        0,
+        8,
+        0,
+        0
+      ]
     },
     {
       "id": 1155,
       "png": "masters/1155.png",
       "logical_size": [
         64,
+        86
+      ],
+      "lightmap": "lightmaps/1155.png",
+      "review_reference_size": [
+        64,
         66
       ],
-      "lightmap": "lightmaps/1155.png"
+      "review_padding": [
+        0,
+        20,
+        0,
+        0
+      ]
     },
     {
       "id": 1156,
       "png": "masters/1156.png",
       "logical_size": [
         64,
+        84
+      ],
+      "lightmap": "lightmaps/1156.png",
+      "review_reference_size": [
+        64,
         72
       ],
-      "lightmap": "lightmaps/1156.png"
+      "review_padding": [
+        0,
+        12,
+        0,
+        0
+      ]
     },
     {
       "id": 1157,
       "png": "masters/1157.png",
       "logical_size": [
         64,
+        100
+      ],
+      "lightmap": "lightmaps/1157.png",
+      "review_reference_size": [
+        64,
         84
       ],
-      "lightmap": "lightmaps/1157.png"
+      "review_padding": [
+        0,
+        16,
+        0,
+        0
+      ]
     },
     {
       "id": 1158,
       "png": "masters/1158.png",
       "logical_size": [
         64,
+        41
+      ],
+      "lightmap": "lightmaps/1158.png",
+      "review_reference_size": [
+        64,
         37
       ],
-      "lightmap": "lightmaps/1158.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1159,
       "png": "masters/1159.png",
       "logical_size": [
         64,
+        54
+      ],
+      "lightmap": "lightmaps/1159.png",
+      "review_reference_size": [
+        64,
         38
       ],
-      "lightmap": "lightmaps/1159.png"
+      "review_padding": [
+        0,
+        16,
+        0,
+        0
+      ]
     },
     {
       "id": 1160,
       "png": "masters/1160.png",
       "logical_size": [
         64,
+        49
+      ],
+      "lightmap": "lightmaps/1160.png",
+      "review_reference_size": [
+        64,
         45
       ],
-      "lightmap": "lightmaps/1160.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1161,
       "png": "masters/1161.png",
       "logical_size": [
         64,
+        47
+      ],
+      "lightmap": "lightmaps/1161.png",
+      "review_reference_size": [
+        64,
         35
       ],
-      "lightmap": "lightmaps/1161.png"
+      "review_padding": [
+        0,
+        12,
+        0,
+        0
+      ]
     },
     {
       "id": 1162,
       "png": "masters/1162.png",
       "logical_size": [
         64,
+        57
+      ],
+      "lightmap": "lightmaps/1162.png",
+      "review_reference_size": [
+        64,
         45
       ],
-      "lightmap": "lightmaps/1162.png"
+      "review_padding": [
+        0,
+        12,
+        0,
+        0
+      ]
     },
     {
       "id": 1163,
       "png": "masters/1163.png",
       "logical_size": [
         64,
+        64
+      ],
+      "lightmap": "lightmaps/1163.png",
+      "review_reference_size": [
+        64,
         56
       ],
-      "lightmap": "lightmaps/1163.png"
+      "review_padding": [
+        0,
+        8,
+        0,
+        0
+      ]
     },
     {
       "id": 1164,
       "png": "masters/1164.png",
       "logical_size": [
         64,
+        77
+      ],
+      "lightmap": "lightmaps/1164.png",
+      "review_reference_size": [
+        64,
         61
       ],
-      "lightmap": "lightmaps/1164.png"
+      "review_padding": [
+        0,
+        16,
+        0,
+        0
+      ]
     },
     {
       "id": 1165,
@@ -1427,14 +1962,34 @@
         64,
         66
       ],
-      "lightmap": "lightmaps/1165.png"
+      "lightmap": "lightmaps/1165.png",
+      "review_reference_size": [
+        64,
+        66
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1166,
       "png": "masters/1166.png",
       "logical_size": [
         64,
+        37
+      ],
+      "review_reference_size": [
+        64,
         33
+      ],
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
       ]
     },
     {
@@ -1442,7 +1997,17 @@
       "png": "masters/1167.png",
       "logical_size": [
         64,
+        60
+      ],
+      "review_reference_size": [
+        64,
         44
+      ],
+      "review_padding": [
+        0,
+        16,
+        0,
+        0
       ]
     },
     {
@@ -1450,7 +2015,17 @@
       "png": "masters/1168.png",
       "logical_size": [
         64,
+        60
+      ],
+      "review_reference_size": [
+        64,
         44
+      ],
+      "review_padding": [
+        0,
+        16,
+        0,
+        0
       ]
     },
     {
@@ -1459,6 +2034,16 @@
       "logical_size": [
         64,
         65
+      ],
+      "review_reference_size": [
+        64,
+        65
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
       ]
     },
     {
@@ -1466,27 +2051,54 @@
       "png": "masters/1170.png",
       "logical_size": [
         64,
+        58
+      ],
+      "review_reference_size": [
+        64,
         46
       ],
-      "lightmap": "lightmaps/1170.png"
+      "review_padding": [
+        0,
+        12,
+        0,
+        0
+      ]
     },
     {
       "id": 1171,
       "png": "masters/1171.png",
       "logical_size": [
         64,
+        57
+      ],
+      "review_reference_size": [
+        64,
         53
       ],
-      "lightmap": "lightmaps/1171.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1172,
       "png": "masters/1172.png",
       "logical_size": [
         64,
+        69
+      ],
+      "review_reference_size": [
+        64,
         61
       ],
-      "lightmap": "lightmaps/1172.png"
+      "review_padding": [
+        0,
+        8,
+        0,
+        0
+      ]
     },
     {
       "id": 1173,
@@ -1495,7 +2107,16 @@
         64,
         73
       ],
-      "lightmap": "lightmaps/1173.png"
+      "review_reference_size": [
+        64,
+        73
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1174,
@@ -1504,7 +2125,17 @@
         96,
         77
       ],
-      "lightmap": "lightmaps/1174.png"
+      "lightmap": "lightmaps/1174.png",
+      "review_reference_size": [
+        96,
+        77
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1175,
@@ -1513,25 +2144,55 @@
         96,
         88
       ],
-      "lightmap": "lightmaps/1175.png"
+      "lightmap": "lightmaps/1175.png",
+      "review_reference_size": [
+        96,
+        88
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1176,
       "png": "masters/1176.png",
       "logical_size": [
         96,
+        62
+      ],
+      "lightmap": "lightmaps/1176.png",
+      "review_reference_size": [
+        96,
         58
       ],
-      "lightmap": "lightmaps/1176.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1177,
       "png": "masters/1177.png",
       "logical_size": [
         96,
+        104
+      ],
+      "lightmap": "lightmaps/1177.png",
+      "review_reference_size": [
+        96,
         96
       ],
-      "lightmap": "lightmaps/1177.png"
+      "review_padding": [
+        0,
+        8,
+        0,
+        0
+      ]
     },
     {
       "id": 1178,
@@ -1540,25 +2201,60 @@
         96,
         61
       ],
-      "lightmap": "lightmaps/1178.png"
+      "lightmap": "lightmaps/1178.png",
+      "review_reference_size": [
+        96,
+        61
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1179,
       "png": "masters/1179.png",
       "logical_size": [
         96,
+        115
+      ],
+      "lightmap": "lightmaps/1179.png",
+      "review_reference_size": [
+        96,
         91
       ],
-      "lightmap": "lightmaps/1179.png"
+      "review_padding": [
+        0,
+        24,
+        0,
+        0
+      ]
     },
     {
       "id": 1180,
       "png": "masters/1180.png",
       "logical_size": [
+        100,
+        65
+      ],
+      "lightmap": "lightmaps/1180.png",
+      "visual_registration": [
+        96,
+        4,
+        0
+      ],
+      "review_reference_size": [
         96,
         65
       ],
-      "lightmap": "lightmaps/1180.png"
+      "review_padding": [
+        4,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1181,
@@ -1567,52 +2263,117 @@
         96,
         90
       ],
-      "lightmap": "lightmaps/1181.png"
+      "lightmap": "lightmaps/1181.png",
+      "review_reference_size": [
+        96,
+        90
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1182,
       "png": "masters/1182.png",
       "logical_size": [
         96,
+        70
+      ],
+      "lightmap": "lightmaps/1182.png",
+      "review_reference_size": [
+        96,
         58
       ],
-      "lightmap": "lightmaps/1182.png"
+      "review_padding": [
+        0,
+        12,
+        0,
+        0
+      ]
     },
     {
       "id": 1183,
       "png": "masters/1183.png",
       "logical_size": [
         96,
+        145
+      ],
+      "lightmap": "lightmaps/1183.png",
+      "review_reference_size": [
+        96,
         117
       ],
-      "lightmap": "lightmaps/1183.png"
+      "review_padding": [
+        0,
+        28,
+        0,
+        0
+      ]
     },
     {
       "id": 1184,
       "png": "masters/1184.png",
       "logical_size": [
         96,
+        151
+      ],
+      "lightmap": "lightmaps/1184.png",
+      "review_reference_size": [
+        96,
         123
       ],
-      "lightmap": "lightmaps/1184.png"
+      "review_padding": [
+        0,
+        28,
+        0,
+        0
+      ]
     },
     {
       "id": 1185,
       "png": "masters/1185.png",
       "logical_size": [
         96,
+        86
+      ],
+      "lightmap": "lightmaps/1185.png",
+      "visual_registration": [
+        96,
+        0,
+        4
+      ],
+      "review_reference_size": [
+        96,
         78
       ],
-      "lightmap": "lightmaps/1185.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        4
+      ]
     },
     {
       "id": 1186,
       "png": "masters/1186.png",
       "logical_size": [
         96,
+        128
+      ],
+      "lightmap": "lightmaps/1186.png",
+      "review_reference_size": [
+        96,
         108
       ],
-      "lightmap": "lightmaps/1186.png"
+      "review_padding": [
+        0,
+        20,
+        0,
+        0
+      ]
     },
     {
       "id": 1187,
@@ -1621,68 +2382,148 @@
         96,
         137
       ],
-      "lightmap": "lightmaps/1187.png"
+      "lightmap": "lightmaps/1187.png",
+      "review_reference_size": [
+        96,
+        137
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1188,
       "png": "masters/1188.png",
       "logical_size": [
         96,
+        70
+      ],
+      "lightmap": "lightmaps/1188.png",
+      "review_reference_size": [
+        96,
         50
       ],
-      "lightmap": "lightmaps/1188.png"
+      "review_padding": [
+        0,
+        20,
+        0,
+        0
+      ]
     },
     {
       "id": 1189,
       "png": "masters/1189.png",
       "logical_size": [
         96,
+        90
+      ],
+      "lightmap": "lightmaps/1189.png",
+      "review_reference_size": [
+        96,
         86
       ],
-      "lightmap": "lightmaps/1189.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1190,
       "png": "masters/1190.png",
       "logical_size": [
         96,
+        75
+      ],
+      "lightmap": "lightmaps/1190.png",
+      "review_reference_size": [
+        96,
         55
       ],
-      "lightmap": "lightmaps/1190.png"
+      "review_padding": [
+        0,
+        20,
+        0,
+        0
+      ]
     },
     {
       "id": 1191,
       "png": "masters/1191.png",
       "logical_size": [
         96,
+        79
+      ],
+      "lightmap": "lightmaps/1191.png",
+      "review_reference_size": [
+        96,
         63
       ],
-      "lightmap": "lightmaps/1191.png"
+      "review_padding": [
+        0,
+        16,
+        0,
+        0
+      ]
     },
     {
       "id": 1192,
       "png": "masters/1192.png",
       "logical_size": [
         96,
+        64
+      ],
+      "lightmap": "lightmaps/1192.png",
+      "review_reference_size": [
+        96,
         56
       ],
-      "lightmap": "lightmaps/1192.png"
+      "review_padding": [
+        0,
+        8,
+        0,
+        0
+      ]
     },
     {
       "id": 1193,
       "png": "masters/1193.png",
       "logical_size": [
         96,
+        65
+      ],
+      "lightmap": "lightmaps/1193.png",
+      "review_reference_size": [
+        96,
         49
       ],
-      "lightmap": "lightmaps/1193.png"
+      "review_padding": [
+        0,
+        16,
+        0,
+        0
+      ]
     },
     {
       "id": 1194,
       "png": "masters/1194.png",
       "logical_size": [
         96,
+        109
+      ],
+      "review_reference_size": [
+        96,
         85
+      ],
+      "review_padding": [
+        0,
+        24,
+        0,
+        0
       ]
     },
     {
@@ -1690,26 +2531,64 @@
       "png": "masters/1195.png",
       "logical_size": [
         96,
+        69
+      ],
+      "review_reference_size": [
+        96,
         65
+      ],
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
       ]
     },
     {
       "id": 1196,
       "png": "masters/1196.png",
       "logical_size": [
+        100,
+        78
+      ],
+      "visual_registration": [
+        96,
+        0,
+        4
+      ],
+      "review_reference_size": [
         96,
         74
       ],
-      "lightmap": "lightmaps/1196.png"
+      "review_padding": [
+        0,
+        0,
+        4,
+        4
+      ]
     },
     {
       "id": 1197,
       "png": "masters/1197.png",
       "logical_size": [
+        100,
+        94
+      ],
+      "visual_registration": [
+        96,
+        0,
+        4
+      ],
+      "review_reference_size": [
         96,
         90
       ],
-      "lightmap": "lightmaps/1197.png"
+      "review_padding": [
+        0,
+        0,
+        4,
+        4
+      ]
     },
     {
       "id": 1198,
@@ -1717,6 +2596,16 @@
       "logical_size": [
         32,
         32
+      ],
+      "review_reference_size": [
+        32,
+        32
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
       ]
     },
     {
@@ -1725,14 +2614,39 @@
       "logical_size": [
         32,
         32
+      ],
+      "review_reference_size": [
+        32,
+        32
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
       ]
     },
     {
       "id": 1200,
       "png": "masters/1200.png",
       "logical_size": [
+        36,
+        56
+      ],
+      "visual_registration": [
+        32,
+        0,
+        0
+      ],
+      "review_reference_size": [
         32,
         48
+      ],
+      "review_padding": [
+        0,
+        8,
+        4,
+        0
       ]
     },
     {
@@ -1748,10 +2662,25 @@
       "id": 1202,
       "png": "masters/1202.png",
       "logical_size": [
+        132,
+        115
+      ],
+      "lightmap": "lightmaps/1202.png",
+      "visual_registration": [
+        128,
+        0,
+        0
+      ],
+      "review_reference_size": [
         128,
         115
       ],
-      "lightmap": "lightmaps/1202.png"
+      "review_padding": [
+        0,
+        0,
+        4,
+        0
+      ]
     },
     {
       "id": 1203,
@@ -1776,27 +2705,57 @@
       "png": "masters/1205.png",
       "logical_size": [
         128,
+        99
+      ],
+      "lightmap": "lightmaps/1205.png",
+      "review_reference_size": [
+        128,
         95
       ],
-      "lightmap": "lightmaps/1205.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1206,
       "png": "masters/1206.png",
       "logical_size": [
         128,
+        73
+      ],
+      "lightmap": "lightmaps/1206.png",
+      "review_reference_size": [
+        128,
         69
       ],
-      "lightmap": "lightmaps/1206.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1207,
       "png": "masters/1207.png",
       "logical_size": [
         128,
+        110
+      ],
+      "lightmap": "lightmaps/1207.png",
+      "review_reference_size": [
+        128,
         106
       ],
-      "lightmap": "lightmaps/1207.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1208,
@@ -1805,7 +2764,17 @@
         96,
         77
       ],
-      "lightmap": "lightmaps/1208.png"
+      "lightmap": "lightmaps/1208.png",
+      "review_reference_size": [
+        96,
+        77
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1209,
@@ -1820,46 +2789,111 @@
       "id": 1210,
       "png": "masters/1210.png",
       "logical_size": [
+        104,
+        80
+      ],
+      "lightmap": "lightmaps/1210.png",
+      "visual_registration": [
+        96,
+        4,
+        0
+      ],
+      "review_reference_size": [
         96,
         72
       ],
-      "lightmap": "lightmaps/1210.png"
+      "review_padding": [
+        4,
+        8,
+        4,
+        0
+      ]
     },
     {
       "id": 1211,
       "png": "masters/1211.png",
       "logical_size": [
         96,
+        85
+      ],
+      "lightmap": "lightmaps/1211.png",
+      "visual_registration": [
+        96,
+        0,
+        4
+      ],
+      "review_reference_size": [
+        96,
         65
       ],
-      "lightmap": "lightmaps/1211.png"
+      "review_padding": [
+        0,
+        16,
+        0,
+        4
+      ]
     },
     {
       "id": 1212,
       "png": "masters/1212.png",
       "logical_size": [
         96,
+        59
+      ],
+      "lightmap": "lightmaps/1212.png",
+      "review_reference_size": [
+        96,
         55
       ],
-      "lightmap": "lightmaps/1212.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1213,
       "png": "masters/1213.png",
       "logical_size": [
         96,
+        55
+      ],
+      "lightmap": "lightmaps/1213.png",
+      "review_reference_size": [
+        96,
         51
       ],
-      "lightmap": "lightmaps/1213.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1214,
       "png": "masters/1214.png",
       "logical_size": [
+        100,
+        57
+      ],
+      "lightmap": "lightmaps/1214.png",
+      "visual_registration": [
+        96,
+        0,
+        0
+      ],
+      "review_reference_size": [
         96,
         57
       ],
-      "lightmap": "lightmaps/1214.png"
+      "review_padding": [
+        0,
+        0,
+        4,
+        0
+      ]
     },
     {
       "id": 1215,
@@ -1883,19 +2917,49 @@
       "id": 1217,
       "png": "masters/1217.png",
       "logical_size": [
+        136,
+        89
+      ],
+      "lightmap": "lightmaps/1217.png",
+      "visual_registration": [
+        128,
+        4,
+        4
+      ],
+      "review_reference_size": [
         128,
         85
       ],
-      "lightmap": "lightmaps/1217.png"
+      "review_padding": [
+        4,
+        0,
+        4,
+        4
+      ]
     },
     {
       "id": 1218,
       "png": "masters/1218.png",
       "logical_size": [
         128,
+        79
+      ],
+      "lightmap": "lightmaps/1218.png",
+      "visual_registration": [
+        128,
+        0,
+        4
+      ],
+      "review_reference_size": [
+        128,
         67
       ],
-      "lightmap": "lightmaps/1218.png"
+      "review_padding": [
+        0,
+        8,
+        0,
+        4
+      ]
     },
     {
       "id": 1219,
@@ -1910,9 +2974,19 @@
       "png": "masters/1220.png",
       "logical_size": [
         32,
+        23
+      ],
+      "lightmap": "lightmaps/1220.png",
+      "review_reference_size": [
+        32,
         19
       ],
-      "lightmap": "lightmaps/1220.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1221,
@@ -1945,10 +3019,25 @@
       "id": 1224,
       "png": "masters/1224.png",
       "logical_size": [
+        36,
+        52
+      ],
+      "lightmap": "lightmaps/1224.png",
+      "visual_registration": [
+        32,
+        4,
+        0
+      ],
+      "review_reference_size": [
         32,
         40
       ],
-      "lightmap": "lightmaps/1224.png"
+      "review_padding": [
+        4,
+        12,
+        0,
+        0
+      ]
     },
     {
       "id": 1225,
@@ -1973,18 +3062,43 @@
       "png": "masters/1227.png",
       "logical_size": [
         32,
+        24
+      ],
+      "lightmap": "lightmaps/1227.png",
+      "review_reference_size": [
+        32,
         20
       ],
-      "lightmap": "lightmaps/1227.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1228,
       "png": "masters/1228.png",
       "logical_size": [
+        40,
+        23
+      ],
+      "lightmap": "lightmaps/1228.png",
+      "visual_registration": [
+        32,
+        4,
+        0
+      ],
+      "review_reference_size": [
         32,
         23
       ],
-      "lightmap": "lightmaps/1228.png"
+      "review_padding": [
+        4,
+        0,
+        4,
+        0
+      ]
     },
     {
       "id": 1229,
@@ -1999,16 +3113,46 @@
       "id": 1230,
       "png": "masters/1230.png",
       "logical_size": [
+        40,
+        21
+      ],
+      "visual_registration": [
+        32,
+        4,
+        0
+      ],
+      "review_reference_size": [
         32,
         17
+      ],
+      "review_padding": [
+        4,
+        4,
+        4,
+        0
       ]
     },
     {
       "id": 1231,
       "png": "masters/1231.png",
       "logical_size": [
+        40,
+        18
+      ],
+      "visual_registration": [
+        32,
+        4,
+        0
+      ],
+      "review_reference_size": [
         32,
         18
+      ],
+      "review_padding": [
+        4,
+        0,
+        4,
+        0
       ]
     },
     {
@@ -2016,25 +3160,70 @@
       "png": "masters/1232.png",
       "logical_size": [
         32,
+        24
+      ],
+      "lightmap": "lightmaps/1232.png",
+      "visual_registration": [
+        32,
+        0,
+        4
+      ],
+      "review_reference_size": [
+        32,
         20
       ],
-      "lightmap": "lightmaps/1232.png"
+      "review_padding": [
+        0,
+        0,
+        0,
+        4
+      ]
     },
     {
       "id": 1233,
       "png": "masters/1233.png",
       "logical_size": [
+        40,
+        25
+      ],
+      "lightmap": "lightmaps/1233.png",
+      "visual_registration": [
+        32,
+        4,
+        0
+      ],
+      "review_reference_size": [
         32,
         21
       ],
-      "lightmap": "lightmaps/1233.png"
+      "review_padding": [
+        4,
+        4,
+        4,
+        0
+      ]
     },
     {
       "id": 1234,
       "png": "masters/1234.png",
       "logical_size": [
+        36,
+        23
+      ],
+      "visual_registration": [
+        32,
+        0,
+        0
+      ],
+      "review_reference_size": [
         32,
         19
+      ],
+      "review_padding": [
+        0,
+        4,
+        4,
+        0
       ]
     },
     {
@@ -2042,27 +3231,67 @@
       "png": "masters/1235.png",
       "logical_size": [
         64,
+        68
+      ],
+      "lightmap": "lightmaps/1235.png",
+      "review_reference_size": [
+        64,
         64
       ],
-      "lightmap": "lightmaps/1235.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1236,
       "png": "masters/1236.png",
       "logical_size": [
         64,
+        41
+      ],
+      "lightmap": "lightmaps/1236.png",
+      "visual_registration": [
+        64,
+        0,
+        4
+      ],
+      "review_reference_size": [
+        64,
         37
       ],
-      "lightmap": "lightmaps/1236.png"
+      "review_padding": [
+        0,
+        0,
+        0,
+        4
+      ]
     },
     {
       "id": 1237,
       "png": "masters/1237.png",
       "logical_size": [
         64,
+        46
+      ],
+      "lightmap": "lightmaps/1237.png",
+      "visual_registration": [
+        64,
+        0,
+        4
+      ],
+      "review_reference_size": [
+        64,
         38
       ],
-      "lightmap": "lightmaps/1237.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        4
+      ]
     },
     {
       "id": 1238,
@@ -2078,18 +3307,43 @@
       "png": "masters/1239.png",
       "logical_size": [
         64,
+        45
+      ],
+      "lightmap": "lightmaps/1239.png",
+      "visual_registration": [
+        64,
+        0,
+        4
+      ],
+      "review_reference_size": [
+        64,
         37
       ],
-      "lightmap": "lightmaps/1239.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        4
+      ]
     },
     {
       "id": 1240,
       "png": "masters/1240.png",
       "logical_size": [
         64,
+        44
+      ],
+      "lightmap": "lightmaps/1240.png",
+      "review_reference_size": [
+        64,
         36
       ],
-      "lightmap": "lightmaps/1240.png"
+      "review_padding": [
+        0,
+        8,
+        0,
+        0
+      ]
     },
     {
       "id": 1241,
@@ -2104,19 +3358,44 @@
       "id": 1242,
       "png": "masters/1242.png",
       "logical_size": [
+        72,
+        45
+      ],
+      "lightmap": "lightmaps/1242.png",
+      "visual_registration": [
+        64,
+        4,
+        0
+      ],
+      "review_reference_size": [
         64,
         33
       ],
-      "lightmap": "lightmaps/1242.png"
+      "review_padding": [
+        4,
+        12,
+        4,
+        0
+      ]
     },
     {
       "id": 1243,
       "png": "masters/1243.png",
       "logical_size": [
         64,
+        40
+      ],
+      "lightmap": "lightmaps/1243.png",
+      "review_reference_size": [
+        64,
         36
       ],
-      "lightmap": "lightmaps/1243.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1244,
@@ -2125,7 +3404,17 @@
         64,
         37
       ],
-      "lightmap": "lightmaps/1244.png"
+      "lightmap": "lightmaps/1244.png",
+      "review_reference_size": [
+        64,
+        37
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1245,
@@ -2141,18 +3430,43 @@
       "png": "masters/1246.png",
       "logical_size": [
         64,
+        43
+      ],
+      "lightmap": "lightmaps/1246.png",
+      "review_reference_size": [
+        64,
         39
       ],
-      "lightmap": "lightmaps/1246.png"
+      "review_padding": [
+        0,
+        4,
+        0,
+        0
+      ]
     },
     {
       "id": 1247,
       "png": "masters/1247.png",
       "logical_size": [
+        68,
+        64
+      ],
+      "lightmap": "lightmaps/1247.png",
+      "visual_registration": [
+        64,
+        4,
+        4
+      ],
+      "review_reference_size": [
         64,
         48
       ],
-      "lightmap": "lightmaps/1247.png"
+      "review_padding": [
+        4,
+        12,
+        0,
+        4
+      ]
     },
     {
       "id": 1248,
@@ -2168,9 +3482,19 @@
       "png": "masters/1249.png",
       "logical_size": [
         96,
+        58
+      ],
+      "lightmap": "lightmaps/1249.png",
+      "review_reference_size": [
+        96,
         50
       ],
-      "lightmap": "lightmaps/1249.png"
+      "review_padding": [
+        0,
+        8,
+        0,
+        0
+      ]
     },
     {
       "id": 1250,
@@ -2203,19 +3527,50 @@
       "id": 1253,
       "png": "masters/1253.png",
       "logical_size": [
+        136,
+        242
+      ],
+      "lightmap": "lightmaps/1253.png",
+      "visual_registration": [
+        128,
+        4,
+        4
+      ],
+      "review_reference_size": [
         128,
         210
       ],
-      "lightmap": "lightmaps/1253.png"
+      "review_padding": [
+        4,
+        28,
+        4,
+        4
+      ]
     },
     {
       "id": 1254,
       "png": "masters/1254.png",
       "logical_size": [
+        132,
+        239
+      ],
+      "lightmap": "lightmaps/1254.png",
+      "visual_registration": [
+        128,
+        0,
+        4
+      ],
+      "review_reference_size": [
         128,
         235
       ],
-      "lightmap": "lightmaps/1254.png"
+      "review_padding": [
+        0,
+        0,
+        4,
+        4
+      ],
+      "artwork_rgba": "rgba/1254.png"
     },
     {
       "id": 1255,
