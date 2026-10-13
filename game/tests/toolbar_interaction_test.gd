@@ -16,6 +16,14 @@ func _run() -> void:
 	await preload("res://tests/support/app_fixture.gd").wait_for_visuals(main)
 	var toolbar := main.get("city_toolbar") as CityToolbar
 	var map := main.get("map_view") as CityMapControl
+	if "--interactive" in OS.get_cmdline_user_args():
+		root.title = "QoL Sidebar Review"
+		print("READY: isolated paused city, Dummy audio")
+		await root.close_requested
+		main.queue_free()
+		await process_frame
+		quit()
+		return
 
 	# Shared tools retain the selected layer and remain usable in either view.
 	for mode: CityViewMode.Mode in [CityViewMode.Mode.CITY, CityViewMode.Mode.UNDERGROUND]:
@@ -62,12 +70,15 @@ func _run() -> void:
 		await process_frame
 		assert(toolbar.child_tool_scroll.scroll_vertical == 0)
 
-	# Let the hold timer expire after a short press; the menu stays closed.
+	# A normal click opens the flyout without expanding the sidebar.
+	var sidebar_width := toolbar.size.x
 	toolbar.toolbar_buttons[6].button_down.emit()
 	toolbar.toolbar_buttons[6].button_up.emit()
 	toolbar.toolbar_buttons[6].pressed.emit()
 	await create_timer(CityToolbar.HOLD_SECONDS + 0.05).timeout
-	assert(not toolbar.hold_menu.visible and main.tool_state.selected_group == 6)
+	assert(toolbar.hold_menu.visible and main.tool_state.selected_group == 6)
+	assert(toolbar.size.x == sidebar_width)
+	toolbar.hold_menu.hide()
 	# A hold opens the same icon, price and availability palette.
 	toolbar.toolbar_buttons[7].button_down.emit()
 	await create_timer(CityToolbar.HOLD_SECONDS + 0.05).timeout
@@ -80,6 +91,29 @@ func _run() -> void:
 	subway_button.pressed.emit()
 	assert(not toolbar.hold_menu.visible and main.tool_state.selected_subtool == 1)
 	assert(main.view_state.overlay_mode == CityViewMode.Mode.UNDERGROUND)
+	# Switching groups keeps the most recent tool, including the flyout highlight.
+	toolbar.toolbar_buttons[6].pressed.emit()
+	await process_frame
+	await process_frame
+	toolbar.toolbar_buttons[7].pressed.emit()
+	await process_frame
+	await process_frame
+	await process_frame
+	assert(main.tool_state.selected_subtool == 1 and toolbar.child_tool_buttons[1].button_pressed)
+	assert(toolbar.hold_menu.gui_get_focus_owner() == toolbar.child_tool_buttons[1], "The reopened flyout must focus the remembered subway tool")
+	var escape := InputEventKey.new()
+	escape.keycode = KEY_ESCAPE
+	escape.pressed = true
+	toolbar.hold_menu.window_input.emit(escape)
+	await process_frame
+	assert(not toolbar.hold_menu.visible, "Escape must close the flyout")
+	# Keyboard/direct selection does not force open a popup (also used by the pipette).
+	main.current_tool.call("select_tool_group", 6)
+	assert(not toolbar.hold_menu.visible)
+	toolbar.toolbar_buttons[6].pressed.emit()
+	toolbar.hide()
+	assert(not toolbar.hold_menu.visible)
+	toolbar.show()
 	# Query's footprint is recovered from saved corner flags, from any member.
 	var city := main.document_state.city as CityState
 	city.document.set_misc_i32(0x14, 100000)

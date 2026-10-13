@@ -1,7 +1,6 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://src/ui/shell/city_toolbar.gd" id="1_3va6y"]
-[ext_resource type="Script" path="res://src/ui/shell/city_child_tool_palette.gd" id="2_uaa4s"]
 [ext_resource type="Shader" path="res://src/ui/shared/frosted_panel.gdshader" id="3_glass"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_glass"]
@@ -60,7 +59,7 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 2
 theme_override_constants/v_separation = 2
-columns = 3
+columns = 2
 
 [node name="SpecialTools" type="GridContainer" parent="Margin/Column/CityToolRows"]
 unique_name_in_owner = true
@@ -116,13 +115,6 @@ tooltip_text = "Zoom In (E / +)"
 text = "Z"
 icon_alignment = 1
 metadata/toolbar_region = Rect2i(486, 0, 23, 23)
-
-[node name="ChildPalette" type="VBoxContainer" parent="Margin/Column"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 4
-script = ExtResource("2_uaa4s")
 
 [node name="ChildPaletteDivider" type="HSeparator" parent="Margin/Column"]
 layout_mode = 2

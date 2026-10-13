@@ -363,7 +363,7 @@ func update_edit_state() -> void:
 		app.map_view.repeat_placement = false
 		app.map_view.placement_validator = Callable()
 		app.map_view.placement_error_provider = Callable()
-		app.city_toolbar.child_palette.hide()
+		app.city_toolbar.hold_menu.hide()
 	app.map_view.query_city = app.document_state.city
 	app.map_view.set_edit_enabled(
 		bool(state.enabled),
