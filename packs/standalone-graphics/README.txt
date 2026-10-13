@@ -1,58 +1,35 @@
 OpenSC2K Remaster - Style A (4x)
 
-Local graphics delivery, 13 October2026
+Development source pack, 13 October 2026
 
-Select the graphics folder as a custom graphics pack in a compatible OpenSC2K
-build, or point OPENSC2K_GRAPHICS_PACK to this graphics folder. The complete
-pack does not require original graphics. The existing optional original import
-is preserved. Do not copy this pack over a personal installation manually.
+Select this graphics folder in a compatible Reticulating Splines build.
+499 city masters and 112 UI masters cover 666 required resource keys.
+No original graphics are required. Large masters are 4x; smaller views are
+derived in memory. Style A, muted materials and 2:1 dimetric projection.
 
-499 city masters and112 UI masters cover666 required resource keys.
-206 city lightmaps;293 intentionally unlit masters;408 image frames and408
-matching light frames;48 road masks.1442 Visual artwork records cover432
-vehicle views,96 pedestrian states,896 woodland variants,13 ground masks
-and5 cloud atlases.3444 PNG files; aliases share files. Small/medium zoom
-views derive from the4x large master in memory. No extra building sides.
+Current correction pass: 81 building/facility masters with matching lightmaps,
+four dust frames, 432 vehicle views, 96 pedestrian states and 432 vehicle
+lightmaps. Flat base lawn is transparent; paths, planting and roof gardens remain.
+The full pack contains 3454 PNG files and 216 city lightmap entries.
+Other Visual Enhancements art and animation coverage are retained.
 
-Compatibility: the feature/standalone-data-pack loader supports this manifest.
-The complete Visual/Remaster consumer combination was tested in an isolated
-build against integration base2373d7610010b52b8f59383979551669088973f0.
-Its reviewed42-file consumer patch is retained at
-D:/OpenSC2K/Codex/standalone-data-pack/validation/visual-artwork/complete-consumer-handoff.patch
-The responsible central integration workflow must apply/review that binding
-before a shared Runtime update. This delivery does not install or publish it.
+Evidence: D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-13/CURRENT.txt
+All corrections checked in isolated engine scenes, day/night and four seasons.
+All 528 figure states match independent GPU pixel references at 100-800% zoom
+and three camera offsets; actual-city occlusion checked at 200-800%.
+Renderer 35/35 and headless 261/261 shared evidence, focused terrain/pack checks,
+Rust release tests, format, clippy and core checks passed. See exact scopes there.
 
-Validation:281 upstream release cases pass across the recorded full selection
-and strict continuations after Windows helper corrections. All29 renderer
-cases pass. Actual replacement art was separately checked without originals:
-full loader and mask audit, city day/night/power, networks/bridges/grades,
-moving sprites, UI/newspaper/SCURK, nature, clouds and City Life.
-Final report and exact evidence hashes:
-D:/OpenSC2K/Codex/standalone-data-pack/production/reports/final-acceptance.json
+provenance.json and graphics/SHA256SUMS.json record delivered sources and hashes.
+Editable ImageGen sources/prompts, geometry and export tools remain under
+D:/OpenSC2K/Codex/standalone-data-pack/production and corrections/2026-10-13.
+Existing editable vehicle/person utility art was revised in produce_style_a.py.
+Original art was used locally for reference/inspiration; no original pixels
+or private comparison galleries are included in the distributed source pack.
 
-Measured catalogue:1600x1000, RTX4080, paused,120 VSync frames: median16.669ms,
-p95 16.864ms; peak working set3.24GiB, peak private4.33GiB; texture monitor
-1.13GiB. Preparation52.596s. These include debug preparation/capture and do
-not predict all city sizes or compare equivalent original and Remaster builds.
-Existing CPU/reflection geometry retains its logical-resolution contract.
-
-Sources and tools: editable ImageGen sources, prompts, emission regions and
-deterministic export/projection tools remain in
-D:/OpenSC2K/Codex/standalone-data-pack/production
-provenance.json records hashes. graphics/SHA256SUMS.json identifies delivery.
-AI assistance: OpenAI ImageGen and Codex. Original artwork was used locally
-for technical reference and visual inspiration; no original pixel files or
-rejected mesh experiments are included.
+This source delivery does not install the personal Runtime. REL owns builds
+and installation under the current workspace rules. No central integration
+or historical feature-branch merge is required.
 
 License: newly generated artwork has no selected distribution license yet.
-See graphics/LICENSE-STATUS.txt. Existing project notices remain applicable
-to their existing code and resources; no broader grant is inferred.
-
-Deutsch
-Vollstaendiges4x-Grafikpaket im freigegebenen Stil A, mit passenden Lichtmasken.
-Grafikordner in einem kompatiblen Build als eigenes Paket auswaehlen.
-Alle666 Pflichtschluessel sind abgedeckt; keine Originalgrafiken erforderlich.
-Die Kombination mit Visual Enhancements ist isoliert geprueft. Die gemeinsame
-Runtime wird ausschliesslich ueber die verantwortliche Zentrale aktualisiert.
-Quellen, Generatoren und genaue Pruefnachweise liegen im genannten Themenordner.
-Vor einer Veroeffentlichung ist noch die Lizenz fuer die neuen Bilder festzulegen.
+See graphics/LICENSE-STATUS.txt; existing project notices remain applicable.

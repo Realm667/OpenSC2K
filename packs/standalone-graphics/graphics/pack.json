@@ -107,7 +107,8 @@
       "logical_size": [
         32,
         21
-      ]
+      ],
+      "lightmap": "lightmaps/1013.png"
     },
     {
       "id": 1014,
@@ -1466,7 +1467,8 @@
       "logical_size": [
         64,
         46
-      ]
+      ],
+      "lightmap": "lightmaps/1170.png"
     },
     {
       "id": 1171,
@@ -1474,7 +1476,8 @@
       "logical_size": [
         64,
         53
-      ]
+      ],
+      "lightmap": "lightmaps/1171.png"
     },
     {
       "id": 1172,
@@ -1482,7 +1485,8 @@
       "logical_size": [
         64,
         61
-      ]
+      ],
+      "lightmap": "lightmaps/1172.png"
     },
     {
       "id": 1173,
@@ -1490,7 +1494,8 @@
       "logical_size": [
         64,
         73
-      ]
+      ],
+      "lightmap": "lightmaps/1173.png"
     },
     {
       "id": 1174,
@@ -1694,7 +1699,8 @@
       "logical_size": [
         96,
         74
-      ]
+      ],
+      "lightmap": "lightmaps/1196.png"
     },
     {
       "id": 1197,
@@ -1702,7 +1708,8 @@
       "logical_size": [
         96,
         90
-      ]
+      ],
+      "lightmap": "lightmaps/1197.png"
     },
     {
       "id": 1198,
@@ -1904,7 +1911,8 @@
       "logical_size": [
         32,
         19
-      ]
+      ],
+      "lightmap": "lightmaps/1220.png"
     },
     {
       "id": 1221,
@@ -1921,7 +1929,8 @@
       "logical_size": [
         32,
         17
-      ]
+      ],
+      "lightmap": "lightmaps/1222.png"
     },
     {
       "id": 1223,
@@ -2034,7 +2043,8 @@
       "logical_size": [
         64,
         64
-      ]
+      ],
+      "lightmap": "lightmaps/1235.png"
     },
     {
       "id": 1236,
