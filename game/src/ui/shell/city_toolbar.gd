@@ -83,6 +83,8 @@ var _hold_opened := false
 var _current_city: CityState
 var _icon_provider := Callable()
 var _selected_subtool := 0
+var _group_subtools: Dictionary = {}
+var _dismiss_mouse_buttons := 0
 var toolbar_art: Image
 var toolbar_buttons: Array[Button] = []
 var rotate_counter_clockwise_button: Button
@@ -108,7 +110,6 @@ func _ready() -> void:
 	rotate_clockwise_button = %RotateClockwiseButton
 	zoom_out_button = %ZoomOutButton
 	zoom_in_button = %ZoomInButton
-	child_palette = %ChildPalette
 	view_layers_heading = %ViewLayersHeading
 	data_view_input = %DataViewInput
 	data_view_input.clear()
@@ -146,6 +147,13 @@ func _ready() -> void:
 	hold_menu.subtool_requested.connect(subtool_requested.emit)
 	add_child(hold_menu)
 	move_child(hold_menu, 0)
+	child_palette = hold_menu.palette
+	hold_menu.popup_hide.connect(_on_flyout_closed)
+	visibility_changed.connect(func() -> void:
+		if not is_visible_in_tree():
+			hold_menu.hide())
+	if is_inside_tree():
+		get_viewport().size_changed.connect(hold_menu.hide)
 	start_city_button.pressed.connect(start_city_requested.emit)
 	var tool_button_group := ButtonGroup.new()
 
@@ -173,7 +181,6 @@ func _ready() -> void:
 	zoom_in_button.pressed.connect(zoom_in_requested.emit)
 
 	child_palette.build()
-	child_palette.subtool_requested.connect(subtool_requested.emit)
 	child_tool_scroll = child_palette.scroll
 	child_tool_buttons = child_palette.buttons
 
@@ -207,6 +214,13 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	# PopupPanel dismisses before forwarding an outside click to this viewport.
+	# Consume that complete gesture so closing the menu cannot also build a tile.
+	if _dismiss_mouse_buttons != 0 and event is InputEventMouse:
+		get_viewport().set_input_as_handled()
+		if event is InputEventMouseButton and not event.pressed:
+			_dismiss_mouse_buttons &= ~(1 << (event.button_index - 1))
+		return
 	if not brush_controls.is_visible_in_tree() or not event is InputEventMouseButton:
 		return
 
@@ -229,11 +243,23 @@ func _input(event: InputEvent) -> void:
 	brush_size_input.value += 1 if mouse.button_index == MOUSE_BUTTON_WHEEL_UP else -1
 
 
+func _on_flyout_closed() -> void:
+	_dismiss_mouse_buttons = Input.get_mouse_button_mask()
+	if _dismiss_mouse_buttons != 0:
+		get_viewport().set_input_as_handled()
+
+
 func group_icon(group_index: int) -> Texture2D:
 	if group_index < 0 or group_index >= GROUP_ICON_REGIONS.size():
 		return null
 
 	return _toolbar_icon(GROUP_ICON_REGIONS[group_index])
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED:
+		for group: int in _group_subtools:
+			_refresh_group_icon(group)
 
 
 func show_tool_group(
@@ -247,8 +273,8 @@ func show_tool_group(
 
 	_current_city = city
 	_icon_provider = icon_provider
+	hold_menu.hide()
 	if land_mode:
-		child_palette.hide()
 		return 0
 
 	for button_index in toolbar_buttons.size():
@@ -257,20 +283,39 @@ func show_tool_group(
 	_refresh_group_buttons(city)
 	var selected := child_palette.show_tool_group(group_index, city, icon_provider, preferred_subtool)
 	if landscape_editor:
-		child_palette.hide()
 		_build_landscape_tools()
 	return selected
 
 
 func sync_child_tool_selection(group_index: int, subtool_index: int) -> void:
 	_selected_subtool = subtool_index
+	_group_subtools[group_index] = subtool_index
 	child_palette.sync_selection(subtool_index)
+	_refresh_group_icon(group_index)
 	for key in landscape_buttons:
 		landscape_buttons[key].set_pressed_no_signal(key == Vector2i(group_index, subtool_index))
 
 
 func refresh_child_tool_icons(icon_provider: Callable) -> void:
+	_icon_provider = icon_provider
 	child_palette.refresh_icons(icon_provider)
+	for group: int in _group_subtools:
+		_refresh_group_icon(group)
+
+
+func _refresh_group_icon(group_index: int) -> void:
+	if group_index < 0 or group_index >= toolbar_buttons.size():
+		return
+	var button := toolbar_buttons[group_index]
+	var tool_index := int(_group_subtools.get(group_index, -1))
+	var tool := Tools.tool(group_index, tool_index) if tool_index >= 0 else null
+	var icon: Texture2D = _icon_provider.call(group_index, tool_index) if tool != null and _icon_provider.is_valid() else null
+	button.icon = icon if icon != null else group_icon(group_index)
+	button.text = str(group_index + 1) if button.icon == null else ""
+	button.tooltip_text = tr(str(Tools.GROUPS[group_index].name))
+	if tool != null:
+		button.tooltip_text += "\n" + tr(str(tool.name))
+	button.queue_redraw()
 
 
 func refresh_tool_availability(
@@ -318,6 +363,8 @@ func _add_group_button(
 ) -> void:
 	var button := Button.new()
 	button.custom_minimum_size = Vector2(32, 32)
+	button.expand_icon = true
+	button.add_theme_constant_override("icon_max_width", 28)
 	button.toggle_mode = true
 	button.button_group = button_group
 	button.tooltip_text = Tools.GROUPS[group_index].name
@@ -331,6 +378,12 @@ func _add_group_button(
 	button.button_up.connect(_end_group_hold)
 	button.mouse_exited.connect(_cancel_group_hold)
 	button.pressed.connect(_activate_group.bind(group_index))
+	if group_index < CityToolIds.Group.SIGNS or group_index == CityToolIds.Group.QUERY:
+		button.draw.connect(func() -> void:
+			var corner := button.size - Vector2(4, 4)
+			button.draw_colored_polygon(PackedVector2Array([
+				corner - Vector2(5, 0), corner - Vector2(0, 5), corner,
+			]), button.get_theme_color("font_color")))
 	parent.add_child(button)
 	toolbar_buttons.append(button)
 
@@ -416,6 +469,18 @@ func _activate_group(group_index: int) -> void:
 
 	hold_menu.hide()
 	group_requested.emit(group_index)
+	_open_group_menu(group_index)
+
+
+func _open_group_menu(group_index: int) -> void:
+	if landscape_editor or land_mode or not is_inside_tree() or toolbar_buttons[group_index].disabled:
+		return
+	if child_palette.shown_group != group_index or child_tool_buttons.size() < 2:
+		return
+	# Anchor to the outer sidebar edge, including groups in its left column.
+	var anchor := toolbar_buttons[group_index].get_global_rect()
+	anchor.size.x = get_global_rect().end.x - anchor.position.x
+	hold_menu.show_palette(_selected_subtool, anchor)
 
 
 func _show_held_group(group_index: int, generation: int) -> void:
@@ -424,10 +489,7 @@ func _show_held_group(group_index: int, generation: int) -> void:
 
 	_hold_opened = true
 	group_requested.emit(group_index)
-	hold_menu.show_tools(
-		group_index, _current_city, _icon_provider, _selected_subtool,
-		toolbar_buttons[group_index].get_global_rect()
-	)
+	_open_group_menu(group_index)
 
 
 func set_landscape_editor(enabled: bool) -> void:
@@ -435,10 +497,8 @@ func set_landscape_editor(enabled: bool) -> void:
 	start_city_button.visible = enabled
 	regenerate_button.visible = enabled
 	landscape_tools.visible = enabled
-	child_palette.visible = not enabled
 	hold_menu.hide()
 	child_palette.free_landscape = enabled
-	hold_menu.palette.free_landscape = enabled
 
 	for index in toolbar_buttons.size():
 		toolbar_buttons[index].visible = not enabled
@@ -509,8 +569,7 @@ func replace_artwork(value: Image) -> void:
 
 	for index in toolbar_buttons.size():
 		toolbar_buttons[index].theme_type_variation = "ArtworkButton"
-		toolbar_buttons[index].icon = group_icon(index)
-		toolbar_buttons[index].text = str(index + 1) if toolbar_buttons[index].icon == null else ""
+		_refresh_group_icon(index)
 
 	_refresh_artwork_buttons(self)
 

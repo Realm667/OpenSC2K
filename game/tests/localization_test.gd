@@ -305,18 +305,23 @@ func _check_toolbar_layout() -> void:
 				AppUiScale.apply(root, ui_scale)
 				for group in [CityToolIds.Group.POWER, CityToolIds.Group.WATER, CityToolIds.Group.REWARDS]:
 					toolbar.show_tool_group(group, null, provider)
+					toolbar.hold_menu.show_palette(0, Rect2(toolbar.get_global_rect().end.x, 40, 0, 32))
 					for frame in 6:
 						await process_frame
 					var bounds := toolbar.get_global_rect().grow(0.5)
 					for path in ["Margin", "Margin/Column", "Margin/Column/Layers", "Margin/Column/DataViewInput"]:
 						var control := toolbar.get_node(path) as Control
 						assert(bounds.encloses(control.get_global_rect()), "%s overflows the %s toolbar at scale %s" % [path, language, ui_scale])
+					var popup_bounds := Rect2(Vector2.ZERO, Vector2(toolbar.hold_menu.size)).grow(0.5)
+					assert(root.get_visible_rect().encloses(Rect2(Vector2(toolbar.hold_menu.position), Vector2(toolbar.hold_menu.size))),
+						"Translated flyouts must fit the viewport at each UI scale")
 					for button: Button in toolbar.child_tool_buttons.values():
 						var rect := button.get_global_rect()
-						assert(rect.position.x >= bounds.position.x and rect.end.x <= bounds.end.x,
-							"Translated tool buttons must fit the sidebar horizontally")
+						assert(rect.position.x >= popup_bounds.position.x and rect.end.x <= popup_bounds.end.x,
+							"Translated tool buttons must fit the flyout horizontally")
 						assert(button.size.x >= button.get_minimum_size().x,
 							"Tool text and artwork must have their requested width")
+					toolbar.hold_menu.hide()
 	row.free()
 	root.size = old_size
 	root.content_scale_factor = old_factor

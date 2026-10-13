@@ -1,5 +1,11 @@
 [
   {
+    "id": "toolbar_flyout_test",
+    "script": "tests/toolbar_flyout_test.gd",
+    "domain": "ui",
+    "lane": "product"
+  },
+  {
     "id": "standalone_first_import_test",
     "script": "tests/standalone_first_import_test.gd",
     "domain": "ui",

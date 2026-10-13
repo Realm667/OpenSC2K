@@ -611,7 +611,7 @@ func select_land(action: String) -> void:
 	update_land_tooltip()
 	land_offer_price = -1
 	coop.app.city_toolbar.land_mode = true
-	coop.app.city_toolbar.child_palette.hide()
+	coop.app.city_toolbar.hold_menu.hide()
 	land_options.show()
 	for index in land_tool_buttons.size():
 		land_tool_buttons[index].set_pressed_no_signal(index == (2 if action == "land_offer" else 0) + (1 if include_water else 0))

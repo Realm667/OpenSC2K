@@ -3,6 +3,22 @@
 The interface uses shared dialog margins, control spacing, headings and keyboard
 focus styles in both themes. Utility windows follow theme changes immediately.
 
+## Tool flyouts
+
+Tool groups use a compact two-column sidebar. Click a group to select its last
+used tool and open the available subtools beside the sidebar. Holding the button
+also opens this menu. Groups with only one offered tool select it directly.
+The group button shows the last selected tool; the menu retains names, prices,
+availability and a marked selection. The sidebar does not expand for subtools.
+
+Choose an entry with the mouse, or use the arrow keys and Enter. Selection,
+Escape or an outside click closes the menu. The outside click is consumed so
+it cannot also build on the map. Long lists scroll, and menus fit inside the
+current viewport. Resizing the view, hiding the sidebar or entering the terrain
+editor closes the menu. Existing keyboard shortcuts and the middle-button picker
+select tools without forcing a menu open. Tool selection memory follows the
+existing city session; this feature does not add saved workspace layouts.
+
 ## Pick an existing tool
 
 Click an existing building or network with the middle mouse button to select
