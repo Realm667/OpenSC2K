@@ -1480,7 +1480,7 @@ msgid "Neighbors"
 msgstr "Nachbarn"
 
 msgid "Networks"
-msgstr "Verkehrs- und Leitungsnetze"
+msgstr "Verkehrs-/Leitungsnetze"
 
 msgid "New City"
 msgstr "Neue Stadt"
@@ -25994,3 +25994,603 @@ msgstr "Ja, und aktivieren"
 #. Package library and shared original import prompt; supplementary translation.
 msgid "Imported packages are available in Data. Your active sources are unchanged."
 msgstr "Importierte Pakete sind unter Daten verfügbar. Deine aktiven Quellen bleiben unverändert."
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "%s needs a key.\nPress Esc to cancel."
+msgstr "%s benötigt eine Taste.\nEsc zum Abbrechen drücken."
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Apostrophe (')"
+msgstr "Apostroph (')"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Apply paste"
+msgstr "Einfügen bestätigen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Arrow keys, Shift, Ctrl"
+msgstr "Pfeiltasten, Umschalt, Strg"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Back Tab"
+msgstr "Umschalt+Tab"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Backslash (\\)"
+msgstr "Rückstrich (\\)"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Backspace"
+msgstr "Rücktaste"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Bulldoze with any tool (hold)"
+msgstr "Mit jedem Werkzeug abreißen (halten)"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Camera"
+msgstr "Kamera"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Cancel or close"
+msgstr "Abbrechen oder schließen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Cancel selection"
+msgstr "Auswahl aufheben"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Cannot load the application."
+msgstr "Das Programm konnte nicht geladen werden."
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Caps Lock"
+msgstr "Feststelltaste"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Center on tile"
+msgstr "Auf Kachel zentrieren"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Center with any tool (hold)"
+msgstr "Mit jedem Werkzeug zentrieren (halten)"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "City services"
+msgstr "Städtische Dienste"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "City view"
+msgstr "Stadtansicht"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Comma (,)"
+msgstr "Komma (,)"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Commercial zones"
+msgstr "Gewerbegebiete"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Compare with the original (hold)"
+msgstr "Mit dem Original vergleichen (halten)"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Context menu"
+msgstr "Kontextmenü"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Copy from all layers"
+msgstr "Aus allen Ebenen kopieren"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Crime view"
+msgstr "Kriminalität"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Ctrl"
+msgstr "Strg"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Cut from all layers"
+msgstr "Aus allen Ebenen ausschneiden"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Debug window"
+msgstr "Debug-Fenster"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Delete selection"
+msgstr "Auswahl löschen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Density view"
+msgstr "Bevölkerungsdichte"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Down Arrow"
+msgstr "Pfeil runter"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Duplicate selection"
+msgstr "Auswahl duplizieren"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Emergency dispatch"
+msgstr "Notfalldienste entsenden"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "End"
+msgstr "Ende"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Enter"
+msgstr "Eingabe"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Equals (=)"
+msgstr "Gleich (=)"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Esc"
+msgstr "Esc"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Escape"
+msgstr "Esc"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Exact data view values, deferred terrain stretch"
+msgstr "Genaue Datenwerte, verzögerte Geländeverformung"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Export city as PNG"
+msgstr "Stadt als PNG exportieren"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Fast move (hold)"
+msgstr "Schnell bewegen (halten)"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Faster"
+msgstr "Schneller"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Fire Power view"
+msgstr "Feuerwehrabdeckung"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Fixed controls"
+msgstr "Feste Steuerung"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Full screen"
+msgstr "Vollbild"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Grave Accent (`)"
+msgstr "Gravis (`)"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Heightmap view"
+msgstr "Höhenkarte"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Hold Shift"
+msgstr "Umschalt halten"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Home"
+msgstr "Pos1"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Industrial zones"
+msgstr "Industriegebiete"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Insert"
+msgstr "Einfg"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Keypad %s"
+msgstr "Ziffernblock %s"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Keypad Add"
+msgstr "Ziffernblock +"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Keypad Decimal"
+msgstr "Ziffernblock Dezimalzeichen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Keypad Divide"
+msgstr "Ziffernblock ÷"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Keypad Enter"
+msgstr "Ziffernblock Eingabe"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Keypad Multiply"
+msgstr "Ziffernblock ×"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Keypad Subtract"
+msgstr "Ziffernblock −"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Land Value view"
+msgstr "Grundstückswerte"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Larger brush"
+msgstr "Größerer Pinsel"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Latest newspaper"
+msgstr "Neueste Zeitung"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Left Arrow"
+msgstr "Pfeil links"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Left Bracket ([)"
+msgstr "Eckige Klammer auf ([)"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Left button"
+msgstr "Linke Maustaste"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Line or rectangle (hold)"
+msgstr "Linie oder Rechteck (halten)"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Loading…"
+msgstr "Wird geladen…"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Main menu"
+msgstr "Hauptmenü"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Middle button"
+msgstr "Mittlere Maustaste"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Minus (-)"
+msgstr "Minus (-)"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Mouse"
+msgstr "Maus"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Mouse %d"
+msgstr "Maustaste %d"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Mouse 4"
+msgstr "Maustaste 4"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Mouse 5"
+msgstr "Maustaste 5"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Move canvas with the left button (hold)"
+msgstr "Leinwand mit linker Maustaste bewegen (halten)"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Move left"
+msgstr "Nach links"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Move map (drag)"
+msgstr "Karte verschieben (ziehen)"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Move map (drag) needs a mouse button.\nPress Esc to cancel."
+msgstr "Karte verschieben (ziehen) benötigt eine Maustaste.\nEsc zum Abbrechen drücken."
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Move right"
+msgstr "Nach rechts"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Next tool in group"
+msgstr "Nächstes Werkzeug der Gruppe"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Next track"
+msgstr "Nächster Titel"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Num Lock"
+msgstr "Num-Taste"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Open city"
+msgstr "Stadt öffnen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Open tile set"
+msgstr "Grafiksatz öffnen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Page Down"
+msgstr "Bild ab"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Page Up"
+msgstr "Bild auf"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Paste as new layer"
+msgstr "Als neue Ebene einfügen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Pause or resume"
+msgstr "Pause oder fortsetzen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Period (.)"
+msgstr "Punkt (.)"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Play or pause music"
+msgstr "Musik abspielen oder pausieren"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Police Power view"
+msgstr "Polizeiabdeckung"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Pollution view"
+msgstr "Umweltverschmutzung"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Power Supply view"
+msgstr "Stromversorgung"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Preparing city graphics…"
+msgstr "Stadtgrafiken werden vorbereitet…"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Press a key or mouse button for %s.\nPress Esc to cancel."
+msgstr "Taste oder Maustaste für %s drücken.\nEsc zum Abbrechen drücken."
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Previous tool"
+msgstr "Vorheriges Werkzeug"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Previous tool in group"
+msgstr "Vorheriges Werkzeug der Gruppe"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Previous track"
+msgstr "Vorheriger Titel"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Print Screen"
+msgstr "Druck"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Query with any tool (hold)"
+msgstr "Mit jedem Werkzeug abfragen (halten)"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Rate of Growth view"
+msgstr "Wachstumsrate"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Rename city"
+msgstr "Stadt umbenennen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Reset zoom to 100%"
+msgstr "Zoom auf 100% zurücksetzen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Residential zones"
+msgstr "Wohngebiete"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Reticulating Splines Settings"
+msgstr "Reticulating-Splines-Einstellungen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Right Arrow"
+msgstr "Pfeil rechts"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Right Bracket (])"
+msgstr "Eckige Klammer zu (])"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Right button"
+msgstr "Rechte Maustaste"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Rotate clockwise"
+msgstr "Im Uhrzeigersinn drehen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Rotate counterclockwise"
+msgstr "Gegen den Uhrzeigersinn drehen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "SCURK nudge and selection modes"
+msgstr "SCURK-Verschiebe- und Auswahlmodi"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Save city"
+msgstr "Stadt speichern"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Save city as"
+msgstr "Stadt speichern unter"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Save tile set as"
+msgstr "Grafiksatz speichern unter"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Scenario goals"
+msgstr "Szenarioziele"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Scroll Lock"
+msgstr "Rollen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Select all"
+msgstr "Alles auswählen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Semicolon (;)"
+msgstr "Semikolon (;)"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Shift"
+msgstr "Umschalt"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Show SimCity 2000 graphics sets for medium and small zoom levels"
+msgstr "SimCity2000-Grafiksets für mittlere und kleine Zoomstufen anzeigen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Show buildings"
+msgstr "Gebäude anzeigen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Show networks"
+msgstr "Verkehrs- und Leitungsnetze anzeigen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Show pipes"
+msgstr "Leitungen anzeigen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Show signs"
+msgstr "Schilder anzeigen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Show subways"
+msgstr "U-Bahnen anzeigen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Show trees"
+msgstr "Bäume anzeigen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Show tunnels"
+msgstr "Tunnel anzeigen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Show vehicles"
+msgstr "Fahrzeuge anzeigen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Show water"
+msgstr "Wasser anzeigen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Show water mains"
+msgstr "Hauptwasserleitungen anzeigen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Slash (/)"
+msgstr "Schrägstrich (/)"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Slower"
+msgstr "Langsamer"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Smaller brush"
+msgstr "Kleinerer Pinsel"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Sound effects"
+msgstr "Toneffekte"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Space"
+msgstr "Leertaste"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Stop music"
+msgstr "Musik stoppen"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Tab"
+msgstr "Tab"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "The left button always uses the current tool.\nPress another button, or Esc to cancel."
+msgstr "Die linke Maustaste verwendet immer das aktuelle Werkzeug.\nAndere Taste drücken oder mit Esc abbrechen."
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Toolbar and status bar help (hold)"
+msgstr "Hilfe zu Werkzeug- und Statusleiste (halten)"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Tools"
+msgstr "Werkzeuge"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Traffic view"
+msgstr "Verkehrsansicht"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Underground view"
+msgstr "Untergrundansicht"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Up Arrow"
+msgstr "Pfeil hoch"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Use tool"
+msgstr "Werkzeug verwenden"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Water Supply view"
+msgstr "Wasserversorgung"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Wheel down"
+msgstr "Mausrad runter"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Wheel left"
+msgstr "Mausrad links"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Wheel right"
+msgstr "Mausrad rechts"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Wheel up"
+msgstr "Mausrad hoch"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Zones view"
+msgstr "Zonenansicht"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Zoom in"
+msgstr "Vergrößern"
+
+#. Supplementary QOL controls/settings translation, AI-assisted from English source.
+msgid "Zoom out"
+msgstr "Verkleinern"
+
+#. Supplementary QOL controls translation, AI-assisted from English source.
+msgid "Reassign"
+msgstr "Neu zuweisen"

@@ -73,7 +73,9 @@ func _run() -> void:
 	var dialog := (load("res://src/ui/settings/app_settings_dialog.tscn") as PackedScene).instantiate() as AppSettingsDialog
 	root.add_child(dialog)
 	await process_frame
-	assert(dialog.pack_selectors.size() == 8)
+	assert(dialog.pack_selectors.size() == 5)
+	assert(not dialog.tabs.get_node("Data/Content/Fields/MusicPackControls").visible)
+	assert(not dialog.cities_folder_edit.visible and not dialog.mods_folder_edit.visible and not dialog.brightmaps_folder_edit.visible)
 	dialog.sound_pack_edit.text = chosen
 	dialog.rescan_packages()
 	var selector: PackSourceSelector = dialog.pack_selectors.sound
@@ -107,7 +109,28 @@ func _run() -> void:
 		dialog.rescan_packages()
 		assert(selector.item_count >= 2)
 	assert(FileAccess.get_file_as_string(base.path_join("cities/collection/My city.sc2")) == "untouched city")
+	_test_source_choices(base.path_join("dedup"))
 	prompt.free()
 	dialog.free()
 	print("PASS: pack discovery, invalid sources, category independence, preferences, import choices and seven UI languages")
 	quit()
+
+
+func _test_source_choices(base: String) -> void:
+	var manifest := {"format": "opensc2k-graphics", "version": 1, "name": "Imported", "source_platform": "Windows", "import_revision": 1}
+	var legacy := base.path_join("packs/Windows-old/graphics/pack.json")
+	var current := base.path_join("pack/sc2000/Windows-new/graphics/pack.json")
+	_write(legacy, JSON.stringify(manifest))
+	manifest.import_revision = 2
+	_write(current, JSON.stringify(manifest))
+	var rows := PackLibrary.selection_entries("graphics", legacy, base)
+	assert(rows.size() == 1 and rows[0].path == PackLibrary.normalized(legacy, "graphics"), "Rescanning preserves the active legacy version")
+	rows = PackLibrary.selection_entries("graphics", "", base)
+	assert(rows.size() == 1 and rows[0].path == PackLibrary.normalized(current, "graphics"), "Unselected imports prefer the newer available version")
+	manifest.erase("source_platform")
+	manifest.erase("import_revision")
+	manifest.name = "Custom"
+	for folder in ["graphic/reticulating-splines", "packs/standalone-graphics/graphics", "graphic/custom-one", "graphic/custom-two"]:
+		_write(base.path_join(folder).path_join("pack.json"), JSON.stringify(manifest))
+	rows = PackLibrary.selection_entries("graphics", "", base)
+	assert(rows.size() == 4, "Bundled migration copies collapse; unrelated custom packs with the same name remain selectable")

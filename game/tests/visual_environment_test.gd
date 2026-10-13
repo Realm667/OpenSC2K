@@ -652,6 +652,7 @@ func _check_light_graphics_caches(main: CityApplication) -> void:
 	var old_zoom := main.map_view.zoom_factor
 	var regions := main.render_caches.region_cache
 	main.render_caches.region_cache = null
+	main.preferences.use_classic_zoom_graphics = true
 	main.preferences.zoom_graphics = [1, 2, 2, 2, 2, 2]
 	var snapshots := {}
 	var old_large := main.asset_state.large_sprites

@@ -37,6 +37,7 @@ func _run() -> void:
 	check(created.ok and created.document.full_resolution_maps(), "Native new city mode")
 	check(created.document.find_chunk("ALTM").decoded_payload == preview.document.find_chunk("ALTM").decoded_payload,
 		"Native preview and created terrain match")
+	main.preferences.use_classic_zoom_graphics = true
 	main.preferences.zoom_graphics = AppSettingsStore.normalize_zoom_graphics([0, 1, 2, 2, 2, 2])
 	main.map_view.zoom_factor = 0.25
 	main.view_state.overlay_mode = CityViewMode.Mode.UNDERGROUND

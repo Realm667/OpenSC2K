@@ -517,9 +517,9 @@ func update_palette_blending(force := false) -> void:
 
 func _city_graphics_size() -> int:
 	return SettingsStore.graphics_size_at_zoom(
-		app.preferences.zoom_graphics,
+		app.preferences.effective_zoom_graphics(),
 		app.map_view.zoom_percent(),
-		app.preferences.overview_graphics,
+		app.preferences.effective_overview_graphics(),
 	)
 
 

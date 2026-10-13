@@ -27,11 +27,30 @@ func _run() -> void:
 	_test_capture_and_conflicts()
 	_test_use_defaults()
 	_test_immediate_apply()
+	await _test_language_switch()
 
 	main.queue_free()
 	await process_frame
 	print("PASS: Controls tab capture, conflicts, Use Defaults, and immediate settings changes")
 	quit()
+
+
+func _test_language_switch() -> void:
+	var stored := dialog.controls_list.pending.to_texts("camera_left")
+	for locale in AppLocalization.codes():
+		AppLocalization.select(locale)
+		await process_frame
+		await process_frame
+		for action in ControlActions.all():
+			if action.scope == ControlActions.SCOPE_FIXED:
+				continue
+			var label := dialog.controls_list.get_node(action.id).get_node("Label") as Label
+			assert(label.tr(label.text) == TranslationServer.translate(action.label))
+		assert(dialog.controls_list.pending.to_texts("camera_left") == stored, "Changing language must not change stored bindings")
+		if locale == "de":
+			assert(ControlBinding.key(KEY_LEFT).display_text() != OS.get_keycode_string(KEY_LEFT))
+			assert(ControlBinding.mouse(MOUSE_BUTTON_WHEEL_UP).display_text() != ControlBinding.MOUSE_LABELS[MOUSE_BUTTON_WHEEL_UP])
+	AppLocalization.select("en")
 
 
 func _test_tab_visibility() -> void:

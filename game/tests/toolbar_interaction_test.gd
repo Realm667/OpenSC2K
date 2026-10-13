@@ -157,6 +157,7 @@ func _run() -> void:
 	assert(main.view_state.overlay_mode == CityViewMode.Mode.UNDERGROUND)
 	main.current_tool.call("select_subtool", 1)
 	assert(main.view_state.overlay_mode == CityViewMode.Mode.CITY)
+	main.preferences.use_classic_zoom_graphics = true
 	main.preferences.zoom_graphics = AppSettingsStore.normalize_zoom_graphics(AppSettingsStore.DEFAULT_ZOOM_GRAPHICS)
 	# Overview size is independent of the saved graphics settings.
 	main.preferences.overview_graphics = CityIsometricRenderer.VIEW_SMALL

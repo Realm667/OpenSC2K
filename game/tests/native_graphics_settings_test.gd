@@ -13,6 +13,11 @@ func _run() -> void:
 	config.set_value("graphics", "folder", "/example/custom-pack")
 	assert(config.save(path) == OK)
 	var values := AppSettingsStore.load_values(path)
+	assert(not values.use_classic_zoom_graphics)
+	var preferences := AppPreferences.new()
+	assert(preferences.effective_zoom_graphics() == [2, 2, 2, 2, 2, 2] and preferences.effective_overview_graphics() == 2)
+	preferences.use_classic_zoom_graphics = true
+	assert(preferences.effective_zoom_graphics() == preferences.zoom_graphics and preferences.effective_overview_graphics() == preferences.overview_graphics)
 	assert(values.zoom_graphics == [0, 1, 2, 2, 2, 2])
 	assert(values.graphics_source == "folder")
 	assert(values.graphics_folder == "/example/custom-pack")
@@ -22,6 +27,7 @@ func _run() -> void:
 	graphics_options.city_renderer = "gpu"
 	graphics_options.background_audio = false
 	graphics_options.zoom_graphics = values.zoom_graphics
+	graphics_options.use_classic_zoom_graphics = true
 	assert(AppSettingsStore.save_values(0.5, 0.5, false, path, graphics_options) == OK)
 	assert(AppSettingsStore.load_values(path).zoom_graphics == values.zoom_graphics)
 	assert(values.overview_graphics == 0)
@@ -32,6 +38,7 @@ func _run() -> void:
 	assert(AppSettingsStore.save_values(0.5, 0.5, false, path, city_options) == OK)
 	var updated := AppSettingsStore.load_values(path)
 	assert(updated.default_mayor_name == "Alex")
+	assert(updated.use_classic_zoom_graphics, "Unrelated saves preserve the graphics choice")
 	assert(updated.overview_graphics == 2)
 	# the 10% size is the minimum for every higher zoom level
 	assert(updated.zoom_graphics == [2, 2, 2, 2, 2, 2])
@@ -40,6 +47,9 @@ func _run() -> void:
 	assert(AppSettingsStore.graphics_size_at_zoom(updated.zoom_graphics, 25, updated.overview_graphics) == 2)
 	var dialog := preload("res://src/ui/settings/app_settings_dialog.tscn").instantiate() as AppSettingsDialog
 	root.add_child(dialog)
+	assert(not dialog.selected_values().use_classic_zoom_graphics and not dialog.overview_graphics_selector.is_visible_in_tree())
+	dialog.show_classic_zoom_graphics(true)
+	assert(dialog.selected_values().use_classic_zoom_graphics and dialog.overview_graphics_selector.get_parent().visible)
 	dialog.show_values(0.5, 0.5, false, "folder", values.graphics_folder, "gpu", false, values.zoom_graphics)
 
 	for selector in dialog.zoom_graphics_selectors:

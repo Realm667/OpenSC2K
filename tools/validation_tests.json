@@ -1,5 +1,12 @@
 [
   {
+    "id": "startup_loading_test",
+    "script": "tests/startup_loading_test.gd",
+    "domain": "ui",
+    "lane": "product",
+    "requires": ["ext/graphics/pack.json", "ext/data/pack.json"]
+  },
+  {
     "id": "toolbar_flyout_test",
     "script": "tests/toolbar_flyout_test.gd",
     "domain": "ui",

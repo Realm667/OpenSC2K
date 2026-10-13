@@ -2,6 +2,9 @@
 class_name CityApplication
 extends Control
 
+signal startup_finished
+var startup_progress: ProgressOverlay
+
 # active city, document, and save state
 var document_state := ActiveDocumentState.new()
 # loaded assets
@@ -108,6 +111,7 @@ var scripting: ApplicationScripting = ApplicationScripting.new(self)
 
 
 func _ready() -> void:
+	get_window().title = "Reticulating Splines"
 	var first_start := OriginalImportPrompt.first_start(preferences.settings_path, AppPaths.root())
 	effects_audio.disaster_effects = disaster_effects
 	# the window samples embedded dialogs with nearest filtering. keep the
@@ -133,7 +137,7 @@ func _ready() -> void:
 	scripting.mods.load_all(preferences.mods_folder if not preferences.mods_folder.is_empty() else ModCatalog.default_folder(), preferences.settings_path)
 	get_window().size_changed.connect(_on_window_size_changed)
 	assets.build_reference_import_dialogs()
-	assets.initialize_runtime()
+	await assets.initialize_runtime()
 	if OS.has_feature("template") and DisplayServer.get_name() != "headless":
 		var folder_error := PackLibrary.ensure_folders()
 		if folder_error != OK:
@@ -144,6 +148,8 @@ func _ready() -> void:
 
 	if not AppPaths.error().is_empty():
 		_show_data_folder_error()
+	startup_progress = null
+	startup_finished.emit()
 
 
 func _show_data_folder_error() -> void:
@@ -159,7 +165,10 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
 		coop.refresh_language()
 	elif what == NOTIFICATION_WM_CLOSE_REQUEST and is_inside_tree():
-		city_files.request_city_exit("quit")
+		if startup_progress != null:
+			get_tree().quit()
+		else:
+			city_files.request_city_exit("quit")
 	elif what == NOTIFICATION_WM_DPI_CHANGE:
 		settings.apply_ui_scale()
 	elif what == NOTIFICATION_APPLICATION_FOCUS_OUT:
@@ -188,16 +197,22 @@ func _exit_tree() -> void:
 
 
 func _process(delta: float) -> void:
+	if startup_progress != null:
+		return
 	frame.process(delta)
 	autosave.process(delta)
 	scripting.process(delta)
 
 
 func _input(event: InputEvent) -> void:
+	if startup_progress != null:
+		return
 	camera_input.input(event)
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
+	if startup_progress != null:
+		return
 	camera_input.unhandled_key_input(event)
 
 

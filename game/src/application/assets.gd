@@ -13,6 +13,7 @@ var app: CityApplication
 var text_resources: OriginalTextResources
 var original_import_prompt: OriginalImportPrompt
 var requested_import_categories := PackedStringArray()
+var _startup_load: GraphicsSourceLoad
 
 
 func _init(application: CityApplication) -> void:
@@ -29,9 +30,32 @@ func initialize_runtime() -> void:
 	if mode.is_empty():
 		mode = app.preferences.graphics_source
 
-	app.asset_state.asset_source = GameAssetSource.load_source(
-		app.asset_state.reference_root, mode, app.preferences.graphics_folder, OS.get_environment("OPENSC2K_GRAPHICS_PACK")
-	)
+	if app.startup_progress == null:
+		app.asset_state.asset_source = GameAssetSource.load_source(
+			app.asset_state.reference_root, mode, app.preferences.graphics_folder, OS.get_environment("OPENSC2K_GRAPHICS_PACK")
+		)
+	else:
+		var folder := OS.get_environment("OPENSC2K_GRAPHICS_PACK")
+		if not folder.is_empty():
+			mode = "folder"
+		else:
+			folder = app.preferences.graphics_folder
+		_startup_load = GraphicsSourceLoad.new()
+		app.tree_exiting.connect(_finish_startup_worker, CONNECT_ONE_SHOT)
+		var error := _startup_load.start(app.asset_state.reference_root, mode, folder)
+		if error == OK:
+			while _startup_load != null and _startup_load.thread.is_alive():
+				app.startup_progress.show_progress("Reticulating Splines", "Preparing city graphics…", 0.3 + _startup_load.fraction() * 0.5)
+				await app.get_tree().process_frame
+			if _startup_load == null:
+				return
+			app.asset_state.asset_source = _startup_load.finish()
+		else:
+			app.asset_state.asset_source = GameAssetSource.new()
+			app.asset_state.asset_source.error = error_string(error)
+		_startup_load = null
+		app.startup_progress.show_progress("Reticulating Splines", "Loading…", 0.8)
+		await app.get_tree().process_frame
 	app.asset_state.assets_ready = app.asset_state.asset_source.error.is_empty()
 
 	if not app.asset_state.assets_ready:
@@ -72,6 +96,9 @@ func initialize_runtime() -> void:
 	NewsQueue.initialize_session(app.newspaper_state.session_state, app.tool_state.tool_random)
 
 	var original_assets := app.asset_state.asset_source.assets
+	if app.startup_progress != null:
+		app.startup_progress.show_progress("Reticulating Splines", "Loading…", 0.9)
+		await app.get_tree().process_frame
 	text_resources.newspaper_data = original_assets.newspaper_data
 	text_resources.library_texts = original_assets.library_texts
 	app.asset_state.scurk_graphics = original_assets.scurk_graphics
@@ -107,9 +134,17 @@ func initialize_runtime() -> void:
 	use_default_sprites()
 	app.visual_environment.reload_brightmaps()
 	app.camera_input.refresh_child_tool_icons()
-
+	if app.startup_progress != null:
+		app.startup_progress.show_progress("Reticulating Splines", "Loading…", 1.0)
+		await app.get_tree().process_frame
 	app.interface.show_main_menu()
 	prompt_for_stale_packs.call_deferred()
+
+
+func _finish_startup_worker() -> void:
+	if _startup_load != null and _startup_load.thread.is_started():
+		_startup_load.finish()
+	_startup_load = null
 
 
 func build_reference_import_dialogs() -> void:

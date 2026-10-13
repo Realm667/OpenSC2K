@@ -57,6 +57,12 @@ func show_bindings(value: ControlBindings) -> void:
 	rebuild()
 
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+		cancel_capture()
+		call_deferred("rebuild")
+
+
 func rebuild() -> void:
 	for child in get_children():
 		remove_child(child)
@@ -99,7 +105,7 @@ func _action_row(action: ControlActions.Action) -> HBoxContainer:
 
 	if action.scope == ControlActions.SCOPE_FIXED:
 		var fixed := Label.new()
-		fixed.text = tr("%s (fixed)") % (action.fixed_text if not action.fixed_text.is_empty()
+		fixed.text = tr("%s (fixed)") % (tr(action.fixed_text) if not action.fixed_text.is_empty()
 			else ControlBinding.from_text(action.defaults[0]).display_text())
 		fixed.theme_type_variation = &"HelpLabel"
 		fixed.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -117,7 +123,7 @@ func _action_row(action: ControlActions.Action) -> HBoxContainer:
 	add.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 	add.name = "Add"
 	add.text = "+"
-	add.tooltip_text = tr("Add a key or mouse button for %s") % action.label
+	add.tooltip_text = tr("Add a key or mouse button for %s") % tr(action.label)
 	add.custom_minimum_size = Vector2(28, 28)
 	add.pressed.connect(start_capture.bind(action.id))
 	add.pressed.connect(button_clicked.emit)
@@ -168,14 +174,14 @@ func start_capture(id: String) -> void:
 	# Esc cancels the capture, not the settings dialog
 	if capture_dialog != null:
 		capture_dialog.dialog_close_on_escape = false
-	_show_capture_text("Press a key or mouse button for %s.\nPress Esc to cancel." % action.label)
+	_show_capture_text(tr("Press a key or mouse button for %s.\nPress Esc to cancel.") % tr(action.label))
 
 
 func _show_capture_text(text: String) -> void:
 	if capture_overlay == null:
 		return
 
-	capture_label.text = text
+	capture_label.text = tr(text)
 	capture_overlay.show()
 	capture_overlay.move_to_front()
 
@@ -251,7 +257,7 @@ func capture_input(event: InputEvent) -> bool:
 			return true
 
 		if kind == ControlActions.KIND_MODIFIER:
-			_show_capture_text("%s needs a key.\nPress Esc to cancel." % ControlActions.find(capture_action).label)
+			_show_capture_text(tr("%s needs a key.\nPress Esc to cancel.") % tr(ControlActions.find(capture_action).label))
 
 			return true
 

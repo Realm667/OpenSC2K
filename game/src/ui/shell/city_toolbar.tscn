@@ -47,7 +47,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/h_separation = 3
 theme_override_constants/v_separation = 3
-columns = 2
+columns = 3
 
 [node name="CityToolRows" type="VBoxContainer" parent="Margin/Column"]
 layout_mode = 2
@@ -59,7 +59,7 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 2
 theme_override_constants/v_separation = 2
-columns = 2
+columns = 3
 
 [node name="SpecialTools" type="GridContainer" parent="Margin/Column/CityToolRows"]
 unique_name_in_owner = true
@@ -201,12 +201,14 @@ text = "Height Map"
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Replace structures with current tile values."
+fit_to_longest_item = false
+text_overrun_behavior = 3
 
 [node name="Layers" type="GridContainer" parent="Margin/Column"]
 layout_mode = 2
 theme_override_constants/h_separation = 4
 theme_override_constants/v_separation = 2
-columns = 2
+columns = 1
 
 [node name="BuildingsVisible" type="CheckBox" parent="Margin/Column/Layers"]
 unique_name_in_owner = true

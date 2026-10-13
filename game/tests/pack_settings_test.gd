@@ -106,7 +106,7 @@ func _run() -> void:
 
 	# graphics, sound, music, data, and HD sprite packs
 	assert(pickers == 5 and soundfont_pickers == 1)
-	assert(folder_pickers == 3)
+	assert(folder_pickers == 0, "Cities, mods and brightmaps use their dedicated workflows")
 	assert(dialog.pack_name_labels.data.text == main.asset_state.data_pack.pack_name and main.asset_state.data_pack.is_loaded())
 	assert(dialog.folder_dialog.file_mode == FileDialog.FILE_MODE_OPEN_FILE)
 	assert(dialog.folder_dialog.filters[0].begins_with("pack.json"))

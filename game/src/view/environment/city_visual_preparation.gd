@@ -62,7 +62,7 @@ func _layout() -> Array:
 	return [city.document.get_instance_id(), city.map_size, city.compass_rotation(), city.visible_altitude_levels,
 		app.asset_state.large_sprites, app.asset_state.small_medium_sprites,
 		app.view_state.surface_visibility.duplicate(), app.preferences.city_renderer,
-		app.preferences.zoom_graphics.duplicate(), app.preferences.overview_graphics, app.preferences.visual_enhancements.life_cars_enabled,
+		app.preferences.effective_zoom_graphics().duplicate(), app.preferences.effective_overview_graphics(), app.preferences.visual_enhancements.life_cars_enabled,
 		app.asset_state.large_sprites.visual_nature_enabled, app.asset_state.large_sprites.visual_terrain_enabled,
 		app.asset_state.small_medium_sprites.visual_nature_enabled, app.asset_state.small_medium_sprites.visual_terrain_enabled]
 
@@ -70,7 +70,7 @@ func _layout() -> Array:
 func required_variants() -> Array[int]:
 	var result: Array[int] = []
 	for zoom: float in CityMapConstants.ZOOM_LEVELS:
-		var view := AppSettingsStore.graphics_size_at_zoom(app.preferences.zoom_graphics, roundi(zoom * 100), app.preferences.overview_graphics)
+		var view := AppSettingsStore.graphics_size_at_zoom(app.preferences.effective_zoom_graphics(), roundi(zoom * 100), app.preferences.effective_overview_graphics())
 		var traffic := int(zoom >= 0.5 and app.preferences.visual_enhancements.life_cars_enabled and app.view_state.surface_visibility.networks)
 		var index := mini(view, 2) * 2 + traffic
 		if index not in result:

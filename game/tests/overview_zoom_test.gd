@@ -33,6 +33,7 @@ func _run() -> void:
 	main.frame.select_speed(GameSpeedController.Speed.PAUSED)
 	var before: PackedByteArray = doc.serialize().data
 	var map: CityMapControl = main.map_view
+	main.preferences.use_classic_zoom_graphics = true
 	main.preferences.zoom_graphics = AppSettingsStore.normalize_zoom_graphics([2, 2, 2, 2, 2, 2])
 	map.zoom_factor = 0.25
 	map.center_on_tile(Vector2i(64, 64))

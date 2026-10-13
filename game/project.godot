@@ -12,7 +12,10 @@ config_version=5
 
 config/name="OpenSC2K"
 config/version="0.3.0"
-run/main_scene="res://main.tscn"
+run/main_scene="res://src/ui/startup/startup_loading.tscn"
+boot_splash/image="res://assets/branding/reticulating-splines-logo.png"
+boot_splash/bg_color=Color(0.035, 0.047, 0.059, 1)
+boot_splash/stretch_mode=1
 config/features=PackedStringArray("4.7")
 config/icon="res://assets/icons/ReticulatingSplines.png"
 

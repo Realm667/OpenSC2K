@@ -26,6 +26,7 @@ var hd_graphics := true
 # autosaves of the last ten minutes in the temporary folder (ApplicationAutosave)
 var recent_autosaves := true
 var default_mayor_name := "Mayor"
+var use_classic_zoom_graphics := false
 var overview_graphics := 0
 var zoom_graphics: Array[int] = SettingsStore.normalize_zoom_graphics(SettingsStore.DEFAULT_ZOOM_GRAPHICS)
 var background_audio := false
@@ -59,6 +60,7 @@ func save_options(include_ui_scale := true) -> SettingsStore.SaveOptions:
 	options.soundtrack_folder = soundtrack_folder
 	options.city_renderer = city_renderer
 	options.background_audio = background_audio
+	options.use_classic_zoom_graphics = use_classic_zoom_graphics
 	options.zoom_graphics = zoom_graphics
 	options.toolbar_sounds = toolbar_sounds
 	options.city_sounds = city_sounds
@@ -87,3 +89,12 @@ func save_options(include_ui_scale := true) -> SettingsStore.SaveOptions:
 		options.ui_scale = ui_scale
 
 	return options
+
+
+func effective_zoom_graphics() -> Array[int]:
+	var large: Array[int] = [2, 2, 2, 2, 2, 2]
+	return zoom_graphics if use_classic_zoom_graphics else large
+
+
+func effective_overview_graphics() -> int:
+	return overview_graphics if use_classic_zoom_graphics else 2

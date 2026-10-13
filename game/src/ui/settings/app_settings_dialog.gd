@@ -55,6 +55,7 @@ var hd_graphics_choice := true
 var recent_autosaves_check: CheckBox
 var fullscreen_check: CheckBox
 var zoom_graphics_selectors: Array[OptionButton] = []
+var classic_zoom_check: CheckBox
 var overview_graphics_selector: OptionButton
 var theme_selector: OptionButton
 var language_selector: OptionButton
@@ -151,12 +152,15 @@ func _ready() -> void:
 		selector.item_selected.connect(func(_size: int) -> void:
 			_update_zoom_graphics_choices())
 
+	_build_classic_zoom_control()
 	_bind_pack_controls("graphics", folder_edit, %GraphicsPackName, %GraphicsBrowse)
 	_bind_pack_controls("sound", sound_pack_edit, %SoundPackName, %SoundBrowse)
 	_bind_pack_controls("music", music_pack_edit, %MusicPackName, %MusicBrowse)
 	_bind_pack_controls("data", data_pack_edit, %DataPackName, %DataBrowse)
 	_bind_pack_controls("hd", hd_pack_edit, %HdPackName, %HdBrowse)
 	_build_library_controls()
+	tabs.get_node("Data/Content/Fields/MusicPackLabel").hide()
+	tabs.get_node("Data/Content/Fields/MusicPackControls").hide()
 	_watch_clicks(tabs)
 	tabs.get_tab_bar().tab_clicked.connect(button_clicked.emit.unbind(1))
 	_build_controls_reset(content)
@@ -286,7 +290,7 @@ func _notify_change() -> void:
 
 func _notify_visual_change() -> void:
 	brightmaps_folder_edit.text = str(visual_tab.selected_values().brightmap_folder)
-	(pack_selectors["brightmaps"] as PackSourceSelector).rescan()
+	# The Visual Effects tab owns the brightmap source.
 	visual_change_in_progress = true
 	_notify_change()
 	visual_change_in_progress = false
@@ -384,6 +388,7 @@ func selected_values() -> AppSettingsStore.Values:
 	result.ui_language = AppLocalization.codes()[maxi(0, language_selector.selected)]
 	result.translucent_menus = translucent_menus_check.button_pressed
 	result.ui_scale = AppUiScale.OPTIONS[maxi(0, ui_scale_selector.selected)]
+	result.use_classic_zoom_graphics = classic_zoom_check.button_pressed
 	result.overview_graphics = overview_graphics_selector.selected
 	result.toolbar_sounds = toolbar_sounds_check.button_pressed
 	result.city_sounds = maxi(0, city_sounds_selector.selected)
@@ -490,6 +495,8 @@ func _bind_pack_controls(kind: String, edit: LineEdit, label: Label, browse: But
 	pack_name_labels[kind] = label
 	pack_edits[kind] = edit
 	_add_pack_selector(kind, edit, label)
+	edit.hide()
+	label.hide()
 	edit.text_changed.connect(func(_text: String) -> void:
 		_refresh_pack_name(kind))
 
@@ -519,48 +526,38 @@ func _add_pack_selector(kind: String, edit: LineEdit, label: Label) -> void:
 
 
 func _build_library_controls() -> void:
-	var fields := folder_edit.get_parent().get_parent().get_parent()
-	for pair in [["brightmaps", "Custom light masks (brightmaps)"], ["cities", "Cities"], ["mods", "Mods"]]:
-		var title_label := Label.new()
-		title_label.text = pair[1]
-		title_label.custom_minimum_size.x = 150
-		title_label.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
-		fields.add_child(title_label)
-		var column := VBoxContainer.new()
-		column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		fields.add_child(column)
-		var row := HBoxContainer.new()
-		column.add_child(row)
-		var edit := LineEdit.new()
-		edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		row.add_child(edit)
-		var browse := Button.new()
-		browse.text = "Browse..."
-		row.add_child(browse)
-		var label := Label.new()
-		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		label.theme_type_variation = &"HelpLabel"
-		column.add_child(label)
-		var picker := FileDialog.new()
-		picker.theme = AppUiTheme.file_dialog()
-		picker.file_mode = FileDialog.FILE_MODE_OPEN_DIR
-		picker.access = FileDialog.ACCESS_FILESYSTEM
-		picker.exclusive = true
-		add_child(picker)
-		browse.pressed.connect(func() -> void: picker.popup_centered_ratio(0.8))
-		picker.dir_selected.connect(func(path: String) -> void:
-			edit.text = path
-			rescan_packages()
-			_notify_change())
-		_add_pack_selector(pair[0], edit, label)
-		match pair[0]:
-			"brightmaps": brightmaps_folder_edit = edit
-			"cities": cities_folder_edit = edit
-			"mods": mods_folder_edit = edit
+	# Dedicated workflows own these retained compatibility values.
+	brightmaps_folder_edit = LineEdit.new()
+	cities_folder_edit = LineEdit.new()
+	mods_folder_edit = LineEdit.new()
+	for edit in [brightmaps_folder_edit, cities_folder_edit, mods_folder_edit]:
+		add_child(edit)
+		edit.hide()
 	var rescan := Button.new()
 	rescan.text = "Rescan packages"
 	rescan.pressed.connect(rescan_packages)
-	fields.get_parent().add_child(rescan)
+	tabs.get_node("Data/Content").add_child(rescan)
+
+
+func _build_classic_zoom_control() -> void:
+	var fields := tabs.get_node("Graphics/Content/PackFields")
+	classic_zoom_check = CheckBox.new()
+	classic_zoom_check.text = "Show SimCity 2000 graphics sets for medium and small zoom levels"
+	classic_zoom_check.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	classic_zoom_check.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var spacer := Control.new()
+	fields.add_child(spacer)
+	fields.move_child(spacer, 2)
+	fields.add_child(classic_zoom_check)
+	fields.move_child(classic_zoom_check, 3)
+	classic_zoom_check.toggled.connect(show_classic_zoom_graphics)
+	show_classic_zoom_graphics(false)
+
+
+func show_classic_zoom_graphics(enabled: bool) -> void:
+	classic_zoom_check.set_pressed_no_signal(enabled)
+	for name in ["GraphicsSizeLabel", "Fields", "GraphicsSizeHelpSpacer", "GraphicsSizeHelp"]:
+		(tabs.get_node("Graphics/Content/PackFields").get_node(name) as Control).visible = enabled
 
 
 func rescan_packages() -> void:

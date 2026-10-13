@@ -41,6 +41,7 @@ static func load_values(
 	result.translucent_menus = bool(config.get_value("general", "translucent_menus", true))
 	result.ui_scale = AppUiScale.normalize(config.get_value("general", "ui_scale", AppUiScale.DEFAULT))
 	result.default_mayor_name = str(config.get_value("general", "default_mayor_name", "Mayor"))
+	result.use_classic_zoom_graphics = bool(config.get_value("graphics", "use_classic_zoom_graphics", false))
 	result.overview_graphics = clampi(int(config.get_value("graphics", "overview_graphics", 0)), 0, 2)
 	result.music_volume = clampf(
 		float(config.get_value("audio", "music_volume", result.music_volume)),
@@ -294,6 +295,8 @@ static func save_values(
 		var mayor := str(options.default_mayor_name).strip_edges().left(23)
 		config.set_value("general", "default_mayor_name", "Mayor" if mayor.is_empty() else mayor)
 
+	if options.use_classic_zoom_graphics != null:
+		config.set_value("graphics", "use_classic_zoom_graphics", bool(options.use_classic_zoom_graphics))
 	if options.overview_graphics != null:
 		config.set_value("graphics", "overview_graphics", clampi(int(options.overview_graphics), 0, 2))
 
@@ -414,6 +417,7 @@ class Values extends RefCounted:
 	var sprite_corrections := false
 	var hd_graphics := true
 	var recent_autosaves := true
+	var use_classic_zoom_graphics := false
 	var overview_graphics := 0
 	var music_volume := 0.8
 	var effects_volume := 0.8
@@ -467,6 +471,7 @@ class SaveOptions extends RefCounted:
 	var music_soundfont: Variant = null
 	var music_soundfont_path: Variant = null
 	var default_mayor_name: Variant = null
+	var use_classic_zoom_graphics: Variant = null
 	var overview_graphics: Variant = null
 	var ui_theme: Variant = null
 	var ui_language: Variant = null

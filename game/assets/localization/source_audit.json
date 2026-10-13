@@ -12,9 +12,18 @@
     "game/src/audio/mp3_title.gd",
     "game/src/assets/pack_library.gd",
     "game/src/ui/settings/pack_source_selector.gd",
-    "game/src/ui/settings/original_import_prompt.gd"
+    "game/src/ui/settings/original_import_prompt.gd",
+    "game/src/ui/startup/startup_loading.gd",
+    "game/src/ui/settings/controls_binding_list.gd"
   ],
   "non_display_literals": {
+    "SimCity 2000 (%s)": "Product and platform proper names; source package identity.",
+    "CaptureOverlay": "Internal scene node name.",
+    "Fixed": "Internal controls category rendered as Fixed controls.",
+    "Add": "Internal button node name.",
+    "Remove": "Internal button node name.",
+    "PanelPadding5_2_5_2": "Godot theme variation for binding chips.",
+    "Center/Panel/Rows": "Existing progress overlay node path.",
     "OpenSC2K Koop": "Saved session format signature; never translate.",
     "Multiplayer display transaction": "Internal worker job name.",
     "Multiplayer state codec": "Internal worker job name.",

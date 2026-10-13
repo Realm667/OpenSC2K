@@ -83,6 +83,40 @@ static func scan(kind: String, selected := "", root := AppPaths.root()) -> Array
 	return result
 
 
+static func selection_entries(kind: String, selected := "", root := AppPaths.root()) -> Array[Dictionary]:
+	var groups := {}
+	var chosen := normalized(selected, kind)
+	for item in scan(kind, selected, root):
+		var manifest := _read_json(str(item.path))
+		var platform := str(manifest.get("source_platform", ""))
+		var folder := str(item.path).get_base_dir()
+		var relative := folder.trim_prefix(ProjectSettings.globalize_path(root).replace("\\", "/").simplify_path() + "/")
+		var identity := str(item.path)
+		if not platform.is_empty() and manifest.has("import_revision"):
+			identity = "sc2000:" + platform.to_lower()
+			item.name = "SimCity 2000 (%s)" % platform
+		elif relative == str(FOLDERS[kind]) + "/reticulating-splines" or relative in ["packs/standalone-graphics/graphics", "packs/standalone-audio/" + kind]:
+			identity = "reticulating-splines"
+			item.name = "Reticulating Splines"
+		# Preserve the active source. Otherwise prefer a valid, newer import,
+		# with the structured layout winning ties over a legacy copy.
+		item.rank = [int(str(item.path).nocasecmp_to(chosen) == 0), int(str(item.error).is_empty()),
+			int(manifest.get("import_revision", 0)), int(not relative.begins_with("packs/"))]
+		if not groups.has(identity) or _prefer_entry(item, groups[identity]):
+			groups[identity] = item
+	var result: Array[Dictionary] = []
+	result.assign(groups.values())
+	result.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return str(a.name).naturalnocasecmp_to(str(b.name)) < 0)
+	return result
+
+
+static func _prefer_entry(candidate: Dictionary, previous: Dictionary) -> bool:
+	for index in candidate.rank.size():
+		if candidate.rank[index] != previous.rank[index]:
+			return candidate.rank[index] > previous.rank[index]
+	return str(candidate.path) > str(previous.path)
+
+
 static func _scan_legacy(result: Array[Dictionary], seen: Dictionary, kind: String, folder: String, depth: int) -> void:
 	var directory := DirAccess.open(folder)
 	if directory == null or depth > 3:

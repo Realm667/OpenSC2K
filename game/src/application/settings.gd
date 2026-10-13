@@ -81,6 +81,7 @@ func open_settings_dialog() -> void:
 	app.main_overlays.settings_dialog.translucent_menus_check.button_pressed = preferences.translucent_menus
 	app.main_overlays.settings_dialog.ui_scale_selector.select(AppUiScale.option_index(preferences.ui_scale))
 	app.main_overlays.settings_dialog.default_mayor_edit.text = preferences.default_mayor_name
+	app.main_overlays.settings_dialog.show_classic_zoom_graphics(preferences.use_classic_zoom_graphics)
 	app.main_overlays.settings_dialog.overview_graphics_selector.select(preferences.overview_graphics)
 	app.main_overlays.settings_dialog.check_for_updates_check.button_pressed = preferences.check_for_updates
 	app.main_overlays.settings_dialog.set_update_status(preferences.update_checked_at, preferences.update_error)
@@ -300,7 +301,8 @@ func apply_settings() -> void:
 	if preferences.default_mayor_name.is_empty():
 		preferences.default_mayor_name = "Mayor"
 
-	var overview_changed := preferences.overview_graphics != int(values.overview_graphics)
+	var overview_changed := preferences.overview_graphics != int(values.overview_graphics) or preferences.use_classic_zoom_graphics != values.use_classic_zoom_graphics
+	preferences.use_classic_zoom_graphics = values.use_classic_zoom_graphics
 	preferences.overview_graphics = int(values.overview_graphics)
 	_set_graphics_preferences(values.zoom_graphics)
 
@@ -491,6 +493,7 @@ func load_app_settings() -> void:
 	apply_ui_scale()
 	preferences.default_mayor_name = str(values.default_mayor_name)
 	preferences.overview_graphics = int(values.overview_graphics)
+	preferences.use_classic_zoom_graphics = values.use_classic_zoom_graphics
 	preferences.zoom_graphics = values.zoom_graphics
 	preferences.background_audio = values.background_audio
 	preferences.shuffle_music = values.shuffle_music

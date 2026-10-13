@@ -37,6 +37,7 @@ func run_check() -> void:
 		assert(main.city_dialogs.new_city_dialog.preview_view.texture.get_width() == edge)
 
 	main.new_city.cancel_new_city()
+	main.preferences.use_classic_zoom_graphics = true
 	main.preferences.zoom_graphics = AppSettingsStore.normalize_zoom_graphics([0, 1, 2, 2, 2, 2])
 	main.map_view.zoom_factor = 0.25
 	main.view_state.overlay_mode = CityViewMode.Mode.UNDERGROUND

@@ -93,30 +93,10 @@ func cursor_selection(hovered: Control, display_width: int) -> CursorSelection:
 
 
 func _update_icon() -> void:
-	var app := "city"
-	var group := 2
-
-	if print_dialog != null and print_dialog.visible:
-		app = "scurk"
-		group = 3
-	elif editor != null and editor.visible:
-		app = "scurk"
-		group = 4 if editor.pick_copy_control.visible else 2
-	elif place_print != null and place_print.visible:
-		app = "scurk"
-		group = 1
-
-	var key := "%s:%d" % [app, group]
-
-	if icon_key == key:
+	if icon_key == "reticulating-splines":
 		return
-
-	icon_key = key
-	icon_image = graphics.icon(app, group, 32) if graphics != null else null
-
-	if icon_image == null:
-		icon_image = _project_icon
-
+	icon_key = "reticulating-splines"
+	icon_image = _project_icon
 	if icon_image != null:
 		DisplayServer.set_icon(icon_image)
 

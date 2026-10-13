@@ -25,7 +25,7 @@ func rescan(library_root := AppPaths.root()) -> void:
 	set_item_metadata(0, "")
 	select(0)
 	var chosen := PackLibrary.normalized(path_edit.text.strip_edges(), kind)
-	var entries := PackLibrary.scan(kind, chosen, library_root)
+	var entries := PackLibrary.selection_entries(kind, chosen, library_root)
 	var counts := {}
 	for item in entries:
 		counts[item.name] = int(counts.get(item.name, 0)) + 1

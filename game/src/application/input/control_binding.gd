@@ -45,6 +45,10 @@ const FULL_KEY_NAMES: Dictionary[int, String] = {
 	KEY_BRACKETRIGHT: "Right Bracket (])", KEY_BACKSLASH: "Backslash (\\)", KEY_SEMICOLON: "Semicolon (;)",
 	KEY_APOSTROPHE: "Apostrophe (')", KEY_QUOTELEFT: "Grave Accent (`)", KEY_COMMA: "Comma (,)",
 	KEY_PERIOD: "Period (.)", KEY_SLASH: "Slash (/)",
+	KEY_KP_ADD: "Keypad Add", KEY_KP_SUBTRACT: "Keypad Subtract", KEY_KP_MULTIPLY: "Keypad Multiply",
+	KEY_KP_DIVIDE: "Keypad Divide", KEY_KP_PERIOD: "Keypad Decimal",
+	KEY_MEDIAPLAY: "Play or pause music", KEY_MEDIANEXT: "Next track",
+	KEY_MEDIAPREVIOUS: "Previous track", KEY_MEDIASTOP: "Stop music",
 }
 
 var device := Device.KEY
@@ -203,7 +207,8 @@ func key_with_masks() -> int:
 
 func display_text() -> String:
 	if device == Device.MOUSE:
-		return _modifier_prefix(modifiers) + MOUSE_LABELS.get(code, "Mouse %d" % code)
+		var mouse_label: String = TranslationServer.translate(MOUSE_LABELS[code]) if MOUSE_LABELS.has(code) else TranslationServer.translate("Mouse %d") % code
+		return _modifier_prefix(modifiers) + mouse_label
 
 	var label := code
 
@@ -214,7 +219,9 @@ func display_text() -> String:
 		if layout_key != KEY_NONE:
 			label = layout_key
 
-	return ScurkContextMenu.key_hint((key_with_masks() & KEY_MODIFIER_MASK) | label)
+	if _is_symbol(label):
+		return _modifier_prefix(modifiers) + String.chr(label)
+	return _modifier_prefix(modifiers) + full_key_name(label)
 
 
 # The tooltip text, with every modifier and key named in words, such as
@@ -225,10 +232,10 @@ func full_text() -> String:
 
 	for entry in [[CONTROL, "Ctrl", ""], [ALT, "Option", "Alt"], [SHIFT, "Shift", "Shift"], [COMMAND, "Cmd", "Ctrl"]]:
 		if modifiers & entry[0]:
-			names.append(entry[1] if mac else entry[2])
+			names.append(TranslationServer.translate(entry[1] if mac else entry[2]))
 
 	if device == Device.MOUSE:
-		names.append(MOUSE_LABELS.get(code, "Mouse %d" % code))
+		names.append(TranslationServer.translate(MOUSE_LABELS[code]) if MOUSE_LABELS.has(code) else TranslationServer.translate("Mouse %d") % code)
 	else:
 		names.append(full_key_name(code))
 
@@ -243,7 +250,7 @@ static func full_key_name(keycode: int) -> String:
 		return "Cmd" if is_macos() else "Super"
 
 	if FULL_KEY_NAMES.has(keycode):
-		return FULL_KEY_NAMES[keycode]
+		return TranslationServer.translate(FULL_KEY_NAMES[keycode])
 
 	if _is_letter_or_digit(keycode) and DisplayServer.get_name() != "headless":
 		var layout_key := DisplayServer.keyboard_get_label_from_physical(keycode as Key)
@@ -254,7 +261,7 @@ static func full_key_name(keycode: int) -> String:
 	var name := OS.get_keycode_string(keycode)
 
 	if name.begins_with("Kp "):
-		return "Keypad " + name.substr(3)
+		return TranslationServer.translate("Keypad %s") % name.substr(3)
 
 	return name
 
@@ -265,7 +272,7 @@ static func _modifier_prefix(value: int) -> String:
 
 	for entry in [[CONTROL, "⌃", ""], [ALT, "⌥", "Alt+"], [SHIFT, "⇧", "Shift+"], [COMMAND, "⌘", "Ctrl+"]]:
 		if value & entry[0]:
-			text += entry[1] if is_macos() else entry[2]
+			text += entry[1] if is_macos() else TranslationServer.translate(str(entry[2]).trim_suffix("+")) + "+"
 
 	return text
 

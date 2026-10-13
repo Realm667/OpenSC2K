@@ -30,6 +30,7 @@ func _run() -> void:
 	var engine := main.simulation_state.simulation_engine
 	var random_before := [engine.random.state, engine.lfsr_random.state, engine.game_random.state]
 	var prepare := main.visual_preparation
+	main.preferences.use_classic_zoom_graphics = true
 	main.preferences.zoom_graphics = [0, 1, 2, 2, 2, 2]
 	assert(prepare.required_variants() == [0, 3, 5], "Preload only the variants reachable at configured zooms")
 	main.preferences.zoom_graphics = [1, 2, 2, 2, 2, 2]
