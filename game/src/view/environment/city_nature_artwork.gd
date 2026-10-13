@@ -30,7 +30,7 @@ static func sprite_id(view: int, density: int, neighbors: int, variant: int) -> 
 	return FIRST + (neighbors * VARIANTS + variant) * SPAN + view * 500 + 5 + density
 
 
-static func prepare(archive: Sc2SpriteArchive, palette: Sc2Palette) -> void:
+static func prepare(archive: Sc2SpriteArchive, palette: Sc2Palette, authored: VisualArtwork = null) -> void:
 	if not archive.visual_nature.is_empty():
 		return
 	var trees := _templates(palette)
@@ -74,6 +74,83 @@ static func prepare(archive: Sc2SpriteArchive, palette: Sc2Palette) -> void:
 				var rock := offset != 256 and color.g < color.r * 0.76
 				mask.set_pixel(at % entry.width, at / entry.width, Color(0, 1, 0, 0.55 if rock else (1.0 if offset == 256 else 0.92)))
 			archive.visual_nature_masks[id] = mask
+	if authored != null:
+		_apply_authored(archive, palette, authored)
+
+
+static func _apply_authored(archive: Sc2SpriteArchive, palette: Sc2Palette, authored: VisualArtwork) -> void:
+	var colors := {}
+	for index in 256:
+		var color := palette.color(index).to_rgba32()
+		if not colors.has(color):
+			colors[color] = index
+	var decoded_cache := {}
+	for key: String in authored.frames:
+		var frame := authored.frames[key]
+		if not key.begins_with("woodland/") and not key.begins_with("ground/"):
+			continue
+		var parts := key.split("/")
+		for view in 3:
+			if not archive.entries_by_id.has(view * 500 + 6):
+				continue
+			var divisor := 4 >> view
+			var size := Vector2i(frame.logical_size.x / divisor, (frame.logical_size.y + divisor - 1) / divisor)
+			var id: int
+			var entry: Sc2SpriteArchive.SpriteEntry
+			if parts[0] == "woodland":
+				id = sprite_id(view, int(parts[1]), int(parts[2]), int(parts[3]))
+				var identity := frame.image.get_instance_id()
+				if not decoded_cache.has(identity):
+					var decoded := IndexedImageResult.new()
+					decoded.width = frame.image.get_width()
+					decoded.height = frame.image.get_height()
+					decoded.pixels.resize(decoded.width * decoded.height)
+					for y in decoded.height:
+						for x in decoded.width:
+							var pixel := frame.image.get_pixel(x, y)
+							var rgba := pixel.to_rgba32()
+							if pixel.a8 > 0 and not colors.has(rgba):
+								colors[rgba] = _nearest(palette, pixel)
+							decoded.pixels[y * decoded.width + x] = -1 if pixel.a8 == 0 else colors[rgba]
+					decoded_cache[identity] = decoded
+				var indices := MasterSpriteSource._sample_indices(decoded_cache[identity], size, divisor)
+				entry = Sc2SpriteArchive.entry_from_indices(id, size.x, size.y, indices)
+			else:
+				var base_id := int(parts[1]) - 1000 + view * 500
+				var ground := archive.find_sprite(base_id)
+				if ground == null or Vector2i(ground.width, ground.height) != size:
+					continue
+				id = FIRST + GROUND_VARIANT * SPAN + base_id
+				entry = Sc2SpriteArchive.entry_from_indices(id, size.x, size.y, ground.decode_indices().pixels)
+				if frame.season_mask != null:
+					archive.visual_nature_masks[base_id] = _logical_mask(frame.season_mask, size, divisor)
+					archive.visual_season_artwork[base_id] = frame.season_mask
+			archive.visual_nature[id] = entry
+			var hd := HdSprite.new()
+			hd.image = frame.image
+			hd.height = size.y
+			archive.high_resolution[id] = hd
+			if frame.season_mask != null:
+				archive.visual_nature_masks[id] = _logical_mask(frame.season_mask, size, divisor)
+				archive.visual_season_artwork[id] = frame.season_mask
+
+
+static func _logical_mask(source: Image, size: Vector2i, divisor: int) -> Image:
+	var result := Image.create(size.x, size.y, false, Image.FORMAT_RGBA8)
+	for y in size.y:
+		for x in size.x:
+			var sx := mini(source.get_width() - 1, x * divisor * 4 + divisor * 2)
+			var sy := maxi(0, source.get_height() - 1 - (size.y - 1 - y) * divisor * 4)
+			result.set_pixel(x, y, source.get_pixel(sx, sy))
+	return result
+
+
+static func atlas_masks(archive: Sc2SpriteArchive) -> Dictionary:
+	var result: Dictionary = {}
+	result.merge(archive.visual_seasons)
+	for id: int in archive.visual_season_artwork:
+		result[id] = {"logical": archive.visual_seasons.get(id), "artwork": archive.visual_season_artwork[id]}
+	return result
 
 
 static func _nearest(palette: Sc2Palette, target: Color) -> int:

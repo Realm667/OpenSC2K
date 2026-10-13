@@ -6,6 +6,7 @@ uniform sampler2D animated_palette : source_color, filter_nearest, repeat_disabl
 uniform sampler2D foreground : filter_nearest, repeat_disable;
 uniform bool has_foreground = false;
 uniform bool frame_blending = false;
+uniform bool literal_artwork = false;
 uniform float frame_mix = 1.0;
 uniform vec2 sprite_size;
 uniform vec2 mask_size;
@@ -16,13 +17,13 @@ void vertex() {
 }
 void fragment() {
 	vec4 indexed = texture(TEXTURE, UV);
-	vec3 color = texture(animated_palette, vec2((round(indexed.r * 255.0) + 0.5) / 256.0, 0.5)).rgb;
+	vec3 color = literal_artwork ? indexed.rgb : texture(animated_palette, vec2((round(indexed.r * 255.0) + 0.5) / 256.0, 0.5)).rgb;
 	float alpha = indexed.a;
 	if (frame_blending) {
 		vec4 a = texture(TEXTURE, vec2(UV.x, UV.y * 0.5));
 		vec4 b = texture(TEXTURE, vec2(UV.x, (UV.y + 1.0) * 0.5));
-		vec3 ca = texture(animated_palette, vec2((round(a.r * 255.0) + 0.5) / 256.0, 0.5)).rgb;
-		vec3 cb = texture(animated_palette, vec2((round(b.r * 255.0) + 0.5) / 256.0, 0.5)).rgb;
+		vec3 ca = literal_artwork ? a.rgb : texture(animated_palette, vec2((round(a.r * 255.0) + 0.5) / 256.0, 0.5)).rgb;
+		vec3 cb = literal_artwork ? b.rgb : texture(animated_palette, vec2((round(b.r * 255.0) + 0.5) / 256.0, 0.5)).rgb;
 		alpha = mix(a.a, b.a, frame_mix);
 		color = mix(ca * a.a, cb * b.a, frame_mix) / max(alpha, 0.00001);
 	}

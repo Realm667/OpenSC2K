@@ -116,7 +116,9 @@ func begin() -> void:
 		archive.entries = original.entries
 		archive.entries_by_id = original.entries_by_id
 		archive.visual_emission = original.visual_emission
+		archive.visual_emission_artwork = original.visual_emission_artwork
 		archive.visual_seasons = original.visual_seasons
+		archive.visual_season_artwork = original.visual_season_artwork
 		archive.visual_nature = original.visual_nature
 		archive.visual_nature_masks = original.visual_nature_masks
 		archive.visual_nature_enabled = original.visual_nature_enabled
@@ -125,6 +127,7 @@ func begin() -> void:
 		archive.water_reflections = original.water_reflections
 		archive.water_indices = original.water_indices
 		archive.redraw_small_highway_ground = original.redraw_small_highway_ground
+		archive.draw_building_ground = original.draw_building_ground
 		archive.visual_city_life_traffic = index % 2 == 1
 		archives.append(archive)
 		var cache := CityRegionCache.new()

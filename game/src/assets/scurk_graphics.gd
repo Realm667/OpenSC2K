@@ -75,6 +75,19 @@ func _load(value: Variant, read_png: Callable, palette: Sc2Palette) -> void:
 			"workspace": WORKSPACE_SIZES.keys(),
 			"presentation": PRESENTATION_SIZES.keys(),
 		}[group]
+		# Independent packs need only the place/print icons they use. Keep the
+		# complete legacy workspace, including its indexed palette sheet, separate.
+		if group == "workspace" and records is Array and not records.is_empty() and records.size() <= 16:
+			var selected: Array[int] = []
+			for record: Variant in records:
+				if not record is Dictionary or record.get("master_scale") != 4:
+					break
+				var id: Variant = record.get("id")
+				if not (id is int or id is float) or id < 1200 or id > 1215 or id != int(id) or int(id) in selected:
+					break
+				selected.append(int(id))
+			if selected.size() == records.size():
+				ids = selected
 
 		if not records is Array or records.size() != ids.size():
 			error = "scurk.%s must contain %d records in resource order" % [group, ids.size()]
@@ -109,9 +122,16 @@ func _load(value: Variant, read_png: Callable, palette: Sc2Palette) -> void:
 				"presentation": PRESENTATION_SIZES.get(ids[i], Vector2i.ZERO),
 			}[group]
 			var allows_alpha: bool = group == "presentation" and ids[i] in [123, 124]
+			var master_scale: Variant = record.get("master_scale", 1)
+			if not (master_scale is int or master_scale is float) or (master_scale != 1 and master_scale != 4):
+				error = "SCURK master_scale must be 1 or 4"
+				return
+			if master_scale == 4 and group not in ["textures", "backgrounds"] and not (group == "workspace" and ids[i] >= 1200 and ids[i] <= 1215):
+				error = "SCURK master_scale 4 requires a texture or background"
+				return
 
-			if Vector2i(png.width, png.height) != size:
-				error = "SCURK bitmap %d must be %d by %d" % [ids[i], size.x, size.y]
+			if Vector2i(png.width, png.height) != size * int(master_scale):
+				error = "SCURK bitmap %d must be %d by %d" % [ids[i], size.x * master_scale, size.y * master_scale]
 
 				return
 
@@ -135,17 +155,30 @@ func _load(value: Variant, read_png: Callable, palette: Sc2Palette) -> void:
 						return
 
 			if group == "textures":
-				patterns.append(png.pixels)
+				patterns.append(_logical_pixels(png, size, int(master_scale)))
 				pattern_names.append(record.name)
 			elif group == "backgrounds":
-				backgrounds.append(png.pixels)
+				backgrounds.append(_logical_pixels(png, size, int(master_scale)))
 			elif group == "controls":
 				control_images[ids[i]] = Sc2SpriteArchive.entry_from_indices(ids[i], 20, 20, png.pixels).create_image(palette).image
 			elif group == "workspace":
-				workspace_images[ids[i]] = Sc2SpriteArchive.entry_from_indices(ids[i], size.x, size.y,
+				workspace_images[ids[i]] = Sc2SpriteArchive.entry_from_indices(ids[i], png.width, png.height,
 					png.pixels).create_image(palette).image
-				workspace_pixels[ids[i]] = png.pixels
+				workspace_pixels[ids[i]] = _logical_pixels(png, size, int(master_scale))
 			else:
 				presentation_images[ids[i]] = Sc2SpriteArchive.entry_from_indices(ids[i], size.x, size.y,
 					png.pixels).create_image(palette).image
 				presentation_pixels[ids[i]] = png.pixels
+
+
+static func _logical_pixels(png: IndexedImageResult, size: Vector2i, scale: int) -> PackedInt32Array:
+	if scale == 1:
+		return png.pixels
+	# The pixel editor paints the original logical grid. Sample exact indices,
+	# never blended RGB: 0 and 255 are brush instructions, and 252 is background.
+	var result := PackedInt32Array()
+	result.resize(size.x * size.y)
+	for y in size.y:
+		for x in size.x:
+			result[y * size.x + x] = png.pixels[(y * scale + scale / 2) * png.width + x * scale + scale / 2]
+	return result

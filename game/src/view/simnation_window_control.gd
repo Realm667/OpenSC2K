@@ -102,6 +102,8 @@ func set_city(value: CityState) -> void:
 func set_sprite_sheet(source: Image) -> void:
 	var prepared := prepare_sprite_sheet(source)
 	sprite_sheet = null if prepared == null else ImageTexture.create_from_image(prepared)
+	if prepared != null and prepared.get_size() == Vector2i(512, 1792):
+		sprite_sheet = HdArtworkTexture.create(prepared, Vector2i(128, 448))
 	queue_redraw()
 
 
@@ -207,8 +209,9 @@ static func prepare_sprite_sheet(source: Image) -> Image:
 	var prepared := source.duplicate()
 	prepared.convert(Image.FORMAT_RGBA8)
 
-	for y in int(SPRITE_SIZE.y * SPRITE_ROW_COUNT):
-		for x in int(SPRITE_SIZE.x):
+	var master_scale := 4 if source.get_size() == Vector2i(512, 1792) else 1
+	for y in int(SPRITE_SIZE.y * SPRITE_ROW_COUNT) * master_scale:
+		for x in int(SPRITE_SIZE.x) * master_scale:
 			var color: Color = prepared.get_pixel(x, y)
 
 			if color.r == 0.0 and color.g == 0.0 and color.b == 0.0:

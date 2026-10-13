@@ -3,7 +3,10 @@ extends RefCounted
 ## Match the standard child-tool palette; retain the terrain water artwork.
 
 static func water_icon(graphics: CityUiGraphics) -> Texture2D:
-	var image := TerrainToolIcons.terrain_action(graphics, "water").get_image()
+	var texture := TerrainToolIcons.terrain_action(graphics, "water")
+	var image: Image = texture.source.diffuse_texture.get_image() if texture is HdArtworkTexture else texture.get_image()
+	if image == null:
+		return null
 	var bounds := Rect2i()
 	var found := false
 	for y in image.get_height():

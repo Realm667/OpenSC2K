@@ -32,7 +32,7 @@ func waterline() -> PackedInt32Array:
 func light_mask(source: Image, flip: bool) -> Image:
 	if source != _light_source:
 		_light_source = source
-		_light_mask = CityBrightmaps.transform_mask(source, image, flip)
+		_light_mask = CityBrightmaps.transform_mask(source, artwork_image if artwork_image != null else image, flip)
 		_light_texture = ImageTexture.create_from_image(_light_mask) if _light_mask != null else null
 		_reflection = null
 	return _light_mask

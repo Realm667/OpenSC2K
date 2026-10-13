@@ -281,6 +281,38 @@ impl Builder {
                 sprite < crate::nature::FIRST && ((self.city.flags[i] & flags::FLIPPED != 0) ^ (developed && self.city.rotation & 1 != 0));
             let image = self.sprites.get(sprite, flip)?;
             let width = self.sprites.images[&image].w;
+            if developed && c.building_ground {
+                // Paint the whole footprint before its one anchored building.
+                // Per-cell draws can cover the building's front in later tiles.
+                let area = (width / (c.hw() * 2)).max(1);
+                let mut footprint = Vec::new();
+                for dx in 0..area {
+                    for dy in 0..area {
+                        let (nx, ny) = (x + dx, y - dy);
+                        if nx >= 0 && ny >= 0 && nx < self.city.edge && ny < self.city.edge {
+                            footprint.push((nx, ny));
+                        }
+                    }
+                }
+                footprint.sort_by_key(|&(nx, ny)| (nx + ny, nx));
+                for (nx, ny) in footprint {
+                    let n = self.city.index(nx, ny);
+                    let terrain = self.city.surface(nx, ny);
+                    let ground = self.ground(n, terrain);
+                    let level = if terrain >= terrain::DEEP_WATER_FIRST {
+                        self.city.water(n)
+                    } else {
+                        self.city.land(n)
+                    };
+                    self.add(
+                        &mut draws,
+                        self.nature_ground(c.base() + ground),
+                        false,
+                        c.side() + (self.city.edge + nx - ny) * c.hw(),
+                        c.top() + (nx + ny) * c.hh() + c.height() - level * c.step(),
+                    )?;
+                }
+            }
             let offset = if composite {
                 c.hh()
             } else if developed {

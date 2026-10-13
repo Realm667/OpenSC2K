@@ -121,8 +121,8 @@ func prepare(city: CityState, palette: Sc2Palette, sprites: Sc2SpriteArchive, vi
 		return "invalid native region view"
 
 	if layout != _layout:
-		_emission = sprites.visual_emission
-		_seasons = sprites.visual_seasons
+		_emission = CityBrightmaps.atlas_masks(sprites)
+		_seasons = CityNatureArtwork.atlas_masks(sprites)
 		var artwork: Dictionary[int, Image] = {}
 
 		for id: int in sprites.entries_by_id:
@@ -139,7 +139,7 @@ func prepare(city: CityState, palette: Sc2Palette, sprites: Sc2SpriteArchive, vi
 
 		# GPU regions and `raster_artwork` draw full-color art
 		if pack_atlas or with_artwork:
-			request.merge(artwork_request(sprites, configuration.sprite_base))
+			request.merge(artwork_request(sprites, configuration.sprite_base, mode == CityViewMode.Mode.CITY))
 
 		request.merge({"view": view, "underground_mode": int(mode == CityViewMode.Mode.UNDERGROUND),
 			"individual_traffic": int(sprites.visual_city_life_traffic and not special_overlays),
@@ -147,6 +147,7 @@ func prepare(city: CityState, palette: Sc2Palette, sprites: Sc2SpriteArchive, vi
 			"natural_terrain": int(sprites.visual_terrain_enabled and mode == CityViewMode.Mode.CITY),
 			"pipes": int(pipes), "subways": int(subways), "mains": int(water_mains), "tunnels": int(tunnels),
 			"redraw_ground": int(sprites.redraw_small_highway_ground), "atlas_edge": atlas_edge,
+			"building_ground": int(sprites.draw_building_ground),
 			"atlas": int(pack_atlas), "special_overlays": int(special_overlays), "animation_phase": animation_phase,
 			# an HD pack shows every effect on its art
 			"shadow_colors": shadow_colors(palette), "hd_effects": ALL_HD_EFFECTS})
@@ -275,7 +276,7 @@ static func foreground_commands(records: PackedInt64Array, region_orders := fals
 # Shadows darken 0x5f to 0x64 and the 0x74 to 0x7e band to 0x7e. When colors
 # repeat, the first rule wins, so it is inserted last
 # The full-color art of the sprites of one view, for `NativeCityRegionBuilder.configure`.
-static func artwork_request(sprites: Sc2SpriteArchive, sprite_base: int) -> Dictionary:
+static func artwork_request(sprites: Sc2SpriteArchive, sprite_base: int, include_nature := true) -> Dictionary:
 	var stills: Dictionary[int, Image] = {}
 	var heights: Dictionary[int, int] = {}
 	var animations: Dictionary[int, Image] = {}
@@ -283,7 +284,13 @@ static func artwork_request(sprites: Sc2SpriteArchive, sprite_base: int) -> Dict
 	var rates: Dictionary[int, int] = {}
 
 	for id: int in sprites.high_resolution:
-		if id < sprite_base or id >= sprite_base + 500 or not sprites.entries_by_id.has(id):
+		var nature := sprites.visual_nature.has(id) and id % CityNatureArtwork.SPAN / 500 == sprite_base / 500
+		if nature:
+			if not include_nature:
+				continue
+			if (id % 500 >= 256 and not sprites.visual_terrain_enabled) or (id % 500 < 256 and not sprites.visual_nature_enabled):
+				continue
+		elif id < sprite_base or id >= sprite_base + 500 or not sprites.entries_by_id.has(id):
 			continue
 
 		var art := sprites.high_resolution[id]

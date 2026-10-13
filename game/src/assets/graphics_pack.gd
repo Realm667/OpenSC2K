@@ -18,6 +18,7 @@ var scurk_graphics: ScurkGraphics
 var city_ui_graphics: CityUiGraphics
 var desktop_graphics: DesktopGraphics
 var scenario_graphics: ScenarioGraphics
+var visual_artwork: VisualArtwork
 var _root := ""
 
 
@@ -65,6 +66,8 @@ func apply_to(assets: OriginalGameAssets) -> bool:
 
 	if scenario_graphics != null:
 		assets.scenario_graphics = scenario_graphics
+	if visual_artwork != null or not partial:
+		assets.visual_artwork = visual_artwork
 
 	for field in ui_images:
 		assets.set(field, ui_images[field])
@@ -138,11 +141,24 @@ func _load() -> void:
 
 		scenario_palette = scenario_image.palette
 
-	if not _load_sprites(manifest.get("large_sprites", []), large_sprites):
-		return
+	if manifest.has("master_sprites"):
+		if manifest.has("large_sprites") or manifest.has("small_medium_sprites"):
+			_fail("Unsupported graphics pack format or version")
+			return
+		var masters := MasterSpriteSource.new()
+		if not masters.load_records(manifest.master_sprites, _read_png, palette):
+			_fail(masters.error if error.is_empty() else error)
+			return
+		large_sprites = masters.large
+		small_medium_sprites = masters.small_medium
+		large_sprites.redraw_small_highway_ground = redraw
+		small_medium_sprites.redraw_small_highway_ground = redraw
+	else:
+		if not _load_sprites(manifest.get("large_sprites", []), large_sprites):
+			return
 
-	if not _load_sprites(manifest.get("small_medium_sprites", []), small_medium_sprites):
-		return
+		if not _load_sprites(manifest.get("small_medium_sprites", []), small_medium_sprites):
+			return
 
 	var ui: Variant = manifest.get("ui")
 
@@ -201,6 +217,11 @@ func _load() -> void:
 		if error.is_empty() and not scenario_graphics.error.is_empty():
 			_fail(scenario_graphics.error)
 
+	if error.is_empty() and manifest.has("visual_artwork"):
+		visual_artwork = VisualArtwork.load_records(manifest.visual_artwork, _read_rgba_png)
+		if error.is_empty() and not visual_artwork.error.is_empty():
+			_fail(visual_artwork.error)
+
 	if (error.is_empty()
 			and large_sprites.entries.is_empty()
 			and small_medium_sprites.entries.is_empty()
@@ -208,7 +229,8 @@ func _load() -> void:
 			and scurk_graphics == null
 			and city_ui_graphics == null
 			and desktop_graphics == null
-			and scenario_graphics == null):
+			and scenario_graphics == null
+			and visual_artwork == null):
 		_fail("Graphics pack contains no assets")
 
 
@@ -248,37 +270,64 @@ func _load_sprites(records: Variant, archive: Sc2SpriteArchive) -> bool:
 
 
 func _read_png(relative_path: Variant) -> IndexedImageResult:
+	var path := _png_path(relative_path)
+	if path.is_empty():
+		return null
+	var decoded := Png.load_path(_root.path_join(path))
+	if not decoded.ok:
+		_fail("%s: %s" % [path, decoded.error])
+		return null
+	return decoded
+
+
+func _read_rgba_png(relative_path: Variant) -> Image:
+	var path := _png_path(relative_path)
+	if path.is_empty():
+		return null
+	var bytes := FileAccess.get_file_as_bytes(_root.path_join(path))
+	if bytes.size() < 24 or bytes.slice(0, 8) != PackedByteArray([137, 80, 78, 71, 13, 10, 26, 10]):
+		_fail("Cannot read visual artwork PNG: %s" % path)
+		return null
+	var header := StreamPeerBuffer.new()
+	header.data_array = bytes.slice(16, 24)
+	header.big_endian = true
+	var width := header.get_u32()
+	var height := header.get_u32()
+	if width < 1 or height < 1 or width > 8192 or height > 8192:
+		_fail("Visual artwork PNG dimensions must be 1 through 8192: %s" % path)
+		return null
+	var image := Image.new()
+	if bytes.is_empty() or image.load_png_from_buffer(bytes) != OK:
+		_fail("Cannot read visual artwork PNG: %s" % path)
+		return null
+	image.convert(Image.FORMAT_RGBA8)
+	return image
+
+
+func _png_path(relative_path: Variant) -> String:
 	if not relative_path is String or relative_path.is_empty():
 		_fail("PNG path must be a nonempty string")
 
-		return null
+		return ""
 
 	var path: String = relative_path
 
 	if path.is_absolute_path() or path.contains(":") or path.contains("\\"):
 		_fail("PNG paths must be relative and use forward slashes")
 
-		return null
+		return ""
 
 	for component in path.split("/"):
 		if component in ["", ".", ".."]:
 			_fail("PNG paths must not contain empty, dot, or parent components")
 
-			return null
+			return ""
 
 	if path.get_extension().to_lower() != "png":
 		_fail("Graphics files must be PNG")
 
-		return null
-
-	var decoded := Png.load_path(_root.path_join(path))
-
-	if not decoded.ok:
-		_fail("%s: %s" % [path, decoded.error])
-
-		return null
-
-	return decoded
+		return ""
+	return path
 
 
 func _fail(message: String) -> bool:

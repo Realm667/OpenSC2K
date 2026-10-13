@@ -95,7 +95,8 @@ vec4 cloud_sample(vec2 grid_position, float softness, float map_edge) {
 			// A uniform branch keeps steady weather at one atlas lookup. Blend
 			// premultiplied silhouettes only during a coherent two-type front.
 			if (cloud_type_blend > 0.0) {
-				vec4 incoming = textureLod(cloud_field_next, atlas_uv, lod);
+				float next_lod = max(lod + log2(float(textureSize(cloud_field_next, 0).x) / float(textureSize(cloud_field, 0).x)), 0.0);
+				vec4 incoming = textureLod(cloud_field_next, atlas_uv, next_lod);
 				float alpha = mix(cloud.a, incoming.a, cloud_type_blend);
 				cloud.rgb = mix(cloud.rgb * cloud.a, incoming.rgb * incoming.a, cloud_type_blend) / max(alpha, 0.001);
 				cloud.a = alpha;
@@ -117,11 +118,17 @@ vec4 cloud_sample(vec2 grid_position, float softness, float map_edge) {
 	return vec4(combined.rgb / max(combined.a, 0.001), combined.a);
 }
 
+float cloud_shadow_lod() {
+	// Keep shadow softness in world units when a pack increases pixel density.
+	// The built-in atlases have 1254px sides; 4x art needs two more mip levels.
+	return max(5.0 + log2(float(textureSize(cloud_field, 0).x) / 1254.0), 0.0);
+}
+
 float cloud_cover(vec2 grid_position) {
 	// A prefiltered alpha gives diffuse shadow edges with one shared lookup
 	// per candidate instead of multiplying the full cloud search five times.
 	if (cloud_cover_cached) { return texture(cloud_cover_field, (grid_position - cloud_drift) / cloud_span).r; }
-	return cloud_sample(grid_position, 5.0, -1.0).a;
+	return cloud_sample(grid_position, cloud_shadow_lod(), -1.0).a;
 }
 
 // Air and water reflections use exactly the same authored volume and alpha.

@@ -336,6 +336,8 @@ func _add_group_button(
 
 
 func _toolbar_icon(region: Rect2i) -> Texture2D:
+	var scale := 4 if toolbar_art != null and toolbar_art.get_size() == Vector2i(3460, 92) else 1
+	region = Rect2i(region.position * scale, region.size * scale)
 	if (
 		toolbar_art == null
 		or not Rect2i(Vector2i.ZERO, toolbar_art.get_size()).encloses(region)
@@ -364,6 +366,8 @@ func _toolbar_icon(region: Rect2i) -> Texture2D:
 		return null
 
 	var bounds := Rect2i(minimum, maximum - minimum + Vector2i.ONE)
+	if scale == 4:
+		return HdArtworkTexture.create(image.get_region(bounds), Vector2i(ceili(bounds.size.x / 4.0), ceili(bounds.size.y / 4.0)))
 
 	return PixelArtTexture.wrap(ImageTexture.create_from_image(image.get_region(bounds)))
 
@@ -538,6 +542,9 @@ func _build_landscape_tools() -> void:
 		button.tooltip_text = str(Tools.GROUPS[group].tools[tool].name)
 		button.icon = _icon_provider.call(group, tool) if _icon_provider.is_valid() else null
 		if (group in [CityToolIds.Group.BULLDOZER, CityToolIds.Group.LANDSCAPE] and button.icon != null
+				and button.icon is HdArtworkTexture and button.icon.get_meta("terrain_toolbar", false)):
+			button.icon = HdArtworkTexture.create(button.icon.source.diffuse_texture.get_image(), button.icon.logical_size / 2)
+		elif (group in [CityToolIds.Group.BULLDOZER, CityToolIds.Group.LANDSCAPE] and button.icon != null
 				and not button.icon is HdArtworkTexture):
 			# terrain symbols are 19-pixel native icons, like the city toolbar
 			var native_icon := PixelArtTexture.unwrap(button.icon).get_image()

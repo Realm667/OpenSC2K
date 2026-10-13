@@ -13,6 +13,16 @@ static func fingerprint(entry: Sc2SpriteArchive.SpriteEntry) -> String:
 
 static func load_archive(archive: Sc2SpriteArchive, folder: String, group: String) -> void:
 	archive.visual_emission.clear()
+	archive.visual_emission_artwork.clear()
+	# A master pack owns its light masks. Original catalog files remain optional.
+	for id: int in archive.high_resolution:
+		var hd := archive.high_resolution[id]
+		var entry := archive.find_sprite(id)
+		if hd.emission == null or entry == null:
+			continue
+		var logical := HdSprite.scaled(hd.emission, Vector2i(entry.width, entry.height))
+		archive.visual_emission[id] = logical
+		archive.visual_emission_artwork[id] = hd.emission_animation if hd.emission_animation != null else hd.emission
 	folder = DEFAULT_FOLDER if folder.is_empty() else resolve_folder(folder)
 	var path := folder.path_join("catalog.json")
 	if not FileAccess.file_exists(path):
@@ -39,8 +49,19 @@ static func load_archive(archive: Sc2SpriteArchive, folder: String, group: Strin
 		if image == null or image.get_size() != Vector2i(entry.width, entry.height):
 			continue
 		image.convert(Image.FORMAT_RGBA8)
+		# An explicit compatible custom mask takes precedence, including darkness.
+		archive.visual_emission_artwork.erase(id)
+		archive.visual_emission.erase(id)
 		if not image.is_invisible():
 			archive.visual_emission[id] = image
+
+
+static func atlas_masks(archive: Sc2SpriteArchive) -> Dictionary:
+	var result: Dictionary = {}
+	result.merge(archive.visual_emission)
+	for id: int in archive.visual_emission_artwork:
+		result[id] = {"logical": archive.visual_emission.get(id), "artwork": archive.visual_emission_artwork[id]}
+	return result
 
 
 static func transform_mask(source: Image, silhouette: Image, flip: bool) -> Image:

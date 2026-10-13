@@ -4,7 +4,9 @@ extends RefCounted
 var entries: Array[SpriteEntry] = []
 var entries_by_id: Dictionary[int, SpriteEntry] = {}
 var visual_emission: Dictionary[int, Image] = {}
+var visual_emission_artwork: Dictionary[int, Image] = {}
 var visual_seasons: Dictionary[int, Image] = {}
+var visual_season_artwork: Dictionary[int, Image] = {}
 var visual_nature: Dictionary[int, SpriteEntry] = {}
 var visual_nature_masks: Dictionary[int, Image] = {}
 var visual_nature_enabled := false
@@ -16,6 +18,7 @@ var visual_city_life_traffic := false
 var parse_error := ""
 # alternate art can leave the ground visible below its small highway pieces
 var redraw_small_highway_ground := false
+var draw_building_ground := false
 # full-color art from an HD sprite pack, by sprite ID. It changes only the look
 # of a sprite, never its indexed pixels
 var high_resolution: Dictionary[int, HdSprite] = {}
@@ -62,6 +65,7 @@ static func combine(archives: Array[Sc2SpriteArchive]) -> Sc2SpriteArchive:
 			return result
 
 		result.redraw_small_highway_ground = result.redraw_small_highway_ground or archive.redraw_small_highway_ground
+		result.draw_building_ground = result.draw_building_ground or archive.draw_building_ground
 
 		# a later sprite replaces the art of an earlier sprite with its ID
 		for entry in archive.entries:
@@ -79,6 +83,9 @@ func parse(bytes: PackedByteArray) -> bool:
 	entries_by_id.clear()
 	visual_nature.clear()
 	visual_nature_masks.clear()
+	visual_season_artwork.clear()
+	visual_emission_artwork.clear()
+	draw_building_ground = false
 	high_resolution.clear()
 	parse_error = ""
 	redraw_small_highway_ground = false

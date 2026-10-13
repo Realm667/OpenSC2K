@@ -203,13 +203,20 @@ func _load(value: Variant, read_png: Callable, _palette: Sc2Palette) -> void:
 					return
 
 				var size := native_size(app, kind, ids[i])
+				var master_scale: Variant = record.get("master_scale", 1)
+				if not (master_scale is int or master_scale is float) or (master_scale != 1 and master_scale != 4):
+					error = "Desktop master_scale must be 1 or 4"
+					return
+				if master_scale == 4 and record.has("and_png"):
+					error = "Desktop 4x masters use alpha instead of legacy AND/XOR masks"
+					return
 
-				if Vector2i(png.width, png.height) != size:
-					error = "Desktop PNG must use its native dimensions"
+				if Vector2i(png.width, png.height) != size * int(master_scale):
+					error = "Desktop PNG dimensions must match its master_scale"
 
 					return
 
-				var image: Image = Sc2SpriteArchive.entry_from_indices(0, size.x, size.y, png.pixels).create_image(png.palette).image
+				var image: Image = Sc2SpriteArchive.entry_from_indices(0, png.width, png.height, png.pixels).create_image(png.palette).image
 
 				if kind == "icons":
 					icons[app][ids[i]] = image
@@ -243,11 +250,18 @@ func _load(value: Variant, read_png: Callable, _palette: Sc2Palette) -> void:
 
 					cursors[app][ids[i]] = Cursor.new(PeIconCursorResource.transparent_image(decoded).image, hotspot, decoded)
 				else:
-					cursors[app][ids[i]] = Cursor.new(image, hotspot)
+					var master: Image = image if master_scale == 4 else null
+					if master != null:
+						image = image.duplicate()
+						image.resize(size.x, size.y, Image.INTERPOLATE_LANCZOS)
+					var cursor_image := Cursor.new(image, hotspot)
+					cursor_image.high_resolution = master
+					cursors[app][ids[i]] = cursor_image
 
 
 class Cursor extends RefCounted:
 	var image: Image
+	var high_resolution: Image
 	var hotspot := Vector2i.ZERO
 	var masked: PeIconCursorResource.DecodedImage
 

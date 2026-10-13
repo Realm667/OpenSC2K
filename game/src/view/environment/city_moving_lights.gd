@@ -6,8 +6,11 @@ const SOURCES := CityMovingLightSources.DATA
 var masks: Dictionary[String, Image] = {}
 
 
-func mask(archive: Sc2SpriteArchive, sprite_id: int) -> Image:
+func mask(archive: Sc2SpriteArchive, sprite_id: int, artwork := false) -> Image:
 	# A graphics set's own authored brightmap always takes precedence.
+	# Presence in the artwork map also preserves explicit custom-mask overrides.
+	if artwork and archive.visual_emission_artwork.has(sprite_id) and archive.high_resolution.has(sprite_id):
+		return archive.high_resolution[sprite_id].emission
 	if archive.visual_emission.has(sprite_id):
 		return archive.visual_emission[sprite_id]
 	var record: Dictionary = SOURCES.get(str(sprite_id), {})

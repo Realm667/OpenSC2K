@@ -230,6 +230,7 @@ pub struct Config {
     pub tunnels: bool,
     pub mains: bool,
     pub redraw_ground: bool,
+    pub building_ground: bool,
     /// Draw the animated fire, flood and radiation markers as tile sprites.
     /// Previews use this; the city view draws them as moving sprites.
     pub specials: bool,

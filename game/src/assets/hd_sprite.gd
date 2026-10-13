@@ -11,6 +11,12 @@ var height := 0
 var animation: Image
 var frames := 1
 var fps := 8
+# A master pack's authored emission, at exactly the same size and anchor as
+# image. It belongs to this art, so an HD override cannot retain stale lights.
+var emission: Image
+# Optional light frames follow exactly the animation strip's frame count,
+# dimensions and rate. The visual integration must advance both together.
+var emission_animation: Image
 
 
 # `source` at `size`. The filter averages premultiplied colors, so transparent

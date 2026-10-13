@@ -17,6 +17,7 @@ var _textures: Dictionary[String, ImageTexture] = {}
 var _layer: CanvasLayer
 var _copy: BackBufferCopy
 var _patch: TextureRect
+var _xor_material: ShaderMaterial
 var _owns_hidden_mouse := false
 var _land_cursor := DesktopGraphics.Cursor.new(preload("res://assets/ui/buy_land_cursor.svg").get_image(), Vector2i(1, 1))
 
@@ -35,6 +36,7 @@ func _ready() -> void:
 	_patch.stretch_mode = TextureRect.STRETCH_SCALE
 	var shader_material := ShaderMaterial.new()
 	shader_material.shader = XOR_SHADER
+	_xor_material = shader_material
 	_patch.material = shader_material
 	_layer.add_child(_patch)
 	_layer.hide()
@@ -76,7 +78,7 @@ func present(app: String, group: int, point: Vector2, shape: int) -> void:
 		var key := "%s:%d" % [app, group]
 
 		if not _textures.has(key):
-			var image: Image = record.image
+			var image: Image = record.high_resolution if record.high_resolution != null else record.image
 
 			if image == null:
 				image = mask_image(record.masked)
@@ -84,18 +86,20 @@ func present(app: String, group: int, point: Vector2, shape: int) -> void:
 			_textures[key] = ImageTexture.create_from_image(image)
 			upload_count += 1
 
-		if record.image != null:
+		if record.image != null and record.high_resolution == null:
 			Input.set_custom_mouse_cursor(_textures[key], shape, Vector2(record.hotspot))
 		else:
 			_patch.texture = _textures[key]
+			_patch.material = null if record.high_resolution != null else _xor_material
+			_patch.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR if record.high_resolution != null else CanvasItem.TEXTURE_FILTER_NEAREST
 			_layer.show()
-			_copy.show()
+			_copy.visible = record.high_resolution == null
 
 			if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
 				Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 				_owns_hidden_mouse = true
 
-	if record.image == null:
+	if record.image == null or record.high_resolution != null:
 		# match the native cursors, which the system draws at its display scale
 		# and not at the UI scale, on whole screen pixels
 		var pixel := 1.0

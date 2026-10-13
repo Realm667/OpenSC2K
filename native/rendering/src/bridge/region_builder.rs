@@ -188,14 +188,27 @@ fn city(d: &VarDictionary) -> Result<City, String> {
 }
 
 fn auxiliary_images(images: &VarDictionary) -> HashMap<u64, Sprite> {
-    images
-        .iter_shared()
-        .filter_map(|(key, value)| {
-            let id = key.try_to::<i64>().ok()?;
-            let image = value.try_to::<Gd<Image>>().ok()?;
-            Some((id as u64 * 2, sprite_from_image(&image).ok()?))
-        })
-        .collect()
+    let mut result = HashMap::new();
+    for (key, value) in images.iter_shared() {
+        let Ok(id) = key.try_to::<u32>() else { continue };
+        let key = u64::from(id) * 2;
+        if let Ok(image) = value.try_to::<Gd<Image>>() {
+            if let Ok(sprite) = sprite_from_image(&image) {
+                result.insert(key, sprite);
+            }
+        } else if let Ok(bundle) = value.try_to::<AnyDictionary>() {
+            // Preserve the legacy logical mask for CPU and reflection paths.
+            // The tagged master follows the HD atlas and animation UVs.
+            for (name, flag) in [("logical", 0), ("artwork", sprites::ARTWORK_SLOT)] {
+                let Some(value) = bundle.get(name) else { continue };
+                let Ok(image) = value.try_to::<Gd<Image>>() else { continue };
+                if let Ok(sprite) = sprite_from_image(&image) {
+                    result.insert(key | flag, sprite);
+                }
+            }
+        }
+    }
+    result
 }
 
 #[godot_api]
@@ -300,6 +313,7 @@ impl NativeCityRegionBuilder {
                 tunnels: int(&request, "tunnels", 1) != 0,
                 mains: int(&request, "mains", 1) != 0,
                 redraw_ground: int(&request, "redraw_ground", 0) != 0,
+                building_ground: int(&request, "building_ground", 0) != 0,
                 specials: int(&request, "special_overlays", 0) != 0,
                 individual_traffic: int(&request, "individual_traffic", 0) != 0,
                 natural_forests: int(&request, "natural_forests", 0) != 0,

@@ -193,8 +193,9 @@ func _rebuild_tabs() -> void:
 			and not icon_sheet.is_empty()
 			and icon_sheet.get_width() >= (index + 1) * 26
 		):
-			var region := icon_sheet.get_region(Rect2i(index * 26, 0, 26, 20))
-			icon = PixelArtTexture.wrap(ImageTexture.create_from_image(region))
+			var scale := 4 if icon_sheet.get_size() == Vector2i(936, 80) else 1
+			var region := icon_sheet.get_region(Rect2i(index * 26 * scale, 0, 26 * scale, 20 * scale))
+			icon = HdArtworkTexture.create(region, Vector2i(26, 20)) if scale == 4 else PixelArtTexture.wrap(ImageTexture.create_from_image(region))
 
 		tab_bar.add_tab("", icon)
 		tab_bar.set_tab_tooltip(index, TAB_NAMES[index])

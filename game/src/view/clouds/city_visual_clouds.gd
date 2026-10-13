@@ -32,6 +32,26 @@ var storminess := 0.0
 var _preview_signature: Array = []
 var _manual_preview := false
 var _zoom := -1.0
+var _artwork: VisualArtwork
+var _authored_atlases: Dictionary[int, Texture2D] = {}
+
+
+func artwork_atlas(index: int) -> Texture2D:
+	index = 1 if index == 5 else index
+	var source := app.asset_state.asset_source.assets.visual_artwork if app != null and app.asset_state.asset_source != null else null
+	if source != _artwork:
+		_artwork = source
+		_authored_atlases.clear()
+	if source == null:
+		return CityCloudSituations.ATLASES[index]
+	var key: String = "cloud/" + VisualArtwork.CLOUDS[index]
+	if not source.frames.has(key):
+		return CityCloudSituations.ATLASES[index]
+	if not _authored_atlases.has(index):
+		var image: Image = source.frames[key].image.duplicate()
+		image.generate_mipmaps()
+		_authored_atlases[index] = ImageTexture.create_from_image(image)
+	return _authored_atlases[index]
 
 
 func _init(application: CityApplication) -> void:
@@ -106,7 +126,7 @@ func process(delta: float, phase_elapsed: float, active: bool, light: Color, dar
 	_preview_signature = signature
 	_manual_preview = _manual_preview or manual
 	situations.advance(int(options.get("cloud_mode", 0)), kind, game_weather, delta, phase_elapsed, manual)
-	field = CityCloudSituations.ATLASES[situations.current]
+	field = artwork_atlas(situations.current)
 	var appearance := situations.appearance()
 	if options.weather_enabled:
 		weather_clock = fposmod(weather_clock + maxf(phase_elapsed, 0.0), 900.0)
@@ -150,7 +170,7 @@ func process(delta: float, phase_elapsed: float, active: bool, light: Color, dar
 		appearance.x = lerpf(appearance.x, maxf(appearance.x, 0.7), storminess)
 	parameters.merge({
 		"cloud_field": field,
-		"cloud_field_next": CityCloudSituations.ATLASES[situations.target],
+		"cloud_field_next": artwork_atlas(situations.target),
 		"cloud_type_blend": situations.weight(),
 		"cloud_appearance": appearance,
 		"cloud_span": FIELD_SPAN,

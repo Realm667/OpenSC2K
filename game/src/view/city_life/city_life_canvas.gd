@@ -47,6 +47,14 @@ func _draw() -> void:
 
 
 func render(app: CityApplication, figures: Array, sprites: CityLifeSprites) -> void:
+	var source_art := app.asset_state.asset_source.assets.visual_artwork if app.asset_state.asset_source != null else null
+	if sprites.set_artwork(source_art):
+		if gpu != null:
+			for node in gpu.groups + gpu.emissions:
+				if is_instance_valid(node):
+					node.queue_free()
+			gpu = null
+		atlas = CityLifeAtlas.new()
 	var map := app.map_view
 	var bounds := Rect2i(map.visible_source_rect()).grow(32)
 	if not supports_view(map.visible_source_rect()):
@@ -96,8 +104,9 @@ func render(app: CityApplication, figures: Array, sprites: CityLifeSprites) -> v
 			continue
 		var candidates := _candidates(app, figure.tile, figure.enter)
 		var opacity := figure.opacity()
-		var mask: Image = lights.lamp_mask(sprite, figure.vehicle_kind, figure.direction) if light_active and not figure.walking else null
-		entries.append({"sprite": sprite, "origin": origin, "occluders": candidates, "opacity": opacity, "lamps": mask, "figure": figure})
+		var mask: Image = sprites.lamp_image(sprite, lights, figure.vehicle_kind, figure.direction) if light_active and not figure.walking else null
+		entries.append({"sprite": sprite, "origin": origin, "occluders": candidates, "opacity": opacity, "lamps": mask, "figure": figure,
+			"master": sprites.master_image(sprite), "master_lamps": sprites.lamp_image(sprite, lights, figure.vehicle_kind, figure.direction, true) if mask != null else null})
 	if gpu_enabled:
 		if gpu == null:
 			gpu = CityLifeGpu.new()

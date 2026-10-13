@@ -211,14 +211,15 @@ func refresh_moving_things(view_size := -1) -> void:
 		visual.size = Vector2(resource.native_size)
 		visual.image = visual_image
 		if not command.shadow and light_allowed:
-			var emission := resource.light_mask(moving_lights.mask(sprite_archive, command.sprite_id), command.flip)
+			var light_source := moving_lights.mask(sprite_archive, command.sprite_id, resource.artwork_image != null)
+			var emission := resource.light_mask(light_source, command.flip)
 			if visual_image == resource.image:
 				visual.emission_texture = resource.light_texture()
 			elif emission != null:
 				# The cached mask already includes the original artwork alpha.
 				# Apply the final silhouette to the authored source exactly once.
 				visual.emission_texture = ImageTexture.create_from_image(CityBrightmaps.transform_mask(
-					moving_lights.mask(sprite_archive, command.sprite_id), visual_image, command.flip))
+					light_source, visual_image, command.flip))
 		if sprite_archive.water_reflections and command.floating_altitude >= 0 and not command.shadow:
 			visual.water_reflection = resource.reflection(position, int(command.floating_altitude), app.asset_state.palette, light_allowed)
 		visual.special_overlay = command.overlay >= 0

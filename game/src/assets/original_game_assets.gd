@@ -26,6 +26,7 @@ var scurk_graphics: ScurkGraphics
 var city_ui_graphics: CityUiGraphics
 var desktop_graphics: DesktopGraphics
 var scenario_graphics: ScenarioGraphics
+var visual_artwork: VisualArtwork
 var error := ""
 
 

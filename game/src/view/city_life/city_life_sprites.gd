@@ -11,6 +11,36 @@ const VEHICLE_SIZES := [Vector2i(9, 6), Vector2i(12, 8), Vector2i(14, 9)]
 const VARIANTS := 18
 const CELL := Vector2i(16, 10)
 var images: Dictionary[String, Image] = {}
+var authored: VisualArtwork
+var master_frames: Dictionary[int, VisualArtwork.Frame] = {}
+var logical_lamps: Dictionary[int, Image] = {}
+
+
+func set_artwork(source: VisualArtwork) -> bool:
+	if source == authored:
+		return false
+	authored = source
+	images.clear()
+	master_frames.clear()
+	logical_lamps.clear()
+	return true
+
+
+func master_image(sprite_image: Image) -> Image:
+	var frame := master_frames.get(sprite_image.get_instance_id()) as VisualArtwork.Frame
+	return frame.image if frame != null else sprite_image
+
+
+func lamp_image(sprite_image: Image, lights: CityLifeLights, kind: int, direction: int, master := false) -> Image:
+	var id := sprite_image.get_instance_id()
+	var frame := master_frames.get(id) as VisualArtwork.Frame
+	if frame == null:
+		return lights.lamp_mask(sprite_image, kind, direction)
+	if master and frame.emission != null:
+		return frame.emission
+	if not logical_lamps.has(id):
+		logical_lamps[id] = HdSprite.scaled(frame.emission, frame.logical_size) if frame.emission != null else Image.create(frame.logical_size.x, frame.logical_size.y, false, Image.FORMAT_RGBA8)
+	return logical_lamps[id]
 var _vehicle_atlas := VEHICLE_ATLAS.get_image()
 var _diagonal_atlas := DIAGONAL_ATLAS.get_image()
 
@@ -26,8 +56,16 @@ func prepare_frames() -> void:
 
 
 func sprite(walking: bool, variant: int, direction: int, phase: int, vehicle_kind: int = Vehicle.CAR) -> Image:
+	if walking:
+		variant %= COLORS.size()
 	var key := "%d:%d:%d:%d:%d" % [int(walking), variant, direction, phase if walking else 0, vehicle_kind]
 	if not images.has(key):
+		var source_key := "person/%d/%d/%d" % [variant % COLORS.size(), direction, phase % 2] if walking else "vehicle/%s/%d/%d" % [VisualArtwork.VEHICLES[vehicle_kind], variant, direction]
+		if authored != null and authored.frames.has(source_key):
+			var frame := authored.frames[source_key]
+			images[key] = HdSprite.scaled(frame.image, frame.logical_size)
+			master_frames[images[key].get_instance_id()] = frame
+			return images[key]
 		images[key] = _person(variant, direction, phase) if walking else _vehicle(variant, direction, vehicle_kind)
 	return images[key]
 

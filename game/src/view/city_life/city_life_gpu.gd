@@ -24,26 +24,30 @@ var blank := Image.create(128, 128, false, Image.FORMAT_RGBA8)
 var blend := 1.0
 var origin := Vector2i.ZERO
 var upload_bytes := 0
+var artwork_scale := 1
 
 
 func prepare(sprites: CityLifeSprites, lights: CityLifeLights) -> void:
 	if artwork != null:
 		return
-	var image := Image.create(1024, 512, false, Image.FORMAT_RGBA8)
-	var lamp_image := Image.create(1024, 512, false, Image.FORMAT_RGBA8)
+	artwork_scale = 4 if sprites.authored != null else 1
+	var image := Image.create(1024 * artwork_scale, 512 * artwork_scale, false, Image.FORMAT_RGBA8)
+	var lamp_image := Image.create(1024 * artwork_scale, 512 * artwork_scale, false, Image.FORMAT_RGBA8)
 	for walking in [false, true]:
 		for kind in (1 if walking else 3):
-			for variant in 18:
+			for variant in (6 if walking else 18):
 				for direction in 8:
 					for phase in (2 if walking else 1):
 						var sprite := sprites.sprite(walking, variant, direction, phase, kind)
 						var index := rectangles.size()
-						var point := Vector2i(index % 32, index / 32) * CELL
-						var rect := Rect2i(point, sprite.get_size())
+						var point := Vector2i(index % 32, index / 32) * CELL * artwork_scale
+						var art := _scaled(sprites.master_image(sprite), sprite.get_size() * artwork_scale)
+						var rect := Rect2i(point, art.get_size())
 						assert(rect.end.y <= image.get_height())
-						image.blit_rect(sprite, Rect2i(Vector2i.ZERO, sprite.get_size()), point)
+						image.blit_rect(art, Rect2i(Vector2i.ZERO, art.get_size()), point)
 						if not walking:
-							lamp_image.blit_rect(lights.lamp_mask(sprite, kind, direction), Rect2i(Vector2i.ZERO, sprite.get_size()), point)
+							var light := _scaled(sprites.lamp_image(sprite, lights, kind, direction, true), art.get_size())
+							lamp_image.blit_rect(light, Rect2i(Vector2i.ZERO, art.get_size()), point)
 						rectangles[sprite.get_instance_id()] = rect
 	artwork = ImageTexture.create_from_image(image)
 	emission = ImageTexture.create_from_image(lamp_image)
@@ -103,9 +107,9 @@ func render(canvas: CityLifeCanvas, entries: Array[Dictionary]) -> void:
 		var rect := rectangles[entry.sprite.get_instance_id()]
 		var at := slot * STRIDE
 		var destination: Vector2i = entry.origin - origin
-		buffers[group][at] = rect.size.x
+		buffers[group][at] = rect.size.x / artwork_scale
 		buffers[group][at + 3] = destination.x
-		buffers[group][at + 5] = rect.size.y
+		buffers[group][at + 5] = rect.size.y / artwork_scale
 		buffers[group][at + 7] = destination.y
 		var offset := slot * 4
 		data[group][offset] = rect.position.x
@@ -195,6 +199,7 @@ func add_group(parent: Node2D) -> void:
 	var shader := ShaderMaterial.new()
 	shader.shader = SHADER
 	shader.set_shader_parameter("artwork", artwork)
+	shader.set_shader_parameter("artwork_scale", float(artwork_scale))
 	shader.set_shader_parameter("lamps", emission)
 	shader.set_shader_parameter("masks", array)
 	shader.set_shader_parameter("parameters", texture)
@@ -203,3 +208,11 @@ func add_group(parent: Node2D) -> void:
 	node.material = shader
 	parent.add_child(node)
 	groups.append(node)
+
+
+static func _scaled(image: Image, size: Vector2i) -> Image:
+	if image.get_size() == size:
+		return image
+	var result: Image = image.duplicate()
+	result.resize(size.x, size.y, Image.INTERPOLATE_NEAREST)
+	return result

@@ -588,6 +588,7 @@ mod tests {
             tunnels: true,
             mains: true,
             redraw_ground: false,
+            building_ground: false,
             specials: false,
             individual_traffic: false,
             natural_forests: false,

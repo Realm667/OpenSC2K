@@ -2,6 +2,8 @@ class_name CityTornadoRenderer
 extends RefCounted
 ## Keep original indexed artwork. Scroll through a retained foreground mask on the GPU.
 
+@warning_ignore_start("integer_division")
+
 const SHADER := preload("res://src/view/disasters/tornado_sprite.gdshader")
 const PADDING := Vector2i(48, 48)
 var app: CityApplication
@@ -53,33 +55,39 @@ func draw(command: CityDynamicCommand, source: CityDynamicCommand, resource: Cit
 		canvas.add_child(entry.sprite)
 		entries[command.record] = entry
 	seen[command.record] = true
-	if entry.divisor != divisor:
+	var factor := maxi(1, resource.image.get_width() / resource.native_size.x)
+	if entry.divisor != divisor or entry.texture_factor != factor:
 		entry.current = null
 		entry.resource = null
 		entry.divisor = divisor
+		entry.texture_factor = factor
 	var blending: bool = app.preferences.visual_enhancements.disaster_blending
 	var extent := resource.native_size
+	var texture := resource.artwork_texture if resource.artwork_texture != null else resource.texture
+	entry.material.set_shader_parameter("literal_artwork", resource.artwork_texture != null)
 	if blending:
-		if entry.current != resource.texture:
+		if entry.current != texture:
 			var previous := entry.resource if entry.resource != null else resource
 			entry.blend = 0.0 if entry.resource != null else 1.0
 			entry.extent = Vector2i(maxi(previous.native_size.x, extent.x), maxi(previous.native_size.y, extent.y))
-			var atlas := Image.create(entry.extent.x, entry.extent.y * 2, false, Image.FORMAT_RGBA8)
+			var atlas := Image.create(entry.extent.x * factor, entry.extent.y * factor * 2, false, Image.FORMAT_RGBA8)
 			# Tornado art is anchored at its lower right corner.
-			atlas.blit_rect(previous.image, Rect2i(Vector2i.ZERO, previous.native_size), entry.extent - previous.native_size)
-			atlas.blit_rect(resource.image, Rect2i(Vector2i.ZERO, extent), entry.extent - extent + Vector2i(0, entry.extent.y))
+			var previous_image := previous.artwork_image if previous.artwork_image != null else previous.image
+			var next_image := resource.artwork_image if resource.artwork_image != null else resource.image
+			atlas.blit_rect(previous_image, Rect2i(Vector2i.ZERO, previous_image.get_size()), (entry.extent - previous.native_size) * factor)
+			atlas.blit_rect(next_image, Rect2i(Vector2i.ZERO, next_image.get_size()), (entry.extent - extent + Vector2i(0, entry.extent.y)) * factor)
 			entry.atlas = ImageTexture.create_from_image(atlas)
-			entry.current = resource.texture
+			entry.current = texture
 			entry.resource = resource
 		entry.sprite.texture = entry.atlas
-		entry.sprite.scale = Vector2(1.0, 0.5)
+		entry.sprite.scale = Vector2(1.0, 0.5) / factor
 		position += Vector2(extent - entry.extent)
 		extent = entry.extent
 	else:
 		entry.current = null
 		entry.resource = null
-		entry.sprite.texture = resource.texture
-		entry.sprite.scale = Vector2.ONE
+		entry.sprite.texture = texture
+		entry.sprite.scale = Vector2.ONE / factor
 	entry.material.set_shader_parameter("frame_blending", blending)
 	entry.material.set_shader_parameter("frame_mix", entry.blend if blending else 1.0)
 	entry.sprite.position = position
@@ -121,6 +129,7 @@ func sync_transform() -> void:
 
 class Entry extends RefCounted:
 	var divisor := -1
+	var texture_factor := -1
 	var resource: CitySpriteResource
 	var current: Texture2D
 	var atlas: Texture2D

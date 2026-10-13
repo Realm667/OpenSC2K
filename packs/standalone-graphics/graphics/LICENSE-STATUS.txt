@@ -1,0 +1,7 @@
+Newly generated Remaster artwork: distribution license not yet selected.
+No license grant or ownership claim is inferred from generation or local use.
+The repository's existing notices apply to its existing code/resources; this
+document does not extend that license to newly generated artwork.
+
+Neue Remaster-Bilder: Die Veroeffentlichungslizenz ist noch nicht festgelegt.
+Es wird keine Lizenzfreigabe erfunden. Vor einer Veroeffentlichung klaeren.

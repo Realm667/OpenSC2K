@@ -219,6 +219,15 @@ func _load(value: Variant, read_png: Callable, _palette: Sc2Palette) -> void:
 			elif group == "presentation":
 				size = PRESENTATION_SIZES[ids[i]]
 
+			var master_scale: Variant = record.get("master_scale", 1)
+			if not (master_scale is int or master_scale is float) or (master_scale != 1 and master_scale != 4):
+				error = "city_ui master_scale must be 1 or 4"
+				return
+			if master_scale == 4 and group not in ["portraits", "notices"] and not (group == "terrain" and ids[i] == 207):
+				error = "city_ui master_scale 4 requires a portrait, notice or terrain toolbar"
+				return
+			size *= int(master_scale)
+
 			if Vector2i(png.width, png.height) != size or png.pixels.has(-1):
 				error = "city_ui image %s must be opaque and %d by %d" % [str(ids[i]), size.x, size.y]
 
@@ -282,7 +291,9 @@ func terrain_icon(role: String, loose := false) -> Image:
 	if not terrain.has(id) or index < 0:
 		return null
 
-	return terrain[id].get_region(terrain_region(index))
+	var scale := 4 if id == 207 and terrain[id].get_size() == TERRAIN_SIZES[207] * 4 else 1
+	var region := terrain_region(index)
+	return terrain[id].get_region(Rect2i(region.position * scale, region.size * scale))
 
 
 func media_image(index: int, pressed: bool) -> Image:

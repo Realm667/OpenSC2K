@@ -1,6 +1,7 @@
 class_name TerrainToolIcons
 extends RefCounted
 
+@warning_ignore_start("integer_division")
 
 static func stretch() -> ImageTexture:
 	# one flat tile sits one level above the surrounding ground
@@ -25,7 +26,7 @@ static func _fill(image: Image, points: PackedVector2Array, color: Color) -> voi
 				image.set_pixel(x, y, color)
 
 
-static func terrain_action(graphics: CityUiGraphics, role: String) -> ImageTexture:
+static func terrain_action(graphics: CityUiGraphics, role: String) -> Texture2D:
 	var image: Image = null if graphics == null else graphics.terrain_icon(role)
 
 	if image != null:
@@ -37,6 +38,10 @@ static func terrain_action(graphics: CityUiGraphics, role: String) -> ImageTextu
 				if image.get_pixel(x, y).is_equal_approx(background):
 					image.set_pixel(x, y, Color.TRANSPARENT)
 
+		if graphics.terrain.get(207) != null and graphics.terrain[207].get_size() == Vector2i(2176, 76):
+			var texture := HdArtworkTexture.create(image, Vector2i(image.get_width() / 2, image.get_height() / 2))
+			texture.set_meta("terrain_toolbar", true)
+			return texture
 		image.resize(image.get_width() * 2, image.get_height() * 2, Image.INTERPOLATE_NEAREST)
 	else:
 		image = stretch().get_image()

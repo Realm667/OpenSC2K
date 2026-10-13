@@ -103,6 +103,11 @@ func _configure_water(options: Dictionary, refresh := true) -> void:
 		app.map_render.refresh_map()
 
 
+func _authored_visuals() -> VisualArtwork:
+	var source := app.asset_state.asset_source
+	return source.assets.visual_artwork if source != null and source.assets != null else null
+
+
 func reload_brightmaps(refresh := true) -> void:
 	if refresh and app.main_menu != null:
 		app.main_menu.city_background.reload_visual_assets()
@@ -114,8 +119,8 @@ func reload_brightmaps(refresh := true) -> void:
 				CityDispatchLights.prepare(archive, app.asset_state.palette)
 				CitySeasonColors.prepare(archive, app.asset_state.palette)
 				if app.preferences.visual_enhancements.nature_forests_enabled or app.preferences.visual_enhancements.nature_terrain_enabled:
-					CityNatureArtwork.prepare(archive, app.asset_state.palette)
-					archive.visual_seasons.merge(archive.visual_nature_masks)
+					CityNatureArtwork.prepare(archive, app.asset_state.palette, _authored_visuals())
+					archive.visual_seasons.merge(archive.visual_nature_masks, true)
 			archive.visual_revision += 1
 	_configure_water(app.preferences.visual_enhancements, refresh)
 	_configure_nature(app.preferences.visual_enhancements, refresh)
@@ -140,8 +145,8 @@ func _configure_nature(options: Dictionary, refresh := true) -> void:
 		if archive == null or app.asset_state.palette == null:
 			continue
 		if options.nature_forests_enabled or options.nature_terrain_enabled:
-			CityNatureArtwork.prepare(archive, app.asset_state.palette)
-			archive.visual_seasons.merge(archive.visual_nature_masks)
+			CityNatureArtwork.prepare(archive, app.asset_state.palette, _authored_visuals())
+			archive.visual_seasons.merge(archive.visual_nature_masks, true)
 		if archive.visual_nature_enabled != options.nature_forests_enabled or archive.visual_terrain_enabled != options.nature_terrain_enabled:
 			archive.visual_nature_enabled = options.nature_forests_enabled
 			archive.visual_terrain_enabled = options.nature_terrain_enabled

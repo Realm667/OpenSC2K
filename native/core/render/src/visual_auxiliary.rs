@@ -7,7 +7,9 @@ use std::collections::HashMap;
 
 fn sample(key: u64, sprite: &Sprite, artwork: &HashMap<u64, Sprite>, x: i32, y: i32) -> [u8; 4] {
     let base = if key & (1 << 32) != 0 { (key >> 16) & 0xffff } else { key };
-    let Some(mask) = artwork.get(&(base & !1)) else { return [0; 4] };
+    let Some(mask) = artwork.get(&(base & !1)) else {
+        return [0; 4];
+    };
     if mask.w != sprite.w || mask.h != sprite.h {
         return [0; 4];
     }
@@ -34,14 +36,27 @@ fn artwork_sample(key: u64, source: &Artwork, sprite: &Sprite, masks: &HashMap<u
     } else {
         y
     };
+    let frame = y / stride;
+    let alpha = source.image.rgba[(((frame * frame_height + row) * source.image.w + x) * 4 + 3) as usize];
+    // Authored master masks share the artwork's texel grid. A tagged entry
+    // cannot be confused with the logical mask used by CPU and water paths.
+    // Atlas UVs mirror art and auxiliary channels together at draw time.
+    if let Some(mask) = masks.get(&((key & !1) | ARTWORK_SLOT)) {
+        if mask.w != source.image.w || (mask.h != frame_height && mask.h != source.image.h) {
+            return [0; 4];
+        }
+        let mask_row = if mask.h == frame_height { row } else { frame * frame_height + row };
+        let at = ((mask_row * mask.w + x) * 4) as usize;
+        let mut color: [u8; 4] = mask.rgba[at..at + 4].try_into().unwrap();
+        color[3] = ((u16::from(color[3]) * u16::from(alpha)) / 255) as u8;
+        return color;
+    }
     let sx = x * sprite.w / source.image.w;
     let sy = row * source.height / frame_height - (source.height - sprite.h);
     if sy < 0 || sy >= sprite.h {
         return [0; 4];
     }
     let mut color = sample(key, sprite, masks, sx, sy);
-    let frame = y / stride;
-    let alpha = source.image.rgba[(((frame * frame_height + row) * source.image.w + x) * 4 + 3) as usize];
     color[3] = ((u16::from(color[3]) * u16::from(alpha)) / 255) as u8;
     color
 }
@@ -78,7 +93,9 @@ pub fn raster(bounds: Rect, draws: &[Draw], sprites: &HashMap<u64, Sprite>, artw
         if draw.shadow {
             continue;
         }
-        let Some(sprite) = sprites.get(&draw.image) else { continue };
+        let Some(sprite) = sprites.get(&draw.image) else {
+            continue;
+        };
         let clipped = draw.rect.clip(bounds);
         for y in clipped.y..clipped.y + clipped.h {
             for x in clipped.x..clipped.x + clipped.w {
@@ -111,6 +128,96 @@ mod tests {
             rgba,
             la: alpha.iter().flat_map(|a| [0, *a]).collect(),
         }
+    }
+
+    #[test]
+    fn authored_master_masks_keep_subpixel_detail_and_distinct_animation_frames() {
+        use crate::sprites::Atlas;
+        let mut sprites = Sprites::new(HashMap::from([(2, sprite(vec![0; 8], &[255, 255]))]), [0; 4]);
+        let source = Sprite {
+            w: 8,
+            h: 8,
+            rgba: vec![255; 8 * 8 * 4],
+            la: Vec::new(),
+        };
+        sprites.artwork.insert(
+            2,
+            Artwork {
+                image: source,
+                height: 1,
+                frames: 2,
+                fps: 8,
+            },
+        );
+        let mut mask = Sprite {
+            w: 8,
+            h: 8,
+            rgba: vec![0; 8 * 8 * 4],
+            la: Vec::new(),
+        };
+        let red = [231, 143, 61, 191];
+        let blue = [92, 144, 210, 255];
+        mask.rgba[(2 * 8 + 1) * 4..(2 * 8 + 2) * 4].copy_from_slice(&red);
+        mask.rgba[(6 * 8 + 6) * 4..(6 * 8 + 7) * 4].copy_from_slice(&blue);
+        let masks = HashMap::from([(2 | ARTWORK_SLOT, mask)]);
+        let mut packed = Atlas::new(32);
+        let slot = packed.artwork_slot(2, &sprites.artwork[&2]).unwrap();
+        let rgba = atlas(packed.edge, &packed.slots, &sprites, &masks);
+        let pixel = |x: i32, y: i32| -> &[u8] {
+            let at = (((slot.y + y) * packed.edge + slot.x + x) * 4) as usize;
+            &rgba[at..at + 4]
+        };
+        assert_eq!(pixel(1, 4), red, "one master texel survives inside a four-texel logical pixel");
+        assert_eq!(pixel(0, 4), [0; 4], "light must not spread to its neighbor");
+        assert_eq!(pixel(6, 12), blue, "the second frame has independent lighting");
+        assert_eq!(pixel(1, 12), [0; 4], "the first frame is not repeated over the second");
+        assert_eq!(
+            sample(2, &sprites.images[&2], &masks, 0, 0),
+            [0; 4],
+            "HD entries cannot enter the logical path"
+        );
+    }
+
+    #[test]
+    fn master_masks_repeat_static_frames_clip_alpha_and_reject_wrong_dimensions() {
+        let original = sprite(vec![0; 4], &[255]);
+        let mut source = Artwork {
+            image: Sprite {
+                w: 4,
+                h: 8,
+                rgba: vec![255; 4 * 8 * 4],
+                la: Vec::new(),
+            },
+            height: 1,
+            frames: 2,
+            fps: 8,
+        };
+        let mask = Sprite {
+            w: 4,
+            h: 4,
+            rgba: vec![255; 4 * 4 * 4],
+            la: Vec::new(),
+        };
+        let masks = HashMap::from([(2 | ARTWORK_SLOT, mask)]);
+        source.image.rgba[3] = 0;
+        assert_eq!(artwork_sample(2, &source, &original, &masks, 0, 0)[3], 0);
+        assert_eq!(artwork_sample(2, &source, &original, &masks, 0, 8), [255; 4]);
+        assert_eq!(artwork_sample(2, &source, &original, &masks, 1, 7), [255; 4]);
+        let wrong = HashMap::from([(
+            2 | ARTWORK_SLOT,
+            Sprite {
+                w: 4,
+                h: 3,
+                rgba: vec![255; 48],
+                la: Vec::new(),
+            },
+        )]);
+        assert_eq!(artwork_sample(2, &source, &original, &wrong, 0, 8), [0; 4]);
+        // A still source uses the same physical sampling without frame padding.
+        source.frames = 1;
+        source.image.h = 4;
+        source.image.rgba.truncate(64);
+        assert_eq!(artwork_sample(2, &source, &original, &masks, 3, 3), [255; 4]);
     }
     #[test]
     fn colors_gradients_flips_and_traffic_keep_the_original_silhouette() {
