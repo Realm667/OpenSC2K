@@ -163,7 +163,7 @@ func run() -> void:
 	main.coop.session.publish()
 	main.coop.windows.select_land("land_buy")
 	check(main.city_toolbar.land_mode and main.coop.windows.land_button.button_pressed, "dedicated land mode")
-	check(not main.city_toolbar.toolbar_buttons[9].button_pressed and not main.city_toolbar.child_palette.visible, "land buying never activates Residential")
+	check(not main.city_toolbar.toolbar_buttons[9].button_pressed and not main.city_toolbar.hold_menu.visible, "land buying never activates Residential or leaves its flyout open")
 	check(main.map_view.selection_mode == "rectangle", "land mode enables rectangle input")
 	main.coop.windows.land_offer_price = 20
 	main.coop.apply_selection(Vector2i(4, 4), Vector2i(5, 5), [], true)
