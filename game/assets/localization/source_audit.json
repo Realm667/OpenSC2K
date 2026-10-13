@@ -24,6 +24,8 @@
     "Remove": "Internal button node name.",
     "PanelPadding5_2_5_2": "Godot theme variation for binding chips.",
     "Center/Panel/Rows": "Existing progress overlay node path.",
+    "Center/Panel": "Existing progress overlay node path.",
+    "Shade": "Existing progress overlay background node name.",
     "OpenSC2K Koop": "Saved session format signature; never translate.",
     "Multiplayer display transaction": "Internal worker job name.",
     "Multiplayer state codec": "Internal worker job name.",

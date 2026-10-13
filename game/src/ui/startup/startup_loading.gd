@@ -3,29 +3,55 @@ extends CanvasLayer
 
 const MAIN_SCENE := "res://main.tscn"
 var overlay: ProgressOverlay
+var logo: TextureRect
 var loading_scene := false
 
 
 func _ready() -> void:
 	get_window().title = "Reticulating Splines"
-	var settings := ConfigFile.new()
-	settings.load(AppPaths.path("settings.cfg"))
-	AppLocalization.select(str(settings.get_value("general", "ui_language", AppLocalization.DEFAULT)))
 	overlay = preload("res://src/ui/shared/progress_overlay.tscn").instantiate()
 	add_child(overlay)
 	overlay.theme = AppUiTheme.current()
-	var logo := TextureRect.new()
+	# Cover the scene while it is instantiated, with a fully opaque startup surface.
+	overlay.get_node("Shade").color = Color(0.035, 0.047, 0.059, 1)
+	logo = TextureRect.new()
 	logo.texture = preload("res://assets/branding/reticulating-splines-logo.png")
-	logo.custom_minimum_size = Vector2(0, 140)
 	logo.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	logo.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	logo.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var rows := overlay.get_node("Center/Panel/Rows")
-	rows.add_child(logo)
-	rows.move_child(logo, 0)
+	overlay.add_child(logo)
+	overlay.title_label.hide()
+	overlay.detail_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	overlay.get_node("Center/Panel").custom_minimum_size = Vector2.ZERO
+	overlay.get_node("Center").set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+	overlay.resized.connect(_layout_startup)
 	overlay.show_progress("Reticulating Splines", "Loading…", 0.0)
+	_layout_startup()
 	await get_tree().process_frame
 	await get_tree().process_frame
+	# Present the bar before catalogs, scene construction and asset setup can block.
+	if DisplayServer.get_name() != "headless":
+		await RenderingServer.frame_post_draw
+	var settings := ConfigFile.new()
+	settings.load(AppPaths.path("settings.cfg"))
+	AppLocalization.select(str(settings.get_value("general", "ui_language", AppLocalization.DEFAULT)))
+	await _load_application()
+
+
+func _layout_startup() -> void:
+	if logo == null:
+		return
+	var viewport_size := get_viewport().get_visible_rect().size
+	var texture_size := logo.texture.get_size()
+	var scale_factor := minf(viewport_size.x * 0.3 / texture_size.x, viewport_size.y * 0.3 / texture_size.y)
+	logo.size = texture_size * scale_factor
+	logo.position = (viewport_size - logo.size) * 0.5
+	var center: CenterContainer = overlay.get_node("Center")
+	center.position = Vector2(logo.position.x, logo.position.y + logo.size.y + 16.0)
+	center.size = Vector2(logo.size.x, 0.0)
+
+
+func _load_application() -> void:
 	var error := ResourceLoader.load_threaded_request(MAIN_SCENE)
 	if error != OK:
 		_failed(error_string(error))
