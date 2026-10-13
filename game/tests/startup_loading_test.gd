@@ -1,6 +1,14 @@
 extends SceneTree
 
 
+class LayoutPreview extends "res://src/ui/startup/startup_loading.gd":
+	signal start_application
+
+	func _load_application() -> void:
+		await start_application
+		await super._load_application()
+
+
 func _initialize() -> void:
 	_run.call_deferred()
 
@@ -11,7 +19,7 @@ func _run() -> void:
 	var settings := ConfigFile.new()
 	settings.set_value("general", "check_for_updates", false)
 	assert(settings.save(AppPaths.path("settings.cfg")) == OK)
-	var boot := (load("res://src/ui/startup/startup_loading.tscn") as PackedScene).instantiate()
+	var boot = LayoutPreview.new()
 	root.add_child(boot)
 	current_scene = boot
 	assert(boot.overlay.visible)
@@ -19,8 +27,8 @@ func _run() -> void:
 	root.content_scale_factor = 1.0
 	for viewport_size in [Vector2i(640, 480), Vector2i(1280, 720), Vector2i(1920, 1080)]:
 		root.size = viewport_size
-		await process_frame
-		await process_frame
+		for frame in 4:
+			await process_frame
 		var view := root.get_visible_rect()
 		var logo_rect: Rect2 = boot.logo.get_global_rect()
 		assert(logo_rect.size.x <= view.size.x * 0.3 + 1.0, "Startup logo must not exceed 30% of the viewport width")
@@ -29,8 +37,11 @@ func _run() -> void:
 		assert(boot.overlay.bar.is_visible_in_tree() and boot.overlay.bar.size.y > 0.0)
 		assert(boot.overlay.bar.size.x > logo_rect.size.x * 0.5, "The loading bar must not collapse to the text's minimum width")
 		assert(absf(boot.overlay.bar.get_global_rect().get_center().x - logo_rect.get_center().x) < 1.0,
-			"The loading bar stays centered below the logo")
+			"The loading bar stays centered below the logo: %s / %s" % [boot.overlay.bar.get_global_rect(), logo_rect])
 		assert(view.encloses(boot.overlay.bar.get_global_rect()), "The existing loading bar must remain inside the viewport")
+		assert(view.encloses(boot.progress_panel.get_global_rect()), "The whole progress panel must fit inside the viewport")
+	# Test handoff separately: the main scene restores window/UI scale settings.
+	boot.start_application.emit()
 	var started := Time.get_ticks_msec()
 	while is_instance_valid(boot):
 		assert(Time.get_ticks_msec() - started < 60000, "Startup failed to hand off to the application")

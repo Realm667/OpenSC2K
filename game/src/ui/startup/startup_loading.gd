@@ -28,7 +28,11 @@ func _ready() -> void:
 	# and its progress panel has an independent position immediately below it.
 	progress_panel = overlay.get_node("Center/Panel")
 	progress_panel.reparent(overlay)
+	# Autowrapped text can briefly report a tall minimum before receiving its width.
+	progress_panel.minimum_size_changed.connect(progress_panel.reset_size)
 	progress_panel.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+	progress_panel.grow_horizontal = Control.GROW_DIRECTION_END
+	progress_panel.grow_vertical = Control.GROW_DIRECTION_END
 	overlay.get_node("Center").hide()
 	overlay.resized.connect(_layout_startup)
 	overlay.show_progress("Reticulating Splines", "Loading…", 0.0)
