@@ -11,6 +11,8 @@ const PACK_NAMES := { "graphics": "Graphics", "sound": "Sound", "music": "Music"
 
 var app: CityApplication
 var text_resources: OriginalTextResources
+var original_import_prompt: OriginalImportPrompt
+var requested_import_categories := PackedStringArray()
 
 
 func _init(application: CityApplication) -> void:
@@ -74,6 +76,7 @@ func initialize_runtime() -> void:
 	text_resources.library_texts = original_assets.library_texts
 	app.asset_state.scurk_graphics = original_assets.scurk_graphics
 	app.interface.build_interface(original_assets)
+	app.main_overlays.blocking_windows.append(original_import_prompt)
 	app.city_files.sync_upgrade_city_option()
 
 	app.desktop_presentation = CityDesktopPresentation.new()
@@ -110,6 +113,16 @@ func initialize_runtime() -> void:
 
 
 func build_reference_import_dialogs() -> void:
+	original_import_prompt = OriginalImportPrompt.new()
+	app.add_child(original_import_prompt)
+	original_import_prompt.import_chosen.connect(func(activate: bool) -> void:
+		app.reference_import_dialog.activate_after_import = activate
+		app.reference_import_dialog.open(requested_import_categories))
+	original_import_prompt.visibility_changed.connect(func() -> void:
+		if original_import_prompt.visible:
+			var error := OriginalImportPrompt.remember(app.preferences.settings_path)
+			if error != OK:
+				push_warning("Cannot remember the import prompt: " + error_string(error)))
 	app.graphics_source_error_dialog = AcceptDialog.new()
 	app.graphics_source_error_dialog.title = "Graphics source"
 	app.graphics_source_error_dialog.exclusive = true
@@ -142,7 +155,8 @@ func show_reference_import_dialog(categories := PackedStringArray()) -> void:
 	if app.reference_import_dialog == null:
 		return
 
-	app.reference_import_dialog.open(categories)
+	requested_import_categories = categories
+	original_import_prompt.popup_centered(Vector2i(500, 150))
 
 
 func _on_reference_import_canceled() -> void:
@@ -152,6 +166,10 @@ func _on_reference_import_canceled() -> void:
 
 func activate_imported_packs(result: Sc2MediaImportResult) -> void:
 	if not result.ok:
+		return
+	if not app.reference_import_dialog.activate_after_import:
+		app.main_overlays.settings_dialog.rescan_packages()
+		app.reference_import_dialog.add_activation_notes(PackedStringArray([tr("Imported packages are available in Data. Your active sources are unchanged.")]))
 		return
 
 	var notes := PackedStringArray()
@@ -222,7 +240,7 @@ func _show_reference_import_error(message: String) -> void:
 
 func _import_original_game(executable_path: String) -> void:
 	var install_result := OriginalPackImporter.import_executable(
-		executable_path, AppPaths.path("packs"), AppPaths.root()
+		executable_path, PackLibrary.import_root(), AppPaths.root()
 	)
 
 	if not install_result.ok:

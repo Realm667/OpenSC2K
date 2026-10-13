@@ -144,6 +144,10 @@ func _check_settings_feedback(main: Node) -> void:
 				action_index, enabled, _sound_count(main, 505)])
 			await _clear(main)
 			main.reference_import_dialog.hide()
+			if main.assets.original_import_prompt.visible:
+				main.assets.original_import_prompt.get_cancel_button().pressed.emit()
+				await process_frame
+				assert(not main.assets.original_import_prompt.visible)
 
 			for child in dialog.get_children():
 				if child is FileDialog:

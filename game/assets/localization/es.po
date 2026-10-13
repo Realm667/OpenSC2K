@@ -27543,3 +27543,47 @@ msgstr "Cola"
 #. Music box UI; AI-assisted translation from English.
 msgid "Reticulating Splines"
 msgstr "Reticulating Splines"
+
+#. Package library and shared original import prompt; supplementary translation.
+msgid "Folder not found"
+msgstr "Carpeta no encontrada"
+
+#. Package library and shared original import prompt; supplementary translation.
+msgid "No mod manifests found"
+msgstr "No se encontraron manifiestos de mods"
+
+#. Package library and shared original import prompt; supplementary translation.
+msgid "Missing or invalid manifest"
+msgstr "Manifiesto ausente o no válido"
+
+#. Package library and shared original import prompt; supplementary translation.
+msgid "Incompatible package format"
+msgstr "Formato de paquete incompatible"
+
+#. Package library and shared original import prompt; supplementary translation.
+msgid "Missing file: %s"
+msgstr "Falta el archivo: %s"
+
+#. Package library and shared original import prompt; supplementary translation.
+msgid "%s (unavailable)"
+msgstr "%s (no disponible)"
+
+#. Package library and shared original import prompt; supplementary translation.
+msgid "Rescan packages"
+msgstr "Volver a buscar paquetes"
+
+#. Package library and shared original import prompt; supplementary translation.
+msgid "Import original assets"
+msgstr "Importar archivos originales"
+
+#. Package library and shared original import prompt; supplementary translation.
+msgid "Would you like to import SimCity 2000 data?"
+msgstr "¿Quieres importar datos de SimCity 2000?"
+
+#. Package library and shared original import prompt; supplementary translation.
+msgid "Yes, and activate"
+msgstr "Sí, y activar"
+
+#. Package library and shared original import prompt; supplementary translation.
+msgid "Imported packages are available in Data. Your active sources are unchanged."
+msgstr "Los paquetes importados están disponibles en Datos. Tus fuentes activas no han cambiado."

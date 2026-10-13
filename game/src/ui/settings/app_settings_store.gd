@@ -57,6 +57,8 @@ static func load_values(
 	result.city_sounds = normalize_city_sounds(config.get_value("audio", "city_sounds", result.city_sounds))
 	result.sound_pack_folder = AppPaths.loaded_path(str(config.get_value("audio", "sound_pack_folder", result.sound_pack_folder)))
 	result.music_pack_folder = AppPaths.loaded_path(str(config.get_value("audio", "music_pack_folder", result.music_pack_folder)))
+	result.cities_folder = AppPaths.loaded_path(str(config.get_value("data", "cities_folder", "")))
+	result.mods_folder = AppPaths.loaded_path(str(config.get_value("data", "mods_folder", "")))
 	result.data_pack_folder = AppPaths.loaded_path(str(config.get_value("data", "pack_folder", result.data_pack_folder)))
 	result.hd_pack_folder = AppPaths.loaded_path(str(config.get_value("graphics", "hd_pack", result.hd_pack_folder)))
 
@@ -327,6 +329,10 @@ static func save_values(
 	if options.check_for_updates != null:
 		config.set_value("updates", "check_periodically", bool(options.check_for_updates))
 
+	for key in ["cities_folder", "mods_folder"]:
+		if options.get(key) != null:
+			config.set_value("data", key, AppPaths.stored_path(str(options.get(key)).strip_edges()))
+
 	if options.data_pack_folder != null:
 		config.set_value("data", "pack_folder", AppPaths.stored_path(str(options.data_pack_folder).strip_edges()))
 
@@ -424,6 +430,8 @@ class Values extends RefCounted:
 	var city_sounds: int = WaveSoundGate.CitySounds.DEFAULT
 	var sound_pack_folder := ""
 	var music_pack_folder := ""
+	var cities_folder := ""
+	var mods_folder := ""
 	var data_pack_folder := ""
 	var hd_pack_folder := ""
 	var check_for_updates := false
@@ -468,6 +476,8 @@ class SaveOptions extends RefCounted:
 	var recent_autosaves: Variant = null
 	var translucent_menus: Variant = null
 	var check_for_updates: Variant = null
+	var cities_folder: Variant = null
+	var mods_folder: Variant = null
 	var data_pack_folder: Variant = null
 	var hd_pack_folder: Variant = null
 	var ui_scale: Variant = null

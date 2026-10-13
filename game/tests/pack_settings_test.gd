@@ -89,9 +89,13 @@ func _run() -> void:
 	assert(not ("soundtrack_folder" in dialog.selected_values()))
 	var pickers := 0
 	var soundfont_pickers := 0
+	var folder_pickers := 0
 
 	for child in dialog.get_children():
 		if child is FileDialog:
+			if child.file_mode == FileDialog.FILE_MODE_OPEN_DIR:
+				folder_pickers += 1
+				continue
 			assert(child.file_mode == FileDialog.FILE_MODE_OPEN_FILE)
 
 			if child.filters[0].begins_with("pack.json"):
@@ -102,6 +106,7 @@ func _run() -> void:
 
 	# graphics, sound, music, data, and HD sprite packs
 	assert(pickers == 5 and soundfont_pickers == 1)
+	assert(folder_pickers == 3)
 	assert(dialog.pack_name_labels.data.text == main.asset_state.data_pack.pack_name and main.asset_state.data_pack.is_loaded())
 	assert(dialog.folder_dialog.file_mode == FileDialog.FILE_MODE_OPEN_FILE)
 	assert(dialog.folder_dialog.filters[0].begins_with("pack.json"))

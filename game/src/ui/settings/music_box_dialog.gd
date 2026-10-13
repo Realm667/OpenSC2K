@@ -516,7 +516,7 @@ func handle_media_key(key: int) -> bool:
 func rescan() -> void:
 	var selected := str(collection.get_item_metadata(collection.get_selected_items()[0])) if not collection.get_selected_items().is_empty() else "all"
 	custom_music.refresh()
-	music_library.refresh(app.asset_state.data_pack, app.audio_controller.music_pack, AppPaths.path("packs/standalone-audio/music"))
+	music_library.refresh(app.asset_state.data_pack, app.audio_controller.music_pack, PackLibrary.bundled_folder("music"))
 	if active and playback.pack_key != null and not _available(playback.pack_key):
 		automatic()
 	collection.clear()

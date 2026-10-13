@@ -4,7 +4,8 @@ extends Window
 signal packs_imported(result: Sc2MediaImportResult)
 signal dismissed
 
-var packs_root := AppPaths.path("packs")
+var packs_root := PackLibrary.import_root()
+var activate_after_import := true
 var source_edit: LineEdit
 var graphics_check: CheckBox
 var sound_check: CheckBox

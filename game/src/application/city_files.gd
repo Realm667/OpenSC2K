@@ -37,7 +37,7 @@ func open_city_dialog() -> void:
 	if not app.asset_state.assets_ready:
 		return
 
-	var city_directory := AppPaths.path("cities")
+	var city_directory := app.preferences.cities_folder if not app.preferences.cities_folder.is_empty() else AppPaths.path("cities")
 
 	if DirAccess.dir_exists_absolute(city_directory):
 		app.city_dialogs.city_open_dialog.current_dir = city_directory

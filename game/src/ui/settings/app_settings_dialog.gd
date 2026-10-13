@@ -32,6 +32,10 @@ var data_pack_edit: LineEdit
 var hd_pack_edit: LineEdit
 var pack_name_labels: Dictionary = {}
 var pack_edits: Dictionary = {}
+var pack_selectors: Dictionary = {}
+var cities_folder_edit: LineEdit
+var mods_folder_edit: LineEdit
+var brightmaps_folder_edit: LineEdit
 var pack_import_buttons: Dictionary = {}
 var loaded_pack_names: Dictionary = {}
 var loaded_pack_paths: Dictionary = {}
@@ -152,6 +156,7 @@ func _ready() -> void:
 	_bind_pack_controls("music", music_pack_edit, %MusicPackName, %MusicBrowse)
 	_bind_pack_controls("data", data_pack_edit, %DataPackName, %DataBrowse)
 	_bind_pack_controls("hd", hd_pack_edit, %HdPackName, %HdBrowse)
+	_build_library_controls()
 	_watch_clicks(tabs)
 	tabs.get_tab_bar().tab_clicked.connect(button_clicked.emit.unbind(1))
 	_build_controls_reset(content)
@@ -175,6 +180,7 @@ func _ready() -> void:
 	%ImportButton.pressed.connect(_request_original_import.bind(PackedStringArray(Sc2MediaImporter.CATEGORIES)))
 	check_updates_now_button.pressed.connect(update_check_requested.emit)
 	about_to_popup.connect(func() -> void:
+		rescan_packages()
 		_fit_to_viewport()
 		# Refit after popup_centered applies the content minimum size.
 		call_deferred("_fit_to_viewport"))
@@ -279,6 +285,8 @@ func _notify_change() -> void:
 
 
 func _notify_visual_change() -> void:
+	brightmaps_folder_edit.text = str(visual_tab.selected_values().brightmap_folder)
+	(pack_selectors["brightmaps"] as PackSourceSelector).rescan()
 	visual_change_in_progress = true
 	_notify_change()
 	visual_change_in_progress = false
@@ -368,6 +376,9 @@ func show_control_bindings(bindings: ControlBindings) -> void:
 func selected_values() -> AppSettingsStore.Values:
 	var result := AppSettingsStore.Values.new()
 	result.visual_enhancements = visual_tab.selected_values()
+	result.visual_enhancements.brightmap_folder = brightmaps_folder_edit.text.strip_edges()
+	result.cities_folder = cities_folder_edit.text.strip_edges()
+	result.mods_folder = mods_folder_edit.text.strip_edges()
 	result.default_mayor_name = default_mayor_edit.text.strip_edges()
 	result.ui_theme = "dark" if theme_selector.selected == 1 else "light"
 	result.ui_language = AppLocalization.codes()[maxi(0, language_selector.selected)]
@@ -478,6 +489,7 @@ func _bind_pack_controls(kind: String, edit: LineEdit, label: Label, browse: But
 
 	pack_name_labels[kind] = label
 	pack_edits[kind] = edit
+	_add_pack_selector(kind, edit, label)
 	edit.text_changed.connect(func(_text: String) -> void:
 		_refresh_pack_name(kind))
 
@@ -495,6 +507,65 @@ func _bind_pack_controls(kind: String, edit: LineEdit, label: Label, browse: But
 	browse.get_parent().add_child(import_button)
 	pack_import_buttons[kind] = import_button
 	edit.placeholder_text = tr("Automatic (%s)") % MediaPack.default_folder(kind).path_join("pack.json")
+
+
+func _add_pack_selector(kind: String, edit: LineEdit, label: Label) -> void:
+	var selector := PackSourceSelector.new()
+	var column := edit.get_parent().get_parent()
+	column.add_child(selector)
+	column.move_child(selector, 0)
+	selector.bind(kind, edit, label)
+	pack_selectors[kind] = selector
+
+
+func _build_library_controls() -> void:
+	var fields := folder_edit.get_parent().get_parent().get_parent()
+	for pair in [["brightmaps", "Custom light masks (brightmaps)"], ["cities", "Cities"], ["mods", "Mods"]]:
+		var title_label := Label.new()
+		title_label.text = pair[1]
+		title_label.custom_minimum_size.x = 150
+		title_label.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+		fields.add_child(title_label)
+		var column := VBoxContainer.new()
+		column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		fields.add_child(column)
+		var row := HBoxContainer.new()
+		column.add_child(row)
+		var edit := LineEdit.new()
+		edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(edit)
+		var browse := Button.new()
+		browse.text = "Browse..."
+		row.add_child(browse)
+		var label := Label.new()
+		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		label.theme_type_variation = &"HelpLabel"
+		column.add_child(label)
+		var picker := FileDialog.new()
+		picker.theme = AppUiTheme.file_dialog()
+		picker.file_mode = FileDialog.FILE_MODE_OPEN_DIR
+		picker.access = FileDialog.ACCESS_FILESYSTEM
+		picker.exclusive = true
+		add_child(picker)
+		browse.pressed.connect(func() -> void: picker.popup_centered_ratio(0.8))
+		picker.dir_selected.connect(func(path: String) -> void:
+			edit.text = path
+			rescan_packages()
+			_notify_change())
+		_add_pack_selector(pair[0], edit, label)
+		match pair[0]:
+			"brightmaps": brightmaps_folder_edit = edit
+			"cities": cities_folder_edit = edit
+			"mods": mods_folder_edit = edit
+	var rescan := Button.new()
+	rescan.text = "Rescan packages"
+	rescan.pressed.connect(rescan_packages)
+	fields.get_parent().add_child(rescan)
+
+
+func rescan_packages() -> void:
+	for selector: PackSourceSelector in pack_selectors.values():
+		selector.rescan()
 
 
 # Whether an HD graphics pack is loaded: only then can HD graphics show.

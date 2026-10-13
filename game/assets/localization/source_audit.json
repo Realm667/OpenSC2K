@@ -9,7 +9,10 @@
     "game/src/ui/shared/qol_dialog.gd",
     "game/src/ui/shared/window_layout_memory.gd",
     "game/src/audio/music_box_library.gd",
-    "game/src/audio/mp3_title.gd"
+    "game/src/audio/mp3_title.gd",
+    "game/src/assets/pack_library.gd",
+    "game/src/ui/settings/pack_source_selector.gd",
+    "game/src/ui/settings/original_import_prompt.gd"
   ],
   "non_display_literals": {
     "OpenSC2K Koop": "Saved session format signature; never translate.",
