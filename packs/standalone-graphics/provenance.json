@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "date": "2026-10-14",
-  "pack_manifest_sha256": "6053affdc2c56b38348c8d7989c3f8b0a9df1dd4f8a7f4b50f19a0b9e5fd6181",
+  "pack_manifest_sha256": "f2f015a1071254c444384bf7d4bedfa39e0b604deef53c8da7771465174a5c22",
   "scope": "Independent Remaster graphics and matching emission/season/traffic masks",
   "generation": "OpenAI ImageGen artwork plus independently authored deterministic projection, compositing and UI/traffic drawing tools",
   "references": "Original resources inspected locally for IDs, dimensions, functions, orientations and visual inspiration. No original pixel files are delivered.",
@@ -52302,5 +52302,12 @@
     "generated_detail_revisions": 9,
     "projection_calibrations": 13,
     "editable_sources": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-parcels"
+  },
+  "parcel_palette_review": {
+    "receipt": "graphics/parcel-review.json",
+    "sha256": "b6d01f5d6e348069e695b3c241d6c1f8f12a1a111cd46ab9222129089761d469",
+    "palette": "Nature pastel (variant A)",
+    "affected_borders": 127,
+    "color_families": 13
   }
 }

@@ -12,7 +12,8 @@ RGBA at 65% opacity; its original geometry and lightmap are preserved.
 Asphalt, pavement, parking and dirt are now textured and baked into the building
 PNGs, with material grain, joints, curb bevels and contact shadows. The RS pack
 requests no software ground fills. 127 colored parcel contours remain software
-layers; 17 exceptions including #1227 retain no contour. SC2K uses its existing
+layers, using the approved Nature pastel palette (variant A, 13 color families);
+17 exceptions including #1227 retain no contour. SC2K uses its existing
 integrated contours. Artwork and matching lightmaps remain strictly pack-local.
 Unrequested base grass stays transparent for seasonal terrain.
 

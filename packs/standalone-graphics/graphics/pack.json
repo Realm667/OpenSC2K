@@ -967,7 +967,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       }
     },
@@ -995,7 +995,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       }
     },
@@ -1018,7 +1018,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       }
     },
@@ -1041,7 +1041,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       }
     },
@@ -1064,7 +1064,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       }
     },
@@ -1087,7 +1087,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       }
     },
@@ -1110,7 +1110,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       }
     },
@@ -1133,7 +1133,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       }
     },
@@ -1156,7 +1156,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       }
     },
@@ -1179,7 +1179,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       }
     },
@@ -1202,7 +1202,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       }
     },
@@ -1225,7 +1225,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       }
     },
@@ -1248,7 +1248,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -1277,7 +1277,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       }
     },
@@ -1300,7 +1300,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -1329,7 +1329,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -1348,7 +1348,7 @@
       ],
       "lightmap": "lightmaps/1128.png",
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       }
     },
@@ -1376,7 +1376,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       }
     },
@@ -1404,7 +1404,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       },
       "baked_ground": "asphalt"
@@ -1428,7 +1428,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -1462,7 +1462,7 @@
         0
       ],
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       }
     },
@@ -1490,7 +1490,7 @@
         0
       ],
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       }
     },
@@ -1513,7 +1513,7 @@
         0
       ],
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -1541,7 +1541,7 @@
         0
       ],
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -1569,7 +1569,7 @@
         0
       ],
       "parcel": {
-        "border": "7b5f2bff",
+        "border": "a18c70ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -1597,7 +1597,7 @@
         0
       ],
       "parcel": {
-        "border": "7b5f2bff",
+        "border": "a18c70ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -1625,7 +1625,7 @@
         0
       ],
       "parcel": {
-        "border": "735323ff",
+        "border": "967f66ff",
         "surface": "none"
       }
     },
@@ -1647,7 +1647,7 @@
         0
       ],
       "parcel": {
-        "border": "735323ff",
+        "border": "967f66ff",
         "surface": "none"
       }
     },
@@ -1675,7 +1675,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       }
     },
@@ -1703,7 +1703,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       }
     },
@@ -1731,7 +1731,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       }
     },
@@ -1759,7 +1759,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       },
       "baked_ground": "asphalt_curb"
@@ -1783,7 +1783,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       },
       "visual_registration": [
@@ -1812,7 +1812,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       }
     },
@@ -1835,7 +1835,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       },
       "visual_registration": [
@@ -1869,7 +1869,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       }
     },
@@ -1892,7 +1892,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       }
     },
@@ -1915,7 +1915,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -1944,7 +1944,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -1978,7 +1978,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       },
       "baked_ground": "tiles"
@@ -2002,7 +2002,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -2031,7 +2031,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -2065,7 +2065,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       }
     },
@@ -2088,7 +2088,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -2117,7 +2117,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -2146,7 +2146,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -2175,7 +2175,7 @@
         0
       ],
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -2209,7 +2209,7 @@
         0
       ],
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       }
     },
@@ -2232,7 +2232,7 @@
         0
       ],
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -2261,7 +2261,7 @@
         0
       ],
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -2290,7 +2290,7 @@
         0
       ],
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -2319,7 +2319,7 @@
         0
       ],
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -2348,7 +2348,7 @@
         0
       ],
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -2377,7 +2377,7 @@
         0
       ],
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -2405,7 +2405,7 @@
         0
       ],
       "parcel": {
-        "border": "7b5f2bff",
+        "border": "a18c70ff",
         "surface": "none"
       }
     },
@@ -2427,7 +2427,7 @@
         0
       ],
       "parcel": {
-        "border": "7b5f2bff",
+        "border": "a18c70ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -2455,7 +2455,7 @@
         0
       ],
       "parcel": {
-        "border": "7b5f2bff",
+        "border": "a18c70ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -2488,7 +2488,7 @@
         0
       ],
       "parcel": {
-        "border": "7b5f2bff",
+        "border": "a18c70ff",
         "surface": "none"
       }
     },
@@ -2510,7 +2510,7 @@
         0
       ],
       "parcel": {
-        "border": "735323ff",
+        "border": "967f66ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -2538,7 +2538,7 @@
         0
       ],
       "parcel": {
-        "border": "735323ff",
+        "border": "967f66ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -2566,7 +2566,7 @@
         0
       ],
       "parcel": {
-        "border": "735323ff",
+        "border": "967f66ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -2594,7 +2594,7 @@
         0
       ],
       "parcel": {
-        "border": "735323ff",
+        "border": "967f66ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -2628,7 +2628,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       },
       "baked_ground": "asphalt_curb"
@@ -2652,7 +2652,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       },
       "visual_registration": [
@@ -2681,7 +2681,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       }
     },
@@ -2704,7 +2704,7 @@
         0
       ],
       "parcel": {
-        "border": "077300ff",
+        "border": "80a97dff",
         "surface": "none"
       }
     },
@@ -2727,7 +2727,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       }
     },
@@ -2755,7 +2755,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       }
     },
@@ -2783,7 +2783,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       }
     },
@@ -2806,7 +2806,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       }
     },
@@ -2829,7 +2829,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       }
     },
@@ -2857,7 +2857,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       }
     },
@@ -2885,7 +2885,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       }
     },
@@ -2913,7 +2913,7 @@
         4
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       }
     },
@@ -2941,7 +2941,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       }
     },
@@ -2969,7 +2969,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       }
     },
@@ -2997,7 +2997,7 @@
         0
       ],
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       }
     },
@@ -3025,7 +3025,7 @@
         0
       ],
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       }
     },
@@ -3053,7 +3053,7 @@
         0
       ],
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       },
       "baked_ground": "asphalt_curb"
@@ -3082,7 +3082,7 @@
         0
       ],
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       },
       "baked_ground": "asphalt_curb"
@@ -3106,7 +3106,7 @@
         0
       ],
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -3140,7 +3140,7 @@
         0
       ],
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       }
     },
@@ -3162,7 +3162,7 @@
         0
       ],
       "parcel": {
-        "border": "7b5f2bff",
+        "border": "a18c70ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -3190,7 +3190,7 @@
         0
       ],
       "parcel": {
-        "border": "7b5f2bff",
+        "border": "a18c70ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -3223,7 +3223,7 @@
         4
       ],
       "parcel": {
-        "border": "735323ff",
+        "border": "967f66ff",
         "surface": "none"
       }
     },
@@ -3250,7 +3250,7 @@
         4
       ],
       "parcel": {
-        "border": "735323ff",
+        "border": "967f66ff",
         "surface": "none"
       },
       "baked_ground": "dirt"
@@ -3319,7 +3319,7 @@
         0
       ],
       "parcel": {
-        "border": "930000ff",
+        "border": "ad7373ff",
         "surface": "none"
       }
     },
@@ -3332,7 +3332,7 @@
       ],
       "lightmap": "lightmaps/1201.png",
       "parcel": {
-        "border": "000000ff",
+        "border": "777a77ff",
         "surface": "none"
       }
     },
@@ -3360,7 +3360,7 @@
         0
       ],
       "parcel": {
-        "border": "000000ff",
+        "border": "777a77ff",
         "surface": "none"
       }
     },
@@ -3373,7 +3373,7 @@
       ],
       "lightmap": "lightmaps/1203.png",
       "parcel": {
-        "border": "000000ff",
+        "border": "777a77ff",
         "surface": "none"
       }
     },
@@ -3386,7 +3386,7 @@
       ],
       "lightmap": "lightmaps/1204.png",
       "parcel": {
-        "border": "000000ff",
+        "border": "777a77ff",
         "surface": "none"
       }
     },
@@ -3409,7 +3409,7 @@
         0
       ],
       "parcel": {
-        "border": "000000ff",
+        "border": "777a77ff",
         "surface": "none"
       }
     },
@@ -3432,7 +3432,7 @@
         0
       ],
       "parcel": {
-        "border": "000000ff",
+        "border": "777a77ff",
         "surface": "none"
       }
     },
@@ -3455,7 +3455,7 @@
         0
       ],
       "parcel": {
-        "border": "000000ff",
+        "border": "777a77ff",
         "surface": "none"
       }
     },
@@ -3478,7 +3478,7 @@
         0
       ],
       "parcel": {
-        "border": "af3f1bff",
+        "border": "b98b78ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -3497,7 +3497,7 @@
       ],
       "lightmap": "lightmaps/1209.png",
       "parcel": {
-        "border": "af3f1bff",
+        "border": "b98b78ff",
         "surface": "none"
       }
     },
@@ -3525,7 +3525,7 @@
         0
       ],
       "parcel": {
-        "border": "af3f1bff",
+        "border": "b98b78ff",
         "surface": "none"
       }
     },
@@ -3553,7 +3553,7 @@
         4
       ],
       "parcel": {
-        "border": "af3f1bff",
+        "border": "b98b78ff",
         "surface": "none"
       }
     },
@@ -3576,7 +3576,7 @@
         0
       ],
       "parcel": {
-        "border": "8300cfff",
+        "border": "aa8dbbff",
         "surface": "none"
       },
       "visual_registration": [
@@ -3605,7 +3605,7 @@
         0
       ],
       "parcel": {
-        "border": "8300cfff",
+        "border": "aa8dbbff",
         "surface": "none"
       }
     },
@@ -3633,7 +3633,7 @@
         0
       ],
       "parcel": {
-        "border": "af3f1bff",
+        "border": "b98b78ff",
         "surface": "none"
       }
     },
@@ -3646,7 +3646,7 @@
       ],
       "lightmap": "lightmaps/1215.png",
       "parcel": {
-        "border": "8300cfff",
+        "border": "aa8dbbff",
         "surface": "none"
       }
     },
@@ -3659,7 +3659,7 @@
       ],
       "lightmap": "lightmaps/1216.png",
       "parcel": {
-        "border": "af3f1bff",
+        "border": "b98b78ff",
         "surface": "none"
       }
     },
@@ -3687,7 +3687,7 @@
         4
       ],
       "parcel": {
-        "border": "af3f1bff",
+        "border": "b98b78ff",
         "surface": "none"
       }
     },
@@ -3715,7 +3715,7 @@
         4
       ],
       "parcel": {
-        "border": "8300cfff",
+        "border": "aa8dbbff",
         "surface": "none"
       }
     },
@@ -3815,7 +3815,7 @@
       ],
       "lightmap": "lightmaps/1226.png",
       "parcel": {
-        "border": "6f5700ff",
+        "border": "a79b73ff",
         "surface": "none"
       }
     },
@@ -3946,7 +3946,7 @@
         4
       ],
       "parcel": {
-        "border": "6f5700ff",
+        "border": "a79b73ff",
         "surface": "none"
       }
     },
@@ -3974,7 +3974,7 @@
         0
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       }
     },
@@ -4020,7 +4020,7 @@
         0
       ],
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       }
     },
@@ -4048,7 +4048,7 @@
         4
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       }
     },
@@ -4076,7 +4076,7 @@
         4
       ],
       "parcel": {
-        "border": "0000e3ff",
+        "border": "7e8fb7ff",
         "surface": "none"
       }
     },
@@ -4113,7 +4113,7 @@
         4
       ],
       "parcel": {
-        "border": "6f5700ff",
+        "border": "a79b73ff",
         "surface": "none"
       }
     },
@@ -4136,7 +4136,7 @@
         0
       ],
       "parcel": {
-        "border": "000000ff",
+        "border": "777a77ff",
         "surface": "none"
       },
       "visual_registration": [
@@ -4154,7 +4154,7 @@
       ],
       "lightmap": "lightmaps/1241.png",
       "parcel": {
-        "border": "6f5700ff",
+        "border": "a79b73ff",
         "surface": "none"
       }
     },
@@ -4182,7 +4182,7 @@
         0
       ],
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       }
     },
@@ -4210,7 +4210,7 @@
         0
       ],
       "parcel": {
-        "border": "ff5f5fff",
+        "border": "c99393ff",
         "surface": "none"
       }
     },
@@ -4233,7 +4233,7 @@
         0
       ],
       "parcel": {
-        "border": "007373ff",
+        "border": "78a5a5ff",
         "surface": "none"
       }
     },
@@ -4246,7 +4246,7 @@
       ],
       "lightmap": "lightmaps/1245.png",
       "parcel": {
-        "border": "8300cfff",
+        "border": "aa8dbbff",
         "surface": "none"
       }
     },
@@ -4298,7 +4298,7 @@
         4
       ],
       "parcel": {
-        "border": "078b00ff",
+        "border": "88ae7fff",
         "surface": "none"
       }
     },
@@ -4311,7 +4311,7 @@
       ],
       "lightmap": "lightmaps/1248.png",
       "parcel": {
-        "border": "6f5700ff",
+        "border": "a79b73ff",
         "surface": "none"
       }
     },
@@ -4339,7 +4339,7 @@
         0
       ],
       "parcel": {
-        "border": "6f5700ff",
+        "border": "a79b73ff",
         "surface": "none"
       }
     },
@@ -4352,7 +4352,7 @@
       ],
       "lightmap": "lightmaps/1250.png",
       "parcel": {
-        "border": "bfb32bff",
+        "border": "b9ae75ff",
         "surface": "none"
       }
     },
@@ -4365,7 +4365,7 @@
       ],
       "lightmap": "lightmaps/1251.png",
       "parcel": {
-        "border": "007373ff",
+        "border": "78a5a5ff",
         "surface": "none"
       }
     },
@@ -4378,7 +4378,7 @@
       ],
       "lightmap": "lightmaps/1252.png",
       "parcel": {
-        "border": "007373ff",
+        "border": "78a5a5ff",
         "surface": "none"
       }
     },
@@ -4406,7 +4406,7 @@
         4
       ],
       "parcel": {
-        "border": "007373ff",
+        "border": "78a5a5ff",
         "surface": "none"
       }
     },
@@ -4435,7 +4435,7 @@
       ],
       "artwork_rgba": "rgba/1254.png",
       "parcel": {
-        "border": "007373ff",
+        "border": "78a5a5ff",
         "surface": "none"
       }
     },
@@ -4463,7 +4463,7 @@
         0
       ],
       "parcel": {
-        "border": "007373ff",
+        "border": "78a5a5ff",
         "surface": "none"
       }
     },
