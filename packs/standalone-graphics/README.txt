@@ -1,27 +1,28 @@
 Reticulating Splines Remaster — Style A (4x)
 
-Development source pack, 14 October 2026.
-499 city masters and 112 UI masters; smaller views are derived in memory.
+Development source pack, 14 October 2026. 499 city masters; all smaller city
+views derive from the 4x masters. Original import sets remain separate.
 
-The latest review applies 72 objects: 24 size/position adjustments and 52 text
-notes, including nine new or revised ImageGen designs. All art/lightmap
-transforms are shared and belong exclusively to this pack. Earlier accepted
-corrections remain in place. Expanded canvases preserve the original footprint.
+Latest review: export (85), 48 requests plus the integration of all 43 ground
+materials. 60 objects reviewed; 12 motifs revised with ImageGen, two exact
+position changes and facade/ground projection corrections. Hydro #1198 is an
+exact horizontal mirror of #1199. The #1254 glass dome already uses authored
+RGBA at 65% opacity; its original geometry and lightmap are preserved.
 
-127 building types opt into software parcel contours; 17 have no contour.
-43 reviewed properties receive asphalt, paving, parking or construction ground.
-The runtime batches cached parcel quads below each building, independently of
-object transforms. SC2K imports retain their own integrated original outlines.
-Unrequested base grass remains transparent so seasonal terrain shows through.
-See graphics/parcel-review.json, graphics/placement-review.json,
-docs/parcel-layers.md and docs/master-sprite-registration.md.
+Asphalt, pavement, parking and dirt are now textured and baked into the building
+PNGs, with material grain, joints, curb bevels and contact shadows. The RS pack
+requests no software ground fills. 127 colored parcel contours remain software
+layers; 17 exceptions including #1227 retain no contour. SC2K uses its existing
+integrated contours. Artwork and matching lightmaps remain strictly pack-local.
+Unrequested base grass stays transparent for seasonal terrain.
 
-Private evidence, editable art, ImageGen prompts and source backups:
-D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-parcels
-Prior review: corrections/2026-10-13-placement/CURRENT.txt.
-provenance.json and graphics/SHA256SUMS.json record selected files and hashes.
-Original reference art and the private comparison gallery are not distributed.
+Private editable sources, exact ImageGen prompts and current verification:
+D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review85/CURRENT.txt
+Previous accepted review: corrections/2026-10-14-parcels/CURRENT.txt.
+Receipts: graphics/placement-review.json, graphics/parcel-review.json.
+Selected raster hashes: provenance.json and graphics/SHA256SUMS.json.
+Private comparison galleries cover buildings, other city tiles, UI and all
+manifest-referenced Visual Enhancements resources. Original pixels stay private.
 
 The personal Runtime is installed only by REL under the workspace rules.
-See graphics/LICENSE-STATUS.txt for generated-art licensing status; existing
-project notices remain applicable.
+Existing project notices and graphics/LICENSE-STATUS.txt continue to apply.

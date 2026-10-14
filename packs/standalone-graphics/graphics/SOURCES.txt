@@ -1,19 +1,16 @@
 Reticulating Splines Remaster graphics — Style A, 4x
 
-Independent OpenAI ImageGen artwork and deterministic projection, palette and
-matching lightmap tools. Original SimCity 2000 supplies local visual inspiration,
-resource IDs, footprint dimensions and categorical parcel colors only. No
-original image pixels are included in this source pack.
+Independent ImageGen artwork plus user-authorized mathematical projection,
+position, palette/lightmap transforms and deterministic textured-ground baking.
+Original SC2K supplies local visual inspiration, IDs, dimensions and categorical
+border colors only. No original image pixels are included in this source pack.
 
-Latest revision: 72 reviewed objects, 24 numerical adjustments, 52 notes,
-nine ImageGen replacements/detail revisions and 13 axis calibrations.
-Earlier placement corrections and Visual Enhancements resources remain intact.
-Software parcel layers are explicitly enabled per master and keep their original
-footprint regardless of art scaling, offsets, padding or mirroring.
-
-Editable sources and exact prompts: private workspace
-standalone-data-pack/corrections/2026-10-14-parcels/artwork.
+Latest export (85): 48 user entries; 60 resources reviewed, 12 selected ImageGen
+revisions, two numeric offsets, 43 ground fills now part of their PNG artwork.
+Only colored contours remain software layers. Earlier accepted changes remain.
+Private sources and exact prompts: corrections/2026-10-14-review85/artwork.
+The attempted #1254 ImageGen edit was not selected: existing semitransparent RGBA
+already meets the request while preserving all original authored geometry.
 Current receipts: placement-review.json and parcel-review.json.
-Exact selected raster inventory: ../provenance.json.
-Original reference images remain private. Existing notices and LICENSE-STATUS.txt
-continue to apply. No generated-art distribution license is newly asserted.
+Selected raster inventory: ../provenance.json. Original references remain private.
+Existing license notices remain applicable; no new distribution license asserted.

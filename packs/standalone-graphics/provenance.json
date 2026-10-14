@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "date": "2026-10-14",
-  "pack_manifest_sha256": "4f44797e79932b3724cd7e394237ecf455ac2f3d906fc7f2dca78a62aefcdb6e",
+  "pack_manifest_sha256": "6053affdc2c56b38348c8d7989c3f8b0a9df1dd4f8a7f4b50f19a0b9e5fd6181",
   "scope": "Independent Remaster graphics and matching emission/season/traffic masks",
   "generation": "OpenAI ImageGen artwork plus independently authored deterministic projection, compositing and UI/traffic drawing tools",
   "references": "Original resources inspected locally for IDs, dimensions, functions, orientations and visual inspiration. No original pixel files are delivered.",
@@ -2755,7 +2755,7 @@
     {
       "id": 1124,
       "png": "masters/1124.png",
-      "sha256": "a0438861408f0d9a1f59e683b8a2e84e179ba1451f2caeb1ea41a1df96701e2f",
+      "sha256": "58710f1007222ccd977da363c7741d733fe8cff31853604eb36662638ad59ea5",
       "evidence": [
         {
           "id": 1124,
@@ -2825,11 +2825,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "a0438861408f0d9a1f59e683b8a2e84e179ba1451f2caeb1ea41a1df96701e2f",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "a0438861408f0d9a1f59e683b8a2e84e179ba1451f2caeb1ea41a1df96701e2f",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1124.png",
-        "sha256": "79af1920c6e12d0dff8e4dbc10ebe39bfe7c234f2b47cf564b002acc567cbeec"
+        "sha256": "586d89405bf1345eace04146fa280beda0480e63da2a269a6ae547638e61b408"
       },
       "animation": null,
       "traffic_mask": null
@@ -2863,7 +2869,7 @@
     {
       "id": 1126,
       "png": "masters/1126.png",
-      "sha256": "7bffd39c1d3a1bfdb5c908fb3460d547580efb3c8260f4d469619abadb04cae1",
+      "sha256": "d40206e3bc71bf7836230abc6f7e93ccb4c72c1ed79265c93e92f30475471601",
       "evidence": [
         {
           "id": 1126,
@@ -2933,11 +2939,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "7bffd39c1d3a1bfdb5c908fb3460d547580efb3c8260f4d469619abadb04cae1",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "7bffd39c1d3a1bfdb5c908fb3460d547580efb3c8260f4d469619abadb04cae1",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1126.png",
-        "sha256": "f0d12c05fe899600fb5a5c195a12583e8fe7fffd3195f0abb928d1c10baef21b"
+        "sha256": "eb007868dea9ff3464d19bc1bec99d9dfc98ab7878533b164641efc6caa01ce4"
       },
       "animation": null,
       "traffic_mask": null
@@ -2945,7 +2957,7 @@
     {
       "id": 1127,
       "png": "masters/1127.png",
-      "sha256": "e76f461b9bf6bcf867bca9ca3899e2f04f2e43c11838b27823c216f5fa7983af",
+      "sha256": "98df75309e06258b012ae646b8a64ed3bf3b20226c4a59276b814c6dc69afda3",
       "evidence": [
         {
           "report": "reports/small-buildings.json",
@@ -2965,11 +2977,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "e76f461b9bf6bcf867bca9ca3899e2f04f2e43c11838b27823c216f5fa7983af",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "e76f461b9bf6bcf867bca9ca3899e2f04f2e43c11838b27823c216f5fa7983af",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1127.png",
-        "sha256": "3b16f6114a5a76a50e4b89f011ca91e116ba93135b0df24ab13544831ba9e084"
+        "sha256": "cee8494a71fdd5bf45a34f59d5177c2efe28780d01c1ca59c5f680b0602564c1"
       },
       "animation": null,
       "traffic_mask": null
@@ -3077,7 +3095,7 @@
     {
       "id": 1130,
       "png": "masters/1130.png",
-      "sha256": "6b8404f700d7f88fba60356aa0ce6fb07da603a3ca4553947c16df8a3f022137",
+      "sha256": "37b5a4b20badacc5f74b2a91248f59fc50cee0eb86f028294f466ea3a325322c",
       "evidence": [
         {
           "report": "reports/small-industry.json",
@@ -3097,6 +3115,12 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "6b8404f700d7f88fba60356aa0ce6fb07da603a3ca4553947c16df8a3f022137",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "6b8404f700d7f88fba60356aa0ce6fb07da603a3ca4553947c16df8a3f022137",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
@@ -3109,7 +3133,7 @@
     {
       "id": 1131,
       "png": "masters/1131.png",
-      "sha256": "ab8a8e4e6b993d8789d4f6b9f352c65e7ef733142c6910f8f192a0a61a4a5282",
+      "sha256": "5fb2af459d51c5b41d60e4866556729a398af907f89bce0a069893a4ecf5ea10",
       "evidence": [
         {
           "report": "reports/small-industry.json",
@@ -3129,11 +3153,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "ab8a8e4e6b993d8789d4f6b9f352c65e7ef733142c6910f8f192a0a61a4a5282",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "ab8a8e4e6b993d8789d4f6b9f352c65e7ef733142c6910f8f192a0a61a4a5282",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1131.png",
-        "sha256": "6afa2c4680515d6b7cf385d4948a63c8215faba44ea851c73bc56a86845842bf"
+        "sha256": "0b3477bb8e6f9afafb5c9ae1a7cee1918fbfb18800e073ae33ce20a77e80c856"
       },
       "animation": null,
       "traffic_mask": null
@@ -3199,7 +3229,7 @@
     {
       "id": 1134,
       "png": "masters/1134.png",
-      "sha256": "8cabaeed61d00e14b01a69373cbf52c569a1db0118b455f6280cb2c7308e45bd",
+      "sha256": "c1c81e9fe775c6f1e0db55b9d91231e2f0b439c85c55517bd0eb1a93c63a8a54",
       "evidence": [
         {
           "report": "reports/small-industry.json",
@@ -3219,6 +3249,12 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "8cabaeed61d00e14b01a69373cbf52c569a1db0118b455f6280cb2c7308e45bd",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "8cabaeed61d00e14b01a69373cbf52c569a1db0118b455f6280cb2c7308e45bd",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
@@ -3231,7 +3267,7 @@
     {
       "id": 1135,
       "png": "masters/1135.png",
-      "sha256": "32d6c3e3172587709284397566088c3503fc29b449313f6a7772e97dd1e7b6b2",
+      "sha256": "6bed5adabbfe5a3e667f25dac065c61d45dc8862a0ccef54c6ea3531af35306f",
       "evidence": [
         {
           "report": "reports/small-industry.json",
@@ -3251,6 +3287,12 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "32d6c3e3172587709284397566088c3503fc29b449313f6a7772e97dd1e7b6b2",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "32d6c3e3172587709284397566088c3503fc29b449313f6a7772e97dd1e7b6b2",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": null,
@@ -3260,7 +3302,7 @@
     {
       "id": 1136,
       "png": "masters/1136.png",
-      "sha256": "7d5cbf80fd5296aaaec8ad042387fe0f6214a4708cf9a19adeaa803a3202e2e5",
+      "sha256": "9c5b8544b046737e517fd7e9873e7857c4f6d9042f3337d97a154ecda1be7fa9",
       "evidence": [
         {
           "report": "reports/small-industry.json",
@@ -3280,6 +3322,12 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "7d5cbf80fd5296aaaec8ad042387fe0f6214a4708cf9a19adeaa803a3202e2e5",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "7d5cbf80fd5296aaaec8ad042387fe0f6214a4708cf9a19adeaa803a3202e2e5",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": null,
@@ -3289,7 +3337,7 @@
     {
       "id": 1137,
       "png": "masters/1137.png",
-      "sha256": "df2cdc0e33507b3576cb3084576c45313d2b6b449f973c3d0eac03c9231aa1d5",
+      "sha256": "0264b660f16d529fbacaca2e2572d155125326c4b853e7a672d2a2a8949f04ca",
       "evidence": [
         {
           "report": "reports/small-industry.json",
@@ -3309,6 +3357,12 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "df2cdc0e33507b3576cb3084576c45313d2b6b449f973c3d0eac03c9231aa1d5",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "df2cdc0e33507b3576cb3084576c45313d2b6b449f973c3d0eac03c9231aa1d5",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": null,
@@ -3591,7 +3645,7 @@
     {
       "id": 1143,
       "png": "masters/1143.png",
-      "sha256": "0fe9434b8ad0b8e6b7971e605c8f644ff7e6f1de5b6e96d5c13ccb12bb00707b",
+      "sha256": "a56d0fced0bb15eb38034cf1d39a27b6e03074f9cc4bbe47ddcc732bcc426ebb",
       "evidence": [
         {
           "report": "reports/apartments.json",
@@ -3611,11 +3665,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "424ab553f4646cdf479078ad5964ea056cec7e8a14a6b8cc2d08c85afb9b364f",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "0fe9434b8ad0b8e6b7971e605c8f644ff7e6f1de5b6e96d5c13ccb12bb00707b",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1143.png",
-        "sha256": "0130effdb34ef898267c14ce860fccb3a0c29ee8011d0a05213b69cd8d876ff7"
+        "sha256": "8793963f0bb63ce1c0cf1d176b5e05222508c7197421343f90e3c1ca3d7ede98"
       },
       "animation": null,
       "traffic_mask": null
@@ -3623,7 +3683,7 @@
     {
       "id": 1144,
       "png": "masters/1144.png",
-      "sha256": "9a87dce85c12e8ba933aba98d9da2e5eb1b9193c94918e5fbeb62cfeef4a21e4",
+      "sha256": "426609ece166f2da504b525d1dd9fb69dbce3b5dc00dae03642cf82f6b43f7df",
       "evidence": [
         {
           "report": "reports/apartments.json",
@@ -3643,11 +3703,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "9a87dce85c12e8ba933aba98d9da2e5eb1b9193c94918e5fbeb62cfeef4a21e4",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "9a87dce85c12e8ba933aba98d9da2e5eb1b9193c94918e5fbeb62cfeef4a21e4",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1144.png",
-        "sha256": "14e3bfda8fd0530cc439d91fdc99f55c8307fb26382e864356026d2e47f0c6ca"
+        "sha256": "37be53e85bf6cca3c970333421e546f828889e6b93488cba314a29538d60c6af"
       },
       "animation": null,
       "traffic_mask": null
@@ -3681,7 +3747,7 @@
     {
       "id": 1146,
       "png": "masters/1146.png",
-      "sha256": "3b3bab49966bd79788cba1db90c798385a222fcbfd2ede97adc83a5a0212c9eb",
+      "sha256": "46a41a2766de1f7d4a4220e108f35ec8f750182f8ef2353c44e67405899b0aa1",
       "evidence": [
         {
           "report": "reports/apartments.json",
@@ -3701,11 +3767,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "3b3bab49966bd79788cba1db90c798385a222fcbfd2ede97adc83a5a0212c9eb",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "3b3bab49966bd79788cba1db90c798385a222fcbfd2ede97adc83a5a0212c9eb",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1146.png",
-        "sha256": "3373929c0b557199fe8e50692024a8f3ea13c64730625a4d58a0ed3390730cf4"
+        "sha256": "5b6c0a808ab703a9d7375fed673c54e2f8f4b5650d7506bf634b1fe577b2942f"
       },
       "animation": null,
       "traffic_mask": null
@@ -3713,7 +3785,7 @@
     {
       "id": 1147,
       "png": "masters/1147.png",
-      "sha256": "6aaa00c1cff28f49bc9e2fdc1c49c396443d1a7a3d02e2003c90caf9d98efe3b",
+      "sha256": "3e042b5004fae71366de7819d09b37a7783324d027ad51874cc9c11746565c73",
       "evidence": [
         {
           "report": "reports/apartments.json",
@@ -3733,11 +3805,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "e6c98e89b0a8843682a70f8c44a47d860b86ca4fe7c3ad8b41897480fd552a02",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "6aaa00c1cff28f49bc9e2fdc1c49c396443d1a7a3d02e2003c90caf9d98efe3b",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1147.png",
-        "sha256": "8d15e1220b5283d8132bd4c0a1f93c9fd8024a71b2762b723cf090c943809291"
+        "sha256": "3f399dc20e617a8207717f872101561d1cd0a446892eb32ed7b14be55ae23f45"
       },
       "animation": null,
       "traffic_mask": null
@@ -3857,7 +3935,7 @@
     {
       "id": 1149,
       "png": "masters/1149.png",
-      "sha256": "d1e4ae4173fd7a79688a83ea8d568059f5c3b867fa7596ede94321f138f6d6c8",
+      "sha256": "e6f254fa77ef96193025f915d1cd1d89215e97084c29f27d9c14e30dd9062284",
       "evidence": [
         {
           "id": 1149,
@@ -3927,11 +4005,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "d1e4ae4173fd7a79688a83ea8d568059f5c3b867fa7596ede94321f138f6d6c8",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "d1e4ae4173fd7a79688a83ea8d568059f5c3b867fa7596ede94321f138f6d6c8",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1149.png",
-        "sha256": "dd9b2b0f9b1308c515d15036344e16abccfd9f9c0fdef4cac1497a154173b41a"
+        "sha256": "9f7385f9a598ddd3781f70338a37d5eee2983293c178554d51c20c6f5b505a9e"
       },
       "animation": null,
       "traffic_mask": null
@@ -3939,7 +4023,7 @@
     {
       "id": 1150,
       "png": "masters/1150.png",
-      "sha256": "0b1e26463cd847b596255c97cb79356dc2e7d231e6ca3142fe2f4184c65629fb",
+      "sha256": "fc9554024df5c29c6c1655d3c01119fed1bd8528f2f971e20b5458669bdddbe1",
       "evidence": [
         {
           "id": 1150,
@@ -4008,11 +4092,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "0b1e26463cd847b596255c97cb79356dc2e7d231e6ca3142fe2f4184c65629fb",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "0b1e26463cd847b596255c97cb79356dc2e7d231e6ca3142fe2f4184c65629fb",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1150.png",
-        "sha256": "60bdfd95ee0686f065e1a30e419826ddd8ae6a45e6c89208350596b47f232b2d"
+        "sha256": "2818c47353306fc3a086ca744d148badfa2ac5e07ae62ad33e2ed69b03fcac2a"
       },
       "animation": null,
       "traffic_mask": null
@@ -4020,7 +4110,7 @@
     {
       "id": 1151,
       "png": "masters/1151.png",
-      "sha256": "a31f29f6dbb9ada85554066c7fdc73a03d3ff82447fb92d88148a7751e67de0b",
+      "sha256": "8ba1d5612a231e72ead785093bce33fb04e3e516860bde6fac5b83d4d4414d6a",
       "evidence": [
         {
           "id": 1151,
@@ -4089,11 +4179,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "e35d966c77e681d077feb941687285172194706a6a31e47c89628d8e9ae941a0",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "a31f29f6dbb9ada85554066c7fdc73a03d3ff82447fb92d88148a7751e67de0b",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1151.png",
-        "sha256": "fe50f643a03de4f082f1d19d967a3d80f37d40d745f9fa40ec3207b45f0bedea"
+        "sha256": "68f2b5d1db4db18b5e0c5528bddea4a4adb148e568a5abd896feed3f55026222"
       },
       "animation": null,
       "traffic_mask": null
@@ -4101,7 +4197,7 @@
     {
       "id": 1152,
       "png": "masters/1152.png",
-      "sha256": "abf70b12abb203ba55d598310c5157e3fd74bebd997028df938dc7fbd485674b",
+      "sha256": "f968314e976cb86285d4bba1eb10dc83831a168c8675e37d5a73c0a623cdca77",
       "evidence": [
         {
           "id": 1152,
@@ -4170,11 +4266,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "abf70b12abb203ba55d598310c5157e3fd74bebd997028df938dc7fbd485674b",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "abf70b12abb203ba55d598310c5157e3fd74bebd997028df938dc7fbd485674b",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1152.png",
-        "sha256": "7914925a9ad01d650b82e453b7660746a94a47d4c8f601b996e46a418ee6b867"
+        "sha256": "94b8efaac53c24f693d921f86d33d56890a874f6dfc8a4b7608cbab2240dd3b8"
       },
       "animation": null,
       "traffic_mask": null
@@ -4182,7 +4284,7 @@
     {
       "id": 1153,
       "png": "masters/1153.png",
-      "sha256": "63632838327cec98dc55accf6c538490e0a389c0e566e4250e2e8a09934c393a",
+      "sha256": "68aa5c1c8c810da7aa0921bf9144db9ff03394e00d57b14a3b99285a4ccfd385",
       "evidence": [
         {
           "id": 1153,
@@ -4251,11 +4353,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "63632838327cec98dc55accf6c538490e0a389c0e566e4250e2e8a09934c393a",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "63632838327cec98dc55accf6c538490e0a389c0e566e4250e2e8a09934c393a",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1153.png",
-        "sha256": "17417c6682fbdfcce35fde8c398784a5d74d78ecfe4cadeecd61379567ed9f90"
+        "sha256": "bfdc925b15fe10f5d9f3c82b41c3729a868a39c184fca2fe7bc45b132a45d8a3"
       },
       "animation": null,
       "traffic_mask": null
@@ -4295,7 +4403,7 @@
     {
       "id": 1155,
       "png": "masters/1155.png",
-      "sha256": "677cb54d77c0c6ad1f41abab47d2abfda4631d9e77012199fcc9d0a1c9f41e2c",
+      "sha256": "f3300b1b7bc3274faaad3c7d77958c5ff0891034f5e9c6c639eabdf7aa98c646",
       "evidence": [
         {
           "id": 1155,
@@ -4366,11 +4474,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "677cb54d77c0c6ad1f41abab47d2abfda4631d9e77012199fcc9d0a1c9f41e2c",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "677cb54d77c0c6ad1f41abab47d2abfda4631d9e77012199fcc9d0a1c9f41e2c",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1155.png",
-        "sha256": "d1287146acb708b4bb4a0b68231e42186c0e7313199f815cc9aed4bfc71547b8"
+        "sha256": "f5c45966b6d1f5b201cd3ca4ce3d4e79fa663c26ea9b02683e07faf47610b8a9"
       },
       "animation": null,
       "traffic_mask": null
@@ -4378,7 +4492,7 @@
     {
       "id": 1156,
       "png": "masters/1156.png",
-      "sha256": "f4cbe76cd077d1da61dfea1d5befda1117f665356dd658b93ea3ab0810e276eb",
+      "sha256": "c82bb89c0834549d1f76b29e1795e3f8f79143386b613483a35893fa661ef4bc",
       "evidence": [
         {
           "id": 1156,
@@ -4447,11 +4561,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "f4cbe76cd077d1da61dfea1d5befda1117f665356dd658b93ea3ab0810e276eb",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "f4cbe76cd077d1da61dfea1d5befda1117f665356dd658b93ea3ab0810e276eb",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1156.png",
-        "sha256": "db5b44ac73ea252d86e3524c871a4425b2215317b1d2560bc75a117b7b8634a9"
+        "sha256": "f57f50ccdc0569c7abe734d796906ba3b2a7b55f759c7414f72df2d09da98731"
       },
       "animation": null,
       "traffic_mask": null
@@ -4459,7 +4579,7 @@
     {
       "id": 1157,
       "png": "masters/1157.png",
-      "sha256": "cb00621f54bceb588af9a6a7023ac640689eb1ad7231cb3e2914c96bb0cb5d20",
+      "sha256": "507ca41603b245e29b58a54b8d4b347cd4bf647616c66b2f4ec8970f76d7be66",
       "evidence": [
         {
           "id": 1157,
@@ -4530,11 +4650,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "cb00621f54bceb588af9a6a7023ac640689eb1ad7231cb3e2914c96bb0cb5d20",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "cb00621f54bceb588af9a6a7023ac640689eb1ad7231cb3e2914c96bb0cb5d20",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1157.png",
-        "sha256": "6d70d86efbdf76c872601d1f44a0dbe1a023670713fd58dff2c56e97cce045f8"
+        "sha256": "78200b154bcc8cd799b16043854ec167cf98dfda597f1d479b3ea15f4c9e9281"
       },
       "animation": null,
       "traffic_mask": null
@@ -4542,7 +4668,7 @@
     {
       "id": 1158,
       "png": "masters/1158.png",
-      "sha256": "134faa5435ec3960cbfac34a767bc6821cfee2c1260825380ed70223fe25cca1",
+      "sha256": "f02fae8a7087824672c965674cc6bd3fcf6a8b4b22dc598930c771e48eb682f9",
       "evidence": [
         {
           "report": "reports/industry.json",
@@ -4562,11 +4688,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "134faa5435ec3960cbfac34a767bc6821cfee2c1260825380ed70223fe25cca1",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "134faa5435ec3960cbfac34a767bc6821cfee2c1260825380ed70223fe25cca1",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1158.png",
-        "sha256": "68af2f8326d586abdb8ff0a3a2bd1ec0d91411f6f6792e16de904b118ca83a58"
+        "sha256": "64bad2c0e17c2301cc1a08278af37ec822e5bb9349e4ca0ab5a6b99e1b2a8df5"
       },
       "animation": null,
       "traffic_mask": null
@@ -4574,7 +4706,7 @@
     {
       "id": 1159,
       "png": "masters/1159.png",
-      "sha256": "6eaf51d5915ff89e357102bbc0817f9c766abca9e0c27c6d90f60346138cc53a",
+      "sha256": "b2011ed3d041929700cfcabe5586fb575c7caf448a1b8dbbc3c8d39370db1fb5",
       "evidence": [
         {
           "report": "reports/industry.json",
@@ -4594,11 +4726,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "187cd9fe260378e813b470a6c77cf1d06f524af784317e8578ad7c9796f1b0b5",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "6eaf51d5915ff89e357102bbc0817f9c766abca9e0c27c6d90f60346138cc53a",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1159.png",
-        "sha256": "64f3767b289a3325b72967d58bcc3cb1757f9514f8aa6a55e5b41fa62ee35f55"
+        "sha256": "9513b34cc8aba0c1e9a9874807cdba85811b261abcc6758289e54ee5fc02a375"
       },
       "animation": null,
       "traffic_mask": null
@@ -4606,7 +4744,7 @@
     {
       "id": 1160,
       "png": "masters/1160.png",
-      "sha256": "48e21447cb27960571c4318eeb7b4607d7a34fdd6b3bdd2f4af51287f9af2cec",
+      "sha256": "7a80ae59c87b093f75bd8caebeda656edf7dc54cc2371606c940ef91661475f0",
       "evidence": [
         {
           "id": 1160,
@@ -4709,11 +4847,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "48e21447cb27960571c4318eeb7b4607d7a34fdd6b3bdd2f4af51287f9af2cec",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "48e21447cb27960571c4318eeb7b4607d7a34fdd6b3bdd2f4af51287f9af2cec",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1160.png",
-        "sha256": "e3404f5e3f4e8a30f3f1ee844c5d66f953d403395f3f6cfbb941931cd9a985dc"
+        "sha256": "93c3c2b6ce1cf50d05a5918f2735a9a78874d51522404ea827856406fb36667b"
       },
       "animation": null,
       "traffic_mask": null
@@ -4721,7 +4865,7 @@
     {
       "id": 1161,
       "png": "masters/1161.png",
-      "sha256": "de757227a44b43fb55b0fd6fb2c09d0c49a8cade9d0fa0af89e8c4abb8d4301a",
+      "sha256": "2d27acd97d39481a25c153afd152e80f244a68921ed93fbf53c12b4525dd5471",
       "evidence": [
         {
           "id": 1161,
@@ -4792,11 +4936,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "de757227a44b43fb55b0fd6fb2c09d0c49a8cade9d0fa0af89e8c4abb8d4301a",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "de757227a44b43fb55b0fd6fb2c09d0c49a8cade9d0fa0af89e8c4abb8d4301a",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1161.png",
-        "sha256": "cc626c4dad576cf8ad4b5f45c4dee3a924ff79feb8d6818e41237de478140a06"
+        "sha256": "c9c8900223e32fea9ad20d159de5c55b9248c0a819ce6e5a1b091f0352d813f6"
       },
       "animation": null,
       "traffic_mask": null
@@ -4804,7 +4954,7 @@
     {
       "id": 1162,
       "png": "masters/1162.png",
-      "sha256": "b685b586aeb26dff903f196aa2b9309e914a56fff501a4d8d5aba655c4b147f8",
+      "sha256": "3422c74be151e6b130d7821bc581e6bcaf04f7f4cc32bf2206912aab5ba7bbed",
       "evidence": [
         {
           "id": 1162,
@@ -4875,11 +5025,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "b685b586aeb26dff903f196aa2b9309e914a56fff501a4d8d5aba655c4b147f8",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "b685b586aeb26dff903f196aa2b9309e914a56fff501a4d8d5aba655c4b147f8",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1162.png",
-        "sha256": "277984494bbb09cfb00bdd3e41863fa19d55f92ef3c4f9ca29ac44b1a857db35"
+        "sha256": "2039b264babcfa554abe85f1bd4d4c1437a614d7cb65474262e902688d1a0225"
       },
       "animation": null,
       "traffic_mask": null
@@ -4887,7 +5043,7 @@
     {
       "id": 1163,
       "png": "masters/1163.png",
-      "sha256": "55af056edff27d9e29919c4e23f719d4d207ca3cb5632401cb3bdb5959fae412",
+      "sha256": "f9f36492cd53c125e37606b6acba6f569fd7a832b2ca66013a88c60657fbffc1",
       "evidence": [
         {
           "report": "reports/industry.json",
@@ -4907,11 +5063,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "55af056edff27d9e29919c4e23f719d4d207ca3cb5632401cb3bdb5959fae412",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "55af056edff27d9e29919c4e23f719d4d207ca3cb5632401cb3bdb5959fae412",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1163.png",
-        "sha256": "288618a9e80eb4a86a5877a372daef5cac2f7fe4e21e258293ac3baf320a2542"
+        "sha256": "9d9e293ca8c17b25218e68c23e6ca95819bdde92557e9961d9cb66581a17f2ba"
       },
       "animation": null,
       "traffic_mask": null
@@ -4919,7 +5081,7 @@
     {
       "id": 1164,
       "png": "masters/1164.png",
-      "sha256": "d5087d2faf747359f3388ce5bb537221bd6f3c9648e932d3b33dd48af1766e94",
+      "sha256": "904482fd1e96fbcdb0c2c06550f5bdf4813e796b849638b3faf5df9121b16c8a",
       "evidence": [
         {
           "report": "reports/industry.json",
@@ -4939,11 +5101,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "d5087d2faf747359f3388ce5bb537221bd6f3c9648e932d3b33dd48af1766e94",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "d5087d2faf747359f3388ce5bb537221bd6f3c9648e932d3b33dd48af1766e94",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1164.png",
-        "sha256": "2c50ec901974422d462549b41a741a6664431f0034a3729665ea3713f7f5e0ef"
+        "sha256": "7d2520780b62f8e44fc2b8e1c1475467d6d2b495e76476a3c1e814a0cbf15301"
       },
       "animation": null,
       "traffic_mask": null
@@ -4951,7 +5119,7 @@
     {
       "id": 1165,
       "png": "masters/1165.png",
-      "sha256": "f981a2eec4cd4ae4f8ef533a2bbde21b8cd6ba3f3005e2df94efb44b83cd6d33",
+      "sha256": "3a66677c2c99ce3d86f20a3d53b02b37d6dc9254f094cd9ec2ec978d0df40f71",
       "evidence": [
         {
           "report": "reports/industry.json",
@@ -4971,11 +5139,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "f981a2eec4cd4ae4f8ef533a2bbde21b8cd6ba3f3005e2df94efb44b83cd6d33",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "f981a2eec4cd4ae4f8ef533a2bbde21b8cd6ba3f3005e2df94efb44b83cd6d33",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1165.png",
-        "sha256": "8ba86ec851d27afb860c25cccb520aaa6b86a04970bfd7fe1b783a0fff552f82"
+        "sha256": "f8aeba906b65dd120e29cd432a8f1cedce8637f9bcb0666c62a6cdf1bdda9753"
       },
       "animation": null,
       "traffic_mask": null
@@ -5006,7 +5180,7 @@
     {
       "id": 1167,
       "png": "masters/1167.png",
-      "sha256": "9cf72d4c78cda26ef992e60c71a91388cba6f060f5289e731a13ee2d0e3b40f2",
+      "sha256": "a93396124ce4d34f097c59616485b0941afa2e821828d6dba3cbab264f89b7f2",
       "evidence": [
         {
           "report": "reports/construction.json",
@@ -5026,6 +5200,12 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "9cf72d4c78cda26ef992e60c71a91388cba6f060f5289e731a13ee2d0e3b40f2",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "9cf72d4c78cda26ef992e60c71a91388cba6f060f5289e731a13ee2d0e3b40f2",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": null,
@@ -5035,7 +5215,7 @@
     {
       "id": 1168,
       "png": "masters/1168.png",
-      "sha256": "ba6af0e948c8cda58708efad1119ad6bfe7db1f3775822b4a1db12c2d649eb6b",
+      "sha256": "1a6893e35d6d1ac09dca90a64dc54874a1a177dd5299d1ba6c762706bf51cb68",
       "evidence": [
         {
           "report": "reports/construction.json",
@@ -5055,6 +5235,12 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "ba6af0e948c8cda58708efad1119ad6bfe7db1f3775822b4a1db12c2d649eb6b",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "ba6af0e948c8cda58708efad1119ad6bfe7db1f3775822b4a1db12c2d649eb6b",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": null,
@@ -5064,7 +5250,7 @@
     {
       "id": 1169,
       "png": "masters/1169.png",
-      "sha256": "e44ad4f2580e66425a7af8cb43fe683177c6ff4ae83e86298183620442d9dceb",
+      "sha256": "0d64c29714f09764b1855986e59ebd726750619b97e1600d49097d8cd952b399",
       "evidence": [
         {
           "report": "reports/construction.json",
@@ -5084,6 +5270,12 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "6cf1e9f5adf2613dc3cd9a8529dd6f7555a29f446871ea074f74bacae2938a64",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "e44ad4f2580e66425a7af8cb43fe683177c6ff4ae83e86298183620442d9dceb",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": null,
@@ -5093,7 +5285,7 @@
     {
       "id": 1170,
       "png": "masters/1170.png",
-      "sha256": "0411c64f08ca35113dcaa7a17fbebc8bc27a7ac26fd95caa8c4f7e25814731a4",
+      "sha256": "5dd31e1ff9a64e919b776e4fc42f4ecd2b48912f7d74eae04f585d5485a4d914",
       "evidence": [
         {
           "id": 1170,
@@ -5162,6 +5354,12 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "0411c64f08ca35113dcaa7a17fbebc8bc27a7ac26fd95caa8c4f7e25814731a4",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "0411c64f08ca35113dcaa7a17fbebc8bc27a7ac26fd95caa8c4f7e25814731a4",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": null,
@@ -5171,7 +5369,7 @@
     {
       "id": 1171,
       "png": "masters/1171.png",
-      "sha256": "bab3aac99b629109fe94430c72e855ffee475e3e776f32a0fea3f6a508010bcc",
+      "sha256": "c5e9dcdd4655b8e024912e934dd8ec0a01af5feddce0b813e6dbd74e643bb08b",
       "evidence": [
         {
           "id": 1171,
@@ -5242,6 +5440,12 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "bab3aac99b629109fe94430c72e855ffee475e3e776f32a0fea3f6a508010bcc",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "bab3aac99b629109fe94430c72e855ffee475e3e776f32a0fea3f6a508010bcc",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": null,
@@ -5251,7 +5455,7 @@
     {
       "id": 1172,
       "png": "masters/1172.png",
-      "sha256": "df5d29be1f3148bbdef31a7f32bc309929b3033f6011994ac40eaece46a007e9",
+      "sha256": "3e7142b0428bb41d5572eaa95c789ebc22591b5fa2e897cbdd05f7cc83136c7e",
       "evidence": [
         {
           "id": 1172,
@@ -5320,6 +5524,12 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "df5d29be1f3148bbdef31a7f32bc309929b3033f6011994ac40eaece46a007e9",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "df5d29be1f3148bbdef31a7f32bc309929b3033f6011994ac40eaece46a007e9",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": null,
@@ -5329,7 +5539,7 @@
     {
       "id": 1173,
       "png": "masters/1173.png",
-      "sha256": "db8b4c4cf12981e0162a874daf80f569bf9c50650f7c1dcd208b7cb7db2567e3",
+      "sha256": "160fc66812c503540543adb082c8497b02abc208024751045a8ff3d9ef2db1be",
       "evidence": [
         {
           "id": 1173,
@@ -5398,6 +5608,12 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "db8b4c4cf12981e0162a874daf80f569bf9c50650f7c1dcd208b7cb7db2567e3",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "db8b4c4cf12981e0162a874daf80f569bf9c50650f7c1dcd208b7cb7db2567e3",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": null,
@@ -5407,7 +5623,7 @@
     {
       "id": 1174,
       "png": "masters/1174.png",
-      "sha256": "cf563de2e6f634ee56bb04bbe134db2231f3328becd86e1fe6e2dde356a77286",
+      "sha256": "87bf03c3e4cb0fc21f4c73f953420e42ddc3c8dfbfd93fff0d50d489f0d647fb",
       "evidence": [
         {
           "report": "reports/apartments.json",
@@ -5427,6 +5643,12 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "b6a87efc494de8b50b6cb8ea587a7ce6ca4962518fc9e95e343431455180fb93",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "cf563de2e6f634ee56bb04bbe134db2231f3328becd86e1fe6e2dde356a77286",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
@@ -5439,7 +5661,7 @@
     {
       "id": 1175,
       "png": "masters/1175.png",
-      "sha256": "8a56afc2ff42c1700dcb5c041815201ba193230ef4383c5f039a04c79808cf4e",
+      "sha256": "988d7787db83a66ae789fe5cac7afe5a741accf270b1985334ab834c3be4eed2",
       "evidence": [
         {
           "report": "reports/apartments.json",
@@ -5459,11 +5681,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "8a56afc2ff42c1700dcb5c041815201ba193230ef4383c5f039a04c79808cf4e",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "8a56afc2ff42c1700dcb5c041815201ba193230ef4383c5f039a04c79808cf4e",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1175.png",
-        "sha256": "2c9fe24acdf3599470316b80f3160f903112f69f5bfeda71b319604a628b7429"
+        "sha256": "f44b44cb345dcc5807fdec4a1b9226dc603fe8e048634561c071f74dae85b7f1"
       },
       "animation": null,
       "traffic_mask": null
@@ -5923,7 +6151,7 @@
     {
       "id": 1185,
       "png": "masters/1185.png",
-      "sha256": "b4d23792deeb7d82b2e9ada62988bf9544bdfa4972f11e1b3b99afe71a919a06",
+      "sha256": "4027dda08c88d00a0dff94c90149c20164e61879ca5997152ed394341d4967a3",
       "evidence": [
         {
           "id": 1185,
@@ -5994,11 +6222,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "f80cad9ccf9c02c9604bacf57dc06fb03999186aa4023a52dad059483f122cea",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "b4d23792deeb7d82b2e9ada62988bf9544bdfa4972f11e1b3b99afe71a919a06",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1185.png",
-        "sha256": "d469a7e2996ea76470da130d9c9841711abafca4a8a8657c4488507a832145e2"
+        "sha256": "77c51e21a2e028c3cbc14b5fcdcaf1e36517e3d53a7a56138f50c1cb94192dd0"
       },
       "animation": null,
       "traffic_mask": null
@@ -6370,7 +6604,7 @@
     {
       "id": 1190,
       "png": "masters/1190.png",
-      "sha256": "b4150a5cc4a9bcea559dcf2be2a19880f94643e24346df6da0961c8ac1bfad47",
+      "sha256": "cd8e7a887035e4d0054b3977c859840c6716b75ebec195a57c9112a11937368e",
       "evidence": [
         {
           "report": "reports/large-industry.json",
@@ -6390,11 +6624,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "916ef982725d4cd52d2de00c2a8603dab708dbad21f4c87a1bdcdb1a8b544657",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "b4150a5cc4a9bcea559dcf2be2a19880f94643e24346df6da0961c8ac1bfad47",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1190.png",
-        "sha256": "b550ed19b23b21cd4820b9abb57e647f18afefec079facfdb73321ab56ecca99"
+        "sha256": "1be5da577ee40e9088b551e1e779cc1043e1016cc335bd7ef630f12254108537"
       },
       "animation": null,
       "traffic_mask": null
@@ -6402,7 +6642,7 @@
     {
       "id": 1191,
       "png": "masters/1191.png",
-      "sha256": "d77b5c08f9b9f6df6b85e2d789621ed5aea335946ab0112d62489f231f0f5e67",
+      "sha256": "5185dfc95f498bf187264f6a04f26c0b7520ff2d714044ac3a9452d47fe2d3d0",
       "evidence": [
         {
           "report": "reports/large-industry.json",
@@ -6422,11 +6662,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "639c9237f9e8963d59d9303fdfecc69c54e878f63b2316a8623fc7c3e8ba5a01",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "d77b5c08f9b9f6df6b85e2d789621ed5aea335946ab0112d62489f231f0f5e67",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1191.png",
-        "sha256": "2aae97f66a61977f6cdacd78f33600933562983da08687080a745128f4aa262a"
+        "sha256": "1219312160abd09eea0aa3e3f54ac7141ff31e71b3f1ef1b479e146620f0108f"
       },
       "animation": null,
       "traffic_mask": null
@@ -6434,7 +6680,7 @@
     {
       "id": 1192,
       "png": "masters/1192.png",
-      "sha256": "8ff0697682c41db2e286e62973abee51875666c7baf1f5a1d5949997126cdcee",
+      "sha256": "23e61efb28ec31a7acf5911d457f49bb4ca84e9c9af680ad3daaa9850f156aac",
       "evidence": [
         {
           "id": 1192,
@@ -6505,6 +6751,12 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "8ff0697682c41db2e286e62973abee51875666c7baf1f5a1d5949997126cdcee",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "8ff0697682c41db2e286e62973abee51875666c7baf1f5a1d5949997126cdcee",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
@@ -6632,7 +6884,7 @@
     {
       "id": 1194,
       "png": "masters/1194.png",
-      "sha256": "00cc2ddf3999f63d06383b011ccd4648b05ac64021325079ab8666a83a7f7dd0",
+      "sha256": "6d70b4f205af76f1134236eafa23902cba9237cb7f97568c41526d6a9e211805",
       "evidence": [
         {
           "report": "reports/large-industry.json",
@@ -6652,6 +6904,12 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "00cc2ddf3999f63d06383b011ccd4648b05ac64021325079ab8666a83a7f7dd0",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "00cc2ddf3999f63d06383b011ccd4648b05ac64021325079ab8666a83a7f7dd0",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": null,
@@ -6661,7 +6919,7 @@
     {
       "id": 1195,
       "png": "masters/1195.png",
-      "sha256": "0df4287a3ff0c343c5fff676b68f3e34186dff8e67fee1db3e2ac7a624b09275",
+      "sha256": "179e30243d83469c30531de9c81235319ca11a56eb636de39938858b43e26052",
       "evidence": [
         {
           "report": "reports/large-industry.json",
@@ -6681,6 +6939,12 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "0df4287a3ff0c343c5fff676b68f3e34186dff8e67fee1db3e2ac7a624b09275",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "0df4287a3ff0c343c5fff676b68f3e34186dff8e67fee1db3e2ac7a624b09275",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": null,
@@ -6690,7 +6954,7 @@
     {
       "id": 1196,
       "png": "masters/1196.png",
-      "sha256": "a35b70d0eecb1dd16fad7a9d137105fad49a4e0a9a8ffa95f759295a087d2635",
+      "sha256": "6dd9a40490cc90d3c6e146b0104a6ac6b6b4e468d4b84fda9c5f9200edb3b6db",
       "evidence": [
         {
           "id": 1196,
@@ -6761,6 +7025,12 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "92110efcba9d795d1da0dde936f0f2fb376ddc3d96f254410f6f01f5f5d49e36",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "a35b70d0eecb1dd16fad7a9d137105fad49a4e0a9a8ffa95f759295a087d2635",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": null,
@@ -6770,7 +7040,7 @@
     {
       "id": 1197,
       "png": "masters/1197.png",
-      "sha256": "f27b86b73da245bada5c515d344c265778336ab1a25f31eb458bdd29a80943b9",
+      "sha256": "951e7a786cfa23c758a7c0e5e86b2aa821174d88baefd083fd53a2255d237674",
       "evidence": [
         {
           "id": 1197,
@@ -6840,6 +7110,12 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "be8ed077da218c3cb60649cd346770c3a56d6145c86142893229f5883bac5988",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "f27b86b73da245bada5c515d344c265778336ab1a25f31eb458bdd29a80943b9",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": null,
@@ -6849,7 +7125,7 @@
     {
       "id": 1198,
       "png": "masters/1198.png",
-      "sha256": "3df3111354fe945962c00fb2933d1333744d346a042f9dcb64577765b4bec868",
+      "sha256": "56167c654cde46a761b8fefcf1ae9f5904b962babd22cd1e1f62b555ec7006b1",
       "evidence": [
         {
           "report": "reports/airport-port.json",
@@ -6869,6 +7145,12 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "33177ba099011e096b0e128d339db225efd2318e4daba8baeb171d5bcbd25f92",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "3df3111354fe945962c00fb2933d1333744d346a042f9dcb64577765b4bec868",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": null,
@@ -7535,7 +7817,7 @@
     {
       "id": 1208,
       "png": "masters/1208.png",
-      "sha256": "f1491a21e1f70946d0a5ffcbbf72bf06e9218acc4abd00314081075940970061",
+      "sha256": "dac68be1fdee2da9d622c4263c5fde36f8cfa14cb1d96e6abe3ff10f42df3c27",
       "evidence": [
         {
           "id": 1208,
@@ -7632,11 +7914,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "f1491a21e1f70946d0a5ffcbbf72bf06e9218acc4abd00314081075940970061",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "f1491a21e1f70946d0a5ffcbbf72bf06e9218acc4abd00314081075940970061",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1208.png",
-        "sha256": "4b7a111f7184ce64b583f5d34b298fcc89da136e4dbdd4f7f2b5af5aa8863f61"
+        "sha256": "e023227602dd324888d00ec50dd20c7009f42115b67359368a10754124b7713a"
       },
       "animation": null,
       "traffic_mask": null
@@ -7839,7 +8127,7 @@
     {
       "id": 1212,
       "png": "masters/1212.png",
-      "sha256": "58f8eb82eee5fe9da2307712b8781c33307359bd7863fcb7759f6df6bc560b3f",
+      "sha256": "ed32230c86563a4174ddb71d14c227462456d9d0e046595c8e11cb9d0aeab55b",
       "evidence": [
         {
           "report": "reports/civic.json",
@@ -7859,11 +8147,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "58f8eb82eee5fe9da2307712b8781c33307359bd7863fcb7759f6df6bc560b3f",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "58f8eb82eee5fe9da2307712b8781c33307359bd7863fcb7759f6df6bc560b3f",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1212.png",
-        "sha256": "c143c7afa1852af74e80745a3eba4e5619847a70dd4308eeb7d389fc72d6c54d"
+        "sha256": "3c9d7b8b59c5a2100191e4086ddc934d4c54f93709963638de83bb67e71e6ba7"
       },
       "animation": null,
       "traffic_mask": null
@@ -7946,7 +8240,7 @@
     {
       "id": 1214,
       "png": "masters/1214.png",
-      "sha256": "2eb888e8a8f4274b11459fbf60cca088f69c8f89cd2818c9b18b9ae7619b3567",
+      "sha256": "9f9e8ca07765bd1f07c7beba422bbb2076be87ba244002c343ce53ad98139ddf",
       "evidence": [
         {
           "id": 1214,
@@ -8015,11 +8309,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "a53c7c7485df3b94394b3b46ef346a8a77d41b3958c7001fa24a124865d2eae3",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "2eb888e8a8f4274b11459fbf60cca088f69c8f89cd2818c9b18b9ae7619b3567",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1214.png",
-        "sha256": "654442beadb7d51f1aed66613fedfa9687c22f98d2af1cd6391299e9c689a090"
+        "sha256": "9da7844435eddfab8240d371802d75d6f90999663a02ef943e22f9871e310a85"
       },
       "animation": null,
       "traffic_mask": null
@@ -8187,7 +8487,7 @@
     {
       "id": 1217,
       "png": "masters/1217.png",
-      "sha256": "534b117e5b79778175adc8e417e4d214a6677537465589868b334277ea70dd3e",
+      "sha256": "8ecab40b117b03b40b87cba6324075af59d83731f1ee631d9e90784004134a2f",
       "evidence": [
         {
           "id": 1217,
@@ -8256,11 +8556,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "d15ed4f26e71bf15669e6a938f0bd4fd2f8102f0136927fc4b475640e8a2e420",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "534b117e5b79778175adc8e417e4d214a6677537465589868b334277ea70dd3e",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1217.png",
-        "sha256": "d086cce2183fe0386ec4403e3998358a9bc06b46eef24cdb49914c1e1ad367a9"
+        "sha256": "46f1344e4bb56901e382a9eb0664412fec64b21e9c05545e0541608fb38167b9"
       },
       "animation": null,
       "traffic_mask": null
@@ -8730,7 +9036,7 @@
     {
       "id": 1227,
       "png": "masters/1227.png",
-      "sha256": "2326dbb52093b6d73a748d4e05955b3c8fc8f306d7692f8aba5ac0d45615ec70",
+      "sha256": "81376df6c31f191ef5187cbbe1ffc59e1f17f3acc263d5b16e8df7d414ab41f3",
       "evidence": [
         {
           "report": "reports/transport-service.json",
@@ -8744,11 +9050,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "31854d940bcc89ca1faeda24115e8d2f57717336d3f89a617ae453eb18d27c7b",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "2326dbb52093b6d73a748d4e05955b3c8fc8f306d7692f8aba5ac0d45615ec70",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1227.png",
-        "sha256": "78a2d269ebaa3cd59bdc9d8955473bd0c62ad34f4cd1fe8ddced23b1ccb2df84"
+        "sha256": "dcad1ecca8b398e68f1ee2e117bb231c0aeeb4e27be8ffc3ae6222c40bc0ce0a"
       },
       "animation": null,
       "traffic_mask": null
@@ -8845,7 +9157,7 @@
     {
       "id": 1232,
       "png": "masters/1232.png",
-      "sha256": "0b8b7543fe72205984a7c622152145bbd355007fb9a5d681b8f06c428552df5c",
+      "sha256": "d1ccff18648995ffad5199002faa1766e59751c48e3404e8ca23bf47864ec871",
       "evidence": [
         {
           "id": 1232,
@@ -8914,6 +9226,12 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "3f2c3dfe9b3f5bb9186fa10d023eba306a424436cdaac9aa9ec2bc28105849cc",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "0b8b7543fe72205984a7c622152145bbd355007fb9a5d681b8f06c428552df5c",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
@@ -9081,7 +9399,7 @@
     {
       "id": 1236,
       "png": "masters/1236.png",
-      "sha256": "9eb9f81551a0de973b318704664910c00f7862f4e7df4dfb7da77f439ed35495",
+      "sha256": "2d2350273bc31697f21a8bdde214e7ba8fb6d01dc5597d5d4684c9f0ef18b6f4",
       "evidence": [
         {
           "report": "reports/transport-service.json",
@@ -9101,11 +9419,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "28d38ef9527cca397ec7559cf25943d0e49f44c7409bb2895ca02ac614eb86a5",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "9eb9f81551a0de973b318704664910c00f7862f4e7df4dfb7da77f439ed35495",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1236.png",
-        "sha256": "1123c97551c7775d6939bd5c4bf9ab09a5bd3dd8e469cc027a89bca8d44035cf"
+        "sha256": "06fb5086f09ec3c2400743282e1179b2d4516ee358ae421db43969c45b5c323e"
       },
       "animation": null,
       "traffic_mask": null
@@ -9113,7 +9437,7 @@
     {
       "id": 1237,
       "png": "masters/1237.png",
-      "sha256": "591bb689ca3eebbdf29b311ebde51d265c4dbc367837dd74467678eb8676d1f7",
+      "sha256": "0c8c23749e8cf22d38e23bc24cca5fc42600126baf789c5262c99796fedd1fac",
       "evidence": [
         {
           "id": 1237,
@@ -9216,11 +9540,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "c1458a1eac55fe6aded6930a6f12592b0b6babd57319d700ebb99449b475fc65",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "591bb689ca3eebbdf29b311ebde51d265c4dbc367837dd74467678eb8676d1f7",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1237.png",
-        "sha256": "07b798b61c189896b13a987d5ff326afc37c1b33ec4d6e3c4008eab4703dddba"
+        "sha256": "a8e8d863202dff392142c6918907328fb323ea800befde378548bf06cce2ede5"
       },
       "animation": null,
       "traffic_mask": null
@@ -9369,7 +9699,7 @@
     {
       "id": 1240,
       "png": "masters/1240.png",
-      "sha256": "71784b98c26c77ef1a837f01ae4819bd1cef2a84ff16844c5a77bb5d074e9838",
+      "sha256": "9feba6324d4e293df42ba22a31bc9b5029c6e1d5602078512be7891cac435e37",
       "evidence": [
         {
           "report": "reports/transport-service.json",
@@ -9383,11 +9713,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "995d5c9fa84bbbde92cf4dd383f4e83ab0a81422d76c8d6c7d57606a5b969982",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "71784b98c26c77ef1a837f01ae4819bd1cef2a84ff16844c5a77bb5d074e9838",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1240.png",
-        "sha256": "61a385b5168f3880833ed9613cf4fe4cab3f6d0d0098b21c763e3e1bb92f66d1"
+        "sha256": "5c218a05b1303c54026d5c4ba5dc88ee4379796a4e9ab76d411bbee94940523e"
       },
       "animation": null,
       "traffic_mask": null
@@ -9461,7 +9797,7 @@
     {
       "id": 1242,
       "png": "masters/1242.png",
-      "sha256": "9e61d9121e2695869e771ba6ec188a4e2d1b5db3f9c396314134f9c0c3970667",
+      "sha256": "a22be15f41d2fcc1b72b37bca43853b7b32b2163958686e05fac2eb38865aad2",
       "evidence": [
         {
           "report": "reports/transport-service.json",
@@ -9481,11 +9817,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "a589a8b22c3c7de4d05d7d79eb8cb267161fdb73224c448781e02248f351063c",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "9e61d9121e2695869e771ba6ec188a4e2d1b5db3f9c396314134f9c0c3970667",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1242.png",
-        "sha256": "147e2cf2b5084d4f433872e4369793aa448c22b69e0ca01d83ab06c93f07675a"
+        "sha256": "d4a6a3a74934566deea39bdeb180acdfaf9c0997b68dbefb94d3a134e368a481"
       },
       "animation": null,
       "traffic_mask": null
@@ -9493,7 +9835,7 @@
     {
       "id": 1243,
       "png": "masters/1243.png",
-      "sha256": "94993ea6fd753e53b3b9f08372ab45c6cca14f832af243626c599d859c44d646",
+      "sha256": "d3684116722b5212faddfe4b1fe1e31783c3c068cdc7655d8af6b7f17fc96be2",
       "evidence": [
         {
           "id": 1243,
@@ -9590,11 +9932,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "97163733ce45534dc7a50bbfa6d9d5d43c7bb2a098cb28cb5bf9805932217e20",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "94993ea6fd753e53b3b9f08372ab45c6cca14f832af243626c599d859c44d646",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1243.png",
-        "sha256": "77fe01d982fae503094aa7aee41da6f5f5c111267a61d4cd8ac146af0c36ae43"
+        "sha256": "0276373c48b9d70635173aaf016f46c1fc9d48c2296eadabb9a33c2fd31974e7"
       },
       "animation": null,
       "traffic_mask": null
@@ -9771,7 +10119,7 @@
     {
       "id": 1246,
       "png": "masters/1246.png",
-      "sha256": "6f8d5f92d91b8f98a9d0b38c12951bd4869cda16cb64019a8ba79f68dafc9018",
+      "sha256": "7c8c124e1d583e9fd2028076001801958d819c517b151ec216c613d70da3eab0",
       "evidence": [
         {
           "report": "reports/transport-service.json",
@@ -9785,11 +10133,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "18dc601e5f742c9031c3893037087f55342caf24a451c2083bc2c978df483a7e",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "6f8d5f92d91b8f98a9d0b38c12951bd4869cda16cb64019a8ba79f68dafc9018",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1246.png",
-        "sha256": "445d1dbcdd4a95a2044aca781bf08c4933e98aa5d777d07c8ad33a9aabd6e465"
+        "sha256": "d3ae0e6549ed89d8a17f8be633bb556ba2ed9e87a9384825626feebc665e1736"
       },
       "animation": null,
       "traffic_mask": null
@@ -10393,6 +10747,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "2873315cd7d20195b4a10bf7e4efe66045dd83473d327dc057cd5e36f5f794dd",
           "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+          "source_sha256": "128528784ce7231e31de4e1450c04091b9f43886af70151762f003332bc5254c",
+          "method": "Review85: revised style, axes and textured ground baked into RS art"
         }
       ],
       "lightmap": {
@@ -20493,8 +20853,8 @@
     },
     {
       "path": "lightmaps/1124.png",
-      "sha256": "79af1920c6e12d0dff8e4dbc10ebe39bfe7c234f2b47cf564b002acc567cbeec",
-      "bytes": 1288,
+      "sha256": "586d89405bf1345eace04146fa280beda0480e63da2a269a6ae547638e61b408",
+      "bytes": 1276,
       "size": [
         128,
         92
@@ -20513,8 +20873,8 @@
     },
     {
       "path": "lightmaps/1126.png",
-      "sha256": "f0d12c05fe899600fb5a5c195a12583e8fe7fffd3195f0abb928d1c10baef21b",
-      "bytes": 1148,
+      "sha256": "eb007868dea9ff3464d19bc1bec99d9dfc98ab7878533b164641efc6caa01ce4",
+      "bytes": 1135,
       "size": [
         128,
         96
@@ -20523,8 +20883,8 @@
     },
     {
       "path": "lightmaps/1127.png",
-      "sha256": "3b16f6114a5a76a50e4b89f011ca91e116ba93135b0df24ab13544831ba9e084",
-      "bytes": 981,
+      "sha256": "cee8494a71fdd5bf45a34f59d5177c2efe28780d01c1ca59c5f680b0602564c1",
+      "bytes": 976,
       "size": [
         128,
         88
@@ -20563,8 +20923,8 @@
     },
     {
       "path": "lightmaps/1131.png",
-      "sha256": "6afa2c4680515d6b7cf385d4948a63c8215faba44ea851c73bc56a86845842bf",
-      "bytes": 954,
+      "sha256": "0b3477bb8e6f9afafb5c9ae1a7cee1918fbfb18800e073ae33ce20a77e80c856",
+      "bytes": 952,
       "size": [
         128,
         168
@@ -20633,8 +20993,8 @@
     },
     {
       "path": "lightmaps/1143.png",
-      "sha256": "0130effdb34ef898267c14ce860fccb3a0c29ee8011d0a05213b69cd8d876ff7",
-      "bytes": 1070,
+      "sha256": "8793963f0bb63ce1c0cf1d176b5e05222508c7197421343f90e3c1ca3d7ede98",
+      "bytes": 1099,
       "size": [
         256,
         256
@@ -20643,8 +21003,8 @@
     },
     {
       "path": "lightmaps/1144.png",
-      "sha256": "14e3bfda8fd0530cc439d91fdc99f55c8307fb26382e864356026d2e47f0c6ca",
-      "bytes": 1485,
+      "sha256": "37be53e85bf6cca3c970333421e546f828889e6b93488cba314a29538d60c6af",
+      "bytes": 1467,
       "size": [
         256,
         276
@@ -20663,8 +21023,8 @@
     },
     {
       "path": "lightmaps/1146.png",
-      "sha256": "3373929c0b557199fe8e50692024a8f3ea13c64730625a4d58a0ed3390730cf4",
-      "bytes": 1433,
+      "sha256": "5b6c0a808ab703a9d7375fed673c54e2f8f4b5650d7506bf634b1fe577b2942f",
+      "bytes": 1408,
       "size": [
         256,
         344
@@ -20673,13 +21033,13 @@
     },
     {
       "path": "lightmaps/1147.png",
-      "sha256": "8d15e1220b5283d8132bd4c0a1f93c9fd8024a71b2762b723cf090c943809291",
-      "bytes": 1609,
+      "sha256": "3f399dc20e617a8207717f872101561d1cd0a446892eb32ed7b14be55ae23f45",
+      "bytes": 1701,
       "size": [
         256,
-        356
+        372
       ],
-      "decoded_rgba_bytes": 364544
+      "decoded_rgba_bytes": 380928
     },
     {
       "path": "lightmaps/1148.png",
@@ -20693,8 +21053,8 @@
     },
     {
       "path": "lightmaps/1149.png",
-      "sha256": "dd9b2b0f9b1308c515d15036344e16abccfd9f9c0fdef4cac1497a154173b41a",
-      "bytes": 1313,
+      "sha256": "9f7385f9a598ddd3781f70338a37d5eee2983293c178554d51c20c6f5b505a9e",
+      "bytes": 1296,
       "size": [
         256,
         212
@@ -20703,8 +21063,8 @@
     },
     {
       "path": "lightmaps/1150.png",
-      "sha256": "60bdfd95ee0686f065e1a30e419826ddd8ae6a45e6c89208350596b47f232b2d",
-      "bytes": 1589,
+      "sha256": "2818c47353306fc3a086ca744d148badfa2ac5e07ae62ad33e2ed69b03fcac2a",
+      "bytes": 1566,
       "size": [
         256,
         232
@@ -20713,8 +21073,8 @@
     },
     {
       "path": "lightmaps/1151.png",
-      "sha256": "fe50f643a03de4f082f1d19d967a3d80f37d40d745f9fa40ec3207b45f0bedea",
-      "bytes": 1009,
+      "sha256": "68f2b5d1db4db18b5e0c5528bddea4a4adb148e568a5abd896feed3f55026222",
+      "bytes": 1011,
       "size": [
         256,
         264
@@ -20723,8 +21083,8 @@
     },
     {
       "path": "lightmaps/1152.png",
-      "sha256": "7914925a9ad01d650b82e453b7660746a94a47d4c8f601b996e46a418ee6b867",
-      "bytes": 1679,
+      "sha256": "94b8efaac53c24f693d921f86d33d56890a874f6dfc8a4b7608cbab2240dd3b8",
+      "bytes": 1659,
       "size": [
         256,
         232
@@ -20733,8 +21093,8 @@
     },
     {
       "path": "lightmaps/1153.png",
-      "sha256": "17417c6682fbdfcce35fde8c398784a5d74d78ecfe4cadeecd61379567ed9f90",
-      "bytes": 2247,
+      "sha256": "bfdc925b15fe10f5d9f3c82b41c3729a868a39c184fca2fe7bc45b132a45d8a3",
+      "bytes": 2226,
       "size": [
         256,
         252
@@ -20753,8 +21113,8 @@
     },
     {
       "path": "lightmaps/1155.png",
-      "sha256": "d1287146acb708b4bb4a0b68231e42186c0e7313199f815cc9aed4bfc71547b8",
-      "bytes": 2001,
+      "sha256": "f5c45966b6d1f5b201cd3ca4ce3d4e79fa663c26ea9b02683e07faf47610b8a9",
+      "bytes": 1981,
       "size": [
         256,
         344
@@ -20763,8 +21123,8 @@
     },
     {
       "path": "lightmaps/1156.png",
-      "sha256": "db5b44ac73ea252d86e3524c871a4425b2215317b1d2560bc75a117b7b8634a9",
-      "bytes": 1569,
+      "sha256": "f57f50ccdc0569c7abe734d796906ba3b2a7b55f759c7414f72df2d09da98731",
+      "bytes": 1551,
       "size": [
         256,
         336
@@ -20773,8 +21133,8 @@
     },
     {
       "path": "lightmaps/1157.png",
-      "sha256": "6d70d86efbdf76c872601d1f44a0dbe1a023670713fd58dff2c56e97cce045f8",
-      "bytes": 2048,
+      "sha256": "78200b154bcc8cd799b16043854ec167cf98dfda597f1d479b3ea15f4c9e9281",
+      "bytes": 2029,
       "size": [
         256,
         400
@@ -20783,8 +21143,8 @@
     },
     {
       "path": "lightmaps/1158.png",
-      "sha256": "68af2f8326d586abdb8ff0a3a2bd1ec0d91411f6f6792e16de904b118ca83a58",
-      "bytes": 1056,
+      "sha256": "64bad2c0e17c2301cc1a08278af37ec822e5bb9349e4ca0ab5a6b99e1b2a8df5",
+      "bytes": 1048,
       "size": [
         256,
         164
@@ -20793,8 +21153,8 @@
     },
     {
       "path": "lightmaps/1159.png",
-      "sha256": "64f3767b289a3325b72967d58bcc3cb1757f9514f8aa6a55e5b41fa62ee35f55",
-      "bytes": 1047,
+      "sha256": "9513b34cc8aba0c1e9a9874807cdba85811b261abcc6758289e54ee5fc02a375",
+      "bytes": 1030,
       "size": [
         256,
         216
@@ -20803,8 +21163,8 @@
     },
     {
       "path": "lightmaps/1160.png",
-      "sha256": "e3404f5e3f4e8a30f3f1ee844c5d66f953d403395f3f6cfbb941931cd9a985dc",
-      "bytes": 1391,
+      "sha256": "93c3c2b6ce1cf50d05a5918f2735a9a78874d51522404ea827856406fb36667b",
+      "bytes": 1363,
       "size": [
         256,
         196
@@ -20813,8 +21173,8 @@
     },
     {
       "path": "lightmaps/1161.png",
-      "sha256": "cc626c4dad576cf8ad4b5f45c4dee3a924ff79feb8d6818e41237de478140a06",
-      "bytes": 1408,
+      "sha256": "c9c8900223e32fea9ad20d159de5c55b9248c0a819ce6e5a1b091f0352d813f6",
+      "bytes": 1384,
       "size": [
         256,
         188
@@ -20823,8 +21183,8 @@
     },
     {
       "path": "lightmaps/1162.png",
-      "sha256": "277984494bbb09cfb00bdd3e41863fa19d55f92ef3c4f9ca29ac44b1a857db35",
-      "bytes": 1111,
+      "sha256": "2039b264babcfa554abe85f1bd4d4c1437a614d7cb65474262e902688d1a0225",
+      "bytes": 1100,
       "size": [
         256,
         228
@@ -20833,8 +21193,8 @@
     },
     {
       "path": "lightmaps/1163.png",
-      "sha256": "288618a9e80eb4a86a5877a372daef5cac2f7fe4e21e258293ac3baf320a2542",
-      "bytes": 1202,
+      "sha256": "9d9e293ca8c17b25218e68c23e6ca95819bdde92557e9961d9cb66581a17f2ba",
+      "bytes": 1184,
       "size": [
         256,
         256
@@ -20843,18 +21203,18 @@
     },
     {
       "path": "lightmaps/1164.png",
-      "sha256": "2c50ec901974422d462549b41a741a6664431f0034a3729665ea3713f7f5e0ef",
-      "bytes": 1342,
+      "sha256": "7d2520780b62f8e44fc2b8e1c1475467d6d2b495e76476a3c1e814a0cbf15301",
+      "bytes": 1334,
       "size": [
         256,
-        308
+        324
       ],
-      "decoded_rgba_bytes": 315392
+      "decoded_rgba_bytes": 331776
     },
     {
       "path": "lightmaps/1165.png",
-      "sha256": "8ba86ec851d27afb860c25cccb520aaa6b86a04970bfd7fe1b783a0fff552f82",
-      "bytes": 1122,
+      "sha256": "f8aeba906b65dd120e29cd432a8f1cedce8637f9bcb0666c62a6cdf1bdda9753",
+      "bytes": 1107,
       "size": [
         256,
         264
@@ -20873,8 +21233,8 @@
     },
     {
       "path": "lightmaps/1175.png",
-      "sha256": "2c9fe24acdf3599470316b80f3160f903112f69f5bfeda71b319604a628b7429",
-      "bytes": 1473,
+      "sha256": "f44b44cb345dcc5807fdec4a1b9226dc603fe8e048634561c071f74dae85b7f1",
+      "bytes": 1526,
       "size": [
         384,
         352
@@ -20973,13 +21333,13 @@
     },
     {
       "path": "lightmaps/1185.png",
-      "sha256": "d469a7e2996ea76470da130d9c9841711abafca4a8a8657c4488507a832145e2",
-      "bytes": 1523,
+      "sha256": "77c51e21a2e028c3cbc14b5fcdcaf1e36517e3d53a7a56138f50c1cb94192dd0",
+      "bytes": 1589,
       "size": [
         384,
-        376
+        392
       ],
-      "decoded_rgba_bytes": 577536
+      "decoded_rgba_bytes": 602112
     },
     {
       "path": "lightmaps/1186.png",
@@ -21023,8 +21383,8 @@
     },
     {
       "path": "lightmaps/1190.png",
-      "sha256": "b550ed19b23b21cd4820b9abb57e647f18afefec079facfdb73321ab56ecca99",
-      "bytes": 1165,
+      "sha256": "1be5da577ee40e9088b551e1e779cc1043e1016cc335bd7ef630f12254108537",
+      "bytes": 1177,
       "size": [
         384,
         316
@@ -21033,8 +21393,8 @@
     },
     {
       "path": "lightmaps/1191.png",
-      "sha256": "2aae97f66a61977f6cdacd78f33600933562983da08687080a745128f4aa262a",
-      "bytes": 1310,
+      "sha256": "1219312160abd09eea0aa3e3f54ac7141ff31e71b3f1ef1b479e146620f0108f",
+      "bytes": 1353,
       "size": [
         384,
         316
@@ -21133,8 +21493,8 @@
     },
     {
       "path": "lightmaps/1208.png",
-      "sha256": "4b7a111f7184ce64b583f5d34b298fcc89da136e4dbdd4f7f2b5af5aa8863f61",
-      "bytes": 1631,
+      "sha256": "e023227602dd324888d00ec50dd20c7009f42115b67359368a10754124b7713a",
+      "bytes": 1611,
       "size": [
         384,
         308
@@ -21173,13 +21533,13 @@
     },
     {
       "path": "lightmaps/1212.png",
-      "sha256": "c143c7afa1852af74e80745a3eba4e5619847a70dd4308eeb7d389fc72d6c54d",
-      "bytes": 1033,
+      "sha256": "3c9d7b8b59c5a2100191e4086ddc934d4c54f93709963638de83bb67e71e6ba7",
+      "bytes": 1058,
       "size": [
         384,
-        236
+        252
       ],
-      "decoded_rgba_bytes": 362496
+      "decoded_rgba_bytes": 387072
     },
     {
       "path": "lightmaps/1213.png",
@@ -21193,8 +21553,8 @@
     },
     {
       "path": "lightmaps/1214.png",
-      "sha256": "654442beadb7d51f1aed66613fedfa9687c22f98d2af1cd6391299e9c689a090",
-      "bytes": 1385,
+      "sha256": "9da7844435eddfab8240d371802d75d6f90999663a02ef943e22f9871e310a85",
+      "bytes": 1035,
       "size": [
         400,
         228
@@ -21223,8 +21583,8 @@
     },
     {
       "path": "lightmaps/1217.png",
-      "sha256": "d086cce2183fe0386ec4403e3998358a9bc06b46eef24cdb49914c1e1ad367a9",
-      "bytes": 1360,
+      "sha256": "46f1344e4bb56901e382a9eb0664412fec64b21e9c05545e0541608fb38167b9",
+      "bytes": 1115,
       "size": [
         544,
         356
@@ -21313,13 +21673,13 @@
     },
     {
       "path": "lightmaps/1227.png",
-      "sha256": "78a2d269ebaa3cd59bdc9d8955473bd0c62ad34f4cd1fe8ddced23b1ccb2df84",
-      "bytes": 900,
+      "sha256": "dcad1ecca8b398e68f1ee2e117bb231c0aeeb4e27be8ffc3ae6222c40bc0ce0a",
+      "bytes": 903,
       "size": [
         128,
-        96
+        112
       ],
-      "decoded_rgba_bytes": 49152
+      "decoded_rgba_bytes": 57344
     },
     {
       "path": "lightmaps/1228.png",
@@ -21373,8 +21733,8 @@
     },
     {
       "path": "lightmaps/1236.png",
-      "sha256": "1123c97551c7775d6939bd5c4bf9ab09a5bd3dd8e469cc027a89bca8d44035cf",
-      "bytes": 1233,
+      "sha256": "06fb5086f09ec3c2400743282e1179b2d4516ee358ae421db43969c45b5c323e",
+      "bytes": 1240,
       "size": [
         256,
         164
@@ -21383,8 +21743,8 @@
     },
     {
       "path": "lightmaps/1237.png",
-      "sha256": "07b798b61c189896b13a987d5ff326afc37c1b33ec4d6e3c4008eab4703dddba",
-      "bytes": 1237,
+      "sha256": "a8e8d863202dff392142c6918907328fb323ea800befde378548bf06cce2ede5",
+      "bytes": 1538,
       "size": [
         256,
         184
@@ -21413,13 +21773,13 @@
     },
     {
       "path": "lightmaps/1240.png",
-      "sha256": "61a385b5168f3880833ed9613cf4fe4cab3f6d0d0098b21c763e3e1bb92f66d1",
-      "bytes": 1134,
+      "sha256": "5c218a05b1303c54026d5c4ba5dc88ee4379796a4e9ab76d411bbee94940523e",
+      "bytes": 1180,
       "size": [
         256,
-        176
+        208
       ],
-      "decoded_rgba_bytes": 180224
+      "decoded_rgba_bytes": 212992
     },
     {
       "path": "lightmaps/1241.png",
@@ -21433,8 +21793,8 @@
     },
     {
       "path": "lightmaps/1242.png",
-      "sha256": "147e2cf2b5084d4f433872e4369793aa448c22b69e0ca01d83ab06c93f07675a",
-      "bytes": 965,
+      "sha256": "d4a6a3a74934566deea39bdeb180acdfaf9c0997b68dbefb94d3a134e368a481",
+      "bytes": 972,
       "size": [
         288,
         180
@@ -21443,13 +21803,13 @@
     },
     {
       "path": "lightmaps/1243.png",
-      "sha256": "77fe01d982fae503094aa7aee41da6f5f5c111267a61d4cd8ac146af0c36ae43",
-      "bytes": 1227,
+      "sha256": "0276373c48b9d70635173aaf016f46c1fc9d48c2296eadabb9a33c2fd31974e7",
+      "bytes": 1290,
       "size": [
         256,
-        176
+        192
       ],
-      "decoded_rgba_bytes": 180224
+      "decoded_rgba_bytes": 196608
     },
     {
       "path": "lightmaps/1244.png",
@@ -21473,8 +21833,8 @@
     },
     {
       "path": "lightmaps/1246.png",
-      "sha256": "445d1dbcdd4a95a2044aca781bf08c4933e98aa5d777d07c8ad33a9aabd6e465",
-      "bytes": 960,
+      "sha256": "d3ae0e6549ed89d8a17f8be633bb556ba2ed9e87a9384825626feebc665e1736",
+      "bytes": 966,
       "size": [
         256,
         172
@@ -27713,8 +28073,8 @@
     },
     {
       "path": "masters/1124.png",
-      "sha256": "a0438861408f0d9a1f59e683b8a2e84e179ba1451f2caeb1ea41a1df96701e2f",
-      "bytes": 4288,
+      "sha256": "58710f1007222ccd977da363c7741d733fe8cff31853604eb36662638ad59ea5",
+      "bytes": 4541,
       "size": [
         128,
         92
@@ -27733,8 +28093,8 @@
     },
     {
       "path": "masters/1126.png",
-      "sha256": "7bffd39c1d3a1bfdb5c908fb3460d547580efb3c8260f4d469619abadb04cae1",
-      "bytes": 4567,
+      "sha256": "d40206e3bc71bf7836230abc6f7e93ccb4c72c1ed79265c93e92f30475471601",
+      "bytes": 4702,
       "size": [
         128,
         96
@@ -27743,8 +28103,8 @@
     },
     {
       "path": "masters/1127.png",
-      "sha256": "e76f461b9bf6bcf867bca9ca3899e2f04f2e43c11838b27823c216f5fa7983af",
-      "bytes": 3124,
+      "sha256": "98df75309e06258b012ae646b8a64ed3bf3b20226c4a59276b814c6dc69afda3",
+      "bytes": 3417,
       "size": [
         128,
         88
@@ -27773,8 +28133,8 @@
     },
     {
       "path": "masters/1130.png",
-      "sha256": "6b8404f700d7f88fba60356aa0ce6fb07da603a3ca4553947c16df8a3f022137",
-      "bytes": 4766,
+      "sha256": "37b5a4b20badacc5f74b2a91248f59fc50cee0eb86f028294f466ea3a325322c",
+      "bytes": 4800,
       "size": [
         144,
         116
@@ -27783,8 +28143,8 @@
     },
     {
       "path": "masters/1131.png",
-      "sha256": "ab8a8e4e6b993d8789d4f6b9f352c65e7ef733142c6910f8f192a0a61a4a5282",
-      "bytes": 7830,
+      "sha256": "5fb2af459d51c5b41d60e4866556729a398af907f89bce0a069893a4ecf5ea10",
+      "bytes": 8220,
       "size": [
         128,
         168
@@ -27813,8 +28173,8 @@
     },
     {
       "path": "masters/1134.png",
-      "sha256": "8cabaeed61d00e14b01a69373cbf52c569a1db0118b455f6280cb2c7308e45bd",
-      "bytes": 3418,
+      "sha256": "c1c81e9fe775c6f1e0db55b9d91231e2f0b439c85c55517bd0eb1a93c63a8a54",
+      "bytes": 3666,
       "size": [
         128,
         96
@@ -27823,8 +28183,8 @@
     },
     {
       "path": "masters/1135.png",
-      "sha256": "32d6c3e3172587709284397566088c3503fc29b449313f6a7772e97dd1e7b6b2",
-      "bytes": 3597,
+      "sha256": "6bed5adabbfe5a3e667f25dac065c61d45dc8862a0ccef54c6ea3531af35306f",
+      "bytes": 3822,
       "size": [
         128,
         104
@@ -27833,8 +28193,8 @@
     },
     {
       "path": "masters/1136.png",
-      "sha256": "7d5cbf80fd5296aaaec8ad042387fe0f6214a4708cf9a19adeaa803a3202e2e5",
-      "bytes": 3018,
+      "sha256": "9c5b8544b046737e517fd7e9873e7857c4f6d9042f3337d97a154ecda1be7fa9",
+      "bytes": 3367,
       "size": [
         128,
         88
@@ -27843,8 +28203,8 @@
     },
     {
       "path": "masters/1137.png",
-      "sha256": "df2cdc0e33507b3576cb3084576c45313d2b6b449f973c3d0eac03c9231aa1d5",
-      "bytes": 4006,
+      "sha256": "0264b660f16d529fbacaca2e2572d155125326c4b853e7a672d2a2a8949f04ca",
+      "bytes": 4195,
       "size": [
         128,
         104
@@ -27903,8 +28263,8 @@
     },
     {
       "path": "masters/1143.png",
-      "sha256": "0fe9434b8ad0b8e6b7971e605c8f644ff7e6f1de5b6e96d5c13ccb12bb00707b",
-      "bytes": 21594,
+      "sha256": "a56d0fced0bb15eb38034cf1d39a27b6e03074f9cc4bbe47ddcc732bcc426ebb",
+      "bytes": 27908,
       "size": [
         256,
         256
@@ -27913,8 +28273,8 @@
     },
     {
       "path": "masters/1144.png",
-      "sha256": "9a87dce85c12e8ba933aba98d9da2e5eb1b9193c94918e5fbeb62cfeef4a21e4",
-      "bytes": 22811,
+      "sha256": "426609ece166f2da504b525d1dd9fb69dbce3b5dc00dae03642cf82f6b43f7df",
+      "bytes": 23311,
       "size": [
         256,
         276
@@ -27933,8 +28293,8 @@
     },
     {
       "path": "masters/1146.png",
-      "sha256": "3b3bab49966bd79788cba1db90c798385a222fcbfd2ede97adc83a5a0212c9eb",
-      "bytes": 29368,
+      "sha256": "46a41a2766de1f7d4a4220e108f35ec8f750182f8ef2353c44e67405899b0aa1",
+      "bytes": 29673,
       "size": [
         256,
         344
@@ -27943,13 +28303,13 @@
     },
     {
       "path": "masters/1147.png",
-      "sha256": "6aaa00c1cff28f49bc9e2fdc1c49c396443d1a7a3d02e2003c90caf9d98efe3b",
-      "bytes": 34899,
+      "sha256": "3e042b5004fae71366de7819d09b37a7783324d027ad51874cc9c11746565c73",
+      "bytes": 37866,
       "size": [
         256,
-        356
+        372
       ],
-      "decoded_rgba_bytes": 364544
+      "decoded_rgba_bytes": 380928
     },
     {
       "path": "masters/1148.png",
@@ -27963,8 +28323,8 @@
     },
     {
       "path": "masters/1149.png",
-      "sha256": "d1e4ae4173fd7a79688a83ea8d568059f5c3b867fa7596ede94321f138f6d6c8",
-      "bytes": 12521,
+      "sha256": "e6f254fa77ef96193025f915d1cd1d89215e97084c29f27d9c14e30dd9062284",
+      "bytes": 13890,
       "size": [
         256,
         212
@@ -27973,8 +28333,8 @@
     },
     {
       "path": "masters/1150.png",
-      "sha256": "0b1e26463cd847b596255c97cb79356dc2e7d231e6ca3142fe2f4184c65629fb",
-      "bytes": 18873,
+      "sha256": "fc9554024df5c29c6c1655d3c01119fed1bd8528f2f971e20b5458669bdddbe1",
+      "bytes": 19472,
       "size": [
         256,
         232
@@ -27983,8 +28343,8 @@
     },
     {
       "path": "masters/1151.png",
-      "sha256": "a31f29f6dbb9ada85554066c7fdc73a03d3ff82447fb92d88148a7751e67de0b",
-      "bytes": 26149,
+      "sha256": "8ba1d5612a231e72ead785093bce33fb04e3e516860bde6fac5b83d4d4414d6a",
+      "bytes": 26229,
       "size": [
         256,
         264
@@ -27993,8 +28353,8 @@
     },
     {
       "path": "masters/1152.png",
-      "sha256": "abf70b12abb203ba55d598310c5157e3fd74bebd997028df938dc7fbd485674b",
-      "bytes": 15885,
+      "sha256": "f968314e976cb86285d4bba1eb10dc83831a168c8675e37d5a73c0a623cdca77",
+      "bytes": 17260,
       "size": [
         256,
         232
@@ -28003,8 +28363,8 @@
     },
     {
       "path": "masters/1153.png",
-      "sha256": "63632838327cec98dc55accf6c538490e0a389c0e566e4250e2e8a09934c393a",
-      "bytes": 22189,
+      "sha256": "68aa5c1c8c810da7aa0921bf9144db9ff03394e00d57b14a3b99285a4ccfd385",
+      "bytes": 23117,
       "size": [
         256,
         252
@@ -28023,8 +28383,8 @@
     },
     {
       "path": "masters/1155.png",
-      "sha256": "677cb54d77c0c6ad1f41abab47d2abfda4631d9e77012199fcc9d0a1c9f41e2c",
-      "bytes": 23753,
+      "sha256": "f3300b1b7bc3274faaad3c7d77958c5ff0891034f5e9c6c639eabdf7aa98c646",
+      "bytes": 24829,
       "size": [
         256,
         344
@@ -28033,8 +28393,8 @@
     },
     {
       "path": "masters/1156.png",
-      "sha256": "f4cbe76cd077d1da61dfea1d5befda1117f665356dd658b93ea3ab0810e276eb",
-      "bytes": 20536,
+      "sha256": "c82bb89c0834549d1f76b29e1795e3f8f79143386b613483a35893fa661ef4bc",
+      "bytes": 21553,
       "size": [
         256,
         336
@@ -28043,8 +28403,8 @@
     },
     {
       "path": "masters/1157.png",
-      "sha256": "cb00621f54bceb588af9a6a7023ac640689eb1ad7231cb3e2914c96bb0cb5d20",
-      "bytes": 22798,
+      "sha256": "507ca41603b245e29b58a54b8d4b347cd4bf647616c66b2f4ec8970f76d7be66",
+      "bytes": 24124,
       "size": [
         256,
         400
@@ -28053,8 +28413,8 @@
     },
     {
       "path": "masters/1158.png",
-      "sha256": "134faa5435ec3960cbfac34a767bc6821cfee2c1260825380ed70223fe25cca1",
-      "bytes": 10113,
+      "sha256": "f02fae8a7087824672c965674cc6bd3fcf6a8b4b22dc598930c771e48eb682f9",
+      "bytes": 11803,
       "size": [
         256,
         164
@@ -28063,8 +28423,8 @@
     },
     {
       "path": "masters/1159.png",
-      "sha256": "6eaf51d5915ff89e357102bbc0817f9c766abca9e0c27c6d90f60346138cc53a",
-      "bytes": 15254,
+      "sha256": "b2011ed3d041929700cfcabe5586fb575c7caf448a1b8dbbc3c8d39370db1fb5",
+      "bytes": 14583,
       "size": [
         256,
         216
@@ -28073,8 +28433,8 @@
     },
     {
       "path": "masters/1160.png",
-      "sha256": "48e21447cb27960571c4318eeb7b4607d7a34fdd6b3bdd2f4af51287f9af2cec",
-      "bytes": 16594,
+      "sha256": "7a80ae59c87b093f75bd8caebeda656edf7dc54cc2371606c940ef91661475f0",
+      "bytes": 17398,
       "size": [
         256,
         196
@@ -28083,8 +28443,8 @@
     },
     {
       "path": "masters/1161.png",
-      "sha256": "de757227a44b43fb55b0fd6fb2c09d0c49a8cade9d0fa0af89e8c4abb8d4301a",
-      "bytes": 13079,
+      "sha256": "2d27acd97d39481a25c153afd152e80f244a68921ed93fbf53c12b4525dd5471",
+      "bytes": 14079,
       "size": [
         256,
         188
@@ -28093,8 +28453,8 @@
     },
     {
       "path": "masters/1162.png",
-      "sha256": "b685b586aeb26dff903f196aa2b9309e914a56fff501a4d8d5aba655c4b147f8",
-      "bytes": 13252,
+      "sha256": "3422c74be151e6b130d7821bc581e6bcaf04f7f4cc32bf2206912aab5ba7bbed",
+      "bytes": 13907,
       "size": [
         256,
         228
@@ -28103,8 +28463,8 @@
     },
     {
       "path": "masters/1163.png",
-      "sha256": "55af056edff27d9e29919c4e23f719d4d207ca3cb5632401cb3bdb5959fae412",
-      "bytes": 21844,
+      "sha256": "f9f36492cd53c125e37606b6acba6f569fd7a832b2ca66013a88c60657fbffc1",
+      "bytes": 22691,
       "size": [
         256,
         256
@@ -28113,18 +28473,18 @@
     },
     {
       "path": "masters/1164.png",
-      "sha256": "d5087d2faf747359f3388ce5bb537221bd6f3c9648e932d3b33dd48af1766e94",
-      "bytes": 28210,
+      "sha256": "904482fd1e96fbcdb0c2c06550f5bdf4813e796b849638b3faf5df9121b16c8a",
+      "bytes": 30957,
       "size": [
         256,
-        308
+        324
       ],
-      "decoded_rgba_bytes": 315392
+      "decoded_rgba_bytes": 331776
     },
     {
       "path": "masters/1165.png",
-      "sha256": "f981a2eec4cd4ae4f8ef533a2bbde21b8cd6ba3f3005e2df94efb44b83cd6d33",
-      "bytes": 17502,
+      "sha256": "3a66677c2c99ce3d86f20a3d53b02b37d6dc9254f094cd9ec2ec978d0df40f71",
+      "bytes": 18479,
       "size": [
         256,
         264
@@ -28143,8 +28503,8 @@
     },
     {
       "path": "masters/1167.png",
-      "sha256": "9cf72d4c78cda26ef992e60c71a91388cba6f060f5289e731a13ee2d0e3b40f2",
-      "bytes": 16464,
+      "sha256": "a93396124ce4d34f097c59616485b0941afa2e821828d6dba3cbab264f89b7f2",
+      "bytes": 17680,
       "size": [
         256,
         240
@@ -28153,18 +28513,18 @@
     },
     {
       "path": "masters/1168.png",
-      "sha256": "ba6af0e948c8cda58708efad1119ad6bfe7db1f3775822b4a1db12c2d649eb6b",
-      "bytes": 14593,
+      "sha256": "1a6893e35d6d1ac09dca90a64dc54874a1a177dd5299d1ba6c762706bf51cb68",
+      "bytes": 16410,
       "size": [
         256,
-        240
+        256
       ],
-      "decoded_rgba_bytes": 245760
+      "decoded_rgba_bytes": 262144
     },
     {
       "path": "masters/1169.png",
-      "sha256": "e44ad4f2580e66425a7af8cb43fe683177c6ff4ae83e86298183620442d9dceb",
-      "bytes": 18480,
+      "sha256": "0d64c29714f09764b1855986e59ebd726750619b97e1600d49097d8cd952b399",
+      "bytes": 14912,
       "size": [
         256,
         292
@@ -28173,28 +28533,28 @@
     },
     {
       "path": "masters/1170.png",
-      "sha256": "0411c64f08ca35113dcaa7a17fbebc8bc27a7ac26fd95caa8c4f7e25814731a4",
-      "bytes": 16087,
+      "sha256": "5dd31e1ff9a64e919b776e4fc42f4ecd2b48912f7d74eae04f585d5485a4d914",
+      "bytes": 24304,
       "size": [
         256,
-        232
+        280
       ],
-      "decoded_rgba_bytes": 237568
+      "decoded_rgba_bytes": 286720
     },
     {
       "path": "masters/1171.png",
-      "sha256": "bab3aac99b629109fe94430c72e855ffee475e3e776f32a0fea3f6a508010bcc",
-      "bytes": 14787,
+      "sha256": "c5e9dcdd4655b8e024912e934dd8ec0a01af5feddce0b813e6dbd74e643bb08b",
+      "bytes": 22622,
       "size": [
         256,
-        228
+        260
       ],
-      "decoded_rgba_bytes": 233472
+      "decoded_rgba_bytes": 266240
     },
     {
       "path": "masters/1172.png",
-      "sha256": "df5d29be1f3148bbdef31a7f32bc309929b3033f6011994ac40eaece46a007e9",
-      "bytes": 20852,
+      "sha256": "3e7142b0428bb41d5572eaa95c789ebc22591b5fa2e897cbdd05f7cc83136c7e",
+      "bytes": 18773,
       "size": [
         256,
         276
@@ -28203,18 +28563,18 @@
     },
     {
       "path": "masters/1173.png",
-      "sha256": "db8b4c4cf12981e0162a874daf80f569bf9c50650f7c1dcd208b7cb7db2567e3",
-      "bytes": 19415,
+      "sha256": "160fc66812c503540543adb082c8497b02abc208024751045a8ff3d9ef2db1be",
+      "bytes": 34774,
       "size": [
         256,
-        292
+        388
       ],
-      "decoded_rgba_bytes": 299008
+      "decoded_rgba_bytes": 397312
     },
     {
       "path": "masters/1174.png",
-      "sha256": "cf563de2e6f634ee56bb04bbe134db2231f3328becd86e1fe6e2dde356a77286",
-      "bytes": 33682,
+      "sha256": "87bf03c3e4cb0fc21f4c73f953420e42ddc3c8dfbfd93fff0d50d489f0d647fb",
+      "bytes": 34812,
       "size": [
         384,
         308
@@ -28223,8 +28583,8 @@
     },
     {
       "path": "masters/1175.png",
-      "sha256": "8a56afc2ff42c1700dcb5c041815201ba193230ef4383c5f039a04c79808cf4e",
-      "bytes": 33420,
+      "sha256": "988d7787db83a66ae789fe5cac7afe5a741accf270b1985334ab834c3be4eed2",
+      "bytes": 42533,
       "size": [
         384,
         352
@@ -28323,13 +28683,13 @@
     },
     {
       "path": "masters/1185.png",
-      "sha256": "b4d23792deeb7d82b2e9ada62988bf9544bdfa4972f11e1b3b99afe71a919a06",
-      "bytes": 42455,
+      "sha256": "4027dda08c88d00a0dff94c90149c20164e61879ca5997152ed394341d4967a3",
+      "bytes": 46672,
       "size": [
         384,
-        376
+        392
       ],
-      "decoded_rgba_bytes": 577536
+      "decoded_rgba_bytes": 602112
     },
     {
       "path": "masters/1186.png",
@@ -28373,8 +28733,8 @@
     },
     {
       "path": "masters/1190.png",
-      "sha256": "b4150a5cc4a9bcea559dcf2be2a19880f94643e24346df6da0961c8ac1bfad47",
-      "bytes": 35351,
+      "sha256": "cd8e7a887035e4d0054b3977c859840c6716b75ebec195a57c9112a11937368e",
+      "bytes": 36923,
       "size": [
         384,
         316
@@ -28383,8 +28743,8 @@
     },
     {
       "path": "masters/1191.png",
-      "sha256": "d77b5c08f9b9f6df6b85e2d789621ed5aea335946ab0112d62489f231f0f5e67",
-      "bytes": 38696,
+      "sha256": "5185dfc95f498bf187264f6a04f26c0b7520ff2d714044ac3a9452d47fe2d3d0",
+      "bytes": 40976,
       "size": [
         384,
         316
@@ -28393,8 +28753,8 @@
     },
     {
       "path": "masters/1192.png",
-      "sha256": "8ff0697682c41db2e286e62973abee51875666c7baf1f5a1d5949997126cdcee",
-      "bytes": 17101,
+      "sha256": "23e61efb28ec31a7acf5911d457f49bb4ca84e9c9af680ad3daaa9850f156aac",
+      "bytes": 18996,
       "size": [
         384,
         256
@@ -28413,18 +28773,18 @@
     },
     {
       "path": "masters/1194.png",
-      "sha256": "00cc2ddf3999f63d06383b011ccd4648b05ac64021325079ab8666a83a7f7dd0",
-      "bytes": 47930,
+      "sha256": "6d70b4f205af76f1134236eafa23902cba9237cb7f97568c41526d6a9e211805",
+      "bytes": 53765,
       "size": [
         384,
-        436
+        452
       ],
-      "decoded_rgba_bytes": 669696
+      "decoded_rgba_bytes": 694272
     },
     {
       "path": "masters/1195.png",
-      "sha256": "0df4287a3ff0c343c5fff676b68f3e34186dff8e67fee1db3e2ac7a624b09275",
-      "bytes": 30446,
+      "sha256": "179e30243d83469c30531de9c81235319ca11a56eb636de39938858b43e26052",
+      "bytes": 31475,
       "size": [
         384,
         276
@@ -28433,8 +28793,8 @@
     },
     {
       "path": "masters/1196.png",
-      "sha256": "a35b70d0eecb1dd16fad7a9d137105fad49a4e0a9a8ffa95f759295a087d2635",
-      "bytes": 35606,
+      "sha256": "6dd9a40490cc90d3c6e146b0104a6ac6b6b4e468d4b84fda9c5f9200edb3b6db",
+      "bytes": 27242,
       "size": [
         416,
         312
@@ -28443,8 +28803,8 @@
     },
     {
       "path": "masters/1197.png",
-      "sha256": "f27b86b73da245bada5c515d344c265778336ab1a25f31eb458bdd29a80943b9",
-      "bytes": 37011,
+      "sha256": "951e7a786cfa23c758a7c0e5e86b2aa821174d88baefd083fd53a2255d237674",
+      "bytes": 32624,
       "size": [
         400,
         376
@@ -28453,8 +28813,8 @@
     },
     {
       "path": "masters/1198.png",
-      "sha256": "3df3111354fe945962c00fb2933d1333744d346a042f9dcb64577765b4bec868",
-      "bytes": 3798,
+      "sha256": "56167c654cde46a761b8fefcf1ae9f5904b962babd22cd1e1f62b555ec7006b1",
+      "bytes": 3950,
       "size": [
         128,
         128
@@ -28553,8 +28913,8 @@
     },
     {
       "path": "masters/1208.png",
-      "sha256": "f1491a21e1f70946d0a5ffcbbf72bf06e9218acc4abd00314081075940970061",
-      "bytes": 28183,
+      "sha256": "dac68be1fdee2da9d622c4263c5fde36f8cfa14cb1d96e6abe3ff10f42df3c27",
+      "bytes": 29317,
       "size": [
         384,
         308
@@ -28593,13 +28953,13 @@
     },
     {
       "path": "masters/1212.png",
-      "sha256": "58f8eb82eee5fe9da2307712b8781c33307359bd7863fcb7759f6df6bc560b3f",
-      "bytes": 27293,
+      "sha256": "ed32230c86563a4174ddb71d14c227462456d9d0e046595c8e11cb9d0aeab55b",
+      "bytes": 32381,
       "size": [
         384,
-        236
+        252
       ],
-      "decoded_rgba_bytes": 362496
+      "decoded_rgba_bytes": 387072
     },
     {
       "path": "masters/1213.png",
@@ -28613,8 +28973,8 @@
     },
     {
       "path": "masters/1214.png",
-      "sha256": "2eb888e8a8f4274b11459fbf60cca088f69c8f89cd2818c9b18b9ae7619b3567",
-      "bytes": 22868,
+      "sha256": "9f9e8ca07765bd1f07c7beba422bbb2076be87ba244002c343ce53ad98139ddf",
+      "bytes": 25927,
       "size": [
         400,
         228
@@ -28643,8 +29003,8 @@
     },
     {
       "path": "masters/1217.png",
-      "sha256": "534b117e5b79778175adc8e417e4d214a6677537465589868b334277ea70dd3e",
-      "bytes": 30567,
+      "sha256": "8ecab40b117b03b40b87cba6324075af59d83731f1ee631d9e90784004134a2f",
+      "bytes": 46308,
       "size": [
         544,
         356
@@ -28743,13 +29103,13 @@
     },
     {
       "path": "masters/1227.png",
-      "sha256": "2326dbb52093b6d73a748d4e05955b3c8fc8f306d7692f8aba5ac0d45615ec70",
-      "bytes": 4238,
+      "sha256": "81376df6c31f191ef5187cbbe1ffc59e1f17f3acc263d5b16e8df7d414ab41f3",
+      "bytes": 5005,
       "size": [
         128,
-        96
+        112
       ],
-      "decoded_rgba_bytes": 49152
+      "decoded_rgba_bytes": 57344
     },
     {
       "path": "masters/1228.png",
@@ -28793,8 +29153,8 @@
     },
     {
       "path": "masters/1232.png",
-      "sha256": "0b8b7543fe72205984a7c622152145bbd355007fb9a5d681b8f06c428552df5c",
-      "bytes": 4312,
+      "sha256": "d1ccff18648995ffad5199002faa1766e59751c48e3404e8ca23bf47864ec871",
+      "bytes": 4286,
       "size": [
         128,
         112
@@ -28833,8 +29193,8 @@
     },
     {
       "path": "masters/1236.png",
-      "sha256": "9eb9f81551a0de973b318704664910c00f7862f4e7df4dfb7da77f439ed35495",
-      "bytes": 11247,
+      "sha256": "2d2350273bc31697f21a8bdde214e7ba8fb6d01dc5597d5d4684c9f0ef18b6f4",
+      "bytes": 12029,
       "size": [
         256,
         164
@@ -28843,8 +29203,8 @@
     },
     {
       "path": "masters/1237.png",
-      "sha256": "591bb689ca3eebbdf29b311ebde51d265c4dbc367837dd74467678eb8676d1f7",
-      "bytes": 13703,
+      "sha256": "0c8c23749e8cf22d38e23bc24cca5fc42600126baf789c5262c99796fedd1fac",
+      "bytes": 14550,
       "size": [
         256,
         184
@@ -28873,13 +29233,13 @@
     },
     {
       "path": "masters/1240.png",
-      "sha256": "71784b98c26c77ef1a837f01ae4819bd1cef2a84ff16844c5a77bb5d074e9838",
-      "bytes": 12481,
+      "sha256": "9feba6324d4e293df42ba22a31bc9b5029c6e1d5602078512be7891cac435e37",
+      "bytes": 14995,
       "size": [
         256,
-        176
+        208
       ],
-      "decoded_rgba_bytes": 180224
+      "decoded_rgba_bytes": 212992
     },
     {
       "path": "masters/1241.png",
@@ -28893,8 +29253,8 @@
     },
     {
       "path": "masters/1242.png",
-      "sha256": "9e61d9121e2695869e771ba6ec188a4e2d1b5db3f9c396314134f9c0c3970667",
-      "bytes": 12966,
+      "sha256": "a22be15f41d2fcc1b72b37bca43853b7b32b2163958686e05fac2eb38865aad2",
+      "bytes": 14240,
       "size": [
         288,
         180
@@ -28903,13 +29263,13 @@
     },
     {
       "path": "masters/1243.png",
-      "sha256": "94993ea6fd753e53b3b9f08372ab45c6cca14f832af243626c599d859c44d646",
-      "bytes": 15392,
+      "sha256": "d3684116722b5212faddfe4b1fe1e31783c3c068cdc7655d8af6b7f17fc96be2",
+      "bytes": 18529,
       "size": [
         256,
-        176
+        192
       ],
-      "decoded_rgba_bytes": 180224
+      "decoded_rgba_bytes": 196608
     },
     {
       "path": "masters/1244.png",
@@ -28933,8 +29293,8 @@
     },
     {
       "path": "masters/1246.png",
-      "sha256": "6f8d5f92d91b8f98a9d0b38c12951bd4869cda16cb64019a8ba79f68dafc9018",
-      "bytes": 10593,
+      "sha256": "7c8c124e1d583e9fd2028076001801958d819c517b151ec216c613d70da3eab0",
+      "bytes": 11390,
       "size": [
         256,
         172
@@ -51908,7 +52268,7 @@
     }
   },
   "raster_count": 3449,
-  "compressed_raster_bytes": 17047522,
+  "compressed_raster_bytes": 17153724,
   "unselected_retained_development_files": [
     "lightmaps/model-1188.png",
     "lightmaps/model-1192.png",
@@ -51916,11 +52276,23 @@
     "masters/model-1192.png"
   ],
   "delivery_rule": "Only manifest-referenced PNGs; rejected model1188/1192 development files are excluded.",
-  "all_rasters_as_rgba_bytes": 362921152,
+  "all_rasters_as_rgba_bytes": 363420864,
   "memory_limit": "The decoded sum is a file inventory, not measured process or GPU residency; aliases and atlases change residency.",
   "private_reference_files_in_pack": false,
   "publication_ready": false,
   "placement_review": {
+    "receipt": "graphics/placement-review.json",
+    "sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
+    "source_export_sha256": "c43c1098e54a97a1c513dbd4bddbe60520d5b2c38eaebc61e4e3c79f6fd88488",
+    "records": 60,
+    "user_entries": 48,
+    "numeric_adjustments": 2,
+    "text_notes": 48,
+    "generated_detail_revisions": 12,
+    "baked_ground": 43,
+    "editable_sources": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review85"
+  },
+  "previous_placement_review": {
     "receipt": "graphics/placement-review.json",
     "sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
     "source_export_sha256": "38d6fec7195e739a42a72b80a45f9a50f0dde16bb1bde9933840e9753bd36e60",
@@ -51930,17 +52302,5 @@
     "generated_detail_revisions": 9,
     "projection_calibrations": 13,
     "editable_sources": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-parcels"
-  },
-  "previous_placement_review": {
-    "receipt": "graphics/placement-review.json",
-    "sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
-    "source_export_sha256": "b09a19379a79713594de3417288ea8747a5bba93fbf3d0f1ae7622c41e690391",
-    "records": 122,
-    "numeric_adjustments": 111,
-    "text_notes": 38,
-    "generated_detail_revisions": 14,
-    "projection_calibrations": 36,
-    "pack_local_canvas_registration": 28,
-    "editable_sources": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-13-placement"
   }
 }

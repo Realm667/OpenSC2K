@@ -24,5 +24,8 @@ all views. Ground has no emissive mask, building reflection or figure silhouette
 Underground and data views do not request parcel layers.
 
 Artwork and lightmap transforms remain documented in master-sprite-registration.md.
-The private comparison gallery shows the fixed parcel under the editable art;
-its flat material preview omits the game's procedural surface grain.
+The RS pack uses only colored contours in this layer. Its textured asphalt,
+paving and soil were baked into the PNG artwork in review 85; `surface` is
+`none`. The optional surface support remains available to other packs.
+The private comparison gallery shows the fixed contour below editable artwork,
+including its baked ground.

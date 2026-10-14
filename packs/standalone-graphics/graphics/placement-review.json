@@ -2,27 +2,23 @@
   "format": "rs-applied-placement-review",
   "version": 1,
   "date": "2026-10-14",
-  "revision": "2026-10-14-parcels",
+  "revision": "2026-10-14-review85",
   "pack_specific": true,
-  "source_export_sha256": "38d6fec7195e739a42a72b80a45f9a50f0dde16bb1bde9933840e9753bd36e60",
+  "source_export_sha256": "c43c1098e54a97a1c513dbd4bddbe60520d5b2c38eaebc61e4e3c79f6fd88488",
   "changes": [
     {
       "id": 1124,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Gehweg",
+      "note": "Bodenbelag texturiert und in Grafik integriert.",
       "source_sha256": "a0438861408f0d9a1f59e683b8a2e84e179ba1451f2caeb1ea41a1df96701e2f",
-      "result_sha256": "a0438861408f0d9a1f59e683b8a2e84e179ba1451f2caeb1ea41a1df96701e2f",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "58710f1007222ccd977da363c7741d733fe8cff31853604eb36662638ad59ea5",
+      "lightmap_sha256": "586d89405bf1345eace04146fa280beda0480e63da2a269a6ae547638e61b408",
       "user_matrix": [
-        1.0,
+        1,
         0,
         0,
-        1.0,
-        0.0,
-        0.0
+        1,
+        0,
+        0
       ],
       "matrix": [
         [
@@ -58,32 +54,23 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "79af1920c6e12d0dff8e4dbc10ebe39bfe7c234f2b47cf564b002acc567cbeec",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1126,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes \"Asphalt\"",
+      "note": "Bodenbelag texturiert und in Grafik integriert.",
       "source_sha256": "7bffd39c1d3a1bfdb5c908fb3460d547580efb3c8260f4d469619abadb04cae1",
-      "result_sha256": "7bffd39c1d3a1bfdb5c908fb3460d547580efb3c8260f4d469619abadb04cae1",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "d40206e3bc71bf7836230abc6f7e93ccb4c72c1ed79265c93e92f30475471601",
+      "lightmap_sha256": "eb007868dea9ff3464d19bc1bec99d9dfc98ab7878533b164641efc6caa01ce4",
       "user_matrix": [
-        1.0,
+        1,
         0,
         0,
-        1.0,
-        0.0,
-        0.0
+        1,
+        0,
+        0
       ],
       "matrix": [
         [
@@ -119,25 +106,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "f0d12c05fe899600fb5a5c195a12583e8fe7fffd3195f0abb928d1c10baef21b",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1127,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Gehweg",
+      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
       "source_sha256": "e76f461b9bf6bcf867bca9ca3899e2f04f2e43c11838b27823c216f5fa7983af",
-      "result_sha256": "e76f461b9bf6bcf867bca9ca3899e2f04f2e43c11838b27823c216f5fa7983af",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "98df75309e06258b012ae646b8a64ed3bf3b20226c4a59276b814c6dc69afda3",
+      "lightmap_sha256": "cee8494a71fdd5bf45a34f59d5177c2efe28780d01c1ca59c5f680b0602564c1",
       "user_matrix": [
         1.0,
         0,
@@ -180,93 +158,23 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "3b16f6114a5a76a50e4b89f011ca91e116ba93135b0df24ab13544831ba9e084",
-      "method": "Shared review transform; optional software parcel layer"
-    },
-    {
-      "id": 1129,
-      "note": "Korrigiere die Isometrie, die linke Seite des Gebäudes sitzt nicht sauber an der Diagonalen des Rasters.",
-      "source_sha256": "769a01ac175a2abf441c7798a6c96cbe2401ed57ac660bef27768acafbc096d4",
-      "result_sha256": "466f15071c24c119fc1c9f909cc0ee76546325a3eb98a651b609278b28f6ac04",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          -0.004790697975337044,
-          1.0079363385624702,
-          -1.0314909060487638
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          -0.004790697975337044,
-          1.0079363385624702,
-          -1.0314909060487638
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "702d5feac186a032a12d653f5748713ba4e69d94097353c691e49f722b9cbf2a",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1130,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt",
+      "note": "Bodenbelag texturiert und in Grafik integriert.",
       "source_sha256": "6b8404f700d7f88fba60356aa0ce6fb07da603a3ca4553947c16df8a3f022137",
-      "result_sha256": "6b8404f700d7f88fba60356aa0ce6fb07da603a3ca4553947c16df8a3f022137",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "37b5a4b20badacc5f74b2a91248f59fc50cee0eb86f028294f466ea3a325322c",
+      "lightmap_sha256": "c45c48f3688bf27005465bb0765954c2364c4c20c82e9f5413a162b7376a2469",
       "user_matrix": [
-        1.0,
+        1,
         0,
         0,
-        1.0,
-        0.0,
-        0.0
+        1,
+        0,
+        0
       ],
       "matrix": [
         [
@@ -302,25 +210,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "c45c48f3688bf27005465bb0765954c2364c4c20c82e9f5413a162b7376a2469",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1131,
-      "note": "Bordstein bis zum Rand des Feldes anlegen",
+      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
       "source_sha256": "ab8a8e4e6b993d8789d4f6b9f352c65e7ef733142c6910f8f192a0a61a4a5282",
-      "result_sha256": "ab8a8e4e6b993d8789d4f6b9f352c65e7ef733142c6910f8f192a0a61a4a5282",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "5fb2af459d51c5b41d60e4866556729a398af907f89bce0a069893a4ecf5ea10",
+      "lightmap_sha256": "0b3477bb8e6f9afafb5c9ae1a7cee1918fbfb18800e073ae33ce20a77e80c856",
       "user_matrix": [
         1.0,
         0,
@@ -363,93 +262,23 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "6afa2c4680515d6b7cf385d4948a63c8215faba44ea851c73bc56a86845842bf",
-      "method": "Shared review transform; optional software parcel layer"
-    },
-    {
-      "id": 1132,
-      "note": "Korrigiere die Isometrie des Gebäudes, die rechte Seite ist nicht sauber an der Diagonalen des Rasters ausgerichtet.",
-      "source_sha256": "49d1fd760e088fb697cf1aa5688951d46247beb3d9d891b7b8ce3fc6a46dac99",
-      "result_sha256": "1f8fa2aa5ed4b0b74547c31f98eff094dcf3b5fa892431918907edcd02f62d3b",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.00045858174153318165,
-          0.9921246275568635,
-          0.8526924821731665
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.00045858174153318165,
-          0.9921246275568635,
-          0.8526924821731665
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "6cb4eb20aa3088430369db9960486eb85374ff791b443b7307cc9561a8b31c06",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "tiles",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1134,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Bordstein",
+      "note": "Bodenbelag texturiert und in Grafik integriert.",
       "source_sha256": "8cabaeed61d00e14b01a69373cbf52c569a1db0118b455f6280cb2c7308e45bd",
-      "result_sha256": "8cabaeed61d00e14b01a69373cbf52c569a1db0118b455f6280cb2c7308e45bd",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "c1c81e9fe775c6f1e0db55b9d91231e2f0b439c85c55517bd0eb1a93c63a8a54",
+      "lightmap_sha256": "a18c790dfc1962d92c09bef17b15e919dcefed51b200e2e239bf74d3f7d87bb1",
       "user_matrix": [
-        1.0,
+        1,
         0,
         0,
-        1.0,
-        0.0,
-        0.0
+        1,
+        0,
+        0
       ],
       "matrix": [
         [
@@ -485,25 +314,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "a18c790dfc1962d92c09bef17b15e919dcefed51b200e2e239bf74d3f7d87bb1",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1135,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Bordstein",
+      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
       "source_sha256": "32d6c3e3172587709284397566088c3503fc29b449313f6a7772e97dd1e7b6b2",
-      "result_sha256": "32d6c3e3172587709284397566088c3503fc29b449313f6a7772e97dd1e7b6b2",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "6bed5adabbfe5a3e667f25dac065c61d45dc8862a0ccef54c6ea3531af35306f",
+      "lightmap_sha256": null,
       "user_matrix": [
         1.0,
         0,
@@ -546,25 +366,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": null,
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1136,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Erde/Dreck einer Baustelle",
+      "note": "Texturiere Dreck und Erde, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
       "source_sha256": "7d5cbf80fd5296aaaec8ad042387fe0f6214a4708cf9a19adeaa803a3202e2e5",
-      "result_sha256": "7d5cbf80fd5296aaaec8ad042387fe0f6214a4708cf9a19adeaa803a3202e2e5",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "9c5b8544b046737e517fd7e9873e7857c4f6d9042f3337d97a154ecda1be7fa9",
+      "lightmap_sha256": null,
       "user_matrix": [
         1.0,
         0,
@@ -607,86 +418,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": null,
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "dirt",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1137,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Dreck und Erde einer Baustelle",
+      "note": "Texturiere Dreck und Erde damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
       "source_sha256": "df2cdc0e33507b3576cb3084576c45313d2b6b449f973c3d0eac03c9231aa1d5",
-      "result_sha256": "df2cdc0e33507b3576cb3084576c45313d2b6b449f973c3d0eac03c9231aa1d5",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
+      "result_sha256": "0264b660f16d529fbacaca2e2572d155125326c4b853e7a672d2a2a8949f04ca",
       "lightmap_sha256": null,
-      "method": "Shared review transform; optional software parcel layer"
-    },
-    {
-      "id": 1140,
-      "note": "Korrigiere die Isometrie, die linke Seite des Gebäudes ist nicht sauber an der Diagonalen des Rasters ausgerichtet.",
-      "source_sha256": "48b6620d0f1a2708a03034df7f3017e2632b5c411219522e0ed2c239e6fa6897",
-      "result_sha256": "87c3b7553b85ee532fe11be984771d398e805f008e86a84504ba713c4e443f06",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
       "user_matrix": [
         1.0,
         0,
@@ -702,70 +443,9 @@
           0.0
         ],
         [
-          0.0010614236239518404,
-          0.9976095177372782,
-          0.1746328352731752
-        ],
-        [
           0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
           1.0,
-          0.0,
           0.0
-        ],
-        [
-          0.0010614236239518404,
-          0.9976095177372782,
-          0.1746328352731752
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "97f03056b529172949d28a5195665c5277cda888d99399aa8c3f8075558be93d",
-      "method": "Shared review transform; optional software parcel layer"
-    },
-    {
-      "id": 1141,
-      "note": "",
-      "source_sha256": "f342d16fc371bd4ea2cd2d63cffe7184157573d067ea5fb032eee36bb3f4bd26",
-      "result_sha256": "ec1eb9d02fe2c57a9e57d7c3281e141bd2d7251ad4289ab5808759e74a0aa5be",
-      "scale_percent": 105.0,
-      "offset_master_pixels": [
-        0.0,
-        5.0
-      ],
-      "user_matrix": [
-        1.05,
-        0,
-        0,
-        1.05,
-        -6.400000000000006,
-        -4.200000000000008
-      ],
-      "matrix": [
-        [
-          1.05,
-          0.0,
-          -6.400000000000006
-        ],
-        [
-          0.0,
-          1.05,
-          11.799999999999992
         ],
         [
           0.0,
@@ -790,104 +470,34 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        16,
-        0,
-        0
-      ],
-      "lightmap_sha256": "76c6390dd1c074a7f8abb5f56f2170a5fac9ce5ff8ead4965da386e20bf4d129",
-      "method": "Shared review transform; optional software parcel layer"
-    },
-    {
-      "id": 1142,
-      "note": "",
-      "source_sha256": "29ba0367071342feb436aaee10d454371e66d41592adc76a560d3d6fad76d4b4",
-      "result_sha256": "def2de185a5e436eb0373c34923db54e43d782c43e36fb9b31b825cfeff8408a",
-      "scale_percent": 110.0,
-      "offset_master_pixels": [
-        1.0,
-        6.0
-      ],
-      "user_matrix": [
-        1.1,
-        0,
-        0,
-        1.1,
-        -11.800000000000011,
-        -11.200000000000017
-      ],
-      "matrix": [
-        [
-          1.1,
-          0.0,
-          -11.800000000000011
-        ],
-        [
-          0.0,
-          1.1,
-          4.799999999999983
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "padding_master": [
-        0,
-        16,
-        0,
-        0
-      ],
-      "lightmap_sha256": "2e51723310ea4142a0cae1b9e1ea5ca92f06acd3a88b2c66448b9a812f7e4172",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "dirt",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1143,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Bordstein, orientiere dich auch mehr an der Originalgrafik (Höhe und Form des Gebäudes)",
-      "source_sha256": "424ab553f4646cdf479078ad5964ea056cec7e8a14a6b8cc2d08c85afb9b364f",
-      "result_sha256": "0fe9434b8ad0b8e6b7971e605c8f644ff7e6f1de5b6e96d5c13ccb12bb00707b",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht zu den Diagonalen des Rasters.",
+      "source_sha256": "0fe9434b8ad0b8e6b7971e605c8f644ff7e6f1de5b6e96d5c13ccb12bb00707b",
+      "result_sha256": "a56d0fced0bb15eb38034cf1d39a27b6e03074f9cc4bbe47ddcc732bcc426ebb",
+      "lightmap_sha256": "8793963f0bb63ce1c0cf1d176b5e05222508c7197421343f90e3c1ca3d7ede98",
       "user_matrix": [
         1.0,
         0,
         0,
         1.0,
-        0.0,
-        0.0
+        -2.0,
+        25.0
       ],
       "matrix": [
         [
-          0.23408560311284046,
+          1.0,
           0.0,
-          -18.771673151750974
+          -2.0
         ],
         [
-          -4.978776600859844e-05,
-          0.2356399837950634,
-          -24.74716589347981
+          0.0,
+          1.2562814070351758,
+          -32.66331658291455
         ],
         [
           0.0,
@@ -902,9 +512,9 @@
           0.0
         ],
         [
-          -0.00021269042327476395,
-          1.0066402233266505,
-          -6.905279830856237
+          0.0,
+          1.2562814070351758,
+          -57.66331658291455
         ],
         [
           0.0,
@@ -912,25 +522,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "0130effdb34ef898267c14ce860fccb3a0c29ee8011d0a05213b69cd8d876ff7",
-      "method": "ImageGen revision + shared projection and review transform"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1144,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Bordstein",
+      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
       "source_sha256": "9a87dce85c12e8ba933aba98d9da2e5eb1b9193c94918e5fbeb62cfeef4a21e4",
-      "result_sha256": "9a87dce85c12e8ba933aba98d9da2e5eb1b9193c94918e5fbeb62cfeef4a21e4",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "426609ece166f2da504b525d1dd9fb69dbce3b5dc00dae03642cf82f6b43f7df",
+      "lightmap_sha256": "37be53e85bf6cca3c970333421e546f828889e6b93488cba314a29538d60c6af",
       "user_matrix": [
         1.0,
         0,
@@ -973,25 +574,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "14e3bfda8fd0530cc439d91fdc99f55c8307fb26382e864356026d2e47f0c6ca",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1146,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Bordstein",
+      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
       "source_sha256": "3b3bab49966bd79788cba1db90c798385a222fcbfd2ede97adc83a5a0212c9eb",
-      "result_sha256": "3b3bab49966bd79788cba1db90c798385a222fcbfd2ede97adc83a5a0212c9eb",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "46a41a2766de1f7d4a4220e108f35ec8f750182f8ef2353c44e67405899b0aa1",
+      "lightmap_sha256": "5b6c0a808ab703a9d7375fed673c54e2f8f4b5650d7506bf634b1fe577b2942f",
       "user_matrix": [
         1.0,
         0,
@@ -1034,32 +626,23 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "3373929c0b557199fe8e50692024a8f3ea13c64730625a4d58a0ed3390730cf4",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1147,
-      "note": "",
-      "source_sha256": "e6c98e89b0a8843682a70f8c44a47d860b86ca4fe7c3ad8b41897480fd552a02",
-      "result_sha256": "6aaa00c1cff28f49bc9e2fdc1c49c396443d1a7a3d02e2003c90caf9d98efe3b",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        6.0
-      ],
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "6aaa00c1cff28f49bc9e2fdc1c49c396443d1a7a3d02e2003c90caf9d98efe3b",
+      "result_sha256": "3e042b5004fae71366de7819d09b37a7783324d027ad51874cc9c11746565c73",
+      "lightmap_sha256": "3f399dc20e617a8207717f872101561d1cd0a446892eb32ed7b14be55ae23f45",
       "user_matrix": [
         1.0,
         0,
         0,
         1.0,
         0.0,
-        6.0
+        0.0
       ],
       "matrix": [
         [
@@ -1068,9 +651,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          6.0
+          -0.022292993630573243,
+          1.0615711252653925,
+          -2.7075371549893035
         ],
         [
           0.0,
@@ -1085,9 +668,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          -0.022292993630573243,
+          1.0615711252653925,
+          -18.707537154989303
         ],
         [
           0.0,
@@ -1095,25 +678,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "8d15e1220b5283d8132bd4c0a1f93c9fd8024a71b2762b723cf090c943809291",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "none",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1149,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Parkplätze, Asphalt und Bordstein",
+      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
       "source_sha256": "d1e4ae4173fd7a79688a83ea8d568059f5c3b867fa7596ede94321f138f6d6c8",
-      "result_sha256": "d1e4ae4173fd7a79688a83ea8d568059f5c3b867fa7596ede94321f138f6d6c8",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "e6f254fa77ef96193025f915d1cd1d89215e97084c29f27d9c14e30dd9062284",
+      "lightmap_sha256": "9f7385f9a598ddd3781f70338a37d5eee2983293c178554d51c20c6f5b505a9e",
       "user_matrix": [
         1.0,
         0,
@@ -1156,25 +730,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "dd9b2b0f9b1308c515d15036344e16abccfd9f9c0fdef4cac1497a154173b41a",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "parking",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1150,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Bordstein",
+      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
       "source_sha256": "0b1e26463cd847b596255c97cb79356dc2e7d231e6ca3142fe2f4184c65629fb",
-      "result_sha256": "0b1e26463cd847b596255c97cb79356dc2e7d231e6ca3142fe2f4184c65629fb",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "fc9554024df5c29c6c1655d3c01119fed1bd8528f2f971e20b5458669bdddbe1",
+      "lightmap_sha256": "2818c47353306fc3a086ca744d148badfa2ac5e07ae62ad33e2ed69b03fcac2a",
       "user_matrix": [
         1.0,
         0,
@@ -1217,43 +782,34 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "60bdfd95ee0686f065e1a30e419826ddd8ae6a45e6c89208350596b47f232b2d",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1151,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen ein Teich, Spazieranlagen, Gehweg, Dekoration",
-      "source_sha256": "e35d966c77e681d077feb941687285172194706a6a31e47c89628d8e9ae941a0",
-      "result_sha256": "a31f29f6dbb9ada85554066c7fdc73a03d3ff82447fb92d88148a7751e67de0b",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
+      "source_sha256": "a31f29f6dbb9ada85554066c7fdc73a03d3ff82447fb92d88148a7751e67de0b",
+      "result_sha256": "8ba1d5612a231e72ead785093bce33fb04e3e516860bde6fac5b83d4d4414d6a",
+      "lightmap_sha256": "68f2b5d1db4db18b5e0c5528bddea4a4adb148e568a5abd896feed3f55026222",
       "user_matrix": [
         1.0,
         0,
         0,
         1.0,
         0.0,
-        0.0
+        39.0
       ],
       "matrix": [
         [
-          0.18553585196607555,
+          1.0,
           0.0,
-          5.8246414803392526
+          0.0
         ],
         [
-          -0.0016450201410118865,
-          0.1822035016828045,
-          5.54074179060947
+          0.0,
+          1.0,
+          39.0
         ],
         [
           0.0,
@@ -1268,9 +824,9 @@
           0.0
         ],
         [
-          -0.008866319493402663,
-          0.9820393188272832,
-          26.8883897208297
+          0.0,
+          1.0,
+          0.0
         ],
         [
           0.0,
@@ -1278,25 +834,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        32,
-        0,
-        0
-      ],
-      "lightmap_sha256": "fe50f643a03de4f082f1d19d967a3d80f37d40d745f9fa40ec3207b45f0bedea",
-      "method": "ImageGen revision + shared projection and review transform"
+      "baked_ground": "tiles",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1152,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Parkplatz, Asphalt und Bordstein",
+      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
       "source_sha256": "abf70b12abb203ba55d598310c5157e3fd74bebd997028df938dc7fbd485674b",
-      "result_sha256": "abf70b12abb203ba55d598310c5157e3fd74bebd997028df938dc7fbd485674b",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "f968314e976cb86285d4bba1eb10dc83831a168c8675e37d5a73c0a623cdca77",
+      "lightmap_sha256": "94b8efaac53c24f693d921f86d33d56890a874f6dfc8a4b7608cbab2240dd3b8",
       "user_matrix": [
         1.0,
         0,
@@ -1339,25 +886,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "7914925a9ad01d650b82e453b7660746a94a47d4c8f601b996e46a418ee6b867",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "parking",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1153,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Bordstein",
+      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
       "source_sha256": "63632838327cec98dc55accf6c538490e0a389c0e566e4250e2e8a09934c393a",
-      "result_sha256": "63632838327cec98dc55accf6c538490e0a389c0e566e4250e2e8a09934c393a",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "68aa5c1c8c810da7aa0921bf9144db9ff03394e00d57b14a3b99285a4ccfd385",
+      "lightmap_sha256": "bfdc925b15fe10f5d9f3c82b41c3729a868a39c184fca2fe7bc45b132a45d8a3",
       "user_matrix": [
         1.0,
         0,
@@ -1400,86 +938,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "17417c6682fbdfcce35fde8c398784a5d74d78ecfe4cadeecd61379567ed9f90",
-      "method": "Shared review transform; optional software parcel layer"
-    },
-    {
-      "id": 1154,
-      "note": "",
-      "source_sha256": "07ae91e68758b5c7cb68f9f7352bf405dd5e70da9239f429d053a5a58ded0965",
-      "result_sha256": "c2d6fb8e73abcb8282cd4663c61c839273659a633d9353e8a81daac0f976db37",
-      "scale_percent": 112.0,
-      "offset_master_pixels": [
-        2.0,
-        10.0
-      ],
-      "user_matrix": [
-        1.12,
-        0,
-        0,
-        1.12,
-        -13.360000000000014,
-        -26.960000000000036
-      ],
-      "matrix": [
-        [
-          1.12,
-          0.0,
-          -13.360000000000014
-        ],
-        [
-          0.0,
-          1.12,
-          5.039999999999964
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "padding_master": [
-        0,
-        32,
-        0,
-        0
-      ],
-      "lightmap_sha256": "2ad885f8f142d38cc6ff6fabdbb8bd2d4185983dbc8f1c4e33eece38842699b4",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1155,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt, Wege und Bordstein",
+      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
       "source_sha256": "677cb54d77c0c6ad1f41abab47d2abfda4631d9e77012199fcc9d0a1c9f41e2c",
-      "result_sha256": "677cb54d77c0c6ad1f41abab47d2abfda4631d9e77012199fcc9d0a1c9f41e2c",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "f3300b1b7bc3274faaad3c7d77958c5ff0891034f5e9c6c639eabdf7aa98c646",
+      "lightmap_sha256": "f5c45966b6d1f5b201cd3ca4ce3d4e79fa663c26ea9b02683e07faf47610b8a9",
       "user_matrix": [
         1.0,
         0,
@@ -1522,25 +990,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "d1287146acb708b4bb4a0b68231e42186c0e7313199f815cc9aed4bfc71547b8",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1156,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Bordstein",
+      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
       "source_sha256": "f4cbe76cd077d1da61dfea1d5befda1117f665356dd658b93ea3ab0810e276eb",
-      "result_sha256": "f4cbe76cd077d1da61dfea1d5befda1117f665356dd658b93ea3ab0810e276eb",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "c82bb89c0834549d1f76b29e1795e3f8f79143386b613483a35893fa661ef4bc",
+      "lightmap_sha256": "f57f50ccdc0569c7abe734d796906ba3b2a7b55f759c7414f72df2d09da98731",
       "user_matrix": [
         1.0,
         0,
@@ -1583,25 +1042,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "db5b44ac73ea252d86e3524c871a4425b2215317b1d2560bc75a117b7b8634a9",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1157,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Bordstein",
+      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
       "source_sha256": "cb00621f54bceb588af9a6a7023ac640689eb1ad7231cb3e2914c96bb0cb5d20",
-      "result_sha256": "cb00621f54bceb588af9a6a7023ac640689eb1ad7231cb3e2914c96bb0cb5d20",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "507ca41603b245e29b58a54b8d4b347cd4bf647616c66b2f4ec8970f76d7be66",
+      "lightmap_sha256": "78200b154bcc8cd799b16043854ec167cf98dfda597f1d479b3ea15f4c9e9281",
       "user_matrix": [
         1.0,
         0,
@@ -1644,25 +1094,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "6d70d86efbdf76c872601d1f44a0dbe1a023670713fd58dff2c56e97cce045f8",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1158,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Bordstein",
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
       "source_sha256": "134faa5435ec3960cbfac34a767bc6821cfee2c1260825380ed70223fe25cca1",
-      "result_sha256": "134faa5435ec3960cbfac34a767bc6821cfee2c1260825380ed70223fe25cca1",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "f02fae8a7087824672c965674cc6bd3fcf6a8b4b22dc598930c771e48eb682f9",
+      "lightmap_sha256": "64bad2c0e17c2301cc1a08278af37ec822e5bb9349e4ca0ab5a6b99e1b2a8df5",
       "user_matrix": [
         1.0,
         0,
@@ -1678,9 +1119,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          0.053459119496855334,
+          1.0482180293501049,
+          -12.950733752620552
         ],
         [
           0.0,
@@ -1695,9 +1136,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          0.053459119496855334,
+          1.0482180293501049,
+          -12.950733752620552
         ],
         [
           0.0,
@@ -1705,43 +1146,34 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "68af2f8326d586abdb8ff0a3a2bd1ec0d91411f6f6792e16de904b118ca83a58",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1159,
-      "note": "",
-      "source_sha256": "187cd9fe260378e813b470a6c77cf1d06f524af784317e8578ad7c9796f1b0b5",
-      "result_sha256": "6eaf51d5915ff89e357102bbc0817f9c766abca9e0c27c6d90f60346138cc53a",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        1.0,
-        8.0
-      ],
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "6eaf51d5915ff89e357102bbc0817f9c766abca9e0c27c6d90f60346138cc53a",
+      "result_sha256": "b2011ed3d041929700cfcabe5586fb575c7caf448a1b8dbbc3c8d39370db1fb5",
+      "lightmap_sha256": "9513b34cc8aba0c1e9a9874807cdba85811b261abcc6758289e54ee5fc02a375",
       "user_matrix": [
         1.0,
         0,
         0,
         1.0,
-        1.0,
-        8.0
+        0.0,
+        0.0
       ],
       "matrix": [
         [
           1.0,
           0.0,
-          1.0
+          0.0
         ],
         [
-          0.0,
-          1.0,
-          8.0
+          0.03358208955223885,
+          0.9328358208955223,
+          9.604477611940311
         ],
         [
           0.0,
@@ -1756,9 +1188,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          0.03358208955223885,
+          0.9328358208955223,
+          9.604477611940311
         ],
         [
           0.0,
@@ -1766,32 +1198,23 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "64f3767b289a3325b72967d58bcc3cb1757f9514f8aa6a55e5b41fa62ee35f55",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "none",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1160,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Bordstein",
+      "note": "Bodenbelag texturiert und in Grafik integriert.",
       "source_sha256": "48e21447cb27960571c4318eeb7b4607d7a34fdd6b3bdd2f4af51287f9af2cec",
-      "result_sha256": "48e21447cb27960571c4318eeb7b4607d7a34fdd6b3bdd2f4af51287f9af2cec",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "7a80ae59c87b093f75bd8caebeda656edf7dc54cc2371606c940ef91661475f0",
+      "lightmap_sha256": "93c3c2b6ce1cf50d05a5918f2735a9a78874d51522404ea827856406fb36667b",
       "user_matrix": [
-        1.0,
+        1,
         0,
         0,
-        1.0,
-        0.0,
-        0.0
+        1,
+        0,
+        0
       ],
       "matrix": [
         [
@@ -1827,32 +1250,23 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "e3404f5e3f4e8a30f3f1ee844c5d66f953d403395f3f6cfbb941931cd9a985dc",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1161,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Bordstein",
+      "note": "Bodenbelag texturiert und in Grafik integriert.",
       "source_sha256": "de757227a44b43fb55b0fd6fb2c09d0c49a8cade9d0fa0af89e8c4abb8d4301a",
-      "result_sha256": "de757227a44b43fb55b0fd6fb2c09d0c49a8cade9d0fa0af89e8c4abb8d4301a",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "2d27acd97d39481a25c153afd152e80f244a68921ed93fbf53c12b4525dd5471",
+      "lightmap_sha256": "c9c8900223e32fea9ad20d159de5c55b9248c0a819ce6e5a1b091f0352d813f6",
       "user_matrix": [
-        1.0,
+        1,
         0,
         0,
-        1.0,
-        0.0,
-        0.0
+        1,
+        0,
+        0
       ],
       "matrix": [
         [
@@ -1888,32 +1302,23 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "cc626c4dad576cf8ad4b5f45c4dee3a924ff79feb8d6818e41237de478140a06",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1162,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Bordstein",
+      "note": "Bodenbelag texturiert und in Grafik integriert.",
       "source_sha256": "b685b586aeb26dff903f196aa2b9309e914a56fff501a4d8d5aba655c4b147f8",
-      "result_sha256": "b685b586aeb26dff903f196aa2b9309e914a56fff501a4d8d5aba655c4b147f8",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "3422c74be151e6b130d7821bc581e6bcaf04f7f4cc32bf2206912aab5ba7bbed",
+      "lightmap_sha256": "2039b264babcfa554abe85f1bd4d4c1437a614d7cb65474262e902688d1a0225",
       "user_matrix": [
-        1.0,
+        1,
         0,
         0,
-        1.0,
-        0.0,
-        0.0
+        1,
+        0,
+        0
       ],
       "matrix": [
         [
@@ -1949,25 +1354,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "277984494bbb09cfb00bdd3e41863fa19d55f92ef3c4f9ca29ac44b1a857db35",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1163,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Bordstein",
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
       "source_sha256": "55af056edff27d9e29919c4e23f719d4d207ca3cb5632401cb3bdb5959fae412",
-      "result_sha256": "55af056edff27d9e29919c4e23f719d4d207ca3cb5632401cb3bdb5959fae412",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "f9f36492cd53c125e37606b6acba6f569fd7a832b2ca66013a88c60657fbffc1",
+      "lightmap_sha256": "9d9e293ca8c17b25218e68c23e6ca95819bdde92557e9961d9cb66581a17f2ba",
       "user_matrix": [
         1.0,
         0,
@@ -1983,9 +1379,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          -0.008840864440078589,
+          0.9823182711198426,
+          5.322200392927362
         ],
         [
           0.0,
@@ -2000,9 +1396,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          -0.008840864440078589,
+          0.9823182711198426,
+          5.322200392927362
         ],
         [
           0.0,
@@ -2010,25 +1406,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "288618a9e80eb4a86a5877a372daef5cac2f7fe4e21e258293ac3baf320a2542",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1164,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Bordstein",
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
       "source_sha256": "d5087d2faf747359f3388ce5bb537221bd6f3c9648e932d3b33dd48af1766e94",
-      "result_sha256": "d5087d2faf747359f3388ce5bb537221bd6f3c9648e932d3b33dd48af1766e94",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "904482fd1e96fbcdb0c2c06550f5bdf4813e796b849638b3faf5df9121b16c8a",
+      "lightmap_sha256": "7d2520780b62f8e44fc2b8e1c1475467d6d2b495e76476a3c1e814a0cbf15301",
       "user_matrix": [
         1.0,
         0,
@@ -2044,9 +1431,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          0.01867219917012447,
+          1.0373443983402488,
+          3.2095435684647686
         ],
         [
           0.0,
@@ -2061,9 +1448,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          0.01867219917012447,
+          1.0373443983402488,
+          -12.790456431535231
         ],
         [
           0.0,
@@ -2071,32 +1458,23 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "2c50ec901974422d462549b41a741a6664431f0034a3729665ea3713f7f5e0ef",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1165,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Bordstein",
+      "note": "Bodenbelag texturiert und in Grafik integriert.",
       "source_sha256": "f981a2eec4cd4ae4f8ef533a2bbde21b8cd6ba3f3005e2df94efb44b83cd6d33",
-      "result_sha256": "f981a2eec4cd4ae4f8ef533a2bbde21b8cd6ba3f3005e2df94efb44b83cd6d33",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "3a66677c2c99ce3d86f20a3d53b02b37d6dc9254f094cd9ec2ec978d0df40f71",
+      "lightmap_sha256": "f8aeba906b65dd120e29cd432a8f1cedce8637f9bcb0666c62a6cdf1bdda9753",
       "user_matrix": [
-        1.0,
+        1,
         0,
         0,
-        1.0,
-        0.0,
-        0.0
+        1,
+        0,
+        0
       ],
       "matrix": [
         [
@@ -2132,25 +1510,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "8ba86ec851d27afb860c25cccb520aaa6b86a04970bfd7fe1b783a0fff552f82",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1167,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Dreck und brauner Boden einer Baustelle",
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
       "source_sha256": "9cf72d4c78cda26ef992e60c71a91388cba6f060f5289e731a13ee2d0e3b40f2",
-      "result_sha256": "9cf72d4c78cda26ef992e60c71a91388cba6f060f5289e731a13ee2d0e3b40f2",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "a93396124ce4d34f097c59616485b0941afa2e821828d6dba3cbab264f89b7f2",
+      "lightmap_sha256": null,
       "user_matrix": [
         1.0,
         0,
@@ -2166,9 +1535,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          0.043893129770992356,
+          0.9541984732824426,
+          4.611641221374088
         ],
         [
           0.0,
@@ -2183,9 +1552,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          0.043893129770992356,
+          0.9541984732824426,
+          4.611641221374088
         ],
         [
           0.0,
@@ -2193,25 +1562,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": null,
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "dirt",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1168,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Dreck und brauner Boden einer Baustelle",
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
       "source_sha256": "ba6af0e948c8cda58708efad1119ad6bfe7db1f3775822b4a1db12c2d649eb6b",
-      "result_sha256": "ba6af0e948c8cda58708efad1119ad6bfe7db1f3775822b4a1db12c2d649eb6b",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "1a6893e35d6d1ac09dca90a64dc54874a1a177dd5299d1ba6c762706bf51cb68",
+      "lightmap_sha256": null,
       "user_matrix": [
         1.0,
         0,
@@ -2227,9 +1587,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          0.014403292181070004,
+          1.0288065843621397,
+          7.81893004115231
         ],
         [
           0.0,
@@ -2244,9 +1604,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          0.014403292181070004,
+          1.0288065843621397,
+          -8.18106995884769
         ],
         [
           0.0,
@@ -2254,43 +1614,34 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": null,
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "dirt",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1169,
-      "note": "",
-      "source_sha256": "6cf1e9f5adf2613dc3cd9a8529dd6f7555a29f446871ea074f74bacae2938a64",
-      "result_sha256": "e44ad4f2580e66425a7af8cb43fe683177c6ff4ae83e86298183620442d9dceb",
-      "scale_percent": 138.0,
-      "offset_master_pixels": [
-        1.0,
-        0.0
-      ],
+      "note": "Die Grafik passt ganicht, orientiere dich mehr am SC2000 Original.",
+      "source_sha256": "e44ad4f2580e66425a7af8cb43fe683177c6ff4ae83e86298183620442d9dceb",
+      "result_sha256": "0d64c29714f09764b1855986e59ebd726750619b97e1600d49097d8cd952b399",
+      "lightmap_sha256": null,
       "user_matrix": [
-        1.38,
+        1.0,
         0,
         0,
-        1.38,
-        -47.639999999999986,
-        -97.27999999999997
+        1.0,
+        0.0,
+        0.0
       ],
       "matrix": [
         [
-          1.38,
+          0.21031802120141344,
           0.0,
-          -47.639999999999986
+          4.543321554770316
         ],
         [
           0.0,
-          1.38,
-          -65.27999999999997
+          0.21031802120141344,
+          21.471519434628988
         ],
         [
           0.0,
@@ -2315,25 +1666,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        32,
-        0,
-        0
-      ],
-      "lightmap_sha256": null,
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "none",
+      "authored": true,
+      "method": "ImageGen design and shared mathematical transform"
     },
     {
       "id": 1170,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes dreckiger Asphalt und Bordstein",
+      "note": "Die Grafik muss mehr nach einem verlassenen alten Gebäude aussehen. Orientiere Dich farblich an Original SC2000 Grafik",
       "source_sha256": "0411c64f08ca35113dcaa7a17fbebc8bc27a7ac26fd95caa8c4f7e25814731a4",
-      "result_sha256": "0411c64f08ca35113dcaa7a17fbebc8bc27a7ac26fd95caa8c4f7e25814731a4",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "5dd31e1ff9a64e919b776e4fc42f4ecd2b48912f7d74eae04f585d5485a4d914",
+      "lightmap_sha256": null,
       "user_matrix": [
         1.0,
         0,
@@ -2344,14 +1686,14 @@
       ],
       "matrix": [
         [
-          1.0,
+          0.25140443505807814,
           0.0,
-          0.0
+          -37.54982048574445
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          -0.0026312573927572422,
+          0.24843342045727776,
+          -2.270580816734075
         ],
         [
           0.0,
@@ -2366,9 +1708,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          -0.0104662329928642,
+          0.9881823301959092,
+          20.068716257362347
         ],
         [
           0.0,
@@ -2376,25 +1718,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": null,
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "dirty_asphalt",
+      "authored": true,
+      "method": "ImageGen design and shared mathematical transform"
     },
     {
       "id": 1171,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes dreckiger Asphalt und Bordstein",
+      "note": "Die Grafik muss mehr nach einem verlassenen alten Gebäude aussehen. Orientiere Dich farblich an Original SC2000 Grafik",
       "source_sha256": "bab3aac99b629109fe94430c72e855ffee475e3e776f32a0fea3f6a508010bcc",
-      "result_sha256": "bab3aac99b629109fe94430c72e855ffee475e3e776f32a0fea3f6a508010bcc",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "c5e9dcdd4655b8e024912e934dd8ec0a01af5feddce0b813e6dbd74e643bb08b",
+      "lightmap_sha256": null,
       "user_matrix": [
         1.0,
         0,
@@ -2405,14 +1738,14 @@
       ],
       "matrix": [
         [
-          1.0,
+          0.25167019027484144,
           0.0,
-          0.0
+          -39.36067653276956
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          -4.9575720789849944e-05,
+          0.24676510728498058,
+          -8.784810975039171
         ],
         [
           0.0,
@@ -2427,9 +1760,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          -0.0001969868610013359,
+          0.9805098768968062,
+          20.810016875054462
         ],
         [
           0.0,
@@ -2437,25 +1770,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": null,
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "dirty_asphalt",
+      "authored": true,
+      "method": "ImageGen design and shared mathematical transform"
     },
     {
       "id": 1172,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes dreckiger Asphalt und Bordstein",
+      "note": "Die Grafik muss mehr nach einem verlassenen alten Gebäude aussehen. Orientiere Dich farblich an Original SC2000 Grafik",
       "source_sha256": "df5d29be1f3148bbdef31a7f32bc309929b3033f6011994ac40eaece46a007e9",
-      "result_sha256": "df5d29be1f3148bbdef31a7f32bc309929b3033f6011994ac40eaece46a007e9",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "3e7142b0428bb41d5572eaa95c789ebc22591b5fa2e897cbdd05f7cc83136c7e",
+      "lightmap_sha256": null,
       "user_matrix": [
         1.0,
         0,
@@ -2466,14 +1790,14 @@
       ],
       "matrix": [
         [
-          1.0,
+          0.20227697536108752,
           0.0,
-          0.0
+          5.9258453695836835
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          0.001495190620532793,
+          0.18909657127008267,
+          31.726938372905124
         ],
         [
           0.0,
@@ -2488,9 +1812,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          0.007391798388638682,
+          0.9348398201650172,
+          76.98927446618504
         ],
         [
           0.0,
@@ -2498,25 +1822,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": null,
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "dirty_asphalt",
+      "authored": true,
+      "method": "ImageGen design and shared mathematical transform"
     },
     {
       "id": 1173,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes dreckiger Asphalt und Bordstein",
+      "note": "Die Grafik muss mehr nach einem verlassenen alten Gebäude aussehen. Orientiere Dich farblich an Original SC2000 Grafik",
       "source_sha256": "db8b4c4cf12981e0162a874daf80f569bf9c50650f7c1dcd208b7cb7db2567e3",
-      "result_sha256": "db8b4c4cf12981e0162a874daf80f569bf9c50650f7c1dcd208b7cb7db2567e3",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "160fc66812c503540543adb082c8497b02abc208024751045a8ff3d9ef2db1be",
+      "lightmap_sha256": null,
       "user_matrix": [
         1.0,
         0,
@@ -2527,14 +1842,14 @@
       ],
       "matrix": [
         [
-          1.0,
+          0.2998488664987406,
           0.0,
-          0.0
+          -44.71294710327459
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          3.2910634271133264e-05,
+          0.30815878873293157,
+          -12.84588852602677
         ],
         [
           0.0,
@@ -2549,9 +1864,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          0.00010975740764146424,
+          1.02771370234353,
+          -35.481331861832956
         ],
         [
           0.0,
@@ -2559,43 +1874,34 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": null,
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "dirty_asphalt",
+      "authored": true,
+      "method": "ImageGen design and shared mathematical transform"
     },
     {
       "id": 1174,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt, Gehwegm ein Teich vor dem Gebäude und Bordstein",
-      "source_sha256": "b6a87efc494de8b50b6cb8ea587a7ce6ca4962518fc9e95e343431455180fb93",
-      "result_sha256": "cf563de2e6f634ee56bb04bbe134db2231f3328becd86e1fe6e2dde356a77286",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "note": "Bodenbelag texturiert und in Grafik integriert.",
+      "source_sha256": "cf563de2e6f634ee56bb04bbe134db2231f3328becd86e1fe6e2dde356a77286",
+      "result_sha256": "87bf03c3e4cb0fc21f4c73f953420e42ddc3c8dfbfd93fff0d50d489f0d647fb",
+      "lightmap_sha256": "802bb41657c11d1000b54e80c46a92802509051751cc4cc5ee39e47cac6e3051",
       "user_matrix": [
-        1.0,
+        1,
         0,
         0,
-        1.0,
-        0.0,
-        0.0
+        1,
+        0,
+        0
       ],
       "matrix": [
         [
-          0.2593103448275862,
+          1.0,
           0.0,
-          9.964137931034486
+          0.0
         ],
         [
-          -6.970623628236389e-05,
-          0.2354755978902577,
-          30.931177030649465
+          0.0,
+          1.0,
+          0.0
         ],
         [
           0.0,
@@ -2610,9 +1916,9 @@
           0.0
         ],
         [
-          -0.0002688139431101799,
-          0.9080840876087066,
-          89.62289014479181
+          0.0,
+          1.0,
+          0.0
         ],
         [
           0.0,
@@ -2620,25 +1926,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "802bb41657c11d1000b54e80c46a92802509051751cc4cc5ee39e47cac6e3051",
-      "method": "ImageGen revision + shared projection and review transform"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1175,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt, Parkplätze, Gehwege und Bordstein",
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
       "source_sha256": "8a56afc2ff42c1700dcb5c041815201ba193230ef4383c5f039a04c79808cf4e",
-      "result_sha256": "8a56afc2ff42c1700dcb5c041815201ba193230ef4383c5f039a04c79808cf4e",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "988d7787db83a66ae789fe5cac7afe5a741accf270b1985334ab834c3be4eed2",
+      "lightmap_sha256": "f44b44cb345dcc5807fdec4a1b9226dc603fe8e048634561c071f74dae85b7f1",
       "user_matrix": [
         1.0,
         0,
@@ -2655,8 +1952,8 @@
         ],
         [
           0.0,
-          1.0,
-          0.0
+          1.1904761904761905,
+          -57.14285714285714
         ],
         [
           0.0,
@@ -2672,8 +1969,8 @@
         ],
         [
           0.0,
-          1.0,
-          0.0
+          1.1904761904761905,
+          -57.14285714285714
         ],
         [
           0.0,
@@ -2681,226 +1978,34 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "2c9fe24acdf3599470316b80f3160f903112f69f5bfeda71b319604a628b7429",
-      "method": "Shared review transform; optional software parcel layer"
-    },
-    {
-      "id": 1179,
-      "note": "",
-      "source_sha256": "fcb40585f744f899eb02f1b52f65807d0758b607d0c7317016577529e529863b",
-      "result_sha256": "238fb3365f637c070647486cc88f4457fce18c69aa6b621f6e0e5fb1a6d06f32",
-      "scale_percent": 126.0,
-      "offset_master_pixels": [
-        0.0,
-        27.0
-      ],
-      "user_matrix": [
-        1.26,
-        0,
-        0,
-        1.26,
-        -49.92,
-        -91.56
-      ],
-      "matrix": [
-        [
-          1.26,
-          0.0,
-          -49.92
-        ],
-        [
-          0.0,
-          1.26,
-          -11.560000000000002
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "padding_master": [
-        0,
-        80,
-        0,
-        0
-      ],
-      "lightmap_sha256": "a5a0febc7ed9c4a9fb8b1c6fa6800d3cf1f5f33d97d5de3332e8843567ed68c6",
-      "method": "Shared review transform; optional software parcel layer"
-    },
-    {
-      "id": 1183,
-      "note": "",
-      "source_sha256": "332d9fc9b45915470aac566e82d54f01e385a8cd3f89901abe5b9139e43ac5d5",
-      "result_sha256": "cbe10f0b78a3be0d713812edd5ee29ecb86f1eb7214a1f9632dc76d3bfe4e566",
-      "scale_percent": 118.0,
-      "offset_master_pixels": [
-        2.0,
-        16.0
-      ],
-      "user_matrix": [
-        1.18,
-        0,
-        0,
-        1.18,
-        -32.55999999999999,
-        -87.67999999999996
-      ],
-      "matrix": [
-        [
-          1.18,
-          0.0,
-          -32.55999999999999
-        ],
-        [
-          0.0,
-          1.18,
-          8.320000000000036
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "padding_master": [
-        0,
-        96,
-        0,
-        0
-      ],
-      "lightmap_sha256": "a2bb7e9c19afbd817347b56247ad947c38ff9b1e9f3eb1fb305dd3f396f40a6c",
-      "method": "Shared review transform; optional software parcel layer"
-    },
-    {
-      "id": 1184,
-      "note": "",
-      "source_sha256": "477ef66a3283e1def9cf0376cedea8ca7c8d9fe241c70a01bfe26d090201deac",
-      "result_sha256": "855a04890af5ec8d9a8cb2706aab39b8e92218a8c40acdccd884fc9213c1fdbc",
-      "scale_percent": 142.0,
-      "offset_master_pixels": [
-        8.0,
-        31.0
-      ],
-      "user_matrix": [
-        1.42,
-        0,
-        0,
-        1.42,
-        -72.63999999999999,
-        -220.99999999999994
-      ],
-      "matrix": [
-        [
-          1.42,
-          0.0,
-          -72.63999999999999
-        ],
-        [
-          0.0,
-          1.42,
-          -12.999999999999943
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "padding_master": [
-        0,
-        208,
-        0,
-        0
-      ],
-      "lightmap_sha256": "d254c195c95e2ad7386a83256c230cf1316681b890f62ac2ba9565d171ae4e83",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "parking",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1185,
-      "note": "",
-      "source_sha256": "f80cad9ccf9c02c9604bacf57dc06fb03999186aa4023a52dad059483f122cea",
-      "result_sha256": "b4d23792deeb7d82b2e9ada62988bf9544bdfa4972f11e1b3b99afe71a919a06",
-      "scale_percent": 111.0,
-      "offset_master_pixels": [
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik auf der linken Seite passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "b4d23792deeb7d82b2e9ada62988bf9544bdfa4972f11e1b3b99afe71a919a06",
+      "result_sha256": "4027dda08c88d00a0dff94c90149c20164e61879ca5997152ed394341d4967a3",
+      "lightmap_sha256": "77c51e21a2e028c3cbc14b5fcdcaf1e36517e3d53a7a56138f50c1cb94192dd0",
+      "user_matrix": [
+        1.0,
+        0,
+        0,
+        1.0,
         0.0,
         0.0
       ],
-      "user_matrix": [
-        1.11,
-        0,
-        0,
-        1.11,
-        -21.12000000000002,
-        -35.64000000000003
-      ],
       "matrix": [
         [
-          1.11,
+          1.0,
           0.0,
-          -21.12000000000002
+          0.0
         ],
         [
-          0.0,
-          1.11,
-          -3.640000000000029
+          0.0010706638115631217,
+          1.070663811563169,
+          -9.503211991434632
         ],
         [
           0.0,
@@ -2915,9 +2020,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          0.0010706638115631217,
+          1.070663811563169,
+          -25.503211991434632
         ],
         [
           0.0,
@@ -2925,287 +2030,34 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        32,
-        0,
-        0
-      ],
-      "lightmap_sha256": "d469a7e2996ea76470da130d9c9841711abafca4a8a8657c4488507a832145e2",
-      "method": "Shared review transform; optional software parcel layer"
-    },
-    {
-      "id": 1186,
-      "note": "",
-      "source_sha256": "455b040343193a7dd8b237ff24d83925a7485a2815ce6e1096a800a38eb5741c",
-      "result_sha256": "2de43650f224008d952f65371c94d9f03c826bf8ceaee4fd259531d5b79cd5af",
-      "scale_percent": 106.0,
-      "offset_master_pixels": [
-        0.0,
-        10.0
-      ],
-      "user_matrix": [
-        1.06,
-        0,
-        0,
-        1.06,
-        -11.52000000000001,
-        -20.480000000000025
-      ],
-      "matrix": [
-        [
-          1.06,
-          0.0,
-          -11.52000000000001
-        ],
-        [
-          0.0,
-          1.06,
-          11.519999999999975
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "padding_master": [
-        0,
-        32,
-        0,
-        0
-      ],
-      "lightmap_sha256": "c0df357df92e869fc85c9cef1baaa9bf3f2daf12ce3672c63f4c6364a2be0d9f",
-      "method": "Shared review transform; optional software parcel layer"
-    },
-    {
-      "id": 1187,
-      "note": "",
-      "source_sha256": "cab01aaca75e803c479f65f8439a9a00ceda4907cfb1f6625f8463a40b83fd94",
-      "result_sha256": "a520afcd95e4706f09894076920dd9bdab9d7589ceb211b498acf59253119f5a",
-      "scale_percent": 106.0,
-      "offset_master_pixels": [
-        8.0,
-        1.0
-      ],
-      "user_matrix": [
-        1.06,
-        0,
-        0,
-        1.06,
-        -3.5200000000000102,
-        -31.64000000000003
-      ],
-      "matrix": [
-        [
-          1.06,
-          0.0,
-          -3.5200000000000102
-        ],
-        [
-          0.0,
-          1.06,
-          -15.640000000000029
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "padding_master": [
-        0,
-        16,
-        0,
-        0
-      ],
-      "lightmap_sha256": "427741d6ea6b751a5490b97a3cf33499fb3d6ad53a374cd03b4226bb992db645",
-      "method": "Shared review transform; optional software parcel layer"
-    },
-    {
-      "id": 1188,
-      "note": "",
-      "source_sha256": "3ef6772cafbeebca25ba02356f388683580d8da2bc7d298624e671efb70194f5",
-      "result_sha256": "57a81656e24b7371d1e1b4dd3daf215efb56c2941aa91d9634230731803e9321",
-      "scale_percent": 104.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
-      "user_matrix": [
-        1.04,
-        0,
-        0,
-        1.04,
-        -7.680000000000007,
-        -11.04000000000001
-      ],
-      "matrix": [
-        [
-          1.04,
-          0.0,
-          -7.680000000000007
-        ],
-        [
-          0.0,
-          1.04,
-          4.95999999999999
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "padding_master": [
-        0,
-        16,
-        0,
-        0
-      ],
-      "lightmap_sha256": "cf7fdd240dca3d7864c4ca061a731840fa876a06d98e703f7b0591bfd64037ba",
-      "method": "Shared review transform; optional software parcel layer"
-    },
-    {
-      "id": 1189,
-      "note": "",
-      "source_sha256": "25a03f62fd4cd01ccc55b88e36447bfdef4c4f4a87f5f8fa1bb46b98928a9d58",
-      "result_sha256": "9eb045a8585bd1043bef3ad0b2a5a7e63d2778efb3e202695fc8530b37483af5",
-      "scale_percent": 106.0,
-      "offset_master_pixels": [
-        11.0,
-        -2.0
-      ],
-      "user_matrix": [
-        1.06,
-        0,
-        0,
-        1.06,
-        -0.5200000000000102,
-        -23.36000000000002
-      ],
-      "matrix": [
-        [
-          1.06,
-          0.0,
-          -0.5200000000000102
-        ],
-        [
-          0.0,
-          1.06,
-          8.63999999999998
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "padding_master": [
-        0,
-        32,
-        0,
-        0
-      ],
-      "lightmap_sha256": "a94506c00fdbe46c736864d6f830f7bf12f5ba92ed696166dee1179788255a2f",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "none",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1190,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Bordstein",
-      "source_sha256": "916ef982725d4cd52d2de00c2a8603dab708dbad21f4c87a1bdcdb1a8b544657",
-      "result_sha256": "b4150a5cc4a9bcea559dcf2be2a19880f94643e24346df6da0961c8ac1bfad47",
-      "scale_percent": 108.0,
-      "offset_master_pixels": [
-        -2.0,
-        18.0
-      ],
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "b4150a5cc4a9bcea559dcf2be2a19880f94643e24346df6da0961c8ac1bfad47",
+      "result_sha256": "cd8e7a887035e4d0054b3977c859840c6716b75ebec195a57c9112a11937368e",
+      "lightmap_sha256": "1be5da577ee40e9088b551e1e779cc1043e1016cc335bd7ef630f12254108537",
       "user_matrix": [
-        1.08,
+        1.0,
         0,
         0,
-        1.08,
-        -17.360000000000014,
-        -5.680000000000021
+        1.0,
+        0.0,
+        0.0
       ],
       "matrix": [
         [
-          1.08,
+          1.0,
           0.0,
-          -17.360000000000014
+          0.0
         ],
         [
-          0.0,
-          1.08,
-          10.319999999999979
+          -0.004950495049504955,
+          0.9900990099009899,
+          3.7772277227723445
         ],
         [
           0.0,
@@ -3220,9 +2072,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          -0.004950495049504955,
+          0.9900990099009899,
+          3.7772277227723445
         ],
         [
           0.0,
@@ -3230,43 +2082,34 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        16,
-        0,
-        0
-      ],
-      "lightmap_sha256": "b550ed19b23b21cd4820b9abb57e647f18afefec079facfdb73321ab56ecca99",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1191,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Bordstein",
-      "source_sha256": "639c9237f9e8963d59d9303fdfecc69c54e878f63b2316a8623fc7c3e8ba5a01",
-      "result_sha256": "d77b5c08f9b9f6df6b85e2d789621ed5aea335946ab0112d62489f231f0f5e67",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        1.0,
-        10.0
-      ],
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "d77b5c08f9b9f6df6b85e2d789621ed5aea335946ab0112d62489f231f0f5e67",
+      "result_sha256": "5185dfc95f498bf187264f6a04f26c0b7520ff2d714044ac3a9452d47fe2d3d0",
+      "lightmap_sha256": "1219312160abd09eea0aa3e3f54ac7141ff31e71b3f1ef1b479e146620f0108f",
       "user_matrix": [
         1.0,
         0,
         0,
         1.0,
-        1.0,
-        10.0
+        0.0,
+        0.0
       ],
       "matrix": [
         [
           1.0,
           0.0,
-          1.0
+          0.0
         ],
         [
-          0.0,
-          1.0,
-          10.0
+          0.02620967741935487,
+          1.008064516129032,
+          -7.3387096774192955
         ],
         [
           0.0,
@@ -3281,9 +2124,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          0.02620967741935487,
+          1.008064516129032,
+          -7.3387096774192955
         ],
         [
           0.0,
@@ -3291,104 +2134,34 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "2aae97f66a61977f6cdacd78f33600933562983da08687080a745128f4aa262a",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1192,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Asphalt und Bordstein",
+      "note": "Bodenbelag texturiert und in Grafik integriert.",
       "source_sha256": "8ff0697682c41db2e286e62973abee51875666c7baf1f5a1d5949997126cdcee",
-      "result_sha256": "8ff0697682c41db2e286e62973abee51875666c7baf1f5a1d5949997126cdcee",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
+      "result_sha256": "23e61efb28ec31a7acf5911d457f49bb4ca84e9c9af680ad3daaa9850f156aac",
       "lightmap_sha256": "0221de81f5b03487e90c5179511ab3a07962f38de9e2104fbfb89fb6d31af9fa",
-      "method": "Shared review transform; optional software parcel layer"
-    },
-    {
-      "id": 1193,
-      "note": "",
-      "source_sha256": "3855199742339e66225e4af7d26429f741f991c7a4a4a8d0dc73105a49fdcaad",
-      "result_sha256": "7640c39a9f4455ccf6118ba937498b0114addb490b426d84db65d42c859ec6be",
-      "scale_percent": 104.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
       "user_matrix": [
-        1.04,
+        1,
         0,
         0,
-        1.04,
-        -7.680000000000007,
-        -10.240000000000009
+        1,
+        0,
+        0
       ],
       "matrix": [
         [
-          1.04,
+          1.0,
           0.0,
-          -7.680000000000007
+          0.0
         ],
         [
           0.0,
-          1.04,
-          5.759999999999991
+          1.0,
+          0.0
         ],
         [
           0.0,
@@ -3413,25 +2186,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        16,
-        0,
-        0
-      ],
-      "lightmap_sha256": "e8b2e746a2ef11227faf29b06dbb97ca706d1446b25a3b3047e2034f4089821e",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "asphalt_curb",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1194,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Dreck, Bauschutt, brauner Boden",
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik auf der rechten Seite passen nicht ganz zu den Diagonalen des Rasters",
       "source_sha256": "00cc2ddf3999f63d06383b011ccd4648b05ac64021325079ab8666a83a7f7dd0",
-      "result_sha256": "00cc2ddf3999f63d06383b011ccd4648b05ac64021325079ab8666a83a7f7dd0",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "6d70b4f205af76f1134236eafa23902cba9237cb7f97568c41526d6a9e211805",
+      "lightmap_sha256": null,
       "user_matrix": [
         1.0,
         0,
@@ -3447,9 +2211,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          0.03191489361702132,
+          1.0638297872340423,
+          -16.37765957446799
         ],
         [
           0.0,
@@ -3464,9 +2228,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          0.03191489361702132,
+          1.0638297872340423,
+          -32.37765957446799
         ],
         [
           0.0,
@@ -3474,32 +2238,23 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": null,
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "dirt",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1195,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Dreck, Bauschutt, brauner Boden",
+      "note": "Bodenbelag texturiert und in Grafik integriert.",
       "source_sha256": "0df4287a3ff0c343c5fff676b68f3e34186dff8e67fee1db3e2ac7a624b09275",
-      "result_sha256": "0df4287a3ff0c343c5fff676b68f3e34186dff8e67fee1db3e2ac7a624b09275",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "179e30243d83469c30531de9c81235319ca11a56eb636de39938858b43e26052",
+      "lightmap_sha256": null,
       "user_matrix": [
-        1.0,
+        1,
         0,
         0,
-        1.0,
-        0.0,
-        0.0
+        1,
+        0,
+        0
       ],
       "matrix": [
         [
@@ -3535,43 +2290,34 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": null,
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "dirt",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1196,
-      "note": "",
-      "source_sha256": "92110efcba9d795d1da0dde936f0f2fb376ddc3d96f254410f6f01f5f5d49e36",
-      "result_sha256": "a35b70d0eecb1dd16fad7a9d137105fad49a4e0a9a8ffa95f759295a087d2635",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        -1.0,
-        -50.0
-      ],
+      "note": "Die Grafik muss mehr nach einem verlassenen alten Gebäude aussehen. Orientiere Dich farblich an Original SC2000 Grafik",
+      "source_sha256": "a35b70d0eecb1dd16fad7a9d137105fad49a4e0a9a8ffa95f759295a087d2635",
+      "result_sha256": "6dd9a40490cc90d3c6e146b0104a6ac6b6b4e468d4b84fda9c5f9200edb3b6db",
+      "lightmap_sha256": null,
       "user_matrix": [
         1.0,
         0,
         0,
         1.0,
-        -1.0,
-        -50.0
+        0.0,
+        0.0
       ],
       "matrix": [
         [
-          1.0,
+          0.25113924050632913,
           0.0,
-          15.0
+          25.170632911392403
         ],
         [
-          0.0,
-          1.0,
-          -50.0
+          0.003902326116072607,
+          0.22453535866676883,
+          64.31817222473157
         ],
         [
           0.0,
@@ -3586,9 +2332,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          0.015538496127506851,
+          0.8940672043686863,
+          93.349576902913
         ],
         [
           0.0,
@@ -3596,43 +2342,34 @@
           1.0
         ]
       ],
-      "padding_master": [
-        16,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": null,
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "none",
+      "authored": true,
+      "method": "ImageGen design and shared mathematical transform"
     },
     {
       "id": 1197,
-      "note": "Die Isometrie passt nicht, korrigiere diese. Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes Dreck, Bauschutt, brauner Boden",
-      "source_sha256": "be8ed077da218c3cb60649cd346770c3a56d6145c86142893229f5883bac5988",
-      "result_sha256": "f27b86b73da245bada5c515d344c265778336ab1a25f31eb458bdd29a80943b9",
-      "scale_percent": 92.0,
-      "offset_master_pixels": [
-        -1.0,
-        -51.0
-      ],
+      "note": "Die Grafik muss mehr nach einem verlassenen alten Gebäude aussehen. Orientiere Dich farblich an Original SC2000 Grafik",
+      "source_sha256": "f27b86b73da245bada5c515d344c265778336ab1a25f31eb458bdd29a80943b9",
+      "result_sha256": "951e7a786cfa23c758a7c0e5e86b2aa821174d88baefd083fd53a2255d237674",
+      "lightmap_sha256": null,
       "user_matrix": [
-        0.92,
+        1.0,
         0,
         0,
-        0.92,
-        14.359999999999992,
-        -22.520000000000014
+        1.0,
+        0.0,
+        0.0
       ],
       "matrix": [
         [
-          0.92,
+          0.2905777054515867,
           0.0,
-          14.359999999999992
+          4.1415134255492205
         ],
         [
-          -0.0010244428672693707,
-          0.9224002763159895,
-          -23.182605890608546
+          -0.0035209555700207906,
+          0.27800858047812105,
+          63.64529685446946
         ],
         [
           0.0,
@@ -3647,9 +2384,9 @@
           0.0
         ],
         [
-          -0.0011135248557275768,
-          1.0026089959956408,
-          -0.7202237941397098
+          -0.01211708780117482,
+          0.956744358780272,
+          53.20886490295422
         ],
         [
           0.0,
@@ -3657,43 +2394,34 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": null,
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "dirt",
+      "authored": true,
+      "method": "ImageGen design and shared mathematical transform"
     },
     {
       "id": 1198,
-      "note": "",
-      "source_sha256": "33177ba099011e096b0e128d339db225efd2318e4daba8baeb171d5bcbd25f92",
-      "result_sha256": "3df3111354fe945962c00fb2933d1333744d346a042f9dcb64577765b4bec868",
-      "scale_percent": 89.0,
-      "offset_master_pixels": [
-        1.0,
-        5.0
-      ],
+      "note": "Nutze stattdessen 1199, nur gespiegelt (vertikale Spiegelkante)",
+      "source_sha256": "3df3111354fe945962c00fb2933d1333744d346a042f9dcb64577765b4bec868",
+      "result_sha256": "56167c654cde46a761b8fefcf1ae9f5904b962babd22cd1e1f62b555ec7006b1",
+      "lightmap_sha256": null,
       "user_matrix": [
-        0.89,
+        1.0,
         0,
         0,
-        0.89,
-        8.04,
-        18.64
+        1.0,
+        0.0,
+        0.0
       ],
       "matrix": [
         [
-          0.89,
+          1.0,
           0.0,
-          8.04
+          0.0
         ],
         [
           0.0,
-          0.89,
-          18.64
+          1.0,
+          0.0
         ],
         [
           0.0,
@@ -3718,32 +2446,23 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": null,
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "none",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1208,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes weitere Fliesen",
+      "note": "Bodenbelag texturiert und in Grafik integriert.",
       "source_sha256": "f1491a21e1f70946d0a5ffcbbf72bf06e9218acc4abd00314081075940970061",
-      "result_sha256": "f1491a21e1f70946d0a5ffcbbf72bf06e9218acc4abd00314081075940970061",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "dac68be1fdee2da9d622c4263c5fde36f8cfa14cb1d96e6abe3ff10f42df3c27",
+      "lightmap_sha256": "e023227602dd324888d00ec50dd20c7009f42115b67359368a10754124b7713a",
       "user_matrix": [
-        1.0,
+        1,
         0,
         0,
-        1.0,
-        0.0,
-        0.0
+        1,
+        0,
+        0
       ],
       "matrix": [
         [
@@ -3779,25 +2498,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "4b7a111f7184ce64b583f5d34b298fcc89da136e4dbdd4f7f2b5af5aa8863f61",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "tiles",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1212,
-      "note": "Diese Grafik ohne Transparenz für Terrain, stattdessen im Format des Feldes weitere Fliesen",
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik auf der rechten Seite passen nicht ganz zu den Diagonalen des Rasters",
       "source_sha256": "58f8eb82eee5fe9da2307712b8781c33307359bd7863fcb7759f6df6bc560b3f",
-      "result_sha256": "58f8eb82eee5fe9da2307712b8781c33307359bd7863fcb7759f6df6bc560b3f",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "result_sha256": "ed32230c86563a4174ddb71d14c227462456d9d0e046595c8e11cb9d0aeab55b",
+      "lightmap_sha256": "3c9d7b8b59c5a2100191e4086ddc934d4c54f93709963638de83bb67e71e6ba7",
       "user_matrix": [
         1.0,
         0,
@@ -3813,9 +2523,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          -0.046485260770975034,
+          1.1337868480725624,
+          -5.397959183673475
         ],
         [
           0.0,
@@ -3830,9 +2540,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          -0.046485260770975034,
+          1.1337868480725624,
+          -21.397959183673475
         ],
         [
           0.0,
@@ -3840,25 +2550,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "c143c7afa1852af74e80745a3eba4e5619847a70dd4308eeb7d389fc72d6c54d",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "tiles",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1214,
-      "note": "Das Gebäude ist viel zu groß für die Anzahl der Felder. Erzeuge eine neue Grafik und orientiere dich am Original von SC2000",
-      "source_sha256": "a53c7c7485df3b94394b3b46ef346a8a77d41b3958c7001fa24a124865d2eae3",
-      "result_sha256": "2eb888e8a8f4274b11459fbf60cca088f69c8f89cd2818c9b18b9ae7619b3567",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "note": "Die Darstellung des Gebäudes ist im Stil zu groß (zu große Türe, zu große Fenster, etc), orientiere dich näher am Original.",
+      "source_sha256": "2eb888e8a8f4274b11459fbf60cca088f69c8f89cd2818c9b18b9ae7619b3567",
+      "result_sha256": "9f9e8ca07765bd1f07c7beba422bbb2076be87ba244002c343ce53ad98139ddf",
+      "lightmap_sha256": "9da7844435eddfab8240d371802d75d6f90999663a02ef943e22f9871e310a85",
       "user_matrix": [
         1.0,
         0,
@@ -3869,14 +2570,14 @@
       ],
       "matrix": [
         [
-          0.25116279069767444,
+          0.23650331125827814,
           0.0,
-          -0.8930232558139721
+          -4.297748344370859
         ],
         [
-          -0.0037961603876519646,
-          0.218756720977962,
-          5.971808203859432
+          -0.007272974640691943,
+          0.2464135676335511,
+          6.00359878447897
         ],
         [
           0.0,
@@ -3891,9 +2592,9 @@
           0.0
         ],
         [
-          -0.015114342284169857,
-          0.8709758335233672,
-          129.53590303388486
+          -0.03075210491556013,
+          1.041903245762383,
+          -12.062964368942566
         ],
         [
           0.0,
@@ -3901,43 +2602,34 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "654442beadb7d51f1aed66613fedfa9687c22f98d2af1cd6391299e9c689a090",
-      "method": "ImageGen revision + shared projection and review transform"
+      "baked_ground": "none",
+      "authored": true,
+      "method": "ImageGen design and shared mathematical transform"
     },
     {
       "id": 1217,
-      "note": "Das Gebäude ist viel zu groß für die Anzahl der Felder. Erzeuge eine neue Grafik und orientiere dich am Original von SC2000",
-      "source_sha256": "d15ed4f26e71bf15669e6a938f0bd4fd2f8102f0136927fc4b475640e8a2e420",
-      "result_sha256": "534b117e5b79778175adc8e417e4d214a6677537465589868b334277ea70dd3e",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        5.0,
-        -66.0
-      ],
+      "note": "Die Darstellung des Gebäudes ist im Stil zu groß (zu große Türe, zu große Fenster, etc), orientiere dich näher am Original.",
+      "source_sha256": "534b117e5b79778175adc8e417e4d214a6677537465589868b334277ea70dd3e",
+      "result_sha256": "8ecab40b117b03b40b87cba6324075af59d83731f1ee631d9e90784004134a2f",
+      "lightmap_sha256": "46f1344e4bb56901e382a9eb0664412fec64b21e9c05545e0541608fb38167b9",
       "user_matrix": [
         1.0,
         0,
         0,
         1.0,
-        5.0,
-        -66.0
+        0.0,
+        0.0
       ],
       "matrix": [
         [
-          0.25654974946313525,
+          0.3365088339222615,
           0.0,
-          78.04566929133861
+          10.027872791519428
         ],
         [
-          1.4303221586768618e-05,
-          0.24667427954127014,
-          32.19490237387507
+          5.921589919006585e-05,
+          0.33072852686309057,
+          23.722727805490866
         ],
         [
           0.0,
@@ -3952,9 +2644,9 @@
           0.0
         ],
         [
-          5.575223369619353e-05,
-          0.9615066085913907,
-          37.064393460667965
+          0.00017597130660690352,
+          0.9828227182276401,
+          15.923764794963022
         ],
         [
           0.0,
@@ -3962,43 +2654,86 @@
           1.0
         ]
       ],
-      "padding_master": [
+      "baked_ground": "none",
+      "authored": true,
+      "method": "ImageGen design and shared mathematical transform"
+    },
+    {
+      "id": 1227,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "2326dbb52093b6d73a748d4e05955b3c8fc8f306d7692f8aba5ac0d45615ec70",
+      "result_sha256": "81376df6c31f191ef5187cbbe1ffc59e1f17f3acc263d5b16e8df7d414ab41f3",
+      "lightmap_sha256": "dcad1ecca8b398e68f1ee2e117bb231c0aeeb4e27be8ffc3ae6222c40bc0ce0a",
+      "user_matrix": [
+        1.0,
         0,
         0,
-        0,
-        0
+        1.0,
+        0.0,
+        0.0
       ],
-      "lightmap_sha256": "d086cce2183fe0386ec4403e3998358a9bc06b46eef24cdb49914c1e1ad367a9",
-      "method": "ImageGen revision + shared projection and review transform"
+      "matrix": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.04698795180722892,
+          1.2048192771084336,
+          0.16385542168675826
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.04698795180722892,
+          1.2048192771084336,
+          -15.836144578313242
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "baked_ground": "none",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1232,
-      "note": "",
-      "source_sha256": "3f2c3dfe9b3f5bb9186fa10d023eba306a424436cdaac9aa9ec2bc28105849cc",
-      "result_sha256": "0b8b7543fe72205984a7c622152145bbd355007fb9a5d681b8f06c428552df5c",
-      "scale_percent": 150.0,
-      "offset_master_pixels": [
-        3.0,
-        -4.0
-      ],
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "0b8b7543fe72205984a7c622152145bbd355007fb9a5d681b8f06c428552df5c",
+      "result_sha256": "d1ccff18648995ffad5199002faa1766e59751c48e3404e8ca23bf47864ec871",
+      "lightmap_sha256": "232bcd0bf09c27e603ecfba9754adaeca54750a6683867c2f5a2a8bf2726c7af",
       "user_matrix": [
-        1.5,
+        1.0,
         0,
         0,
-        1.5,
-        -29.0,
-        -42.0
+        1.0,
+        0.0,
+        0.0
       ],
       "matrix": [
         [
-          1.5,
+          1.0,
           0.0,
-          -29.0
+          0.0
         ],
         [
           0.0,
-          1.5,
-          -26.0
+          1.0,
+          0.0
         ],
         [
           0.0,
@@ -4023,25 +2758,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        16,
-        0,
-        0
-      ],
-      "lightmap_sha256": "232bcd0bf09c27e603ecfba9754adaeca54750a6683867c2f5a2a8bf2726c7af",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "none",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1236,
-      "note": "Die Grafik passt nicht ins Feld, erzeuge eine neue und orientiere dich an der Vorlage von SC2000 ohne den Bildstil von Reticulating Splines zu verlieren.",
-      "source_sha256": "28d38ef9527cca397ec7559cf25943d0e49f44c7409bb2895ca02ac614eb86a5",
-      "result_sha256": "9eb9f81551a0de973b318704664910c00f7862f4e7df4dfb7da77f439ed35495",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters. Orientiere dich außerdem mehr am Original, es fehlen Busse.",
+      "source_sha256": "9eb9f81551a0de973b318704664910c00f7862f4e7df4dfb7da77f439ed35495",
+      "result_sha256": "2d2350273bc31697f21a8bdde214e7ba8fb6d01dc5597d5d4684c9f0ef18b6f4",
+      "lightmap_sha256": "06fb5086f09ec3c2400743282e1179b2d4516ee358ae421db43969c45b5c323e",
       "user_matrix": [
         1.0,
         0,
@@ -4052,14 +2778,14 @@
       ],
       "matrix": [
         [
-          0.18432,
+          0.15369916074887024,
           0.0,
-          -5.44768000000002
+          -8.254306003873467
         ],
         [
-          -0.0014046292756708977,
-          0.1732891952497055,
-          -24.286592163376575
+          0.0005704185412754905,
+          0.16014356355649512,
+          2.77085930457347
         ],
         [
           0.0,
@@ -4074,9 +2800,9 @@
           0.0
         ],
         [
-          -0.0076206015390131165,
-          0.9401540540891141,
-          63.986804669181
+          0.0037112664668839668,
+          1.041928679221316,
+          -39.34870185322443
         ],
         [
           0.0,
@@ -4084,25 +2810,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "1123c97551c7775d6939bd5c4bf9ab09a5bd3dd8e469cc027a89bca8d44035cf",
-      "method": "ImageGen revision + shared projection and review transform"
+      "baked_ground": "none",
+      "authored": true,
+      "method": "ImageGen design and shared mathematical transform"
     },
     {
       "id": 1237,
-      "note": "Die Grafik passt nicht ins Feld, erzeuge eine neue und orientiere dich an der Vorlage von SC2000 ohne den Bildstil von Reticulating Splines zu verlieren.",
-      "source_sha256": "c1458a1eac55fe6aded6930a6f12592b0b6babd57319d700ebb99449b475fc65",
-      "result_sha256": "591bb689ca3eebbdf29b311ebde51d265c4dbc367837dd74467678eb8676d1f7",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters, orientiere dich außerdem näher am Original (auch was das Andreaskreuz links angeht)",
+      "source_sha256": "591bb689ca3eebbdf29b311ebde51d265c4dbc367837dd74467678eb8676d1f7",
+      "result_sha256": "0c8c23749e8cf22d38e23bc24cca5fc42600126baf789c5262c99796fedd1fac",
+      "lightmap_sha256": "a8e8d863202dff392142c6918907328fb323ea800befde378548bf06cce2ede5",
       "user_matrix": [
         1.0,
         0,
@@ -4113,14 +2830,14 @@
       ],
       "matrix": [
         [
-          0.2152101661779081,
+          0.18629107981220658,
           0.0,
-          -27.704555229716533
+          -10.600563380281699
         ],
         [
-          -0.00017102032079461564,
-          0.21275323014809885,
-          -28.63069331208266
+          0.00494232402661471,
+          0.19769363292632078,
+          -34.63760664725882
         ],
         [
           0.0,
@@ -4135,9 +2852,9 @@
           0.0
         ],
         [
-          -0.0007946665523841379,
-          0.9885835503338715,
-          10.918244648162377
+          0.02653011637270497,
+          1.0612082614240506,
+          -79.1716284240456
         ],
         [
           0.0,
@@ -4145,43 +2862,86 @@
           1.0
         ]
       ],
-      "padding_master": [
+      "baked_ground": "none",
+      "authored": true,
+      "method": "ImageGen design and shared mathematical transform"
+    },
+    {
+      "id": 1240,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "71784b98c26c77ef1a837f01ae4819bd1cef2a84ff16844c5a77bb5d074e9838",
+      "result_sha256": "9feba6324d4e293df42ba22a31bc9b5029c6e1d5602078512be7891cac435e37",
+      "lightmap_sha256": "5c218a05b1303c54026d5c4ba5dc88ee4379796a4e9ab76d411bbee94940523e",
+      "user_matrix": [
+        1.0,
         0,
         0,
-        0,
-        0
+        1.0,
+        0.0,
+        0.0
       ],
-      "lightmap_sha256": "07b798b61c189896b13a987d5ff326afc37c1b33ec4d6e3c4008eab4703dddba",
-      "method": "ImageGen revision + shared projection and review transform"
+      "matrix": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.023809523809523836,
+          1.1904761904761905,
+          2.285714285714292
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "projection": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.023809523809523836,
+          1.1904761904761905,
+          -29.714285714285708
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "baked_ground": "none",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1242,
-      "note": "",
-      "source_sha256": "a589a8b22c3c7de4d05d7d79eb8cb267161fdb73224c448781e02248f351063c",
-      "result_sha256": "9e61d9121e2695869e771ba6ec188a4e2d1b5db3f9c396314134f9c0c3970667",
-      "scale_percent": 91.0,
-      "offset_master_pixels": [
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "9e61d9121e2695869e771ba6ec188a4e2d1b5db3f9c396314134f9c0c3970667",
+      "result_sha256": "a22be15f41d2fcc1b72b37bca43853b7b32b2163958686e05fac2eb38865aad2",
+      "lightmap_sha256": "d4a6a3a74934566deea39bdeb180acdfaf9c0997b68dbefb94d3a134e368a481",
+      "user_matrix": [
+        1.0,
+        0,
+        0,
+        1.0,
         0.0,
         0.0
       ],
-      "user_matrix": [
-        0.91,
-        0,
-        0,
-        0.91,
-        12.959999999999996,
-        15.839999999999995
-      ],
       "matrix": [
         [
-          0.91,
+          1.0,
           0.0,
-          12.959999999999996
+          0.0
         ],
         [
-          0.0,
-          0.91,
-          15.839999999999995
+          0.04824561403508776,
+          1.0964912280701753,
+          -23.688596491228047
         ],
         [
           0.0,
@@ -4196,9 +2956,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          0.04824561403508776,
+          1.0964912280701753,
+          -23.688596491228047
         ],
         [
           0.0,
@@ -4206,25 +2966,16 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "147e2cf2b5084d4f433872e4369793aa448c22b69e0ca01d83ab06c93f07675a",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "none",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
       "id": 1243,
-      "note": "Die Grafik passt nicht ins Feld, erzeuge eine neue und orientiere dich an der Vorlage von SC2000 ohne den Bildstil von Reticulating Splines zu verlieren.",
-      "source_sha256": "97163733ce45534dc7a50bbfa6d9d5d43c7bb2a098cb28cb5bf9805932217e20",
-      "result_sha256": "94993ea6fd753e53b3b9f08372ab45c6cca14f832af243626c599d859c44d646",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "note": "Das Design und die Größenverhältnisse passen nicht ganz, orientiere Dich näher am Original.",
+      "source_sha256": "94993ea6fd753e53b3b9f08372ab45c6cca14f832af243626c599d859c44d646",
+      "result_sha256": "d3684116722b5212faddfe4b1fe1e31783c3c068cdc7655d8af6b7f17fc96be2",
+      "lightmap_sha256": "0276373c48b9d70635173aaf016f46c1fc9d48c2296eadabb9a33c2fd31974e7",
       "user_matrix": [
         1.0,
         0,
@@ -4235,14 +2986,14 @@
       ],
       "matrix": [
         [
-          0.20069686411149826,
+          0.1909222133119487,
           0.0,
-          -26.13519163763067
+          -19.67833199679231
         ],
         [
-          -2.9527602283586692e-05,
-          0.1970477676595191,
-          -19.384511007351257
+          0.003571130321348596,
+          0.19952468558813424,
+          -14.094559922287246
         ],
         [
           0.0,
@@ -4257,9 +3008,9 @@
           0.0
         ],
         [
-          -0.0001471253794338434,
-          0.9818178701090621,
-          17.31328716823247
+          0.0187046350416738,
+          1.0450574719775008,
+          -58.804587630595435
         ],
         [
           0.0,
@@ -4267,43 +3018,34 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        16,
-        0,
-        0
-      ],
-      "lightmap_sha256": "77fe01d982fae503094aa7aee41da6f5f5c111267a61d4cd8ac146af0c36ae43",
-      "method": "ImageGen revision + shared projection and review transform"
+      "baked_ground": "none",
+      "authored": true,
+      "method": "ImageGen design and shared mathematical transform"
     },
     {
-      "id": 1249,
-      "note": "",
-      "source_sha256": "fa3a40fe8101eb3b2e32c402340f7d4fb6e48cc27dc7a5aeea02cd0973cb09ee",
-      "result_sha256": "132e1b8807bb8d6ae178a310105cad7fe8644b2eeb7e17b5d44de1d94129c820",
-      "scale_percent": 101.0,
-      "offset_master_pixels": [
+      "id": 1246,
+      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
+      "source_sha256": "6f8d5f92d91b8f98a9d0b38c12951bd4869cda16cb64019a8ba79f68dafc9018",
+      "result_sha256": "7c8c124e1d583e9fd2028076001801958d819c517b151ec216c613d70da3eab0",
+      "lightmap_sha256": "d3ae0e6549ed89d8a17f8be633bb556ba2ed9e87a9384825626feebc665e1736",
+      "user_matrix": [
+        1.0,
+        0,
+        0,
+        1.0,
         0.0,
         0.0
       ],
-      "user_matrix": [
-        1.01,
-        0,
-        0,
-        1.01,
-        -1.9200000000000017,
-        -2.280000000000002
-      ],
       "matrix": [
         [
-          1.01,
+          1.0,
           0.0,
-          -1.9200000000000017
+          0.0
         ],
         [
-          0.0,
-          1.01,
-          -2.280000000000002
+          0.05741127348643005,
+          1.04384133611691,
+          -14.713987473903943
         ],
         [
           0.0,
@@ -4318,9 +3060,9 @@
           0.0
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          0.05741127348643005,
+          1.04384133611691,
+          -14.713987473903943
         ],
         [
           0.0,
@@ -4328,75 +3070,61 @@
           1.0
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        16,
-        0
-      ],
-      "lightmap_sha256": "e1bc6082ee151d40021a3a08db86957065d6cedc8ddf2e585aeb5b2141a358f6",
-      "method": "Shared review transform; optional software parcel layer"
+      "baked_ground": "none",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     },
     {
-      "id": 1255,
-      "note": "Erstelle eine neue Grafik, die etwas freier ist und sich nicht zu sehr an SC2K orientiert. Es soll ein schöner Aussichtsturm sein im passenden Desgn zu Reticulating Splines.",
-      "source_sha256": "60be22e77a1c1810879caa245da5e20c868813d3caae59ea55b921a383173da4",
-      "result_sha256": "7f9670235d1f74482d2ca169fcaa2dc144e7c3506f0bdf5e3c6d8154288acfe0",
-      "scale_percent": 100.0,
-      "offset_master_pixels": [
-        0.0,
-        0.0
-      ],
+      "id": 1254,
+      "note": "Die blaue Kuppel oben bitte leicht transparent machen (Alpha Kanal)",
+      "source_sha256": "128528784ce7231e31de4e1450c04091b9f43886af70151762f003332bc5254c",
+      "result_sha256": "128528784ce7231e31de4e1450c04091b9f43886af70151762f003332bc5254c",
+      "lightmap_sha256": "12b50e6414b866bfa608867d4dad82425d13c5b1ceb54f6b0339621a9b406aed",
       "user_matrix": [
-        1.0,
+        1,
         0,
         0,
-        1.0,
-        0.0,
-        0.0
+        1,
+        0,
+        0
       ],
       "matrix": [
         [
-          0.448955223880597,
-          0.0,
-          8.625671641791058
+          1,
+          0,
+          0
         ],
         [
-          -0.0002303520399573255,
-          0.4268103745062702,
-          8.617054422150414
+          0,
+          1,
+          0
         ],
         [
-          0.0,
-          0.0,
-          1.0
+          0,
+          0,
+          1
         ]
       ],
       "projection": [
         [
-          1.0,
-          0.0,
-          0.0
+          1,
+          0,
+          0
         ],
         [
-          -0.0005130846634687769,
-          0.9506747038537269,
-          70.0286784004015
+          0,
+          1,
+          0
         ],
         [
-          0.0,
-          0.0,
-          1.0
+          0,
+          0,
+          1
         ]
       ],
-      "padding_master": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "lightmap_sha256": "3fb59ef7d92faad46bb4cd9d617f9e6f9032c336fca4e657a168d89ef2b6386f",
-      "method": "ImageGen revision + shared projection and review transform"
+      "baked_ground": "none",
+      "authored": false,
+      "method": "Shared transform and/or deterministic ground bake"
     }
   ]
 }

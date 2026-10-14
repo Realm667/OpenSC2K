@@ -67,7 +67,8 @@
     {
       "id": 1124,
       "border": "0000e3ff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1125,
@@ -77,12 +78,14 @@
     {
       "id": 1126,
       "border": "0000e3ff",
-      "surface": "asphalt"
+      "surface": "none",
+      "baked_surface": "asphalt"
     },
     {
       "id": 1127,
       "border": "0000e3ff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1128,
@@ -97,12 +100,14 @@
     {
       "id": 1130,
       "border": "0000e3ff",
-      "surface": "asphalt"
+      "surface": "none",
+      "baked_surface": "asphalt"
     },
     {
       "id": 1131,
       "border": "0000e3ff",
-      "surface": "tiles"
+      "surface": "none",
+      "baked_surface": "tiles"
     },
     {
       "id": 1132,
@@ -117,22 +122,26 @@
     {
       "id": 1134,
       "border": "bfb32bff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1135,
       "border": "bfb32bff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1136,
       "border": "7b5f2bff",
-      "surface": "dirt"
+      "surface": "none",
+      "baked_surface": "dirt"
     },
     {
       "id": 1137,
       "border": "7b5f2bff",
-      "surface": "dirt"
+      "surface": "none",
+      "baked_surface": "dirt"
     },
     {
       "id": 1138,
@@ -162,12 +171,14 @@
     {
       "id": 1143,
       "border": "077300ff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1144,
       "border": "077300ff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1145,
@@ -177,7 +188,8 @@
     {
       "id": 1146,
       "border": "077300ff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1147,
@@ -192,27 +204,32 @@
     {
       "id": 1149,
       "border": "0000e3ff",
-      "surface": "parking"
+      "surface": "none",
+      "baked_surface": "parking"
     },
     {
       "id": 1150,
       "border": "0000e3ff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1151,
       "border": "0000e3ff",
-      "surface": "tiles"
+      "surface": "none",
+      "baked_surface": "tiles"
     },
     {
       "id": 1152,
       "border": "0000e3ff",
-      "surface": "parking"
+      "surface": "none",
+      "baked_surface": "parking"
     },
     {
       "id": 1153,
       "border": "0000e3ff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1154,
@@ -222,22 +239,26 @@
     {
       "id": 1155,
       "border": "0000e3ff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1156,
       "border": "0000e3ff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1157,
       "border": "0000e3ff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1158,
       "border": "bfb32bff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1159,
@@ -247,32 +268,38 @@
     {
       "id": 1160,
       "border": "bfb32bff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1161,
       "border": "bfb32bff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1162,
       "border": "bfb32bff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1163,
       "border": "bfb32bff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1164,
       "border": "bfb32bff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1165,
       "border": "bfb32bff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1166,
@@ -282,12 +309,14 @@
     {
       "id": 1167,
       "border": "7b5f2bff",
-      "surface": "dirt"
+      "surface": "none",
+      "baked_surface": "dirt"
     },
     {
       "id": 1168,
       "border": "7b5f2bff",
-      "surface": "dirt"
+      "surface": "none",
+      "baked_surface": "dirt"
     },
     {
       "id": 1169,
@@ -297,32 +326,38 @@
     {
       "id": 1170,
       "border": "735323ff",
-      "surface": "dirty_asphalt"
+      "surface": "none",
+      "baked_surface": "dirty_asphalt"
     },
     {
       "id": 1171,
       "border": "735323ff",
-      "surface": "dirty_asphalt"
+      "surface": "none",
+      "baked_surface": "dirty_asphalt"
     },
     {
       "id": 1172,
       "border": "735323ff",
-      "surface": "dirty_asphalt"
+      "surface": "none",
+      "baked_surface": "dirty_asphalt"
     },
     {
       "id": 1173,
       "border": "735323ff",
-      "surface": "dirty_asphalt"
+      "surface": "none",
+      "baked_surface": "dirty_asphalt"
     },
     {
       "id": 1174,
       "border": "077300ff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1175,
       "border": "077300ff",
-      "surface": "parking"
+      "surface": "none",
+      "baked_surface": "parking"
     },
     {
       "id": 1176,
@@ -397,17 +432,20 @@
     {
       "id": 1190,
       "border": "bfb32bff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1191,
       "border": "bfb32bff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1192,
       "border": "bfb32bff",
-      "surface": "asphalt_curb"
+      "surface": "none",
+      "baked_surface": "asphalt_curb"
     },
     {
       "id": 1193,
@@ -417,12 +455,14 @@
     {
       "id": 1194,
       "border": "7b5f2bff",
-      "surface": "dirt"
+      "surface": "none",
+      "baked_surface": "dirt"
     },
     {
       "id": 1195,
       "border": "7b5f2bff",
-      "surface": "dirt"
+      "surface": "none",
+      "baked_surface": "dirt"
     },
     {
       "id": 1196,
@@ -432,7 +472,8 @@
     {
       "id": 1197,
       "border": "735323ff",
-      "surface": "dirt"
+      "surface": "none",
+      "baked_surface": "dirt"
     },
     {
       "id": 1198,
@@ -487,7 +528,8 @@
     {
       "id": 1208,
       "border": "af3f1bff",
-      "surface": "tiles"
+      "surface": "none",
+      "baked_surface": "tiles"
     },
     {
       "id": 1209,
@@ -507,7 +549,8 @@
     {
       "id": 1212,
       "border": "8300cfff",
-      "surface": "tiles"
+      "surface": "none",
+      "baked_surface": "tiles"
     },
     {
       "id": 1213,
@@ -724,5 +767,6 @@
       "border": "007373ff",
       "surface": "none"
     }
-  ]
+  ],
+  "ground_revision": "2026-10-14-review85: textured materials baked into art; only contours remain software layers"
 }

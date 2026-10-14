@@ -1249,8 +1249,14 @@
       ],
       "parcel": {
         "border": "0000e3ff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        32,
+        0,
+        0
+      ],
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1125,
@@ -1295,8 +1301,14 @@
       ],
       "parcel": {
         "border": "0000e3ff",
-        "surface": "asphalt"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        32,
+        0,
+        0
+      ],
+      "baked_ground": "asphalt"
     },
     {
       "id": 1127,
@@ -1318,8 +1330,14 @@
       ],
       "parcel": {
         "border": "0000e3ff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        32,
+        0,
+        0
+      ],
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1128,
@@ -1387,8 +1405,9 @@
       ],
       "parcel": {
         "border": "0000e3ff",
-        "surface": "asphalt"
-      }
+        "surface": "none"
+      },
+      "baked_ground": "asphalt"
     },
     {
       "id": 1131,
@@ -1410,8 +1429,14 @@
       ],
       "parcel": {
         "border": "0000e3ff",
-        "surface": "tiles"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        32,
+        0,
+        0
+      ],
+      "baked_ground": "tiles"
     },
     {
       "id": 1132,
@@ -1489,8 +1514,14 @@
       ],
       "parcel": {
         "border": "bfb32bff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        32,
+        0,
+        0
+      ],
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1135,
@@ -1511,8 +1542,14 @@
       ],
       "parcel": {
         "border": "bfb32bff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        32,
+        0,
+        0
+      ],
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1136,
@@ -1533,8 +1570,14 @@
       ],
       "parcel": {
         "border": "7b5f2bff",
-        "surface": "dirt"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        32,
+        0,
+        0
+      ],
+      "baked_ground": "dirt"
     },
     {
       "id": 1137,
@@ -1555,8 +1598,14 @@
       ],
       "parcel": {
         "border": "7b5f2bff",
-        "surface": "dirt"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        32,
+        0,
+        0
+      ],
+      "baked_ground": "dirt"
     },
     {
       "id": 1138,
@@ -1711,8 +1760,9 @@
       ],
       "parcel": {
         "border": "077300ff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1144,
@@ -1734,8 +1784,14 @@
       ],
       "parcel": {
         "border": "077300ff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1145,
@@ -1780,15 +1836,21 @@
       ],
       "parcel": {
         "border": "077300ff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1147,
       "png": "masters/1147.png",
       "logical_size": [
         64,
-        89
+        93
       ],
       "lightmap": "lightmaps/1147.png",
       "review_reference_size": [
@@ -1797,7 +1859,7 @@
       ],
       "review_padding": [
         0,
-        12,
+        16,
         0,
         0
       ],
@@ -1854,8 +1916,14 @@
       ],
       "parcel": {
         "border": "0000e3ff",
-        "surface": "parking"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "parking"
     },
     {
       "id": 1150,
@@ -1877,8 +1945,14 @@
       ],
       "parcel": {
         "border": "0000e3ff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1151,
@@ -1905,8 +1979,9 @@
       ],
       "parcel": {
         "border": "0000e3ff",
-        "surface": "tiles"
-      }
+        "surface": "none"
+      },
+      "baked_ground": "tiles"
     },
     {
       "id": 1152,
@@ -1928,8 +2003,14 @@
       ],
       "parcel": {
         "border": "0000e3ff",
-        "surface": "parking"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "parking"
     },
     {
       "id": 1153,
@@ -1951,8 +2032,14 @@
       ],
       "parcel": {
         "border": "0000e3ff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1154,
@@ -2002,8 +2089,14 @@
       ],
       "parcel": {
         "border": "0000e3ff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1156,
@@ -2025,8 +2118,14 @@
       ],
       "parcel": {
         "border": "0000e3ff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1157,
@@ -2048,8 +2147,14 @@
       ],
       "parcel": {
         "border": "0000e3ff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1158,
@@ -2071,8 +2176,14 @@
       ],
       "parcel": {
         "border": "bfb32bff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1159,
@@ -2122,8 +2233,14 @@
       ],
       "parcel": {
         "border": "bfb32bff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1161,
@@ -2145,8 +2262,14 @@
       ],
       "parcel": {
         "border": "bfb32bff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1162,
@@ -2168,8 +2291,14 @@
       ],
       "parcel": {
         "border": "bfb32bff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1163,
@@ -2191,15 +2320,21 @@
       ],
       "parcel": {
         "border": "bfb32bff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1164,
       "png": "masters/1164.png",
       "logical_size": [
         64,
-        77
+        81
       ],
       "lightmap": "lightmaps/1164.png",
       "review_reference_size": [
@@ -2208,14 +2343,20 @@
       ],
       "review_padding": [
         0,
-        16,
+        20,
         0,
         0
       ],
       "parcel": {
         "border": "bfb32bff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1165,
@@ -2237,8 +2378,14 @@
       ],
       "parcel": {
         "border": "bfb32bff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1166,
@@ -2281,15 +2428,21 @@
       ],
       "parcel": {
         "border": "7b5f2bff",
-        "surface": "dirt"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "dirt"
     },
     {
       "id": 1168,
       "png": "masters/1168.png",
       "logical_size": [
         64,
-        60
+        64
       ],
       "review_reference_size": [
         64,
@@ -2297,14 +2450,20 @@
       ],
       "review_padding": [
         0,
-        16,
+        20,
         0,
         0
       ],
       "parcel": {
         "border": "7b5f2bff",
-        "surface": "dirt"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "dirt"
     },
     {
       "id": 1169,
@@ -2338,11 +2497,39 @@
       "png": "masters/1170.png",
       "logical_size": [
         64,
-        58
+        70
       ],
       "review_reference_size": [
         64,
         46
+      ],
+      "review_padding": [
+        0,
+        24,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "735323ff",
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "dirty_asphalt"
+    },
+    {
+      "id": 1171,
+      "png": "masters/1171.png",
+      "logical_size": [
+        64,
+        65
+      ],
+      "review_reference_size": [
+        64,
+        53
       ],
       "review_padding": [
         0,
@@ -2352,30 +2539,14 @@
       ],
       "parcel": {
         "border": "735323ff",
-        "surface": "dirty_asphalt"
-      }
-    },
-    {
-      "id": 1171,
-      "png": "masters/1171.png",
-      "logical_size": [
+        "surface": "none"
+      },
+      "visual_registration": [
         64,
-        57
-      ],
-      "review_reference_size": [
-        64,
-        53
-      ],
-      "review_padding": [
-        0,
-        4,
         0,
         0
       ],
-      "parcel": {
-        "border": "735323ff",
-        "surface": "dirty_asphalt"
-      }
+      "baked_ground": "dirty_asphalt"
     },
     {
       "id": 1172,
@@ -2396,15 +2567,21 @@
       ],
       "parcel": {
         "border": "735323ff",
-        "surface": "dirty_asphalt"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "dirty_asphalt"
     },
     {
       "id": 1173,
       "png": "masters/1173.png",
       "logical_size": [
         64,
-        73
+        97
       ],
       "review_reference_size": [
         64,
@@ -2412,14 +2589,20 @@
       ],
       "review_padding": [
         0,
-        0,
+        24,
         0,
         0
       ],
       "parcel": {
         "border": "735323ff",
-        "surface": "dirty_asphalt"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "baked_ground": "dirty_asphalt"
     },
     {
       "id": 1174,
@@ -2446,8 +2629,9 @@
       ],
       "parcel": {
         "border": "077300ff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1175,
@@ -2469,8 +2653,14 @@
       ],
       "parcel": {
         "border": "077300ff",
-        "surface": "parking"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        96,
+        0,
+        0
+      ],
+      "baked_ground": "parking"
     },
     {
       "id": 1176,
@@ -2704,7 +2894,7 @@
       "png": "masters/1185.png",
       "logical_size": [
         96,
-        94
+        98
       ],
       "lightmap": "lightmaps/1185.png",
       "visual_registration": [
@@ -2718,7 +2908,7 @@
       ],
       "review_padding": [
         0,
-        12,
+        16,
         0,
         4
       ],
@@ -2864,8 +3054,9 @@
       ],
       "parcel": {
         "border": "bfb32bff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1191,
@@ -2892,8 +3083,9 @@
       ],
       "parcel": {
         "border": "bfb32bff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1192,
@@ -2915,8 +3107,14 @@
       ],
       "parcel": {
         "border": "bfb32bff",
-        "surface": "asphalt_curb"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        96,
+        0,
+        0
+      ],
+      "baked_ground": "asphalt_curb"
     },
     {
       "id": 1193,
@@ -2951,7 +3149,7 @@
       "png": "masters/1194.png",
       "logical_size": [
         96,
-        109
+        113
       ],
       "review_reference_size": [
         96,
@@ -2959,14 +3157,20 @@
       ],
       "review_padding": [
         0,
-        24,
+        28,
         0,
         0
       ],
       "parcel": {
         "border": "7b5f2bff",
-        "surface": "dirt"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        96,
+        0,
+        0
+      ],
+      "baked_ground": "dirt"
     },
     {
       "id": 1195,
@@ -2987,8 +3191,14 @@
       ],
       "parcel": {
         "border": "7b5f2bff",
-        "surface": "dirt"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        96,
+        0,
+        0
+      ],
+      "baked_ground": "dirt"
     },
     {
       "id": 1196,
@@ -3041,8 +3251,9 @@
       ],
       "parcel": {
         "border": "735323ff",
-        "surface": "dirt"
-      }
+        "surface": "none"
+      },
+      "baked_ground": "dirt"
     },
     {
       "id": 1198,
@@ -3051,15 +3262,15 @@
         32,
         32
       ],
-      "review_reference_size": [
-        32,
-        32
-      ],
       "review_padding": [
         0,
         0,
         0,
         0
+      ],
+      "review_reference_size": [
+        32,
+        32
       ],
       "visual_registration": [
         32,
@@ -3268,8 +3479,14 @@
       ],
       "parcel": {
         "border": "af3f1bff",
-        "surface": "tiles"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        96,
+        0,
+        0
+      ],
+      "baked_ground": "tiles"
     },
     {
       "id": 1209,
@@ -3345,7 +3562,7 @@
       "png": "masters/1212.png",
       "logical_size": [
         96,
-        59
+        63
       ],
       "lightmap": "lightmaps/1212.png",
       "review_reference_size": [
@@ -3354,14 +3571,20 @@
       ],
       "review_padding": [
         0,
-        4,
+        8,
         0,
         0
       ],
       "parcel": {
         "border": "8300cfff",
-        "surface": "tiles"
-      }
+        "surface": "none"
+      },
+      "visual_registration": [
+        96,
+        0,
+        0
+      ],
+      "baked_ground": "tiles"
     },
     {
       "id": 1213,
@@ -3601,7 +3824,7 @@
       "png": "masters/1227.png",
       "logical_size": [
         32,
-        24
+        28
       ],
       "lightmap": "lightmaps/1227.png",
       "review_reference_size": [
@@ -3610,7 +3833,12 @@
       ],
       "review_padding": [
         0,
-        4,
+        8,
+        0,
+        0
+      ],
+      "visual_registration": [
+        32,
         0,
         0
       ]
@@ -3894,7 +4122,7 @@
       "png": "masters/1240.png",
       "logical_size": [
         64,
-        44
+        52
       ],
       "lightmap": "lightmaps/1240.png",
       "review_reference_size": [
@@ -3903,14 +4131,19 @@
       ],
       "review_padding": [
         0,
-        8,
+        16,
         0,
         0
       ],
       "parcel": {
         "border": "000000ff",
         "surface": "none"
-      }
+      },
+      "visual_registration": [
+        64,
+        0,
+        0
+      ]
     },
     {
       "id": 1241,
@@ -3958,7 +4191,7 @@
       "png": "masters/1243.png",
       "logical_size": [
         64,
-        44
+        48
       ],
       "lightmap": "lightmaps/1243.png",
       "review_reference_size": [
@@ -3967,7 +4200,7 @@
       ],
       "review_padding": [
         0,
-        8,
+        12,
         0,
         0
       ],
@@ -4032,6 +4265,11 @@
       "review_padding": [
         0,
         4,
+        0,
+        0
+      ],
+      "visual_registration": [
+        64,
         0,
         0
       ]
