@@ -453,6 +453,23 @@ impl NativeCityRegionBuilder {
                 }
             }
 
+            if let Some(value) = request.get("parcel_styles") {
+                let parcels = value.try_to::<AnyDictionary>().map_err(|_| "invalid parcel styles")?;
+                for (id, value) in parcels.iter_shared() {
+                    let id = id.try_to::<i64>().map_err(|_| "invalid parcel sprite")?;
+                    let style = value.try_to::<PackedInt64Array>().map_err(|_| "invalid parcel style")?;
+                    if !(i64::from(view * 500) + 112..=i64::from(view * 500) + 255).contains(&id)
+                        || style.len() != 2
+                        || !(0..=u32::MAX as i64).contains(&style[0])
+                        || !(0..=6).contains(&style[1])
+                    {
+                        return Err("invalid parcel style".into());
+                    }
+                    core.sprites
+                        .add_parcel(id as i32, (style[0] as u32).to_be_bytes(), style[1] as u8, config.divisor())?;
+                }
+            }
+
             // Shadow pairs: each packed RGBA color and the color that a shadow makes of it.
             for pair in ints(&request, "shadow_colors").chunks_exact(2) {
                 core.shadows.insert((pair[0] as u32).to_be_bytes(), (pair[1] as u32).to_be_bytes());

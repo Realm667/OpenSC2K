@@ -41,6 +41,15 @@ fn registered_canvases_preserve_parcel_and_baseline_in_every_view_and_flip() {
             assert_eq!(foot.rect.x, original_draw.rect.x);
             assert_eq!(foot.rect.w, original_draw.rect.w);
             assert_eq!(foot.rect.y + foot.rect.h, original_draw.rect.y + original_draw.rect.h);
+            b.sprites.add_parcel(id, [7, 115, 0, 255], 2, divisor).unwrap();
+            let painted = b.paint(3, 3).unwrap();
+            let parcel = painted.iter().find(|d| d.sprite == -1).unwrap();
+            assert_eq!(painted.len(), registered.len() + 1);
+            assert_eq!(parcel.rect.x, original_draw.rect.x);
+            assert_eq!(parcel.rect.w, width);
+            assert_eq!(parcel.rect.y + parcel.rect.h, original_draw.rect.y + original_draw.rect.h);
+            assert!(!parcel.flip);
+            assert!(painted.iter().position(|d| d.sprite == -1) < painted.iter().position(|d| d.sprite == id));
         }
     }
 }

@@ -123,6 +123,8 @@ func begin() -> void:
 		var archive := Sc2SpriteArchive.new()
 		# Share immutable decoded art; only the decorative traffic switch differs.
 		archive.high_resolution = original.high_resolution
+		archive.visual_registration = original.visual_registration
+		archive.parcel_styles = original.parcel_styles
 		archive.entries = original.entries
 		archive.entries_by_id = original.entries_by_id
 		archive.visual_emission = original.visual_emission

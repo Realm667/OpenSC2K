@@ -12,6 +12,7 @@ pub mod index;
 pub mod minimap;
 pub mod nature;
 pub mod painter;
+mod parcel;
 pub mod raster;
 pub mod rect_index;
 pub mod region;

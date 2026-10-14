@@ -139,7 +139,8 @@ func _check_master_registration() -> void:
 	translucent.fill(Color(0.2, 0.5, 0.8, 0.65))
 	var rgba_reader := func(_path: Variant) -> Image: return translucent
 	var record := {"id": 1112, "png": "master.png", "logical_size": [40, 24],
-		"visual_registration": [32, 4, 4], "artwork_rgba": "full.png"}
+		"visual_registration": [32, 4, 4], "artwork_rgba": "full.png",
+		"parcel": {"border": "077300ff", "surface": "asphalt_curb"}}
 	var master := MasterSpriteSource.new()
 	assert(master.load_records([record], reader, palette, rgba_reader), master.error)
 	var context := CityGpuBuildContext.new()
@@ -150,6 +151,7 @@ func _check_master_registration() -> void:
 		var divisor := 4 >> view
 		var archive: Sc2SpriteArchive = master.large if view == 2 else master.small_medium
 		var id := view * 500 + 112
+		assert(archive.parcel_styles[id] == PackedInt64Array([0x077300ff, 2]))
 		assert(archive.visual_registration[id] == Vector3i(32 / divisor, 4 / divisor, 4 / divisor))
 		assert(archive.high_resolution[id].image.get_pixel(80, 48).a8 == translucent.get_pixel(80, 48).a8)
 	var classic := Sc2SpriteArchive.new()
@@ -157,14 +159,22 @@ func _check_master_registration() -> void:
 	classic.entries_by_id[1112] = classic.entries[0]
 	assert(Sc2SpriteArchive.combine([master.large, classic]).visual_registration.is_empty(), "replacement pack leaked old registration")
 	assert(Sc2SpriteArchive.combine([classic, master.large]).visual_registration[1112] == Vector3i(32, 4, 4))
+	assert(Sc2SpriteArchive.combine([master.large, classic]).parcel_styles.is_empty(), "SC2K replacement retained RS parcel")
+	assert(Sc2SpriteArchive.combine([classic, master.large]).parcel_styles.has(1112))
+	assert(classic.parcel_styles.is_empty(), "combination modified source parcel metadata")
 	assert(classic.visual_registration.is_empty(), "combining packs mutated the original archive")
 	for invalid in [[31, 4, 4], [32, -4, 4], [32, 12, 4], [32, 4, 24], [32, 4.5, 4], [32, 4]]:
 		var bad := record.duplicate(true)
 		bad.visual_registration = invalid
+		assert(not MasterSpriteSource.new().load_records([bad], reader, palette, rgba_reader))
+	for spec in [{"border": "invalid!"}, {"surface": "lava"}, {"border": 1}, {"surface": 1}, []]:
+		var bad := record.duplicate(true)
+		bad.parcel = spec
 		assert(not MasterSpriteSource.new().load_records([bad], reader, palette, rgba_reader))
 	var network := record.duplicate(true)
 	network.id = 1029
 	assert(not MasterSpriteSource.new().load_records([network], reader, palette, rgba_reader))
 	assert(not MasterSpriteSource.new().load_records([record], reader, palette), "RGBA requires a validated reader")
 	assert(master.large.parse(PackedByteArray([0, 0])))
+	assert(master.large.parcel_styles.is_empty(), "archive reload leaked parcel layer")
 	assert(master.large.visual_registration.is_empty(), "archive reload leaked previous pack registration")

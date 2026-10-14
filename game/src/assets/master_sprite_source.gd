@@ -60,6 +60,19 @@ func load_records(records: Variant, read_png: Callable, palette: Sc2Palette, rea
 			registration = Vector3i(int(values[0]), int(values[1]), int(values[2]))
 			if registration.x < 32 or registration.x % 32 != 0 or registration.x + registration.y > logical.x or logical.x % 4 != 0 or registration.z >= logical.y:
 				return _fail("Unsupported graphics pack format or version")
+		var parcel := PackedInt64Array()
+		if record.has("parcel"):
+			var spec: Variant = record.parcel
+			if id < 1112 or id > 1255 or not spec is Dictionary:
+				return _fail("Unsupported graphics pack format or version")
+			var border: Variant = spec.get("border", "00000000")
+			var surface: Variant = spec.get("surface", "none")
+			const MATERIALS := ["none", "asphalt", "asphalt_curb", "dirt", "dirty_asphalt", "tiles", "parking"]
+			if not border is String or border.length() != 8 or not border.is_valid_hex_number() or not surface is String or surface not in MATERIALS:
+				return _fail("Unsupported graphics pack format or version")
+			if registration.x % 32 != 0 or registration.x > 128:
+				return _fail("Unsupported graphics pack format or version")
+			parcel = PackedInt64Array([border.hex_to_int(), MATERIALS.find(surface)])
 		var decoded: IndexedImageResult = read_png.call(record.get("png"))
 		if decoded == null or not decoded.ok:
 			return _fail("Invalid PNG pixels or palette")
@@ -139,6 +152,8 @@ func load_records(records: Variant, read_png: Callable, palette: Sc2Palette, rea
 						indices[pixel] = ROAD_SURFACE_INDEX - 1
 			var entry := Sc2SpriteArchive.entry_from_indices(view_id, view_size.x, view_size.y, indices)
 			var archive := large if view == 2 else small_medium
+			if not parcel.is_empty():
+				archive.parcel_styles[view_id] = parcel
 			archive.entries.append(entry)
 			archive.entries_by_id[view_id] = entry
 			if record.has("visual_registration"):

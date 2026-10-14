@@ -325,6 +325,11 @@ impl Builder {
             };
 
             let baseline = flat - self.city.object(i) * c.step() + offset;
+            if developed && let Some(&parcel) = self.sprites.parcels.get(&(image & !1)) {
+                self.add(&mut draws, parcel, false, sx, baseline)?;
+                // Ground does not emit, cast a building reflection or mask figures.
+                draws.last_mut().expect("parcel draw was added").sprite = -1;
+            }
             self.add(&mut draws, sprite, flip, sx, baseline)?;
             draws.last_mut().expect("building draw was added").emission_disabled = developed && self.city.flags[i] & flags::POWERED == 0;
 

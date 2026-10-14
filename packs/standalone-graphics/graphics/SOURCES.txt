@@ -1,21 +1,19 @@
 Reticulating Splines Remaster graphics — Style A, 4x
 
-Independent artwork made with OpenAI ImageGen and deterministic projection,
-compositing, palette and mask tools. Muted materials and the original game's
-2:1 ground projection. Original metadata supplies IDs and footprint sizes;
-no original SimCity 2000 pixel files are included.
+Independent OpenAI ImageGen artwork and deterministic projection, palette and
+matching lightmap tools. Original SimCity 2000 supplies local visual inspiration,
+resource IDs, footprint dimensions and categorical parcel colors only. No
+original image pixels are included in this source pack.
 
-The 14 October 2026 placement pass applies 122 review records: 111 numerical
-adjustments and 38 text notes, including 14 ImageGen detail revisions.
-Art and lightmaps share the same transformation. Registration is pack-local.
-Transparent base lawn exposes terrain; paths and planting remain.
+Latest revision: 72 reviewed objects, 24 numerical adjustments, 52 notes,
+nine ImageGen replacements/detail revisions and 13 axis calibrations.
+Earlier placement corrections and Visual Enhancements resources remain intact.
+Software parcel layers are explicitly enabled per master and keep their original
+footprint regardless of art scaling, offsets, padding or mirroring.
 
-499 city masters, 112 UI masters, 210 city lightmap entries. Existing animation,
-vehicle, pedestrian, nature and other Visual Enhancements art is retained.
-The selected raster inventory and exact hashes are in ../provenance.json.
-placement-review.json records this pass. Editable artwork, prompts, backups and
-projection/export tools remain in the private standalone-data-pack workspace,
-under corrections/2026-10-13-placement. Original reference pixels stay private.
-
-Existing project code and procedural resources retain their notices.
-See LICENSE-STATUS.txt for the separate generated-artwork licensing status.
+Editable sources and exact prompts: private workspace
+standalone-data-pack/corrections/2026-10-14-parcels/artwork.
+Current receipts: placement-review.json and parcel-review.json.
+Exact selected raster inventory: ../provenance.json.
+Original reference images remain private. Existing notices and LICENSE-STATUS.txt
+continue to apply. No generated-art distribution license is newly asserted.

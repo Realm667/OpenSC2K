@@ -965,7 +965,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1113,
@@ -989,7 +993,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1114,
@@ -1008,7 +1016,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1115,
@@ -1027,7 +1039,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1116,
@@ -1046,7 +1062,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1117,
@@ -1065,7 +1085,11 @@
         8,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1118,
@@ -1084,7 +1108,11 @@
         8,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1119,
@@ -1103,7 +1131,11 @@
         8,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1120,
@@ -1122,7 +1154,11 @@
         8,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1121,
@@ -1141,7 +1177,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1122,
@@ -1160,7 +1200,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1123,
@@ -1179,7 +1223,11 @@
         8,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1124,
@@ -1198,7 +1246,11 @@
         0,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1125,
@@ -1217,7 +1269,11 @@
         8,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1126,
@@ -1236,7 +1292,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "asphalt"
+      }
     },
     {
       "id": 1127,
@@ -1255,7 +1315,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1128,
@@ -1264,7 +1328,11 @@
         32,
         32
       ],
-      "lightmap": "lightmaps/1128.png"
+      "lightmap": "lightmaps/1128.png",
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1129,
@@ -1283,7 +1351,16 @@
         0,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        32,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1130,
@@ -1307,7 +1384,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "asphalt"
+      }
     },
     {
       "id": 1131,
@@ -1326,7 +1407,11 @@
         8,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "tiles"
+      }
     },
     {
       "id": 1132,
@@ -1345,7 +1430,16 @@
         8,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        32,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "none"
+      }
     },
     {
       "id": 1133,
@@ -1369,7 +1463,11 @@
         4,
         4,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "none"
+      }
     },
     {
       "id": 1134,
@@ -1388,7 +1486,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1135,
@@ -1406,7 +1508,11 @@
         0,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1136,
@@ -1424,7 +1530,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "7b5f2bff",
+        "surface": "dirt"
+      }
     },
     {
       "id": 1137,
@@ -1442,7 +1552,11 @@
         8,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "7b5f2bff",
+        "surface": "dirt"
+      }
     },
     {
       "id": 1138,
@@ -1460,7 +1574,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "735323ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1139,
@@ -1478,7 +1596,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "735323ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1140,
@@ -1497,14 +1619,23 @@
         4,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1141,
       "png": "masters/1141.png",
       "logical_size": [
         64,
-        47
+        51
       ],
       "lightmap": "lightmaps/1141.png",
       "review_reference_size": [
@@ -1513,17 +1644,26 @@
       ],
       "review_padding": [
         0,
-        8,
+        12,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1142,
       "png": "masters/1142.png",
       "logical_size": [
         64,
-        44
+        48
       ],
       "lightmap": "lightmaps/1142.png",
       "review_reference_size": [
@@ -1532,10 +1672,19 @@
       ],
       "review_padding": [
         0,
-        8,
+        12,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1143,
@@ -1554,7 +1703,16 @@
         20,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1144,
@@ -1573,7 +1731,11 @@
         16,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1145,
@@ -1592,7 +1754,11 @@
         0,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1146,
@@ -1611,7 +1777,11 @@
         8,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1147,
@@ -1630,7 +1800,16 @@
         12,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1148,
@@ -1649,7 +1828,11 @@
         8,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1149,
@@ -1668,7 +1851,11 @@
         16,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "parking"
+      }
     },
     {
       "id": 1150,
@@ -1687,14 +1874,18 @@
         16,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1151,
       "png": "masters/1151.png",
       "logical_size": [
         64,
-        58
+        66
       ],
       "lightmap": "lightmaps/1151.png",
       "review_reference_size": [
@@ -1703,10 +1894,19 @@
       ],
       "review_padding": [
         0,
-        12,
+        20,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "tiles"
+      }
     },
     {
       "id": 1152,
@@ -1725,7 +1925,11 @@
         12,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "parking"
+      }
     },
     {
       "id": 1153,
@@ -1744,14 +1948,18 @@
         12,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1154,
       "png": "masters/1154.png",
       "logical_size": [
         64,
-        78
+        86
       ],
       "lightmap": "lightmaps/1154.png",
       "review_reference_size": [
@@ -1760,10 +1968,19 @@
       ],
       "review_padding": [
         0,
-        8,
+        16,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1155,
@@ -1782,7 +1999,11 @@
         20,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1156,
@@ -1801,7 +2022,11 @@
         12,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1157,
@@ -1820,7 +2045,11 @@
         16,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1158,
@@ -1839,7 +2068,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1159,
@@ -1858,7 +2091,16 @@
         16,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "none"
+      }
     },
     {
       "id": 1160,
@@ -1877,7 +2119,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1161,
@@ -1896,7 +2142,11 @@
         12,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1162,
@@ -1915,7 +2165,11 @@
         12,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1163,
@@ -1934,7 +2188,11 @@
         8,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1164,
@@ -1953,7 +2211,11 @@
         16,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1165,
@@ -1972,7 +2234,11 @@
         0,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1166,
@@ -1990,7 +2256,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "7b5f2bff",
+        "surface": "none"
+      }
     },
     {
       "id": 1167,
@@ -2008,7 +2278,11 @@
         16,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "7b5f2bff",
+        "surface": "dirt"
+      }
     },
     {
       "id": 1168,
@@ -2026,14 +2300,18 @@
         16,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "7b5f2bff",
+        "surface": "dirt"
+      }
     },
     {
       "id": 1169,
       "png": "masters/1169.png",
       "logical_size": [
         64,
-        65
+        73
       ],
       "review_reference_size": [
         64,
@@ -2041,10 +2319,19 @@
       ],
       "review_padding": [
         0,
-        0,
+        8,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "7b5f2bff",
+        "surface": "none"
+      }
     },
     {
       "id": 1170,
@@ -2062,7 +2349,11 @@
         12,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "735323ff",
+        "surface": "dirty_asphalt"
+      }
     },
     {
       "id": 1171,
@@ -2080,7 +2371,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "735323ff",
+        "surface": "dirty_asphalt"
+      }
     },
     {
       "id": 1172,
@@ -2098,7 +2393,11 @@
         8,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "735323ff",
+        "surface": "dirty_asphalt"
+      }
     },
     {
       "id": 1173,
@@ -2116,7 +2415,11 @@
         0,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "735323ff",
+        "surface": "dirty_asphalt"
+      }
     },
     {
       "id": 1174,
@@ -2135,7 +2438,16 @@
         0,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        96,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1175,
@@ -2154,7 +2466,11 @@
         0,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "parking"
+      }
     },
     {
       "id": 1176,
@@ -2173,7 +2489,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1177,
@@ -2192,7 +2512,11 @@
         8,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "077300ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1178,
@@ -2211,14 +2535,18 @@
         0,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1179,
       "png": "masters/1179.png",
       "logical_size": [
         96,
-        115
+        135
       ],
       "lightmap": "lightmaps/1179.png",
       "review_reference_size": [
@@ -2227,10 +2555,19 @@
       ],
       "review_padding": [
         0,
-        24,
+        44,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        96,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1180,
@@ -2254,7 +2591,11 @@
         0,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1181,
@@ -2273,7 +2614,11 @@
         0,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1182,
@@ -2292,14 +2637,18 @@
         12,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1183,
       "png": "masters/1183.png",
       "logical_size": [
         96,
-        145
+        169
       ],
       "lightmap": "lightmaps/1183.png",
       "review_reference_size": [
@@ -2308,17 +2657,26 @@
       ],
       "review_padding": [
         0,
-        28,
+        52,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        96,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1184,
       "png": "masters/1184.png",
       "logical_size": [
         96,
-        151
+        203
       ],
       "lightmap": "lightmaps/1184.png",
       "review_reference_size": [
@@ -2327,17 +2685,26 @@
       ],
       "review_padding": [
         0,
-        28,
+        80,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        96,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1185,
       "png": "masters/1185.png",
       "logical_size": [
         96,
-        86
+        94
       ],
       "lightmap": "lightmaps/1185.png",
       "visual_registration": [
@@ -2351,17 +2718,21 @@
       ],
       "review_padding": [
         0,
-        4,
+        12,
         0,
         4
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1186,
       "png": "masters/1186.png",
       "logical_size": [
         96,
-        128
+        136
       ],
       "lightmap": "lightmaps/1186.png",
       "review_reference_size": [
@@ -2370,17 +2741,26 @@
       ],
       "review_padding": [
         0,
-        20,
+        28,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        96,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1187,
       "png": "masters/1187.png",
       "logical_size": [
         96,
-        137
+        141
       ],
       "lightmap": "lightmaps/1187.png",
       "review_reference_size": [
@@ -2389,17 +2769,26 @@
       ],
       "review_padding": [
         0,
-        0,
+        4,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        96,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1188,
       "png": "masters/1188.png",
       "logical_size": [
         96,
-        70
+        74
       ],
       "lightmap": "lightmaps/1188.png",
       "review_reference_size": [
@@ -2408,17 +2797,26 @@
       ],
       "review_padding": [
         0,
-        20,
+        24,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        96,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "none"
+      }
     },
     {
       "id": 1189,
       "png": "masters/1189.png",
       "logical_size": [
         96,
-        90
+        98
       ],
       "lightmap": "lightmaps/1189.png",
       "review_reference_size": [
@@ -2427,17 +2825,26 @@
       ],
       "review_padding": [
         0,
-        4,
+        12,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        96,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "none"
+      }
     },
     {
       "id": 1190,
       "png": "masters/1190.png",
       "logical_size": [
         96,
-        75
+        79
       ],
       "lightmap": "lightmaps/1190.png",
       "review_reference_size": [
@@ -2446,10 +2853,19 @@
       ],
       "review_padding": [
         0,
-        20,
+        24,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        96,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1191,
@@ -2468,7 +2884,16 @@
         16,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        96,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1192,
@@ -2487,14 +2912,18 @@
         8,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "asphalt_curb"
+      }
     },
     {
       "id": 1193,
       "png": "masters/1193.png",
       "logical_size": [
         96,
-        65
+        69
       ],
       "lightmap": "lightmaps/1193.png",
       "review_reference_size": [
@@ -2503,10 +2932,19 @@
       ],
       "review_padding": [
         0,
-        16,
+        20,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        96,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "none"
+      }
     },
     {
       "id": 1194,
@@ -2524,7 +2962,11 @@
         24,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "7b5f2bff",
+        "surface": "dirt"
+      }
     },
     {
       "id": 1195,
@@ -2542,18 +2984,22 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "7b5f2bff",
+        "surface": "dirt"
+      }
     },
     {
       "id": 1196,
       "png": "masters/1196.png",
       "logical_size": [
-        100,
+        104,
         78
       ],
       "visual_registration": [
         96,
-        0,
+        4,
         4
       ],
       "review_reference_size": [
@@ -2561,11 +3007,15 @@
         74
       ],
       "review_padding": [
-        0,
+        4,
         0,
         4,
         4
-      ]
+      ],
+      "parcel": {
+        "border": "735323ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1197,
@@ -2588,7 +3038,11 @@
         0,
         4,
         4
-      ]
+      ],
+      "parcel": {
+        "border": "735323ff",
+        "surface": "dirt"
+      }
     },
     {
       "id": 1198,
@@ -2604,6 +3058,11 @@
       "review_padding": [
         0,
         0,
+        0,
+        0
+      ],
+      "visual_registration": [
+        32,
         0,
         0
       ]
@@ -2647,7 +3106,11 @@
         8,
         4,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "930000ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1201,
@@ -2656,7 +3119,11 @@
         128,
         86
       ],
-      "lightmap": "lightmaps/1201.png"
+      "lightmap": "lightmaps/1201.png",
+      "parcel": {
+        "border": "000000ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1202,
@@ -2680,7 +3147,11 @@
         0,
         4,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "000000ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1203,
@@ -2689,7 +3160,11 @@
         128,
         81
       ],
-      "lightmap": "lightmaps/1203.png"
+      "lightmap": "lightmaps/1203.png",
+      "parcel": {
+        "border": "000000ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1204,
@@ -2698,7 +3173,11 @@
         128,
         78
       ],
-      "lightmap": "lightmaps/1204.png"
+      "lightmap": "lightmaps/1204.png",
+      "parcel": {
+        "border": "000000ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1205,
@@ -2717,7 +3196,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "000000ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1206,
@@ -2736,7 +3219,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "000000ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1207,
@@ -2755,7 +3242,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "000000ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1208,
@@ -2774,7 +3265,11 @@
         0,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "af3f1bff",
+        "surface": "tiles"
+      }
     },
     {
       "id": 1209,
@@ -2783,7 +3278,11 @@
         96,
         82
       ],
-      "lightmap": "lightmaps/1209.png"
+      "lightmap": "lightmaps/1209.png",
+      "parcel": {
+        "border": "af3f1bff",
+        "surface": "none"
+      }
     },
     {
       "id": 1210,
@@ -2807,7 +3306,11 @@
         8,
         4,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "af3f1bff",
+        "surface": "none"
+      }
     },
     {
       "id": 1211,
@@ -2831,7 +3334,11 @@
         16,
         0,
         4
-      ]
+      ],
+      "parcel": {
+        "border": "af3f1bff",
+        "surface": "none"
+      }
     },
     {
       "id": 1212,
@@ -2850,7 +3357,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "8300cfff",
+        "surface": "tiles"
+      }
     },
     {
       "id": 1213,
@@ -2869,7 +3380,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "8300cfff",
+        "surface": "none"
+      }
     },
     {
       "id": 1214,
@@ -2893,7 +3408,11 @@
         0,
         4,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "af3f1bff",
+        "surface": "none"
+      }
     },
     {
       "id": 1215,
@@ -2902,7 +3421,11 @@
         128,
         83
       ],
-      "lightmap": "lightmaps/1215.png"
+      "lightmap": "lightmaps/1215.png",
+      "parcel": {
+        "border": "8300cfff",
+        "surface": "none"
+      }
     },
     {
       "id": 1216,
@@ -2911,7 +3434,11 @@
         128,
         74
       ],
-      "lightmap": "lightmaps/1216.png"
+      "lightmap": "lightmaps/1216.png",
+      "parcel": {
+        "border": "af3f1bff",
+        "surface": "none"
+      }
     },
     {
       "id": 1217,
@@ -2935,7 +3462,11 @@
         0,
         4,
         4
-      ]
+      ],
+      "parcel": {
+        "border": "af3f1bff",
+        "surface": "none"
+      }
     },
     {
       "id": 1218,
@@ -2959,7 +3490,11 @@
         8,
         0,
         4
-      ]
+      ],
+      "parcel": {
+        "border": "8300cfff",
+        "surface": "none"
+      }
     },
     {
       "id": 1219,
@@ -3055,7 +3590,11 @@
         32,
         69
       ],
-      "lightmap": "lightmaps/1226.png"
+      "lightmap": "lightmaps/1226.png",
+      "parcel": {
+        "border": "6f5700ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1227,
@@ -3160,7 +3699,7 @@
       "png": "masters/1232.png",
       "logical_size": [
         32,
-        24
+        28
       ],
       "lightmap": "lightmaps/1232.png",
       "visual_registration": [
@@ -3174,10 +3713,14 @@
       ],
       "review_padding": [
         0,
-        0,
+        4,
         0,
         4
-      ]
+      ],
+      "parcel": {
+        "border": "6f5700ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1233,
@@ -3201,7 +3744,11 @@
         4,
         4,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1234,
@@ -3243,7 +3790,11 @@
         4,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "none"
+      }
     },
     {
       "id": 1236,
@@ -3267,7 +3818,11 @@
         0,
         0,
         4
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1237,
@@ -3291,7 +3846,11 @@
         4,
         0,
         4
-      ]
+      ],
+      "parcel": {
+        "border": "0000e3ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1238,
@@ -3324,7 +3883,11 @@
         4,
         0,
         4
-      ]
+      ],
+      "parcel": {
+        "border": "6f5700ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1240,
@@ -3343,7 +3906,11 @@
         8,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "000000ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1241,
@@ -3352,7 +3919,11 @@
         64,
         57
       ],
-      "lightmap": "lightmaps/1241.png"
+      "lightmap": "lightmaps/1241.png",
+      "parcel": {
+        "border": "6f5700ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1242,
@@ -3376,14 +3947,18 @@
         12,
         4,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "none"
+      }
     },
     {
       "id": 1243,
       "png": "masters/1243.png",
       "logical_size": [
         64,
-        40
+        44
       ],
       "lightmap": "lightmaps/1243.png",
       "review_reference_size": [
@@ -3392,10 +3967,19 @@
       ],
       "review_padding": [
         0,
-        4,
+        8,
         0,
         0
-      ]
+      ],
+      "visual_registration": [
+        64,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "ff5f5fff",
+        "surface": "none"
+      }
     },
     {
       "id": 1244,
@@ -3414,7 +3998,11 @@
         0,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "007373ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1245,
@@ -3423,7 +4011,11 @@
         64,
         53
       ],
-      "lightmap": "lightmaps/1245.png"
+      "lightmap": "lightmaps/1245.png",
+      "parcel": {
+        "border": "8300cfff",
+        "surface": "none"
+      }
     },
     {
       "id": 1246,
@@ -3466,7 +4058,11 @@
         12,
         0,
         4
-      ]
+      ],
+      "parcel": {
+        "border": "078b00ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1248,
@@ -3475,13 +4071,17 @@
         96,
         55
       ],
-      "lightmap": "lightmaps/1248.png"
+      "lightmap": "lightmaps/1248.png",
+      "parcel": {
+        "border": "6f5700ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1249,
       "png": "masters/1249.png",
       "logical_size": [
-        96,
+        100,
         58
       ],
       "lightmap": "lightmaps/1249.png",
@@ -3492,9 +4092,18 @@
       "review_padding": [
         0,
         8,
+        4,
+        0
+      ],
+      "visual_registration": [
+        96,
         0,
         0
-      ]
+      ],
+      "parcel": {
+        "border": "6f5700ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1250,
@@ -3503,7 +4112,11 @@
         96,
         77
       ],
-      "lightmap": "lightmaps/1250.png"
+      "lightmap": "lightmaps/1250.png",
+      "parcel": {
+        "border": "bfb32bff",
+        "surface": "none"
+      }
     },
     {
       "id": 1251,
@@ -3512,7 +4125,11 @@
         128,
         196
       ],
-      "lightmap": "lightmaps/1251.png"
+      "lightmap": "lightmaps/1251.png",
+      "parcel": {
+        "border": "007373ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1252,
@@ -3521,7 +4138,11 @@
         128,
         182
       ],
-      "lightmap": "lightmaps/1252.png"
+      "lightmap": "lightmaps/1252.png",
+      "parcel": {
+        "border": "007373ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1253,
@@ -3545,7 +4166,11 @@
         28,
         4,
         4
-      ]
+      ],
+      "parcel": {
+        "border": "007373ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1254,
@@ -3570,7 +4195,11 @@
         4,
         4
       ],
-      "artwork_rgba": "rgba/1254.png"
+      "artwork_rgba": "rgba/1254.png",
+      "parcel": {
+        "border": "007373ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1255,
@@ -3579,7 +4208,26 @@
         128,
         154
       ],
-      "lightmap": "lightmaps/1255.png"
+      "lightmap": "lightmaps/1255.png",
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "review_reference_size": [
+        128,
+        154
+      ],
+      "visual_registration": [
+        128,
+        0,
+        0
+      ],
+      "parcel": {
+        "border": "007373ff",
+        "surface": "none"
+      }
     },
     {
       "id": 1256,

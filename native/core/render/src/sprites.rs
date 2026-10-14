@@ -45,6 +45,9 @@ pub struct Sprites {
     /// Pack-local footprint width and added left/bottom canvas padding.
     /// Indexed geometry and full-color artwork share this registration.
     pub registration: HashMap<u64, [i32; 3]>,
+    /// Shared cached ground quads, opt-in by the active graphics pack.
+    pub parcels: HashMap<u64, i32>,
+    pub(crate) parcel_cache: HashMap<(i32, [u8; 4], u8), i32>,
     /// Full-color art of unflipped sprite keys. Indexed pixels still give the
     /// draw geometry, the masks and the silhouettes.
     pub artwork: HashMap<u64, Artwork>,
@@ -62,6 +65,8 @@ impl Sprites {
         Self {
             images,
             registration: HashMap::new(),
+            parcels: HashMap::new(),
+            parcel_cache: HashMap::new(),
             artwork: HashMap::new(),
             traffic_masks: HashMap::new(),
             target,

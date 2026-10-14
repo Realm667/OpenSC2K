@@ -38,7 +38,16 @@ func _run() -> void:
 	main.preferences.visual_enhancements.life_cars_enabled = false
 	assert(prepare.required_variants() == [0, 2, 4])
 	main.preferences.visual_enhancements.life_cars_enabled = true
+	for view in 3:
+		var original := main.static_render.original_archive_for_view(view)
+		var id := view * 500 + 112
+		original.visual_registration[id] = Vector3i(original.find_sprite(id).width, 0, 0)
+		original.parcel_styles[id] = PackedInt64Array([0x077300ff, 2])
 	assert(not prepare.process())
+	for index in prepare.VARIANTS:
+		var original := main.static_render.original_archive_for_view(index / 2)
+		assert(is_same(prepare.archives[index].visual_registration, original.visual_registration), "Preparation dropped pack canvas registration")
+		assert(is_same(prepare.archives[index].parcel_styles, original.parcel_styles), "Preparation dropped pack parcel metadata")
 	assert(prepare.busy and not main.frame._simulation_suspended())
 	assert(prepare.owns(main.render_caches.region_cache), "Visible renderer must use the preparation bank before preload completes")
 	assert(main.static_render.sprite_archive_for_view(main.static_render.city_view_size()) == prepare.archive_for_view(main.static_render.city_view_size()),

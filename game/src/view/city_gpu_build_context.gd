@@ -144,6 +144,12 @@ func prepare(city: CityState, palette: Sc2Palette, sprites: Sc2SpriteArchive, vi
 			if artwork.has(id):
 				registrations[id] = sprites.visual_registration[id]
 		request["visual_registration"] = registrations
+		var parcels: Dictionary[int, PackedInt64Array] = {}
+		if mode == CityViewMode.Mode.CITY:
+			for id: int in sprites.parcel_styles:
+				if artwork.has(id):
+					parcels[id] = sprites.parcel_styles[id]
+		request["parcel_styles"] = parcels
 
 		# GPU regions and `raster_artwork` draw full-color art
 		if pack_atlas or with_artwork:

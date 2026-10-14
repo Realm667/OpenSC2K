@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "date": "2026-10-14",
-  "pack_manifest_sha256": "5a36b74cfec4c5499c4e1a52d7120e207568af677a35456815dfda53a67abf78",
+  "pack_manifest_sha256": "4f44797e79932b3724cd7e394237ecf455ac2f3d906fc7f2dca78a62aefcdb6e",
   "scope": "Independent Remaster graphics and matching emission/season/traffic masks",
   "generation": "OpenAI ImageGen artwork plus independently authored deterministic projection, compositing and UI/traffic drawing tools",
   "references": "Original resources inspected locally for IDs, dimensions, functions, orientations and visual inspiration. No original pixel files are delivered.",
@@ -2819,6 +2819,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "dc04892c34e77f7339694e9790796e058c2e2c59124c14c7aec8e84daab18985",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "a0438861408f0d9a1f59e683b8a2e84e179ba1451f2caeb1ea41a1df96701e2f",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -2921,6 +2927,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "bc5b28d86a985d6fd932495be94559919ff6947c671cf486cd8a2f40289af9c4",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "7bffd39c1d3a1bfdb5c908fb3460d547580efb3c8260f4d469619abadb04cae1",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -2947,6 +2959,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "d96f9fbe4b8345d8cc73d3738e4d0921f053f40a87e034c657a681cb9b63392b",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "e76f461b9bf6bcf867bca9ca3899e2f04f2e43c11838b27823c216f5fa7983af",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -3027,7 +3045,7 @@
     {
       "id": 1129,
       "png": "masters/1129.png",
-      "sha256": "769a01ac175a2abf441c7798a6c96cbe2401ed57ac660bef27768acafbc096d4",
+      "sha256": "466f15071c24c119fc1c9f909cc0ee76546325a3eb98a651b609278b28f6ac04",
       "evidence": [
         {
           "report": "reports/small-buildings.json",
@@ -3041,11 +3059,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "4e999525f01da3f951dddcd654aaed07fb648c8cb9b6d6371c3d67969a2eade3",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "769a01ac175a2abf441c7798a6c96cbe2401ed57ac660bef27768acafbc096d4",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1129.png",
-        "sha256": "83fce88dfff89a8e2fa7179e6f70eae7e65e99daa213b18a808ac6734bf614e8"
+        "sha256": "702d5feac186a032a12d653f5748713ba4e69d94097353c691e49f722b9cbf2a"
       },
       "animation": null,
       "traffic_mask": null
@@ -3067,6 +3091,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "0bf279478fc45eacdae6a73fa8dab9b042b54fccf1cb30b41c39380693cb9ff2",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "6b8404f700d7f88fba60356aa0ce6fb07da603a3ca4553947c16df8a3f022137",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -3093,6 +3123,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "86d153c037e81bab984dc30a74733ba99d36d0a3adf2ad6d8285dbe97b389206",
           "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "ab8a8e4e6b993d8789d4f6b9f352c65e7ef733142c6910f8f192a0a61a4a5282",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -3105,7 +3141,7 @@
     {
       "id": 1132,
       "png": "masters/1132.png",
-      "sha256": "49d1fd760e088fb697cf1aa5688951d46247beb3d9d891b7b8ce3fc6a46dac99",
+      "sha256": "1f8fa2aa5ed4b0b74547c31f98eff094dcf3b5fa892431918907edcd02f62d3b",
       "evidence": [
         {
           "report": "reports/small-industry.json",
@@ -3119,11 +3155,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "a2db549ed1c64e2f7742acc14c5b4143abd3d291b192e7fafd956a147e364ea0",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "49d1fd760e088fb697cf1aa5688951d46247beb3d9d891b7b8ce3fc6a46dac99",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1132.png",
-        "sha256": "edf6f1c3db4345433b757d07a6adc529b547a5e9f147a3bfc900002b4ebde730"
+        "sha256": "6cb4eb20aa3088430369db9960486eb85374ff791b443b7307cc9561a8b31c06"
       },
       "animation": null,
       "traffic_mask": null
@@ -3171,6 +3213,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "defc22e165f54aafdab31cabad19a36b213b7985f95b8218e79e44c5bb783510",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "8cabaeed61d00e14b01a69373cbf52c569a1db0118b455f6280cb2c7308e45bd",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -3197,6 +3245,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "dd95983652b0f86de242cdc8cca160513f6eceac38815cdcd0d8dbb9ad566617",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "32d6c3e3172587709284397566088c3503fc29b449313f6a7772e97dd1e7b6b2",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": null,
@@ -3220,6 +3274,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "cdfb84bd2246cf6b5198d9ad3c86c71d583903b77bf3167ee2b0169778451291",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "7d5cbf80fd5296aaaec8ad042387fe0f6214a4708cf9a19adeaa803a3202e2e5",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": null,
@@ -3243,6 +3303,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "f904c504650f2fa3919355a483af607f2226827913e3a2da741f86287353f35d",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "df2cdc0e33507b3576cb3084576c45313d2b6b449f973c3d0eac03c9231aa1d5",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": null,
@@ -3298,7 +3364,7 @@
     {
       "id": 1140,
       "png": "masters/1140.png",
-      "sha256": "48b6620d0f1a2708a03034df7f3017e2632b5c411219522e0ed2c239e6fa6897",
+      "sha256": "87c3b7553b85ee532fe11be984771d398e805f008e86a84504ba713c4e443f06",
       "evidence": [
         {
           "id": 1140,
@@ -3392,11 +3458,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "8a06a8df1c4e179a819c5b60d2056459075706724f9264e479aac1bee97cf39e",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "48b6620d0f1a2708a03034df7f3017e2632b5c411219522e0ed2c239e6fa6897",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1140.png",
-        "sha256": "d52c9ac5594e7af4b2da909ecb3f28e1c70ed4f9006f0c8624472cbc748a9e46"
+        "sha256": "97f03056b529172949d28a5195665c5277cda888d99399aa8c3f8075558be93d"
       },
       "animation": null,
       "traffic_mask": null
@@ -3404,7 +3476,7 @@
     {
       "id": 1141,
       "png": "masters/1141.png",
-      "sha256": "f342d16fc371bd4ea2cd2d63cffe7184157573d067ea5fb032eee36bb3f4bd26",
+      "sha256": "ec1eb9d02fe2c57a9e57d7c3281e141bd2d7251ad4289ab5808759e74a0aa5be",
       "evidence": [
         {
           "report": "reports/apartments.json",
@@ -3418,11 +3490,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "0a4f04df5e3db03241ea33fe9224feca7298f6dbd874b4559789969ced9ef5a7",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "f342d16fc371bd4ea2cd2d63cffe7184157573d067ea5fb032eee36bb3f4bd26",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1141.png",
-        "sha256": "7dcc524cce789146ca5738268dd621ec467d525da3074d42c3acf7c96a80d2b5"
+        "sha256": "76c6390dd1c074a7f8abb5f56f2170a5fac9ce5ff8ead4965da386e20bf4d129"
       },
       "animation": null,
       "traffic_mask": null
@@ -3430,7 +3508,7 @@
     {
       "id": 1142,
       "png": "masters/1142.png",
-      "sha256": "29ba0367071342feb436aaee10d454371e66d41592adc76a560d3d6fad76d4b4",
+      "sha256": "def2de185a5e436eb0373c34923db54e43d782c43e36fb9b31b825cfeff8408a",
       "evidence": [
         {
           "id": 1142,
@@ -3495,11 +3573,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "89ac4736970f260458d8572af11284b92b3be167c0d80d192b46d1af06f94fce",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "29ba0367071342feb436aaee10d454371e66d41592adc76a560d3d6fad76d4b4",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1142.png",
-        "sha256": "c436bc2ac75d959e4b7faa1383d83b0c9fca98069818ec24f6614eb57cdd95a8"
+        "sha256": "2e51723310ea4142a0cae1b9e1ea5ca92f06acd3a88b2c66448b9a812f7e4172"
       },
       "animation": null,
       "traffic_mask": null
@@ -3507,7 +3591,7 @@
     {
       "id": 1143,
       "png": "masters/1143.png",
-      "sha256": "424ab553f4646cdf479078ad5964ea056cec7e8a14a6b8cc2d08c85afb9b364f",
+      "sha256": "0fe9434b8ad0b8e6b7971e605c8f644ff7e6f1de5b6e96d5c13ccb12bb00707b",
       "evidence": [
         {
           "report": "reports/apartments.json",
@@ -3521,11 +3605,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "209ba536d28b1ab46c4b61bdd9b6412e81212d7425801c75d5b8c540fddc0056",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "424ab553f4646cdf479078ad5964ea056cec7e8a14a6b8cc2d08c85afb9b364f",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1143.png",
-        "sha256": "8728990ec00c12a7a4ec147f31277c2e781b492507bd685fa482f5090a0bf607"
+        "sha256": "0130effdb34ef898267c14ce860fccb3a0c29ee8011d0a05213b69cd8d876ff7"
       },
       "animation": null,
       "traffic_mask": null
@@ -3547,6 +3637,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "78af6a7af9a0b4b043a889241b47e099f4fd5f016c54282df9c2b9c5a397e4c4",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "9a87dce85c12e8ba933aba98d9da2e5eb1b9193c94918e5fbeb62cfeef4a21e4",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -3599,6 +3695,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "849d0d1635335f1faff214985f74eff16b82732ccbc2187364bfb8a1b7f6cb56",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "3b3bab49966bd79788cba1db90c798385a222fcbfd2ede97adc83a5a0212c9eb",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -3611,7 +3713,7 @@
     {
       "id": 1147,
       "png": "masters/1147.png",
-      "sha256": "e6c98e89b0a8843682a70f8c44a47d860b86ca4fe7c3ad8b41897480fd552a02",
+      "sha256": "6aaa00c1cff28f49bc9e2fdc1c49c396443d1a7a3d02e2003c90caf9d98efe3b",
       "evidence": [
         {
           "report": "reports/apartments.json",
@@ -3625,11 +3727,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "708216d8013900717bb97c8f07017cd9c5198bcf3a2cca86bd33d4ba8cad2bab",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "e6c98e89b0a8843682a70f8c44a47d860b86ca4fe7c3ad8b41897480fd552a02",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1147.png",
-        "sha256": "ac83310e2044aeaaa8eb45250ee3b9f38c173719c059894ea210cf4aacd1f30f"
+        "sha256": "8d15e1220b5283d8132bd4c0a1f93c9fd8024a71b2762b723cf090c943809291"
       },
       "animation": null,
       "traffic_mask": null
@@ -3813,6 +3921,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "126ca36b276acac5b523e5658da80eeff2cdbcaf8420fb56e3635db592291f5c",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "d1e4ae4173fd7a79688a83ea8d568059f5c3b867fa7596ede94321f138f6d6c8",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -3888,6 +4002,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "25200f708f511eb620b38102001f0152c38bec00df2a3fb1538f33d3a09bce57",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "0b1e26463cd847b596255c97cb79356dc2e7d231e6ca3142fe2f4184c65629fb",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -3900,7 +4020,7 @@
     {
       "id": 1151,
       "png": "masters/1151.png",
-      "sha256": "e35d966c77e681d077feb941687285172194706a6a31e47c89628d8e9ae941a0",
+      "sha256": "a31f29f6dbb9ada85554066c7fdc73a03d3ff82447fb92d88148a7751e67de0b",
       "evidence": [
         {
           "id": 1151,
@@ -3963,11 +4083,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "bb357a4c80e2372f7752343c3cb1e213842f8698dbe3a788032fdc267abe33d6",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "e35d966c77e681d077feb941687285172194706a6a31e47c89628d8e9ae941a0",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1151.png",
-        "sha256": "c075dc31b71db8f111fe4985c546a8038535dbfa4f30a89d67a42bb9878eb581"
+        "sha256": "fe50f643a03de4f082f1d19d967a3d80f37d40d745f9fa40ec3207b45f0bedea"
       },
       "animation": null,
       "traffic_mask": null
@@ -4038,6 +4164,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "d3de8f6eb033685ba581651a68b3ef0b07d6c84371b1eda154b33232bc732866",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "abf70b12abb203ba55d598310c5157e3fd74bebd997028df938dc7fbd485674b",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -4113,6 +4245,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "bfe9acd345f7e78c44129b77dee1441951758f55cf2e30597864f5ccd2ebacfb",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "63632838327cec98dc55accf6c538490e0a389c0e566e4250e2e8a09934c393a",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -4125,7 +4263,7 @@
     {
       "id": 1154,
       "png": "masters/1154.png",
-      "sha256": "07ae91e68758b5c7cb68f9f7352bf405dd5e70da9239f429d053a5a58ded0965",
+      "sha256": "c2d6fb8e73abcb8282cd4663c61c839273659a633d9353e8a81daac0f976db37",
       "evidence": [
         {
           "report": "reports/commercial.json",
@@ -4139,11 +4277,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "749e2db591d91b298e2c285a904fe2ced5ee1da433fd9d78dd1e7961b35452d0",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "07ae91e68758b5c7cb68f9f7352bf405dd5e70da9239f429d053a5a58ded0965",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1154.png",
-        "sha256": "6332c50c308efe06f7e16c747219940c6e492f762a4e34db70b9ef7edd039177"
+        "sha256": "2ad885f8f142d38cc6ff6fabdbb8bd2d4185983dbc8f1c4e33eece38842699b4"
       },
       "animation": null,
       "traffic_mask": null
@@ -4216,6 +4360,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "de0eba2cef07e7c3831be4b340d082f17e32d1250dce5f6efe1cb9a67dbd1fa5",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "677cb54d77c0c6ad1f41abab47d2abfda4631d9e77012199fcc9d0a1c9f41e2c",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -4291,6 +4441,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "ead1bc418333736136bdff9fd6dba145b457753b9b7ac1c9c6fe1312f3218f3c",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "f4cbe76cd077d1da61dfea1d5befda1117f665356dd658b93ea3ab0810e276eb",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -4368,6 +4524,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "532b80779cb4a9fda55eb28ecf692e91ce90982443f6eacc1debc5baad9ef825",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "cb00621f54bceb588af9a6a7023ac640689eb1ad7231cb3e2914c96bb0cb5d20",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -4394,6 +4556,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "de833a8ab41f49e227595a2d0ae8560fe3a8748aec7a6f9d18a611f4c2bd87e2",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "134faa5435ec3960cbfac34a767bc6821cfee2c1260825380ed70223fe25cca1",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -4406,7 +4574,7 @@
     {
       "id": 1159,
       "png": "masters/1159.png",
-      "sha256": "187cd9fe260378e813b470a6c77cf1d06f524af784317e8578ad7c9796f1b0b5",
+      "sha256": "6eaf51d5915ff89e357102bbc0817f9c766abca9e0c27c6d90f60346138cc53a",
       "evidence": [
         {
           "report": "reports/industry.json",
@@ -4420,11 +4588,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "1d0547e2daabcafd929af32461252fc74ede283b54246b8f1e953ce68722d71d",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "187cd9fe260378e813b470a6c77cf1d06f524af784317e8578ad7c9796f1b0b5",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1159.png",
-        "sha256": "f8b083229a5366a12f2907496d94b2eb7617afdeaa797eebebb441fef3076590"
+        "sha256": "64f3767b289a3325b72967d58bcc3cb1757f9514f8aa6a55e5b41fa62ee35f55"
       },
       "animation": null,
       "traffic_mask": null
@@ -4529,6 +4703,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "d82c735d2d6d39202caa207cefb7bc607784abb1b4cf2d3370751d40234e32ea",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "48e21447cb27960571c4318eeb7b4607d7a34fdd6b3bdd2f4af51287f9af2cec",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -4606,6 +4786,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "a0bae2892208dffc9ea5ff7c3dd723e355c374bf8ac6967574c106d805de2c5d",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "de757227a44b43fb55b0fd6fb2c09d0c49a8cade9d0fa0af89e8c4abb8d4301a",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -4683,6 +4869,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "433223e19ab5fb0e85e23368c591e54ede723d44f3e7e7b63aab3316ba487125",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "b685b586aeb26dff903f196aa2b9309e914a56fff501a4d8d5aba655c4b147f8",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -4709,6 +4901,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "6706ad907b959c1469af215bb9e2c407ccf4755f21e0d6d84737a0c43a2d3887",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "55af056edff27d9e29919c4e23f719d4d207ca3cb5632401cb3bdb5959fae412",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -4735,6 +4933,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "ac270fd2a945808a25e8beb553066ed274b58aaf6727714724e9b35afa09e970",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "d5087d2faf747359f3388ce5bb537221bd6f3c9648e932d3b33dd48af1766e94",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -4761,6 +4965,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "b267fd00f32f7fc05ee5582767b13ffe25924c6a8995735460ab60d676ca6eed",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "f981a2eec4cd4ae4f8ef533a2bbde21b8cd6ba3f3005e2df94efb44b83cd6d33",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -4810,6 +5020,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "eea8e69ce74b8629d68e32431383e3b3815d4bc0682274eb4740b69fea67b1b3",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "9cf72d4c78cda26ef992e60c71a91388cba6f060f5289e731a13ee2d0e3b40f2",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": null,
@@ -4833,6 +5049,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "93df726ffbc55aba115616ff30d4f456f60764a0c0b47867c3fa00c651d2708f",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "ba6af0e948c8cda58708efad1119ad6bfe7db1f3775822b4a1db12c2d649eb6b",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": null,
@@ -4842,7 +5064,7 @@
     {
       "id": 1169,
       "png": "masters/1169.png",
-      "sha256": "6cf1e9f5adf2613dc3cd9a8529dd6f7555a29f446871ea074f74bacae2938a64",
+      "sha256": "e44ad4f2580e66425a7af8cb43fe683177c6ff4ae83e86298183620442d9dceb",
       "evidence": [
         {
           "report": "reports/construction.json",
@@ -4856,6 +5078,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "32fa93137ec0bd5d2428cb97d5b3c78cbcdc68a0772d53bc10b1fe167940d307",
           "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "6cf1e9f5adf2613dc3cd9a8529dd6f7555a29f446871ea074f74bacae2938a64",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": null,
@@ -4928,6 +5156,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "49d9920bc584635f1a9bb447a882c973b8ca04e480214c80c65cc85f557fd574",
           "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "0411c64f08ca35113dcaa7a17fbebc8bc27a7ac26fd95caa8c4f7e25814731a4",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": null,
@@ -5002,6 +5236,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "a1ae091ff06f85fb316c135d995e8b323940e4ff1abaeb7910f64044f6644242",
           "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "bab3aac99b629109fe94430c72e855ffee475e3e776f32a0fea3f6a508010bcc",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": null,
@@ -5074,6 +5314,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "0e64eada4bae25ec25e90d59bc839014e170900e476568d8a985c4b72ab8c900",
           "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "df5d29be1f3148bbdef31a7f32bc309929b3033f6011994ac40eaece46a007e9",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": null,
@@ -5146,6 +5392,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "646733154e359878a4001550f88588fadeb4d80f7a823d7a71c6718a749dd69e",
           "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "db8b4c4cf12981e0162a874daf80f569bf9c50650f7c1dcd208b7cb7db2567e3",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": null,
@@ -5155,7 +5407,7 @@
     {
       "id": 1174,
       "png": "masters/1174.png",
-      "sha256": "b6a87efc494de8b50b6cb8ea587a7ce6ca4962518fc9e95e343431455180fb93",
+      "sha256": "cf563de2e6f634ee56bb04bbe134db2231f3328becd86e1fe6e2dde356a77286",
       "evidence": [
         {
           "report": "reports/apartments.json",
@@ -5169,11 +5421,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "74b6611bce9617c8063edde81eb9f07436cac31548cfdccf8a7e9273c3f9bef6",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "b6a87efc494de8b50b6cb8ea587a7ce6ca4962518fc9e95e343431455180fb93",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1174.png",
-        "sha256": "e97da0b595db9df1ac7a9c55df4bfb88f412b6b916aa7b544401db33212013d5"
+        "sha256": "802bb41657c11d1000b54e80c46a92802509051751cc4cc5ee39e47cac6e3051"
       },
       "animation": null,
       "traffic_mask": null
@@ -5195,6 +5453,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "d579a06360ffd78bccd92d3d970b5fae85335f9aae24faf0ccf7e9cfa56fc387",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "8a56afc2ff42c1700dcb5c041815201ba193230ef4383c5f039a04c79808cf4e",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -5334,7 +5598,7 @@
     {
       "id": 1179,
       "png": "masters/1179.png",
-      "sha256": "fcb40585f744f899eb02f1b52f65807d0758b607d0c7317016577529e529863b",
+      "sha256": "238fb3365f637c070647486cc88f4457fce18c69aa6b621f6e0e5fb1a6d06f32",
       "evidence": [
         {
           "id": 1179,
@@ -5399,11 +5663,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "045a41beb332d0e5f9eda4a1bf0c55c07184b24ad5cc8004bf3212ac4bdb76c3",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "fcb40585f744f899eb02f1b52f65807d0758b607d0c7317016577529e529863b",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1179.png",
-        "sha256": "2c2fc898d1a9e5f0c4edb3daa4aea07d00fef35f652b259598ed33a1a13059bc"
+        "sha256": "a5a0febc7ed9c4a9fb8b1c6fa6800d3cf1f5f33d97d5de3332e8843567ed68c6"
       },
       "animation": null,
       "traffic_mask": null
@@ -5538,7 +5808,7 @@
     {
       "id": 1183,
       "png": "masters/1183.png",
-      "sha256": "332d9fc9b45915470aac566e82d54f01e385a8cd3f89901abe5b9139e43ac5d5",
+      "sha256": "cbe10f0b78a3be0d713812edd5ee29ecb86f1eb7214a1f9632dc76d3bfe4e566",
       "evidence": [
         {
           "id": 1183,
@@ -5603,11 +5873,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "d0a62f9a2dff8a46c3fa808d8c153243ab38f389696a5b67acf4048ac423cc81",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "332d9fc9b45915470aac566e82d54f01e385a8cd3f89901abe5b9139e43ac5d5",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1183.png",
-        "sha256": "a956e58957a19c77e5f2eeacf67135e05221422df6cd6eacf7b6458d43368a1e"
+        "sha256": "a2bb7e9c19afbd817347b56247ad947c38ff9b1e9f3eb1fb305dd3f396f40a6c"
       },
       "animation": null,
       "traffic_mask": null
@@ -5615,7 +5891,7 @@
     {
       "id": 1184,
       "png": "masters/1184.png",
-      "sha256": "477ef66a3283e1def9cf0376cedea8ca7c8d9fe241c70a01bfe26d090201deac",
+      "sha256": "855a04890af5ec8d9a8cb2706aab39b8e92218a8c40acdccd884fc9213c1fdbc",
       "evidence": [
         {
           "report": "reports/large-commercial.json",
@@ -5629,11 +5905,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "8226858b72248b0edfc8c39a187a80bc040d0125b60ee86745c17c816a303dd8",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "477ef66a3283e1def9cf0376cedea8ca7c8d9fe241c70a01bfe26d090201deac",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1184.png",
-        "sha256": "30923901b506f9df3f3672de9b0ee6c258c4c475beada7e8f9957baf1ca3f137"
+        "sha256": "d254c195c95e2ad7386a83256c230cf1316681b890f62ac2ba9565d171ae4e83"
       },
       "animation": null,
       "traffic_mask": null
@@ -5641,7 +5923,7 @@
     {
       "id": 1185,
       "png": "masters/1185.png",
-      "sha256": "f80cad9ccf9c02c9604bacf57dc06fb03999186aa4023a52dad059483f122cea",
+      "sha256": "b4d23792deeb7d82b2e9ada62988bf9544bdfa4972f11e1b3b99afe71a919a06",
       "evidence": [
         {
           "id": 1185,
@@ -5706,11 +5988,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "06c5bc85c5ed1e65adc6f4233f850d9192d4c3ab7d4b721e27f69374ee91d5f8",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "f80cad9ccf9c02c9604bacf57dc06fb03999186aa4023a52dad059483f122cea",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1185.png",
-        "sha256": "76025939ecebb334940f5f50cc14aa287afe649d1c710fb3f4418e9d15919ad3"
+        "sha256": "d469a7e2996ea76470da130d9c9841711abafca4a8a8657c4488507a832145e2"
       },
       "animation": null,
       "traffic_mask": null
@@ -5718,7 +6006,7 @@
     {
       "id": 1186,
       "png": "masters/1186.png",
-      "sha256": "455b040343193a7dd8b237ff24d83925a7485a2815ce6e1096a800a38eb5741c",
+      "sha256": "2de43650f224008d952f65371c94d9f03c826bf8ceaee4fd259531d5b79cd5af",
       "evidence": [
         {
           "id": 1186,
@@ -5783,11 +6071,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "6f29d23ec90dec7da25c82f1f7b3d2aa9d211e56b896ebb2d5e8313dea39f268",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "455b040343193a7dd8b237ff24d83925a7485a2815ce6e1096a800a38eb5741c",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1186.png",
-        "sha256": "0255bce9e3f27c7292dbfdcc9a0fb7def89d43cab7e0fab30fe6080968dd2b71"
+        "sha256": "c0df357df92e869fc85c9cef1baaa9bf3f2daf12ce3672c63f4c6364a2be0d9f"
       },
       "animation": null,
       "traffic_mask": null
@@ -5795,7 +6089,7 @@
     {
       "id": 1187,
       "png": "masters/1187.png",
-      "sha256": "cab01aaca75e803c479f65f8439a9a00ceda4907cfb1f6625f8463a40b83fd94",
+      "sha256": "a520afcd95e4706f09894076920dd9bdab9d7589ceb211b498acf59253119f5a",
       "evidence": [
         {
           "id": 1187,
@@ -5860,11 +6154,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "dbc068ccb48fa6036d64b52c81ba43af3ef03b78d3ff826f73b9b3caa0dc22c5",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "cab01aaca75e803c479f65f8439a9a00ceda4907cfb1f6625f8463a40b83fd94",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1187.png",
-        "sha256": "a98559b2e946e621e8b2b3256116204de2b383846c181ae4df52dbef842ee045"
+        "sha256": "427741d6ea6b751a5490b97a3cf33499fb3d6ad53a374cd03b4226bb992db645"
       },
       "animation": null,
       "traffic_mask": null
@@ -5872,7 +6172,7 @@
     {
       "id": 1188,
       "png": "masters/1188.png",
-      "sha256": "3ef6772cafbeebca25ba02356f388683580d8da2bc7d298624e671efb70194f5",
+      "sha256": "57a81656e24b7371d1e1b4dd3daf215efb56c2941aa91d9634230731803e9321",
       "evidence": [
         {
           "id": 1188,
@@ -5937,11 +6237,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "cb10438b913c950fc3c86cd71c3f911132d7c931ae005a24afeb1fe8d83f94b8",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "3ef6772cafbeebca25ba02356f388683580d8da2bc7d298624e671efb70194f5",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1188.png",
-        "sha256": "428dcab1a1b49c9c526cb29601e3d17bc0b3436329e969b3cc32e9bab5bfb544"
+        "sha256": "cf7fdd240dca3d7864c4ca061a731840fa876a06d98e703f7b0591bfd64037ba"
       },
       "animation": null,
       "traffic_mask": null
@@ -5949,7 +6255,7 @@
     {
       "id": 1189,
       "png": "masters/1189.png",
-      "sha256": "25a03f62fd4cd01ccc55b88e36447bfdef4c4f4a87f5f8fa1bb46b98928a9d58",
+      "sha256": "9eb045a8585bd1043bef3ad0b2a5a7e63d2778efb3e202695fc8530b37483af5",
       "evidence": [
         {
           "id": 1189,
@@ -6046,11 +6352,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "5e9bfa1d5c0f3fd5f72f8ddc4e035b6d68e5fed2a754994c192f801795d4ef6b",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "25a03f62fd4cd01ccc55b88e36447bfdef4c4f4a87f5f8fa1bb46b98928a9d58",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1189.png",
-        "sha256": "ce3aae6bd867c13912644cdf20355bfa93a725e168b56c0371d7d07ed2d55ba8"
+        "sha256": "a94506c00fdbe46c736864d6f830f7bf12f5ba92ed696166dee1179788255a2f"
       },
       "animation": null,
       "traffic_mask": null
@@ -6058,7 +6370,7 @@
     {
       "id": 1190,
       "png": "masters/1190.png",
-      "sha256": "916ef982725d4cd52d2de00c2a8603dab708dbad21f4c87a1bdcdb1a8b544657",
+      "sha256": "b4150a5cc4a9bcea559dcf2be2a19880f94643e24346df6da0961c8ac1bfad47",
       "evidence": [
         {
           "report": "reports/large-industry.json",
@@ -6072,11 +6384,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "bea81fe29eef6c7b3d4b5c59bb45fd3fa825fe8a0afcf36604568908258c6045",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "916ef982725d4cd52d2de00c2a8603dab708dbad21f4c87a1bdcdb1a8b544657",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1190.png",
-        "sha256": "ba22e2e99b2c32e8231ec3012a0127a4411f6af3a0bc82ad76e7e7ddb5771075"
+        "sha256": "b550ed19b23b21cd4820b9abb57e647f18afefec079facfdb73321ab56ecca99"
       },
       "animation": null,
       "traffic_mask": null
@@ -6084,7 +6402,7 @@
     {
       "id": 1191,
       "png": "masters/1191.png",
-      "sha256": "639c9237f9e8963d59d9303fdfecc69c54e878f63b2316a8623fc7c3e8ba5a01",
+      "sha256": "d77b5c08f9b9f6df6b85e2d789621ed5aea335946ab0112d62489f231f0f5e67",
       "evidence": [
         {
           "report": "reports/large-industry.json",
@@ -6098,11 +6416,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "b8c3c4ae5770c639395dc8230d4886ce3a0751c1ef6864360ce863069ecf49b9",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "639c9237f9e8963d59d9303fdfecc69c54e878f63b2316a8623fc7c3e8ba5a01",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1191.png",
-        "sha256": "8e0507a19b758dcb35743278ce32018949713f5b682e60e123fb08659808ed59"
+        "sha256": "2aae97f66a61977f6cdacd78f33600933562983da08687080a745128f4aa262a"
       },
       "animation": null,
       "traffic_mask": null
@@ -6175,6 +6499,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "8f679436ae6d4399581a5c8c6ef0fd7d4920a8bbe0ccbede808e814563a9f79d",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "8ff0697682c41db2e286e62973abee51875666c7baf1f5a1d5949997126cdcee",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -6187,7 +6517,7 @@
     {
       "id": 1193,
       "png": "masters/1193.png",
-      "sha256": "3855199742339e66225e4af7d26429f741f991c7a4a4a8d0dc73105a49fdcaad",
+      "sha256": "7640c39a9f4455ccf6118ba937498b0114addb490b426d84db65d42c859ec6be",
       "evidence": [
         {
           "id": 1193,
@@ -6284,11 +6614,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "854d35a2a8dee56b2881443b8e17070d28557d1faa0861d621224ff7b77702a3",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "3855199742339e66225e4af7d26429f741f991c7a4a4a8d0dc73105a49fdcaad",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1193.png",
-        "sha256": "8740feed2412a7df4e2982f6f33446cc1563862397e62ebc84dbb25ca8708746"
+        "sha256": "e8b2e746a2ef11227faf29b06dbb97ca706d1446b25a3b3047e2034f4089821e"
       },
       "animation": null,
       "traffic_mask": null
@@ -6310,6 +6646,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "9aef935398ff05d5da0a034dd544d63816078107929a7d88f092efe47a08fdac",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "00cc2ddf3999f63d06383b011ccd4648b05ac64021325079ab8666a83a7f7dd0",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": null,
@@ -6333,6 +6675,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "67cec8fbebfa501998dacec1364f3e31e674d887e65c4597d7590ed85526bb1c",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "0df4287a3ff0c343c5fff676b68f3e34186dff8e67fee1db3e2ac7a624b09275",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": null,
@@ -6342,7 +6690,7 @@
     {
       "id": 1196,
       "png": "masters/1196.png",
-      "sha256": "92110efcba9d795d1da0dde936f0f2fb376ddc3d96f254410f6f01f5f5d49e36",
+      "sha256": "a35b70d0eecb1dd16fad7a9d137105fad49a4e0a9a8ffa95f759295a087d2635",
       "evidence": [
         {
           "id": 1196,
@@ -6407,6 +6755,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "6bb4ad1a7d121efc932874d5580d45467d0a3aed0d19ce915e70e25bf8728e92",
           "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "92110efcba9d795d1da0dde936f0f2fb376ddc3d96f254410f6f01f5f5d49e36",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": null,
@@ -6416,7 +6770,7 @@
     {
       "id": 1197,
       "png": "masters/1197.png",
-      "sha256": "be8ed077da218c3cb60649cd346770c3a56d6145c86142893229f5883bac5988",
+      "sha256": "f27b86b73da245bada5c515d344c265778336ab1a25f31eb458bdd29a80943b9",
       "evidence": [
         {
           "id": 1197,
@@ -6480,6 +6834,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "b64db765018affcaabcdd1d897dfec85384e2e2b505ba4ed19aa13bc7e73a9df",
           "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "be8ed077da218c3cb60649cd346770c3a56d6145c86142893229f5883bac5988",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": null,
@@ -6489,7 +6849,7 @@
     {
       "id": 1198,
       "png": "masters/1198.png",
-      "sha256": "33177ba099011e096b0e128d339db225efd2318e4daba8baeb171d5bcbd25f92",
+      "sha256": "3df3111354fe945962c00fb2933d1333744d346a042f9dcb64577765b4bec868",
       "evidence": [
         {
           "report": "reports/airport-port.json",
@@ -6503,6 +6863,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "a1bde3dc7d09698fda9c9bd30d4e11f6b0516b69c017fc7646af3a5135f9387f",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "33177ba099011e096b0e128d339db225efd2318e4daba8baeb171d5bcbd25f92",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": null,
@@ -7260,6 +7626,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "23b86395def3afb44b40855da86b368ca9391892ce1004a8f4abcd8edc132fd5",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "f1491a21e1f70946d0a5ffcbbf72bf06e9218acc4abd00314081075940970061",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -7481,6 +7853,12 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "c8771e471bdb610482911f8605feb400a03e07fcbf1b5f114758d0331c7cf279",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "58f8eb82eee5fe9da2307712b8781c33307359bd7863fcb7759f6df6bc560b3f",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
@@ -7568,7 +7946,7 @@
     {
       "id": 1214,
       "png": "masters/1214.png",
-      "sha256": "a53c7c7485df3b94394b3b46ef346a8a77d41b3958c7001fa24a124865d2eae3",
+      "sha256": "2eb888e8a8f4274b11459fbf60cca088f69c8f89cd2818c9b18b9ae7619b3567",
       "evidence": [
         {
           "id": 1214,
@@ -7631,11 +8009,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "c9647b28ed5a5d2c79d5cf9b0e9e4d714c0499ce32fa9be115af6f55cf258a68",
           "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "a53c7c7485df3b94394b3b46ef346a8a77d41b3958c7001fa24a124865d2eae3",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1214.png",
-        "sha256": "cfe20de122df623c6c74734b06bac44ae4a4e0ac1f4ce0984bb5687ca4258bdd"
+        "sha256": "654442beadb7d51f1aed66613fedfa9687c22f98d2af1cd6391299e9c689a090"
       },
       "animation": null,
       "traffic_mask": null
@@ -7803,7 +8187,7 @@
     {
       "id": 1217,
       "png": "masters/1217.png",
-      "sha256": "d15ed4f26e71bf15669e6a938f0bd4fd2f8102f0136927fc4b475640e8a2e420",
+      "sha256": "534b117e5b79778175adc8e417e4d214a6677537465589868b334277ea70dd3e",
       "evidence": [
         {
           "id": 1217,
@@ -7866,11 +8250,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "ef88ba0e865c209804f2423b52ab04be9ca6e2039b1fe70daa6c86617821e701",
           "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "d15ed4f26e71bf15669e6a938f0bd4fd2f8102f0136927fc4b475640e8a2e420",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1217.png",
-        "sha256": "33ca1a74de5da49f5f2c6af1b5b9782b478a4a72bd289a8fb89db29ea81c904b"
+        "sha256": "d086cce2183fe0386ec4403e3998358a9bc06b46eef24cdb49914c1e1ad367a9"
       },
       "animation": null,
       "traffic_mask": null
@@ -8455,7 +8845,7 @@
     {
       "id": 1232,
       "png": "masters/1232.png",
-      "sha256": "3f2c3dfe9b3f5bb9186fa10d023eba306a424436cdaac9aa9ec2bc28105849cc",
+      "sha256": "0b8b7543fe72205984a7c622152145bbd355007fb9a5d681b8f06c428552df5c",
       "evidence": [
         {
           "id": 1232,
@@ -8518,11 +8908,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "dcd69c378e8c432a00aa998fe0f0473910f51deff6973b226401172907e76100",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "3f2c3dfe9b3f5bb9186fa10d023eba306a424436cdaac9aa9ec2bc28105849cc",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1232.png",
-        "sha256": "f897c4f36d522f8cf98478295c7b51b79842cd3fb5553325fc4baaf7fe1b5499"
+        "sha256": "232bcd0bf09c27e603ecfba9754adaeca54750a6683867c2f5a2a8bf2726c7af"
       },
       "animation": null,
       "traffic_mask": null
@@ -8685,7 +9081,7 @@
     {
       "id": 1236,
       "png": "masters/1236.png",
-      "sha256": "28d38ef9527cca397ec7559cf25943d0e49f44c7409bb2895ca02ac614eb86a5",
+      "sha256": "9eb9f81551a0de973b318704664910c00f7862f4e7df4dfb7da77f439ed35495",
       "evidence": [
         {
           "report": "reports/transport-service.json",
@@ -8699,11 +9095,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "6e6661cbf4f352a1abbf655268ad64732803abe77aa189768a13c5621079b226",
           "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "28d38ef9527cca397ec7559cf25943d0e49f44c7409bb2895ca02ac614eb86a5",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1236.png",
-        "sha256": "f1ce79fe9fb86a63c39ed3e8271c4d93abace24aae6615a5ca6a97af11acf7ba"
+        "sha256": "1123c97551c7775d6939bd5c4bf9ab09a5bd3dd8e469cc027a89bca8d44035cf"
       },
       "animation": null,
       "traffic_mask": null
@@ -8711,7 +9113,7 @@
     {
       "id": 1237,
       "png": "masters/1237.png",
-      "sha256": "c1458a1eac55fe6aded6930a6f12592b0b6babd57319d700ebb99449b475fc65",
+      "sha256": "591bb689ca3eebbdf29b311ebde51d265c4dbc367837dd74467678eb8676d1f7",
       "evidence": [
         {
           "id": 1237,
@@ -8808,11 +9210,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "d810e73f75f1e392a92b57632b450a524219d263b98bbfb64df7fc55bf542a5a",
           "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "c1458a1eac55fe6aded6930a6f12592b0b6babd57319d700ebb99449b475fc65",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1237.png",
-        "sha256": "bad56f03766a08a6c0abf626e70f6c099c8c3075d83a7b9e3ccd3236e6fc9122"
+        "sha256": "07b798b61c189896b13a987d5ff326afc37c1b33ec4d6e3c4008eab4703dddba"
       },
       "animation": null,
       "traffic_mask": null
@@ -9053,7 +9461,7 @@
     {
       "id": 1242,
       "png": "masters/1242.png",
-      "sha256": "a589a8b22c3c7de4d05d7d79eb8cb267161fdb73224c448781e02248f351063c",
+      "sha256": "9e61d9121e2695869e771ba6ec188a4e2d1b5db3f9c396314134f9c0c3970667",
       "evidence": [
         {
           "report": "reports/transport-service.json",
@@ -9067,11 +9475,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "a77724dc87a95ab53e85769143a9f5a8968fd72051833e0982e6ceb98f1329ab",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "a589a8b22c3c7de4d05d7d79eb8cb267161fdb73224c448781e02248f351063c",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1242.png",
-        "sha256": "3cacf90f8de92b0fd9ec7a3e441082c253afc09534635f5bbd82002d14e1e0f0"
+        "sha256": "147e2cf2b5084d4f433872e4369793aa448c22b69e0ca01d83ab06c93f07675a"
       },
       "animation": null,
       "traffic_mask": null
@@ -9079,7 +9493,7 @@
     {
       "id": 1243,
       "png": "masters/1243.png",
-      "sha256": "97163733ce45534dc7a50bbfa6d9d5d43c7bb2a098cb28cb5bf9805932217e20",
+      "sha256": "94993ea6fd753e53b3b9f08372ab45c6cca14f832af243626c599d859c44d646",
       "evidence": [
         {
           "id": 1243,
@@ -9170,11 +9584,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "4efbe4ba438adb5927295a6f5713f0d10e8e0af0253235c3012cf598bd24b56a",
           "method": "ImageGen detail revision and shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "97163733ce45534dc7a50bbfa6d9d5d43c7bb2a098cb28cb5bf9805932217e20",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1243.png",
-        "sha256": "0a67a8e53cbfcfc30b9940359c628d730b6d73e8d301f70bd5a3e6b5b7659de9"
+        "sha256": "77fe01d982fae503094aa7aee41da6f5f5c111267a61d4cd8ac146af0c36ae43"
       },
       "animation": null,
       "traffic_mask": null
@@ -9564,7 +9984,7 @@
     {
       "id": 1249,
       "png": "masters/1249.png",
-      "sha256": "fa3a40fe8101eb3b2e32c402340f7d4fb6e48cc27dc7a5aeea02cd0973cb09ee",
+      "sha256": "132e1b8807bb8d6ae178a310105cad7fe8644b2eeb7e17b5d44de1d94129c820",
       "evidence": [
         {
           "id": 1249,
@@ -9627,11 +10047,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "b5978d6c9fa37ba13ef40ab3ecaf89e5fc4285a0b5c7fc9654df453903d0e337",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "fa3a40fe8101eb3b2e32c402340f7d4fb6e48cc27dc7a5aeea02cd0973cb09ee",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1249.png",
-        "sha256": "e592de8b616014475777ebffa93a689d4fe724b1492fcd66b8beb5813242d308"
+        "sha256": "e1bc6082ee151d40021a3a08db86957065d6cedc8ddf2e585aeb5b2141a358f6"
       },
       "animation": null,
       "traffic_mask": null
@@ -9983,7 +10409,7 @@
     {
       "id": 1255,
       "png": "masters/1255.png",
-      "sha256": "60be22e77a1c1810879caa245da5e20c868813d3caae59ea55b921a383173da4",
+      "sha256": "7f9670235d1f74482d2ca169fcaa2dc144e7c3506f0bdf5e3c6d8154288acfe0",
       "evidence": [
         {
           "id": 1255,
@@ -10040,9 +10466,18 @@
           "runtime_acceptance": true,
           "source_record": "corrections/2026-10-13/1255-draft-2.json",
           "runtime_review": "runtime-review-civic/visual-review.json"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+          "source_sha256": "60be22e77a1c1810879caa245da5e20c868813d3caae59ea55b921a383173da4",
+          "method": "2026-10-14 review corrections, matching lightmap and software parcel"
         }
       ],
-      "lightmap": "lightmaps/1255.png",
+      "lightmap": {
+        "png": "lightmaps/1255.png",
+        "sha256": "3fb59ef7d92faad46bb4cd9d617f9e6f9032c336fca4e657a168d89ef2b6386f"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -20108,8 +20543,8 @@
     },
     {
       "path": "lightmaps/1129.png",
-      "sha256": "83fce88dfff89a8e2fa7179e6f70eae7e65e99daa213b18a808ac6734bf614e8",
-      "bytes": 1087,
+      "sha256": "702d5feac186a032a12d653f5748713ba4e69d94097353c691e49f722b9cbf2a",
+      "bytes": 1078,
       "size": [
         128,
         172
@@ -20138,8 +20573,8 @@
     },
     {
       "path": "lightmaps/1132.png",
-      "sha256": "edf6f1c3db4345433b757d07a6adc529b547a5e9f147a3bfc900002b4ebde730",
-      "bytes": 914,
+      "sha256": "6cb4eb20aa3088430369db9960486eb85374ff791b443b7307cc9561a8b31c06",
+      "bytes": 913,
       "size": [
         128,
         116
@@ -20168,8 +20603,8 @@
     },
     {
       "path": "lightmaps/1140.png",
-      "sha256": "d52c9ac5594e7af4b2da909ecb3f28e1c70ed4f9006f0c8624472cbc748a9e46",
-      "bytes": 1350,
+      "sha256": "97f03056b529172949d28a5195665c5277cda888d99399aa8c3f8075558be93d",
+      "bytes": 1363,
       "size": [
         256,
         152
@@ -20178,28 +20613,28 @@
     },
     {
       "path": "lightmaps/1141.png",
-      "sha256": "7dcc524cce789146ca5738268dd621ec467d525da3074d42c3acf7c96a80d2b5",
-      "bytes": 1302,
+      "sha256": "76c6390dd1c074a7f8abb5f56f2170a5fac9ce5ff8ead4965da386e20bf4d129",
+      "bytes": 1307,
       "size": [
         256,
-        188
+        204
       ],
-      "decoded_rgba_bytes": 192512
+      "decoded_rgba_bytes": 208896
     },
     {
       "path": "lightmaps/1142.png",
-      "sha256": "c436bc2ac75d959e4b7faa1383d83b0c9fca98069818ec24f6614eb57cdd95a8",
-      "bytes": 1555,
+      "sha256": "2e51723310ea4142a0cae1b9e1ea5ca92f06acd3a88b2c66448b9a812f7e4172",
+      "bytes": 1658,
       "size": [
         256,
-        176
+        192
       ],
-      "decoded_rgba_bytes": 180224
+      "decoded_rgba_bytes": 196608
     },
     {
       "path": "lightmaps/1143.png",
-      "sha256": "8728990ec00c12a7a4ec147f31277c2e781b492507bd685fa482f5090a0bf607",
-      "bytes": 1536,
+      "sha256": "0130effdb34ef898267c14ce860fccb3a0c29ee8011d0a05213b69cd8d876ff7",
+      "bytes": 1070,
       "size": [
         256,
         256
@@ -20238,8 +20673,8 @@
     },
     {
       "path": "lightmaps/1147.png",
-      "sha256": "ac83310e2044aeaaa8eb45250ee3b9f38c173719c059894ea210cf4aacd1f30f",
-      "bytes": 1627,
+      "sha256": "8d15e1220b5283d8132bd4c0a1f93c9fd8024a71b2762b723cf090c943809291",
+      "bytes": 1609,
       "size": [
         256,
         356
@@ -20278,13 +20713,13 @@
     },
     {
       "path": "lightmaps/1151.png",
-      "sha256": "c075dc31b71db8f111fe4985c546a8038535dbfa4f30a89d67a42bb9878eb581",
-      "bytes": 1212,
+      "sha256": "fe50f643a03de4f082f1d19d967a3d80f37d40d745f9fa40ec3207b45f0bedea",
+      "bytes": 1009,
       "size": [
         256,
-        232
+        264
       ],
-      "decoded_rgba_bytes": 237568
+      "decoded_rgba_bytes": 270336
     },
     {
       "path": "lightmaps/1152.png",
@@ -20308,13 +20743,13 @@
     },
     {
       "path": "lightmaps/1154.png",
-      "sha256": "6332c50c308efe06f7e16c747219940c6e492f762a4e34db70b9ef7edd039177",
-      "bytes": 1526,
+      "sha256": "2ad885f8f142d38cc6ff6fabdbb8bd2d4185983dbc8f1c4e33eece38842699b4",
+      "bytes": 1658,
       "size": [
         256,
-        312
+        344
       ],
-      "decoded_rgba_bytes": 319488
+      "decoded_rgba_bytes": 352256
     },
     {
       "path": "lightmaps/1155.png",
@@ -20358,8 +20793,8 @@
     },
     {
       "path": "lightmaps/1159.png",
-      "sha256": "f8b083229a5366a12f2907496d94b2eb7617afdeaa797eebebb441fef3076590",
-      "bytes": 1056,
+      "sha256": "64f3767b289a3325b72967d58bcc3cb1757f9514f8aa6a55e5b41fa62ee35f55",
+      "bytes": 1047,
       "size": [
         256,
         216
@@ -20428,8 +20863,8 @@
     },
     {
       "path": "lightmaps/1174.png",
-      "sha256": "e97da0b595db9df1ac7a9c55df4bfb88f412b6b916aa7b544401db33212013d5",
-      "bytes": 1337,
+      "sha256": "802bb41657c11d1000b54e80c46a92802509051751cc4cc5ee39e47cac6e3051",
+      "bytes": 1152,
       "size": [
         384,
         308
@@ -20478,13 +20913,13 @@
     },
     {
       "path": "lightmaps/1179.png",
-      "sha256": "2c2fc898d1a9e5f0c4edb3daa4aea07d00fef35f652b259598ed33a1a13059bc",
-      "bytes": 3402,
+      "sha256": "a5a0febc7ed9c4a9fb8b1c6fa6800d3cf1f5f33d97d5de3332e8843567ed68c6",
+      "bytes": 4617,
       "size": [
         384,
-        460
+        540
       ],
-      "decoded_rgba_bytes": 706560
+      "decoded_rgba_bytes": 829440
     },
     {
       "path": "lightmaps/1180.png",
@@ -20518,88 +20953,88 @@
     },
     {
       "path": "lightmaps/1183.png",
-      "sha256": "a956e58957a19c77e5f2eeacf67135e05221422df6cd6eacf7b6458d43368a1e",
-      "bytes": 2482,
+      "sha256": "a2bb7e9c19afbd817347b56247ad947c38ff9b1e9f3eb1fb305dd3f396f40a6c",
+      "bytes": 3009,
       "size": [
         384,
-        580
+        676
       ],
-      "decoded_rgba_bytes": 890880
+      "decoded_rgba_bytes": 1038336
     },
     {
       "path": "lightmaps/1184.png",
-      "sha256": "30923901b506f9df3f3672de9b0ee6c258c4c475beada7e8f9957baf1ca3f137",
-      "bytes": 1976,
+      "sha256": "d254c195c95e2ad7386a83256c230cf1316681b890f62ac2ba9565d171ae4e83",
+      "bytes": 2778,
       "size": [
         384,
-        604
+        812
       ],
-      "decoded_rgba_bytes": 927744
+      "decoded_rgba_bytes": 1247232
     },
     {
       "path": "lightmaps/1185.png",
-      "sha256": "76025939ecebb334940f5f50cc14aa287afe649d1c710fb3f4418e9d15919ad3",
-      "bytes": 1435,
+      "sha256": "d469a7e2996ea76470da130d9c9841711abafca4a8a8657c4488507a832145e2",
+      "bytes": 1523,
       "size": [
         384,
-        344
+        376
       ],
-      "decoded_rgba_bytes": 528384
+      "decoded_rgba_bytes": 577536
     },
     {
       "path": "lightmaps/1186.png",
-      "sha256": "0255bce9e3f27c7292dbfdcc9a0fb7def89d43cab7e0fab30fe6080968dd2b71",
-      "bytes": 3382,
+      "sha256": "c0df357df92e869fc85c9cef1baaa9bf3f2daf12ce3672c63f4c6364a2be0d9f",
+      "bytes": 3679,
       "size": [
         384,
-        512
+        544
       ],
-      "decoded_rgba_bytes": 786432
+      "decoded_rgba_bytes": 835584
     },
     {
       "path": "lightmaps/1187.png",
-      "sha256": "a98559b2e946e621e8b2b3256116204de2b383846c181ae4df52dbef842ee045",
-      "bytes": 3823,
+      "sha256": "427741d6ea6b751a5490b97a3cf33499fb3d6ad53a374cd03b4226bb992db645",
+      "bytes": 4163,
       "size": [
         384,
-        548
+        564
       ],
-      "decoded_rgba_bytes": 841728
+      "decoded_rgba_bytes": 866304
     },
     {
       "path": "lightmaps/1188.png",
-      "sha256": "428dcab1a1b49c9c526cb29601e3d17bc0b3436329e969b3cc32e9bab5bfb544",
-      "bytes": 1206,
+      "sha256": "cf7fdd240dca3d7864c4ca061a731840fa876a06d98e703f7b0591bfd64037ba",
+      "bytes": 1220,
       "size": [
         384,
-        280
+        296
       ],
-      "decoded_rgba_bytes": 430080
+      "decoded_rgba_bytes": 454656
     },
     {
       "path": "lightmaps/1189.png",
-      "sha256": "ce3aae6bd867c13912644cdf20355bfa93a725e168b56c0371d7d07ed2d55ba8",
-      "bytes": 1596,
+      "sha256": "a94506c00fdbe46c736864d6f830f7bf12f5ba92ed696166dee1179788255a2f",
+      "bytes": 2222,
       "size": [
         384,
-        360
+        392
       ],
-      "decoded_rgba_bytes": 552960
+      "decoded_rgba_bytes": 602112
     },
     {
       "path": "lightmaps/1190.png",
-      "sha256": "ba22e2e99b2c32e8231ec3012a0127a4411f6af3a0bc82ad76e7e7ddb5771075",
-      "bytes": 1138,
+      "sha256": "b550ed19b23b21cd4820b9abb57e647f18afefec079facfdb73321ab56ecca99",
+      "bytes": 1165,
       "size": [
         384,
-        300
+        316
       ],
-      "decoded_rgba_bytes": 460800
+      "decoded_rgba_bytes": 485376
     },
     {
       "path": "lightmaps/1191.png",
-      "sha256": "8e0507a19b758dcb35743278ce32018949713f5b682e60e123fb08659808ed59",
-      "bytes": 1313,
+      "sha256": "2aae97f66a61977f6cdacd78f33600933562983da08687080a745128f4aa262a",
+      "bytes": 1310,
       "size": [
         384,
         316
@@ -20618,13 +21053,13 @@
     },
     {
       "path": "lightmaps/1193.png",
-      "sha256": "8740feed2412a7df4e2982f6f33446cc1563862397e62ebc84dbb25ca8708746",
-      "bytes": 1759,
+      "sha256": "e8b2e746a2ef11227faf29b06dbb97ca706d1446b25a3b3047e2034f4089821e",
+      "bytes": 1842,
       "size": [
         384,
-        260
+        276
       ],
-      "decoded_rgba_bytes": 399360
+      "decoded_rgba_bytes": 423936
     },
     {
       "path": "lightmaps/1201.png",
@@ -20758,8 +21193,8 @@
     },
     {
       "path": "lightmaps/1214.png",
-      "sha256": "cfe20de122df623c6c74734b06bac44ae4a4e0ac1f4ce0984bb5687ca4258bdd",
-      "bytes": 1228,
+      "sha256": "654442beadb7d51f1aed66613fedfa9687c22f98d2af1cd6391299e9c689a090",
+      "bytes": 1385,
       "size": [
         400,
         228
@@ -20788,8 +21223,8 @@
     },
     {
       "path": "lightmaps/1217.png",
-      "sha256": "33ca1a74de5da49f5f2c6af1b5b9782b478a4a72bd289a8fb89db29ea81c904b",
-      "bytes": 1586,
+      "sha256": "d086cce2183fe0386ec4403e3998358a9bc06b46eef24cdb49914c1e1ad367a9",
+      "bytes": 1360,
       "size": [
         544,
         356
@@ -20908,13 +21343,13 @@
     },
     {
       "path": "lightmaps/1232.png",
-      "sha256": "f897c4f36d522f8cf98478295c7b51b79842cd3fb5553325fc4baaf7fe1b5499",
-      "bytes": 912,
+      "sha256": "232bcd0bf09c27e603ecfba9754adaeca54750a6683867c2f5a2a8bf2726c7af",
+      "bytes": 928,
       "size": [
         128,
-        96
+        112
       ],
-      "decoded_rgba_bytes": 49152
+      "decoded_rgba_bytes": 57344
     },
     {
       "path": "lightmaps/1233.png",
@@ -20938,8 +21373,8 @@
     },
     {
       "path": "lightmaps/1236.png",
-      "sha256": "f1ce79fe9fb86a63c39ed3e8271c4d93abace24aae6615a5ca6a97af11acf7ba",
-      "bytes": 1120,
+      "sha256": "1123c97551c7775d6939bd5c4bf9ab09a5bd3dd8e469cc027a89bca8d44035cf",
+      "bytes": 1233,
       "size": [
         256,
         164
@@ -20948,8 +21383,8 @@
     },
     {
       "path": "lightmaps/1237.png",
-      "sha256": "bad56f03766a08a6c0abf626e70f6c099c8c3075d83a7b9e3ccd3236e6fc9122",
-      "bytes": 1057,
+      "sha256": "07b798b61c189896b13a987d5ff326afc37c1b33ec4d6e3c4008eab4703dddba",
+      "bytes": 1237,
       "size": [
         256,
         184
@@ -20998,8 +21433,8 @@
     },
     {
       "path": "lightmaps/1242.png",
-      "sha256": "3cacf90f8de92b0fd9ec7a3e441082c253afc09534635f5bbd82002d14e1e0f0",
-      "bytes": 976,
+      "sha256": "147e2cf2b5084d4f433872e4369793aa448c22b69e0ca01d83ab06c93f07675a",
+      "bytes": 965,
       "size": [
         288,
         180
@@ -21008,13 +21443,13 @@
     },
     {
       "path": "lightmaps/1243.png",
-      "sha256": "0a67a8e53cbfcfc30b9940359c628d730b6d73e8d301f70bd5a3e6b5b7659de9",
-      "bytes": 1001,
+      "sha256": "77fe01d982fae503094aa7aee41da6f5f5c111267a61d4cd8ac146af0c36ae43",
+      "bytes": 1227,
       "size": [
         256,
-        160
+        176
       ],
-      "decoded_rgba_bytes": 163840
+      "decoded_rgba_bytes": 180224
     },
     {
       "path": "lightmaps/1244.png",
@@ -21068,13 +21503,13 @@
     },
     {
       "path": "lightmaps/1249.png",
-      "sha256": "e592de8b616014475777ebffa93a689d4fe724b1492fcd66b8beb5813242d308",
-      "bytes": 1023,
+      "sha256": "e1bc6082ee151d40021a3a08db86957065d6cedc8ddf2e585aeb5b2141a358f6",
+      "bytes": 1027,
       "size": [
-        384,
+        400,
         232
       ],
-      "decoded_rgba_bytes": 356352
+      "decoded_rgba_bytes": 371200
     },
     {
       "path": "lightmaps/1250.png",
@@ -21128,8 +21563,8 @@
     },
     {
       "path": "lightmaps/1255.png",
-      "sha256": "32654e4a7b26c1b092cf5cde77937526fbe4ba1790105e1c4605c079a422aafe",
-      "bytes": 2003,
+      "sha256": "3fb59ef7d92faad46bb4cd9d617f9e6f9032c336fca4e657a168d89ef2b6386f",
+      "bytes": 2390,
       "size": [
         512,
         616
@@ -27328,8 +27763,8 @@
     },
     {
       "path": "masters/1129.png",
-      "sha256": "769a01ac175a2abf441c7798a6c96cbe2401ed57ac660bef27768acafbc096d4",
-      "bytes": 9171,
+      "sha256": "466f15071c24c119fc1c9f909cc0ee76546325a3eb98a651b609278b28f6ac04",
+      "bytes": 9440,
       "size": [
         128,
         172
@@ -27358,8 +27793,8 @@
     },
     {
       "path": "masters/1132.png",
-      "sha256": "49d1fd760e088fb697cf1aa5688951d46247beb3d9d891b7b8ce3fc6a46dac99",
-      "bytes": 4196,
+      "sha256": "1f8fa2aa5ed4b0b74547c31f98eff094dcf3b5fa892431918907edcd02f62d3b",
+      "bytes": 4251,
       "size": [
         128,
         116
@@ -27438,8 +27873,8 @@
     },
     {
       "path": "masters/1140.png",
-      "sha256": "48b6620d0f1a2708a03034df7f3017e2632b5c411219522e0ed2c239e6fa6897",
-      "bytes": 9766,
+      "sha256": "87c3b7553b85ee532fe11be984771d398e805f008e86a84504ba713c4e443f06",
+      "bytes": 10073,
       "size": [
         256,
         152
@@ -27448,28 +27883,28 @@
     },
     {
       "path": "masters/1141.png",
-      "sha256": "f342d16fc371bd4ea2cd2d63cffe7184157573d067ea5fb032eee36bb3f4bd26",
-      "bytes": 15837,
+      "sha256": "ec1eb9d02fe2c57a9e57d7c3281e141bd2d7251ad4289ab5808759e74a0aa5be",
+      "bytes": 17981,
       "size": [
         256,
-        188
+        204
       ],
-      "decoded_rgba_bytes": 192512
+      "decoded_rgba_bytes": 208896
     },
     {
       "path": "masters/1142.png",
-      "sha256": "29ba0367071342feb436aaee10d454371e66d41592adc76a560d3d6fad76d4b4",
-      "bytes": 14052,
+      "sha256": "def2de185a5e436eb0373c34923db54e43d782c43e36fb9b31b825cfeff8408a",
+      "bytes": 16717,
       "size": [
         256,
-        176
+        192
       ],
-      "decoded_rgba_bytes": 180224
+      "decoded_rgba_bytes": 196608
     },
     {
       "path": "masters/1143.png",
-      "sha256": "424ab553f4646cdf479078ad5964ea056cec7e8a14a6b8cc2d08c85afb9b364f",
-      "bytes": 15826,
+      "sha256": "0fe9434b8ad0b8e6b7971e605c8f644ff7e6f1de5b6e96d5c13ccb12bb00707b",
+      "bytes": 21594,
       "size": [
         256,
         256
@@ -27508,8 +27943,8 @@
     },
     {
       "path": "masters/1147.png",
-      "sha256": "e6c98e89b0a8843682a70f8c44a47d860b86ca4fe7c3ad8b41897480fd552a02",
-      "bytes": 34903,
+      "sha256": "6aaa00c1cff28f49bc9e2fdc1c49c396443d1a7a3d02e2003c90caf9d98efe3b",
+      "bytes": 34899,
       "size": [
         256,
         356
@@ -27548,13 +27983,13 @@
     },
     {
       "path": "masters/1151.png",
-      "sha256": "e35d966c77e681d077feb941687285172194706a6a31e47c89628d8e9ae941a0",
-      "bytes": 22332,
+      "sha256": "a31f29f6dbb9ada85554066c7fdc73a03d3ff82447fb92d88148a7751e67de0b",
+      "bytes": 26149,
       "size": [
         256,
-        232
+        264
       ],
-      "decoded_rgba_bytes": 237568
+      "decoded_rgba_bytes": 270336
     },
     {
       "path": "masters/1152.png",
@@ -27578,13 +28013,13 @@
     },
     {
       "path": "masters/1154.png",
-      "sha256": "07ae91e68758b5c7cb68f9f7352bf405dd5e70da9239f429d053a5a58ded0965",
-      "bytes": 24045,
+      "sha256": "c2d6fb8e73abcb8282cd4663c61c839273659a633d9353e8a81daac0f976db37",
+      "bytes": 30429,
       "size": [
         256,
-        312
+        344
       ],
-      "decoded_rgba_bytes": 319488
+      "decoded_rgba_bytes": 352256
     },
     {
       "path": "masters/1155.png",
@@ -27628,7 +28063,7 @@
     },
     {
       "path": "masters/1159.png",
-      "sha256": "187cd9fe260378e813b470a6c77cf1d06f524af784317e8578ad7c9796f1b0b5",
+      "sha256": "6eaf51d5915ff89e357102bbc0817f9c766abca9e0c27c6d90f60346138cc53a",
       "bytes": 15254,
       "size": [
         256,
@@ -27728,13 +28163,13 @@
     },
     {
       "path": "masters/1169.png",
-      "sha256": "6cf1e9f5adf2613dc3cd9a8529dd6f7555a29f446871ea074f74bacae2938a64",
-      "bytes": 10497,
+      "sha256": "e44ad4f2580e66425a7af8cb43fe683177c6ff4ae83e86298183620442d9dceb",
+      "bytes": 18480,
       "size": [
         256,
-        260
+        292
       ],
-      "decoded_rgba_bytes": 266240
+      "decoded_rgba_bytes": 299008
     },
     {
       "path": "masters/1170.png",
@@ -27778,8 +28213,8 @@
     },
     {
       "path": "masters/1174.png",
-      "sha256": "b6a87efc494de8b50b6cb8ea587a7ce6ca4962518fc9e95e343431455180fb93",
-      "bytes": 36130,
+      "sha256": "cf563de2e6f634ee56bb04bbe134db2231f3328becd86e1fe6e2dde356a77286",
+      "bytes": 33682,
       "size": [
         384,
         308
@@ -27828,13 +28263,13 @@
     },
     {
       "path": "masters/1179.png",
-      "sha256": "fcb40585f744f899eb02f1b52f65807d0758b607d0c7317016577529e529863b",
-      "bytes": 33846,
+      "sha256": "238fb3365f637c070647486cc88f4457fce18c69aa6b621f6e0e5fb1a6d06f32",
+      "bytes": 48235,
       "size": [
         384,
-        460
+        540
       ],
-      "decoded_rgba_bytes": 706560
+      "decoded_rgba_bytes": 829440
     },
     {
       "path": "masters/1180.png",
@@ -27868,88 +28303,88 @@
     },
     {
       "path": "masters/1183.png",
-      "sha256": "332d9fc9b45915470aac566e82d54f01e385a8cd3f89901abe5b9139e43ac5d5",
-      "bytes": 51501,
+      "sha256": "cbe10f0b78a3be0d713812edd5ee29ecb86f1eb7214a1f9632dc76d3bfe4e566",
+      "bytes": 68055,
       "size": [
         384,
-        580
+        676
       ],
-      "decoded_rgba_bytes": 890880
+      "decoded_rgba_bytes": 1038336
     },
     {
       "path": "masters/1184.png",
-      "sha256": "477ef66a3283e1def9cf0376cedea8ca7c8d9fe241c70a01bfe26d090201deac",
-      "bytes": 53549,
+      "sha256": "855a04890af5ec8d9a8cb2706aab39b8e92218a8c40acdccd884fc9213c1fdbc",
+      "bytes": 94947,
       "size": [
         384,
-        604
+        812
       ],
-      "decoded_rgba_bytes": 927744
+      "decoded_rgba_bytes": 1247232
     },
     {
       "path": "masters/1185.png",
-      "sha256": "f80cad9ccf9c02c9604bacf57dc06fb03999186aa4023a52dad059483f122cea",
-      "bytes": 34400,
+      "sha256": "b4d23792deeb7d82b2e9ada62988bf9544bdfa4972f11e1b3b99afe71a919a06",
+      "bytes": 42455,
       "size": [
         384,
-        344
+        376
       ],
-      "decoded_rgba_bytes": 528384
+      "decoded_rgba_bytes": 577536
     },
     {
       "path": "masters/1186.png",
-      "sha256": "455b040343193a7dd8b237ff24d83925a7485a2815ce6e1096a800a38eb5741c",
-      "bytes": 62645,
+      "sha256": "2de43650f224008d952f65371c94d9f03c826bf8ceaee4fd259531d5b79cd5af",
+      "bytes": 70201,
       "size": [
         384,
-        512
+        544
       ],
-      "decoded_rgba_bytes": 786432
+      "decoded_rgba_bytes": 835584
     },
     {
       "path": "masters/1187.png",
-      "sha256": "cab01aaca75e803c479f65f8439a9a00ceda4907cfb1f6625f8463a40b83fd94",
-      "bytes": 52175,
+      "sha256": "a520afcd95e4706f09894076920dd9bdab9d7589ceb211b498acf59253119f5a",
+      "bytes": 57956,
       "size": [
         384,
-        548
+        564
       ],
-      "decoded_rgba_bytes": 841728
+      "decoded_rgba_bytes": 866304
     },
     {
       "path": "masters/1188.png",
-      "sha256": "3ef6772cafbeebca25ba02356f388683580d8da2bc7d298624e671efb70194f5",
-      "bytes": 30093,
+      "sha256": "57a81656e24b7371d1e1b4dd3daf215efb56c2941aa91d9634230731803e9321",
+      "bytes": 33485,
       "size": [
         384,
-        280
+        296
       ],
-      "decoded_rgba_bytes": 430080
+      "decoded_rgba_bytes": 454656
     },
     {
       "path": "masters/1189.png",
-      "sha256": "25a03f62fd4cd01ccc55b88e36447bfdef4c4f4a87f5f8fa1bb46b98928a9d58",
-      "bytes": 36376,
+      "sha256": "9eb045a8585bd1043bef3ad0b2a5a7e63d2778efb3e202695fc8530b37483af5",
+      "bytes": 43959,
       "size": [
         384,
-        360
+        392
       ],
-      "decoded_rgba_bytes": 552960
+      "decoded_rgba_bytes": 602112
     },
     {
       "path": "masters/1190.png",
-      "sha256": "916ef982725d4cd52d2de00c2a8603dab708dbad21f4c87a1bdcdb1a8b544657",
-      "bytes": 29868,
+      "sha256": "b4150a5cc4a9bcea559dcf2be2a19880f94643e24346df6da0961c8ac1bfad47",
+      "bytes": 35351,
       "size": [
         384,
-        300
+        316
       ],
-      "decoded_rgba_bytes": 460800
+      "decoded_rgba_bytes": 485376
     },
     {
       "path": "masters/1191.png",
-      "sha256": "639c9237f9e8963d59d9303fdfecc69c54e878f63b2316a8623fc7c3e8ba5a01",
-      "bytes": 38706,
+      "sha256": "d77b5c08f9b9f6df6b85e2d789621ed5aea335946ab0112d62489f231f0f5e67",
+      "bytes": 38696,
       "size": [
         384,
         316
@@ -27968,13 +28403,13 @@
     },
     {
       "path": "masters/1193.png",
-      "sha256": "3855199742339e66225e4af7d26429f741f991c7a4a4a8d0dc73105a49fdcaad",
-      "bytes": 25822,
+      "sha256": "7640c39a9f4455ccf6118ba937498b0114addb490b426d84db65d42c859ec6be",
+      "bytes": 28384,
       "size": [
         384,
-        260
+        276
       ],
-      "decoded_rgba_bytes": 399360
+      "decoded_rgba_bytes": 423936
     },
     {
       "path": "masters/1194.png",
@@ -27998,18 +28433,18 @@
     },
     {
       "path": "masters/1196.png",
-      "sha256": "92110efcba9d795d1da0dde936f0f2fb376ddc3d96f254410f6f01f5f5d49e36",
-      "bytes": 35534,
+      "sha256": "a35b70d0eecb1dd16fad7a9d137105fad49a4e0a9a8ffa95f759295a087d2635",
+      "bytes": 35606,
       "size": [
-        400,
+        416,
         312
       ],
-      "decoded_rgba_bytes": 499200
+      "decoded_rgba_bytes": 519168
     },
     {
       "path": "masters/1197.png",
-      "sha256": "be8ed077da218c3cb60649cd346770c3a56d6145c86142893229f5883bac5988",
-      "bytes": 41003,
+      "sha256": "f27b86b73da245bada5c515d344c265778336ab1a25f31eb458bdd29a80943b9",
+      "bytes": 37011,
       "size": [
         400,
         376
@@ -28018,8 +28453,8 @@
     },
     {
       "path": "masters/1198.png",
-      "sha256": "33177ba099011e096b0e128d339db225efd2318e4daba8baeb171d5bcbd25f92",
-      "bytes": 4116,
+      "sha256": "3df3111354fe945962c00fb2933d1333744d346a042f9dcb64577765b4bec868",
+      "bytes": 3798,
       "size": [
         128,
         128
@@ -28178,8 +28613,8 @@
     },
     {
       "path": "masters/1214.png",
-      "sha256": "a53c7c7485df3b94394b3b46ef346a8a77d41b3958c7001fa24a124865d2eae3",
-      "bytes": 24792,
+      "sha256": "2eb888e8a8f4274b11459fbf60cca088f69c8f89cd2818c9b18b9ae7619b3567",
+      "bytes": 22868,
       "size": [
         400,
         228
@@ -28208,8 +28643,8 @@
     },
     {
       "path": "masters/1217.png",
-      "sha256": "d15ed4f26e71bf15669e6a938f0bd4fd2f8102f0136927fc4b475640e8a2e420",
-      "bytes": 46454,
+      "sha256": "534b117e5b79778175adc8e417e4d214a6677537465589868b334277ea70dd3e",
+      "bytes": 30567,
       "size": [
         544,
         356
@@ -28358,13 +28793,13 @@
     },
     {
       "path": "masters/1232.png",
-      "sha256": "3f2c3dfe9b3f5bb9186fa10d023eba306a424436cdaac9aa9ec2bc28105849cc",
-      "bytes": 2570,
+      "sha256": "0b8b7543fe72205984a7c622152145bbd355007fb9a5d681b8f06c428552df5c",
+      "bytes": 4312,
       "size": [
         128,
-        96
+        112
       ],
-      "decoded_rgba_bytes": 49152
+      "decoded_rgba_bytes": 57344
     },
     {
       "path": "masters/1233.png",
@@ -28398,8 +28833,8 @@
     },
     {
       "path": "masters/1236.png",
-      "sha256": "28d38ef9527cca397ec7559cf25943d0e49f44c7409bb2895ca02ac614eb86a5",
-      "bytes": 11323,
+      "sha256": "9eb9f81551a0de973b318704664910c00f7862f4e7df4dfb7da77f439ed35495",
+      "bytes": 11247,
       "size": [
         256,
         164
@@ -28408,8 +28843,8 @@
     },
     {
       "path": "masters/1237.png",
-      "sha256": "c1458a1eac55fe6aded6930a6f12592b0b6babd57319d700ebb99449b475fc65",
-      "bytes": 13754,
+      "sha256": "591bb689ca3eebbdf29b311ebde51d265c4dbc367837dd74467678eb8676d1f7",
+      "bytes": 13703,
       "size": [
         256,
         184
@@ -28458,8 +28893,8 @@
     },
     {
       "path": "masters/1242.png",
-      "sha256": "a589a8b22c3c7de4d05d7d79eb8cb267161fdb73224c448781e02248f351063c",
-      "bytes": 14534,
+      "sha256": "9e61d9121e2695869e771ba6ec188a4e2d1b5db3f9c396314134f9c0c3970667",
+      "bytes": 12966,
       "size": [
         288,
         180
@@ -28468,13 +28903,13 @@
     },
     {
       "path": "masters/1243.png",
-      "sha256": "97163733ce45534dc7a50bbfa6d9d5d43c7bb2a098cb28cb5bf9805932217e20",
-      "bytes": 12252,
+      "sha256": "94993ea6fd753e53b3b9f08372ab45c6cca14f832af243626c599d859c44d646",
+      "bytes": 15392,
       "size": [
         256,
-        160
+        176
       ],
-      "decoded_rgba_bytes": 163840
+      "decoded_rgba_bytes": 180224
     },
     {
       "path": "masters/1244.png",
@@ -28528,13 +28963,13 @@
     },
     {
       "path": "masters/1249.png",
-      "sha256": "fa3a40fe8101eb3b2e32c402340f7d4fb6e48cc27dc7a5aeea02cd0973cb09ee",
-      "bytes": 23677,
+      "sha256": "132e1b8807bb8d6ae178a310105cad7fe8644b2eeb7e17b5d44de1d94129c820",
+      "bytes": 24421,
       "size": [
-        384,
+        400,
         232
       ],
-      "decoded_rgba_bytes": 356352
+      "decoded_rgba_bytes": 371200
     },
     {
       "path": "masters/1250.png",
@@ -28588,8 +29023,8 @@
     },
     {
       "path": "masters/1255.png",
-      "sha256": "60be22e77a1c1810879caa245da5e20c868813d3caae59ea55b921a383173da4",
-      "bytes": 50754,
+      "sha256": "7f9670235d1f74482d2ca169fcaa2dc144e7c3506f0bdf5e3c6d8154288acfe0",
+      "bytes": 59018,
       "size": [
         512,
         616
@@ -51473,7 +51908,7 @@
     }
   },
   "raster_count": 3449,
-  "compressed_raster_bytes": 16913469,
+  "compressed_raster_bytes": 17047522,
   "unselected_retained_development_files": [
     "lightmaps/model-1188.png",
     "lightmaps/model-1192.png",
@@ -51481,11 +51916,22 @@
     "masters/model-1192.png"
   ],
   "delivery_rule": "Only manifest-referenced PNGs; rejected model1188/1192 development files are excluded.",
-  "all_rasters_as_rgba_bytes": 360921792,
+  "all_rasters_as_rgba_bytes": 362921152,
   "memory_limit": "The decoded sum is a file inventory, not measured process or GPU residency; aliases and atlases change residency.",
   "private_reference_files_in_pack": false,
   "publication_ready": false,
   "placement_review": {
+    "receipt": "graphics/placement-review.json",
+    "sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
+    "source_export_sha256": "38d6fec7195e739a42a72b80a45f9a50f0dde16bb1bde9933840e9753bd36e60",
+    "records": 72,
+    "numeric_adjustments": 24,
+    "text_notes": 52,
+    "generated_detail_revisions": 9,
+    "projection_calibrations": 13,
+    "editable_sources": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-parcels"
+  },
+  "previous_placement_review": {
     "receipt": "graphics/placement-review.json",
     "sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
     "source_export_sha256": "b09a19379a79713594de3417288ea8747a5bba93fbf3d0f1ae7622c41e690391",
