@@ -12,3 +12,10 @@ Private exact prompts and editable sources: corrections/2026-10-14-review86/artw
 Current receipts: placement-review.json and parcel-review.json.
 Selected raster inventory: ../provenance.json. Original references remain private.
 Existing license notices remain applicable; no new distribution license asserted.
+
+City review, 14 October 2026: code-native road/rail/terrain/pipe material revisions,
+mathematically corrected rubble, exact exported offsets, ImageGen moving-object,
+explosion and UI revisions. Built-in ImageGen; exact prompts and selected sources
+are preserved privately under corrections/2026-10-14-city-review/artwork.
+Generated transparency is preserved in RGBA companions. Color export uses the
+existing restrained palette. Receipt: city-review.json. No original pixels used.

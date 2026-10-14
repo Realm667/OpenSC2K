@@ -5311,6 +5311,7 @@
         64,
         19
       ],
+      "artwork_rgba": "artwork-rgba/1360.png",
       "lightmap": "lightmaps/1360.png"
     },
     {
@@ -5347,7 +5348,7 @@
         32,
         20
       ],
-      "lightmap": "lightmaps/1364.png"
+      "artwork_rgba": "artwork-rgba/1364.png"
     },
     {
       "id": 1365,
@@ -5356,7 +5357,7 @@
         32,
         13
       ],
-      "lightmap": "lightmaps/1365.png"
+      "artwork_rgba": "artwork-rgba/1365.png"
     },
     {
       "id": 1366,
@@ -5365,7 +5366,7 @@
         32,
         12
       ],
-      "lightmap": "lightmaps/1366.png"
+      "artwork_rgba": "artwork-rgba/1366.png"
     },
     {
       "id": 1367,
@@ -5374,7 +5375,7 @@
         32,
         17
       ],
-      "lightmap": "lightmaps/1367.png"
+      "artwork_rgba": "artwork-rgba/1367.png"
     },
     {
       "id": 1368,
@@ -5383,7 +5384,7 @@
         32,
         21
       ],
-      "lightmap": "lightmaps/1368.png"
+      "artwork_rgba": "artwork-rgba/1368.png"
     },
     {
       "id": 1369,
@@ -5473,7 +5474,7 @@
         32,
         28
       ],
-      "lightmap": "lightmaps/1378.png"
+      "artwork_rgba": "artwork-rgba/1378.png"
     },
     {
       "id": 1379,
@@ -5614,7 +5615,8 @@
       "logical_size": [
         32,
         64
-      ]
+      ],
+      "artwork_rgba": "artwork-rgba/1392.png"
     },
     {
       "id": 1393,
@@ -5622,7 +5624,8 @@
       "logical_size": [
         32,
         49
-      ]
+      ],
+      "artwork_rgba": "artwork-rgba/1393.png"
     },
     {
       "id": 1394,
@@ -5630,7 +5633,8 @@
       "logical_size": [
         32,
         39
-      ]
+      ],
+      "artwork_rgba": "artwork-rgba/1394.png"
     },
     {
       "id": 1395,
@@ -5638,7 +5642,8 @@
       "logical_size": [
         32,
         32
-      ]
+      ],
+      "artwork_rgba": "artwork-rgba/1395.png"
     },
     {
       "id": 1396,
@@ -7645,7 +7650,7 @@
         32,
         15
       ],
-      "lightmap": "lightmaps/1495.png"
+      "artwork_rgba": "artwork-rgba/1495.png"
     },
     {
       "id": 1496,
