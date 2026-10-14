@@ -2,11 +2,12 @@
 //! years, founding newspaper and graph history. This is NewCitySetup.create of
 //! the scripts.
 
-use super::template::{NEIGHBOR_COUNT, NEIGHBOR_FAME, NEIGHBOR_POPULATION, NEIGHBOR_STRIDE, NEIGHBOR_VALUE, draw_neighbors};
+use super::template::{NEIGHBOR_FAME, NEIGHBOR_POPULATION, NEIGHBOR_STRIDE, NEIGHBOR_VALUE, draw_neighbors};
 use super::{Generated, Options, generate_document, is_island};
 use crate::formats::document::{Document, ascii_byte};
 use crate::formats::sc2x::labels;
 use crate::sim::bytes::{read_u32_be, write_u32_be};
+use crate::sim::civic::neighbors;
 use crate::sim::ids::{sc2budget_layout as budget, sc2graph_layout as graph, sc2label_layout, sc2misc_layout as misc};
 use crate::sim::random::{GameLcgRandom, SimRandom};
 use crate::sim::reports::news;
@@ -149,7 +150,7 @@ pub fn create(
         );
     }
 
-    set_ocean_neighbors(&mut data, island);
+    set_ocean_neighbors(&mut data, document.payload("XBIT"), document.map_size, island);
 
     if !founding.newspaper_session.is_empty() {
         let papers = misc::PAPERS as usize;
@@ -239,17 +240,20 @@ fn set_mayor_label(document: &mut Document, name: &str) -> bool {
     chunk.set_decoded(changed)
 }
 
-/// FUN_0042e460 makes the first neighbor the ocean on an ocean map. An island
-/// map has the ocean on all sides.
-fn set_ocean_neighbors(data: &mut [u8], island: bool) {
+/// FUN_0042e460 makes the first neighbor the ocean on an ocean map, because
+/// the original ocean is always on the high-x side. An extended landform can
+/// put the ocean on any side, so the ocean neighbors follow the salt water of
+/// the map sides. See `neighbors::ocean_sides`.
+fn set_ocean_neighbors(data: &mut [u8], tile_flags: &[u8], map_size: i64, island: bool) {
     if read_u32_be(data, misc::HAS_OCEAN) == 0 {
         return;
     }
 
-    let slots = if island { NEIGHBOR_COUNT } else { 1 };
+    let shores = neighbors::shore_lengths(tile_flags, map_size);
+    let compass = read_u32_be(data, misc::COMPASS) & 3;
 
-    for slot in 0..slots {
-        let offset = misc::NEIGHBORS + slot * NEIGHBOR_STRIDE;
+    for side in neighbors::ocean_sides(&shores, map_size, island) {
+        let offset = misc::NEIGHBORS + neighbors::slot_of_side(side, compass) * NEIGHBOR_STRIDE;
 
         for field in [0, NEIGHBOR_POPULATION, NEIGHBOR_VALUE, NEIGHBOR_FAME] {
             write_u32_be(data, offset + field, 0);

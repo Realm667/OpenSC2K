@@ -98,6 +98,7 @@ mod rules {
     use super::super::gd::Vector2;
     use super::super::heights::EDGE;
     use super::super::noise::Noise;
+    use crate::sim::ids::sc2tile_flags::SALT_WATER;
     use crate::sim::random::GameLcgRandom;
 
     fn landform(height: i32) -> Vec<i32> {
@@ -265,6 +266,52 @@ mod rules {
         }
     }
 
+    /// The water tiles and the XBIT flags of a carved landform.
+    fn carved_water(names: &[&str], ocean: bool, river: bool, seed: i64) -> (Vec<bool>, Vec<u8>) {
+        let mut heights = landform(6);
+        let mut flags = vec![0_u8; heights.len()];
+        let selected = strings(names);
+        let options = Carve {
+            sea: 4,
+            features: &selected,
+            ocean,
+            river,
+            water: 10,
+            hills: 30,
+        };
+
+        features::carve(&mut heights, &mut flags, &options, &mut GameLcgRandom::new(seed));
+
+        (heights.iter().map(|&height| height < 4).collect(), flags)
+    }
+
+    /// The ocean and a bay are salt water. A river channel that is not in the sea
+    /// is fresh water, as the river of the original landform.
+    #[test]
+    fn only_the_sea_is_salt_water() {
+        let salt = SALT_WATER as u8;
+
+        for seed in [1, 29, 719] {
+            for (names, ocean) in [(&[][..], true), (&["bay"][..], false)] {
+                let (sea, _) = carved_water(names, ocean, false, seed);
+                let (channels, _) = carved_water(&[], false, true, seed);
+                let (water, flags) = carved_water(names, ocean, true, seed);
+                let mut fresh = 0;
+
+                for index in 0..water.len() {
+                    if sea[index] {
+                        assert!(water[index] && flags[index] & salt != 0, "the sea is salt water: {names:?} {seed}");
+                    } else if channels[index] && water[index] {
+                        assert_eq!(flags[index] & salt, 0, "the river is fresh water: {names:?} {seed}");
+                        fresh += 1;
+                    }
+                }
+
+                assert!(fresh > 0, "the river reaches inland: {names:?} {seed}");
+            }
+        }
+    }
+
     /// Ported from terrain_layout_test.gd: a headland with ocean on three sides.
     #[test]
     fn a_peninsula_keeps_its_headland() {
@@ -403,5 +450,136 @@ fn founded_cities_match_the_corpus() {
             expected.get("city"),
             "{key} city"
         );
+    }
+}
+
+/// The salt-water tiles along each edge in neighbor slot order at compass
+/// rotation 0, and the slots that are the ocean.
+fn ocean_sides(document: &crate::formats::document::Document) -> ([usize; 4], Vec<i64>) {
+    use crate::sim::ids::sc2misc_layout as misc;
+    use crate::sim::ids::sc2tile_flags::SALT_WATER;
+
+    let edge = document.map_size as usize;
+    let flags = document.payload("XBIT");
+    let salt = |x: usize, y: usize| i64::from(flags[x * edge + y]) & SALT_WATER != 0;
+    let last = edge - 1;
+    let shores = [
+        (0..edge).filter(|&y| salt(last, y)).count(),
+        (0..edge).filter(|&x| salt(x, last)).count(),
+        (0..edge).filter(|&y| salt(0, y)).count(),
+        (0..edge).filter(|&x| salt(x, 0)).count(),
+    ];
+    let oceans = (0..4)
+        .filter(|slot| document.misc_u32(misc::NEIGHBORS + slot * 0x10) & 0xffff == 0)
+        .collect();
+
+    (shores, oceans)
+}
+
+fn found(template: &crate::formats::document::Document, process: i64, game: i64) -> crate::formats::document::Document {
+    use super::setup::{self, Founding};
+    use crate::sim::random::{GameLcgRandom, SimRandom};
+
+    let founding = Founding {
+        city_name: "Coast".into(),
+        mayor_name: "Mayor".into(),
+        difficulty: 1,
+        starting_year: 1900,
+        ..Founding::default()
+    };
+
+    setup::create(
+        template,
+        &founding,
+        &mut SimRandom::new(process),
+        Some(&mut GameLcgRandom::new(game)),
+    )
+    .unwrap()
+    .document
+}
+
+/// The New City dialog turns the ocean of its landform to a random edge. The
+/// ocean neighbor is on the side of the ocean. The original landform keeps the
+/// ocean on the first neighbor side.
+#[test]
+fn the_ocean_neighbor_is_on_the_side_of_the_ocean() {
+    let mut moved = 0;
+
+    for (features, ocean, smooth) in [(&[][..], true, true), (&["bay"][..], false, true), (&[][..], true, false)] {
+        for seed in 1..7 {
+            let settings = Preview {
+                size: 128,
+                native_maps: false,
+                terrain: Options {
+                    ocean,
+                    river: true,
+                    hills: 12,
+                    water: 5,
+                    trees: 15,
+                    layout: "classic".into(),
+                    features: features.iter().map(|name| name.to_string()).collect(),
+                    smooth_slopes: smooth,
+                },
+                process_start: seed * 1000 + 7,
+                game_start: seed * 31 + 5,
+            };
+
+            let (preview_document, _, process, game) = preview(&settings).unwrap();
+            let (shores, oceans) = ocean_sides(&found(&preview_document, process, game));
+            let key = format!("{features:?} ocean {ocean} smooth {smooth} seed {seed}: {shores:?} {oceans:?}");
+
+            if !smooth {
+                assert_eq!(oceans, [0], "{key}");
+                continue;
+            }
+
+            assert!(!oceans.is_empty(), "{key}");
+            let most = *shores.iter().max().unwrap();
+
+            for slot in 0..4 {
+                let shore = shores[slot as usize];
+                let expected = shore * 2 >= 128 || (most * 2 < 128 && shore == most);
+                assert_eq!(oceans.contains(&slot), expected, "{key}");
+            }
+
+            if !oceans.contains(&0) {
+                moved += 1;
+            }
+        }
+    }
+
+    assert!(moved > 0, "no seed turns the ocean away from the first side");
+}
+
+/// The edge rule on fixed salt water: half an edge, the edge with the most, no
+/// salt water, and a turned compass.
+#[test]
+fn ocean_neighbors_follow_the_salt_water_edges() {
+    use super::template;
+    use crate::sim::ids::sc2misc_layout as misc;
+    use crate::sim::ids::sc2tile_flags::SALT_WATER;
+
+    type Tile = (usize, usize);
+    let edge = 128_usize;
+
+    // (compass, salt tiles, ocean slots)
+    let half: Vec<Tile> = (0..edge / 2).map(|y| (0, y)).chain((0..edge).map(|x| (x, 0))).collect();
+    let bay: Vec<Tile> = (40..50).map(|x| (x, edge - 1)).chain((60..64).map(|y| (edge - 1, y))).collect();
+    let east: Vec<Tile> = (0..edge).map(|y| (edge - 1, y)).collect();
+    let cases: [(u32, &[Tile], &[i64]); 4] = [(0, &half, &[2, 3]), (0, &bay, &[1]), (0, &[], &[0]), (1, &east, &[1])];
+
+    for (compass, salt, expected) in cases {
+        let mut document = template::empty_city(edge as i64);
+        document.set_misc_u32(misc::HAS_OCEAN, 1);
+        document.set_misc_u32(misc::COMPASS, compass);
+        let mut flags = vec![0_u8; edge * edge];
+
+        for (x, y) in salt {
+            flags[x * edge + y] = SALT_WATER as u8;
+        }
+
+        assert!(document.find_mut("XBIT").unwrap().set_decoded(flags));
+        let (_, oceans) = ocean_sides(&found(&document, 1, 1));
+        assert_eq!(oceans, expected, "compass {compass}");
     }
 }

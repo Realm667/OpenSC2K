@@ -62,6 +62,8 @@ func open(document: Sc2File) -> bool:
 	if city.document.sc2x_metadata.extensions.has("multiplayer_military") and not whole_number(city.document.sc2x_metadata.extensions.multiplayer_military, -1, 5):
 		error = "Invalid saved military proposal."
 		return false
+	# Apply the upstream load repair once on the host, before publishing snapshots.
+	CityNeighbors.repair_ocean_side(city)
 	engine = SimulationEngine.new(city)
 	controller = GameSpeedController.new(engine)
 	Sc2xCheckpoint.restore_random(engine, city.document.sc2x_metadata)

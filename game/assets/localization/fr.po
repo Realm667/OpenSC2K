@@ -28,6 +28,10 @@ msgstr " (le plus ancien)"
 
 #. Supplementary OpenSC2K translation; original terminology used where
 #. available.
+#. Supplementary translation of the upstream ocean-neighbor load repair.
+msgid " Moved the Ocean neighbor to the side of the map with the ocean."
+msgstr " Le voisin Océan a été déplacé du côté de la carte où se trouve la mer."
+
 msgid " Restored facility records for %d buildings."
 msgstr " Enregistrements de %d installations restaurés."
 

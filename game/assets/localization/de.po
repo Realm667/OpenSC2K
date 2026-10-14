@@ -20,6 +20,10 @@ msgstr ""
 msgid " (oldest)"
 msgstr " (älteste)"
 
+#. Supplementary translation of the upstream ocean-neighbor load repair.
+msgid " Moved the Ocean neighbor to the side of the map with the ocean."
+msgstr " Der Ozean-Nachbar wurde auf die Kartenseite mit dem Meer verschoben."
+
 msgid " Restored facility records for %d buildings."
 msgstr " Anlagendatensätze für %d Gebäude wiederhergestellt."
 

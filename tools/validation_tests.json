@@ -1,5 +1,11 @@
 [
   {
+    "id": "ocean_neighbor_load_test",
+    "script": "tests/ocean_neighbor_load_test.gd",
+    "domain": "simulation",
+    "lane": "product"
+  },
+  {
     "id": "visual_raster_test",
     "script": "tests/visual_raster_test.gd",
     "domain": "rendering",
