@@ -7,6 +7,7 @@ const Pack = preload("res://src/assets/graphics_pack.gd")
 
 
 func _initialize() -> void:
+	_check_visual_palette_swaps()
 	_check_master_registration()
 	var pack_root := "user://graphics-pack-test-%d" % Time.get_ticks_usec()
 	assert(DirAccess.make_dir_recursive_absolute(pack_root) == OK)
@@ -178,3 +179,44 @@ func _check_master_registration() -> void:
 	assert(master.large.parse(PackedByteArray([0, 0])))
 	assert(master.large.parcel_styles.is_empty(), "archive reload leaked parcel layer")
 	assert(master.large.visual_registration.is_empty(), "archive reload leaked previous pack registration")
+
+
+func _check_visual_palette_swaps() -> void:
+	var indices := Image.create(12, 24, false, Image.FORMAT_RGBA8)
+	indices.fill(Color8(0, 0, 0, 255))
+	indices.set_pixel(3, 4, Color8(1, 1, 1, 255))
+	var lamp := Image.create(12, 24, false, Image.FORMAT_RGBA8)
+	lamp.set_pixel(3, 4, Color8(220, 170, 90, 255))
+	var reads := {}
+	var reader := func(path: String) -> Image:
+		reads[path] = int(reads.get(path, 0)) + 1
+		return lamp if path == "lamp.png" else indices
+	var first := {"key": "person/0/0/0", "png": "base.png", "logical_size": [3, 6],
+		"master_scale": 4, "palette_swap": ["00000000", "ae584580"], "lightmap": "lamp.png"}
+	var second := first.duplicate(true)
+	second.key = "person/1/0/0"
+	second.palette_swap[1] = "66818dff"
+	var shared := first.duplicate(true)
+	shared.key = "person/2/0/0"
+	var loaded := VisualArtwork.load_records([first, second, shared], reader)
+	assert(loaded.error.is_empty(), loaded.error)
+	assert(reads == {"base.png": 1, "lamp.png": 1}, "Base and lamps must only decode once")
+	assert(loaded.frames[first.key].image.get_pixel(3, 4) == Color8(174, 88, 69, 128))
+	assert(loaded.frames[second.key].image.get_pixel(3, 4) == Color8(102, 129, 141, 255))
+	assert(loaded.frames[first.key].image.get_pixel(0, 0).a8 == 0)
+	assert(loaded.frames[first.key].image == loaded.frames[shared.key].image)
+	assert(loaded.frames[first.key].emission == loaded.frames[second.key].emission)
+	assert(indices.get_pixel(3, 4) == Color8(1, 1, 1, 255), "Recoloring must not modify the source")
+	for invalid in [[], ["00000000"], ["00000000", "zzzzzzzz"], ["00000000", "-0000001"],
+		["00000000", "+0000001"], ["00000000", "0x000001"], ["00000000", 17], "bad"]:
+		var bad := first.duplicate(true)
+		bad.palette_swap = invalid
+		var rejected := VisualArtwork.load_records([second, bad], reader)
+		assert(not rejected.error.is_empty() and rejected.frames.is_empty())
+	indices.set_pixel(3, 4, Color8(1, 2, 1, 255))
+	assert(not VisualArtwork.load_records([first], reader).error.is_empty())
+	indices.set_pixel(3, 4, Color8(1, 1, 1, 128))
+	assert(not VisualArtwork.load_records([first], reader).error.is_empty())
+	var plain := first.duplicate(true)
+	plain.erase("palette_swap")
+	assert(VisualArtwork.load_records([plain], reader).frames[plain.key].image == indices)

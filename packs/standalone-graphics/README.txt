@@ -32,3 +32,11 @@ manifest-referenced Visual Enhancements resources. Original pixels stay private.
 
 The personal Runtime is installed only by REL under the workspace rules.
 Existing project notices and graphics/LICENSE-STATUS.txt continue to apply.
+
+Palette consolidation (14 October 2026): all 528 vehicle/person variants retain
+their exact pixels, with 85 shared index PNGs and per-variant RGBA palettes.
+432 vehicle lightmap references share 49 unique PNGs. Expansion happens once at
+load; existing GPU batching and light/environment effects remain unchanged.
+RS uses the same built-in Visual Enhancement clouds as SC2K.
+Format: docs/visual-artwork-palettes.md; receipt: graphics/palette-review.json.
+Verification: D:/OpenSC2K/Codex/work/palette-swaps/CURRENT.txt.

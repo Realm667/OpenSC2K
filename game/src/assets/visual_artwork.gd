@@ -30,6 +30,7 @@ func _load(records: Variant, read_image: Callable) -> void:
 		return
 
 	var images: Dictionary[String, Image] = {}
+	var recolored: Dictionary[String, Image] = {}
 	for record: Variant in records:
 		if not record is Dictionary or not record.get("key") is String:
 			_fail("Visual artwork records require a string key")
@@ -56,6 +57,10 @@ func _load(records: Variant, read_image: Callable) -> void:
 		frame.image = _image(record.get("png"), read_image, images)
 		if frame.image == null:
 			return
+		if record.has("palette_swap"):
+			frame.image = _palette_image(frame.image, record.palette_swap, record.png, recolored)
+			if frame.image == null:
+				return
 		if frame.image.get_size() != frame.logical_size * frame.scale:
 			_fail("Visual artwork dimensions differ from logical_size times master_scale: %s" % key)
 			return
@@ -73,6 +78,49 @@ func _load(records: Variant, read_image: Callable) -> void:
 			else:
 				frame.season_mask = mask
 		frames[key] = frame
+
+
+func _palette_image(source: Image, values: Variant, path: String, cache: Dictionary[String, Image]) -> Image:
+	if not values is Array or values.is_empty() or values.size() > 256:
+		_fail("palette_swap must contain 1 to 256 RGBA hex colors")
+		return null
+	var colors := PackedByteArray()
+	var names := PackedStringArray()
+	for value: Variant in values:
+		if not value is String or value.length() != 8:
+			_fail("palette_swap colors must be eight hexadecimal digits")
+			return null
+		for character: String in value:
+			if not character in "0123456789abcdefABCDEF":
+				_fail("palette_swap colors must be eight hexadecimal digits")
+				return null
+		names.append(value.to_lower())
+		colors.append_array(value.hex_decode())
+	var key := path + "|" + ",".join(names)
+	if cache.has(key):
+		return cache[key]
+	var bytes := source.get_width() * source.get_height() * 4
+	if _decoded_bytes + bytes > MAX_DECODED_BYTES:
+		_fail("Visual artwork exceeds the decoded image budget")
+		return null
+	var rgba := source
+	if rgba.get_format() != Image.FORMAT_RGBA8:
+		rgba = source.duplicate()
+		rgba.convert(Image.FORMAT_RGBA8)
+	var indices := rgba.get_data()
+	var output := PackedByteArray()
+	output.resize(bytes)
+	for at in range(0, bytes, 4):
+		var index := int(indices[at])
+		if indices[at + 1] != index or indices[at + 2] != index or indices[at + 3] != 255 or index >= values.size():
+			_fail("Palette source must contain opaque grayscale indices within palette_swap")
+			return null
+		for channel in 4:
+			output[at + channel] = colors[index * 4 + channel]
+	var image := Image.create_from_data(source.get_width(), source.get_height(), false, Image.FORMAT_RGBA8, output)
+	_decoded_bytes += bytes
+	cache[key] = image
+	return image
 
 
 func _image(path: Variant, read_image: Callable, images: Dictionary[String, Image]) -> Image:
