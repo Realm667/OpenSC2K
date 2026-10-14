@@ -5,12 +5,10 @@ position, palette/lightmap transforms and deterministic textured-ground baking.
 Original SC2K supplies local visual inspiration, IDs, dimensions and categorical
 border colors only. No original image pixels are included in this source pack.
 
-Latest export (85): 48 user entries; 60 resources reviewed, 12 selected ImageGen
-revisions, two numeric offsets, 43 ground fills now part of their PNG artwork.
-Only colored contours remain software layers. Earlier accepted changes remain.
-Private sources and exact prompts: corrections/2026-10-14-review85/artwork.
-The attempted #1254 ImageGen edit was not selected: existing semitransparent RGBA
-already meets the request while preserving all original authored geometry.
+Latest export (86): 17 reviewed buildings, seven selected ImageGen revisions,
+eight existing motifs reprojected and two numeric offsets. Matching lightmaps
+share all transforms. Earlier baked ground and Nature pastel A contours remain.
+Private exact prompts and editable sources: corrections/2026-10-14-review86/artwork.
 Current receipts: placement-review.json and parcel-review.json.
 Selected raster inventory: ../provenance.json. Original references remain private.
 Existing license notices remain applicable; no new distribution license asserted.

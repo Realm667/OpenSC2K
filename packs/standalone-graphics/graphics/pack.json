@@ -1263,7 +1263,7 @@
       "png": "masters/1125.png",
       "logical_size": [
         32,
-        35
+        39
       ],
       "lightmap": "lightmaps/1125.png",
       "review_reference_size": [
@@ -1272,14 +1272,19 @@
       ],
       "review_padding": [
         0,
-        8,
+        12,
         0,
         0
       ],
       "parcel": {
         "border": "7e8fb7ff",
         "surface": "none"
-      }
+      },
+      "visual_registration": [
+        32,
+        0,
+        0
+      ]
     },
     {
       "id": 1126,
@@ -1656,7 +1661,7 @@
       "png": "masters/1140.png",
       "logical_size": [
         64,
-        38
+        42
       ],
       "lightmap": "lightmaps/1140.png",
       "review_reference_size": [
@@ -1665,7 +1670,7 @@
       ],
       "review_padding": [
         0,
-        4,
+        8,
         0,
         0
       ],
@@ -1821,7 +1826,7 @@
       "png": "masters/1146.png",
       "logical_size": [
         64,
-        86
+        98
       ],
       "lightmap": "lightmaps/1146.png",
       "review_reference_size": [
@@ -1830,7 +1835,7 @@
       ],
       "review_padding": [
         0,
-        8,
+        20,
         0,
         0
       ],
@@ -4057,7 +4062,7 @@
       "png": "masters/1237.png",
       "logical_size": [
         64,
-        46
+        50
       ],
       "lightmap": "lightmaps/1237.png",
       "visual_registration": [
@@ -4071,7 +4076,7 @@
       ],
       "review_padding": [
         0,
-        4,
+        8,
         0,
         4
       ],
@@ -4165,7 +4170,6 @@
         72,
         45
       ],
-      "lightmap": "lightmaps/1242.png",
       "visual_registration": [
         64,
         4,

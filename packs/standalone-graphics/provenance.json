@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "date": "2026-10-14",
-  "pack_manifest_sha256": "f2f015a1071254c444384bf7d4bedfa39e0b604deef53c8da7771465174a5c22",
+  "pack_manifest_sha256": "e69d16af17a6f335d3f33ac1cd8845682d92b612ab315f39b34dd16bd17a36c4",
   "scope": "Independent Remaster graphics and matching emission/season/traffic masks",
   "generation": "OpenAI ImageGen artwork plus independently authored deterministic projection, compositing and UI/traffic drawing tools",
   "references": "Original resources inspected locally for IDs, dimensions, functions, orientations and visual inspiration. No original pixel files are delivered.",
@@ -2843,7 +2843,7 @@
     {
       "id": 1125,
       "png": "masters/1125.png",
-      "sha256": "738f58140e52272806067075af53071bbf1c9517a2ccbfbffe88c4e36ac1818a",
+      "sha256": "e9b380bbb67a8e6281a6e2666e59985ae8ecb12edcc4e430976f3ce6fe198fb7",
       "evidence": [
         {
           "report": "reports/small-buildings.json",
@@ -2857,11 +2857,17 @@
           "report_sha256": "d68fea4c6ae2ae55f8c0ca8d932b5e99f2e6c18f2c38a505748c3c5f38cecef8",
           "source_sha256": "2fb1fe4fe8990e9ea5650f4f243a881363381ae0443dd66b0f6de50460c88a5b",
           "method": "Shared mathematical art/lightmap transform"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "f246396e4bfd59891371dcd5d90207197c8f6689c489aa25154c1ce87847cc23",
+          "source_sha256": "738f58140e52272806067075af53071bbf1c9517a2ccbfbffe88c4e36ac1818a",
+          "method": "Review86: shared facade projection, footprint fit and authored Style A revisions"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1125.png",
-        "sha256": "03b745e7d0f6f5088ade63b20fa0a5e735bfaf705f22bb0246f6a6febc3c42e6"
+        "sha256": "3f8099c6919d6e35def9ef68fd7364f4bac56c79ad00ab3d5893589ceb5030e7"
       },
       "animation": null,
       "traffic_mask": null
@@ -3063,7 +3069,7 @@
     {
       "id": 1129,
       "png": "masters/1129.png",
-      "sha256": "466f15071c24c119fc1c9f909cc0ee76546325a3eb98a651b609278b28f6ac04",
+      "sha256": "8d3434138167a23692fa215508448093f96cf95e2ce94775504606dd021d4d3d",
       "evidence": [
         {
           "report": "reports/small-buildings.json",
@@ -3083,11 +3089,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "769a01ac175a2abf441c7798a6c96cbe2401ed57ac660bef27768acafbc096d4",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "f246396e4bfd59891371dcd5d90207197c8f6689c489aa25154c1ce87847cc23",
+          "source_sha256": "466f15071c24c119fc1c9f909cc0ee76546325a3eb98a651b609278b28f6ac04",
+          "method": "Review86: shared facade projection, footprint fit and authored Style A revisions"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1129.png",
-        "sha256": "702d5feac186a032a12d653f5748713ba4e69d94097353c691e49f722b9cbf2a"
+        "sha256": "87584ea5ac62ae0949b4e273c868f714720bd4e2cb4d8cec4f20d2ed82c8f802"
       },
       "animation": null,
       "traffic_mask": null
@@ -3133,7 +3145,7 @@
     {
       "id": 1131,
       "png": "masters/1131.png",
-      "sha256": "5fb2af459d51c5b41d60e4866556729a398af907f89bce0a069893a4ecf5ea10",
+      "sha256": "5d9f13b6014c70211b1b050c44ad968d9879f74629ab7432f07771b127def349",
       "evidence": [
         {
           "report": "reports/small-industry.json",
@@ -3159,11 +3171,17 @@
           "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
           "source_sha256": "ab8a8e4e6b993d8789d4f6b9f352c65e7ef733142c6910f8f192a0a61a4a5282",
           "method": "Review85: revised style, axes and textured ground baked into RS art"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "f246396e4bfd59891371dcd5d90207197c8f6689c489aa25154c1ce87847cc23",
+          "source_sha256": "5fb2af459d51c5b41d60e4866556729a398af907f89bce0a069893a4ecf5ea10",
+          "method": "Review86: shared facade projection, footprint fit and authored Style A revisions"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1131.png",
-        "sha256": "0b3477bb8e6f9afafb5c9ae1a7cee1918fbfb18800e073ae33ce20a77e80c856"
+        "sha256": "dfa5a045b27aeed4e82207868f7dc631db91db9e40e5c528959535515d720298"
       },
       "animation": null,
       "traffic_mask": null
@@ -3171,7 +3189,7 @@
     {
       "id": 1132,
       "png": "masters/1132.png",
-      "sha256": "1f8fa2aa5ed4b0b74547c31f98eff094dcf3b5fa892431918907edcd02f62d3b",
+      "sha256": "726db1369e9334f1e84c97fffaccf121f50fa01bda91063d4e5a69f6e78291f6",
       "evidence": [
         {
           "report": "reports/small-industry.json",
@@ -3191,11 +3209,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "49d1fd760e088fb697cf1aa5688951d46247beb3d9d891b7b8ce3fc6a46dac99",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "f246396e4bfd59891371dcd5d90207197c8f6689c489aa25154c1ce87847cc23",
+          "source_sha256": "1f8fa2aa5ed4b0b74547c31f98eff094dcf3b5fa892431918907edcd02f62d3b",
+          "method": "Review86: shared facade projection, footprint fit and authored Style A revisions"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1132.png",
-        "sha256": "6cb4eb20aa3088430369db9960486eb85374ff791b443b7307cc9561a8b31c06"
+        "sha256": "d67636eb437d5362df4f2970d44a61480d3f8e66150b5c496acac01c0c139204"
       },
       "animation": null,
       "traffic_mask": null
@@ -3418,7 +3442,7 @@
     {
       "id": 1140,
       "png": "masters/1140.png",
-      "sha256": "87c3b7553b85ee532fe11be984771d398e805f008e86a84504ba713c4e443f06",
+      "sha256": "4794547c3c605a8f165b7f1ce7e7fbe2a7af6e585efa3147e4891bfe7d1fadca",
       "evidence": [
         {
           "id": 1140,
@@ -3518,11 +3542,17 @@
           "report_sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
           "source_sha256": "48b6620d0f1a2708a03034df7f3017e2632b5c411219522e0ed2c239e6fa6897",
           "method": "2026-10-14 review corrections, matching lightmap and software parcel"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "f246396e4bfd59891371dcd5d90207197c8f6689c489aa25154c1ce87847cc23",
+          "source_sha256": "87c3b7553b85ee532fe11be984771d398e805f008e86a84504ba713c4e443f06",
+          "method": "Review86: shared facade projection, footprint fit and authored Style A revisions"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1140.png",
-        "sha256": "97f03056b529172949d28a5195665c5277cda888d99399aa8c3f8075558be93d"
+        "sha256": "452b95804cc5ae27c5af0aa71798224448a21893b18fdab618ade4366cd9c24d"
       },
       "animation": null,
       "traffic_mask": null
@@ -3645,7 +3675,7 @@
     {
       "id": 1143,
       "png": "masters/1143.png",
-      "sha256": "a56d0fced0bb15eb38034cf1d39a27b6e03074f9cc4bbe47ddcc732bcc426ebb",
+      "sha256": "87f95c1f3c4ba041db4c009b3efd466259420670bc5ff41b5a571897a0daa29f",
       "evidence": [
         {
           "report": "reports/apartments.json",
@@ -3671,11 +3701,17 @@
           "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
           "source_sha256": "0fe9434b8ad0b8e6b7971e605c8f644ff7e6f1de5b6e96d5c13ccb12bb00707b",
           "method": "Review85: revised style, axes and textured ground baked into RS art"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "f246396e4bfd59891371dcd5d90207197c8f6689c489aa25154c1ce87847cc23",
+          "source_sha256": "a56d0fced0bb15eb38034cf1d39a27b6e03074f9cc4bbe47ddcc732bcc426ebb",
+          "method": "Review86: shared facade projection, footprint fit and authored Style A revisions"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1143.png",
-        "sha256": "8793963f0bb63ce1c0cf1d176b5e05222508c7197421343f90e3c1ca3d7ede98"
+        "sha256": "b08a45f3a2c34352457525466f84328324bda5e602eaa797eaa6313b265c0b6e"
       },
       "animation": null,
       "traffic_mask": null
@@ -3747,7 +3783,7 @@
     {
       "id": 1146,
       "png": "masters/1146.png",
-      "sha256": "46a41a2766de1f7d4a4220e108f35ec8f750182f8ef2353c44e67405899b0aa1",
+      "sha256": "9964e0d25bc40d066c6e919f88a6b21ea9b1051b11b765c0d3b404e44e870ba2",
       "evidence": [
         {
           "report": "reports/apartments.json",
@@ -3773,11 +3809,17 @@
           "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
           "source_sha256": "3b3bab49966bd79788cba1db90c798385a222fcbfd2ede97adc83a5a0212c9eb",
           "method": "Review85: revised style, axes and textured ground baked into RS art"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "f246396e4bfd59891371dcd5d90207197c8f6689c489aa25154c1ce87847cc23",
+          "source_sha256": "46a41a2766de1f7d4a4220e108f35ec8f750182f8ef2353c44e67405899b0aa1",
+          "method": "Review86: shared facade projection, footprint fit and authored Style A revisions"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1146.png",
-        "sha256": "5b6c0a808ab703a9d7375fed673c54e2f8f4b5650d7506bf634b1fe577b2942f"
+        "sha256": "6bb15a45350cb5b0c06ee9bd487c03583633533bd7dddefbb70286f39b944fba"
       },
       "animation": null,
       "traffic_mask": null
@@ -4668,7 +4710,7 @@
     {
       "id": 1158,
       "png": "masters/1158.png",
-      "sha256": "f02fae8a7087824672c965674cc6bd3fcf6a8b4b22dc598930c771e48eb682f9",
+      "sha256": "dc5db6b5d41e73bca2f7faa8b10d688fa8dfd01b84c2813f4d95e2e3bbc5834c",
       "evidence": [
         {
           "report": "reports/industry.json",
@@ -4694,11 +4736,17 @@
           "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
           "source_sha256": "134faa5435ec3960cbfac34a767bc6821cfee2c1260825380ed70223fe25cca1",
           "method": "Review85: revised style, axes and textured ground baked into RS art"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "f246396e4bfd59891371dcd5d90207197c8f6689c489aa25154c1ce87847cc23",
+          "source_sha256": "f02fae8a7087824672c965674cc6bd3fcf6a8b4b22dc598930c771e48eb682f9",
+          "method": "Review86: shared facade projection, footprint fit and authored Style A revisions"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1158.png",
-        "sha256": "64bad2c0e17c2301cc1a08278af37ec822e5bb9349e4ca0ab5a6b99e1b2a8df5"
+        "sha256": "bc5e7e4778c139a9b8f34011d24b132b386ecaf9a0902e1d1ed4bb0a2bea8637"
       },
       "animation": null,
       "traffic_mask": null
@@ -5250,7 +5298,7 @@
     {
       "id": 1169,
       "png": "masters/1169.png",
-      "sha256": "0d64c29714f09764b1855986e59ebd726750619b97e1600d49097d8cd952b399",
+      "sha256": "5f0da8d403304fa1105e6c8e5d582c33bde70f554637a43ffa1b6ce677c1e099",
       "evidence": [
         {
           "report": "reports/construction.json",
@@ -5276,6 +5324,12 @@
           "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
           "source_sha256": "e44ad4f2580e66425a7af8cb43fe683177c6ff4ae83e86298183620442d9dceb",
           "method": "Review85: revised style, axes and textured ground baked into RS art"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "f246396e4bfd59891371dcd5d90207197c8f6689c489aa25154c1ce87847cc23",
+          "source_sha256": "0d64c29714f09764b1855986e59ebd726750619b97e1600d49097d8cd952b399",
+          "method": "Review86: shared facade projection, footprint fit and authored Style A revisions"
         }
       ],
       "lightmap": null,
@@ -6954,7 +7008,7 @@
     {
       "id": 1196,
       "png": "masters/1196.png",
-      "sha256": "6dd9a40490cc90d3c6e146b0104a6ac6b6b4e468d4b84fda9c5f9200edb3b6db",
+      "sha256": "390e5a028e571d71087908c3939e45a1f4458342319a3c047f8524048bc86167",
       "evidence": [
         {
           "id": 1196,
@@ -7031,6 +7085,12 @@
           "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
           "source_sha256": "a35b70d0eecb1dd16fad7a9d137105fad49a4e0a9a8ffa95f759295a087d2635",
           "method": "Review85: revised style, axes and textured ground baked into RS art"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "f246396e4bfd59891371dcd5d90207197c8f6689c489aa25154c1ce87847cc23",
+          "source_sha256": "6dd9a40490cc90d3c6e146b0104a6ac6b6b4e468d4b84fda9c5f9200edb3b6db",
+          "method": "Review86: shared facade projection, footprint fit and authored Style A revisions"
         }
       ],
       "lightmap": null,
@@ -7040,7 +7100,7 @@
     {
       "id": 1197,
       "png": "masters/1197.png",
-      "sha256": "951e7a786cfa23c758a7c0e5e86b2aa821174d88baefd083fd53a2255d237674",
+      "sha256": "b32df40452ab8706ff361d05fa1b1c13229008aa556c6b10d8a741b474675ee9",
       "evidence": [
         {
           "id": 1197,
@@ -7116,6 +7176,12 @@
           "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
           "source_sha256": "f27b86b73da245bada5c515d344c265778336ab1a25f31eb458bdd29a80943b9",
           "method": "Review85: revised style, axes and textured ground baked into RS art"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "f246396e4bfd59891371dcd5d90207197c8f6689c489aa25154c1ce87847cc23",
+          "source_sha256": "951e7a786cfa23c758a7c0e5e86b2aa821174d88baefd083fd53a2255d237674",
+          "method": "Review86: shared facade projection, footprint fit and authored Style A revisions"
         }
       ],
       "lightmap": null,
@@ -8127,7 +8193,7 @@
     {
       "id": 1212,
       "png": "masters/1212.png",
-      "sha256": "ed32230c86563a4174ddb71d14c227462456d9d0e046595c8e11cb9d0aeab55b",
+      "sha256": "d0fb42b4bba6cff20f9e11e3b22511226f27a55f934f324c5cc62c7507569ec2",
       "evidence": [
         {
           "report": "reports/civic.json",
@@ -8153,11 +8219,17 @@
           "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
           "source_sha256": "58f8eb82eee5fe9da2307712b8781c33307359bd7863fcb7759f6df6bc560b3f",
           "method": "Review85: revised style, axes and textured ground baked into RS art"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "f246396e4bfd59891371dcd5d90207197c8f6689c489aa25154c1ce87847cc23",
+          "source_sha256": "ed32230c86563a4174ddb71d14c227462456d9d0e046595c8e11cb9d0aeab55b",
+          "method": "Review86: shared facade projection, footprint fit and authored Style A revisions"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1212.png",
-        "sha256": "3c9d7b8b59c5a2100191e4086ddc934d4c54f93709963638de83bb67e71e6ba7"
+        "sha256": "f10b23e2fbe6aee14f0e26a714f4c31c5165afee44b432516f75494903838eff"
       },
       "animation": null,
       "traffic_mask": null
@@ -9437,7 +9509,7 @@
     {
       "id": 1237,
       "png": "masters/1237.png",
-      "sha256": "0c8c23749e8cf22d38e23bc24cca5fc42600126baf789c5262c99796fedd1fac",
+      "sha256": "83ce33e868c3f0daa87ae50e8bab9be66cdca25668a7ad9445bab81e828dd6fb",
       "evidence": [
         {
           "id": 1237,
@@ -9546,11 +9618,17 @@
           "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
           "source_sha256": "591bb689ca3eebbdf29b311ebde51d265c4dbc367837dd74467678eb8676d1f7",
           "method": "Review85: revised style, axes and textured ground baked into RS art"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "f246396e4bfd59891371dcd5d90207197c8f6689c489aa25154c1ce87847cc23",
+          "source_sha256": "0c8c23749e8cf22d38e23bc24cca5fc42600126baf789c5262c99796fedd1fac",
+          "method": "Review86: shared facade projection, footprint fit and authored Style A revisions"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1237.png",
-        "sha256": "a8e8d863202dff392142c6918907328fb323ea800befde378548bf06cce2ede5"
+        "sha256": "e472266d7b70f10a20649cf052795690e2648177721331f848a1084badb88565"
       },
       "animation": null,
       "traffic_mask": null
@@ -9699,7 +9777,7 @@
     {
       "id": 1240,
       "png": "masters/1240.png",
-      "sha256": "9feba6324d4e293df42ba22a31bc9b5029c6e1d5602078512be7891cac435e37",
+      "sha256": "4e78912edbda30b0266b4ac6a4c887b96cddc2fa21f304527fdf864d96cc1bd3",
       "evidence": [
         {
           "report": "reports/transport-service.json",
@@ -9719,11 +9797,17 @@
           "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
           "source_sha256": "71784b98c26c77ef1a837f01ae4819bd1cef2a84ff16844c5a77bb5d074e9838",
           "method": "Review85: revised style, axes and textured ground baked into RS art"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "f246396e4bfd59891371dcd5d90207197c8f6689c489aa25154c1ce87847cc23",
+          "source_sha256": "9feba6324d4e293df42ba22a31bc9b5029c6e1d5602078512be7891cac435e37",
+          "method": "Review86: shared facade projection, footprint fit and authored Style A revisions"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1240.png",
-        "sha256": "5c218a05b1303c54026d5c4ba5dc88ee4379796a4e9ab76d411bbee94940523e"
+        "sha256": "91d3e11f49f12341d1a4e553404d10cd42b9c751720843025e33b09f60b1b320"
       },
       "animation": null,
       "traffic_mask": null
@@ -9797,7 +9881,7 @@
     {
       "id": 1242,
       "png": "masters/1242.png",
-      "sha256": "a22be15f41d2fcc1b72b37bca43853b7b32b2163958686e05fac2eb38865aad2",
+      "sha256": "d7bef34d034c58d5df73b46d9dfe7e2e6ee1ef6763847340f839b1b19ea31b76",
       "evidence": [
         {
           "report": "reports/transport-service.json",
@@ -9823,19 +9907,22 @@
           "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
           "source_sha256": "9e61d9121e2695869e771ba6ec188a4e2d1b5db3f9c396314134f9c0c3970667",
           "method": "Review85: revised style, axes and textured ground baked into RS art"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "f246396e4bfd59891371dcd5d90207197c8f6689c489aa25154c1ce87847cc23",
+          "source_sha256": "a22be15f41d2fcc1b72b37bca43853b7b32b2163958686e05fac2eb38865aad2",
+          "method": "Review86: shared facade projection, footprint fit and authored Style A revisions"
         }
       ],
-      "lightmap": {
-        "png": "lightmaps/1242.png",
-        "sha256": "d4a6a3a74934566deea39bdeb180acdfaf9c0997b68dbefb94d3a134e368a481"
-      },
+      "lightmap": null,
       "animation": null,
       "traffic_mask": null
     },
     {
       "id": 1243,
       "png": "masters/1243.png",
-      "sha256": "d3684116722b5212faddfe4b1fe1e31783c3c068cdc7655d8af6b7f17fc96be2",
+      "sha256": "7d1e66164a63fe85ddd4bcf8805fbf1fa0449c5227ed1f5d80b6a175fc02acfe",
       "evidence": [
         {
           "id": 1243,
@@ -9938,11 +10025,17 @@
           "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
           "source_sha256": "94993ea6fd753e53b3b9f08372ab45c6cca14f832af243626c599d859c44d646",
           "method": "Review85: revised style, axes and textured ground baked into RS art"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "f246396e4bfd59891371dcd5d90207197c8f6689c489aa25154c1ce87847cc23",
+          "source_sha256": "d3684116722b5212faddfe4b1fe1e31783c3c068cdc7655d8af6b7f17fc96be2",
+          "method": "Review86: shared facade projection, footprint fit and authored Style A revisions"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1243.png",
-        "sha256": "0276373c48b9d70635173aaf016f46c1fc9d48c2296eadabb9a33c2fd31974e7"
+        "sha256": "882636f5d4165853ac920e9aefd40e29df00b3de286e600d7fd42420b15d182a"
       },
       "animation": null,
       "traffic_mask": null
@@ -10119,7 +10212,7 @@
     {
       "id": 1246,
       "png": "masters/1246.png",
-      "sha256": "7c8c124e1d583e9fd2028076001801958d819c517b151ec216c613d70da3eab0",
+      "sha256": "4f339c13bed8a2efd273b95a62d4ba8a126150085cf993b9db8e60d53117cbe1",
       "evidence": [
         {
           "report": "reports/transport-service.json",
@@ -10139,11 +10232,17 @@
           "report_sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
           "source_sha256": "6f8d5f92d91b8f98a9d0b38c12951bd4869cda16cb64019a8ba79f68dafc9018",
           "method": "Review85: revised style, axes and textured ground baked into RS art"
+        },
+        {
+          "report": "graphics/placement-review.json",
+          "report_sha256": "f246396e4bfd59891371dcd5d90207197c8f6689c489aa25154c1ce87847cc23",
+          "source_sha256": "7c8c124e1d583e9fd2028076001801958d819c517b151ec216c613d70da3eab0",
+          "method": "Review86: shared facade projection, footprint fit and authored Style A revisions"
         }
       ],
       "lightmap": {
         "png": "lightmaps/1246.png",
-        "sha256": "d3ae0e6549ed89d8a17f8be633bb556ba2ed9e87a9384825626feebc665e1736"
+        "sha256": "148cff485ac901d8c8dceed4fb8720059702c9178e335c15c5d9e53de44656c0"
       },
       "animation": null,
       "traffic_mask": null
@@ -20863,13 +20962,13 @@
     },
     {
       "path": "lightmaps/1125.png",
-      "sha256": "03b745e7d0f6f5088ade63b20fa0a5e735bfaf705f22bb0246f6a6febc3c42e6",
-      "bytes": 1030,
+      "sha256": "3f8099c6919d6e35def9ef68fd7364f4bac56c79ad00ab3d5893589ceb5030e7",
+      "bytes": 1065,
       "size": [
         128,
-        140
+        156
       ],
-      "decoded_rgba_bytes": 71680
+      "decoded_rgba_bytes": 79872
     },
     {
       "path": "lightmaps/1126.png",
@@ -20903,8 +21002,8 @@
     },
     {
       "path": "lightmaps/1129.png",
-      "sha256": "702d5feac186a032a12d653f5748713ba4e69d94097353c691e49f722b9cbf2a",
-      "bytes": 1078,
+      "sha256": "87584ea5ac62ae0949b4e273c868f714720bd4e2cb4d8cec4f20d2ed82c8f802",
+      "bytes": 1089,
       "size": [
         128,
         172
@@ -20923,8 +21022,8 @@
     },
     {
       "path": "lightmaps/1131.png",
-      "sha256": "0b3477bb8e6f9afafb5c9ae1a7cee1918fbfb18800e073ae33ce20a77e80c856",
-      "bytes": 952,
+      "sha256": "dfa5a045b27aeed4e82207868f7dc631db91db9e40e5c528959535515d720298",
+      "bytes": 1125,
       "size": [
         128,
         168
@@ -20933,8 +21032,8 @@
     },
     {
       "path": "lightmaps/1132.png",
-      "sha256": "6cb4eb20aa3088430369db9960486eb85374ff791b443b7307cc9561a8b31c06",
-      "bytes": 913,
+      "sha256": "d67636eb437d5362df4f2970d44a61480d3f8e66150b5c496acac01c0c139204",
+      "bytes": 918,
       "size": [
         128,
         116
@@ -20963,13 +21062,13 @@
     },
     {
       "path": "lightmaps/1140.png",
-      "sha256": "97f03056b529172949d28a5195665c5277cda888d99399aa8c3f8075558be93d",
-      "bytes": 1363,
+      "sha256": "452b95804cc5ae27c5af0aa71798224448a21893b18fdab618ade4366cd9c24d",
+      "bytes": 1422,
       "size": [
         256,
-        152
+        168
       ],
-      "decoded_rgba_bytes": 155648
+      "decoded_rgba_bytes": 172032
     },
     {
       "path": "lightmaps/1141.png",
@@ -20993,8 +21092,8 @@
     },
     {
       "path": "lightmaps/1143.png",
-      "sha256": "8793963f0bb63ce1c0cf1d176b5e05222508c7197421343f90e3c1ca3d7ede98",
-      "bytes": 1099,
+      "sha256": "b08a45f3a2c34352457525466f84328324bda5e602eaa797eaa6313b265c0b6e",
+      "bytes": 1069,
       "size": [
         256,
         256
@@ -21023,13 +21122,13 @@
     },
     {
       "path": "lightmaps/1146.png",
-      "sha256": "5b6c0a808ab703a9d7375fed673c54e2f8f4b5650d7506bf634b1fe577b2942f",
-      "bytes": 1408,
+      "sha256": "6bb15a45350cb5b0c06ee9bd487c03583633533bd7dddefbb70286f39b944fba",
+      "bytes": 1549,
       "size": [
         256,
-        344
+        392
       ],
-      "decoded_rgba_bytes": 352256
+      "decoded_rgba_bytes": 401408
     },
     {
       "path": "lightmaps/1147.png",
@@ -21143,8 +21242,8 @@
     },
     {
       "path": "lightmaps/1158.png",
-      "sha256": "64bad2c0e17c2301cc1a08278af37ec822e5bb9349e4ca0ab5a6b99e1b2a8df5",
-      "bytes": 1048,
+      "sha256": "bc5e7e4778c139a9b8f34011d24b132b386ecaf9a0902e1d1ed4bb0a2bea8637",
+      "bytes": 1062,
       "size": [
         256,
         164
@@ -21533,8 +21632,8 @@
     },
     {
       "path": "lightmaps/1212.png",
-      "sha256": "3c9d7b8b59c5a2100191e4086ddc934d4c54f93709963638de83bb67e71e6ba7",
-      "bytes": 1058,
+      "sha256": "f10b23e2fbe6aee14f0e26a714f4c31c5165afee44b432516f75494903838eff",
+      "bytes": 1080,
       "size": [
         384,
         252
@@ -21743,13 +21842,13 @@
     },
     {
       "path": "lightmaps/1237.png",
-      "sha256": "a8e8d863202dff392142c6918907328fb323ea800befde378548bf06cce2ede5",
-      "bytes": 1538,
+      "sha256": "e472266d7b70f10a20649cf052795690e2648177721331f848a1084badb88565",
+      "bytes": 1308,
       "size": [
         256,
-        184
+        200
       ],
-      "decoded_rgba_bytes": 188416
+      "decoded_rgba_bytes": 204800
     },
     {
       "path": "lightmaps/1238.png",
@@ -21773,8 +21872,8 @@
     },
     {
       "path": "lightmaps/1240.png",
-      "sha256": "5c218a05b1303c54026d5c4ba5dc88ee4379796a4e9ab76d411bbee94940523e",
-      "bytes": 1180,
+      "sha256": "91d3e11f49f12341d1a4e553404d10cd42b9c751720843025e33b09f60b1b320",
+      "bytes": 943,
       "size": [
         256,
         208
@@ -21803,8 +21902,8 @@
     },
     {
       "path": "lightmaps/1243.png",
-      "sha256": "0276373c48b9d70635173aaf016f46c1fc9d48c2296eadabb9a33c2fd31974e7",
-      "bytes": 1290,
+      "sha256": "882636f5d4165853ac920e9aefd40e29df00b3de286e600d7fd42420b15d182a",
+      "bytes": 1043,
       "size": [
         256,
         192
@@ -21833,8 +21932,8 @@
     },
     {
       "path": "lightmaps/1246.png",
-      "sha256": "d3ae0e6549ed89d8a17f8be633bb556ba2ed9e87a9384825626feebc665e1736",
-      "bytes": 966,
+      "sha256": "148cff485ac901d8c8dceed4fb8720059702c9178e335c15c5d9e53de44656c0",
+      "bytes": 963,
       "size": [
         256,
         172
@@ -28083,13 +28182,13 @@
     },
     {
       "path": "masters/1125.png",
-      "sha256": "738f58140e52272806067075af53071bbf1c9517a2ccbfbffe88c4e36ac1818a",
-      "bytes": 6972,
+      "sha256": "e9b380bbb67a8e6281a6e2666e59985ae8ecb12edcc4e430976f3ce6fe198fb7",
+      "bytes": 7797,
       "size": [
         128,
-        140
+        156
       ],
-      "decoded_rgba_bytes": 71680
+      "decoded_rgba_bytes": 79872
     },
     {
       "path": "masters/1126.png",
@@ -28123,8 +28222,8 @@
     },
     {
       "path": "masters/1129.png",
-      "sha256": "466f15071c24c119fc1c9f909cc0ee76546325a3eb98a651b609278b28f6ac04",
-      "bytes": 9440,
+      "sha256": "8d3434138167a23692fa215508448093f96cf95e2ce94775504606dd021d4d3d",
+      "bytes": 9563,
       "size": [
         128,
         172
@@ -28143,8 +28242,8 @@
     },
     {
       "path": "masters/1131.png",
-      "sha256": "5fb2af459d51c5b41d60e4866556729a398af907f89bce0a069893a4ecf5ea10",
-      "bytes": 8220,
+      "sha256": "5d9f13b6014c70211b1b050c44ad968d9879f74629ab7432f07771b127def349",
+      "bytes": 7674,
       "size": [
         128,
         168
@@ -28153,8 +28252,8 @@
     },
     {
       "path": "masters/1132.png",
-      "sha256": "1f8fa2aa5ed4b0b74547c31f98eff094dcf3b5fa892431918907edcd02f62d3b",
-      "bytes": 4251,
+      "sha256": "726db1369e9334f1e84c97fffaccf121f50fa01bda91063d4e5a69f6e78291f6",
+      "bytes": 4400,
       "size": [
         128,
         116
@@ -28233,13 +28332,13 @@
     },
     {
       "path": "masters/1140.png",
-      "sha256": "87c3b7553b85ee532fe11be984771d398e805f008e86a84504ba713c4e443f06",
-      "bytes": 10073,
+      "sha256": "4794547c3c605a8f165b7f1ce7e7fbe2a7af6e585efa3147e4891bfe7d1fadca",
+      "bytes": 11048,
       "size": [
         256,
-        152
+        168
       ],
-      "decoded_rgba_bytes": 155648
+      "decoded_rgba_bytes": 172032
     },
     {
       "path": "masters/1141.png",
@@ -28263,8 +28362,8 @@
     },
     {
       "path": "masters/1143.png",
-      "sha256": "a56d0fced0bb15eb38034cf1d39a27b6e03074f9cc4bbe47ddcc732bcc426ebb",
-      "bytes": 27908,
+      "sha256": "87f95c1f3c4ba041db4c009b3efd466259420670bc5ff41b5a571897a0daa29f",
+      "bytes": 21652,
       "size": [
         256,
         256
@@ -28293,13 +28392,13 @@
     },
     {
       "path": "masters/1146.png",
-      "sha256": "46a41a2766de1f7d4a4220e108f35ec8f750182f8ef2353c44e67405899b0aa1",
-      "bytes": 29673,
+      "sha256": "9964e0d25bc40d066c6e919f88a6b21ea9b1051b11b765c0d3b404e44e870ba2",
+      "bytes": 34762,
       "size": [
         256,
-        344
+        392
       ],
-      "decoded_rgba_bytes": 352256
+      "decoded_rgba_bytes": 401408
     },
     {
       "path": "masters/1147.png",
@@ -28413,8 +28512,8 @@
     },
     {
       "path": "masters/1158.png",
-      "sha256": "f02fae8a7087824672c965674cc6bd3fcf6a8b4b22dc598930c771e48eb682f9",
-      "bytes": 11803,
+      "sha256": "dc5db6b5d41e73bca2f7faa8b10d688fa8dfd01b84c2813f4d95e2e3bbc5834c",
+      "bytes": 11312,
       "size": [
         256,
         164
@@ -28523,8 +28622,8 @@
     },
     {
       "path": "masters/1169.png",
-      "sha256": "0d64c29714f09764b1855986e59ebd726750619b97e1600d49097d8cd952b399",
-      "bytes": 14912,
+      "sha256": "5f0da8d403304fa1105e6c8e5d582c33bde70f554637a43ffa1b6ce677c1e099",
+      "bytes": 11855,
       "size": [
         256,
         292
@@ -28793,8 +28892,8 @@
     },
     {
       "path": "masters/1196.png",
-      "sha256": "6dd9a40490cc90d3c6e146b0104a6ac6b6b4e468d4b84fda9c5f9200edb3b6db",
-      "bytes": 27242,
+      "sha256": "390e5a028e571d71087908c3939e45a1f4458342319a3c047f8524048bc86167",
+      "bytes": 27239,
       "size": [
         416,
         312
@@ -28803,8 +28902,8 @@
     },
     {
       "path": "masters/1197.png",
-      "sha256": "951e7a786cfa23c758a7c0e5e86b2aa821174d88baefd083fd53a2255d237674",
-      "bytes": 32624,
+      "sha256": "b32df40452ab8706ff361d05fa1b1c13229008aa556c6b10d8a741b474675ee9",
+      "bytes": 35317,
       "size": [
         400,
         376
@@ -28953,8 +29052,8 @@
     },
     {
       "path": "masters/1212.png",
-      "sha256": "ed32230c86563a4174ddb71d14c227462456d9d0e046595c8e11cb9d0aeab55b",
-      "bytes": 32381,
+      "sha256": "d0fb42b4bba6cff20f9e11e3b22511226f27a55f934f324c5cc62c7507569ec2",
+      "bytes": 20621,
       "size": [
         384,
         252
@@ -29203,13 +29302,13 @@
     },
     {
       "path": "masters/1237.png",
-      "sha256": "0c8c23749e8cf22d38e23bc24cca5fc42600126baf789c5262c99796fedd1fac",
-      "bytes": 14550,
+      "sha256": "83ce33e868c3f0daa87ae50e8bab9be66cdca25668a7ad9445bab81e828dd6fb",
+      "bytes": 14398,
       "size": [
         256,
-        184
+        200
       ],
-      "decoded_rgba_bytes": 188416
+      "decoded_rgba_bytes": 204800
     },
     {
       "path": "masters/1238.png",
@@ -29233,8 +29332,8 @@
     },
     {
       "path": "masters/1240.png",
-      "sha256": "9feba6324d4e293df42ba22a31bc9b5029c6e1d5602078512be7891cac435e37",
-      "bytes": 14995,
+      "sha256": "4e78912edbda30b0266b4ac6a4c887b96cddc2fa21f304527fdf864d96cc1bd3",
+      "bytes": 8648,
       "size": [
         256,
         208
@@ -29253,8 +29352,8 @@
     },
     {
       "path": "masters/1242.png",
-      "sha256": "a22be15f41d2fcc1b72b37bca43853b7b32b2163958686e05fac2eb38865aad2",
-      "bytes": 14240,
+      "sha256": "d7bef34d034c58d5df73b46d9dfe7e2e6ee1ef6763847340f839b1b19ea31b76",
+      "bytes": 12368,
       "size": [
         288,
         180
@@ -29263,8 +29362,8 @@
     },
     {
       "path": "masters/1243.png",
-      "sha256": "d3684116722b5212faddfe4b1fe1e31783c3c068cdc7655d8af6b7f17fc96be2",
-      "bytes": 18529,
+      "sha256": "7d1e66164a63fe85ddd4bcf8805fbf1fa0449c5227ed1f5d80b6a175fc02acfe",
+      "bytes": 14865,
       "size": [
         256,
         192
@@ -29293,8 +29392,8 @@
     },
     {
       "path": "masters/1246.png",
-      "sha256": "7c8c124e1d583e9fd2028076001801958d819c517b151ec216c613d70da3eab0",
-      "bytes": 11390,
+      "sha256": "4f339c13bed8a2efd273b95a62d4ba8a126150085cf993b9db8e60d53117cbe1",
+      "bytes": 11441,
       "size": [
         256,
         172
@@ -52268,7 +52367,7 @@
     }
   },
   "raster_count": 3449,
-  "compressed_raster_bytes": 17153724,
+  "compressed_raster_bytes": 17129194,
   "unselected_retained_development_files": [
     "lightmaps/model-1188.png",
     "lightmaps/model-1192.png",
@@ -52276,11 +52375,24 @@
     "masters/model-1192.png"
   ],
   "delivery_rule": "Only manifest-referenced PNGs; rejected model1188/1192 development files are excluded.",
-  "all_rasters_as_rgba_bytes": 363420864,
+  "all_rasters_as_rgba_bytes": 363601088,
   "memory_limit": "The decoded sum is a file inventory, not measured process or GPU residency; aliases and atlases change residency.",
   "private_reference_files_in_pack": false,
   "publication_ready": false,
   "placement_review": {
+    "receipt": "graphics/placement-review.json",
+    "sha256": "f246396e4bfd59891371dcd5d90207197c8f6689c489aa25154c1ce87847cc23",
+    "source_export_sha256": "a264034d2483d04f94f0093e3db7af6ee379cfcbba4a71340197c9f6aa68773d",
+    "records": 17,
+    "numeric_adjustments": 2,
+    "text_notes": 16,
+    "generated_detail_revisions": 7,
+    "retained_design_reprojection": [
+      1169
+    ],
+    "editable_sources": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review86"
+  },
+  "previous_placement_review": {
     "receipt": "graphics/placement-review.json",
     "sha256": "eb73e057867fd7e0bf86245a92fde92d5d84011925ab392ed4c60e230226a262",
     "source_export_sha256": "c43c1098e54a97a1c513dbd4bddbe60520d5b2c38eaebc61e4e3c79f6fd88488",
@@ -52291,17 +52403,6 @@
     "generated_detail_revisions": 12,
     "baked_ground": 43,
     "editable_sources": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review85"
-  },
-  "previous_placement_review": {
-    "receipt": "graphics/placement-review.json",
-    "sha256": "582dfae91ad2b5efece383735ba7012cdb42d3677e794588d1ad54a6bf12ae19",
-    "source_export_sha256": "38d6fec7195e739a42a72b80a45f9a50f0dde16bb1bde9933840e9753bd36e60",
-    "records": 72,
-    "numeric_adjustments": 24,
-    "text_notes": 52,
-    "generated_detail_revisions": 9,
-    "projection_calibrations": 13,
-    "editable_sources": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-parcels"
   },
   "parcel_palette_review": {
     "receipt": "graphics/parcel-review.json",

@@ -2,16 +2,17 @@
   "format": "rs-applied-placement-review",
   "version": 1,
   "date": "2026-10-14",
-  "revision": "2026-10-14-review85",
+  "revision": "2026-10-14-review86",
   "pack_specific": true,
-  "source_export_sha256": "c43c1098e54a97a1c513dbd4bddbe60520d5b2c38eaebc61e4e3c79f6fd88488",
+  "source_export_sha256": "a264034d2483d04f94f0093e3db7af6ee379cfcbba4a71340197c9f6aa68773d",
   "changes": [
     {
-      "id": 1124,
-      "note": "Bodenbelag texturiert und in Grafik integriert.",
-      "source_sha256": "a0438861408f0d9a1f59e683b8a2e84e179ba1451f2caeb1ea41a1df96701e2f",
-      "result_sha256": "58710f1007222ccd977da363c7741d733fe8cff31853604eb36662638ad59ea5",
-      "lightmap_sha256": "586d89405bf1345eace04146fa280beda0480e63da2a269a6ae547638e61b408",
+      "id": 1125,
+      "note": "Korrigiere die Isometrie, die diagonalen Linien entsprechen nicht dem diagonalen Raster.",
+      "authored": false,
+      "source_sha256": "738f58140e52272806067075af53071bbf1c9517a2ccbfbffe88c4e36ac1818a",
+      "transform_source": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review86/math-source/1125.png",
+      "transform_source_sha256": "738f58140e52272806067075af53071bbf1c9517a2ccbfbffe88c4e36ac1818a",
       "user_matrix": [
         1,
         0,
@@ -20,50 +21,48 @@
         0,
         0
       ],
-      "matrix": [
+      "matrices": [
         [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.005617977528089846,
+            1.1235955056179776,
+            -17.168539325842705
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
         ]
       ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
+      "split_x": null,
+      "padding": [
+        0,
+        16,
+        0,
+        0
       ],
-      "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
+      "baked_ground": "none",
+      "measured_axis_slopes": [
+        0.44,
+        -0.45
+      ],
+      "result_sha256": "e9b380bbb67a8e6281a6e2666e59985ae8ecb12edcc4e430976f3ce6fe198fb7",
+      "lightmap_sha256": "3f8099c6919d6e35def9ef68fd7364f4bac56c79ad00ab3d5893589ceb5030e7",
+      "new_generation": false
     },
     {
-      "id": 1126,
-      "note": "Bodenbelag texturiert und in Grafik integriert.",
-      "source_sha256": "7bffd39c1d3a1bfdb5c908fb3460d547580efb3c8260f4d469619abadb04cae1",
-      "result_sha256": "d40206e3bc71bf7836230abc6f7e93ccb4c72c1ed79265c93e92f30475471601",
-      "lightmap_sha256": "eb007868dea9ff3464d19bc1bec99d9dfc98ab7878533b164641efc6caa01ce4",
+      "id": 1129,
+      "note": "Korrigiere die Isometrie, die linke Seite des Gebäudes sitzt nicht sauber an der Diagonalen des Rasters.",
+      "authored": false,
+      "source_sha256": "466f15071c24c119fc1c9f909cc0ee76546325a3eb98a651b609278b28f6ac04",
+      "transform_source": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review86/math-source/1129.png",
+      "transform_source_sha256": "466f15071c24c119fc1c9f909cc0ee76546325a3eb98a651b609278b28f6ac04",
       "user_matrix": [
         1,
         0,
@@ -72,206 +71,48 @@
         0,
         0
       ],
-      "matrix": [
+      "matrices": [
         [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.024752475247524774,
+            0.9900990099009901,
+            0.07920792079207928
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
         ]
       ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "asphalt",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1127,
-      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
-      "source_sha256": "e76f461b9bf6bcf867bca9ca3899e2f04f2e43c11838b27823c216f5fa7983af",
-      "result_sha256": "98df75309e06258b012ae646b8a64ed3bf3b20226c4a59276b814c6dc69afda3",
-      "lightmap_sha256": "cee8494a71fdd5bf45a34f59d5177c2efe28780d01c1ca59c5f680b0602564c1",
-      "user_matrix": [
-        1.0,
+      "split_x": null,
+      "padding": [
         0,
         0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1130,
-      "note": "Bodenbelag texturiert und in Grafik integriert.",
-      "source_sha256": "6b8404f700d7f88fba60356aa0ce6fb07da603a3ca4553947c16df8a3f022137",
-      "result_sha256": "37b5a4b20badacc5f74b2a91248f59fc50cee0eb86f028294f466ea3a325322c",
-      "lightmap_sha256": "c45c48f3688bf27005465bb0765954c2364c4c20c82e9f5413a162b7376a2469",
-      "user_matrix": [
-        1,
-        0,
-        0,
-        1,
         0,
         0
       ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
+      "baked_ground": "none",
+      "measured_axis_slopes": [
+        0.48,
+        -0.53
       ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "asphalt",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
+      "result_sha256": "8d3434138167a23692fa215508448093f96cf95e2ce94775504606dd021d4d3d",
+      "lightmap_sha256": "87584ea5ac62ae0949b4e273c868f714720bd4e2cb4d8cec4f20d2ed82c8f802",
+      "new_generation": false
     },
     {
       "id": 1131,
-      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
-      "source_sha256": "ab8a8e4e6b993d8789d4f6b9f352c65e7ef733142c6910f8f192a0a61a4a5282",
-      "result_sha256": "5fb2af459d51c5b41d60e4866556729a398af907f89bce0a069893a4ecf5ea10",
-      "lightmap_sha256": "0b3477bb8e6f9afafb5c9ae1a7cee1918fbfb18800e073ae33ce20a77e80c856",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "tiles",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1134,
-      "note": "Bodenbelag texturiert und in Grafik integriert.",
-      "source_sha256": "8cabaeed61d00e14b01a69373cbf52c569a1db0118b455f6280cb2c7308e45bd",
-      "result_sha256": "c1c81e9fe775c6f1e0db55b9d91231e2f0b439c85c55517bd0eb1a93c63a8a54",
-      "lightmap_sha256": "a18c790dfc1962d92c09bef17b15e919dcefed51b200e2e239bf74d3f7d87bb1",
+      "note": "Ergänze mehr Bordstein und Laternen um dass Gebäude",
+      "authored": true,
+      "source_sha256": "5fb2af459d51c5b41d60e4866556729a398af907f89bce0a069893a4ecf5ea10",
+      "transform_source": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review86/artwork/1131.png",
+      "transform_source_sha256": "8a4e44fc04196149121a68bc120d5067ff87ba4e1d963a3458abd9969bf5ff14",
       "user_matrix": [
         1,
         0,
@@ -280,934 +121,276 @@
         0,
         0
       ],
-      "matrix": [
+      "matrices": [
         [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
+          [
+            0.10564378206694353,
+            0.0,
+            6.318494991448844
+          ],
+          [
+            0.0032152455411678395,
+            0.11483019789885168,
+            7.524466161739596
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
         ]
       ],
-      "projection": [
+      "split_x": null,
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "baked_ground": "tiles",
+      "facade_slopes": [
+        0.432,
+        -0.488
+      ],
+      "source_ground_vertices": [
         [
-          1.0,
-          0.0,
-          0.0
+          34,
+          1060
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          550,
+          1320
         ],
         [
-          0.0,
-          0.0,
-          1.0
+          1058,
+          1060
         ]
       ],
-      "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
+      "target_ground_vertices": [
+        [
+          9.910383581724924,
+          129.35379428292208
+        ],
+        [
+          64.42257512826778,
+          160.86871243586614
+        ],
+        [
+          118.0896164182751,
+          132.64620571707798
+        ]
+      ],
+      "result_sha256": "5d9f13b6014c70211b1b050c44ad968d9879f74629ab7432f07771b127def349",
+      "lightmap_sha256": "dfa5a045b27aeed4e82207868f7dc631db91db9e40e5c528959535515d720298",
+      "new_generation": true
     },
     {
-      "id": 1135,
-      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
-      "source_sha256": "32d6c3e3172587709284397566088c3503fc29b449313f6a7772e97dd1e7b6b2",
-      "result_sha256": "6bed5adabbfe5a3e667f25dac065c61d45dc8862a0ccef54c6ea3531af35306f",
-      "lightmap_sha256": null,
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "asphalt_curb",
+      "id": 1132,
+      "note": "Korrigiere die Isometrie des Gebäudes, die rechte Seite ist nicht sauber an der Diagonalen des Rasters ausgerichtet.",
       "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
+      "source_sha256": "1f8fa2aa5ed4b0b74547c31f98eff094dcf3b5fa892431918907edcd02f62d3b",
+      "transform_source": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review86/math-source/1132.png",
+      "transform_source_sha256": "1f8fa2aa5ed4b0b74547c31f98eff094dcf3b5fa892431918907edcd02f62d3b",
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "matrices": [
+        [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            -0.030612244897959218,
+            1.0204081632653061,
+            -0.3265306122448983
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      ],
+      "split_x": null,
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "baked_ground": "none",
+      "measured_axis_slopes": [
+        0.52,
+        -0.46
+      ],
+      "result_sha256": "726db1369e9334f1e84c97fffaccf121f50fa01bda91063d4e5a69f6e78291f6",
+      "lightmap_sha256": "d67636eb437d5362df4f2970d44a61480d3f8e66150b5c496acac01c0c139204",
+      "new_generation": false
     },
     {
-      "id": 1136,
-      "note": "Texturiere Dreck und Erde, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
-      "source_sha256": "7d5cbf80fd5296aaaec8ad042387fe0f6214a4708cf9a19adeaa803a3202e2e5",
-      "result_sha256": "9c5b8544b046737e517fd7e9873e7857c4f6d9042f3337d97a154ecda1be7fa9",
-      "lightmap_sha256": null,
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "dirt",
+      "id": 1140,
+      "note": "Korrigiere die Isometrie, die linke Seite des Gebäudes ist nicht sauber an der Diagonalen des Rasters ausgerichtet.",
       "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1137,
-      "note": "Texturiere Dreck und Erde damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
-      "source_sha256": "df2cdc0e33507b3576cb3084576c45313d2b6b449f973c3d0eac03c9231aa1d5",
-      "result_sha256": "0264b660f16d529fbacaca2e2572d155125326c4b853e7a672d2a2a8949f04ca",
-      "lightmap_sha256": null,
+      "source_sha256": "87c3b7553b85ee532fe11be984771d398e805f008e86a84504ba713c4e443f06",
+      "transform_source": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review86/math-source/1140.png",
+      "transform_source_sha256": "87c3b7553b85ee532fe11be984771d398e805f008e86a84504ba713c4e443f06",
       "user_matrix": [
-        1.0,
+        1,
         0,
         0,
-        1.0,
-        0.0,
-        0.0
+        1,
+        0,
+        0
       ],
-      "matrix": [
+      "matrices": [
         [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.06603773584905659,
+            1.0482180293501049,
+            -15.589098532494766
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
         ]
       ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
+      "split_x": null,
+      "padding": [
+        0,
+        16,
+        0,
+        0
       ],
-      "baked_ground": "dirt",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
+      "baked_ground": "none",
+      "measured_axis_slopes": [
+        0.414,
+        -0.54
+      ],
+      "result_sha256": "4794547c3c605a8f165b7f1ce7e7fbe2a7af6e585efa3147e4891bfe7d1fadca",
+      "lightmap_sha256": "452b95804cc5ae27c5af0aa71798224448a21893b18fdab618ade4366cd9c24d",
+      "new_generation": false
     },
     {
       "id": 1143,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht zu den Diagonalen des Rasters.",
-      "source_sha256": "0fe9434b8ad0b8e6b7971e605c8f644ff7e6f1de5b6e96d5c13ccb12bb00707b",
-      "result_sha256": "a56d0fced0bb15eb38034cf1d39a27b6e03074f9cc4bbe47ddcc732bcc426ebb",
-      "lightmap_sha256": "8793963f0bb63ce1c0cf1d176b5e05222508c7197421343f90e3c1ca3d7ede98",
+      "note": "Die Isometrie ist fehlerhaft, die Kanten der Grundfläche des Hauses passen nicht zur Grundfläche des Rasters (das Terrain stimmt aber nicht der Winkel der Fläche der eigentlichen Grafik). Nutze die vorherige Version ohne den Asphalt und passe das übermathematische Bildmanipulation an, das sollte ausreichen.",
+      "authored": false,
+      "source_sha256": "a56d0fced0bb15eb38034cf1d39a27b6e03074f9cc4bbe47ddcc732bcc426ebb",
+      "transform_source": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review86/math-source/1143.png",
+      "transform_source_sha256": "0fe9434b8ad0b8e6b7971e605c8f644ff7e6f1de5b6e96d5c13ccb12bb00707b",
       "user_matrix": [
-        1.0,
+        1,
         0,
         0,
-        1.0,
-        -2.0,
-        25.0
+        1,
+        0,
+        0
       ],
-      "matrix": [
+      "matrices": [
         [
-          1.0,
-          0.0,
-          -2.0
-        ],
-        [
-          0.0,
-          1.2562814070351758,
-          -32.66331658291455
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
+          [
+            1.0,
+            0.0,
+            -2.0
+          ],
+          [
+            0.0,
+            1.0,
+            25.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
         ]
       ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.2562814070351758,
-          -57.66331658291455
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
+      "split_x": null,
+      "padding": [
+        0,
+        0,
+        0,
+        0
       ],
       "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1144,
-      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
-      "source_sha256": "9a87dce85c12e8ba933aba98d9da2e5eb1b9193c94918e5fbeb62cfeef4a21e4",
-      "result_sha256": "426609ece166f2da504b525d1dd9fb69dbce3b5dc00dae03642cf82f6b43f7df",
-      "lightmap_sha256": "37be53e85bf6cca3c970333421e546f828889e6b93488cba314a29538d60c6af",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
+      "measured_axis_slopes": [
+        0.5,
+        -0.5
       ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
+      "result_sha256": "87f95c1f3c4ba041db4c009b3efd466259420670bc5ff41b5a571897a0daa29f",
+      "lightmap_sha256": "b08a45f3a2c34352457525466f84328324bda5e602eaa797eaa6313b265c0b6e",
+      "new_generation": false
     },
     {
       "id": 1146,
-      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
-      "source_sha256": "3b3bab49966bd79788cba1db90c798385a222fcbfd2ede97adc83a5a0212c9eb",
-      "result_sha256": "46a41a2766de1f7d4a4220e108f35ec8f750182f8ef2353c44e67405899b0aa1",
-      "lightmap_sha256": "5b6c0a808ab703a9d7375fed673c54e2f8f4b5650d7506bf634b1fe577b2942f",
+      "note": "Die Isometrie ist fehlerhaft, die Kanten der Grundfläche des Hauses passen nicht zur Grundfläche des Rasters (das Terrain stimmt aber nicht der Winkel der Fläche der eigentlichen Grafik). Nutze die vorherige Version ohne den Asphalt und passe das übermathematische Bildmanipulation an, das sollte ausreichen.",
+      "authored": false,
+      "source_sha256": "46a41a2766de1f7d4a4220e108f35ec8f750182f8ef2353c44e67405899b0aa1",
+      "transform_source": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review86/math-source/1146.png",
+      "transform_source_sha256": "3b3bab49966bd79788cba1db90c798385a222fcbfd2ede97adc83a5a0212c9eb",
       "user_matrix": [
-        1.0,
+        1,
         0,
         0,
-        1.0,
-        0.0,
-        0.0
+        1,
+        0,
+        0
       ],
-      "matrix": [
+      "matrices": [
         [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.1363636363636365,
+            -46.363636363636395
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
         ]
       ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
+      "split_x": null,
+      "padding": [
+        0,
+        48,
+        0,
+        0
       ],
       "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1147,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
-      "source_sha256": "6aaa00c1cff28f49bc9e2fdc1c49c396443d1a7a3d02e2003c90caf9d98efe3b",
-      "result_sha256": "3e042b5004fae71366de7819d09b37a7783324d027ad51874cc9c11746565c73",
-      "lightmap_sha256": "3f399dc20e617a8207717f872101561d1cd0a446892eb32ed7b14be55ae23f45",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
+      "measured_axis_slopes": [
+        0.44,
+        -0.44
       ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          -0.022292993630573243,
-          1.0615711252653925,
-          -2.7075371549893035
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          -0.022292993630573243,
-          1.0615711252653925,
-          -18.707537154989303
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "none",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1149,
-      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
-      "source_sha256": "d1e4ae4173fd7a79688a83ea8d568059f5c3b867fa7596ede94321f138f6d6c8",
-      "result_sha256": "e6f254fa77ef96193025f915d1cd1d89215e97084c29f27d9c14e30dd9062284",
-      "lightmap_sha256": "9f7385f9a598ddd3781f70338a37d5eee2983293c178554d51c20c6f5b505a9e",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "parking",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1150,
-      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
-      "source_sha256": "0b1e26463cd847b596255c97cb79356dc2e7d231e6ca3142fe2f4184c65629fb",
-      "result_sha256": "fc9554024df5c29c6c1655d3c01119fed1bd8528f2f971e20b5458669bdddbe1",
-      "lightmap_sha256": "2818c47353306fc3a086ca744d148badfa2ac5e07ae62ad33e2ed69b03fcac2a",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1151,
-      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
-      "source_sha256": "a31f29f6dbb9ada85554066c7fdc73a03d3ff82447fb92d88148a7751e67de0b",
-      "result_sha256": "8ba1d5612a231e72ead785093bce33fb04e3e516860bde6fac5b83d4d4414d6a",
-      "lightmap_sha256": "68f2b5d1db4db18b5e0c5528bddea4a4adb148e568a5abd896feed3f55026222",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        39.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          39.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "tiles",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1152,
-      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
-      "source_sha256": "abf70b12abb203ba55d598310c5157e3fd74bebd997028df938dc7fbd485674b",
-      "result_sha256": "f968314e976cb86285d4bba1eb10dc83831a168c8675e37d5a73c0a623cdca77",
-      "lightmap_sha256": "94b8efaac53c24f693d921f86d33d56890a874f6dfc8a4b7608cbab2240dd3b8",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "parking",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1153,
-      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
-      "source_sha256": "63632838327cec98dc55accf6c538490e0a389c0e566e4250e2e8a09934c393a",
-      "result_sha256": "68aa5c1c8c810da7aa0921bf9144db9ff03394e00d57b14a3b99285a4ccfd385",
-      "lightmap_sha256": "bfdc925b15fe10f5d9f3c82b41c3729a868a39c184fca2fe7bc45b132a45d8a3",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1155,
-      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
-      "source_sha256": "677cb54d77c0c6ad1f41abab47d2abfda4631d9e77012199fcc9d0a1c9f41e2c",
-      "result_sha256": "f3300b1b7bc3274faaad3c7d77958c5ff0891034f5e9c6c639eabdf7aa98c646",
-      "lightmap_sha256": "f5c45966b6d1f5b201cd3ca4ce3d4e79fa663c26ea9b02683e07faf47610b8a9",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1156,
-      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
-      "source_sha256": "f4cbe76cd077d1da61dfea1d5befda1117f665356dd658b93ea3ab0810e276eb",
-      "result_sha256": "c82bb89c0834549d1f76b29e1795e3f8f79143386b613483a35893fa661ef4bc",
-      "lightmap_sha256": "f57f50ccdc0569c7abe734d796906ba3b2a7b55f759c7414f72df2d09da98731",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1157,
-      "note": "Texturiere Asphalt und Bordstein, damit beides nicht so flach ausfällt. Achte auch auf die Übergänge.",
-      "source_sha256": "cb00621f54bceb588af9a6a7023ac640689eb1ad7231cb3e2914c96bb0cb5d20",
-      "result_sha256": "507ca41603b245e29b58a54b8d4b347cd4bf647616c66b2f4ec8970f76d7be66",
-      "lightmap_sha256": "78200b154bcc8cd799b16043854ec167cf98dfda597f1d479b3ea15f4c9e9281",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
+      "result_sha256": "9964e0d25bc40d066c6e919f88a6b21ea9b1051b11b765c0d3b404e44e870ba2",
+      "lightmap_sha256": "6bb15a45350cb5b0c06ee9bd487c03583633533bd7dddefbb70286f39b944fba",
+      "new_generation": false
     },
     {
       "id": 1158,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
-      "source_sha256": "134faa5435ec3960cbfac34a767bc6821cfee2c1260825380ed70223fe25cca1",
-      "result_sha256": "f02fae8a7087824672c965674cc6bd3fcf6a8b4b22dc598930c771e48eb682f9",
-      "lightmap_sha256": "64bad2c0e17c2301cc1a08278af37ec822e5bb9349e4ca0ab5a6b99e1b2a8df5",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.053459119496855334,
-          1.0482180293501049,
-          -12.950733752620552
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.053459119496855334,
-          1.0482180293501049,
-          -12.950733752620552
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1159,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
-      "source_sha256": "6eaf51d5915ff89e357102bbc0817f9c766abca9e0c27c6d90f60346138cc53a",
-      "result_sha256": "b2011ed3d041929700cfcabe5586fb575c7caf448a1b8dbbc3c8d39370db1fb5",
-      "lightmap_sha256": "9513b34cc8aba0c1e9a9874807cdba85811b261abcc6758289e54ee5fc02a375",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.03358208955223885,
-          0.9328358208955223,
-          9.604477611940311
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.03358208955223885,
-          0.9328358208955223,
-          9.604477611940311
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "none",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1160,
-      "note": "Bodenbelag texturiert und in Grafik integriert.",
-      "source_sha256": "48e21447cb27960571c4318eeb7b4607d7a34fdd6b3bdd2f4af51287f9af2cec",
-      "result_sha256": "7a80ae59c87b093f75bd8caebeda656edf7dc54cc2371606c940ef91661475f0",
-      "lightmap_sha256": "93c3c2b6ce1cf50d05a5918f2735a9a78874d51522404ea827856406fb36667b",
+      "note": "Die Grafik passt nicht in das bestehende 2x2 Raster, erzeuge sie neu anhand der bestehenden Vorlage von SC2000",
+      "authored": true,
+      "source_sha256": "f02fae8a7087824672c965674cc6bd3fcf6a8b4b22dc598930c771e48eb682f9",
+      "transform_source": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review86/artwork/1158.png",
+      "transform_source_sha256": "86ee62e3dd835a08b20d1e9ca66be012201d0abc507f6b574d3c0a389ac53929",
       "user_matrix": [
         1,
         0,
@@ -1216,1870 +399,248 @@
         0,
         0
       ],
-      "matrix": [
+      "matrices": [
         [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
+          [
+            0.18371440860215052,
+            0.0,
+            -16.032096344086
+          ],
+          [
+            -0.0005544700460829427,
+            0.1848233486943164,
+            -18.416478279569873
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
         ]
       ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1161,
-      "note": "Bodenbelag texturiert und in Grafik integriert.",
-      "source_sha256": "de757227a44b43fb55b0fd6fb2c09d0c49a8cade9d0fa0af89e8c4abb8d4301a",
-      "result_sha256": "2d27acd97d39481a25c153afd152e80f244a68921ed93fbf53c12b4525dd5471",
-      "lightmap_sha256": "c9c8900223e32fea9ad20d159de5c55b9248c0a819ce6e5a1b091f0352d813f6",
-      "user_matrix": [
-        1,
+      "split_x": null,
+      "padding": [
         0,
         0,
-        1,
         0,
         0
       ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
       "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1162,
-      "note": "Bodenbelag texturiert und in Grafik integriert.",
-      "source_sha256": "b685b586aeb26dff903f196aa2b9309e914a56fff501a4d8d5aba655c4b147f8",
-      "result_sha256": "3422c74be151e6b130d7821bc581e6bcaf04f7f4cc32bf2206912aab5ba7bbed",
-      "lightmap_sha256": "2039b264babcfa554abe85f1bd4d4c1437a614d7cb65474262e902688d1a0225",
-      "user_matrix": [
-        1,
-        0,
-        0,
-        1,
-        0,
-        0
+      "facade_slopes": [
+        0.5,
+        -0.494
       ],
-      "matrix": [
+      "source_ground_vertices": [
         [
-          1.0,
-          0.0,
-          0.0
+          138,
+          616
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          773,
+          936
         ],
         [
-          0.0,
-          0.0,
-          1.0
+          1430,
+          616
         ]
       ],
-      "projection": [
+      "target_ground_vertices": [
         [
-          1.0,
-          0.0,
-          0.0
+          9.320492043010773,
+          95.35818764976959
         ],
         [
-          0.0,
-          1.0,
-          0.0
+          125.97914150537636,
+          154.14957075268816
         ],
         [
-          0.0,
-          0.0,
-          1.0
+          246.67950795698923,
+          94.64181235023042
         ]
       ],
-      "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1163,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
-      "source_sha256": "55af056edff27d9e29919c4e23f719d4d207ca3cb5632401cb3bdb5959fae412",
-      "result_sha256": "f9f36492cd53c125e37606b6acba6f569fd7a832b2ca66013a88c60657fbffc1",
-      "lightmap_sha256": "9d9e293ca8c17b25218e68c23e6ca95819bdde92557e9961d9cb66581a17f2ba",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          -0.008840864440078589,
-          0.9823182711198426,
-          5.322200392927362
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          -0.008840864440078589,
-          0.9823182711198426,
-          5.322200392927362
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1164,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
-      "source_sha256": "d5087d2faf747359f3388ce5bb537221bd6f3c9648e932d3b33dd48af1766e94",
-      "result_sha256": "904482fd1e96fbcdb0c2c06550f5bdf4813e796b849638b3faf5df9121b16c8a",
-      "lightmap_sha256": "7d2520780b62f8e44fc2b8e1c1475467d6d2b495e76476a3c1e814a0cbf15301",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.01867219917012447,
-          1.0373443983402488,
-          3.2095435684647686
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.01867219917012447,
-          1.0373443983402488,
-          -12.790456431535231
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1165,
-      "note": "Bodenbelag texturiert und in Grafik integriert.",
-      "source_sha256": "f981a2eec4cd4ae4f8ef533a2bbde21b8cd6ba3f3005e2df94efb44b83cd6d33",
-      "result_sha256": "3a66677c2c99ce3d86f20a3d53b02b37d6dc9254f094cd9ec2ec978d0df40f71",
-      "lightmap_sha256": "f8aeba906b65dd120e29cd432a8f1cedce8637f9bcb0666c62a6cdf1bdda9753",
-      "user_matrix": [
-        1,
-        0,
-        0,
-        1,
-        0,
-        0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1167,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
-      "source_sha256": "9cf72d4c78cda26ef992e60c71a91388cba6f060f5289e731a13ee2d0e3b40f2",
-      "result_sha256": "a93396124ce4d34f097c59616485b0941afa2e821828d6dba3cbab264f89b7f2",
-      "lightmap_sha256": null,
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.043893129770992356,
-          0.9541984732824426,
-          4.611641221374088
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.043893129770992356,
-          0.9541984732824426,
-          4.611641221374088
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "dirt",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1168,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
-      "source_sha256": "ba6af0e948c8cda58708efad1119ad6bfe7db1f3775822b4a1db12c2d649eb6b",
-      "result_sha256": "1a6893e35d6d1ac09dca90a64dc54874a1a177dd5299d1ba6c762706bf51cb68",
-      "lightmap_sha256": null,
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.014403292181070004,
-          1.0288065843621397,
-          7.81893004115231
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.014403292181070004,
-          1.0288065843621397,
-          -8.18106995884769
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "dirt",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
+      "result_sha256": "dc5db6b5d41e73bca2f7faa8b10d688fa8dfd01b84c2813f4d95e2e3bbc5834c",
+      "lightmap_sha256": "bc5e7e4778c139a9b8f34011d24b132b386ecaf9a0902e1d1ed4bb0a2bea8637",
+      "new_generation": true
     },
     {
       "id": 1169,
-      "note": "Die Grafik passt ganicht, orientiere dich mehr am SC2000 Original.",
-      "source_sha256": "e44ad4f2580e66425a7af8cb43fe683177c6ff4ae83e86298183620442d9dceb",
-      "result_sha256": "0d64c29714f09764b1855986e59ebd726750619b97e1600d49097d8cd952b399",
-      "lightmap_sha256": null,
+      "note": "Die Isometrie ist fehlerhaft, die Kanten der Grundfläche der Grafik passen nicht zur Grundfläche des Rasters (das Terrain stimmt aber nicht der Winkel der Fläche der eigentlichen Grafik). Nutze die vorherige Version ohne den Asphalt und passe das über mathematische Bildmanipulation an, das sollte ausreichen.",
+      "authored": true,
+      "source_sha256": "0d64c29714f09764b1855986e59ebd726750619b97e1600d49097d8cd952b399",
+      "transform_source": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review86/artwork/1169.png",
+      "transform_source_sha256": "3c82ca545861e0ae54f626e5c7489ad1257ac58f0a1485e0509fa80aee5b47f5",
       "user_matrix": [
-        1.0,
+        1,
         0,
         0,
-        1.0,
-        0.0,
-        0.0
+        1,
+        0,
+        0
       ],
-      "matrix": [
+      "matrices": [
         [
-          0.21031802120141344,
-          0.0,
-          4.543321554770316
-        ],
-        [
-          0.0,
-          0.21031802120141344,
-          21.471519434628988
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
+          [
+            0.18285714285714286,
+            0.0,
+            20.66285714285715
+          ],
+          [
+            0.0,
+            0.18285714285714286,
+            53.85714285714286
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
         ]
       ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
+      "split_x": null,
+      "padding": [
+        0,
+        0,
+        0,
+        0
       ],
       "baked_ground": "none",
-      "authored": true,
-      "method": "ImageGen design and shared mathematical transform"
-    },
-    {
-      "id": 1170,
-      "note": "Die Grafik muss mehr nach einem verlassenen alten Gebäude aussehen. Orientiere Dich farblich an Original SC2000 Grafik",
-      "source_sha256": "0411c64f08ca35113dcaa7a17fbebc8bc27a7ac26fd95caa8c4f7e25814731a4",
-      "result_sha256": "5dd31e1ff9a64e919b776e4fc42f4ecd2b48912f7d74eae04f585d5485a4d914",
+      "facade_slopes": [
+        0.5,
+        -0.5
+      ],
+      "source_ground_vertices": [
+        [
+          24,
+          925
+        ],
+        [
+          579,
+          1250
+        ],
+        [
+          1150,
+          925
+        ]
+      ],
+      "target_ground_vertices": [
+        [
+          25.051428571428577,
+          223.0
+        ],
+        [
+          126.53714285714287,
+          282.42857142857144
+        ],
+        [
+          230.94857142857143,
+          223.0
+        ]
+      ],
+      "result_sha256": "5f0da8d403304fa1105e6c8e5d582c33bde70f554637a43ffa1b6ce677c1e099",
       "lightmap_sha256": null,
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          0.25140443505807814,
-          0.0,
-          -37.54982048574445
-        ],
-        [
-          -0.0026312573927572422,
-          0.24843342045727776,
-          -2.270580816734075
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          -0.0104662329928642,
-          0.9881823301959092,
-          20.068716257362347
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "dirty_asphalt",
-      "authored": true,
-      "method": "ImageGen design and shared mathematical transform"
-    },
-    {
-      "id": 1171,
-      "note": "Die Grafik muss mehr nach einem verlassenen alten Gebäude aussehen. Orientiere Dich farblich an Original SC2000 Grafik",
-      "source_sha256": "bab3aac99b629109fe94430c72e855ffee475e3e776f32a0fea3f6a508010bcc",
-      "result_sha256": "c5e9dcdd4655b8e024912e934dd8ec0a01af5feddce0b813e6dbd74e643bb08b",
-      "lightmap_sha256": null,
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          0.25167019027484144,
-          0.0,
-          -39.36067653276956
-        ],
-        [
-          -4.9575720789849944e-05,
-          0.24676510728498058,
-          -8.784810975039171
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          -0.0001969868610013359,
-          0.9805098768968062,
-          20.810016875054462
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "dirty_asphalt",
-      "authored": true,
-      "method": "ImageGen design and shared mathematical transform"
-    },
-    {
-      "id": 1172,
-      "note": "Die Grafik muss mehr nach einem verlassenen alten Gebäude aussehen. Orientiere Dich farblich an Original SC2000 Grafik",
-      "source_sha256": "df5d29be1f3148bbdef31a7f32bc309929b3033f6011994ac40eaece46a007e9",
-      "result_sha256": "3e7142b0428bb41d5572eaa95c789ebc22591b5fa2e897cbdd05f7cc83136c7e",
-      "lightmap_sha256": null,
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          0.20227697536108752,
-          0.0,
-          5.9258453695836835
-        ],
-        [
-          0.001495190620532793,
-          0.18909657127008267,
-          31.726938372905124
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.007391798388638682,
-          0.9348398201650172,
-          76.98927446618504
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "dirty_asphalt",
-      "authored": true,
-      "method": "ImageGen design and shared mathematical transform"
-    },
-    {
-      "id": 1173,
-      "note": "Die Grafik muss mehr nach einem verlassenen alten Gebäude aussehen. Orientiere Dich farblich an Original SC2000 Grafik",
-      "source_sha256": "db8b4c4cf12981e0162a874daf80f569bf9c50650f7c1dcd208b7cb7db2567e3",
-      "result_sha256": "160fc66812c503540543adb082c8497b02abc208024751045a8ff3d9ef2db1be",
-      "lightmap_sha256": null,
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          0.2998488664987406,
-          0.0,
-          -44.71294710327459
-        ],
-        [
-          3.2910634271133264e-05,
-          0.30815878873293157,
-          -12.84588852602677
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.00010975740764146424,
-          1.02771370234353,
-          -35.481331861832956
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "dirty_asphalt",
-      "authored": true,
-      "method": "ImageGen design and shared mathematical transform"
-    },
-    {
-      "id": 1174,
-      "note": "Bodenbelag texturiert und in Grafik integriert.",
-      "source_sha256": "cf563de2e6f634ee56bb04bbe134db2231f3328becd86e1fe6e2dde356a77286",
-      "result_sha256": "87bf03c3e4cb0fc21f4c73f953420e42ddc3c8dfbfd93fff0d50d489f0d647fb",
-      "lightmap_sha256": "802bb41657c11d1000b54e80c46a92802509051751cc4cc5ee39e47cac6e3051",
-      "user_matrix": [
-        1,
-        0,
-        0,
-        1,
-        0,
-        0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1175,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
-      "source_sha256": "8a56afc2ff42c1700dcb5c041815201ba193230ef4383c5f039a04c79808cf4e",
-      "result_sha256": "988d7787db83a66ae789fe5cac7afe5a741accf270b1985334ab834c3be4eed2",
-      "lightmap_sha256": "f44b44cb345dcc5807fdec4a1b9226dc603fe8e048634561c071f74dae85b7f1",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.1904761904761905,
-          -57.14285714285714
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.1904761904761905,
-          -57.14285714285714
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "parking",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1185,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik auf der linken Seite passen nicht ganz zu den Diagonalen des Rasters",
-      "source_sha256": "b4d23792deeb7d82b2e9ada62988bf9544bdfa4972f11e1b3b99afe71a919a06",
-      "result_sha256": "4027dda08c88d00a0dff94c90149c20164e61879ca5997152ed394341d4967a3",
-      "lightmap_sha256": "77c51e21a2e028c3cbc14b5fcdcaf1e36517e3d53a7a56138f50c1cb94192dd0",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0010706638115631217,
-          1.070663811563169,
-          -9.503211991434632
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0010706638115631217,
-          1.070663811563169,
-          -25.503211991434632
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "none",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1190,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
-      "source_sha256": "b4150a5cc4a9bcea559dcf2be2a19880f94643e24346df6da0961c8ac1bfad47",
-      "result_sha256": "cd8e7a887035e4d0054b3977c859840c6716b75ebec195a57c9112a11937368e",
-      "lightmap_sha256": "1be5da577ee40e9088b551e1e779cc1043e1016cc335bd7ef630f12254108537",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          -0.004950495049504955,
-          0.9900990099009899,
-          3.7772277227723445
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          -0.004950495049504955,
-          0.9900990099009899,
-          3.7772277227723445
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1191,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
-      "source_sha256": "d77b5c08f9b9f6df6b85e2d789621ed5aea335946ab0112d62489f231f0f5e67",
-      "result_sha256": "5185dfc95f498bf187264f6a04f26c0b7520ff2d714044ac3a9452d47fe2d3d0",
-      "lightmap_sha256": "1219312160abd09eea0aa3e3f54ac7141ff31e71b3f1ef1b479e146620f0108f",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.02620967741935487,
-          1.008064516129032,
-          -7.3387096774192955
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.02620967741935487,
-          1.008064516129032,
-          -7.3387096774192955
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1192,
-      "note": "Bodenbelag texturiert und in Grafik integriert.",
-      "source_sha256": "8ff0697682c41db2e286e62973abee51875666c7baf1f5a1d5949997126cdcee",
-      "result_sha256": "23e61efb28ec31a7acf5911d457f49bb4ca84e9c9af680ad3daaa9850f156aac",
-      "lightmap_sha256": "0221de81f5b03487e90c5179511ab3a07962f38de9e2104fbfb89fb6d31af9fa",
-      "user_matrix": [
-        1,
-        0,
-        0,
-        1,
-        0,
-        0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "asphalt_curb",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1194,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik auf der rechten Seite passen nicht ganz zu den Diagonalen des Rasters",
-      "source_sha256": "00cc2ddf3999f63d06383b011ccd4648b05ac64021325079ab8666a83a7f7dd0",
-      "result_sha256": "6d70b4f205af76f1134236eafa23902cba9237cb7f97568c41526d6a9e211805",
-      "lightmap_sha256": null,
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.03191489361702132,
-          1.0638297872340423,
-          -16.37765957446799
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.03191489361702132,
-          1.0638297872340423,
-          -32.37765957446799
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "dirt",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1195,
-      "note": "Bodenbelag texturiert und in Grafik integriert.",
-      "source_sha256": "0df4287a3ff0c343c5fff676b68f3e34186dff8e67fee1db3e2ac7a624b09275",
-      "result_sha256": "179e30243d83469c30531de9c81235319ca11a56eb636de39938858b43e26052",
-      "lightmap_sha256": null,
-      "user_matrix": [
-        1,
-        0,
-        0,
-        1,
-        0,
-        0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "dirt",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
+      "new_generation": false
     },
     {
       "id": 1196,
-      "note": "Die Grafik muss mehr nach einem verlassenen alten Gebäude aussehen. Orientiere Dich farblich an Original SC2000 Grafik",
-      "source_sha256": "a35b70d0eecb1dd16fad7a9d137105fad49a4e0a9a8ffa95f759295a087d2635",
-      "result_sha256": "6dd9a40490cc90d3c6e146b0104a6ac6b6b4e468d4b84fda9c5f9200edb3b6db",
-      "lightmap_sha256": null,
+      "note": "",
+      "authored": false,
+      "source_sha256": "6dd9a40490cc90d3c6e146b0104a6ac6b6b4e468d4b84fda9c5f9200edb3b6db",
+      "transform_source": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review86/before/1196.png",
+      "transform_source_sha256": "6dd9a40490cc90d3c6e146b0104a6ac6b6b4e468d4b84fda9c5f9200edb3b6db",
       "user_matrix": [
-        1.0,
+        1,
         0,
         0,
-        1.0,
-        0.0,
-        0.0
+        1,
+        -2,
+        -46
       ],
-      "matrix": [
+      "matrices": [
         [
-          0.25113924050632913,
-          0.0,
-          25.170632911392403
-        ],
-        [
-          0.003902326116072607,
-          0.22453535866676883,
-          64.31817222473157
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
+          [
+            1.0,
+            0.0,
+            -2.0
+          ],
+          [
+            0.0,
+            1.0,
+            -46.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
         ]
       ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.015538496127506851,
-          0.8940672043686863,
-          93.349576902913
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
+      "split_x": null,
+      "padding": [
+        0,
+        0,
+        0,
+        0
       ],
       "baked_ground": "none",
-      "authored": true,
-      "method": "ImageGen design and shared mathematical transform"
+      "measured_axis_slopes": null,
+      "result_sha256": "390e5a028e571d71087908c3939e45a1f4458342319a3c047f8524048bc86167",
+      "lightmap_sha256": null,
+      "new_generation": false
     },
     {
       "id": 1197,
-      "note": "Die Grafik muss mehr nach einem verlassenen alten Gebäude aussehen. Orientiere Dich farblich an Original SC2000 Grafik",
-      "source_sha256": "f27b86b73da245bada5c515d344c265778336ab1a25f31eb458bdd29a80943b9",
-      "result_sha256": "951e7a786cfa23c758a7c0e5e86b2aa821174d88baefd083fd53a2255d237674",
-      "lightmap_sha256": null,
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          0.2905777054515867,
-          0.0,
-          4.1415134255492205
-        ],
-        [
-          -0.0035209555700207906,
-          0.27800858047812105,
-          63.64529685446946
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          -0.01211708780117482,
-          0.956744358780272,
-          53.20886490295422
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "dirt",
-      "authored": true,
-      "method": "ImageGen design and shared mathematical transform"
-    },
-    {
-      "id": 1198,
-      "note": "Nutze stattdessen 1199, nur gespiegelt (vertikale Spiegelkante)",
-      "source_sha256": "3df3111354fe945962c00fb2933d1333744d346a042f9dcb64577765b4bec868",
-      "result_sha256": "56167c654cde46a761b8fefcf1ae9f5904b962babd22cd1e1f62b555ec7006b1",
-      "lightmap_sha256": null,
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "none",
+      "note": "Die Grafik sitzr nicht richtig auf dem Untergrund und dadurch nicht richtig im 3x3 Raster, korrigiere das.",
       "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1208,
-      "note": "Bodenbelag texturiert und in Grafik integriert.",
-      "source_sha256": "f1491a21e1f70946d0a5ffcbbf72bf06e9218acc4abd00314081075940970061",
-      "result_sha256": "dac68be1fdee2da9d622c4263c5fde36f8cfa14cb1d96e6abe3ff10f42df3c27",
-      "lightmap_sha256": "e023227602dd324888d00ec50dd20c7009f42115b67359368a10754124b7713a",
+      "source_sha256": "951e7a786cfa23c758a7c0e5e86b2aa821174d88baefd083fd53a2255d237674",
+      "transform_source": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review86/before/1197.png",
+      "transform_source_sha256": "951e7a786cfa23c758a7c0e5e86b2aa821174d88baefd083fd53a2255d237674",
       "user_matrix": [
         1,
         0,
         0,
         1,
+        -3,
+        -49
+      ],
+      "matrices": [
+        [
+          [
+            1.0,
+            0.0,
+            -3.0
+          ],
+          [
+            0.0,
+            1.0,
+            -49.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      ],
+      "split_x": null,
+      "padding": [
+        0,
+        0,
         0,
         0
       ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "tiles",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
+      "baked_ground": "dirt",
+      "measured_axis_slopes": null,
+      "result_sha256": "b32df40452ab8706ff361d05fa1b1c13229008aa556c6b10d8a741b474675ee9",
+      "lightmap_sha256": null,
+      "new_generation": false
     },
     {
       "id": 1212,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik auf der rechten Seite passen nicht ganz zu den Diagonalen des Rasters",
-      "source_sha256": "58f8eb82eee5fe9da2307712b8781c33307359bd7863fcb7759f6df6bc560b3f",
-      "result_sha256": "ed32230c86563a4174ddb71d14c227462456d9d0e046595c8e11cb9d0aeab55b",
-      "lightmap_sha256": "3c9d7b8b59c5a2100191e4086ddc934d4c54f93709963638de83bb67e71e6ba7",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          -0.046485260770975034,
-          1.1337868480725624,
-          -5.397959183673475
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          -0.046485260770975034,
-          1.1337868480725624,
-          -21.397959183673475
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "tiles",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1214,
-      "note": "Die Darstellung des Gebäudes ist im Stil zu groß (zu große Türe, zu große Fenster, etc), orientiere dich näher am Original.",
-      "source_sha256": "2eb888e8a8f4274b11459fbf60cca088f69c8f89cd2818c9b18b9ae7619b3567",
-      "result_sha256": "9f9e8ca07765bd1f07c7beba422bbb2076be87ba244002c343ce53ad98139ddf",
-      "lightmap_sha256": "9da7844435eddfab8240d371802d75d6f90999663a02ef943e22f9871e310a85",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          0.23650331125827814,
-          0.0,
-          -4.297748344370859
-        ],
-        [
-          -0.007272974640691943,
-          0.2464135676335511,
-          6.00359878447897
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          -0.03075210491556013,
-          1.041903245762383,
-          -12.062964368942566
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "none",
+      "note": "Die Grafik passt nicht ins 3x3 Raster, die Isometrie der rechten Seite passt auch nicht. Erzeuge die Grafik nochmal komplett neu, berücksichtige Raster und Isometrie und orientiere Dich am Original von SC2000",
       "authored": true,
-      "method": "ImageGen design and shared mathematical transform"
-    },
-    {
-      "id": 1217,
-      "note": "Die Darstellung des Gebäudes ist im Stil zu groß (zu große Türe, zu große Fenster, etc), orientiere dich näher am Original.",
-      "source_sha256": "534b117e5b79778175adc8e417e4d214a6677537465589868b334277ea70dd3e",
-      "result_sha256": "8ecab40b117b03b40b87cba6324075af59d83731f1ee631d9e90784004134a2f",
-      "lightmap_sha256": "46f1344e4bb56901e382a9eb0664412fec64b21e9c05545e0541608fb38167b9",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          0.3365088339222615,
-          0.0,
-          10.027872791519428
-        ],
-        [
-          5.921589919006585e-05,
-          0.33072852686309057,
-          23.722727805490866
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.00017597130660690352,
-          0.9828227182276401,
-          15.923764794963022
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "none",
-      "authored": true,
-      "method": "ImageGen design and shared mathematical transform"
-    },
-    {
-      "id": 1227,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
-      "source_sha256": "2326dbb52093b6d73a748d4e05955b3c8fc8f306d7692f8aba5ac0d45615ec70",
-      "result_sha256": "81376df6c31f191ef5187cbbe1ffc59e1f17f3acc263d5b16e8df7d414ab41f3",
-      "lightmap_sha256": "dcad1ecca8b398e68f1ee2e117bb231c0aeeb4e27be8ffc3ae6222c40bc0ce0a",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          -0.04698795180722892,
-          1.2048192771084336,
-          0.16385542168675826
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          -0.04698795180722892,
-          1.2048192771084336,
-          -15.836144578313242
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "none",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1232,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
-      "source_sha256": "0b8b7543fe72205984a7c622152145bbd355007fb9a5d681b8f06c428552df5c",
-      "result_sha256": "d1ccff18648995ffad5199002faa1766e59751c48e3404e8ca23bf47864ec871",
-      "lightmap_sha256": "232bcd0bf09c27e603ecfba9754adaeca54750a6683867c2f5a2a8bf2726c7af",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0,
-          1.0,
-          0.0
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "none",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1236,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters. Orientiere dich außerdem mehr am Original, es fehlen Busse.",
-      "source_sha256": "9eb9f81551a0de973b318704664910c00f7862f4e7df4dfb7da77f439ed35495",
-      "result_sha256": "2d2350273bc31697f21a8bdde214e7ba8fb6d01dc5597d5d4684c9f0ef18b6f4",
-      "lightmap_sha256": "06fb5086f09ec3c2400743282e1179b2d4516ee358ae421db43969c45b5c323e",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          0.15369916074887024,
-          0.0,
-          -8.254306003873467
-        ],
-        [
-          0.0005704185412754905,
-          0.16014356355649512,
-          2.77085930457347
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0037112664668839668,
-          1.041928679221316,
-          -39.34870185322443
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "none",
-      "authored": true,
-      "method": "ImageGen design and shared mathematical transform"
-    },
-    {
-      "id": 1237,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters, orientiere dich außerdem näher am Original (auch was das Andreaskreuz links angeht)",
-      "source_sha256": "591bb689ca3eebbdf29b311ebde51d265c4dbc367837dd74467678eb8676d1f7",
-      "result_sha256": "0c8c23749e8cf22d38e23bc24cca5fc42600126baf789c5262c99796fedd1fac",
-      "lightmap_sha256": "a8e8d863202dff392142c6918907328fb323ea800befde378548bf06cce2ede5",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          0.18629107981220658,
-          0.0,
-          -10.600563380281699
-        ],
-        [
-          0.00494232402661471,
-          0.19769363292632078,
-          -34.63760664725882
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.02653011637270497,
-          1.0612082614240506,
-          -79.1716284240456
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "none",
-      "authored": true,
-      "method": "ImageGen design and shared mathematical transform"
-    },
-    {
-      "id": 1240,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
-      "source_sha256": "71784b98c26c77ef1a837f01ae4819bd1cef2a84ff16844c5a77bb5d074e9838",
-      "result_sha256": "9feba6324d4e293df42ba22a31bc9b5029c6e1d5602078512be7891cac435e37",
-      "lightmap_sha256": "5c218a05b1303c54026d5c4ba5dc88ee4379796a4e9ab76d411bbee94940523e",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          -0.023809523809523836,
-          1.1904761904761905,
-          2.285714285714292
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          -0.023809523809523836,
-          1.1904761904761905,
-          -29.714285714285708
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "none",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1242,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
-      "source_sha256": "9e61d9121e2695869e771ba6ec188a4e2d1b5db3f9c396314134f9c0c3970667",
-      "result_sha256": "a22be15f41d2fcc1b72b37bca43853b7b32b2163958686e05fac2eb38865aad2",
-      "lightmap_sha256": "d4a6a3a74934566deea39bdeb180acdfaf9c0997b68dbefb94d3a134e368a481",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.04824561403508776,
-          1.0964912280701753,
-          -23.688596491228047
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.04824561403508776,
-          1.0964912280701753,
-          -23.688596491228047
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "none",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1243,
-      "note": "Das Design und die Größenverhältnisse passen nicht ganz, orientiere Dich näher am Original.",
-      "source_sha256": "94993ea6fd753e53b3b9f08372ab45c6cca14f832af243626c599d859c44d646",
-      "result_sha256": "d3684116722b5212faddfe4b1fe1e31783c3c068cdc7655d8af6b7f17fc96be2",
-      "lightmap_sha256": "0276373c48b9d70635173aaf016f46c1fc9d48c2296eadabb9a33c2fd31974e7",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          0.1909222133119487,
-          0.0,
-          -19.67833199679231
-        ],
-        [
-          0.003571130321348596,
-          0.19952468558813424,
-          -14.094559922287246
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.0187046350416738,
-          1.0450574719775008,
-          -58.804587630595435
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "none",
-      "authored": true,
-      "method": "ImageGen design and shared mathematical transform"
-    },
-    {
-      "id": 1246,
-      "note": "Korrigiere die Isometrie, die Diagonalen der Grafik passen nicht ganz zu den Diagonalen des Rasters",
-      "source_sha256": "6f8d5f92d91b8f98a9d0b38c12951bd4869cda16cb64019a8ba79f68dafc9018",
-      "result_sha256": "7c8c124e1d583e9fd2028076001801958d819c517b151ec216c613d70da3eab0",
-      "lightmap_sha256": "d3ae0e6549ed89d8a17f8be633bb556ba2ed9e87a9384825626feebc665e1736",
-      "user_matrix": [
-        1.0,
-        0,
-        0,
-        1.0,
-        0.0,
-        0.0
-      ],
-      "matrix": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.05741127348643005,
-          1.04384133611691,
-          -14.713987473903943
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "projection": [
-        [
-          1.0,
-          0.0,
-          0.0
-        ],
-        [
-          0.05741127348643005,
-          1.04384133611691,
-          -14.713987473903943
-        ],
-        [
-          0.0,
-          0.0,
-          1.0
-        ]
-      ],
-      "baked_ground": "none",
-      "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
-    },
-    {
-      "id": 1254,
-      "note": "Die blaue Kuppel oben bitte leicht transparent machen (Alpha Kanal)",
-      "source_sha256": "128528784ce7231e31de4e1450c04091b9f43886af70151762f003332bc5254c",
-      "result_sha256": "128528784ce7231e31de4e1450c04091b9f43886af70151762f003332bc5254c",
-      "lightmap_sha256": "12b50e6414b866bfa608867d4dad82425d13c5b1ceb54f6b0339621a9b406aed",
+      "source_sha256": "ed32230c86563a4174ddb71d14c227462456d9d0e046595c8e11cb9d0aeab55b",
+      "transform_source": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review86/artwork/1212.png",
+      "transform_source_sha256": "fb2932099d85f77177a54c4bc2bdfa355a68841658517c07a64715250db8d804",
       "user_matrix": [
         1,
         0,
@@ -3088,43 +649,430 @@
         0,
         0
       ],
-      "matrix": [
+      "matrices": [
         [
-          1,
-          0,
-          0
-        ],
-        [
-          0,
-          1,
-          0
-        ],
-        [
-          0,
-          0,
-          1
+          [
+            0.19069622287914306,
+            0.0,
+            43.82903482290584
+          ],
+          [
+            -0.009729399126486902,
+            0.1768981659361253,
+            54.89741788271088
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
         ]
       ],
-      "projection": [
+      "split_x": null,
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "baked_ground": "tiles",
+      "facade_slopes": [
+        0.594,
+        -0.484
+      ],
+      "source_ground_vertices": [
         [
-          1,
-          0,
-          0
+          31,
+          653
         ],
         [
-          0,
-          1,
-          0
+          589,
+          974
         ],
         [
-          0,
-          0,
-          1
+          1523,
+          519
         ]
+      ],
+      "target_ground_vertices": [
+        [
+          49.74061773215927,
+          170.1103088660796
+        ],
+        [
+          156.1491100987211,
+          221.46561541899615
+        ],
+        [
+          334.25938226784075,
+          131.88969113392037
+        ]
+      ],
+      "result_sha256": "d0fb42b4bba6cff20f9e11e3b22511226f27a55f934f324c5cc62c7507569ec2",
+      "lightmap_sha256": "f10b23e2fbe6aee14f0e26a714f4c31c5165afee44b432516f75494903838eff",
+      "new_generation": true
+    },
+    {
+      "id": 1237,
+      "note": "Die Grafik passt nicht ins 2x2 Raster, orientiere dich an der Isometrie, der Größe und dem Look der Originalgrafik von SC2000 und achte darauf, dass die Isometrie dieselbe ist und die Grafikgrundfläche ins 2x2 Raster passt.",
+      "authored": true,
+      "source_sha256": "0c8c23749e8cf22d38e23bc24cca5fc42600126baf789c5262c99796fedd1fac",
+      "transform_source": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review86/artwork/1237.png",
+      "transform_source_sha256": "b5775e142f1f6d6ae7faad778331832978a02054d3a7c3abd9377213bd6d7f82",
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "matrices": [
+        [
+          [
+            0.16065119664100766,
+            0.0,
+            15.303185556333148
+          ],
+          [
+            0.0038731420573827804,
+            0.16839748075577324,
+            -34.05665925822248
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      ],
+      "split_x": null,
+      "padding": [
+        0,
+        16,
+        0,
+        0
       ],
       "baked_ground": "none",
+      "facade_slopes": [
+        0.454,
+        -0.5
+      ],
+      "source_ground_vertices": [
+        [
+          76,
+          730
+        ],
+        [
+          784,
+          1090
+        ],
+        [
+          1327,
+          818
+        ]
+      ],
+      "target_ground_vertices": [
+        [
+          27.512676501049732,
+          89.16786048985308
+        ],
+        [
+          141.25372372288314,
+          152.53313813855843
+        ],
+        [
+          228.4873234989503,
+          108.83213951014696
+        ]
+      ],
+      "result_sha256": "83ce33e868c3f0daa87ae50e8bab9be66cdca25668a7ad9445bab81e828dd6fb",
+      "lightmap_sha256": "e472266d7b70f10a20649cf052795690e2648177721331f848a1084badb88565",
+      "new_generation": true
+    },
+    {
+      "id": 1240,
+      "note": "Die Isometrie ist fehlerhaft, die Kanten der Grundfläche des Hauses passen nicht zur Grundfläche des Rasters (das Terrain stimmt aber nicht der Winkel der Fläche der eigentlichen Grafik). Erstelle die Grafik nochmal neu damit sie ins 2x2 Raster passt und die Isometrie stimmt.",
+      "authored": true,
+      "source_sha256": "9feba6324d4e293df42ba22a31bc9b5029c6e1d5602078512be7891cac435e37",
+      "transform_source": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review86/artwork/1240.png",
+      "transform_source_sha256": "bc78d59c3b3fa5603c34b3cfc517ec5ea1a02a4584eaf4a7b8d63ffae98a3d90",
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "matrices": [
+        [
+          [
+            0.12583062248732166,
+            0.0,
+            40.67354799379876
+          ],
+          [
+            -0.011381664345586876,
+            0.1580786714664845,
+            30.869130199437677
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      ],
+      "split_x": null,
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "baked_ground": "none",
+      "facade_slopes": [
+        0.47,
+        -0.326
+      ],
+      "source_ground_vertices": [
+        [
+          28,
+          723
+        ],
+        [
+          663,
+          1100
+        ],
+        [
+          1360,
+          745
+        ]
+      ],
+      "target_ground_vertices": [
+        [
+          44.19680542344377,
+          144.84132306802954
+        ],
+        [
+          124.09925070289302,
+          197.20962535144653
+        ],
+        [
+          211.80319457655622,
+          133.1586769319705
+        ]
+      ],
+      "result_sha256": "4e78912edbda30b0266b4ac6a4c887b96cddc2fa21f304527fdf864d96cc1bd3",
+      "lightmap_sha256": "91d3e11f49f12341d1a4e553404d10cd42b9c751720843025e33b09f60b1b320",
+      "new_generation": true
+    },
+    {
+      "id": 1242,
+      "note": "Die Isometrie ist fehlerhaft, die Kanten der Grundfläche des Hauses passen nicht zur Grundfläche des Rasters (das Terrain stimmt aber nicht der Winkel der Fläche der eigentlichen Grafik). Erstelle die Grafik nochmal neu damit sie ins 2x2 Raster passt und die Isometrie stimmt.",
+      "authored": true,
+      "source_sha256": "a22be15f41d2fcc1b72b37bca43853b7b32b2163958686e05fac2eb38865aad2",
+      "transform_source": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review86/artwork/1242.png",
+      "transform_source_sha256": "fff4eb7fa4f55a6b44ca04bea8e021d2597ea4171df4615872d7c788ead31611",
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "matrices": [
+        [
+          [
+            0.19642286723723085,
+            0.0,
+            -11.174065117412368
+          ],
+          [
+            0.0010993817196113752,
+            0.18323028660189444,
+            3.0333859226997077
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      ],
+      "split_x": null,
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "baked_ground": "none",
+      "facade_slopes": [
+        0.53,
+        -0.542
+      ],
+      "source_ground_vertices": [
+        [
+          228,
+          585
+        ],
+        [
+          779,
+          907
+        ],
+        [
+          1352,
+          584
+        ]
+      ],
+      "target_ground_vertices": [
+        [
+          33.61034861267626,
+          110.47376261687936
+        ],
+        [
+          141.83934846039045,
+          170.07967423019522
+        ],
+        [
+          254.3896513873237,
+          111.52623738312064
+        ]
+      ],
+      "result_sha256": "d7bef34d034c58d5df73b46d9dfe7e2e6ee1ef6763847340f839b1b19ea31b76",
+      "lightmap_sha256": null,
+      "new_generation": true
+    },
+    {
+      "id": 1243,
+      "note": "Erstelle die Grafik nochmal neu, orientiere dich bei der Architektur am Haus der Original Grafim von SC2000, achte darauf, dass die Isometrie eingehalten wird und die Grafik in die Grundfläche 2x2 passt.",
+      "authored": true,
+      "source_sha256": "d3684116722b5212faddfe4b1fe1e31783c3c068cdc7655d8af6b7f17fc96be2",
+      "transform_source": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review86/artwork/1243.png",
+      "transform_source_sha256": "a64ea7ab581bdfdaf56aee7d6416db68232b7711248f005a5ffd656af9d719ca",
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "matrices": [
+        [
+          [
+            0.18056431818958735,
+            0.0,
+            -31.167446484121257
+          ],
+          [
+            0.004318736539842072,
+            0.2056541209448603,
+            -8.312521245684195
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      ],
+      "split_x": null,
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "baked_ground": "none",
+      "facade_slopes": [
+        0.418,
+        -0.46
+      ],
+      "source_ground_vertices": [
+        [
+          276,
+          606
+        ],
+        [
+          885,
+          875
+        ],
+        [
+          1487,
+          634
+        ]
+      ],
+      "target_ground_vertices": [
+        [
+          18.668305336204853,
+          117.50584733189756
+        ],
+        [
+          128.63197511366354,
+          175.4569164188288
+        ],
+        [
+          237.3316946637951,
+          128.4941526681024
+        ]
+      ],
+      "result_sha256": "7d1e66164a63fe85ddd4bcf8805fbf1fa0449c5227ed1f5d80b6a175fc02acfe",
+      "lightmap_sha256": "882636f5d4165853ac920e9aefd40e29df00b3de286e600d7fd42420b15d182a",
+      "new_generation": true
+    },
+    {
+      "id": 1246,
+      "note": "Die Isometrie ist fehlerhaft, korrigiere diese mathematisch.",
       "authored": false,
-      "method": "Shared transform and/or deterministic ground bake"
+      "source_sha256": "7c8c124e1d583e9fd2028076001801958d819c517b151ec216c613d70da3eab0",
+      "transform_source": "D:/OpenSC2K/Codex/standalone-data-pack/corrections/2026-10-14-review86/math-source/1246.png",
+      "transform_source_sha256": "6f8d5f92d91b8f98a9d0b38c12951bd4869cda16cb64019a8ba79f68dafc9018",
+      "user_matrix": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "matrices": [
+        [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.026315789473684237,
+            1.0526315789473684,
+            -12.210526315789467
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      ],
+      "split_x": null,
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "baked_ground": "none",
+      "measured_axis_slopes": [
+        0.45,
+        -0.5
+      ],
+      "result_sha256": "4f339c13bed8a2efd273b95a62d4ba8a126150085cf993b9db8e60d53117cbe1",
+      "lightmap_sha256": "148cff485ac901d8c8dceed4fb8720059702c9178e335c15c5d9e53de44656c0",
+      "new_generation": false
     }
   ]
 }
