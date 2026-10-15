@@ -79,13 +79,14 @@ func _run() -> void:
 		await process_frame
 		assert(toolbar.child_tool_scroll.scroll_vertical == 0)
 
-	# A normal click opens the flyout without expanding the sidebar.
+	# A short click selects the remembered item and never opens the submenu.
 	var sidebar_width := toolbar.size.x
 	toolbar.toolbar_buttons[6].button_down.emit()
 	toolbar.toolbar_buttons[6].button_up.emit()
 	toolbar.toolbar_buttons[6].pressed.emit()
 	await create_timer(CityToolbar.HOLD_SECONDS + 0.05).timeout
-	assert(toolbar.hold_menu.visible and main.tool_state.selected_group == 6)
+	assert(not toolbar.hold_menu.visible and main.tool_state.selected_group == 6)
+	assert(main.tool_state.selected_subtool == 1, "A short click restores the last highway tool")
 	assert(toolbar.size.x == sidebar_width)
 	toolbar.hold_menu.hide()
 	# A hold opens the same icon, price and availability palette.
@@ -109,6 +110,13 @@ func _run() -> void:
 	await process_frame
 	await process_frame
 	assert(main.tool_state.selected_subtool == 1 and toolbar.child_tool_buttons[1].button_pressed)
+	assert(not toolbar.hold_menu.visible)
+	toolbar.toolbar_buttons[7].button_down.emit()
+	await create_timer(CityToolbar.HOLD_SECONDS + 0.05).timeout
+	toolbar.toolbar_buttons[7].button_up.emit()
+	toolbar.toolbar_buttons[7].pressed.emit()
+	await process_frame
+	await process_frame
 	assert(toolbar.hold_menu.gui_get_focus_owner() == toolbar.child_tool_buttons[1], "The reopened flyout must focus the remembered subway tool")
 	var escape := InputEventKey.new()
 	escape.keycode = KEY_ESCAPE
@@ -119,8 +127,9 @@ func _run() -> void:
 	# Keyboard/direct selection does not force open a popup (also used by the pipette).
 	main.current_tool.call("select_tool_group", 6)
 	assert(not toolbar.hold_menu.visible)
-	toolbar.toolbar_buttons[6].pressed.emit()
+	toolbar.toolbar_buttons[6].button_down.emit()
 	toolbar.hide()
+	await create_timer(CityToolbar.HOLD_SECONDS + 0.05).timeout
 	assert(not toolbar.hold_menu.visible)
 	toolbar.show()
 	# Query's footprint is recovered from saved corner flags, from any member.

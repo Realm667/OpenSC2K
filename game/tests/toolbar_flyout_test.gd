@@ -31,7 +31,11 @@ func _run() -> void:
 		selected = index
 		toolbar.sync_child_tool_selection(CityToolIds.Group.ROADS, index))
 	await process_frame
-	toolbar.toolbar_buttons[CityToolIds.Group.ROADS].pressed.emit()
+	await process_frame
+	var road_button := toolbar.toolbar_buttons[CityToolIds.Group.ROADS]
+	await _click(road_button.get_global_rect().get_center())
+	assert(not toolbar.hold_menu.visible, "A short click selects the remembered tool without opening a menu")
+	await _hold(road_button.get_global_rect().get_center())
 	await process_frame
 	await process_frame
 	await process_frame
@@ -60,7 +64,7 @@ func _run() -> void:
 		await process_frame
 		assert(view.encloses(Rect2i(toolbar.hold_menu.position, toolbar.hold_menu.size)), "The laid-out power menu must fit a small window")
 		toolbar.hold_menu.hide()
-	toolbar.toolbar_buttons[CityToolIds.Group.ROADS].pressed.emit()
+	await _hold(toolbar.toolbar_buttons[CityToolIds.Group.ROADS].get_global_rect().get_center())
 	await process_frame
 	toolbar.set_landscape_editor(true)
 	assert(not toolbar.hold_menu.visible)
@@ -71,15 +75,27 @@ func _run() -> void:
 	quit()
 
 
+func _hold(point: Vector2) -> void:
+	await _mouse_button(point, true)
+	await create_timer(CityToolbar.HOLD_SECONDS + 0.05).timeout
+	assert(toolbar.hold_menu.visible, "Holding opens the submenu before release")
+	await _mouse_button(point, false)
+	assert(toolbar.hold_menu.visible, "Releasing the opening hold keeps the submenu available")
+
+
 func _click(point: Vector2) -> void:
+	await _mouse_button(point, true)
+	await _mouse_button(point, false)
+
+
+func _mouse_button(point: Vector2, down: bool) -> void:
 	var motion := InputEventMouseMotion.new()
 	motion.position = point
 	Input.parse_input_event(motion)
-	for down in [true, false]:
-		var event := InputEventMouseButton.new()
-		event.position = point
-		event.button_index = MOUSE_BUTTON_LEFT
-		event.pressed = down
-		Input.parse_input_event(event)
-		await process_frame
-		await process_frame
+	var event := InputEventMouseButton.new()
+	event.position = point
+	event.button_index = MOUSE_BUTTON_LEFT
+	event.pressed = down
+	Input.parse_input_event(event)
+	await process_frame
+	await process_frame

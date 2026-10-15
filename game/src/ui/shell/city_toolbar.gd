@@ -151,6 +151,7 @@ func _ready() -> void:
 	hold_menu.popup_hide.connect(_on_flyout_closed)
 	visibility_changed.connect(func() -> void:
 		if not is_visible_in_tree():
+			_end_group_hold()
 			hold_menu.hide())
 	if is_inside_tree():
 		get_viewport().size_changed.connect(hold_menu.hide)
@@ -368,7 +369,7 @@ func _add_group_button(
 	button.toggle_mode = true
 	button.button_group = button_group
 	button.tooltip_text = Tools.GROUPS[group_index].name
-	button.theme_type_variation = "ArtworkButton"
+	button.theme_type_variation = "ToolbarCategoryButton"
 	button.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	button.icon = group_icon(group_index)
 	button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -469,7 +470,6 @@ func _activate_group(group_index: int) -> void:
 
 	hold_menu.hide()
 	group_requested.emit(group_index)
-	_open_group_menu(group_index)
 
 
 func _open_group_menu(group_index: int) -> void:
@@ -486,6 +486,8 @@ func _open_group_menu(group_index: int) -> void:
 func _show_held_group(group_index: int, generation: int) -> void:
 	if generation != _hold_generation or _held_group != group_index:
 		return
+	if not is_visible_in_tree() or landscape_editor or land_mode or toolbar_buttons[group_index].disabled:
+		return
 
 	_hold_opened = true
 	group_requested.emit(group_index)
@@ -493,6 +495,7 @@ func _show_held_group(group_index: int, generation: int) -> void:
 
 
 func set_landscape_editor(enabled: bool) -> void:
+	_end_group_hold()
 	landscape_editor = enabled
 	start_city_button.visible = enabled
 	regenerate_button.visible = enabled
@@ -568,7 +571,7 @@ func replace_artwork(value: Image) -> void:
 	toolbar_art = value
 
 	for index in toolbar_buttons.size():
-		toolbar_buttons[index].theme_type_variation = "ArtworkButton"
+		toolbar_buttons[index].theme_type_variation = "ToolbarCategoryButton"
 		_refresh_group_icon(index)
 
 	_refresh_artwork_buttons(self)

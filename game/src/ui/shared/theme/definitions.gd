@@ -130,6 +130,13 @@ static func build(value: String, files := false, translucent_menus := true) -> T
 	result.set_stylebox("panel", "CityStatusBarPanel", status_bar)
 
 	_apply_shared_layout(result, dark)
+	# Icon-only category buttons need more artwork space than text buttons.
+	# Keep the zoom/rotation buttons and their native icon sizing unchanged.
+	result.set_type_variation("ToolbarCategoryButton", "ArtworkButton")
+	for state in ["normal", "hover", "pressed", "hover_pressed", "disabled", "focus"]:
+		var box := _copy_style(result, "Button", state)
+		box.set_content_margin_all(3)
+		result.set_stylebox(state, "ToolbarCategoryButton", box)
 	return result
 
 
