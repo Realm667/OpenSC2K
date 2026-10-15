@@ -509,5 +509,6 @@
       "frame_interval_ms": 125,
       "review_identity_sha256": "daa67c16e490e0a51b8013189a8fe8ede1cfe8ff6c37611b6da825fb5a581e62"
     }
-  ]
+  ],
+  "motion_revision": "Single upward traveling density wave per loop; prevents reverse-motion aliasing from three repeated puffs at four temporal samples."
 }
