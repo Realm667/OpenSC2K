@@ -33,13 +33,21 @@ manifest-referenced Visual Enhancements resources. Original pixels stay private.
 The personal Runtime is installed only by REL under the workspace rules.
 Existing project notices and graphics/LICENSE-STATUS.txt continue to apply.
 
-Palette consolidation (14 October 2026): all 528 vehicle/person variants retain
-their exact pixels, with 85 shared index PNGs and per-variant RGBA palettes.
-432 vehicle lightmap references share 49 unique PNGs. Expansion happens once at
-load; existing GPU batching and light/environment effects remain unchanged.
-RS uses the same built-in Visual Enhancement clouds as SC2K.
-Format: docs/visual-artwork-palettes.md; receipt: graphics/palette-review.json.
-Verification: D:/OpenSC2K/Codex/work/palette-swaps/CURRENT.txt.
+TrueColor migration (15 October 2026): the visible PNG sources are RGB/RGBA,
+including all 528 vehicle/person color variants. The previous palette-consolidation
+receipt remains historical; literal colors now reside in the variant PNGs.
+432 vehicle lightmap references still share 49 PNGs. Existing GPU batching and
+light/environment effects remain unchanged. RS uses the same built-in Visual
+Enhancement clouds as SC2K.
+
+All 122 animations use source frames at 125 ms per frame: the existing 81
+sequences plus 40 water/coast/pipe sequences converted from cyclic colors, plus the
+fullbright power-warning blink formerly driven by a palette shader.
+The pack disables palette cycling; original SC2000 imports remain indexed and
+keep their cycles. A 16x16 compatibility lookup and optional semantic masks
+preserve logical road/water/editor addresses without limiting visible colors.
+Source colors, alpha, canvas dimensions, anchors and existing lightmaps are
+preserved. See docs/media-pack-format.md and graphics/truecolor-review.json.
 
 2026-10-15: 34 additional four-frame object animations with synchronized masks.
 All 144 buildings now use the centered-footprint-v1 master canvas convention;

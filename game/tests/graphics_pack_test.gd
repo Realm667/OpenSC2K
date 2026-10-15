@@ -7,6 +7,7 @@ const Pack = preload("res://src/assets/graphics_pack.gd")
 
 
 func _initialize() -> void:
+	_check_truecolor_pack()
 	_check_visual_palette_swaps()
 	_check_master_registration()
 	_check_object_frames()
@@ -378,3 +379,63 @@ func _check_numbered_frames() -> void:
 	assert(DirAccess.remove_absolute(folder.path_join("TILE_001_002.png")) == OK)
 	var static_pack := Pack.load_root(folder)
 	assert(static_pack.error.is_empty() and static_pack.large_sprites.high_resolution[1364].animation == null)
+
+
+func _check_truecolor_pack() -> void:
+	var folder := "user://truecolor-pack-%d" % Time.get_ticks_usec()
+	assert(DirAccess.make_dir_recursive_absolute(folder) == OK)
+	var palette := Image.create(16, 16, false, Image.FORMAT_RGBA8)
+	for index in 256:
+		palette.set_pixel(index % 16, index / 16, Color8(index, 255 - index, 40))
+	assert(palette.save_png(folder.path_join("palette.png")) == OK)
+	var art := Image.create(32, 32, false, Image.FORMAT_RGBA8)
+	for y in 32:
+		for x in 32:
+			art.set_pixel(x, y, Color8(x * 7, y * 7, (x + y) * 3, 128 if x == 0 else 255))
+	art.set_pixel(31, 31, Color.TRANSPARENT)
+	assert(art.save_png(folder.path_join("TILE_1364_001.png")) == OK)
+	var second := art.duplicate()
+	second.set_pixel(10, 10, Color8(18, 34, 219))
+	assert(second.save_png(folder.path_join("TILE_1364_002.png")) == OK)
+	var light := art.duplicate()
+	assert(light.save_png(folder.path_join("light.png")) == OK)
+	var mask := Image.create(32, 32, false, Image.FORMAT_RGBA8)
+	mask.fill(Color8(200, 200, 200))
+	assert(mask.save_png(folder.path_join("semantic.png")) == OK)
+	var manifest := {"format": "opensc2k-graphics", "version": 1, "name": "TrueColor test", "partial": true,
+		"pixel_format": "rgba8", "palette": "palette.png", "semantic_images": {"TILE_1364_001.png": "semantic.png"},
+		"master_sprites": [{"id": 1364, "png": "TILE_1364_001.png", "logical_size": [8, 8], "lightmap": "light.png"}],
+		"ui": {"toolbar_art": "TILE_1364_001.png"}}
+	_write_manifest(folder, manifest)
+	var pack := Pack.load_root(folder)
+	assert(pack.error.is_empty(), pack.error)
+	var hd: HdSprite = pack.large_sprites.high_resolution[1364]
+	assert(hd.image.get_data() == art.get_data(), "More than 256 colors and partial alpha must remain exact")
+	assert(hd.emission.get_data() == light.get_data(), "TrueColor emission must remain exact")
+	assert(pack.ui_images.toolbar_art.get_data() == art.get_data(), "UI must bypass indexed rendering")
+	assert(hd.frames == 2 and hd.fps == 8)
+	assert(hd.animation.get_pixel(10, 42) == second.get_pixel(10, 10))
+	assert(pack.large_sprites.find_sprite(1364).decode_indices().pixels.has(200), "Water semantics must survive RGB conversion")
+	assert(pack.palette.animation_image(0).get_data() == pack.palette.animation_image(5).get_data(), "TrueColor must not cycle")
+	assert(Sc2kfixSpriteFixes.extended_palette(pack.palette) == pack.palette, "Original-only palette corrections must not change TrueColor packs")
+	var original := Sc2Palette.from_rgb_bytes(pack.palette.to_rgb_bytes())
+	assert(original.animation_image(0).get_data() != original.animation_image(5).get_data(), "SC2K cycling must remain active")
+	manifest.master_sprites[0].animation = {"format": "unsupported", "frames": ["TILE_1364_001.png", "TILE_1364_002.png"]}
+	_write_manifest(folder, manifest)
+	assert(not Pack.load_root(folder).error.is_empty(), "TrueColor must reject unsupported explicit animation formats")
+	manifest.master_sprites[0].erase("animation")
+	manifest.erase("pixel_format")
+	_write_manifest(folder, manifest)
+	assert(not Pack.load_root(folder).error.is_empty(), "Legacy indexed format must remain strict")
+	manifest.pixel_format = "rgba8"
+	manifest.semantic_images["TILE_1364_001.png"] = "../escape.png"
+	_write_manifest(folder, manifest)
+	assert(not Pack.load_root(folder).error.is_empty(), "Semantic masks must obey pack path validation")
+	manifest.semantic_images.clear()
+	_write_manifest(folder, manifest)
+	assert(Pack.load_root(folder).error.is_empty(), "Simple TrueColor artwork must not require compatibility masks")
+	mask.resize(16, 16)
+	assert(mask.save_png(folder.path_join("semantic.png")) == OK)
+	manifest.semantic_images["TILE_1364_001.png"] = "semantic.png"
+	_write_manifest(folder, manifest)
+	assert(not Pack.load_root(folder).error.is_empty(), "Mismatched logical masks must be rejected")

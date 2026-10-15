@@ -12,7 +12,7 @@ void vertex() {
 	building_emission = float(tag < 128.0 || tag == 255.0);
 	if (building_emission < 0.5) tag -= 128.0;
 	animation = vec3(1.0, 8.0, 0.0);
-	if (tag == 64.0 || tag == 65.0) animation = vec3(bytes.g, tag == 65.0 ? 5.0 : 8.0, bytes.b * 256.0 + bytes.a);
+	if (tag == 64.0 || tag == 65.0 || (tag == 50.0 && bytes.g > 1.0)) animation = vec3(bytes.g, tag == 65.0 ? 5.0 : 8.0, bytes.b * 256.0 + bytes.a);
 	grid = float(tag == 48.0 || tag == 52.0);
 }
 void fragment() {

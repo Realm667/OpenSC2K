@@ -32,7 +32,7 @@ static var _fixes: Array = []
 
 # A copy of `palette` with the DOS colours in its empty entries.
 static func extended_palette(palette: Sc2Palette) -> Sc2Palette:
-	if palette == null or not palette.is_valid():
+	if palette == null or not palette.is_valid() or not palette.cycles_enabled:
 		return palette
 
 	var result := Sc2Palette.new()

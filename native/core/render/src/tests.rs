@@ -1142,7 +1142,7 @@ fn hd_effects_add_grid_lines_and_no_palette_overlay() {
 fn waterfalls_have_the_waterfall_tag_with_the_effect() {
     let mut b = fixture(4, 2);
     b.config.effects = effects::WATERFALL;
-    b.sprites.artwork.insert(2568, artwork(4, 16, 2, 2));
+    b.sprites.artwork.insert(2568, artwork(4, 8, 1, 2));
     let mut draw = Draw::new(2568, Rect::new(0, 0, 2, 2));
     draw.sprite = 1284;
     let mut out = region::Region::default();
@@ -1151,6 +1151,14 @@ fn waterfalls_have_the_waterfall_tag_with_the_effect() {
     assert_eq!(tag(&out, 0)[..2], [49, 2]);
     // blue and alpha give the position of each corner in the sprite
     assert_eq!(out.colors[2][2..], [1.0, 1.0]);
+    b.sprites.artwork.insert(2568, artwork(4, 16, 2, 2));
+    let mut frames = region::Region::default();
+    b.artwork_quad(&mut frames, &draw, 2568, false, Rect::new(0, 0, 10, 10)).unwrap();
+    assert_eq!(
+        tag(&frames, 0)[..2],
+        [65, 2],
+        "Authored waterfall frames must not be replaced by static-frame flow"
+    );
 }
 
 #[test]
@@ -1204,4 +1212,17 @@ fn unpowered_hd_buildings_keep_animation_metadata() {
         assert_eq!(lit.uvs, dark.uvs);
         assert_eq!(lit.vertices, dark.vertices);
     }
+}
+
+#[test]
+fn framed_power_warnings_retain_fullbright_tag_and_strip_geometry() {
+    let mut b = fixture(4, 2);
+    let mut art = artwork(4, 16, 4, 2);
+    art.fps = 8;
+    b.sprites.artwork.insert(2772, art);
+    let mut draw = Draw::new(2772, Rect::new(0, 0, 2, 2));
+    draw.sprite = 1386;
+    let mut out = region::Region::default();
+    b.artwork_quad(&mut out, &draw, 2772, false, Rect::new(0, 0, 10, 10)).unwrap();
+    assert_eq!(tag(&out, 0), [50, 4, 0, 8]);
 }

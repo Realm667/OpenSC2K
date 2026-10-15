@@ -15,6 +15,8 @@ func _run() -> void:
 	await _check_object_frame_timing()
 	await _check_dispatch_lights()
 	await _check_power_warnings()
+	await _check_framed_power_warning(false)
+	await _check_framed_power_warning(true)
 	var viewport := SubViewport.new()
 	viewport.size = Vector2i(16, 16)
 	viewport.transparent_bg = true
@@ -1010,3 +1012,42 @@ func _check_parcel_border(hdr: bool) -> void:
 	assert(night.get_pixel(12, 4).get_luminance() < day.get_pixel(12, 4).get_luminance() * 0.7, "Ordinary building artwork lost environmental lighting")
 	viewport.queue_free()
 	await process_frame
+
+
+func _check_framed_power_warning(hdr: bool) -> void:
+	var viewport := SubViewport.new()
+	viewport.size = Vector2i(8, 8)
+	viewport.use_hdr_2d = hdr
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	root.add_child(viewport)
+	var pixels := Image.create(8, 24, false, Image.FORMAT_RGBA8)
+	pixels.fill_rect(Rect2i(0, 0, 8, 12), Color.RED)
+	pixels.fill_rect(Rect2i(0, 12, 8, 12), Color.GREEN)
+	var sprite := Sprite2D.new()
+	sprite.centered = false
+	sprite.texture = ImageTexture.create_from_image(pixels)
+	sprite.region_enabled = true
+	sprite.region_rect = Rect2(0, 2, 8, 8)
+	sprite.self_modulate = Color(50.0 / 255.0, 2.0 / 255.0, 0, 12.0 / 255.0)
+	var material := ShaderMaterial.new()
+	material.shader = CityMapControl.PALETTE_CYCLE_SHADER
+	material.set_shader_parameter("environment_lut_linear_canvas", hdr)
+	material.set_shader_parameter("environment_enabled", true)
+	material.set_shader_parameter("environment_tint", Vector3(0.1, 0.1, 0.1))
+	material.set_shader_parameter("environment_weather", Vector3(0.2, 0.2, 0.2))
+	material.set_shader_parameter("palette_cycle_enabled", true)
+	var lookup := Image.create(256, 1, false, Image.FORMAT_RGBA8)
+	lookup.fill(Color.BLUE)
+	material.set_shader_parameter("animated_palette", ImageTexture.create_from_image(lookup))
+	sprite.material = material
+	viewport.add_child(sprite)
+	await process_frame
+	for tick in 3:
+		material.set_shader_parameter("artwork_animation_seconds", tick * 0.125)
+		await RenderingServer.frame_post_draw
+		var shown := viewport.get_texture().get_image().get_pixel(4, 4)
+		assert(shown.b < 0.01, "Frame warning was recolored by the legacy palette")
+		assert((shown.r if tick % 2 == 0 else shown.g) > 0.95, "Frame warning lost animation or fullbright lighting")
+	viewport.queue_free()
+	await process_frame
+	print("PASS: literal power-warning frames retain fullbright and loop independently of palette; HDR=", hdr)

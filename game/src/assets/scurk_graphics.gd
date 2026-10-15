@@ -160,14 +160,12 @@ func _load(value: Variant, read_png: Callable, palette: Sc2Palette) -> void:
 			elif group == "backgrounds":
 				backgrounds.append(_logical_pixels(png, size, int(master_scale)))
 			elif group == "controls":
-				control_images[ids[i]] = Sc2SpriteArchive.entry_from_indices(ids[i], 20, 20, png.pixels).create_image(palette).image
+				control_images[ids[i]] = png.render_image()
 			elif group == "workspace":
-				workspace_images[ids[i]] = Sc2SpriteArchive.entry_from_indices(ids[i], png.width, png.height,
-					png.pixels).create_image(palette).image
+				workspace_images[ids[i]] = png.render_image()
 				workspace_pixels[ids[i]] = _logical_pixels(png, size, int(master_scale))
 			else:
-				presentation_images[ids[i]] = Sc2SpriteArchive.entry_from_indices(ids[i], size.x, size.y,
-					png.pixels).create_image(palette).image
+				presentation_images[ids[i]] = png.render_image()
 				presentation_pixels[ids[i]] = png.pixels
 
 

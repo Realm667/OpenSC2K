@@ -114,6 +114,9 @@ void vertex() {
 	if (tag == ARTWORK_TAG || tag == POWER_WARNING_TAG || tag == TERRAIN_ARTWORK_TAG || tag == PARCEL_BORDER_TAG) {
 		artwork_kind = 1.0;
 		power_warning = tag == POWER_WARNING_TAG ? 1.0 : 0.0;
+		if (power_warning > 0.5 && bytes.g > 1.0) {
+			artwork_frames = vec3(bytes.g, 8.0, bytes.b * 256.0 + bytes.a);
+		}
 	} else if (tag == ANIMATION_TAG || tag == SLOW_ANIMATION_TAG) {
 		artwork_kind = 1.0;
 		artwork_frames = vec3(bytes.g, tag == SLOW_ANIMATION_TAG ? 5.0 : 8.0, bytes.b * 256.0 + bytes.a);
@@ -424,7 +427,7 @@ void fragment() {
 			COLOR.rgb = environment_color_emission(cloud_shadow(COLOR.rgb, cloud_ground_grid), center * pixel_size, building_emission);
 		}
 
-		if (power_warning > 0.5 && palette_cycle_enabled) {
+		if (power_warning > 0.5 && artwork_frames.x < 1.5 && palette_cycle_enabled) {
 			vec3 phase = texture(animated_palette, vec2((POWER_WARNING_INDEX + 0.5) / 256.0, 0.5)).rgb;
 			COLOR.rgb = mix(COLOR.rgb, phase, 0.3);
 		}

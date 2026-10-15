@@ -17,6 +17,8 @@ const SCURK_INCREMENT_TIMER_TICKS := 5
 var colors: Array[Color] = []
 var load_error := ""
 var is_index_encoding := false
+# TrueColor packs keep only a static compatibility lookup for logical masks.
+var cycles_enabled := true
 
 
 static func load_bmp(path: String) -> Sc2Palette:
@@ -104,15 +106,21 @@ static func index_encoding() -> Sc2Palette:
 
 
 func animation_index_map(base_ticks: int) -> PackedInt32Array:
+	if not cycles_enabled:
+		return NativePalette.index_map(0)
 	return NativePalette.index_map(base_ticks)
 
 
 # scurk has its own palette clock, including the startup delay
 func scurk_animation_index_map(timer_ticks: int) -> PackedInt32Array:
+	if not cycles_enabled:
+		return NativePalette.index_map(0)
 	return NativePalette.scurk_index_map(timer_ticks)
 
 
 func animation_index_map_steps(fast_steps: int, slow_steps: int) -> PackedInt32Array:
+	if not cycles_enabled:
+		return NativePalette.index_map(0)
 	return NativePalette.index_map_steps(fast_steps, slow_steps)
 
 

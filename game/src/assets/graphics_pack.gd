@@ -19,6 +19,8 @@ var city_ui_graphics: CityUiGraphics
 var desktop_graphics: DesktopGraphics
 var scenario_graphics: ScenarioGraphics
 var visual_artwork: VisualArtwork
+var _truecolor := false
+var _semantic_images: Dictionary = {}
 var _root := ""
 var _progress := Callable()
 var _files_read := 0
@@ -107,6 +109,15 @@ func _load() -> void:
 
 		return
 
+	var pixel_format: Variant = manifest.get("pixel_format", "indexed")
+	if pixel_format not in ["indexed", "rgba8"] or not manifest.get("semantic_images", {}) is Dictionary:
+		_fail("Unsupported graphics pack format or version")
+		return
+	_truecolor = pixel_format == "rgba8"
+	_semantic_images = manifest.get("semantic_images", {})
+	if _truecolor and not manifest.has("master_sprites"):
+		_fail("Unsupported graphics pack format or version")
+		return
 	pack_name = manifest.name
 	import_revision = ImportedPackRevision.read(manifest)
 	source_platform = str(manifest.get("source_platform", ""))
@@ -137,7 +148,13 @@ func _load() -> void:
 		for i in manifest.master_sprites.size():
 			if not manifest.master_sprites[i] is Dictionary:
 				continue
+			if _truecolor and manifest.master_sprites[i].get("animation") is Dictionary:
+				if manifest.master_sprites[i].animation.get("format", "rgba") != "rgba":
+					_fail("Unsupported graphics pack format or version")
+					return
 			manifest.master_sprites[i] = numbered.resolve(manifest.master_sprites[i], _has_png)
+			if _truecolor and manifest.master_sprites[i].get("animation") is Dictionary:
+				manifest.master_sprites[i].animation.format = "rgba"
 			if not error.is_empty():
 				return
 			if not numbered.error.is_empty():
@@ -145,14 +162,15 @@ func _load() -> void:
 				_fail("Unsupported graphics pack format or version")
 				return
 	_file_count = maxi(1, _count_images(manifest))
-	var palette_image := _read_png(manifest.get("palette"))
+	var palette_image := _read_palette(manifest.get("palette"))
 
 	if not error.is_empty():
 		return
 
 	palette = palette_image.palette
+	palette.cycles_enabled = not _truecolor
 	if not partial or manifest.has("scenario_palette"):
-		var scenario_image := _read_png(manifest.get("scenario_palette"))
+		var scenario_image := _read_palette(manifest.get("scenario_palette"))
 
 		if not error.is_empty():
 			return
@@ -203,9 +221,7 @@ func _load() -> void:
 		if not error.is_empty():
 			return
 
-		var entry := Sc2SpriteArchive.entry_from_indices(0, decoded.width, decoded.height, decoded.pixels)
-		var rendered := entry.create_image(decoded.palette)
-		ui_images[field] = rendered.image
+		ui_images[field] = decoded.render_image()
 
 	if manifest.has("scurk"):
 		scurk_graphics = ScurkGraphics.load_manifest(manifest.scurk, _read_png, palette)
@@ -295,7 +311,41 @@ func _has_png(relative_path: String) -> bool:
 	return exists
 
 
+func _read_palette(relative_path: Variant) -> IndexedImageResult:
+	if not _truecolor:
+		return _read_png(relative_path)
+	var source := _read_rgba_png(relative_path)
+	if source == null:
+		return null
+	if source.get_size() != Vector2i(16, 16):
+		_fail("Invalid PNG pixels or palette")
+		return null
+	var result := IndexedImageResult.new()
+	result.ok = true
+	result.palette = Sc2Palette.new()
+	for y in 16:
+		for x in 16:
+			var color := source.get_pixel(x, y)
+			color.a = 1.0
+			result.palette.colors.append(color)
+	return result
+
+
 func _read_png(relative_path: Variant) -> IndexedImageResult:
+	if _truecolor:
+		var source := _read_rgba_png(relative_path)
+		if source == null:
+			return null
+		var semantic: Image
+		if _semantic_images.has(relative_path):
+			semantic = _read_rgba_png(_semantic_images[relative_path])
+			if semantic == null:
+				return null
+		var result := TrueColorPackImage.decode(source, palette, semantic)
+		if not result.ok:
+			_fail(result.error)
+			return null
+		return result
 	_report_progress()
 	var path := _png_path(relative_path)
 	if path.is_empty():

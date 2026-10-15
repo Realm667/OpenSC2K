@@ -32,3 +32,10 @@ Integer translations and transparent cropping preserve all art, animation frames
 and lightmaps. Common bottom-center anchor, symmetric optional gutters.
 Receipt: canvas-normalization.json; editable backups and script retained in
 D:/OpenSC2K/Codex/work/canvas-normalization. No new original-game pixels used.
+
+TrueColor migration, 15 October 2026: lossless RGB/RGBA encoding of all RS PNGs;
+40 existing RS water/pipe color cycles baked to 320 literal source frames.
+Existing 81 frame sequences retained. The prior vehicle/person palette variants
+are baked to 528 RGBA sources with identical visible pixels. Semantic masks
+retain only material addresses. No SC2000 source files or pixels were changed
+or included. Receipt: truecolor-review.json. Earlier receipts are historical.

@@ -87,7 +87,7 @@ func _load(value: Variant, read_png: Callable, palette: Sc2Palette) -> void:
 
 			return
 
-		images[key] = Sc2SpriteArchive.entry_from_indices(0, png.width, png.height, png.pixels).create_image(palette).image
+		images[key] = png.render_image()
 		ids[record.id] = true
 		records.append(record.duplicate(true))
 

@@ -316,7 +316,7 @@ impl Builder {
                 byte(record.y >> 8),
                 byte(record.y & 255),
             ]
-        } else if self.waterfall_flow(draw) {
+        } else if frames == 1 && self.waterfall_flow(draw) {
             // the sprite position of each corner selects the top and the falling faces
             let corners = [
                 (
@@ -348,10 +348,16 @@ impl Builder {
             return Ok(());
         } else if self.sprites.unshaded_parcels.contains(&source) {
             [byte(i32::from(PARCEL_BORDER_TAG)), 0.0, 0.0, 1.0]
+        } else if !draw.moving && draw.sprite.rem_euclid(500) == POWER_WARNING_SPRITE {
+            // The warning remains fullbright, including authored TrueColor frames.
+            [
+                byte(i32::from(POWER_WARNING_TAG)),
+                byte(frames),
+                byte(stride >> 8),
+                byte(stride & 255),
+            ]
         } else if frames > 1 {
             [byte(i32::from(fps_tag)), byte(frames), byte(stride >> 8), byte(stride & 255)]
-        } else if !draw.moving && draw.sprite.rem_euclid(500) == POWER_WARNING_SPRITE {
-            [byte(i32::from(POWER_WARNING_TAG)), 0.0, 0.0, 1.0]
         } else {
             self.terrain_color(draw, true)
                 .unwrap_or([byte(i32::from(ARTWORK_TAG)), 0.0, 0.0, 1.0])
@@ -379,7 +385,13 @@ impl Builder {
             surface_grid::append(out, draw, bounds, &self.sprites.images[&draw.image]);
         }
 
-        if !self.config.underground || effects & effects::PIPE_FLOW == 0 {
+        if !self.config.underground
+            || effects & effects::PIPE_FLOW == 0
+            || self
+                .sprites
+                .artwork_source(draw.image)
+                .is_some_and(|(key, _)| self.sprites.artwork[&key].frames > 1)
+        {
             return Ok(());
         }
 

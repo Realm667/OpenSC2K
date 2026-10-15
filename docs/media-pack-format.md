@@ -125,6 +125,36 @@ The dialog lists only those pack kinds. Import opens the import dialog with
 only those kinds selected. Later closes the dialog. An out-of-date pack stays
 active until a new import replaces it.
 
+## TrueColor master packs
+
+Independent master packs can set `"pixel_format": "rgba8"`. The default is
+`"indexed"`; original SC2000 imports keep that default and their color cycles.
+TrueColor master packs use `master_sprites`, RGB/RGBA PNGs and literal pixel
+colors, including partial alpha. UI and lightmap PNGs use the same direct-color
+path. They do not need an `artwork_rgba` companion or a 256-color image palette.
+
+The `palette` and optional `scenario_palette` references are 16 by 16 RGB/RGBA
+lookup images in row-major order. These are static compatibility data for
+logical rendering/editor operations, not the colors of the visible artwork.
+TrueColor mode disables palette cycling only for this loaded pack.
+
+An optional `semantic_images` object maps artwork PNG paths to logical mask PNG
+paths. A mask has the same dimensions; its red channel stores the legacy
+material address (for example road 161 or water 200–207), and alpha marks valid
+coverage. It never supplies the displayed color. Existing RS masks preserve
+water, traffic, picking and SCURK brush semantics, including duplicate palette
+addresses. Keep them aligned when changing geometry. Simple art without a mask
+uses address zero at visible pixels; its appearance still comes from RGBA.
+
+Animation uses RGBA source frames. A base named `TILE_1364_001.png` discovers
+`TILE_1364_002.png`, `TILE_1364_003.png`, and so on, up to 32 contiguous frames.
+No second frame means a still image. Every frame lasts 125 ms; the loop duration
+is the frame count times 125 ms. A numbered lightmap sequence must cover all
+frames; a single lightmap is reused. First artwork/lightmap frames must match
+the respective base images. Explicit `animation.frames` lists are also supported.
+Authored waterfall and pipe sequences take precedence over the static-art
+waterfall/pipe-flow fallback. Independent environmental shaders remain available.
+
 ## Graphics pack
 
 ```json

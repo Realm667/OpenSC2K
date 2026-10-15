@@ -234,7 +234,7 @@ func _load(value: Variant, read_png: Callable, _palette: Sc2Palette) -> void:
 				return
 
 
-			var image: Image = Sc2SpriteArchive.entry_from_indices(0, size.x, size.y, png.pixels).create_image(png.palette).image
+			var image: Image = png.render_image()
 
 			if group == "checks":
 				check_sheet = image

@@ -1,7 +1,7 @@
 class_name MasterSpriteSource
 extends RefCounted
 ## Derive the three existing renderer views from one independently authored
-## indexed master. Logical geometry stays in the original coordinate system.
+## master (indexed legacy PNG or literal TrueColor PNG). Logical geometry stays in the original coordinate system.
 ## Full-resolution art is shared by all views; there are no small/medium files.
 
 @warning_ignore_start("integer_division")
@@ -97,6 +97,8 @@ func load_records(records: Variant, read_png: Callable, palette: Sc2Palette, rea
 		var rendered := master.create_image(palette)
 		if not rendered.ok:
 			return _fail(rendered.error)
+		if decoded.image != null:
+			rendered.image = decoded.image
 		if record.has("artwork_rgba"):
 			if not read_rgba.is_valid():
 				return _fail("Unsupported graphics pack format or version")
@@ -126,7 +128,7 @@ func load_records(records: Variant, read_png: Callable, palette: Sc2Palette, rea
 			var light_rendered := light_entry.create_image(light.palette)
 			if not light_rendered.ok:
 				return _fail(light_rendered.error)
-			emission = light_rendered.image
+			emission = light.render_image()
 		var animation := _load_animation(record, decoded, read_png, palette, emission, MAX_DECODED_BYTES - decoded_bytes, read_rgba, rendered.image)
 		if not error.is_empty():
 			return false
