@@ -975,21 +975,16 @@
       "id": 1113,
       "png": "masters/1113.png",
       "logical_size": [
-        36,
+        32,
         22
       ],
       "lightmap": "lightmaps/1113.png",
-      "visual_registration": [
-        32,
-        4,
-        0
-      ],
       "review_reference_size": [
         32,
         18
       ],
       "review_padding": [
-        4,
+        0,
         4,
         0,
         0
@@ -1251,11 +1246,6 @@
         "border": "7e8fb7ff",
         "surface": "none"
       },
-      "visual_registration": [
-        32,
-        0,
-        0
-      ],
       "baked_ground": "asphalt_curb"
     },
     {
@@ -1279,12 +1269,7 @@
       "parcel": {
         "border": "7e8fb7ff",
         "surface": "none"
-      },
-      "visual_registration": [
-        32,
-        0,
-        0
-      ]
+      }
     },
     {
       "id": 1126,
@@ -1308,11 +1293,6 @@
         "border": "7e8fb7ff",
         "surface": "none"
       },
-      "visual_registration": [
-        32,
-        0,
-        0
-      ],
       "baked_ground": "asphalt"
     },
     {
@@ -1337,11 +1317,6 @@
         "border": "7e8fb7ff",
         "surface": "none"
       },
-      "visual_registration": [
-        32,
-        0,
-        0
-      ],
       "baked_ground": "asphalt_curb"
     },
     {
@@ -1355,7 +1330,17 @@
       "parcel": {
         "border": "7e8fb7ff",
         "surface": "none"
-      }
+      },
+      "review_reference_size": [
+        32,
+        32
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1129,
@@ -1375,11 +1360,6 @@
         0,
         0
       ],
-      "visual_registration": [
-        32,
-        0,
-        0
-      ],
       "parcel": {
         "border": "7e8fb7ff",
         "surface": "none"
@@ -1389,21 +1369,16 @@
       "id": 1130,
       "png": "masters/1130.png",
       "logical_size": [
-        36,
+        32,
         29
       ],
       "lightmap": "lightmaps/1130.png",
-      "visual_registration": [
-        32,
-        4,
-        0
-      ],
       "review_reference_size": [
         32,
         25
       ],
       "review_padding": [
-        4,
+        0,
         4,
         0,
         0
@@ -1436,11 +1411,6 @@
         "border": "7e8fb7ff",
         "surface": "none"
       },
-      "visual_registration": [
-        32,
-        0,
-        0
-      ],
       "baked_ground": "tiles"
     },
     {
@@ -1461,11 +1431,6 @@
         0,
         0
       ],
-      "visual_registration": [
-        32,
-        0,
-        0
-      ],
       "parcel": {
         "border": "b9ae75ff",
         "surface": "none"
@@ -1475,23 +1440,18 @@
       "id": 1133,
       "png": "masters/1133.png",
       "logical_size": [
-        40,
+        32,
         32
       ],
       "lightmap": "lightmaps/1133.png",
-      "visual_registration": [
-        32,
-        4,
-        0
-      ],
       "review_reference_size": [
         32,
         28
       ],
       "review_padding": [
+        0,
         4,
-        4,
-        4,
+        0,
         0
       ],
       "parcel": {
@@ -1521,11 +1481,6 @@
         "border": "b9ae75ff",
         "surface": "none"
       },
-      "visual_registration": [
-        32,
-        0,
-        0
-      ],
       "baked_ground": "asphalt_curb"
     },
     {
@@ -1549,11 +1504,6 @@
         "border": "b9ae75ff",
         "surface": "none"
       },
-      "visual_registration": [
-        32,
-        0,
-        0
-      ],
       "baked_ground": "asphalt_curb"
     },
     {
@@ -1577,11 +1527,6 @@
         "border": "a18c70ff",
         "surface": "none"
       },
-      "visual_registration": [
-        32,
-        0,
-        0
-      ],
       "baked_ground": "dirt"
     },
     {
@@ -1605,11 +1550,6 @@
         "border": "a18c70ff",
         "surface": "none"
       },
-      "visual_registration": [
-        32,
-        0,
-        0
-      ],
       "baked_ground": "dirt"
     },
     {
@@ -1674,11 +1614,6 @@
         0,
         0
       ],
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "parcel": {
         "border": "80a97dff",
         "surface": "none"
@@ -1699,11 +1634,6 @@
       "review_padding": [
         0,
         12,
-        0,
-        0
-      ],
-      "visual_registration": [
-        64,
         0,
         0
       ],
@@ -1730,11 +1660,6 @@
         0,
         0
       ],
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "parcel": {
         "border": "80a97dff",
         "surface": "none"
@@ -1745,7 +1670,7 @@
       "png": "masters/1143.png",
       "logical_size": [
         64,
-        64
+        52
       ],
       "lightmap": "lightmaps/1143.png",
       "review_reference_size": [
@@ -1754,12 +1679,7 @@
       ],
       "review_padding": [
         0,
-        20,
-        0,
-        0
-      ],
-      "visual_registration": [
-        64,
+        8,
         0,
         0
       ],
@@ -1791,11 +1711,6 @@
         "border": "80a97dff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "asphalt_curb"
     },
     {
@@ -1843,11 +1758,6 @@
         "border": "80a97dff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "asphalt_curb"
     },
     {
@@ -1865,11 +1775,6 @@
       "review_padding": [
         0,
         16,
-        0,
-        0
-      ],
-      "visual_registration": [
-        64,
         0,
         0
       ],
@@ -1923,11 +1828,6 @@
         "border": "7e8fb7ff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "parking"
     },
     {
@@ -1952,11 +1852,6 @@
         "border": "7e8fb7ff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "asphalt_curb"
     },
     {
@@ -1964,7 +1859,7 @@
       "png": "masters/1151.png",
       "logical_size": [
         64,
-        66
+        62
       ],
       "lightmap": "lightmaps/1151.png",
       "review_reference_size": [
@@ -1973,12 +1868,7 @@
       ],
       "review_padding": [
         0,
-        20,
-        0,
-        0
-      ],
-      "visual_registration": [
-        64,
+        16,
         0,
         0
       ],
@@ -2010,11 +1900,6 @@
         "border": "7e8fb7ff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "parking"
     },
     {
@@ -2039,11 +1924,6 @@
         "border": "7e8fb7ff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "asphalt_curb"
     },
     {
@@ -2061,11 +1941,6 @@
       "review_padding": [
         0,
         16,
-        0,
-        0
-      ],
-      "visual_registration": [
-        64,
         0,
         0
       ],
@@ -2096,11 +1971,6 @@
         "border": "7e8fb7ff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "asphalt_curb"
     },
     {
@@ -2125,11 +1995,6 @@
         "border": "7e8fb7ff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "asphalt_curb"
     },
     {
@@ -2154,11 +2019,6 @@
         "border": "7e8fb7ff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "asphalt_curb"
     },
     {
@@ -2183,11 +2043,6 @@
         "border": "b9ae75ff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "asphalt_curb"
     },
     {
@@ -2195,7 +2050,7 @@
       "png": "masters/1159.png",
       "logical_size": [
         64,
-        54
+        50
       ],
       "lightmap": "lightmaps/1159.png",
       "review_reference_size": [
@@ -2204,12 +2059,7 @@
       ],
       "review_padding": [
         0,
-        16,
-        0,
-        0
-      ],
-      "visual_registration": [
-        64,
+        12,
         0,
         0
       ],
@@ -2223,7 +2073,7 @@
       "png": "masters/1160.png",
       "logical_size": [
         64,
-        57
+        53
       ],
       "lightmap": "lightmaps/1160.png",
       "review_reference_size": [
@@ -2232,7 +2082,7 @@
       ],
       "review_padding": [
         0,
-        12,
+        8,
         0,
         0
       ],
@@ -2240,11 +2090,6 @@
         "border": "b9ae75ff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "asphalt_curb",
       "animation": {
         "format": "rgba",
@@ -2292,11 +2137,6 @@
         "border": "b9ae75ff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "asphalt_curb"
     },
     {
@@ -2321,11 +2161,6 @@
         "border": "b9ae75ff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "asphalt_curb",
       "animation": {
         "format": "rgba",
@@ -2373,11 +2208,6 @@
         "border": "b9ae75ff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "asphalt_curb",
       "animation": {
         "format": "rgba",
@@ -2408,7 +2238,7 @@
       "png": "masters/1164.png",
       "logical_size": [
         64,
-        89
+        81
       ],
       "lightmap": "lightmaps/1164.png",
       "review_reference_size": [
@@ -2417,7 +2247,7 @@
       ],
       "review_padding": [
         0,
-        28,
+        20,
         0,
         0
       ],
@@ -2425,11 +2255,6 @@
         "border": "b9ae75ff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "asphalt_curb",
       "animation": {
         "format": "rgba",
@@ -2460,7 +2285,7 @@
       "png": "masters/1165.png",
       "logical_size": [
         64,
-        74
+        66
       ],
       "lightmap": "lightmaps/1165.png",
       "review_reference_size": [
@@ -2469,7 +2294,7 @@
       ],
       "review_padding": [
         0,
-        8,
+        0,
         0,
         0
       ],
@@ -2477,11 +2302,6 @@
         "border": "b9ae75ff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "asphalt_curb",
       "animation": {
         "format": "rgba",
@@ -2550,11 +2370,6 @@
         "border": "a18c70ff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "dirt"
     },
     {
@@ -2578,11 +2393,6 @@
         "border": "a18c70ff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "dirt"
     },
     {
@@ -2590,7 +2400,7 @@
       "png": "masters/1169.png",
       "logical_size": [
         64,
-        73
+        61
       ],
       "review_reference_size": [
         64,
@@ -2598,12 +2408,7 @@
       ],
       "review_padding": [
         0,
-        8,
-        0,
-        0
-      ],
-      "visual_registration": [
-        64,
+        -4,
         0,
         0
       ],
@@ -2633,11 +2438,6 @@
         "border": "967f66ff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "dirty_asphalt"
     },
     {
@@ -2661,11 +2461,6 @@
         "border": "967f66ff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "dirty_asphalt"
     },
     {
@@ -2673,7 +2468,7 @@
       "png": "masters/1172.png",
       "logical_size": [
         64,
-        69
+        65
       ],
       "review_reference_size": [
         64,
@@ -2681,7 +2476,7 @@
       ],
       "review_padding": [
         0,
-        8,
+        4,
         0,
         0
       ],
@@ -2689,11 +2484,6 @@
         "border": "967f66ff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "dirty_asphalt"
     },
     {
@@ -2717,11 +2507,6 @@
         "border": "967f66ff",
         "surface": "none"
       },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ],
       "baked_ground": "dirty_asphalt"
     },
     {
@@ -2729,7 +2514,7 @@
       "png": "masters/1174.png",
       "logical_size": [
         96,
-        77
+        73
       ],
       "lightmap": "lightmaps/1174.png",
       "review_reference_size": [
@@ -2738,12 +2523,7 @@
       ],
       "review_padding": [
         0,
-        0,
-        0,
-        0
-      ],
-      "visual_registration": [
-        96,
+        -4,
         0,
         0
       ],
@@ -2775,11 +2555,6 @@
         "border": "80a97dff",
         "surface": "none"
       },
-      "visual_registration": [
-        96,
-        0,
-        0
-      ],
       "baked_ground": "parking"
     },
     {
@@ -2892,11 +2667,6 @@
         0,
         0
       ],
-      "visual_registration": [
-        96,
-        0,
-        0
-      ],
       "parcel": {
         "border": "7e8fb7ff",
         "surface": "none"
@@ -2906,21 +2676,16 @@
       "id": 1180,
       "png": "masters/1180.png",
       "logical_size": [
-        100,
+        96,
         65
       ],
       "lightmap": "lightmaps/1180.png",
-      "visual_registration": [
-        96,
-        4,
-        0
-      ],
       "review_reference_size": [
         96,
         65
       ],
       "review_padding": [
-        4,
+        0,
         0,
         0,
         0
@@ -3063,11 +2828,6 @@
         0,
         0
       ],
-      "visual_registration": [
-        96,
-        0,
-        0
-      ],
       "parcel": {
         "border": "7e8fb7ff",
         "surface": "none"
@@ -3091,11 +2851,6 @@
         0,
         0
       ],
-      "visual_registration": [
-        96,
-        0,
-        0
-      ],
       "parcel": {
         "border": "7e8fb7ff",
         "surface": "none"
@@ -3106,14 +2861,9 @@
       "png": "masters/1185.png",
       "logical_size": [
         96,
-        98
+        94
       ],
       "lightmap": "lightmaps/1185.png",
-      "visual_registration": [
-        96,
-        0,
-        4
-      ],
       "review_reference_size": [
         96,
         78
@@ -3122,7 +2872,7 @@
         0,
         16,
         0,
-        4
+        0
       ],
       "parcel": {
         "border": "7e8fb7ff",
@@ -3144,11 +2894,6 @@
       "review_padding": [
         0,
         28,
-        0,
-        0
-      ],
-      "visual_registration": [
-        96,
         0,
         0
       ],
@@ -3175,11 +2920,6 @@
         0,
         0
       ],
-      "visual_registration": [
-        96,
-        0,
-        0
-      ],
       "parcel": {
         "border": "7e8fb7ff",
         "surface": "none"
@@ -3203,11 +2943,6 @@
         0,
         0
       ],
-      "visual_registration": [
-        96,
-        0,
-        0
-      ],
       "parcel": {
         "border": "b9ae75ff",
         "surface": "none"
@@ -3228,11 +2963,6 @@
       "review_padding": [
         0,
         20,
-        0,
-        0
-      ],
-      "visual_registration": [
-        96,
         0,
         0
       ],
@@ -3282,11 +3012,6 @@
         0,
         0
       ],
-      "visual_registration": [
-        96,
-        0,
-        0
-      ],
       "parcel": {
         "border": "b9ae75ff",
         "surface": "none"
@@ -3308,11 +3033,6 @@
       "review_padding": [
         0,
         24,
-        0,
-        0
-      ],
-      "visual_registration": [
-        96,
         0,
         0
       ],
@@ -3367,11 +3087,6 @@
         "border": "b9ae75ff",
         "surface": "none"
       },
-      "visual_registration": [
-        96,
-        0,
-        0
-      ],
       "baked_ground": "asphalt_curb"
     },
     {
@@ -3389,11 +3104,6 @@
       "review_padding": [
         0,
         20,
-        0,
-        0
-      ],
-      "visual_registration": [
-        96,
         0,
         0
       ],
@@ -3423,11 +3133,6 @@
         "border": "a18c70ff",
         "surface": "none"
       },
-      "visual_registration": [
-        96,
-        0,
-        0
-      ],
       "baked_ground": "dirt"
     },
     {
@@ -3451,34 +3156,24 @@
         "border": "a18c70ff",
         "surface": "none"
       },
-      "visual_registration": [
-        96,
-        0,
-        0
-      ],
       "baked_ground": "dirt"
     },
     {
       "id": 1196,
       "png": "masters/1196.png",
       "logical_size": [
-        104,
-        78
-      ],
-      "visual_registration": [
         96,
-        4,
-        4
+        70
       ],
       "review_reference_size": [
         96,
         74
       ],
       "review_padding": [
-        4,
         0,
-        4,
-        4
+        -4,
+        0,
+        0
       ],
       "parcel": {
         "border": "967f66ff",
@@ -3489,13 +3184,8 @@
       "id": 1197,
       "png": "masters/1197.png",
       "logical_size": [
-        100,
-        94
-      ],
-      "visual_registration": [
         96,
-        0,
-        4
+        82
       ],
       "review_reference_size": [
         96,
@@ -3503,9 +3193,9 @@
       ],
       "review_padding": [
         0,
+        -8,
         0,
-        4,
-        4
+        0
       ],
       "parcel": {
         "border": "967f66ff",
@@ -3529,11 +3219,6 @@
       "review_reference_size": [
         32,
         32
-      ],
-      "visual_registration": [
-        32,
-        0,
-        0
       ]
     },
     {
@@ -3558,22 +3243,17 @@
       "id": 1200,
       "png": "masters/1200.png",
       "logical_size": [
-        52,
+        40,
         64
-      ],
-      "visual_registration": [
-        32,
-        8,
-        0
       ],
       "review_reference_size": [
         32,
         48
       ],
       "review_padding": [
-        8,
+        4,
         16,
-        12,
+        4,
         0
       ],
       "parcel": {
@@ -3620,11 +3300,6 @@
         0,
         0
       ],
-      "visual_registration": [
-        128,
-        0,
-        0
-      ],
       "animation": {
         "format": "rgba",
         "frames": [
@@ -3653,15 +3328,10 @@
       "id": 1202,
       "png": "masters/1202.png",
       "logical_size": [
-        132,
+        128,
         123
       ],
       "lightmap": "lightmaps/1202.png",
-      "visual_registration": [
-        128,
-        0,
-        0
-      ],
       "review_reference_size": [
         128,
         115
@@ -3669,7 +3339,7 @@
       "review_padding": [
         0,
         8,
-        4,
+        0,
         0
       ],
       "parcel": {
@@ -3711,7 +3381,17 @@
       "parcel": {
         "border": "777a77ff",
         "surface": "none"
-      }
+      },
+      "review_reference_size": [
+        128,
+        81
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1204,
@@ -3724,7 +3404,17 @@
       "parcel": {
         "border": "777a77ff",
         "surface": "none"
-      }
+      },
+      "review_reference_size": [
+        128,
+        78
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1205,
@@ -3794,11 +3484,6 @@
         "border": "777a77ff",
         "surface": "none"
       },
-      "visual_registration": [
-        128,
-        0,
-        0
-      ],
       "animation": {
         "format": "rgba",
         "frames": [
@@ -3845,11 +3530,6 @@
         "border": "b98b78ff",
         "surface": "none"
       },
-      "visual_registration": [
-        96,
-        0,
-        0
-      ],
       "baked_ground": "tiles"
     },
     {
@@ -3857,13 +3537,23 @@
       "png": "masters/1209.png",
       "logical_size": [
         96,
-        82
+        78
       ],
       "lightmap": "lightmaps/1209.png",
       "parcel": {
         "border": "b98b78ff",
         "surface": "none"
-      }
+      },
+      "review_reference_size": [
+        96,
+        82
+      ],
+      "review_padding": [
+        0,
+        -4,
+        0,
+        0
+      ]
     },
     {
       "id": 1210,
@@ -3873,11 +3563,6 @@
         80
       ],
       "lightmap": "lightmaps/1210.png",
-      "visual_registration": [
-        96,
-        4,
-        0
-      ],
       "review_reference_size": [
         96,
         72
@@ -3898,14 +3583,9 @@
       "png": "masters/1211.png",
       "logical_size": [
         96,
-        85
+        81
       ],
       "lightmap": "lightmaps/1211.png",
-      "visual_registration": [
-        96,
-        0,
-        4
-      ],
       "review_reference_size": [
         96,
         65
@@ -3914,7 +3594,7 @@
         0,
         16,
         0,
-        4
+        0
       ],
       "parcel": {
         "border": "b98b78ff",
@@ -3926,7 +3606,7 @@
       "png": "masters/1212.png",
       "logical_size": [
         96,
-        63
+        55
       ],
       "lightmap": "lightmaps/1212.png",
       "review_reference_size": [
@@ -3935,7 +3615,7 @@
       ],
       "review_padding": [
         0,
-        8,
+        0,
         0,
         0
       ],
@@ -3943,11 +3623,6 @@
         "border": "aa8dbbff",
         "surface": "none"
       },
-      "visual_registration": [
-        96,
-        0,
-        0
-      ],
       "baked_ground": "tiles"
     },
     {
@@ -4000,15 +3675,10 @@
       "id": 1214,
       "png": "masters/1214.png",
       "logical_size": [
-        100,
+        96,
         57
       ],
       "lightmap": "lightmaps/1214.png",
-      "visual_registration": [
-        96,
-        0,
-        0
-      ],
       "review_reference_size": [
         96,
         57
@@ -4016,7 +3686,7 @@
       "review_padding": [
         0,
         0,
-        4,
+        0,
         0
       ],
       "parcel": {
@@ -4029,13 +3699,23 @@
       "png": "masters/1215.png",
       "logical_size": [
         128,
-        83
+        79
       ],
       "lightmap": "lightmaps/1215.png",
       "parcel": {
         "border": "aa8dbbff",
         "surface": "none"
-      }
+      },
+      "review_reference_size": [
+        128,
+        83
+      ],
+      "review_padding": [
+        0,
+        -4,
+        0,
+        0
+      ]
     },
     {
       "id": 1216,
@@ -4048,30 +3728,35 @@
       "parcel": {
         "border": "b98b78ff",
         "surface": "none"
-      }
+      },
+      "review_reference_size": [
+        128,
+        74
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1217,
       "png": "masters/1217.png",
       "logical_size": [
-        136,
-        89
+        128,
+        73
       ],
       "lightmap": "lightmaps/1217.png",
-      "visual_registration": [
-        128,
-        4,
-        4
-      ],
       "review_reference_size": [
         128,
         85
       ],
       "review_padding": [
-        4,
         0,
-        4,
-        4
+        -12,
+        0,
+        0
       ],
       "parcel": {
         "border": "b98b78ff",
@@ -4083,14 +3768,9 @@
       "png": "masters/1218.png",
       "logical_size": [
         128,
-        79
+        75
       ],
       "lightmap": "lightmaps/1218.png",
-      "visual_registration": [
-        128,
-        0,
-        4
-      ],
       "review_reference_size": [
         128,
         67
@@ -4099,7 +3779,7 @@
         0,
         8,
         0,
-        4
+        0
       ],
       "parcel": {
         "border": "aa8dbbff",
@@ -4135,6 +3815,16 @@
       "logical_size": [
         32,
         42
+      ],
+      "review_reference_size": [
+        32,
+        42
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
       ]
     },
     {
@@ -4209,7 +3899,17 @@
           "animation/objects/1221/light-2.png",
           "animation/objects/1221/light-3.png"
         ]
-      }
+      },
+      "review_reference_size": [
+        32,
+        17
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1222,
@@ -4241,7 +3941,17 @@
           "animation/objects/1222/light-2.png",
           "animation/objects/1222/light-3.png"
         ]
-      }
+      },
+      "review_reference_size": [
+        32,
+        17
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1223,
@@ -4250,21 +3960,26 @@
         32,
         21
       ],
-      "lightmap": "lightmaps/1223.png"
+      "lightmap": "lightmaps/1223.png",
+      "review_reference_size": [
+        32,
+        21
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1224,
       "png": "masters/1224.png",
       "logical_size": [
-        36,
+        40,
         52
       ],
       "lightmap": "lightmaps/1224.png",
-      "visual_registration": [
-        32,
-        4,
-        0
-      ],
       "review_reference_size": [
         32,
         40
@@ -4272,7 +3987,7 @@
       "review_padding": [
         4,
         12,
-        0,
+        4,
         0
       ]
     },
@@ -4306,7 +4021,17 @@
           "animation/objects/1225/light-2.png",
           "animation/objects/1225/light-3.png"
         ]
-      }
+      },
+      "review_reference_size": [
+        32,
+        63
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1226,
@@ -4342,7 +4067,17 @@
           "animation/objects/1226/light-2.png",
           "animation/objects/1226/light-3.png"
         ]
-      }
+      },
+      "review_reference_size": [
+        32,
+        69
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1227,
@@ -4361,11 +4096,6 @@
         8,
         0,
         0
-      ],
-      "visual_registration": [
-        32,
-        0,
-        0
       ]
     },
     {
@@ -4376,11 +4106,6 @@
         23
       ],
       "lightmap": "lightmaps/1228.png",
-      "visual_registration": [
-        32,
-        4,
-        0
-      ],
       "review_reference_size": [
         32,
         23
@@ -4399,7 +4124,17 @@
         32,
         22
       ],
-      "lightmap": "lightmaps/1229.png"
+      "lightmap": "lightmaps/1229.png",
+      "review_reference_size": [
+        32,
+        22
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1230,
@@ -4407,11 +4142,6 @@
       "logical_size": [
         40,
         21
-      ],
-      "visual_registration": [
-        32,
-        4,
-        0
       ],
       "review_reference_size": [
         32,
@@ -4431,11 +4161,6 @@
         40,
         18
       ],
-      "visual_registration": [
-        32,
-        4,
-        0
-      ],
       "review_reference_size": [
         32,
         18
@@ -4452,14 +4177,9 @@
       "png": "masters/1232.png",
       "logical_size": [
         32,
-        28
+        24
       ],
       "lightmap": "lightmaps/1232.png",
-      "visual_registration": [
-        32,
-        0,
-        4
-      ],
       "review_reference_size": [
         32,
         20
@@ -4468,7 +4188,7 @@
         0,
         4,
         0,
-        4
+        0
       ],
       "parcel": {
         "border": "a79b73ff",
@@ -4479,23 +4199,18 @@
       "id": 1233,
       "png": "masters/1233.png",
       "logical_size": [
-        40,
+        32,
         25
       ],
       "lightmap": "lightmaps/1233.png",
-      "visual_registration": [
-        32,
-        4,
-        0
-      ],
       "review_reference_size": [
         32,
         21
       ],
       "review_padding": [
+        0,
         4,
-        4,
-        4,
+        0,
         0
       ],
       "parcel": {
@@ -4507,13 +4222,8 @@
       "id": 1234,
       "png": "masters/1234.png",
       "logical_size": [
-        36,
-        23
-      ],
-      "visual_registration": [
         32,
-        0,
-        0
+        23
       ],
       "review_reference_size": [
         32,
@@ -4522,7 +4232,7 @@
       "review_padding": [
         0,
         4,
-        4,
+        0,
         0
       ],
       "animation": {
@@ -4571,14 +4281,9 @@
       "png": "masters/1236.png",
       "logical_size": [
         64,
-        41
+        37
       ],
       "lightmap": "lightmaps/1236.png",
-      "visual_registration": [
-        64,
-        0,
-        4
-      ],
       "review_reference_size": [
         64,
         37
@@ -4587,7 +4292,7 @@
         0,
         0,
         0,
-        4
+        0
       ],
       "parcel": {
         "border": "7e8fb7ff",
@@ -4599,14 +4304,9 @@
       "png": "masters/1237.png",
       "logical_size": [
         64,
-        50
+        46
       ],
       "lightmap": "lightmaps/1237.png",
-      "visual_registration": [
-        64,
-        0,
-        4
-      ],
       "review_reference_size": [
         64,
         38
@@ -4615,7 +4315,7 @@
         0,
         8,
         0,
-        4
+        0
       ],
       "parcel": {
         "border": "7e8fb7ff",
@@ -4629,21 +4329,26 @@
         64,
         39
       ],
-      "lightmap": "lightmaps/1238.png"
+      "lightmap": "lightmaps/1238.png",
+      "review_reference_size": [
+        64,
+        39
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1239,
       "png": "masters/1239.png",
       "logical_size": [
         64,
-        45
+        41
       ],
       "lightmap": "lightmaps/1239.png",
-      "visual_registration": [
-        64,
-        0,
-        4
-      ],
       "review_reference_size": [
         64,
         37
@@ -4652,7 +4357,7 @@
         0,
         4,
         0,
-        4
+        0
       ],
       "parcel": {
         "border": "a79b73ff",
@@ -4664,7 +4369,7 @@
       "png": "masters/1240.png",
       "logical_size": [
         64,
-        52
+        48
       ],
       "lightmap": "lightmaps/1240.png",
       "review_reference_size": [
@@ -4673,19 +4378,14 @@
       ],
       "review_padding": [
         0,
-        16,
+        12,
         0,
         0
       ],
       "parcel": {
         "border": "777a77ff",
         "surface": "none"
-      },
-      "visual_registration": [
-        64,
-        0,
-        0
-      ]
+      }
     },
     {
       "id": 1241,
@@ -4698,28 +4398,33 @@
       "parcel": {
         "border": "a79b73ff",
         "surface": "none"
-      }
+      },
+      "review_reference_size": [
+        64,
+        57
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1242,
       "png": "masters/1242.png",
       "logical_size": [
-        72,
-        45
-      ],
-      "visual_registration": [
         64,
-        4,
-        0
+        45
       ],
       "review_reference_size": [
         64,
         33
       ],
       "review_padding": [
-        4,
+        0,
         12,
-        4,
+        0,
         0
       ],
       "parcel": {
@@ -4742,11 +4447,6 @@
       "review_padding": [
         0,
         12,
-        0,
-        0
-      ],
-      "visual_registration": [
-        64,
         0,
         0
       ],
@@ -4789,7 +4489,17 @@
       "parcel": {
         "border": "aa8dbbff",
         "surface": "none"
-      }
+      },
+      "review_reference_size": [
+        64,
+        53
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1246,
@@ -4808,35 +4518,25 @@
         4,
         0,
         0
-      ],
-      "visual_registration": [
-        64,
-        0,
-        0
       ]
     },
     {
       "id": 1247,
       "png": "masters/1247.png",
       "logical_size": [
-        68,
-        64
+        64,
+        60
       ],
       "lightmap": "lightmaps/1247.png",
-      "visual_registration": [
-        64,
-        4,
-        4
-      ],
       "review_reference_size": [
         64,
         48
       ],
       "review_padding": [
-        4,
+        0,
         12,
         0,
-        4
+        0
       ],
       "parcel": {
         "border": "88ae7fff",
@@ -4854,13 +4554,23 @@
       "parcel": {
         "border": "a79b73ff",
         "surface": "none"
-      }
+      },
+      "review_reference_size": [
+        96,
+        55
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1249,
       "png": "masters/1249.png",
       "logical_size": [
-        100,
+        96,
         58
       ],
       "lightmap": "lightmaps/1249.png",
@@ -4871,11 +4581,6 @@
       "review_padding": [
         0,
         8,
-        4,
-        0
-      ],
-      "visual_registration": [
-        96,
         0,
         0
       ],
@@ -4889,7 +4594,7 @@
       "png": "masters/1250.png",
       "logical_size": [
         96,
-        85
+        77
       ],
       "lightmap": "lightmaps/1250.png",
       "parcel": {
@@ -4902,12 +4607,7 @@
       ],
       "review_padding": [
         0,
-        8,
         0,
-        0
-      ],
-      "visual_registration": [
-        96,
         0,
         0
       ],
@@ -4969,7 +4669,17 @@
           "animation/objects/1251/light-2.png",
           "animation/objects/1251/light-3.png"
         ]
-      }
+      },
+      "review_reference_size": [
+        128,
+        196
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1252,
@@ -5005,30 +4715,35 @@
           "animation/objects/1252/light-2.png",
           "animation/objects/1252/light-3.png"
         ]
-      }
+      },
+      "review_reference_size": [
+        128,
+        182
+      ],
+      "review_padding": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
     {
       "id": 1253,
       "png": "masters/1253.png",
       "logical_size": [
-        136,
-        242
+        128,
+        238
       ],
       "lightmap": "lightmaps/1253.png",
-      "visual_registration": [
-        128,
-        4,
-        4
-      ],
       "review_reference_size": [
         128,
         210
       ],
       "review_padding": [
-        4,
+        0,
         28,
-        4,
-        4
+        0,
+        0
       ],
       "parcel": {
         "border": "78a5a5ff",
@@ -5062,24 +4777,19 @@
       "id": 1254,
       "png": "masters/1254.png",
       "logical_size": [
-        132,
-        239
+        128,
+        219
       ],
       "lightmap": "lightmaps/1254.png",
-      "visual_registration": [
-        128,
-        0,
-        4
-      ],
       "review_reference_size": [
         128,
         235
       ],
       "review_padding": [
         0,
+        -16,
         0,
-        4,
-        4
+        0
       ],
       "artwork_rgba": "rgba/1254.png",
       "parcel": {
@@ -5127,11 +4837,6 @@
       "review_reference_size": [
         128,
         154
-      ],
-      "visual_registration": [
-        128,
-        0,
-        0
       ],
       "parcel": {
         "border": "78a5a5ff",
@@ -31170,5 +30875,6 @@
       "season_mask": "visual/ground/1268-season.png"
     }
   ],
-  "scenario_palette": "palette.png"
+  "scenario_palette": "palette.png",
+  "master_canvas": "centered-footprint-v1"
 }

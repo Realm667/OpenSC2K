@@ -156,6 +156,18 @@ func _check_master_registration() -> void:
 		assert(archive.parcel_styles[id] == PackedInt64Array([0x077300ff, 2]))
 		assert(archive.visual_registration[id] == Vector3i(32 / divisor, 4 / divisor, 4 / divisor))
 		assert(archive.high_resolution[id].image.get_pixel(80, 48).a8 == translucent.get_pixel(80, 48).a8)
+	var normalized := record.duplicate(true)
+	normalized.erase("visual_registration")
+	var centered := MasterSpriteSource.new()
+	assert(centered.load_records([normalized], reader, palette, rgba_reader, "centered-footprint-v1"), centered.error)
+	for view in 3:
+		var archive: Sc2SpriteArchive = centered.large if view == 2 else centered.small_medium
+		var divisor := 4 >> view
+		assert(archive.visual_registration[view * 500 + 112] == Vector3i(32 / divisor, 4 / divisor, 0))
+	assert(not centered.load_records([record], reader, palette, rgba_reader, "centered-footprint-v1"), "Conflicting legacy offset accepted")
+	assert(not centered.load_records([normalized], reader, palette, rgba_reader, "unknown"), "Unknown canvas convention accepted")
+	normalized.logical_size = [36, 24]
+	assert(not centered.load_records([normalized], reader, palette, rgba_reader, "centered-footprint-v1"), "Asymmetric view margins accepted")
 	var classic := Sc2SpriteArchive.new()
 	classic.entries.append(master.large.find_sprite(1112))
 	classic.entries_by_id[1112] = classic.entries[0]

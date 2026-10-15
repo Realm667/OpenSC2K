@@ -26,3 +26,9 @@ smoke and selected light details were animated by explicitly authorized scripts.
 Existing architecture pixels and accepted placement are preserved. No original
 SC2K pixels were used. Receipt: animation-review.json; editable private source:
 D:/OpenSC2K/Codex/work/object-animation-frames/generate_frames.py.
+
+Canvas normalization 2026-10-15: accepted scale/position is baked into pixels.
+Integer translations and transparent cropping preserve all art, animation frames
+and lightmaps. Common bottom-center anchor, symmetric optional gutters.
+Receipt: canvas-normalization.json; editable backups and script retained in
+D:/OpenSC2K/Codex/work/canvas-normalization. No new original-game pixels used.

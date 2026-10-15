@@ -16,13 +16,15 @@ var error := ""
 var _animation_bytes := 0
 
 
-func load_records(records: Variant, read_png: Callable, palette: Sc2Palette, read_rgba := Callable()) -> bool:
+func load_records(records: Variant, read_png: Callable, palette: Sc2Palette, read_rgba := Callable(), canvas_layout: Variant = "legacy") -> bool:
 	error = ""
 	large = Sc2SpriteArchive.new()
 	small_medium = Sc2SpriteArchive.new()
 	large.draw_building_ground = true
 	small_medium.draw_building_ground = true
 	_animation_bytes = 0
+	if not canvas_layout is String or canvas_layout not in ["legacy", "centered-footprint-v1"]:
+		return _fail("Unsupported graphics pack format or version")
 	if not records is Array or records.is_empty():
 		return _fail("Sprite lists must be nonempty arrays")
 
@@ -50,6 +52,14 @@ func load_records(records: Variant, read_png: Callable, palette: Sc2Palette, rea
 				return _fail("Unsupported graphics pack format or version")
 		var logical := Vector2i(int(size[0]), int(size[1]))
 		var registration := Vector3i(logical.x, 0, 0)
+		var centered: bool = canvas_layout == "centered-footprint-v1" and id >= 1112 and id <= 1255
+		if centered:
+			# Authored pixels use a common bottom-center anchor. A wider canvas
+			# provides symmetric transparent space, never a per-object offset.
+			var footprint: int = NativeCityTools.building_area(id - 1000) * 32
+			if record.has("visual_registration") or logical.x < footprint or (logical.x - footprint) % 8 != 0:
+				return _fail("Unsupported graphics pack format or version")
+			registration = Vector3i(footprint, (logical.x - footprint) / 2, 0)
 		if record.has("visual_registration"):
 			var values: Variant = record.visual_registration
 			if id < 1112 or id > 1255 or not values is Array or values.size() != 3:
@@ -156,7 +166,7 @@ func load_records(records: Variant, read_png: Callable, palette: Sc2Palette, rea
 				archive.parcel_styles[view_id] = parcel
 			archive.entries.append(entry)
 			archive.entries_by_id[view_id] = entry
-			if record.has("visual_registration"):
+			if record.has("visual_registration") or centered:
 				archive.visual_registration[view_id] = Vector3i(registration.x / divisor, registration.y / divisor, registration.z / divisor)
 			var artwork := HdSprite.new()
 			artwork.image = rendered.image

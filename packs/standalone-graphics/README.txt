@@ -40,3 +40,9 @@ load; existing GPU batching and light/environment effects remain unchanged.
 RS uses the same built-in Visual Enhancement clouds as SC2K.
 Format: docs/visual-artwork-palettes.md; receipt: graphics/palette-review.json.
 Verification: D:/OpenSC2K/Codex/work/palette-swaps/CURRENT.txt.
+
+2026-10-15: 34 additional four-frame object animations with synchronized masks.
+All 144 buildings now use the centered-footprint-v1 master canvas convention;
+accepted sizes and positions are baked into pixels, with no individual overrides.
+Use the matching game build with master_canvas support. Modding documentation:
+../../docs/master-canvas-layout.md; per-building sizes and guides: templates/.
