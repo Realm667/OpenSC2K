@@ -586,11 +586,11 @@
       "footprint_tiles": 2,
       "png_size": [
         256,
-        212
+        244
       ],
       "front_corner": [
         128,
-        208
+        240
       ]
     },
     {
@@ -610,11 +610,11 @@
       "footprint_tiles": 2,
       "png_size": [
         256,
-        260
+        324
       ],
       "front_corner": [
         128,
-        256
+        320
       ]
     },
     {
@@ -622,11 +622,11 @@
       "footprint_tiles": 2,
       "png_size": [
         256,
-        288
+        336
       ],
       "front_corner": [
         128,
-        284
+        332
       ]
     },
     {
@@ -634,11 +634,11 @@
       "footprint_tiles": 2,
       "png_size": [
         256,
-        324
+        372
       ],
       "front_corner": [
         128,
-        320
+        368
       ]
     },
     {
@@ -934,11 +934,11 @@
       "footprint_tiles": 3,
       "png_size": [
         384,
-        424
+        472
       ],
       "front_corner": [
         192,
-        420
+        468
       ]
     },
     {
@@ -958,11 +958,11 @@
       "footprint_tiles": 3,
       "png_size": [
         384,
-        348
+        396
       ],
       "front_corner": [
         192,
-        344
+        392
       ]
     },
     {
@@ -1078,11 +1078,11 @@
       "footprint_tiles": 4,
       "png_size": [
         512,
-        376
+        424
       ],
       "front_corner": [
         256,
-        372
+        420
       ]
     },
     {
@@ -1090,11 +1090,11 @@
       "footprint_tiles": 4,
       "png_size": [
         512,
-        492
+        540
       ],
       "front_corner": [
         256,
-        488
+        536
       ]
     },
     {
@@ -1150,11 +1150,11 @@
       "footprint_tiles": 4,
       "png_size": [
         512,
-        472
+        520
       ],
       "front_corner": [
         256,
-        468
+        516
       ]
     },
     {
@@ -1666,11 +1666,11 @@
       "footprint_tiles": 3,
       "png_size": [
         384,
-        308
+        340
       ],
       "front_corner": [
         192,
-        304
+        336
       ]
     },
     {

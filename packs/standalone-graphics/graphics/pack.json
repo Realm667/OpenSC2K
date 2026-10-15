@@ -2073,7 +2073,7 @@
       "png": "masters/1160.png",
       "logical_size": [
         64,
-        53
+        61
       ],
       "lightmap": "lightmaps/1160.png",
       "review_reference_size": [
@@ -2082,7 +2082,7 @@
       ],
       "review_padding": [
         0,
-        8,
+        16,
         0,
         0
       ],
@@ -2122,7 +2122,7 @@
       "png": "masters/1162.png",
       "logical_size": [
         64,
-        65
+        81
       ],
       "lightmap": "lightmaps/1162.png",
       "review_reference_size": [
@@ -2131,7 +2131,7 @@
       ],
       "review_padding": [
         0,
-        20,
+        36,
         0,
         0
       ],
@@ -2147,7 +2147,7 @@
       "png": "masters/1163.png",
       "logical_size": [
         64,
-        72
+        84
       ],
       "lightmap": "lightmaps/1163.png",
       "review_reference_size": [
@@ -2156,7 +2156,7 @@
       ],
       "review_padding": [
         0,
-        16,
+        28,
         0,
         0
       ],
@@ -2172,7 +2172,7 @@
       "png": "masters/1164.png",
       "logical_size": [
         64,
-        81
+        93
       ],
       "lightmap": "lightmaps/1164.png",
       "review_reference_size": [
@@ -2181,7 +2181,7 @@
       ],
       "review_padding": [
         0,
-        20,
+        32,
         0,
         0
       ],
@@ -2753,7 +2753,7 @@
       "png": "masters/1189.png",
       "logical_size": [
         96,
-        106
+        118
       ],
       "lightmap": "lightmaps/1189.png",
       "review_reference_size": [
@@ -2762,7 +2762,7 @@
       ],
       "review_padding": [
         0,
-        20,
+        32,
         0,
         0
       ],
@@ -2801,7 +2801,7 @@
       "png": "masters/1191.png",
       "logical_size": [
         96,
-        87
+        99
       ],
       "lightmap": "lightmaps/1191.png",
       "review_reference_size": [
@@ -2810,7 +2810,7 @@
       ],
       "review_padding": [
         0,
-        24,
+        36,
         0,
         0
       ],
@@ -3023,7 +3023,7 @@
       "png": "masters/1201.png",
       "logical_size": [
         128,
-        94
+        106
       ],
       "lightmap": "lightmaps/1201.png",
       "parcel": {
@@ -3036,7 +3036,7 @@
       ],
       "review_padding": [
         0,
-        8,
+        20,
         0,
         0
       ],
@@ -3047,7 +3047,7 @@
       "png": "masters/1202.png",
       "logical_size": [
         128,
-        123
+        135
       ],
       "lightmap": "lightmaps/1202.png",
       "review_reference_size": [
@@ -3056,7 +3056,7 @@
       ],
       "review_padding": [
         0,
-        8,
+        20,
         0,
         0
       ],
@@ -3163,7 +3163,7 @@
       "png": "masters/1207.png",
       "logical_size": [
         128,
-        118
+        130
       ],
       "lightmap": "lightmaps/1207.png",
       "review_reference_size": [
@@ -3172,7 +3172,7 @@
       ],
       "review_padding": [
         0,
-        12,
+        24,
         0,
         0
       ],
@@ -4096,7 +4096,7 @@
       "png": "masters/1250.png",
       "logical_size": [
         96,
-        77
+        85
       ],
       "lightmap": "lightmaps/1250.png",
       "parcel": {
@@ -4109,7 +4109,7 @@
       ],
       "review_padding": [
         0,
-        0,
+        8,
         0,
         0
       ],
