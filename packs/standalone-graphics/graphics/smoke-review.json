@@ -510,5 +510,7 @@
       "review_identity_sha256": "daa67c16e490e0a51b8013189a8fe8ede1cfe8ff6c37611b6da825fb5a581e62"
     }
   ],
-  "motion_revision": "Single upward traveling density wave per loop; prevents reverse-motion aliasing from three repeated puffs at four temporal samples."
+  "motion_revision": "One upward traveling density wave and one rising textured eddy per loop; distinct chimney phase offsets retained.",
+  "selected_style": "B — dense industrial smoke; actual textured plume from approved ImageGen concept",
+  "style_reference_sha256": "d17a85cbab99ce17c84558d854d0cfa055a383adbce7f3fad1fcdd5fb6780f7d"
 }
