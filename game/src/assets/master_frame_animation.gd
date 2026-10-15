@@ -1,6 +1,6 @@
 class_name MasterFrameAnimation
 extends RefCounted
-## Compile up to four editable RGBA frames into the existing resident GPU strip.
+## Compile up to 32 editable RGBA frames into the existing resident GPU strip.
 ## Holds and ping-pong are expanded once, never on the rendering thread.
 
 @warning_ignore_start("integer_division")
@@ -13,8 +13,8 @@ func load_frames(spec: Dictionary, base: Image, emission: Image, read_rgba: Call
 	var paths: Variant = spec.get("frames")
 	var rate: Variant = spec.get("fps", 8)
 	var playback: Variant = spec.get("playback", "loop")
-	if not paths is Array or paths.size() < 1 or paths.size() > 4 or not read_rgba.is_valid():
-		return _fail("RGBA object animations require one to four frames")
+	if not paths is Array or paths.size() < 1 or paths.size() > 32 or not read_rgba.is_valid():
+		return _fail("RGBA object animations require one to 32 frames")
 	if not (rate is int or rate is float) or not is_finite(float(rate)) or rate != int(rate) or int(rate) not in [5, 8]:
 		return _fail("Object animation fps must be 5 or 8")
 	if playback not in ["loop", "ping_pong"]:

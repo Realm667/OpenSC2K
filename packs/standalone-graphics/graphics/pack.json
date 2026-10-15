@@ -2091,29 +2091,7 @@
         "surface": "none"
       },
       "baked_ground": "asphalt_curb",
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1160.png",
-          "animation/objects/1160/1.png",
-          "animation/objects/1160/2.png",
-          "animation/objects/1160/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1160.png",
-          "lightmaps/1160.png",
-          "lightmaps/1160.png",
-          "lightmaps/1160.png"
-        ]
-      }
+      "artwork_rgba": "animation/objects/1160/TILE_1160_001.png"
     },
     {
       "id": 1161,
@@ -2162,29 +2140,7 @@
         "surface": "none"
       },
       "baked_ground": "asphalt_curb",
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1162.png",
-          "animation/objects/1162/1.png",
-          "animation/objects/1162/2.png",
-          "animation/objects/1162/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1162.png",
-          "lightmaps/1162.png",
-          "lightmaps/1162.png",
-          "lightmaps/1162.png"
-        ]
-      }
+      "artwork_rgba": "animation/objects/1162/TILE_1162_001.png"
     },
     {
       "id": 1163,
@@ -2209,29 +2165,7 @@
         "surface": "none"
       },
       "baked_ground": "asphalt_curb",
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1163.png",
-          "animation/objects/1163/1.png",
-          "animation/objects/1163/2.png",
-          "animation/objects/1163/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1163.png",
-          "lightmaps/1163.png",
-          "lightmaps/1163.png",
-          "lightmaps/1163.png"
-        ]
-      }
+      "artwork_rgba": "animation/objects/1163/TILE_1163_001.png"
     },
     {
       "id": 1164,
@@ -2256,29 +2190,7 @@
         "surface": "none"
       },
       "baked_ground": "asphalt_curb",
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1164.png",
-          "animation/objects/1164/1.png",
-          "animation/objects/1164/2.png",
-          "animation/objects/1164/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1164.png",
-          "lightmaps/1164.png",
-          "lightmaps/1164.png",
-          "lightmaps/1164.png"
-        ]
-      }
+      "artwork_rgba": "animation/objects/1164/TILE_1164_001.png"
     },
     {
       "id": 1165,
@@ -2303,29 +2215,7 @@
         "surface": "none"
       },
       "baked_ground": "asphalt_curb",
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1165.png",
-          "animation/objects/1165/1.png",
-          "animation/objects/1165/2.png",
-          "animation/objects/1165/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1165.png",
-          "lightmaps/1165.png",
-          "lightmaps/1165.png",
-          "lightmaps/1165.png"
-        ]
-      }
+      "artwork_rgba": "animation/objects/1165/TILE_1165_001.png"
     },
     {
       "id": 1166,
@@ -2624,29 +2514,6 @@
       "parcel": {
         "border": "7e8fb7ff",
         "surface": "none"
-      },
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1178.png",
-          "animation/objects/1178/1.png",
-          "animation/objects/1178/2.png",
-          "animation/objects/1178/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1178.png",
-          "animation/objects/1178/light-1.png",
-          "animation/objects/1178/light-2.png",
-          "animation/objects/1178/light-3.png"
-        ]
       }
     },
     {
@@ -2693,29 +2560,6 @@
       "parcel": {
         "border": "7e8fb7ff",
         "surface": "none"
-      },
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1180.png",
-          "animation/objects/1180/1.png",
-          "animation/objects/1180/2.png",
-          "animation/objects/1180/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1180.png",
-          "animation/objects/1180/light-1.png",
-          "animation/objects/1180/light-2.png",
-          "animation/objects/1180/light-3.png"
-        ]
       }
     },
     {
@@ -2725,7 +2569,7 @@
         96,
         90
       ],
-      "lightmap": "lightmaps/1181.png",
+      "lightmap": "animation/objects/1181/LIGHT_1181_001.png",
       "review_reference_size": [
         96,
         90
@@ -2740,29 +2584,7 @@
         "border": "7e8fb7ff",
         "surface": "none"
       },
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1181.png",
-          "animation/objects/1181/1.png",
-          "animation/objects/1181/2.png",
-          "animation/objects/1181/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1181.png",
-          "animation/objects/1181/light-1.png",
-          "animation/objects/1181/light-2.png",
-          "animation/objects/1181/light-3.png"
-        ]
-      }
+      "artwork_rgba": "animation/objects/1181/TILE_1181_001.png"
     },
     {
       "id": 1182,
@@ -2771,7 +2593,7 @@
         96,
         70
       ],
-      "lightmap": "lightmaps/1182.png",
+      "lightmap": "animation/objects/1182/LIGHT_1182_001.png",
       "review_reference_size": [
         96,
         58
@@ -2786,29 +2608,7 @@
         "border": "7e8fb7ff",
         "surface": "none"
       },
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1182.png",
-          "animation/objects/1182/1.png",
-          "animation/objects/1182/2.png",
-          "animation/objects/1182/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1182.png",
-          "animation/objects/1182/light-1.png",
-          "animation/objects/1182/light-2.png",
-          "animation/objects/1182/light-3.png"
-        ]
-      }
+      "artwork_rgba": "animation/objects/1182/TILE_1182_001.png"
     },
     {
       "id": 1183,
@@ -2970,29 +2770,7 @@
         "border": "b9ae75ff",
         "surface": "none"
       },
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1189.png",
-          "animation/objects/1189/1.png",
-          "animation/objects/1189/2.png",
-          "animation/objects/1189/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1189.png",
-          "lightmaps/1189.png",
-          "lightmaps/1189.png",
-          "lightmaps/1189.png"
-        ]
-      }
+      "artwork_rgba": "animation/objects/1189/TILE_1189_001.png"
     },
     {
       "id": 1190,
@@ -3041,29 +2819,7 @@
         "surface": "none"
       },
       "baked_ground": "asphalt_curb",
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1191.png",
-          "animation/objects/1191/1.png",
-          "animation/objects/1191/2.png",
-          "animation/objects/1191/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1191.png",
-          "lightmaps/1191.png",
-          "lightmaps/1191.png",
-          "lightmaps/1191.png"
-        ]
-      }
+      "artwork_rgba": "animation/objects/1191/TILE_1191_001.png"
     },
     {
       "id": 1192,
@@ -3260,23 +3016,7 @@
         "border": "ad7373ff",
         "surface": "none"
       },
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1200.png",
-          "animation/objects/1200/1.png",
-          "animation/objects/1200/2.png",
-          "animation/objects/1200/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          400,
-          400,
-          400,
-          400
-        ],
-        "playback": "loop"
-      }
+      "artwork_rgba": "animation/objects/1200/TILE_1200_001.png"
     },
     {
       "id": 1201,
@@ -3300,29 +3040,7 @@
         0,
         0
       ],
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1201.png",
-          "animation/objects/1201/1.png",
-          "animation/objects/1201/2.png",
-          "animation/objects/1201/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1201.png",
-          "lightmaps/1201.png",
-          "lightmaps/1201.png",
-          "lightmaps/1201.png"
-        ]
-      }
+      "artwork_rgba": "animation/objects/1201/TILE_1201_001.png"
     },
     {
       "id": 1202,
@@ -3346,29 +3064,7 @@
         "border": "777a77ff",
         "surface": "none"
       },
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1202.png",
-          "animation/objects/1202/1.png",
-          "animation/objects/1202/2.png",
-          "animation/objects/1202/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1202.png",
-          "lightmaps/1202.png",
-          "lightmaps/1202.png",
-          "lightmaps/1202.png"
-        ]
-      }
+      "artwork_rgba": "animation/objects/1202/TILE_1202_001.png"
     },
     {
       "id": 1203,
@@ -3484,29 +3180,7 @@
         "border": "777a77ff",
         "surface": "none"
       },
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1207.png",
-          "animation/objects/1207/1.png",
-          "animation/objects/1207/2.png",
-          "animation/objects/1207/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1207.png",
-          "lightmaps/1207.png",
-          "lightmaps/1207.png",
-          "lightmaps/1207.png"
-        ]
-      }
+      "artwork_rgba": "animation/objects/1207/TILE_1207_001.png"
     },
     {
       "id": 1208,
@@ -3646,29 +3320,6 @@
       "parcel": {
         "border": "aa8dbbff",
         "surface": "none"
-      },
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1213.png",
-          "animation/objects/1213/1.png",
-          "animation/objects/1213/2.png",
-          "animation/objects/1213/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1213.png",
-          "animation/objects/1213/light-1.png",
-          "animation/objects/1213/light-2.png",
-          "animation/objects/1213/light-3.png"
-        ]
       }
     },
     {
@@ -3784,29 +3435,6 @@
       "parcel": {
         "border": "aa8dbbff",
         "surface": "none"
-      },
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1218.png",
-          "animation/objects/1218/1.png",
-          "animation/objects/1218/2.png",
-          "animation/objects/1218/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1218.png",
-          "animation/objects/1218/light-1.png",
-          "animation/objects/1218/light-2.png",
-          "animation/objects/1218/light-3.png"
-        ]
       }
     },
     {
@@ -3845,29 +3473,7 @@
         0,
         0
       ],
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1220.png",
-          "animation/objects/1220/1.png",
-          "animation/objects/1220/2.png",
-          "animation/objects/1220/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1220.png",
-          "animation/objects/1220/light-1.png",
-          "animation/objects/1220/light-2.png",
-          "animation/objects/1220/light-3.png"
-        ]
-      }
+      "artwork_rgba": "animation/objects/1220/TILE_1220_001.png"
     },
     {
       "id": 1221,
@@ -3876,30 +3482,7 @@
         32,
         17
       ],
-      "lightmap": "lightmaps/1221.png",
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1221.png",
-          "animation/objects/1221/1.png",
-          "animation/objects/1221/2.png",
-          "animation/objects/1221/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1221.png",
-          "animation/objects/1221/light-1.png",
-          "animation/objects/1221/light-2.png",
-          "animation/objects/1221/light-3.png"
-        ]
-      },
+      "lightmap": "animation/objects/1221/LIGHT_1221_001.png",
       "review_reference_size": [
         32,
         17
@@ -3909,7 +3492,8 @@
         0,
         0,
         0
-      ]
+      ],
+      "artwork_rgba": "animation/objects/1221/TILE_1221_001.png"
     },
     {
       "id": 1222,
@@ -3918,30 +3502,7 @@
         32,
         17
       ],
-      "lightmap": "lightmaps/1222.png",
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1222.png",
-          "animation/objects/1222/1.png",
-          "animation/objects/1222/2.png",
-          "animation/objects/1222/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1222.png",
-          "animation/objects/1222/light-1.png",
-          "animation/objects/1222/light-2.png",
-          "animation/objects/1222/light-3.png"
-        ]
-      },
+      "lightmap": "animation/objects/1222/LIGHT_1222_001.png",
       "review_reference_size": [
         32,
         17
@@ -3951,7 +3512,8 @@
         0,
         0,
         0
-      ]
+      ],
+      "artwork_rgba": "animation/objects/1222/TILE_1222_001.png"
     },
     {
       "id": 1223,
@@ -3998,30 +3560,7 @@
         32,
         63
       ],
-      "lightmap": "lightmaps/1225.png",
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1225.png",
-          "animation/objects/1225/1.png",
-          "animation/objects/1225/2.png",
-          "animation/objects/1225/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1225.png",
-          "animation/objects/1225/light-1.png",
-          "animation/objects/1225/light-2.png",
-          "animation/objects/1225/light-3.png"
-        ]
-      },
+      "lightmap": "animation/objects/1225/LIGHT_1225_001.png",
       "review_reference_size": [
         32,
         63
@@ -4031,7 +3570,8 @@
         0,
         0,
         0
-      ]
+      ],
+      "artwork_rgba": "animation/objects/1225/TILE_1225_001.png"
     },
     {
       "id": 1226,
@@ -4040,33 +3580,10 @@
         32,
         69
       ],
-      "lightmap": "lightmaps/1226.png",
+      "lightmap": "animation/objects/1226/LIGHT_1226_001.png",
       "parcel": {
         "border": "a79b73ff",
         "surface": "none"
-      },
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1226.png",
-          "animation/objects/1226/1.png",
-          "animation/objects/1226/2.png",
-          "animation/objects/1226/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1226.png",
-          "animation/objects/1226/light-1.png",
-          "animation/objects/1226/light-2.png",
-          "animation/objects/1226/light-3.png"
-        ]
       },
       "review_reference_size": [
         32,
@@ -4077,7 +3594,8 @@
         0,
         0,
         0
-      ]
+      ],
+      "artwork_rgba": "animation/objects/1226/TILE_1226_001.png"
     },
     {
       "id": 1227,
@@ -4235,23 +3753,7 @@
         0,
         0
       ],
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1234.png",
-          "animation/objects/1234/1.png",
-          "animation/objects/1234/2.png",
-          "animation/objects/1234/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          400,
-          400,
-          400,
-          400
-        ],
-        "playback": "loop"
-      }
+      "artwork_rgba": "animation/objects/1234/TILE_1234_001.png"
     },
     {
       "id": 1235,
@@ -4611,29 +4113,7 @@
         0,
         0
       ],
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1250.png",
-          "animation/objects/1250/1.png",
-          "animation/objects/1250/2.png",
-          "animation/objects/1250/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1250.png",
-          "lightmaps/1250.png",
-          "lightmaps/1250.png",
-          "lightmaps/1250.png"
-        ]
-      }
+      "artwork_rgba": "animation/objects/1250/TILE_1250_001.png"
     },
     {
       "id": 1251,
@@ -4642,33 +4122,10 @@
         128,
         196
       ],
-      "lightmap": "lightmaps/1251.png",
+      "lightmap": "animation/objects/1251/LIGHT_1251_001.png",
       "parcel": {
         "border": "78a5a5ff",
         "surface": "none"
-      },
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1251.png",
-          "animation/objects/1251/1.png",
-          "animation/objects/1251/2.png",
-          "animation/objects/1251/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1251.png",
-          "animation/objects/1251/light-1.png",
-          "animation/objects/1251/light-2.png",
-          "animation/objects/1251/light-3.png"
-        ]
       },
       "review_reference_size": [
         128,
@@ -4679,7 +4136,8 @@
         0,
         0,
         0
-      ]
+      ],
+      "artwork_rgba": "animation/objects/1251/TILE_1251_001.png"
     },
     {
       "id": 1252,
@@ -4688,33 +4146,10 @@
         128,
         182
       ],
-      "lightmap": "lightmaps/1252.png",
+      "lightmap": "animation/objects/1252/LIGHT_1252_001.png",
       "parcel": {
         "border": "78a5a5ff",
         "surface": "none"
-      },
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1252.png",
-          "animation/objects/1252/1.png",
-          "animation/objects/1252/2.png",
-          "animation/objects/1252/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1252.png",
-          "animation/objects/1252/light-1.png",
-          "animation/objects/1252/light-2.png",
-          "animation/objects/1252/light-3.png"
-        ]
       },
       "review_reference_size": [
         128,
@@ -4725,7 +4160,8 @@
         0,
         0,
         0
-      ]
+      ],
+      "artwork_rgba": "animation/objects/1252/TILE_1252_001.png"
     },
     {
       "id": 1253,
@@ -4734,7 +4170,7 @@
         128,
         238
       ],
-      "lightmap": "lightmaps/1253.png",
+      "lightmap": "animation/objects/1253/LIGHT_1253_001.png",
       "review_reference_size": [
         128,
         210
@@ -4749,29 +4185,7 @@
         "border": "78a5a5ff",
         "surface": "none"
       },
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1253.png",
-          "animation/objects/1253/1.png",
-          "animation/objects/1253/2.png",
-          "animation/objects/1253/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1253.png",
-          "animation/objects/1253/light-1.png",
-          "animation/objects/1253/light-2.png",
-          "animation/objects/1253/light-3.png"
-        ]
-      }
+      "artwork_rgba": "animation/objects/1253/TILE_1253_001.png"
     },
     {
       "id": 1254,
@@ -4780,7 +4194,7 @@
         128,
         219
       ],
-      "lightmap": "lightmaps/1254.png",
+      "lightmap": "animation/objects/1254/LIGHT_1254_001.png",
       "review_reference_size": [
         128,
         235
@@ -4791,33 +4205,10 @@
         0,
         0
       ],
-      "artwork_rgba": "rgba/1254.png",
+      "artwork_rgba": "animation/objects/1254/TILE_1254_001.png",
       "parcel": {
         "border": "78a5a5ff",
         "surface": "none"
-      },
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "rgba/1254.png",
-          "animation/objects/1254/1.png",
-          "animation/objects/1254/2.png",
-          "animation/objects/1254/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1254.png",
-          "animation/objects/1254/light-1.png",
-          "animation/objects/1254/light-2.png",
-          "animation/objects/1254/light-3.png"
-        ]
       }
     },
     {
@@ -4827,7 +4218,7 @@
         128,
         154
       ],
-      "lightmap": "lightmaps/1255.png",
+      "lightmap": "animation/objects/1255/LIGHT_1255_001.png",
       "review_padding": [
         0,
         0,
@@ -4842,29 +4233,7 @@
         "border": "78a5a5ff",
         "surface": "none"
       },
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "masters/1255.png",
-          "animation/objects/1255/1.png",
-          "animation/objects/1255/2.png",
-          "animation/objects/1255/3.png"
-        ],
-        "fps": 5,
-        "durations_ms": [
-          200,
-          200,
-          200,
-          200
-        ],
-        "playback": "loop",
-        "lightmaps": [
-          "lightmaps/1255.png",
-          "animation/objects/1255/light-1.png",
-          "animation/objects/1255/light-2.png",
-          "animation/objects/1255/light-3.png"
-        ]
-      }
+      "artwork_rgba": "animation/objects/1255/TILE_1255_001.png"
     },
     {
       "id": 1256,
@@ -5743,24 +5112,7 @@
         32,
         20
       ],
-      "artwork_rgba": "artwork-rgba/1364.png",
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "artwork-rgba/1364.png",
-          "animation/objects/1364/1.png",
-          "animation/objects/1364/2.png",
-          "animation/objects/1364/3.png"
-        ],
-        "fps": 8,
-        "durations_ms": [
-          125,
-          125,
-          125,
-          125
-        ],
-        "playback": "loop"
-      }
+      "artwork_rgba": "animation/objects/1364/TILE_1364_001.png"
     },
     {
       "id": 1365,
@@ -5769,24 +5121,7 @@
         32,
         13
       ],
-      "artwork_rgba": "artwork-rgba/1365.png",
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "artwork-rgba/1365.png",
-          "animation/objects/1365/1.png",
-          "animation/objects/1365/2.png",
-          "animation/objects/1365/3.png"
-        ],
-        "fps": 8,
-        "durations_ms": [
-          125,
-          125,
-          125,
-          125
-        ],
-        "playback": "loop"
-      }
+      "artwork_rgba": "animation/objects/1365/TILE_1365_001.png"
     },
     {
       "id": 1366,
@@ -5795,24 +5130,7 @@
         32,
         12
       ],
-      "artwork_rgba": "artwork-rgba/1366.png",
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "artwork-rgba/1366.png",
-          "animation/objects/1366/1.png",
-          "animation/objects/1366/2.png",
-          "animation/objects/1366/3.png"
-        ],
-        "fps": 8,
-        "durations_ms": [
-          125,
-          125,
-          125,
-          125
-        ],
-        "playback": "loop"
-      }
+      "artwork_rgba": "animation/objects/1366/TILE_1366_001.png"
     },
     {
       "id": 1367,
@@ -5821,24 +5139,7 @@
         32,
         17
       ],
-      "artwork_rgba": "artwork-rgba/1367.png",
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "artwork-rgba/1367.png",
-          "animation/objects/1367/1.png",
-          "animation/objects/1367/2.png",
-          "animation/objects/1367/3.png"
-        ],
-        "fps": 8,
-        "durations_ms": [
-          125,
-          125,
-          125,
-          125
-        ],
-        "playback": "loop"
-      }
+      "artwork_rgba": "animation/objects/1367/TILE_1367_001.png"
     },
     {
       "id": 1368,
@@ -5847,24 +5148,7 @@
         32,
         21
       ],
-      "artwork_rgba": "artwork-rgba/1368.png",
-      "animation": {
-        "format": "rgba",
-        "frames": [
-          "artwork-rgba/1368.png",
-          "animation/objects/1368/1.png",
-          "animation/objects/1368/2.png",
-          "animation/objects/1368/3.png"
-        ],
-        "fps": 8,
-        "durations_ms": [
-          125,
-          125,
-          125,
-          125
-        ],
-        "playback": "loop"
-      }
+      "artwork_rgba": "animation/objects/1368/TILE_1368_001.png"
     },
     {
       "id": 1369,

@@ -2286,5 +2286,6 @@
         ]
       }
     }
-  ]
+  ],
+  "status": "Historical generation receipt; current corrections and numbered sequences are recorded in animation-corrections.json and pack.json"
 }

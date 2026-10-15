@@ -10,6 +10,7 @@ func _initialize() -> void:
 	_check_visual_palette_swaps()
 	_check_master_registration()
 	_check_object_frames()
+	_check_numbered_frames()
 	var pack_root := "user://graphics-pack-test-%d" % Time.get_ticks_usec()
 	assert(DirAccess.make_dir_recursive_absolute(pack_root) == OK)
 	var png := FileAccess.open(pack_root.path_join("sprite.png"), FileAccess.WRITE)
@@ -258,7 +259,7 @@ func _check_object_frames() -> void:
 	for i in expected.size():
 		assert(result.art.get_pixel(0, i * 4).r8 == 30 + expected[i] * 20)
 		assert(result.light.get_pixel(1, i * 4 + 2).r8 == 100 + expected[i] * 20)
-	for change in [{"frames": []}, {"frames": ["0", "1", "2", "3", "0"]},
+	for change in [{"frames": []}, {"frames": range(33)},
 		{"fps": 6}, {"fps": 5.5}, {"fps": INF}, {"playback": "reverse"}, {"durations_ms": [125]},
 		{"durations_ms": [0, 125, 125, 125]}, {"durations_ms": [126, 125, 125, 125]},
 		{"durations_ms": [NAN, 125, 125, 125]}, {"durations_ms": [4000, 4000, 4000, 4000]},
@@ -304,3 +305,76 @@ func _check_object_frames() -> void:
 	assert(not loader.load_frames({"frames": ["png"]}, base, null, png_reader, 1000).is_empty(), loader.error)
 	base.set_pixel(1, 0, Color(0.1, 0.2, 0.3, 0.5))
 	assert(loader.load_frames({"frames": ["png"]}, base, null, png_reader, 1000).is_empty())
+
+
+func _check_numbered_frames() -> void:
+	var files := {"TILE_001_001.png": true}
+	var exists := func(path: String) -> bool: return files.has(path)
+	var sequence := NumberedFrameSequence.new()
+	var record := {"png": "indexed.png", "artwork_rgba": "TILE_001_001.png"}
+	assert(not sequence.resolve(record, exists).has("animation"))
+	files["TILE_001_002.png"] = true
+	var resolved := sequence.resolve(record, exists)
+	assert(resolved.animation.frames == ["TILE_001_001.png", "TILE_001_002.png"])
+	assert(resolved.animation.fps == 8 and not record.has("animation"))
+	files["TILE_001_003.png"] = true
+	assert(sequence.resolve(record, exists).animation.frames.size() == 3)
+	files.erase("TILE_001_002.png")
+	assert(not sequence.resolve(record, exists).has("animation"), "A gap ends the contiguous sequence")
+	files["TILE_001_002.png"] = true
+	record.lightmap = "LIGHT_001_001.png"
+	assert(not sequence.resolve(record, exists).animation.has("lightmaps"), "Static lightmap fallback")
+	files["LIGHT_001_002.png"] = true
+	assert(sequence.resolve(record, exists).is_empty(), "Missing animated lightmap accepted")
+	files["LIGHT_001_003.png"] = true
+	assert(sequence.resolve(record, exists).animation.lightmaps.size() == 3)
+	files["LIGHT_001_004.png"] = true
+	assert(sequence.resolve(record, exists).is_empty(), "Excess lightmap accepted")
+	record.erase("lightmap")
+	for number in range(4, 34):
+		files["TILE_001_%03d.png" % number] = true
+	assert(sequence.resolve(record, exists).is_empty(), "Unbounded sequence accepted")
+	files.erase("TILE_001_033.png")
+	assert(sequence.resolve(record, exists).animation.frames.size() == 32)
+	record.animation = {"format": "rgba", "frames": ["explicit.png"]}
+	assert(sequence.resolve(record, exists) == record, "Explicit legacy declaration takes precedence")
+
+	# Actual disk discovery, decoding, shared view strips and 2 -> 3 -> still reload.
+	var folder := "user://numbered-frames-%d" % Time.get_ticks_usec()
+	assert(DirAccess.make_dir_recursive_absolute(folder) == OK)
+	var palette_file := FileAccess.open(folder.path_join("palette.png"), FileAccess.WRITE)
+	palette_file.store_buffer(Fixture.FIXTURE.hex_decode())
+	palette_file.close()
+	var master := Image.create(4, 4, false, Image.FORMAT_RGBA8)
+	master.fill(Color8(30, 60, 90))
+	var indexed := IndexedImageResult.new()
+	indexed.ok = true
+	indexed.width = 4
+	indexed.height = 4
+	indexed.palette = Sc2Palette.index_encoding()
+	indexed.pixels.resize(16)
+	indexed.pixels.fill(1)
+	# Use the real indexed fixture via a small valid indexed PNG encoder.
+	var png := IndexedPng.encode(4, 4, indexed.pixels, indexed.palette)
+	var master_file := FileAccess.open(folder.path_join("master.png"), FileAccess.WRITE)
+	assert(png.ok, png.error)
+	master_file.store_buffer(png.bytes)
+	master_file.close()
+	var pack_manifest := {"format": "opensc2k-graphics", "version": 1, "name": "Numbered test", "partial": true,
+		"palette": "master.png", "master_sprites": [{"id": 1364, "png": "master.png", "logical_size": [1, 1], "artwork_rgba": "TILE_001_001.png"}]}
+	_write_manifest(folder, pack_manifest)
+	for number in range(1, 4):
+		master.fill(Color8(30 * number, 60, 90))
+		assert(master.save_png(folder.path_join("TILE_001_%03d.png" % number)) == OK)
+		var pack := Pack.load_root(folder)
+		assert(pack.error.is_empty(), pack.error)
+		var hd: HdSprite = pack.large_sprites.high_resolution[1364]
+		if number == 1:
+			assert(hd.animation == null)
+		else:
+			assert(hd.frames == number and hd.fps == 8)
+			assert(hd.animation.get_pixel(0, (number - 1) * 4).r8 == 30 * number)
+			assert(pack.small_medium_sprites.high_resolution[364].animation == hd.animation)
+	assert(DirAccess.remove_absolute(folder.path_join("TILE_001_002.png")) == OK)
+	var static_pack := Pack.load_root(folder)
+	assert(static_pack.error.is_empty() and static_pack.large_sprites.high_resolution[1364].animation == null)

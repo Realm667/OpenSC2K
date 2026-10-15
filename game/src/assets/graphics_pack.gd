@@ -95,7 +95,7 @@ func _load() -> void:
 		return
 
 	var manifest: Dictionary = json.data
-	_file_count = maxi(1, _count_images(manifest))
+
 
 	if manifest.get("format") != "opensc2k-graphics" or manifest.get("version") != 1:
 		_fail("Unsupported graphics pack format or version")
@@ -132,6 +132,19 @@ func _load() -> void:
 
 	large_sprites.redraw_small_highway_ground = redraw
 	small_medium_sprites.redraw_small_highway_ground = redraw
+	if manifest.get("master_sprites") is Array:
+		var numbered := NumberedFrameSequence.new()
+		for i in manifest.master_sprites.size():
+			if not manifest.master_sprites[i] is Dictionary:
+				continue
+			manifest.master_sprites[i] = numbered.resolve(manifest.master_sprites[i], _has_png)
+			if not error.is_empty():
+				return
+			if not numbered.error.is_empty():
+				print_verbose(numbered.error)
+				_fail("Unsupported graphics pack format or version")
+				return
+	_file_count = maxi(1, _count_images(manifest))
 	var palette_image := _read_png(manifest.get("palette"))
 
 	if not error.is_empty():
@@ -272,6 +285,14 @@ func _load_sprites(records: Variant, archive: Sc2SpriteArchive) -> bool:
 		archive.entries_by_id[entry.sprite_id] = entry
 
 	return true
+
+
+func _has_png(relative_path: String) -> bool:
+	var path := _png_path(relative_path)
+	if path.is_empty():
+		return false
+	var exists := FileAccess.file_exists(_root.path_join(path))
+	return exists
 
 
 func _read_png(relative_path: Variant) -> IndexedImageResult:
