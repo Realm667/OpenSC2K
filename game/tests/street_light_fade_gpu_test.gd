@@ -6,6 +6,7 @@ func _initialize() -> void:
 
 
 func _run() -> void:
+	await _check_soft_edges()
 	for zoom in [0.1, 0.25, 0.5, 1.0]:
 		await _check_zoom(zoom)
 	print("PASS: per-light fades at 10/25/50/100 percent, invisible prefetch, cache and camera continuity")
@@ -108,3 +109,38 @@ func _check_zoom(zoom: float) -> void:
 
 func _pixel(pixels: Image, x: int, y: int, zoom: float) -> Color:
 	return pixels.get_pixel(floori(x * zoom), floori(y * zoom))
+
+
+func _check_soft_edges() -> void:
+	var viewport := SubViewport.new()
+	viewport.size = Vector2i(64, 64)
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	root.add_child(viewport)
+	var background := ColorRect.new()
+	background.size = Vector2(64, 64)
+	background.color = Color(0.1, 0.1, 0.1)
+	viewport.add_child(background)
+	var pixels := Image.create(32, 32, false, Image.FORMAT_RGBA8)
+	for y in 32:
+		for x in range(y, 32):
+			pixels.set_pixel(x, y, Color(0.3, 0.25, 0.2, 1))
+	var sprite := Sprite2D.new()
+	sprite.texture = ImageTexture.create_from_image(pixels)
+	sprite.centered = false
+	sprite.scale = Vector2.ONE * 2.0
+	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	var material := ShaderMaterial.new()
+	material.shader = CityNightGround.SHADER
+	material.set_shader_parameter("strength", 1.0)
+	sprite.material = material
+	viewport.add_child(sprite)
+	await RenderingServer.frame_post_draw
+	var hard := viewport.get_texture().get_image()
+	material.set_shader_parameter("edge_softness", 4.0)
+	await RenderingServer.frame_post_draw
+	var soft := viewport.get_texture().get_image()
+	assert(soft.get_pixel(32, 32).r < hard.get_pixel(32, 32).r, "RS receiver edge was not feathered")
+	assert(soft.get_pixel(22, 32).is_equal_approx(hard.get_pixel(22, 32)), "Soft light leaked into an occluder")
+	assert(soft.get_pixel(48, 32).is_equal_approx(hard.get_pixel(48, 32)), "Edge feathering changed the pool center")
+	viewport.queue_free()
+	await process_frame

@@ -8,6 +8,7 @@ func _initialize() -> void:
 
 
 func _run() -> void:
+	await _check_hd_surface_sampling()
 	_check_moving_texture_reuse()
 	await _check_unlit_ship_regions()
 	await _check_resident_water_uploads()
@@ -512,4 +513,47 @@ func _check_resident_water_uploads() -> void:
 				assert(before == pixels.get_data(), "Returning water changed despite identical cached geometry")
 	viewport.queue_free()
 	cache.close()
+	await process_frame
+
+
+func _check_hd_surface_sampling() -> void:
+	var viewport := SubViewport.new()
+	viewport.size = Vector2i(32, 32)
+	viewport.transparent_bg = true
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	root.add_child(viewport)
+	var surface := Image.create(8, 8, false, Image.FORMAT_RGBA8)
+	for x in 8:
+		for y in 8:
+			surface.set_pixel(x, y, Color(6.0 / 255.0, (96.0 + x % 2) / 255.0, 0, 1))
+	surface.fill_rect(Rect2i(6, 0, 2, 8), Color.TRANSPARENT)
+	var palette := Image.create(256, 1, false, Image.FORMAT_RGBA8)
+	palette.fill(Color.MAGENTA)
+	palette.set_pixel(96, 0, Color(0.1, 0.2, 0.3))
+	palette.set_pixel(97, 0, Color(0.3, 0.4, 0.5))
+	var sprite := Sprite2D.new()
+	sprite.centered = false
+	sprite.scale = Vector2.ONE * 4.0
+	sprite.texture = ImageTexture.create_from_image(surface)
+	var material := ShaderMaterial.new()
+	material.shader = SHADER
+	material.set_shader_parameter("animated_palette", ImageTexture.create_from_image(palette))
+	material.set_shader_parameter("water_surface", ImageTexture.create_from_image(surface))
+	material.set_shader_parameter("water_enabled", true)
+	material.set_shader_parameter("water_padding", 0.0)
+	material.set_shader_parameter("water_reflections_enabled", false)
+	material.set_shader_parameter("water_topography", false)
+	material.set_shader_parameter("water_waves_enabled", false)
+	sprite.material = material
+	viewport.add_child(sprite)
+	await RenderingServer.frame_post_draw
+	var classic := viewport.get_texture().get_image()
+	assert(classic.get_pixel(8, 12).is_equal_approx(classic.get_pixel(11, 12)), "SC2K water keeps its pixel raster")
+	material.set_shader_parameter("water_high_resolution", true)
+	await RenderingServer.frame_post_draw
+	var hd := viewport.get_texture().get_image()
+	assert(absf(hd.get_pixel(8, 12).r - hd.get_pixel(9, 12).r) > 0.01, "RS water must resolve subpixel surface detail")
+	assert(hd.get_pixel(24, 12).a == 0.0, "Water smoothing must never extend onto land")
+	assert(hd.get_pixel(23, 12).g > hd.get_pixel(23, 12).r, "Shore interpolation must not sample invalid palette indices")
+	viewport.queue_free()
 	await process_frame

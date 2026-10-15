@@ -31,6 +31,8 @@ const float PIPE_FLOW_TAG = 52.0;
 // Green carries the actual ground altitude; other sprite classes are unchanged.
 const float TERRAIN_ARTWORK_TAG = 53.0;
 const float TERRAIN_INDEXED_TAG = 54.0;
+const float PARCEL_BORDER_TAG = 55.0;
+varying flat float parcel_border;
 const vec3 GRID_COLOR = vec3(0.22, 0.19, 0.10);
 const float GRID_OPACITY = 0.36;
 const float GRID_WIDTH = 0.45;
@@ -98,6 +100,7 @@ void vertex() {
 	// Native building quads reserve red bit 7; plain indexed white (255) is unchanged.
 	building_emission = float(tag < 128.0 || tag == 255.0);
 	if (building_emission < 0.5) { tag -= 128.0; }
+	parcel_border = float(tag == PARCEL_BORDER_TAG);
 	terrain_elevation = (tag == TERRAIN_ARTWORK_TAG || tag == TERRAIN_INDEXED_TAG) ? bytes.g : -1.0;
 	artwork_kind = 0.0;
 	power_warning = 0.0;
@@ -108,7 +111,7 @@ void vertex() {
 	waterfall_local = vec2(0.0);
 	world_position = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy / max(length(MODEL_MATRIX[0].xy), 0.00001);
 
-	if (tag == ARTWORK_TAG || tag == POWER_WARNING_TAG || tag == TERRAIN_ARTWORK_TAG) {
+	if (tag == ARTWORK_TAG || tag == POWER_WARNING_TAG || tag == TERRAIN_ARTWORK_TAG || tag == PARCEL_BORDER_TAG) {
 		artwork_kind = 1.0;
 		power_warning = tag == POWER_WARNING_TAG ? 1.0 : 0.0;
 	} else if (tag == ANIMATION_TAG || tag == SLOW_ANIMATION_TAG) {
@@ -417,7 +420,7 @@ void fragment() {
 			COLOR.rgb = min(COLOR.r, min(COLOR.g, COLOR.b)) > DARK_WHITE ? DARK_BACKGROUND : COLOR.rgb * DARK_ARTWORK;
 		}
 
-		if (!dark_underground && power_warning < 0.5) {
+		if (!dark_underground && power_warning < 0.5 && parcel_border < 0.5) {
 			COLOR.rgb = environment_color_emission(cloud_shadow(COLOR.rgb, cloud_ground_grid), center * pixel_size, building_emission);
 		}
 

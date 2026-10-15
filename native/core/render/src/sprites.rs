@@ -47,6 +47,8 @@ pub struct Sprites {
     pub registration: HashMap<u64, [i32; 3]>,
     /// Shared cached ground quads, opt-in by the active graphics pack.
     pub parcels: HashMap<u64, i32>,
+    /// Border-only decals keep their identifying colors under environmental light.
+    pub(crate) unshaded_parcels: BTreeSet<u64>,
     pub(crate) parcel_cache: HashMap<(i32, [u8; 4], u8), i32>,
     /// Full-color art of unflipped sprite keys. Indexed pixels still give the
     /// draw geometry, the masks and the silhouettes.
@@ -67,6 +69,7 @@ impl Sprites {
             registration: HashMap::new(),
             parcels: HashMap::new(),
             parcel_cache: HashMap::new(),
+            unshaded_parcels: BTreeSet::new(),
             artwork: HashMap::new(),
             traffic_masks: HashMap::new(),
             target,

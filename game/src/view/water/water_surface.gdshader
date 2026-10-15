@@ -11,6 +11,7 @@ uniform bool water_has_seabed = false;
 uniform sampler2D water_lights : source_color, filter_nearest, repeat_disable;
 uniform bool water_has_lights = false;
 uniform float water_clock = 0.0;
+uniform bool water_high_resolution = false;
 uniform float water_rain = 0.0;
 uniform vec2 water_origin = vec2(0.0);
 uniform float water_divisor = 1.0;
@@ -25,6 +26,28 @@ void vertex() {
 
 vec3 palette_color(float encoded) {
 	return texture(animated_palette, vec2((round(encoded * 255.0) + 0.5) / 256.0, 0.5)).rgb;
+}
+
+// Keep encoded height and coverage nearest-filtered. Only resolved surface
+// colors interpolate, and only between water pixels on the same level.
+vec3 surface_color(vec2 uv, vec4 center) {
+	if (!water_high_resolution || water_geometry_preview) return palette_color(center.g);
+	vec2 dimensions = vec2(textureSize(water_surface, 0));
+	vec2 pixel = uv * dimensions - vec2(0.5);
+	vec2 origin = floor(pixel);
+	vec2 fraction = fract(pixel);
+	vec3 color = vec3(0.0);
+	for (int y = 0; y < 2; y++) {
+		for (int x = 0; x < 2; x++) {
+			vec2 sample_uv = (origin + vec2(float(x), float(y)) + vec2(0.5)) / dimensions;
+			vec4 neighbor = texture(water_surface, sample_uv);
+			bool valid = neighbor.a > 0.5 && abs(neighbor.r - center.r) < 0.001
+				&& all(greaterThanEqual(sample_uv, vec2(0.0))) && all(lessThan(sample_uv, vec2(1.0)));
+			float weight = (x == 0 ? 1.0 - fraction.x : fraction.x) * (y == 0 ? 1.0 - fraction.y : fraction.y);
+			color += palette_color(valid ? neighbor.g : center.g) * weight;
+		}
+	}
+	return color;
 }
 
 // Interpolate resolved colors, never palette indices. The light and vegetation
@@ -54,14 +77,16 @@ void fragment() {
 			|| any(greaterThanEqual(pixel, dimensions - vec2(water_padding)))) {
 		discard;
 	}
-	vec2 world = water_origin + (pixel + vec2(0.5)) * water_divisor;
+	vec2 surface_pixel = water_high_resolution && !water_geometry_preview
+		? (floor(UV * dimensions * 4.0) + vec2(0.5)) / 4.0 : pixel + vec2(0.5);
+	vec2 world = water_origin + surface_pixel * water_divisor;
 	vec4 bottom = water_has_seabed ? texture(water_seabed, UV) : vec4(0.0);
 	float level = round(surface.r * 255.0) - 1.0;
 	float depth = max(level - bottom.r * 31.0, 0.0);
 	float coast = water_has_seabed ? bottom.b * 255.0 / 8.0 : 32.0;
 	vec3 swell = water_waves_enabled && !water_geometry_preview
 		? water_swell(world, water_clock, water_rain, coast, round(surface.b * 255.0)) : vec3(0.0);
-	vec3 base = water_season_color(palette_color(surface.g));
+	vec3 base = water_season_color(surface_color(UV, surface));
 	if (!water_geometry_preview && (water_reflections_enabled || water_topography || water_waves_enabled)) {
 		base = water_body(base, bottom, depth, world, water_topography);
 		if (water_waves_enabled) {

@@ -55,6 +55,42 @@ fn registered_canvases_preserve_parcel_and_baseline_in_every_view_and_flip() {
 }
 
 #[test]
+fn border_only_parcels_bypass_environment_but_material_surfaces_do_not() {
+    for material in [0, 2] {
+        let mut b = fixture(8, 2);
+        b.config.building_ground = true;
+        let id = 1112;
+        let key = id as u64 * 2;
+        b.sprites.images.insert(
+            key,
+            Sprite {
+                w: 32,
+                h: 32,
+                rgba: vec![255; 32 * 32 * 4],
+                la: vec![255; 32 * 32 * 2],
+            },
+        );
+        b.sprites.add_parcel(id, [130, 161, 116, 255], material, 1).unwrap();
+        let i = b.city.index(3, 3);
+        b.city.buildings[i] = 112;
+        b.city.zones[i] = 0x80;
+        let painted = b.paint(3, 3).unwrap();
+        let draw = painted.iter().find(|d| d.sprite == -1).unwrap();
+        let (source, mirrored) = b.sprites.artwork_source(draw.image).unwrap();
+        let bounds = Rect {
+            x: draw.rect.x - 10,
+            y: draw.rect.y - 10,
+            w: draw.rect.w + 20,
+            h: draw.rect.h + 20,
+        };
+        let mut out = region::Region::default();
+        b.artwork_quad(&mut out, draw, source, mirrored, bounds).unwrap();
+        assert!(!out.colors.is_empty());
+        assert_eq!((out.colors[0][0] * 255.0).round() as u8, if material == 0 { 55 } else { 2 });
+    }
+}
+
+#[test]
 fn forests_keep_density_clearings_and_local_cache_invalidation() {
     for view in 0..3 {
         let mut b = fixture(16, view);

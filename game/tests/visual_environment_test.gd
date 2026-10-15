@@ -7,6 +7,18 @@ func _initialize() -> void:
 
 
 func _run() -> void:
+	var elevation := CityTerrainElevation.new()
+	var relief := CityState.from_document(EmptyCityTemplate.create(16))
+	for x in 16:
+		for y in 16:
+			relief.set_land_altitude(x, y, 6)
+	assert(elevation.range_for(relief) == Vector2(2, 10), "Flat terrain must remain neutral")
+	relief.set_land_altitude(0, 0, 2)
+	assert(elevation.range_for(relief) == Vector2(0, 8), "Small relief needs a minimum eight-level range")
+	relief.set_land_altitude(0, 1, 18)
+	assert(elevation.range_for(relief) == Vector2(2, 18), "Terrain edits must refresh the display range")
+	var other := CityState.from_document(EmptyCityTemplate.create(16))
+	assert(elevation.range_for(other) != Vector2(2, 18), "Changing cities must refresh elevation shading")
 	var defaults := VisualEnhancementOptions.normalize({})
 	assert(defaults.day_seconds == 600.0)
 	assert(defaults.nature_terrain_strength == 0.5)

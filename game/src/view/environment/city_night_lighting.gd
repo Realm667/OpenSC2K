@@ -82,6 +82,7 @@ func process(active: bool, night: float, options: Dictionary, elapsed := 0.0, pr
 	for index in blur_rects.size():
 		blur_rects[index].size = Vector2(size)
 		(blur_rects[index].material as ShaderMaterial).set_shader_parameter("radius", radius if index == 0 else radius * 0.5)
+		(blur_rects[index].material as ShaderMaterial).set_shader_parameter("small_light_retention", 0.6 if master_art and index == 0 else 0.0)
 	scene.scale = Vector2.ONE * view_scale * emission_reduction
 	scene.position = (map.camera._draw_offset(view_scale) - padded.position) * emission_reduction
 	if source != map.city_source:

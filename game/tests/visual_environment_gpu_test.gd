@@ -9,6 +9,8 @@ func _run() -> void:
 	await _check_hd_environment()
 	await _check_terrain_elevation()
 	await _check_terrain_elevation(true)
+	await _check_terrain_elevation(false, true)
+	await _check_terrain_elevation(true, true)
 	await _check_hd_animation_masks()
 	await _check_object_frame_timing()
 	await _check_dispatch_lights()
@@ -85,6 +87,8 @@ func _run() -> void:
 	await _check_weather_layer()
 	await _check_rain_depth()
 	await _check_zone_seasons()
+	await _check_parcel_border(false)
+	await _check_parcel_border(true)
 	await _check_night_glow(false)
 	await _check_night_glow(true)
 	await _check_city_life_glow(false)
@@ -760,7 +764,7 @@ func _check_hd_environment() -> void:
 	await process_frame
 
 
-func _check_terrain_elevation(paged := false) -> void:
+func _check_terrain_elevation(paged := false, indexed := false) -> void:
 	var viewport := SubViewport.new()
 	viewport.size = Vector2i(32, 16)
 	viewport.transparent_bg = true
@@ -784,14 +788,15 @@ func _check_terrain_elevation(paged := false) -> void:
 		material.set_shader_parameter("region_atlas_pages", art_pages)
 		material.set_shader_parameter("region_season_pages", soil_pages)
 	var sprites: Array[Sprite2D] = []
-	for height in [0, 31]:
+	material.set_shader_parameter("terrain_elevation_range", Vector2(0, 8))
+	for height in [2, 6]:
 		var sprite := Sprite2D.new()
 		sprite.centered = false
 		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		sprite.texture = ImageTexture.create_from_image(art)
 		sprite.material = material
 		sprite.position.x = sprites.size() * 8
-		sprite.self_modulate = Color(53.0 / 255.0, height / 255.0, 0, 1)
+		sprite.self_modulate = Color((54.0 if indexed else 53.0) / 255.0, height / 255.0, 0, 1)
 		viewport.add_child(sprite)
 		sprites.append(sprite)
 	for zoom in [1, 2]:
@@ -804,6 +809,7 @@ func _check_terrain_elevation(paged := false) -> void:
 		var low := image.get_pixel(2 * zoom, 2 * zoom)
 		var high := image.get_pixel(10 * zoom, 2 * zoom)
 		assert(high.r > low.r and high.g > low.g and high.b > low.b, "Terrain elevation must rise monotonically in every color channel")
+		assert(high.get_luminance() > low.get_luminance() * 1.10, "Four levels must remain distinguishable in a modest-height city")
 		assert(absf(low.r / low.g - high.r / high.g) < 0.025, "Elevation changed the terrain hue")
 		assert(image.get_pixel(6 * zoom, 2 * zoom).is_equal_approx(image.get_pixel(14 * zoom, 2 * zoom)), "Elevation affected unmasked paths or water")
 	material.set_shader_parameter("terrain_elevation_enabled", false)
@@ -969,5 +975,38 @@ func _check_object_frame_timing() -> void:
 			await RenderingServer.frame_post_draw
 			var pixel := viewport.get_texture().get_image().get_pixel(4, 4)
 			assert(pixel.is_equal_approx(colors[expected[i]]), "Object frame timing and bloom must agree: %d %s" % [i, pixel])
+	viewport.queue_free()
+	await process_frame
+
+
+func _check_parcel_border(hdr: bool) -> void:
+	var viewport := SubViewport.new()
+	viewport.size = Vector2i(16, 8)
+	viewport.use_hdr_2d = hdr
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	root.add_child(viewport)
+	var pixels := Image.create(8, 8, false, Image.FORMAT_RGBA8)
+	pixels.fill(Color("82a174"))
+	var material := ShaderMaterial.new()
+	material.shader = CityMapControl.PALETTE_CYCLE_SHADER
+	material.set_shader_parameter("environment_lut_linear_canvas", hdr)
+	for tag in [55, 2]:
+		var sprite := Sprite2D.new()
+		sprite.centered = false
+		sprite.position.x = 0 if tag == 55 else 8
+		sprite.texture = ImageTexture.create_from_image(pixels)
+		sprite.self_modulate = Color(tag / 255.0, 0, 0, 1)
+		sprite.material = material
+		viewport.add_child(sprite)
+	await RenderingServer.frame_post_draw
+	var day := viewport.get_texture().get_image()
+	material.set_shader_parameter("environment_enabled", true)
+	material.set_shader_parameter("environment_tint", Vector3(0.28, 0.34, 0.52))
+	material.set_shader_parameter("environment_weather", Vector3(0.65, 0.7, 0.75))
+	material.set_shader_parameter("environment_night", 1.0)
+	await RenderingServer.frame_post_draw
+	var night := viewport.get_texture().get_image()
+	assert(night.get_pixel(4, 4).is_equal_approx(day.get_pixel(4, 4)), "Parcel category color changed with night/weather")
+	assert(night.get_pixel(12, 4).get_luminance() < day.get_pixel(12, 4).get_luminance() * 0.7, "Ordinary building artwork lost environmental lighting")
 	viewport.queue_free()
 	await process_frame

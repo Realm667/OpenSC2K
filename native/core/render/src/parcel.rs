@@ -96,6 +96,9 @@ impl Sprites {
             }
         }
         let key = parcel_id as u64 * 2;
+        if material == 0 {
+            self.unshaded_parcels.insert(key);
+        }
         self.images.insert(key, logical);
         self.artwork.insert(
             key,

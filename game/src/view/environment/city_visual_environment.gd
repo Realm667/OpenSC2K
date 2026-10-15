@@ -16,6 +16,7 @@ var night := 0.0
 var lut: ImageTexture
 var lut_size := 0.0
 var profiles := CityVisualLuts.new()
+var terrain_elevation := CityTerrainElevation.new()
 var _options := {}
 var _city_id := 0
 var weather: CityVisualWeather
@@ -241,11 +242,13 @@ func process(delta: float) -> void:
 	var parameters := {
 		"nature_terrain_enabled": active and options.nature_terrain_enabled,
 		"terrain_elevation_enabled": active and options.nature_terrain_enabled,
+		"terrain_elevation_range": terrain_elevation.range_for(city),
 		"nature_terrain_strength": options.nature_terrain_strength,
 		"nature_forests_enabled": active and options.nature_forests_enabled,
 		"nature_ground": CityNatureArtwork.ground_texture(),
 		"nature_canvas_to_grid": _nature_projection(),
 		"water_enabled": active and VisualEnhancementOptions.water_pass_enabled(options),
+		"water_high_resolution": app.asset_state.large_sprites != null and not app.asset_state.large_sprites.high_resolution.is_empty(),
 		"water_reflections_enabled": active and options.water_reflections == 1,
 		"water_topography": options.water_topography,
 		"water_waves_enabled": options.water_waves_enabled,

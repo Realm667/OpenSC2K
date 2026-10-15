@@ -233,7 +233,7 @@ static func _light_theme() -> Theme:
 		result.set_icon("tick", type_name, _tinted_icon(ThemeDB.get_default_theme().get_icon("tick", type_name), Color("505050")))
 
 	result.set_stylebox("background", "ProgressBar", create_box(Color("d0d0d0"), Color("484848"), 1, 1, 1))
-	result.set_stylebox("fill", "ProgressBar", create_box(Color("173f73"), Color("173f73"), 0, 0, 0))
+	result.set_stylebox("fill", "ProgressBar", create_box(Color("769302"), Color("769302"), 0, 0, 0))
 
 	for state in ["selected", "selected_focus", "hovered_selected", "hovered_selected_focus", "cursor", "cursor_unfocused"]:
 		var selection := _copy_style(result, "ItemList", state)
@@ -360,7 +360,8 @@ static func _dark_theme() -> Theme:
 			type_name, result.get_color("font_disabled_color", "OptionButton"))
 
 	var fill := _copy_style(result, "ProgressBar", "fill")
-	fill.bg_color = Color("087e8b")
+	fill.bg_color = Color("769302")
+	fill.border_color = Color("769302")
 	result.set_stylebox("fill", "ProgressBar", fill)
 
 	for state in ["selected", "selected_focus", "hovered_selected", "hovered_selected_focus", "cursor", "cursor_unfocused"]:

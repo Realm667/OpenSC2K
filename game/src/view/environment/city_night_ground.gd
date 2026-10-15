@@ -126,6 +126,8 @@ func sync(app: CityApplication, strength: float, elapsed := 0.0, prepare := fals
 		reset()
 		signature = revision
 		roads.set_raster_scale(4 if archive != null and not archive.high_resolution.is_empty() else 1)
+		(material as ShaderMaterial).set_shader_parameter("edge_softness", 4.0 if roads.raster_scale > 1 else 0.0)
+		signals.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR if roads.raster_scale > 1 else CanvasItem.TEXTURE_FILTER_NEAREST
 	var changed := roads.sync_geometry(city)
 	var shape := [app.view_state.surface_visibility.duplicate()]
 	if roads.geometry_reset or geometry != shape:

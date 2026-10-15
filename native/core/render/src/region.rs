@@ -22,6 +22,7 @@ const WATERFALL_TAG: u8 = 49;
 const PIPE_FLOW_TAG: u8 = 52;
 /// Natural ground altitude in green, shared by every zoom/view of a tile.
 const TERRAIN_ARTWORK_TAG: u8 = 53;
+const PARCEL_BORDER_TAG: u8 = 55;
 const TERRAIN_INDEXED_TAG: u8 = 54;
 const WATERFALL_SPRITE: i32 = 284;
 
@@ -345,6 +346,8 @@ impl Builder {
             out.colors[count - 4..].copy_from_slice(&colors);
 
             return Ok(());
+        } else if self.sprites.unshaded_parcels.contains(&source) {
+            [byte(i32::from(PARCEL_BORDER_TAG)), 0.0, 0.0, 1.0]
         } else if frames > 1 {
             [byte(i32::from(fps_tag)), byte(frames), byte(stride >> 8), byte(stride & 255)]
         } else if !draw.moving && draw.sprite.rem_euclid(500) == POWER_WARNING_SPRITE {
