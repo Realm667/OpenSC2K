@@ -10,6 +10,7 @@ func _run() -> void:
 	await _check_terrain_elevation()
 	await _check_terrain_elevation(true)
 	await _check_hd_animation_masks()
+	await _check_object_frame_timing()
 	await _check_dispatch_lights()
 	await _check_power_warnings()
 	var viewport := SubViewport.new()
@@ -918,3 +919,55 @@ func _check_building_power() -> void:
 	viewport.queue_free()
 	await process_frame
 	print("PASS: per-building power gates indexed, HD and animated lights and glow; day art and occlusion preserved")
+
+
+func _check_object_frame_timing() -> void:
+	var images := {}
+	var colors := [Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW]
+	for i in 4:
+		var frame := Image.create(8, 8, false, Image.FORMAT_RGBA8)
+		frame.fill(colors[i])
+		images[str(i)] = frame
+	var loader := MasterFrameAnimation.new()
+	var reader := func(path: Variant) -> Image: return images.get(path)
+	var result := loader.load_frames({"frames": ["0", "1", "2", "3"], "lightmaps": ["0", "1", "2", "3"],
+		"durations_ms": [125, 250, 125, 125], "playback": "ping_pong"}, images["0"], images["0"], reader, 100000)
+	assert(loader.error.is_empty(), loader.error)
+	# Native atlas layout: two padding rows on each side, plus outer padding.
+	var art := Image.create(8, result.frames * 12 + 4, false, Image.FORMAT_RGBA8)
+	var lights := Image.create(8, result.frames * 12 + 4, false, Image.FORMAT_RGBA8)
+	for i in result.frames:
+		art.blit_rect(result.art, Rect2i(0, i * 8, 8, 8), Vector2i(0, 2 + i * 12))
+		lights.blit_rect(result.light, Rect2i(0, i * 8, 8, 8), Vector2i(0, 2 + i * 12))
+	var viewport := SubViewport.new()
+	viewport.size = Vector2i(8, 8)
+	viewport.transparent_bg = true
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	root.add_child(viewport)
+	var sprite := Sprite2D.new()
+	sprite.centered = false
+	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	sprite.texture = ImageTexture.create_from_image(art)
+	sprite.region_enabled = true
+	sprite.region_rect = Rect2(0, 2, 8, 8)
+	sprite.self_modulate = Color(64.0 / 255.0, result.frames / 255.0, 0, 12.0 / 255.0)
+	var material := ShaderMaterial.new()
+	sprite.material = material
+	viewport.add_child(sprite)
+	var expected := [0, 1, 1, 2, 3, 2, 1, 1, 0]
+	for shader in [CityMapControl.PALETTE_CYCLE_SHADER, CityNightLighting.EMISSION]:
+		material.shader = shader
+		material.set_shader_parameter("environment_enabled", true)
+		material.set_shader_parameter("environment_night", 1.0)
+		material.set_shader_parameter("environment_has_emission", true)
+		material.set_shader_parameter("environment_emission", ImageTexture.create_from_image(lights))
+		material.set_shader_parameter("has_emission", true)
+		material.set_shader_parameter("emission", ImageTexture.create_from_image(lights))
+		for i in expected.size():
+			material.set_shader_parameter("artwork_animation_seconds", i * 0.125 + 0.01)
+			await process_frame
+			await RenderingServer.frame_post_draw
+			var pixel := viewport.get_texture().get_image().get_pixel(4, 4)
+			assert(pixel.is_equal_approx(colors[expected[i]]), "Object frame timing and bloom must agree: %d %s" % [i, pixel])
+	viewport.queue_free()
+	await process_frame

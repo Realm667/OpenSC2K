@@ -9,6 +9,7 @@ const Pack = preload("res://src/assets/graphics_pack.gd")
 func _initialize() -> void:
 	_check_visual_palette_swaps()
 	_check_master_registration()
+	_check_object_frames()
 	var pack_root := "user://graphics-pack-test-%d" % Time.get_ticks_usec()
 	assert(DirAccess.make_dir_recursive_absolute(pack_root) == OK)
 	var png := FileAccess.open(pack_root.path_join("sprite.png"), FileAccess.WRITE)
@@ -220,3 +221,72 @@ func _check_visual_palette_swaps() -> void:
 	var plain := first.duplicate(true)
 	plain.erase("palette_swap")
 	assert(VisualArtwork.load_records([plain], reader).frames[plain.key].image == indices)
+
+
+func _check_object_frames() -> void:
+	var loader := MasterFrameAnimation.new()
+	var images: Dictionary = {}
+	for i in 4:
+		var art := Image.create(4, 4, false, Image.FORMAT_RGBA8)
+		art.fill(Color8(30 + i * 20, 60, 90))
+		images[str(i)] = art
+		var light := Image.create(4, 4, false, Image.FORMAT_RGBA8)
+		light.set_pixel(1, 2, Color8(100 + i * 20, 80, 30))
+		images["l" + str(i)] = light
+	var reader := func(path: Variant) -> Image: return images.get(path)
+	var spec := {"format": "rgba", "frames": ["0", "1", "2", "3"],
+		"lightmaps": ["l0", "l1", "l2", "l3"], "fps": 8,
+		"durations_ms": [125, 250, 125, 125], "playback": "ping_pong"}
+	var result := loader.load_frames(spec, images["0"], images.l0, reader, 10000)
+	assert(loader.error.is_empty(), loader.error)
+	assert(result.frames == 8 and result.fps == 8)
+	var expected := [0, 1, 1, 2, 3, 2, 1, 1]
+	for i in expected.size():
+		assert(result.art.get_pixel(0, i * 4).r8 == 30 + expected[i] * 20)
+		assert(result.light.get_pixel(1, i * 4 + 2).r8 == 100 + expected[i] * 20)
+	for change in [{"frames": []}, {"frames": ["0", "1", "2", "3", "0"]},
+		{"fps": 6}, {"fps": INF}, {"playback": "reverse"}, {"durations_ms": [125]},
+		{"durations_ms": [0, 125, 125, 125]}, {"durations_ms": [126, 125, 125, 125]},
+		{"durations_ms": [NAN, 125, 125, 125]}, {"durations_ms": [4000, 4000, 4000, 4000]},
+		{"lightmaps": ["l0"]}, {"frames": ["1", "1", "2", "3"]},
+		{"lightmaps": ["l1", "l1", "l2", "l3"]}, {"lightmaps": ["l0", "missing", "l2", "l3"]}]:
+		var bad: Dictionary = spec.duplicate(true)
+		bad.merge(change, true)
+		assert(loader.load_frames(bad, images["0"], images.l0, reader, 10000).is_empty(), str(change))
+		assert(not loader.error.is_empty())
+	assert(loader.load_frames(spec, images["0"], images.l0, reader, 1).is_empty())
+	images["2"].set_pixel(1, 2, Color.TRANSPARENT)
+	assert(loader.load_frames(spec, images["0"], images.l0, reader, 10000).is_empty())
+	images["2"].set_pixel(1, 2, Color.BLACK)
+	result = loader.load_frames({"frames": ["0"]}, images["0"], null, reader, 10000)
+	assert(result.frames == 2 and result.light == null)
+	result = loader.load_frames({"frames": ["0", "1"], "fps": 5, "durations_ms": [200, 400]}, images["0"], images.l0, reader, 10000)
+	assert(result.frames == 3 and result.fps == 5 and result.light.get_pixel(1, 6) == images.l0.get_pixel(1, 2))
+	# Exercise the full master loader, all three derived views and pack-local geometry.
+	var decoded := IndexedImageResult.new()
+	decoded.ok = true
+	decoded.width = 4
+	decoded.height = 4
+	decoded.palette = Sc2Palette.index_encoding()
+	decoded.pixels.resize(16)
+	decoded.pixels.fill(1)
+	var indexed_reader := func(_path: Variant) -> IndexedImageResult: return decoded
+	var source := MasterSpriteSource.new()
+	var record := {"id": 1364, "png": "indexed.png", "logical_size": [1, 1], "artwork_rgba": "0", "animation": {"format": "rgba", "frames": ["0", "1"]}}
+	assert(source.load_records([record], indexed_reader, decoded.palette, reader), source.error)
+	assert(source.large.high_resolution[1364].frames == 2)
+	assert(source.small_medium.high_resolution[364].animation == source.large.high_resolution[1364].animation)
+	assert(source.small_medium.high_resolution[864].height == 1)
+	record.animation.format = "unknown"
+	assert(not source.load_records([record], indexed_reader, decoded.palette, reader))
+
+	# A PNG can retain RGB under alpha zero; indexed decoding clears those bytes.
+	var png_image := Image.new()
+	assert(png_image.load_png_from_buffer(Fixture.FIXTURE.hex_decode()) == OK)
+	png_image.convert(Image.FORMAT_RGBA8)
+	var base := Image.create_from_data(4, 1, false, Image.FORMAT_RGBA8, png_image.get_data())
+	base.set_pixel(0, 0, Color.TRANSPARENT)
+	var png_reader := func(_path: Variant) -> Image: return png_image
+	assert(not loader.load_frames({"frames": ["png"]}, base, null, png_reader, 1000).is_empty(), loader.error)
+	base.set_pixel(1, 0, Color(0.1, 0.2, 0.3, 0.5))
+	assert(loader.load_frames({"frames": ["png"]}, base, null, png_reader, 1000).is_empty())

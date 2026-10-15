@@ -88,7 +88,7 @@ func load_records(records: Variant, read_png: Callable, palette: Sc2Palette, rea
 		if not rendered.ok:
 			return _fail(rendered.error)
 		if record.has("artwork_rgba"):
-			if not read_rgba.is_valid() or record.has("animation"):
+			if not read_rgba.is_valid():
 				return _fail("Unsupported graphics pack format or version")
 			var full_color: Image = read_rgba.call(record.artwork_rgba)
 			if full_color == null or full_color.get_size() != logical * SCALE:
@@ -117,7 +117,7 @@ func load_records(records: Variant, read_png: Callable, palette: Sc2Palette, rea
 			if not light_rendered.ok:
 				return _fail(light_rendered.error)
 			emission = light_rendered.image
-		var animation := _load_animation(record, decoded, read_png, palette, emission, MAX_DECODED_BYTES - decoded_bytes)
+		var animation := _load_animation(record, decoded, read_png, palette, emission, MAX_DECODED_BYTES - decoded_bytes, read_rgba, rendered.image)
 		if not error.is_empty():
 			return false
 		var traffic_mask: IndexedImageResult
@@ -171,11 +171,23 @@ func load_records(records: Variant, read_png: Callable, palette: Sc2Palette, rea
 	return true
 
 
-func _load_animation(record: Dictionary, master: IndexedImageResult, read_png: Callable, palette: Sc2Palette, emission: Image, available_bytes: int) -> Dictionary:
+func _load_animation(record: Dictionary, master: IndexedImageResult, read_png: Callable, palette: Sc2Palette, emission: Image, available_bytes: int, read_rgba: Callable, artwork: Image) -> Dictionary:
 	if not record.has("animation"):
 		return {}
 	var spec: Variant = record.animation
 	if not spec is Dictionary:
+		_fail("Unsupported graphics pack format or version")
+		return {}
+	if spec.get("format", "indexed") == "rgba":
+		var loader := MasterFrameAnimation.new()
+		var result := loader.load_frames(spec, artwork, emission, read_rgba, available_bytes - _animation_bytes)
+		if not loader.error.is_empty():
+			print_verbose(loader.error)
+			_fail("Unsupported graphics pack format or version")
+			return {}
+		_animation_bytes += int(result.bytes)
+		return result
+	if spec.get("format", "indexed") != "indexed" or record.has("artwork_rgba"):
 		_fail("Unsupported graphics pack format or version")
 		return {}
 	var paths: Variant = spec.get("frames")
