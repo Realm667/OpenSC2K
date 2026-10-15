@@ -240,12 +240,14 @@ func _check_object_frames() -> void:
 	var result := loader.load_frames(spec, images["0"], images.l0, reader, 10000)
 	assert(loader.error.is_empty(), loader.error)
 	assert(result.frames == 8 and result.fps == 8)
+	var from_json: Dictionary = JSON.parse_string(JSON.stringify(spec))
+	assert(not loader.load_frames(from_json, images["0"], images.l0, reader, 10000).is_empty(), loader.error)
 	var expected := [0, 1, 1, 2, 3, 2, 1, 1]
 	for i in expected.size():
 		assert(result.art.get_pixel(0, i * 4).r8 == 30 + expected[i] * 20)
 		assert(result.light.get_pixel(1, i * 4 + 2).r8 == 100 + expected[i] * 20)
 	for change in [{"frames": []}, {"frames": ["0", "1", "2", "3", "0"]},
-		{"fps": 6}, {"fps": INF}, {"playback": "reverse"}, {"durations_ms": [125]},
+		{"fps": 6}, {"fps": 5.5}, {"fps": INF}, {"playback": "reverse"}, {"durations_ms": [125]},
 		{"durations_ms": [0, 125, 125, 125]}, {"durations_ms": [126, 125, 125, 125]},
 		{"durations_ms": [NAN, 125, 125, 125]}, {"durations_ms": [4000, 4000, 4000, 4000]},
 		{"lightmaps": ["l0"]}, {"frames": ["1", "1", "2", "3"]},

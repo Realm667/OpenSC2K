@@ -15,7 +15,7 @@ func load_frames(spec: Dictionary, base: Image, emission: Image, read_rgba: Call
 	var playback: Variant = spec.get("playback", "loop")
 	if not paths is Array or paths.size() < 1 or paths.size() > 4 or not read_rgba.is_valid():
 		return _fail("RGBA object animations require one to four frames")
-	if not (rate is int or rate is float) or not is_finite(float(rate)) or rate not in [5, 8]:
+	if not (rate is int or rate is float) or not is_finite(float(rate)) or rate != int(rate) or int(rate) not in [5, 8]:
 		return _fail("Object animation fps must be 5 or 8")
 	if playback not in ["loop", "ping_pong"]:
 		return _fail("Object animation playback must be loop or ping_pong")

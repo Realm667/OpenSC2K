@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "date": "2026-10-14",
-  "pack_manifest_sha256": "9cd8d6dac31ddd0845cdd6009e8f07b5685a3fa412aac98b44a952e98c702fbb",
+  "date": "2026-10-15",
+  "pack_manifest_sha256": "38f6aad071d4ceed4bc4178e57e6ed4b55cbb163712ad77cc1ea3f6c34673312",
   "scope": "Independent Remaster graphics and matching emission/season/traffic masks",
   "generation": "OpenAI ImageGen artwork plus independently authored deterministic projection, compositing and UI/traffic drawing tools",
   "references": "Original resources inspected locally for IDs, dimensions, functions, orientations and visual inspiration. No original pixel files are delivered.",
@@ -3443,7 +3443,10 @@
           "runtime_review": "runtime-review-grasshomes/visual-review.json"
         }
       ],
-      "lightmap": "lightmaps/1128.png",
+      "lightmap": {
+        "png": "lightmaps/1128.png",
+        "sha256": "912362b04027edb524c23dff07d098f78929d8134f629692a80c96d6b2af726f"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -5173,7 +5176,7 @@
     {
       "id": 1160,
       "png": "masters/1160.png",
-      "sha256": "7a80ae59c87b093f75bd8caebeda656edf7dc54cc2371606c940ef91661475f0",
+      "sha256": "95ae9db4f95784d7dee8189f837111f132b44726d599bc4f011124476cf12afb",
       "evidence": [
         {
           "id": 1160,
@@ -5286,9 +5289,31 @@
       ],
       "lightmap": {
         "png": "lightmaps/1160.png",
-        "sha256": "93c3c2b6ce1cf50d05a5918f2735a9a78874d51522404ea827856406fb36667b"
+        "sha256": "890ae6e52a264bc8b00909282ea41a576d6cc4d34d0980fc723f92b55f27095d"
       },
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1160.png",
+          "animation/objects/1160/1.png",
+          "animation/objects/1160/2.png",
+          "animation/objects/1160/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1160.png",
+          "lightmaps/1160.png",
+          "lightmaps/1160.png",
+          "lightmaps/1160.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -5383,7 +5408,7 @@
     {
       "id": 1162,
       "png": "masters/1162.png",
-      "sha256": "3422c74be151e6b130d7821bc581e6bcaf04f7f4cc32bf2206912aab5ba7bbed",
+      "sha256": "ca573b4796ef4aea4cc2e36572191ba153428c04c677ab00d626601de347030d",
       "evidence": [
         {
           "id": 1162,
@@ -5464,15 +5489,37 @@
       ],
       "lightmap": {
         "png": "lightmaps/1162.png",
-        "sha256": "2039b264babcfa554abe85f1bd4d4c1437a614d7cb65474262e902688d1a0225"
+        "sha256": "e45d30670803f11ade3db81c6744b935d2ab43740df7538094f7987900d8b591"
       },
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1162.png",
+          "animation/objects/1162/1.png",
+          "animation/objects/1162/2.png",
+          "animation/objects/1162/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1162.png",
+          "lightmaps/1162.png",
+          "lightmaps/1162.png",
+          "lightmaps/1162.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
       "id": 1163,
       "png": "masters/1163.png",
-      "sha256": "f9f36492cd53c125e37606b6acba6f569fd7a832b2ca66013a88c60657fbffc1",
+      "sha256": "c46097c5da07970b700c3d7775aceb541064f04478886f515fe8fd88936f1adb",
       "evidence": [
         {
           "report": "reports/industry.json",
@@ -5502,15 +5549,37 @@
       ],
       "lightmap": {
         "png": "lightmaps/1163.png",
-        "sha256": "9d9e293ca8c17b25218e68c23e6ca95819bdde92557e9961d9cb66581a17f2ba"
+        "sha256": "6fe8161ed8f05e1c94072a966a01f9d11b0012e085c8ea9efe5119a02f304950"
       },
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1163.png",
+          "animation/objects/1163/1.png",
+          "animation/objects/1163/2.png",
+          "animation/objects/1163/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1163.png",
+          "lightmaps/1163.png",
+          "lightmaps/1163.png",
+          "lightmaps/1163.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
       "id": 1164,
       "png": "masters/1164.png",
-      "sha256": "904482fd1e96fbcdb0c2c06550f5bdf4813e796b849638b3faf5df9121b16c8a",
+      "sha256": "e2c71353299749fcb7ea8982ce2b1a6f427f5fc16b4f3d4925bb7338d7c357e9",
       "evidence": [
         {
           "report": "reports/industry.json",
@@ -5540,15 +5609,37 @@
       ],
       "lightmap": {
         "png": "lightmaps/1164.png",
-        "sha256": "7d2520780b62f8e44fc2b8e1c1475467d6d2b495e76476a3c1e814a0cbf15301"
+        "sha256": "581d18c1d8108add0cfe4c7096e71ab147ba7ab5077b4c19b080638055b1abbb"
       },
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1164.png",
+          "animation/objects/1164/1.png",
+          "animation/objects/1164/2.png",
+          "animation/objects/1164/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1164.png",
+          "lightmaps/1164.png",
+          "lightmaps/1164.png",
+          "lightmaps/1164.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
       "id": 1165,
       "png": "masters/1165.png",
-      "sha256": "3a66677c2c99ce3d86f20a3d53b02b37d6dc9254f094cd9ec2ec978d0df40f71",
+      "sha256": "913384516ac0792efb6270faf619f5891a9c451cb57824ef135b41ef4ae68593",
       "evidence": [
         {
           "report": "reports/industry.json",
@@ -5578,9 +5669,31 @@
       ],
       "lightmap": {
         "png": "lightmaps/1165.png",
-        "sha256": "f8aeba906b65dd120e29cd432a8f1cedce8637f9bcb0666c62a6cdf1bdda9753"
+        "sha256": "1fc9b271287a93abc0014839ef0551a17937b864ebc759fbf17e2023c945d2b7"
       },
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1165.png",
+          "animation/objects/1165/1.png",
+          "animation/objects/1165/2.png",
+          "animation/objects/1165/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1165.png",
+          "lightmaps/1165.png",
+          "lightmaps/1165.png",
+          "lightmaps/1165.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -6255,7 +6368,29 @@
         "png": "lightmaps/1178.png",
         "sha256": "a1feda3fe8e041c41e0ee6b40d349270e7ccdca470d2b001e109cd391a80155d"
       },
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1178.png",
+          "animation/objects/1178/1.png",
+          "animation/objects/1178/2.png",
+          "animation/objects/1178/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1178.png",
+          "animation/objects/1178/light-1.png",
+          "animation/objects/1178/light-2.png",
+          "animation/objects/1178/light-3.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -6364,7 +6499,29 @@
         "png": "lightmaps/1180.png",
         "sha256": "f7369cec9ec677955777f116e70561070d27d689ebb2c1850a6df15762b67430"
       },
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1180.png",
+          "animation/objects/1180/1.png",
+          "animation/objects/1180/2.png",
+          "animation/objects/1180/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1180.png",
+          "animation/objects/1180/light-1.png",
+          "animation/objects/1180/light-2.png",
+          "animation/objects/1180/light-3.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -6390,7 +6547,29 @@
         "png": "lightmaps/1181.png",
         "sha256": "3a63ff036d72448841e43b9a5eed2ffa0997831ba7aef0873f22dc8a24aa1252"
       },
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1181.png",
+          "animation/objects/1181/1.png",
+          "animation/objects/1181/2.png",
+          "animation/objects/1181/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1181.png",
+          "animation/objects/1181/light-1.png",
+          "animation/objects/1181/light-2.png",
+          "animation/objects/1181/light-3.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -6465,7 +6644,29 @@
         "png": "lightmaps/1182.png",
         "sha256": "81bc461f853f2f87f89574c7601a121cd9b8ce31ed0398b45e4f84f725037780"
       },
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1182.png",
+          "animation/objects/1182/1.png",
+          "animation/objects/1182/2.png",
+          "animation/objects/1182/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1182.png",
+          "animation/objects/1182/light-1.png",
+          "animation/objects/1182/light-2.png",
+          "animation/objects/1182/light-3.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -6924,7 +7125,7 @@
     {
       "id": 1189,
       "png": "masters/1189.png",
-      "sha256": "9eb045a8585bd1043bef3ad0b2a5a7e63d2778efb3e202695fc8530b37483af5",
+      "sha256": "32ed83868afd09b312d3adada3d6ac3b7fbd952a4bba0d88a8770a33a0f762ff",
       "evidence": [
         {
           "id": 1189,
@@ -7031,9 +7232,31 @@
       ],
       "lightmap": {
         "png": "lightmaps/1189.png",
-        "sha256": "a94506c00fdbe46c736864d6f830f7bf12f5ba92ed696166dee1179788255a2f"
+        "sha256": "d41370eda7dcd98f6e9a85b3a70f2a2f534a7e170df0d19b84b43dc9d3612a81"
       },
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1189.png",
+          "animation/objects/1189/1.png",
+          "animation/objects/1189/2.png",
+          "animation/objects/1189/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1189.png",
+          "lightmaps/1189.png",
+          "lightmaps/1189.png",
+          "lightmaps/1189.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -7077,7 +7300,7 @@
     {
       "id": 1191,
       "png": "masters/1191.png",
-      "sha256": "5185dfc95f498bf187264f6a04f26c0b7520ff2d714044ac3a9452d47fe2d3d0",
+      "sha256": "5574932028d5fd1c4759dffcaa28d5d07cfc37a85edbf800f907cad25333fe59",
       "evidence": [
         {
           "report": "reports/large-industry.json",
@@ -7107,9 +7330,31 @@
       ],
       "lightmap": {
         "png": "lightmaps/1191.png",
-        "sha256": "1219312160abd09eea0aa3e3f54ac7141ff31e71b3f1ef1b479e146620f0108f"
+        "sha256": "869266e341b3f4143644b042e7dd0990540fff36adec5789da2ad74647d275c2"
       },
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1191.png",
+          "animation/objects/1191/1.png",
+          "animation/objects/1191/2.png",
+          "animation/objects/1191/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1191.png",
+          "lightmaps/1191.png",
+          "lightmaps/1191.png",
+          "lightmaps/1191.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -7630,7 +7875,7 @@
     {
       "id": 1200,
       "png": "masters/1200.png",
-      "sha256": "56a8d6ab5c273a93130e11cf79ace6b3e90ea98cc1051a84ec3c8aed8b8280f9",
+      "sha256": "b2ff3e37501910ba6d1667388c1169b4e66453565b4be1ef38bee8124fd47158",
       "evidence": [
         {
           "report": "reports/power-plants.json",
@@ -7647,13 +7892,29 @@
         }
       ],
       "lightmap": null,
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1200.png",
+          "animation/objects/1200/1.png",
+          "animation/objects/1200/2.png",
+          "animation/objects/1200/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          400,
+          400,
+          400,
+          400
+        ],
+        "playback": "loop"
+      },
       "traffic_mask": null
     },
     {
       "id": 1201,
       "png": "masters/1201.png",
-      "sha256": "2a2adf565224dfaa361a91d46251b3e5531af375be29188878214a04c6b920bd",
+      "sha256": "be214c89b80de881e1776ae33f285027f553a5dd5f4869c8c9ce928258324248",
       "evidence": [
         {
           "id": 1201,
@@ -7712,14 +7973,39 @@
           "runtime_review": "runtime-review-reworka/visual-review.json"
         }
       ],
-      "lightmap": "lightmaps/1201.png",
-      "animation": null,
+      "lightmap": {
+        "png": "lightmaps/1201.png",
+        "sha256": "285fc947d23e49999aaa3752ece39a608752a35b9419eefdfe4bffe9d82df67b"
+      },
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1201.png",
+          "animation/objects/1201/1.png",
+          "animation/objects/1201/2.png",
+          "animation/objects/1201/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1201.png",
+          "lightmaps/1201.png",
+          "lightmaps/1201.png",
+          "lightmaps/1201.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
       "id": 1202,
       "png": "masters/1202.png",
-      "sha256": "0cc9f3eaf59e1e4a809cae49d6326f3149e98bd7000e11b9a1063aad93007620",
+      "sha256": "efe69f51f229444b071e0e7edbf9bd186e16b50fdecb3e7e1a04d2a39cb064ae",
       "evidence": [
         {
           "id": 1202,
@@ -7787,9 +8073,31 @@
       ],
       "lightmap": {
         "png": "lightmaps/1202.png",
-        "sha256": "88a58a6bd0a0cac78d876a1f9e25e645a963c199324340ec4eea92e06f0dbaf6"
+        "sha256": "efb533b77c0a11759ebcb5f11444bdadbcedcee449b86d51f00fbe64ece42a5c"
       },
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1202.png",
+          "animation/objects/1202/1.png",
+          "animation/objects/1202/2.png",
+          "animation/objects/1202/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1202.png",
+          "lightmaps/1202.png",
+          "lightmaps/1202.png",
+          "lightmaps/1202.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -7882,7 +8190,10 @@
           "runtime_review": "runtime-review-reworkb/visual-review.json"
         }
       ],
-      "lightmap": "lightmaps/1203.png",
+      "lightmap": {
+        "png": "lightmaps/1203.png",
+        "sha256": "5b2eee710de51b04aa36dca605f2784f6e1f3bf0e211070c52ae88f7f4dac6fb"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -7948,7 +8259,10 @@
           "runtime_review": "runtime-review-civic/visual-review.json"
         }
       ],
-      "lightmap": "lightmaps/1204.png",
+      "lightmap": {
+        "png": "lightmaps/1204.png",
+        "sha256": "f8e0c2cc72f0aa5dbf72b32726fc1b0fc89dd065ff624d3be1ede369c71b692f"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -8161,7 +8475,7 @@
     {
       "id": 1207,
       "png": "masters/1207.png",
-      "sha256": "33e904ba4dbf7c4c8ee9c03800d4a22771aaf09165d9923c39632555916d2b02",
+      "sha256": "bf95e6269672130d67e760568293a1bcadc7b6c61009bafd1ee6499cce311ab4",
       "evidence": [
         {
           "id": 1207,
@@ -8256,9 +8570,31 @@
       ],
       "lightmap": {
         "png": "lightmaps/1207.png",
-        "sha256": "f486bbc5d8c3b271bb158a4c9aab042113a83d5ad4dee88574dd74741cb216da"
+        "sha256": "b95c6e8caf11d56d9abd25fc07aa5e079a07f850d5d72f39a52d2652a982a1eb"
       },
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1207.png",
+          "animation/objects/1207/1.png",
+          "animation/objects/1207/2.png",
+          "animation/objects/1207/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1207.png",
+          "lightmaps/1207.png",
+          "lightmaps/1207.png",
+          "lightmaps/1207.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -8438,7 +8774,10 @@
           "runtime_review": "runtime-review-grasscivic/visual-review.json"
         }
       ],
-      "lightmap": "lightmaps/1209.png",
+      "lightmap": {
+        "png": "lightmaps/1209.png",
+        "sha256": "b1e6453703ec8fa4c74fc161eb1692ecaaa581092c84f0891c9a72e877b53a7e"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -8687,7 +9026,29 @@
         "png": "lightmaps/1213.png",
         "sha256": "100aaf142003f562b2b6e17ced46d8057d08aaae806eb6dd744c9180a1090ff7"
       },
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1213.png",
+          "animation/objects/1213/1.png",
+          "animation/objects/1213/2.png",
+          "animation/objects/1213/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1213.png",
+          "animation/objects/1213/light-1.png",
+          "animation/objects/1213/light-2.png",
+          "animation/objects/1213/light-3.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -8839,7 +9200,10 @@
           "runtime_review": "runtime-review-grasscivic/visual-review.json"
         }
       ],
-      "lightmap": "lightmaps/1215.png",
+      "lightmap": {
+        "png": "lightmaps/1215.png",
+        "sha256": "0416977e764cd788ab9ff4c88305c6970cb2d103d799c7ca10ae4188d5f9d3d8"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -8933,7 +9297,10 @@
           "runtime_review": "runtime-review-reworkb/visual-review.json"
         }
       ],
-      "lightmap": "lightmaps/1216.png",
+      "lightmap": {
+        "png": "lightmaps/1216.png",
+        "sha256": "f64833615a6d977ebc1343fbc5e5a3ca44f826a815497016c2b0012515302f80"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -9096,7 +9463,29 @@
         "png": "lightmaps/1218.png",
         "sha256": "2efaa05286014180e29c9e93f3d902b74967c9b72c98dfeb1378fce84bac25f0"
       },
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1218.png",
+          "animation/objects/1218/1.png",
+          "animation/objects/1218/2.png",
+          "animation/objects/1218/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1218.png",
+          "animation/objects/1218/light-1.png",
+          "animation/objects/1218/light-2.png",
+          "animation/objects/1218/light-3.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -9186,9 +9575,31 @@
       ],
       "lightmap": {
         "png": "lightmaps/1220.png",
-        "sha256": "64431dbba2420f38e6d399be38e954dcc1ab2a85f9fd607088409b6cbd79ab0f"
+        "sha256": "e4b4af8c25786a4d4a2e954ad5c5fb30feb40d38e8c839fad7784e1113d7bc60"
       },
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1220.png",
+          "animation/objects/1220/1.png",
+          "animation/objects/1220/2.png",
+          "animation/objects/1220/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1220.png",
+          "animation/objects/1220/light-1.png",
+          "animation/objects/1220/light-2.png",
+          "animation/objects/1220/light-3.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -9265,8 +9676,33 @@
           "runtime_review": "runtime-review-civic/visual-review.json"
         }
       ],
-      "lightmap": "lightmaps/1221.png",
-      "animation": null,
+      "lightmap": {
+        "png": "lightmaps/1221.png",
+        "sha256": "ac628b15b79223da120cf7b93dd1c46cbae9d572cd97034707ff9fa12101b4e1"
+      },
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1221.png",
+          "animation/objects/1221/1.png",
+          "animation/objects/1221/2.png",
+          "animation/objects/1221/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1221.png",
+          "animation/objects/1221/light-1.png",
+          "animation/objects/1221/light-2.png",
+          "animation/objects/1221/light-3.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -9343,8 +9779,33 @@
           "runtime_review": "runtime-review-civic/visual-review.json"
         }
       ],
-      "lightmap": "lightmaps/1222.png",
-      "animation": null,
+      "lightmap": {
+        "png": "lightmaps/1222.png",
+        "sha256": "3a21e6341fc2b8fe320c303b251d5af77630dd6f5f673f7ab0d00c1d0738ab25"
+      },
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1222.png",
+          "animation/objects/1222/1.png",
+          "animation/objects/1222/2.png",
+          "animation/objects/1222/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1222.png",
+          "animation/objects/1222/light-1.png",
+          "animation/objects/1222/light-2.png",
+          "animation/objects/1222/light-3.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -9422,7 +9883,10 @@
           "runtime_review": "runtime-review-civic/visual-review.json"
         }
       ],
-      "lightmap": "lightmaps/1223.png",
+      "lightmap": {
+        "png": "lightmaps/1223.png",
+        "sha256": "8f11a1216d0641b3cfc45d39526f2503b1d4a7be9ccba5a2ab25688ff0e0d599"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -9465,8 +9929,33 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1225.png",
-      "animation": null,
+      "lightmap": {
+        "png": "lightmaps/1225.png",
+        "sha256": "28f6c8f8b51232908953528a0bf177fc6323bceac2ed391b6f51132ffc2f060b"
+      },
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1225.png",
+          "animation/objects/1225/1.png",
+          "animation/objects/1225/2.png",
+          "animation/objects/1225/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1225.png",
+          "animation/objects/1225/light-1.png",
+          "animation/objects/1225/light-2.png",
+          "animation/objects/1225/light-3.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -9482,8 +9971,33 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1226.png",
-      "animation": null,
+      "lightmap": {
+        "png": "lightmaps/1226.png",
+        "sha256": "e019dc21d579f7ea4b8a50880c58885abb99ccce83e858dbfac63d73b482867b"
+      },
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1226.png",
+          "animation/objects/1226/1.png",
+          "animation/objects/1226/2.png",
+          "animation/objects/1226/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1226.png",
+          "animation/objects/1226/light-1.png",
+          "animation/objects/1226/light-2.png",
+          "animation/objects/1226/light-3.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -9557,7 +10071,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1229.png",
+      "lightmap": {
+        "png": "lightmaps/1229.png",
+        "sha256": "32305c959a763f09a073c46ba3785338bd5e459a329d621bdee23361921ee66e"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -9740,7 +10257,23 @@
         }
       ],
       "lightmap": null,
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1234.png",
+          "animation/objects/1234/1.png",
+          "animation/objects/1234/2.png",
+          "animation/objects/1234/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          400,
+          400,
+          400,
+          400
+        ],
+        "playback": "loop"
+      },
       "traffic_mask": null
     },
     {
@@ -10076,7 +10609,10 @@
           "runtime_review": "runtime-review-civic/visual-review.json"
         }
       ],
-      "lightmap": "lightmaps/1238.png",
+      "lightmap": {
+        "png": "lightmaps/1238.png",
+        "sha256": "d782bf572645efbd4e9cc1da333c1b29f94bb0374e2b3e81c424ffaed98ce2f9"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -10255,7 +10791,10 @@
           "runtime_review": "runtime-review-reworkc/visual-review.json"
         }
       ],
-      "lightmap": "lightmaps/1241.png",
+      "lightmap": {
+        "png": "lightmaps/1241.png",
+        "sha256": "7f83192e115e51d6342b7bc1319395852f05accf297bfb69642b74cf0c6fcd5f"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -10586,7 +11125,10 @@
           "runtime_review": "runtime-review-reworkc/visual-review.json"
         }
       ],
-      "lightmap": "lightmaps/1245.png",
+      "lightmap": {
+        "png": "lightmaps/1245.png",
+        "sha256": "443c6f6c45f0b8a58ec0b6854f701b9c3a20d2d02b9b83ff194ac92b145b32a6"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -10811,7 +11353,10 @@
           "runtime_review": "runtime-review-adjacency5/visual-review.json"
         }
       ],
-      "lightmap": "lightmaps/1248.png",
+      "lightmap": {
+        "png": "lightmaps/1248.png",
+        "sha256": "e79bc0b9daeb7d0f4a330e550f4b92d3ecab6e69135337e23fcd64b99b2055c5"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -10899,7 +11444,7 @@
     {
       "id": 1250,
       "png": "masters/1250.png",
-      "sha256": "daa67c16e490e0a51b8013189a8fe8ede1cfe8ff6c37611b6da825fb5a581e62",
+      "sha256": "e1bdb2fa3e11d11901ec9786c6150de026532ec499a337ac0391e7fac700cda2",
       "evidence": [
         {
           "id": 1250,
@@ -10986,8 +11531,33 @@
           "runtime_review": "runtime-review-reworkc/visual-review.json"
         }
       ],
-      "lightmap": "lightmaps/1250.png",
-      "animation": null,
+      "lightmap": {
+        "png": "lightmaps/1250.png",
+        "sha256": "5e9be6650967acc6cd3d7974210dcc2857c2511bd23338df7b6a3be36df5afea"
+      },
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1250.png",
+          "animation/objects/1250/1.png",
+          "animation/objects/1250/2.png",
+          "animation/objects/1250/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1250.png",
+          "lightmaps/1250.png",
+          "lightmaps/1250.png",
+          "lightmaps/1250.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -11003,8 +11573,33 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1251.png",
-      "animation": null,
+      "lightmap": {
+        "png": "lightmaps/1251.png",
+        "sha256": "73a0a24a922ebe348bec61e93c30a54b53db1725343dd1c53c36e8113581e6f0"
+      },
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1251.png",
+          "animation/objects/1251/1.png",
+          "animation/objects/1251/2.png",
+          "animation/objects/1251/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1251.png",
+          "animation/objects/1251/light-1.png",
+          "animation/objects/1251/light-2.png",
+          "animation/objects/1251/light-3.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -11020,8 +11615,33 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1252.png",
-      "animation": null,
+      "lightmap": {
+        "png": "lightmaps/1252.png",
+        "sha256": "1c07f0cf5660392ba309657695656dbc536384872ef156b1faa33b011f1bb99a"
+      },
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1252.png",
+          "animation/objects/1252/1.png",
+          "animation/objects/1252/2.png",
+          "animation/objects/1252/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1252.png",
+          "animation/objects/1252/light-1.png",
+          "animation/objects/1252/light-2.png",
+          "animation/objects/1252/light-3.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -11122,9 +11742,31 @@
       ],
       "lightmap": {
         "png": "lightmaps/1253.png",
-        "sha256": "ea00e6973eda2943b43b9c795bb5d65795672ffb7bd314b72b2e32d0822d6a43"
+        "sha256": "2db4cca06e97db9d7e4105b2c92fb2a90698baaf3eec0b47d19bc406a8023df5"
       },
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1253.png",
+          "animation/objects/1253/1.png",
+          "animation/objects/1253/2.png",
+          "animation/objects/1253/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1253.png",
+          "animation/objects/1253/light-1.png",
+          "animation/objects/1253/light-2.png",
+          "animation/objects/1253/light-3.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -11237,9 +11879,31 @@
       ],
       "lightmap": {
         "png": "lightmaps/1254.png",
-        "sha256": "12b50e6414b866bfa608867d4dad82425d13c5b1ceb54f6b0339621a9b406aed"
+        "sha256": "20fd50aa1f219d33fdb090c4c892bc1cb1ed4b485be7ae08e586924aaa7fd180"
       },
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "rgba/1254.png",
+          "animation/objects/1254/1.png",
+          "animation/objects/1254/2.png",
+          "animation/objects/1254/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1254.png",
+          "animation/objects/1254/light-1.png",
+          "animation/objects/1254/light-2.png",
+          "animation/objects/1254/light-3.png"
+        ]
+      },
       "traffic_mask": null,
       "artwork_rgba": {
         "png": "rgba/1254.png",
@@ -11316,9 +11980,31 @@
       ],
       "lightmap": {
         "png": "lightmaps/1255.png",
-        "sha256": "3fb59ef7d92faad46bb4cd9d617f9e6f9032c336fca4e657a168d89ef2b6386f"
+        "sha256": "178d8a743468bab1aaa2910be6bbbd174ebd4f1eeccd1585a4a4a5422e3296c9"
       },
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "masters/1255.png",
+          "animation/objects/1255/1.png",
+          "animation/objects/1255/2.png",
+          "animation/objects/1255/3.png"
+        ],
+        "fps": 5,
+        "durations_ms": [
+          200,
+          200,
+          200,
+          200
+        ],
+        "playback": "loop",
+        "lightmaps": [
+          "lightmaps/1255.png",
+          "animation/objects/1255/light-1.png",
+          "animation/objects/1255/light-2.png",
+          "animation/objects/1255/light-3.png"
+        ]
+      },
       "traffic_mask": null
     },
     {
@@ -13465,7 +14151,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1359.png",
+      "lightmap": {
+        "png": "lightmaps/1359.png",
+        "sha256": "e0e6a38db40e9ccec5886f5e3d357b6bc8fa1009cd8421ae9e0a9a4b8da36964"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -13507,7 +14196,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1361.png",
+      "lightmap": {
+        "png": "lightmaps/1361.png",
+        "sha256": "612a85c9cef451e4b429e988c6f858e700435d051603e058e5a0e031edb0a115"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -13524,7 +14216,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1362.png",
+      "lightmap": {
+        "png": "lightmaps/1362.png",
+        "sha256": "244ef6a169e6e566536dc896f5da57366a00748f803e7251a166a97b2b8f2b3d"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -13541,7 +14236,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1363.png",
+      "lightmap": {
+        "png": "lightmaps/1363.png",
+        "sha256": "595c3f011290b1615b35b3d1cc6b66c5a76a10e969ea6834a33b938d4698e981"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -13564,7 +14262,23 @@
         }
       ],
       "lightmap": null,
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "artwork-rgba/1364.png",
+          "animation/objects/1364/1.png",
+          "animation/objects/1364/2.png",
+          "animation/objects/1364/3.png"
+        ],
+        "fps": 8,
+        "durations_ms": [
+          125,
+          125,
+          125,
+          125
+        ],
+        "playback": "loop"
+      },
       "traffic_mask": null
     },
     {
@@ -13586,7 +14300,23 @@
         }
       ],
       "lightmap": null,
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "artwork-rgba/1365.png",
+          "animation/objects/1365/1.png",
+          "animation/objects/1365/2.png",
+          "animation/objects/1365/3.png"
+        ],
+        "fps": 8,
+        "durations_ms": [
+          125,
+          125,
+          125,
+          125
+        ],
+        "playback": "loop"
+      },
       "traffic_mask": null
     },
     {
@@ -13608,7 +14338,23 @@
         }
       ],
       "lightmap": null,
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "artwork-rgba/1366.png",
+          "animation/objects/1366/1.png",
+          "animation/objects/1366/2.png",
+          "animation/objects/1366/3.png"
+        ],
+        "fps": 8,
+        "durations_ms": [
+          125,
+          125,
+          125,
+          125
+        ],
+        "playback": "loop"
+      },
       "traffic_mask": null
     },
     {
@@ -13630,7 +14376,23 @@
         }
       ],
       "lightmap": null,
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "artwork-rgba/1367.png",
+          "animation/objects/1367/1.png",
+          "animation/objects/1367/2.png",
+          "animation/objects/1367/3.png"
+        ],
+        "fps": 8,
+        "durations_ms": [
+          125,
+          125,
+          125,
+          125
+        ],
+        "playback": "loop"
+      },
       "traffic_mask": null
     },
     {
@@ -13652,7 +14414,23 @@
         }
       ],
       "lightmap": null,
-      "animation": null,
+      "animation": {
+        "format": "rgba",
+        "frames": [
+          "artwork-rgba/1368.png",
+          "animation/objects/1368/1.png",
+          "animation/objects/1368/2.png",
+          "animation/objects/1368/3.png"
+        ],
+        "fps": 8,
+        "durations_ms": [
+          125,
+          125,
+          125,
+          125
+        ],
+        "playback": "loop"
+      },
       "traffic_mask": null
     },
     {
@@ -13668,7 +14446,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1369.png",
+      "lightmap": {
+        "png": "lightmaps/1369.png",
+        "sha256": "7fa6c5bc71e89560a3b2807add03ba6cbff9f7a9a54feef05a934ec7490afaec"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -13685,7 +14466,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1370.png",
+      "lightmap": {
+        "png": "lightmaps/1370.png",
+        "sha256": "06c67d3feacbdaa7d78e2686eef1e311740feb8fe927e474352a69412205c1a2"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -13702,7 +14486,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1371.png",
+      "lightmap": {
+        "png": "lightmaps/1371.png",
+        "sha256": "c7b8e4fff16b6d69dae3a53681622331c690db3bb28cacbc1c6841ee12b5555d"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -13719,7 +14506,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1372.png",
+      "lightmap": {
+        "png": "lightmaps/1372.png",
+        "sha256": "2c2922126f8714f02c55aa7f44cb0c847cece69d0b848fac509cd1b26a44b6c7"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -13736,7 +14526,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1373.png",
+      "lightmap": {
+        "png": "lightmaps/1373.png",
+        "sha256": "ef1c635f644fa8347afdac457eef29990b3e23af359560b02204bbfdbd8d3e94"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -13753,7 +14546,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1374.png",
+      "lightmap": {
+        "png": "lightmaps/1374.png",
+        "sha256": "0f8a7176169b7e8c24e07dbbd364c1a5d205caa9a7ffc12347f9e64d03b8f45f"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -13770,7 +14566,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1375.png",
+      "lightmap": {
+        "png": "lightmaps/1375.png",
+        "sha256": "f438dfff4eb7af855a53f241eb35a830c8996c07afcf39481b2439d56cdd2e96"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -13787,7 +14586,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1376.png",
+      "lightmap": {
+        "png": "lightmaps/1376.png",
+        "sha256": "7455cd457e0d445d9e0f6f486876893856020f321fb57a554dfd088db637dd08"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -13804,7 +14606,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1377.png",
+      "lightmap": {
+        "png": "lightmaps/1377.png",
+        "sha256": "4f5effb1e2552551449402e80b5c59cb8091e698a89da87c766d6ac4c790431d"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -13945,7 +14750,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1385.png",
+      "lightmap": {
+        "png": "lightmaps/1385.png",
+        "sha256": "9150731b1766e17733bf79a9f00b3cde8a715f82faff82db464cbe7581ffe2cb"
+      },
       "animation": {
         "fps": 8,
         "frames": [
@@ -14001,7 +14809,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1387.png",
+      "lightmap": {
+        "png": "lightmaps/1387.png",
+        "sha256": "d6af36d1c3fa04d5294a6f3498c58f02faf0f9df0dad3b4d1124de3cbdb27ad2"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -14018,7 +14829,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1388.png",
+      "lightmap": {
+        "png": "lightmaps/1388.png",
+        "sha256": "1e65566506df91269ca59d01070d9bf95f2a801c46410122e9770663d776ef03"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -14035,7 +14849,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1389.png",
+      "lightmap": {
+        "png": "lightmaps/1389.png",
+        "sha256": "9c5b7a2a33365392e4b266cac16a4be6bac6da9bafcc2cf0f6791774467feb98"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -14052,7 +14869,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1390.png",
+      "lightmap": {
+        "png": "lightmaps/1390.png",
+        "sha256": "e0cdd9c90d8d98d23d9966221b16aa78729128e509c1a4250efe62ce44aeaded"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -14069,7 +14889,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1391.png",
+      "lightmap": {
+        "png": "lightmaps/1391.png",
+        "sha256": "22e6efbda90e27befa2f87de4f259d9ccff639f4936ed4970c775b26ec948eee"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -14322,7 +15145,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1396.png",
+      "lightmap": {
+        "png": "lightmaps/1396.png",
+        "sha256": "ca4450e0d7996a72583a0c93aa0b0cd66b7af0bfdc1df9824bd02b31cc948735"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -14339,7 +15165,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1397.png",
+      "lightmap": {
+        "png": "lightmaps/1397.png",
+        "sha256": "d040825f5c149e35f98fc41c249dfcb31b5a5006c300dc8b9d7dcdb79b4ebd51"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -14356,7 +15185,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1398.png",
+      "lightmap": {
+        "png": "lightmaps/1398.png",
+        "sha256": "683b100d5eb34be30c949713110b84c6629d35e5236352722793da081d286fe9"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -14373,7 +15205,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1399.png",
+      "lightmap": {
+        "png": "lightmaps/1399.png",
+        "sha256": "4d8e19b9292a89b8e4c25880db27189abb215193c4483b2c7711043b48856e55"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -17510,7 +18345,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1490.png",
+      "lightmap": {
+        "png": "lightmaps/1490.png",
+        "sha256": "4ba6213e4d389ca97b094a3cbfc47fcc8ad2ed7f10e39457163451c263cd4498"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -17527,7 +18365,10 @@
           "method": null
         }
       ],
-      "lightmap": "lightmaps/1491.png",
+      "lightmap": {
+        "png": "lightmaps/1491.png",
+        "sha256": "7f353f9d8d17226b6cb9e6bb0cbf85125b607cb003d4519de252b326ab879223"
+      },
       "animation": null,
       "traffic_mask": null
     },
@@ -17753,6 +18594,1506 @@
         364
       ],
       "decoded_rgba_bytes": 186368
+    },
+    {
+      "path": "animation/objects/1160/1.png",
+      "sha256": "c04cb7377d22cc4d81ce244cd016414fa98930d9a887bbc68c782dd163d9a83a",
+      "bytes": 44094,
+      "size": [
+        256,
+        228
+      ],
+      "decoded_rgba_bytes": 233472
+    },
+    {
+      "path": "animation/objects/1160/2.png",
+      "sha256": "d0d9acccc21d8492fcb43ce6053b41d5a2a73eb200445f328f52166312ac1705",
+      "bytes": 45032,
+      "size": [
+        256,
+        228
+      ],
+      "decoded_rgba_bytes": 233472
+    },
+    {
+      "path": "animation/objects/1160/3.png",
+      "sha256": "6ff4cca930f4986ead31c2ae10efb96107c38de1adc441f384cda365ead829cd",
+      "bytes": 45414,
+      "size": [
+        256,
+        228
+      ],
+      "decoded_rgba_bytes": 233472
+    },
+    {
+      "path": "animation/objects/1162/1.png",
+      "sha256": "47ddff3e6c383fdf6aed57a6cde0133718526f39c69008aa7d8954b978a85c2e",
+      "bytes": 33158,
+      "size": [
+        256,
+        260
+      ],
+      "decoded_rgba_bytes": 266240
+    },
+    {
+      "path": "animation/objects/1162/2.png",
+      "sha256": "6092874004fa90494f7aa328dde0d1808dba113a8aa958e3e968b88447b518cf",
+      "bytes": 33342,
+      "size": [
+        256,
+        260
+      ],
+      "decoded_rgba_bytes": 266240
+    },
+    {
+      "path": "animation/objects/1162/3.png",
+      "sha256": "92731e868ca1a9047589aacf4ac650e5873fa1b95b2e44b2588c3ba1bff20f50",
+      "bytes": 33367,
+      "size": [
+        256,
+        260
+      ],
+      "decoded_rgba_bytes": 266240
+    },
+    {
+      "path": "animation/objects/1163/1.png",
+      "sha256": "a800bb767660dd8ccd73e08686c55900431868f81719344a78411bb979a38064",
+      "bytes": 60730,
+      "size": [
+        256,
+        288
+      ],
+      "decoded_rgba_bytes": 294912
+    },
+    {
+      "path": "animation/objects/1163/2.png",
+      "sha256": "d105b59869ae15815f77d814c30a3470932d7ed344513bbde5ac21bd847d919d",
+      "bytes": 61057,
+      "size": [
+        256,
+        288
+      ],
+      "decoded_rgba_bytes": 294912
+    },
+    {
+      "path": "animation/objects/1163/3.png",
+      "sha256": "7e992af4d50cde5fbfd4e6ef2806c8db01745c218c1d410560395222ba480956",
+      "bytes": 61172,
+      "size": [
+        256,
+        288
+      ],
+      "decoded_rgba_bytes": 294912
+    },
+    {
+      "path": "animation/objects/1164/1.png",
+      "sha256": "dd155f8b05917ae5477dd8ae0759417087c87f3eab984bd62fbfb1d3ae4604c4",
+      "bytes": 76894,
+      "size": [
+        256,
+        356
+      ],
+      "decoded_rgba_bytes": 364544
+    },
+    {
+      "path": "animation/objects/1164/2.png",
+      "sha256": "80fcb0a4486babc44f39a8d7ab996c025cfd4783c7dac6a6692f26e4173bbf2b",
+      "bytes": 77095,
+      "size": [
+        256,
+        356
+      ],
+      "decoded_rgba_bytes": 364544
+    },
+    {
+      "path": "animation/objects/1164/3.png",
+      "sha256": "1efad4cd4252866c694ecb0617346a937bfbd41c09b8458c84628a3a70070c66",
+      "bytes": 77159,
+      "size": [
+        256,
+        356
+      ],
+      "decoded_rgba_bytes": 364544
+    },
+    {
+      "path": "animation/objects/1165/1.png",
+      "sha256": "ff052b6a85bbd6823ec2b7160e1aa7d568cad49aa48d11235421e31f4a06fe99",
+      "bytes": 45733,
+      "size": [
+        256,
+        296
+      ],
+      "decoded_rgba_bytes": 303104
+    },
+    {
+      "path": "animation/objects/1165/2.png",
+      "sha256": "76c4fdf45d37e0369710f914f51ebeada96ac8e5ef9b517de94e7f0d789cb4a5",
+      "bytes": 45956,
+      "size": [
+        256,
+        296
+      ],
+      "decoded_rgba_bytes": 303104
+    },
+    {
+      "path": "animation/objects/1165/3.png",
+      "sha256": "0249065cecf9473114f301ef82169845e4657281ba208dbe5b973fed66e7011b",
+      "bytes": 46000,
+      "size": [
+        256,
+        296
+      ],
+      "decoded_rgba_bytes": 303104
+    },
+    {
+      "path": "animation/objects/1178/1.png",
+      "sha256": "11599c7fb5ed6e92b421df0303d7f8ef75d21194ca1cc536ba0dbb5f8d9907d9",
+      "bytes": 56839,
+      "size": [
+        384,
+        244
+      ],
+      "decoded_rgba_bytes": 374784
+    },
+    {
+      "path": "animation/objects/1178/2.png",
+      "sha256": "74b6572031ba3a7eeb88cb93556542cca0dc01d42bcd7c0181b69b1122b86930",
+      "bytes": 56849,
+      "size": [
+        384,
+        244
+      ],
+      "decoded_rgba_bytes": 374784
+    },
+    {
+      "path": "animation/objects/1178/3.png",
+      "sha256": "da6d373bb55c1fd058eaf9ae35f76249dcfba5df6d242de9b0cd6c225006ef23",
+      "bytes": 56849,
+      "size": [
+        384,
+        244
+      ],
+      "decoded_rgba_bytes": 374784
+    },
+    {
+      "path": "animation/objects/1178/light-1.png",
+      "sha256": "6fa485c21380b3a302a4dcdec45ab8ec72a913d6fc5d84818ae6e2597c1da3fc",
+      "bytes": 1465,
+      "size": [
+        384,
+        244
+      ],
+      "decoded_rgba_bytes": 374784
+    },
+    {
+      "path": "animation/objects/1178/light-2.png",
+      "sha256": "31ffdc5643a046a19b9b3aef56e920d1e40605dd15987ad3ad7be5c6d0595824",
+      "bytes": 1490,
+      "size": [
+        384,
+        244
+      ],
+      "decoded_rgba_bytes": 374784
+    },
+    {
+      "path": "animation/objects/1178/light-3.png",
+      "sha256": "732523c3eee5c3e99962149f99bb5286153e70443f97486cda64caceb8b6e91d",
+      "bytes": 1464,
+      "size": [
+        384,
+        244
+      ],
+      "decoded_rgba_bytes": 374784
+    },
+    {
+      "path": "animation/objects/1180/1.png",
+      "sha256": "2dec2a03eec8c979c5fbd0ba2d2c97475858eb77508703c8e275b875e36a065e",
+      "bytes": 51987,
+      "size": [
+        400,
+        260
+      ],
+      "decoded_rgba_bytes": 416000
+    },
+    {
+      "path": "animation/objects/1180/2.png",
+      "sha256": "12183c937f26c0d90879a284df8492a23bdb9f5afe5519fc96c229e2e9a75e16",
+      "bytes": 51990,
+      "size": [
+        400,
+        260
+      ],
+      "decoded_rgba_bytes": 416000
+    },
+    {
+      "path": "animation/objects/1180/3.png",
+      "sha256": "36123d8b18c15bffb8ced175ca25ef36a273871b6b217c411542eda12cb4c2fb",
+      "bytes": 51988,
+      "size": [
+        400,
+        260
+      ],
+      "decoded_rgba_bytes": 416000
+    },
+    {
+      "path": "animation/objects/1180/light-1.png",
+      "sha256": "35db204e587013cce61b7d4528ee1b9040b9efaceae8a1581d8c48c89418ce3d",
+      "bytes": 1372,
+      "size": [
+        400,
+        260
+      ],
+      "decoded_rgba_bytes": 416000
+    },
+    {
+      "path": "animation/objects/1180/light-2.png",
+      "sha256": "f02eca42cf0c2da05f9eec70a75b5afd9574ce560b17ed9d18476b92beb2140a",
+      "bytes": 1384,
+      "size": [
+        400,
+        260
+      ],
+      "decoded_rgba_bytes": 416000
+    },
+    {
+      "path": "animation/objects/1180/light-3.png",
+      "sha256": "7004b642195dbf2020c748d7a20a79a566b16b315180e73b9b420fca68dde55a",
+      "bytes": 1370,
+      "size": [
+        400,
+        260
+      ],
+      "decoded_rgba_bytes": 416000
+    },
+    {
+      "path": "animation/objects/1181/1.png",
+      "sha256": "58f579d8a01d78bacb8bc0d2a44447b8f154c2fe43bb8a008e5d7a13533f8d7b",
+      "bytes": 76410,
+      "size": [
+        384,
+        360
+      ],
+      "decoded_rgba_bytes": 552960
+    },
+    {
+      "path": "animation/objects/1181/2.png",
+      "sha256": "d6afdc8af1316bcd5b0c0deb92c97d337748fb76e4c5b28d8fb3e6e735fa172e",
+      "bytes": 76399,
+      "size": [
+        384,
+        360
+      ],
+      "decoded_rgba_bytes": 552960
+    },
+    {
+      "path": "animation/objects/1181/3.png",
+      "sha256": "ac581b1c6a22434515efc75d38f712fe0227eacff4107a94e8d278de235264f5",
+      "bytes": 76425,
+      "size": [
+        384,
+        360
+      ],
+      "decoded_rgba_bytes": 552960
+    },
+    {
+      "path": "animation/objects/1181/light-1.png",
+      "sha256": "780e82d428f6d7d641674d43c07d21e2fd7a991dcdcc4d8b8f68f729ba9d0b75",
+      "bytes": 1537,
+      "size": [
+        384,
+        360
+      ],
+      "decoded_rgba_bytes": 552960
+    },
+    {
+      "path": "animation/objects/1181/light-2.png",
+      "sha256": "a38890a3ce5832b1ee288af70addbca2a6a0ab69f5212e41a4c36dae013371f1",
+      "bytes": 1531,
+      "size": [
+        384,
+        360
+      ],
+      "decoded_rgba_bytes": 552960
+    },
+    {
+      "path": "animation/objects/1181/light-3.png",
+      "sha256": "88d93145f251dc4140fa00a569cd77bd54ec083736ee6a7bb850566826748b11",
+      "bytes": 1570,
+      "size": [
+        384,
+        360
+      ],
+      "decoded_rgba_bytes": 552960
+    },
+    {
+      "path": "animation/objects/1182/1.png",
+      "sha256": "f47d2d6df8fe1cfdb49ccf34550ca164d33a421bbdfc9b7a0122add32b878391",
+      "bytes": 58786,
+      "size": [
+        384,
+        280
+      ],
+      "decoded_rgba_bytes": 430080
+    },
+    {
+      "path": "animation/objects/1182/2.png",
+      "sha256": "bc5f6c0ec6e945410f4047aff906fee2946396cf75124bd2c04098ddba866c30",
+      "bytes": 58662,
+      "size": [
+        384,
+        280
+      ],
+      "decoded_rgba_bytes": 430080
+    },
+    {
+      "path": "animation/objects/1182/3.png",
+      "sha256": "e22c1d31fce652d21820cb6bd6ce34117ae04f7d18fae9acf4439bb611617456",
+      "bytes": 58651,
+      "size": [
+        384,
+        280
+      ],
+      "decoded_rgba_bytes": 430080
+    },
+    {
+      "path": "animation/objects/1182/light-1.png",
+      "sha256": "855ef12db749e9676a7efe5df57dd905aff59899d142e63e73cca4fdb526b298",
+      "bytes": 19920,
+      "size": [
+        384,
+        280
+      ],
+      "decoded_rgba_bytes": 430080
+    },
+    {
+      "path": "animation/objects/1182/light-2.png",
+      "sha256": "8dbd115c13bbc694fc45b16f90271d51dd67929d82fda201ce0ad976c9843510",
+      "bytes": 19718,
+      "size": [
+        384,
+        280
+      ],
+      "decoded_rgba_bytes": 430080
+    },
+    {
+      "path": "animation/objects/1182/light-3.png",
+      "sha256": "745c9fcd111b9c191724e36f6f3e14430518152b0c025b08ff7c7ef96b87460e",
+      "bytes": 19997,
+      "size": [
+        384,
+        280
+      ],
+      "decoded_rgba_bytes": 430080
+    },
+    {
+      "path": "animation/objects/1189/1.png",
+      "sha256": "3a42531e75c899040a42c53be8d8d2d995713d5a0dd71d855debf33f616ef4f1",
+      "bytes": 113034,
+      "size": [
+        384,
+        424
+      ],
+      "decoded_rgba_bytes": 651264
+    },
+    {
+      "path": "animation/objects/1189/2.png",
+      "sha256": "eebeebf9eaa39d2ce9d81ef693718630c91fa3736f547afc003eb672f2d21802",
+      "bytes": 113375,
+      "size": [
+        384,
+        424
+      ],
+      "decoded_rgba_bytes": 651264
+    },
+    {
+      "path": "animation/objects/1189/3.png",
+      "sha256": "b5de7d41a2f6c927e7722db0bb40a65fe14871303574e75cf730795605fe3c42",
+      "bytes": 113395,
+      "size": [
+        384,
+        424
+      ],
+      "decoded_rgba_bytes": 651264
+    },
+    {
+      "path": "animation/objects/1191/1.png",
+      "sha256": "ea520faf0a28b5674a3ec667ed1024ab5ccae03527a229681d21a6d8c31f010e",
+      "bytes": 102367,
+      "size": [
+        384,
+        348
+      ],
+      "decoded_rgba_bytes": 534528
+    },
+    {
+      "path": "animation/objects/1191/2.png",
+      "sha256": "dfc14f4a0ffce34896f773e862affa73af613e03280c2986a101dbd118a3a902",
+      "bytes": 102896,
+      "size": [
+        384,
+        348
+      ],
+      "decoded_rgba_bytes": 534528
+    },
+    {
+      "path": "animation/objects/1191/3.png",
+      "sha256": "454e1bfd3eb5473854cf2a7d47e9f0466f644fe79b399df3affcf279f666360e",
+      "bytes": 103033,
+      "size": [
+        384,
+        348
+      ],
+      "decoded_rgba_bytes": 534528
+    },
+    {
+      "path": "animation/objects/1200/1.png",
+      "sha256": "7474dcc8148790adc83c07f48ebbda4df76fba13cbf296cd5d9aaec781c3beec",
+      "bytes": 13498,
+      "size": [
+        208,
+        256
+      ],
+      "decoded_rgba_bytes": 212992
+    },
+    {
+      "path": "animation/objects/1200/2.png",
+      "sha256": "8cb5bc3d54d3f676cd2a3e2339db1bced3222938571bda16d0bf34381b520d5e",
+      "bytes": 14187,
+      "size": [
+        208,
+        256
+      ],
+      "decoded_rgba_bytes": 212992
+    },
+    {
+      "path": "animation/objects/1200/3.png",
+      "sha256": "41f66ae916fcd97e4c277eed4ae4c4e822e46720091711004142a0e241206234",
+      "bytes": 14467,
+      "size": [
+        208,
+        256
+      ],
+      "decoded_rgba_bytes": 212992
+    },
+    {
+      "path": "animation/objects/1201/1.png",
+      "sha256": "0d4e8841663093c0a2319492e7c7c79d410264c681a1ea40c3d02e92c3d56cf2",
+      "bytes": 103080,
+      "size": [
+        512,
+        376
+      ],
+      "decoded_rgba_bytes": 770048
+    },
+    {
+      "path": "animation/objects/1201/2.png",
+      "sha256": "ad0a4fda992ed99b1c19fae29a039d7c3c91ab32f1b1a48e2e477cdf1b024e13",
+      "bytes": 103395,
+      "size": [
+        512,
+        376
+      ],
+      "decoded_rgba_bytes": 770048
+    },
+    {
+      "path": "animation/objects/1201/3.png",
+      "sha256": "02ac11316213b87cc35ee0b63b7cc514d2ed593d4eccd8c20b58cbd0724c97ee",
+      "bytes": 103534,
+      "size": [
+        512,
+        376
+      ],
+      "decoded_rgba_bytes": 770048
+    },
+    {
+      "path": "animation/objects/1202/1.png",
+      "sha256": "0467a151f5b666c6142022c7336649a7e37613ff401671afcc709bdb0b9687b0",
+      "bytes": 99138,
+      "size": [
+        528,
+        492
+      ],
+      "decoded_rgba_bytes": 1039104
+    },
+    {
+      "path": "animation/objects/1202/2.png",
+      "sha256": "fadd0b21c3714659ad0a22b46d76dc896118025feb1e1b844215c377ba1bb7d1",
+      "bytes": 99385,
+      "size": [
+        528,
+        492
+      ],
+      "decoded_rgba_bytes": 1039104
+    },
+    {
+      "path": "animation/objects/1202/3.png",
+      "sha256": "328f04275b0520e96166a5fe70e8e5fce259c029fec9a34a6764a22a04313142",
+      "bytes": 99319,
+      "size": [
+        528,
+        492
+      ],
+      "decoded_rgba_bytes": 1039104
+    },
+    {
+      "path": "animation/objects/1207/1.png",
+      "sha256": "50d8a220b1eeb3784f32c03654694f3587b6778be4f0a0f5731228e7d11a7a83",
+      "bytes": 100146,
+      "size": [
+        512,
+        472
+      ],
+      "decoded_rgba_bytes": 966656
+    },
+    {
+      "path": "animation/objects/1207/2.png",
+      "sha256": "2f5d8440bfe3a6e771f12bff5341b3e8e71973ee97f170c7e3c9973cfdba80ef",
+      "bytes": 100561,
+      "size": [
+        512,
+        472
+      ],
+      "decoded_rgba_bytes": 966656
+    },
+    {
+      "path": "animation/objects/1207/3.png",
+      "sha256": "34514dc006cadbd689426e6778db730b466a44d02f09ff73b368edea73f75bbd",
+      "bytes": 100521,
+      "size": [
+        512,
+        472
+      ],
+      "decoded_rgba_bytes": 966656
+    },
+    {
+      "path": "animation/objects/1213/1.png",
+      "sha256": "f783fdb297d6c9604c0b40af5386c6f64231685891ca9b70d051fc76afb67e7e",
+      "bytes": 47045,
+      "size": [
+        384,
+        220
+      ],
+      "decoded_rgba_bytes": 337920
+    },
+    {
+      "path": "animation/objects/1213/2.png",
+      "sha256": "dcb655051c1d263c666bb71b135c6c558b4e8ed012a3c790b02a4ce67a5206e7",
+      "bytes": 47047,
+      "size": [
+        384,
+        220
+      ],
+      "decoded_rgba_bytes": 337920
+    },
+    {
+      "path": "animation/objects/1213/3.png",
+      "sha256": "476be4988cde68641eac11650a79837712e4b55019ca309d3fbab017b97d9930",
+      "bytes": 47033,
+      "size": [
+        384,
+        220
+      ],
+      "decoded_rgba_bytes": 337920
+    },
+    {
+      "path": "animation/objects/1213/light-1.png",
+      "sha256": "f733347278a6156222cad3f36cf1803b5d49ccdef245809cb206018ef7ffc32c",
+      "bytes": 844,
+      "size": [
+        384,
+        220
+      ],
+      "decoded_rgba_bytes": 337920
+    },
+    {
+      "path": "animation/objects/1213/light-2.png",
+      "sha256": "2caf81f6eef512458ad568174102d4e97fecb95813e4a12765a5b279f447e5d8",
+      "bytes": 847,
+      "size": [
+        384,
+        220
+      ],
+      "decoded_rgba_bytes": 337920
+    },
+    {
+      "path": "animation/objects/1213/light-3.png",
+      "sha256": "dccdf84768ab317000f863522d886c15a90901929e99e330e77d3edfdb14e448",
+      "bytes": 837,
+      "size": [
+        384,
+        220
+      ],
+      "decoded_rgba_bytes": 337920
+    },
+    {
+      "path": "animation/objects/1218/1.png",
+      "sha256": "8694eef045fab15788f18996f4b5871e44c2528ab64db3108777088dfc6cadd5",
+      "bytes": 130870,
+      "size": [
+        512,
+        316
+      ],
+      "decoded_rgba_bytes": 647168
+    },
+    {
+      "path": "animation/objects/1218/2.png",
+      "sha256": "b02624169be3a80c8220872c5ab8f4b7b345ef902f7421ba75257194d64962f6",
+      "bytes": 130856,
+      "size": [
+        512,
+        316
+      ],
+      "decoded_rgba_bytes": 647168
+    },
+    {
+      "path": "animation/objects/1218/3.png",
+      "sha256": "bed519a515c4fba3d52bf910e4018ecdf0c76725ed0afe2addc0f12d80adeea5",
+      "bytes": 130851,
+      "size": [
+        512,
+        316
+      ],
+      "decoded_rgba_bytes": 647168
+    },
+    {
+      "path": "animation/objects/1218/light-1.png",
+      "sha256": "c150ed40a84318a4e1a5dad18dd38311a1a490de8be39ed761ca84d1692cc504",
+      "bytes": 1595,
+      "size": [
+        512,
+        316
+      ],
+      "decoded_rgba_bytes": 647168
+    },
+    {
+      "path": "animation/objects/1218/light-2.png",
+      "sha256": "6fb2e19f902554f466a1490c56efbe8e43fbffe6f4573374973e72e2862e9a1a",
+      "bytes": 1589,
+      "size": [
+        512,
+        316
+      ],
+      "decoded_rgba_bytes": 647168
+    },
+    {
+      "path": "animation/objects/1218/light-3.png",
+      "sha256": "d3cee09b7e63cabe6b2b30a4b738e0eedf5c22483f903e5b78827d9c69e411d9",
+      "bytes": 1616,
+      "size": [
+        512,
+        316
+      ],
+      "decoded_rgba_bytes": 647168
+    },
+    {
+      "path": "animation/objects/1220/1.png",
+      "sha256": "a8bb2091c2d61d6f58c0576664a5e3738634caa178feb89c2c97d9e5ee138848",
+      "bytes": 9067,
+      "size": [
+        128,
+        92
+      ],
+      "decoded_rgba_bytes": 47104
+    },
+    {
+      "path": "animation/objects/1220/2.png",
+      "sha256": "8269f08b0f744d6cad1f8f7d015214fab56392eaf18c1b423da2d6763462f5f7",
+      "bytes": 9050,
+      "size": [
+        128,
+        92
+      ],
+      "decoded_rgba_bytes": 47104
+    },
+    {
+      "path": "animation/objects/1220/3.png",
+      "sha256": "8152b4be2455f109516851d10e71eeabb4b2b14e3bb97ac1529c506012b3c460",
+      "bytes": 9040,
+      "size": [
+        128,
+        92
+      ],
+      "decoded_rgba_bytes": 47104
+    },
+    {
+      "path": "animation/objects/1220/light-1.png",
+      "sha256": "a25349a65631c52a2efbfec200e2e1b3a9f1fd0d5d7675812ca0625519b1fafa",
+      "bytes": 189,
+      "size": [
+        128,
+        92
+      ],
+      "decoded_rgba_bytes": 47104
+    },
+    {
+      "path": "animation/objects/1220/light-2.png",
+      "sha256": "516723cda3bf1aaee60984a064aadae11bd5cf89c07b1bf06165b200ac8f8476",
+      "bytes": 197,
+      "size": [
+        128,
+        92
+      ],
+      "decoded_rgba_bytes": 47104
+    },
+    {
+      "path": "animation/objects/1220/light-3.png",
+      "sha256": "f7bc59dd9a15497c8a4d2e4f2dd499ea353112f0522e6e1d728440417f84cd1a",
+      "bytes": 192,
+      "size": [
+        128,
+        92
+      ],
+      "decoded_rgba_bytes": 47104
+    },
+    {
+      "path": "animation/objects/1221/1.png",
+      "sha256": "fdc6fa754f4390040f143fbded103cc10eaeba1cf328ca9f12a99c43c15cd03f",
+      "bytes": 1838,
+      "size": [
+        128,
+        68
+      ],
+      "decoded_rgba_bytes": 34816
+    },
+    {
+      "path": "animation/objects/1221/2.png",
+      "sha256": "024b419e5b12f3b0a4b83d6c4d8167204461b0579261c928f9402dd587b6acd9",
+      "bytes": 1836,
+      "size": [
+        128,
+        68
+      ],
+      "decoded_rgba_bytes": 34816
+    },
+    {
+      "path": "animation/objects/1221/3.png",
+      "sha256": "c47a67321a7b637809da47307247f3077dc4142687fef68d1ab31acd2e66e04c",
+      "bytes": 1845,
+      "size": [
+        128,
+        68
+      ],
+      "decoded_rgba_bytes": 34816
+    },
+    {
+      "path": "animation/objects/1221/light-1.png",
+      "sha256": "9c86401adadf6df9090c437d69a615a0e200391ca196fd68af912d9538a84100",
+      "bytes": 365,
+      "size": [
+        128,
+        68
+      ],
+      "decoded_rgba_bytes": 34816
+    },
+    {
+      "path": "animation/objects/1221/light-2.png",
+      "sha256": "9c9c2bf0fdd9e92343439a5d68079bb70a50ee425dddab357b28bb9247115eee",
+      "bytes": 360,
+      "size": [
+        128,
+        68
+      ],
+      "decoded_rgba_bytes": 34816
+    },
+    {
+      "path": "animation/objects/1221/light-3.png",
+      "sha256": "c1beb68ddaad859d12ffafceedb88ec3e5fd0d2674092eed7df879412df8f8d1",
+      "bytes": 358,
+      "size": [
+        128,
+        68
+      ],
+      "decoded_rgba_bytes": 34816
+    },
+    {
+      "path": "animation/objects/1222/1.png",
+      "sha256": "ad3ae2d083973c0aa0130196c874a60366d878768474179acb31d963437ce67e",
+      "bytes": 2166,
+      "size": [
+        128,
+        68
+      ],
+      "decoded_rgba_bytes": 34816
+    },
+    {
+      "path": "animation/objects/1222/2.png",
+      "sha256": "092955add6dc7e05574981f08ec9517f2ab989e2db081bc811f3b8af5a8791dd",
+      "bytes": 2165,
+      "size": [
+        128,
+        68
+      ],
+      "decoded_rgba_bytes": 34816
+    },
+    {
+      "path": "animation/objects/1222/3.png",
+      "sha256": "cdc624fe8f4b635124a9e2ecee0da66d76718a8446d57ca9c7509fb6a3f62b96",
+      "bytes": 2168,
+      "size": [
+        128,
+        68
+      ],
+      "decoded_rgba_bytes": 34816
+    },
+    {
+      "path": "animation/objects/1222/light-1.png",
+      "sha256": "2814845b3dae5f40903b136a42268ef81b357da5feb3d8cdea22f955913fd8b2",
+      "bytes": 344,
+      "size": [
+        128,
+        68
+      ],
+      "decoded_rgba_bytes": 34816
+    },
+    {
+      "path": "animation/objects/1222/light-2.png",
+      "sha256": "fa7a1eda299b991c55153652192390e2b693500e2c1cc06731c2a12770e538db",
+      "bytes": 347,
+      "size": [
+        128,
+        68
+      ],
+      "decoded_rgba_bytes": 34816
+    },
+    {
+      "path": "animation/objects/1222/light-3.png",
+      "sha256": "56a286dd617d1c2bd066a67a2690345b75f5d9299921897d9e4d15d5059438ed",
+      "bytes": 338,
+      "size": [
+        128,
+        68
+      ],
+      "decoded_rgba_bytes": 34816
+    },
+    {
+      "path": "animation/objects/1225/1.png",
+      "sha256": "fa4b86e4a74863e29d4c921f33d10701a51e125a7f1f98f394777ca941fb1b56",
+      "bytes": 11299,
+      "size": [
+        128,
+        252
+      ],
+      "decoded_rgba_bytes": 129024
+    },
+    {
+      "path": "animation/objects/1225/2.png",
+      "sha256": "ff69179535e2aa36d13002b4db24c61165144d37be0c8b4b1fa7cfab38f9c642",
+      "bytes": 11303,
+      "size": [
+        128,
+        252
+      ],
+      "decoded_rgba_bytes": 129024
+    },
+    {
+      "path": "animation/objects/1225/3.png",
+      "sha256": "3a3b5794977e4b88ec37e04af8a9bdc63da05e0b46a66a660bbae63509f49e58",
+      "bytes": 11304,
+      "size": [
+        128,
+        252
+      ],
+      "decoded_rgba_bytes": 129024
+    },
+    {
+      "path": "animation/objects/1225/light-1.png",
+      "sha256": "16cb74627e98eef31f3f86c53e359842d5d9a9ea712e4b7aef8ccfea313d5b3e",
+      "bytes": 768,
+      "size": [
+        128,
+        252
+      ],
+      "decoded_rgba_bytes": 129024
+    },
+    {
+      "path": "animation/objects/1225/light-2.png",
+      "sha256": "3a814f379b2b5da291e9ba6ebabaea58eb4e38fb32846723e99a1d68b5f27c71",
+      "bytes": 777,
+      "size": [
+        128,
+        252
+      ],
+      "decoded_rgba_bytes": 129024
+    },
+    {
+      "path": "animation/objects/1225/light-3.png",
+      "sha256": "46c0249c0e37de61737f6415dc6486843f9d9bfa8ab2daca9ea570b4a7ec73e2",
+      "bytes": 770,
+      "size": [
+        128,
+        252
+      ],
+      "decoded_rgba_bytes": 129024
+    },
+    {
+      "path": "animation/objects/1226/1.png",
+      "sha256": "5036677681d0f096c44205a9a84a0b66cf2205e5959497ede68e967277c36fee",
+      "bytes": 18768,
+      "size": [
+        128,
+        276
+      ],
+      "decoded_rgba_bytes": 141312
+    },
+    {
+      "path": "animation/objects/1226/2.png",
+      "sha256": "21e1ee2770d82f621e770580cfc4034133e1d38c3cb19351409e48dbf05e801a",
+      "bytes": 18783,
+      "size": [
+        128,
+        276
+      ],
+      "decoded_rgba_bytes": 141312
+    },
+    {
+      "path": "animation/objects/1226/3.png",
+      "sha256": "9f3bab99f20af5859f39d42deb2ca8c5577ac0d6a304024652e4506a8c2d7044",
+      "bytes": 18778,
+      "size": [
+        128,
+        276
+      ],
+      "decoded_rgba_bytes": 141312
+    },
+    {
+      "path": "animation/objects/1226/light-1.png",
+      "sha256": "8da6dca821122fcd1174873e2845e83258f0406797b5346ec3d040bc76a703d1",
+      "bytes": 669,
+      "size": [
+        128,
+        276
+      ],
+      "decoded_rgba_bytes": 141312
+    },
+    {
+      "path": "animation/objects/1226/light-2.png",
+      "sha256": "a7aad25f63cf65061d84a8ccba347b6010b43b23ddf2dbcfbff323898596e058",
+      "bytes": 678,
+      "size": [
+        128,
+        276
+      ],
+      "decoded_rgba_bytes": 141312
+    },
+    {
+      "path": "animation/objects/1226/light-3.png",
+      "sha256": "2d7c2f3ba20fdbe7c7914e0c657cd4a9e9b3edb7fcd6c4f3af38c5965ffa641b",
+      "bytes": 676,
+      "size": [
+        128,
+        276
+      ],
+      "decoded_rgba_bytes": 141312
+    },
+    {
+      "path": "animation/objects/1234/1.png",
+      "sha256": "ed009d5c55f70b5c246ff84ff9357063bef593bd37e562e5bf2f670bedc98f85",
+      "bytes": 7615,
+      "size": [
+        144,
+        92
+      ],
+      "decoded_rgba_bytes": 52992
+    },
+    {
+      "path": "animation/objects/1234/2.png",
+      "sha256": "76f873aabfb591d96e513a2a9f7d3d193fbd250677b4b60fcd679ef58870c427",
+      "bytes": 8595,
+      "size": [
+        144,
+        92
+      ],
+      "decoded_rgba_bytes": 52992
+    },
+    {
+      "path": "animation/objects/1234/3.png",
+      "sha256": "ba8dc395b026b3e45a6e541362067b37831619f54fc50bf0920f2cd50d8a661d",
+      "bytes": 8555,
+      "size": [
+        144,
+        92
+      ],
+      "decoded_rgba_bytes": 52992
+    },
+    {
+      "path": "animation/objects/1250/1.png",
+      "sha256": "65a9b4c28f5bbb178d1ac9e7d6beb88f99fb46da3c688715bc65138af2f0079d",
+      "bytes": 55974,
+      "size": [
+        384,
+        340
+      ],
+      "decoded_rgba_bytes": 522240
+    },
+    {
+      "path": "animation/objects/1250/2.png",
+      "sha256": "0a69a2a8a0fd8d9864defe3d8786758f709813f633425aae9a5700f3c679551f",
+      "bytes": 56165,
+      "size": [
+        384,
+        340
+      ],
+      "decoded_rgba_bytes": 522240
+    },
+    {
+      "path": "animation/objects/1250/3.png",
+      "sha256": "deb3752657a21d6c415793c93f22bf28dbcf6163a64c6f1211240909ff27ad1f",
+      "bytes": 56138,
+      "size": [
+        384,
+        340
+      ],
+      "decoded_rgba_bytes": 522240
+    },
+    {
+      "path": "animation/objects/1251/1.png",
+      "sha256": "e51b44c06c451e7f2ad098f57df0ae4a03fd1f471562a70823df6c957416bd57",
+      "bytes": 205834,
+      "size": [
+        512,
+        784
+      ],
+      "decoded_rgba_bytes": 1605632
+    },
+    {
+      "path": "animation/objects/1251/2.png",
+      "sha256": "6a075bbc865e0c7ca3707148d209f224e9fea5d3b24258b473f21c17ede46987",
+      "bytes": 205836,
+      "size": [
+        512,
+        784
+      ],
+      "decoded_rgba_bytes": 1605632
+    },
+    {
+      "path": "animation/objects/1251/3.png",
+      "sha256": "e8f189c12e8f5f374f587a7c51e11f17633235ea2eb11b58732f54fce2cf0ac6",
+      "bytes": 205833,
+      "size": [
+        512,
+        784
+      ],
+      "decoded_rgba_bytes": 1605632
+    },
+    {
+      "path": "animation/objects/1251/light-1.png",
+      "sha256": "bafd2eab0c54fbfca498752af2553dfa44bcb316cac7a24e1e13b4378fa6d3aa",
+      "bytes": 3913,
+      "size": [
+        512,
+        784
+      ],
+      "decoded_rgba_bytes": 1605632
+    },
+    {
+      "path": "animation/objects/1251/light-2.png",
+      "sha256": "a91e9dafb7462fbdd25d15b6150285bd209b88cd44e096aad243c93f78d595ad",
+      "bytes": 3923,
+      "size": [
+        512,
+        784
+      ],
+      "decoded_rgba_bytes": 1605632
+    },
+    {
+      "path": "animation/objects/1251/light-3.png",
+      "sha256": "50e7714c198f53740c902f8314d4c1650aa74c968a2ab74d1cfbd0f00935cb58",
+      "bytes": 3919,
+      "size": [
+        512,
+        784
+      ],
+      "decoded_rgba_bytes": 1605632
+    },
+    {
+      "path": "animation/objects/1252/1.png",
+      "sha256": "600118e884abba21068a839463584dbd5b83fdccf01b09d2f7c87973d83cf1a9",
+      "bytes": 234858,
+      "size": [
+        512,
+        728
+      ],
+      "decoded_rgba_bytes": 1490944
+    },
+    {
+      "path": "animation/objects/1252/2.png",
+      "sha256": "f4234e47279739dadf7b9cc789fd084b3359b584079227089ffea7add36f640b",
+      "bytes": 234860,
+      "size": [
+        512,
+        728
+      ],
+      "decoded_rgba_bytes": 1490944
+    },
+    {
+      "path": "animation/objects/1252/3.png",
+      "sha256": "40a5450810d22442da80fdf2e412d7be506656ba508c3ba192857abfbbc2a423",
+      "bytes": 234858,
+      "size": [
+        512,
+        728
+      ],
+      "decoded_rgba_bytes": 1490944
+    },
+    {
+      "path": "animation/objects/1252/light-1.png",
+      "sha256": "4a30a1300f6025f6d323e9e223f6d49dca4cf240c28cfc6306f4a9b5e06123b2",
+      "bytes": 3173,
+      "size": [
+        512,
+        728
+      ],
+      "decoded_rgba_bytes": 1490944
+    },
+    {
+      "path": "animation/objects/1252/light-2.png",
+      "sha256": "ff7ce1380c3ff53731048693afbed6a2585d459047ccf709a1c6ac30a18b5d9a",
+      "bytes": 3177,
+      "size": [
+        512,
+        728
+      ],
+      "decoded_rgba_bytes": 1490944
+    },
+    {
+      "path": "animation/objects/1252/light-3.png",
+      "sha256": "95214613fe2acb4b3466acc116b4df8f2766487aa24fcf4dac3329ee3af3c4dc",
+      "bytes": 3176,
+      "size": [
+        512,
+        728
+      ],
+      "decoded_rgba_bytes": 1490944
+    },
+    {
+      "path": "animation/objects/1253/1.png",
+      "sha256": "bbbfd8878a1898b9e453d37ca20a9af64de2b9dc138f437fa0f7063490299776",
+      "bytes": 178480,
+      "size": [
+        544,
+        968
+      ],
+      "decoded_rgba_bytes": 2106368
+    },
+    {
+      "path": "animation/objects/1253/2.png",
+      "sha256": "9083609e393f40bbb2bc637b1a1136a85ba28fc21dd94a7f43cdeec7896eb13d",
+      "bytes": 178482,
+      "size": [
+        544,
+        968
+      ],
+      "decoded_rgba_bytes": 2106368
+    },
+    {
+      "path": "animation/objects/1253/3.png",
+      "sha256": "20bd06b182dbb95d66bb2b536d81c51693b9646ce25749097db0758a5903ec5f",
+      "bytes": 178488,
+      "size": [
+        544,
+        968
+      ],
+      "decoded_rgba_bytes": 2106368
+    },
+    {
+      "path": "animation/objects/1253/light-1.png",
+      "sha256": "944ee38fa410f1f3ea6c6a8e07bd0058afd49a8a5acbd74272d275e7e0097922",
+      "bytes": 9378,
+      "size": [
+        544,
+        968
+      ],
+      "decoded_rgba_bytes": 2106368
+    },
+    {
+      "path": "animation/objects/1253/light-2.png",
+      "sha256": "caa6b0b78bfba1ae61ed85c8f86aa3059bcc1adb5c1a21e15d392946b2bb6a03",
+      "bytes": 9381,
+      "size": [
+        544,
+        968
+      ],
+      "decoded_rgba_bytes": 2106368
+    },
+    {
+      "path": "animation/objects/1253/light-3.png",
+      "sha256": "b7013b408784a033bbba4498cf5ce6a240cee0b00a25d52aaf3afbbbcab4629e",
+      "bytes": 9379,
+      "size": [
+        544,
+        968
+      ],
+      "decoded_rgba_bytes": 2106368
+    },
+    {
+      "path": "animation/objects/1254/1.png",
+      "sha256": "c1c000b83836507fbdd09b406e6cf82a49b628d547abda3bae05fb3fa2751342",
+      "bytes": 265503,
+      "size": [
+        528,
+        956
+      ],
+      "decoded_rgba_bytes": 2019072
+    },
+    {
+      "path": "animation/objects/1254/2.png",
+      "sha256": "815e5b2b54d8ec31694bb096d6463ecea6a5c3185bbe99e959114d1baadea874",
+      "bytes": 265503,
+      "size": [
+        528,
+        956
+      ],
+      "decoded_rgba_bytes": 2019072
+    },
+    {
+      "path": "animation/objects/1254/3.png",
+      "sha256": "47e73d7649db27fe597917037aa79f1cdbaaa6ea065454522c57cc8bf857a4f1",
+      "bytes": 265511,
+      "size": [
+        528,
+        956
+      ],
+      "decoded_rgba_bytes": 2019072
+    },
+    {
+      "path": "animation/objects/1254/light-1.png",
+      "sha256": "64f4f0a393cff251da76e977a90e065727704f12754b51ec8ffcae1023efe09f",
+      "bytes": 4536,
+      "size": [
+        528,
+        956
+      ],
+      "decoded_rgba_bytes": 2019072
+    },
+    {
+      "path": "animation/objects/1254/light-2.png",
+      "sha256": "c37e44143d13d05393b98215a577ea54a4d1f7b871a67f71d036ad50e8730064",
+      "bytes": 4551,
+      "size": [
+        528,
+        956
+      ],
+      "decoded_rgba_bytes": 2019072
+    },
+    {
+      "path": "animation/objects/1254/light-3.png",
+      "sha256": "3dda2e500dc7bd6c324ee2d5b97a44b68bc2a4c9e85c3d1a39530816220476bf",
+      "bytes": 4540,
+      "size": [
+        528,
+        956
+      ],
+      "decoded_rgba_bytes": 2019072
+    },
+    {
+      "path": "animation/objects/1255/1.png",
+      "sha256": "e23bf52b65c59ad73e9d276de5550bbe74fd8b9aecf70febec870703295ee291",
+      "bytes": 138386,
+      "size": [
+        512,
+        616
+      ],
+      "decoded_rgba_bytes": 1261568
+    },
+    {
+      "path": "animation/objects/1255/2.png",
+      "sha256": "67ade80df1aced4e07cb26674c00e090e574755a8bb6c14664c52d5851b8e099",
+      "bytes": 138418,
+      "size": [
+        512,
+        616
+      ],
+      "decoded_rgba_bytes": 1261568
+    },
+    {
+      "path": "animation/objects/1255/3.png",
+      "sha256": "630f19169054614be0e078a780bffe6e135d2977fc6fdacc8f29f202b19b60b9",
+      "bytes": 138391,
+      "size": [
+        512,
+        616
+      ],
+      "decoded_rgba_bytes": 1261568
+    },
+    {
+      "path": "animation/objects/1255/light-1.png",
+      "sha256": "53069b4e3de5024e6703addcc39502da701aac45103e783edbc2fdaaa561c780",
+      "bytes": 4370,
+      "size": [
+        512,
+        616
+      ],
+      "decoded_rgba_bytes": 1261568
+    },
+    {
+      "path": "animation/objects/1255/light-2.png",
+      "sha256": "4728cf9dc248c1f9c8dda81b3f1d33a644a123c2daab550dcee7a4dd5419b9bb",
+      "bytes": 4393,
+      "size": [
+        512,
+        616
+      ],
+      "decoded_rgba_bytes": 1261568
+    },
+    {
+      "path": "animation/objects/1255/light-3.png",
+      "sha256": "dbd790ba62d41a2a63aa69ab2964d7aa97891ae45d0f8d20d9ac4f41298d39a4",
+      "bytes": 4378,
+      "size": [
+        512,
+        616
+      ],
+      "decoded_rgba_bytes": 1261568
+    },
+    {
+      "path": "animation/objects/1364/1.png",
+      "sha256": "794b563e29a5bf33a317c51e5a25463b9828ea49586dfd2dafd72a134a6f9d17",
+      "bytes": 6930,
+      "size": [
+        128,
+        80
+      ],
+      "decoded_rgba_bytes": 40960
+    },
+    {
+      "path": "animation/objects/1364/2.png",
+      "sha256": "efa8741251b832cbf7e1fb27c88df3ff26b946d4220f5897f710f1b072ec7d1b",
+      "bytes": 7002,
+      "size": [
+        128,
+        80
+      ],
+      "decoded_rgba_bytes": 40960
+    },
+    {
+      "path": "animation/objects/1364/3.png",
+      "sha256": "4d2c1ea80aa0187656457ae9a522283131a02c98c61f88cda3439b2248fc9c80",
+      "bytes": 6955,
+      "size": [
+        128,
+        80
+      ],
+      "decoded_rgba_bytes": 40960
+    },
+    {
+      "path": "animation/objects/1365/1.png",
+      "sha256": "39cf242ad224279bd2623378d26cb7298e9a8bd77d46261308cba212b80f74ea",
+      "bytes": 8159,
+      "size": [
+        128,
+        52
+      ],
+      "decoded_rgba_bytes": 26624
+    },
+    {
+      "path": "animation/objects/1365/2.png",
+      "sha256": "078e55cc0729c3e1cc02dbb87b4ec2a6d742746abce3863402e191ef6440eb4a",
+      "bytes": 8258,
+      "size": [
+        128,
+        52
+      ],
+      "decoded_rgba_bytes": 26624
+    },
+    {
+      "path": "animation/objects/1365/3.png",
+      "sha256": "7311a6b9d03b5d28f1ab2bf50a2530d8913bc50dee5ce28ec07a291a5f98c04e",
+      "bytes": 8152,
+      "size": [
+        128,
+        52
+      ],
+      "decoded_rgba_bytes": 26624
+    },
+    {
+      "path": "animation/objects/1366/1.png",
+      "sha256": "639230b0f84217edfcc0f778da786d6b38f11e8a958997de46d5c5c150f45c3b",
+      "bytes": 9665,
+      "size": [
+        128,
+        48
+      ],
+      "decoded_rgba_bytes": 24576
+    },
+    {
+      "path": "animation/objects/1366/2.png",
+      "sha256": "db0967c5cffc89fe34d9c41660a4040a7ac66ca79c789def0697cd55fe4c3d64",
+      "bytes": 9832,
+      "size": [
+        128,
+        48
+      ],
+      "decoded_rgba_bytes": 24576
+    },
+    {
+      "path": "animation/objects/1366/3.png",
+      "sha256": "db75e97815d973253f2570d188f9af03263f29a54799a8b436a4c9b71eb608d7",
+      "bytes": 9723,
+      "size": [
+        128,
+        48
+      ],
+      "decoded_rgba_bytes": 24576
+    },
+    {
+      "path": "animation/objects/1367/1.png",
+      "sha256": "3eeb9c5893fa16aff06fedde1e54fe1be360ea50a1d3b5af5d78fb021b0b13dc",
+      "bytes": 10095,
+      "size": [
+        128,
+        68
+      ],
+      "decoded_rgba_bytes": 34816
+    },
+    {
+      "path": "animation/objects/1367/2.png",
+      "sha256": "db47186a5390671d63918400c53abb3b05da5bf3e9c208e4bd7efd1e212606c5",
+      "bytes": 10141,
+      "size": [
+        128,
+        68
+      ],
+      "decoded_rgba_bytes": 34816
+    },
+    {
+      "path": "animation/objects/1367/3.png",
+      "sha256": "97d0446f85aecaf1f3bcd464853d152b5c763575147bfb4b8701ba4cd325cf0b",
+      "bytes": 10016,
+      "size": [
+        128,
+        68
+      ],
+      "decoded_rgba_bytes": 34816
+    },
+    {
+      "path": "animation/objects/1368/1.png",
+      "sha256": "51b5db09344502b5247800c2fc6838206a467ce3df74ea6eda887d450e90464b",
+      "bytes": 12826,
+      "size": [
+        128,
+        84
+      ],
+      "decoded_rgba_bytes": 43008
+    },
+    {
+      "path": "animation/objects/1368/2.png",
+      "sha256": "b5cac8f88f57481d8314225f3565920e74334e65926c985a84a4b0f2973fb11d",
+      "bytes": 12978,
+      "size": [
+        128,
+        84
+      ],
+      "decoded_rgba_bytes": 43008
+    },
+    {
+      "path": "animation/objects/1368/3.png",
+      "sha256": "ce9f88fc1d61befc8f67426a1f6d818f705e41b79a83a0adbf96b5619fac8d43",
+      "bytes": 12908,
+      "size": [
+        128,
+        84
+      ],
+      "decoded_rgba_bytes": 43008
     },
     {
       "path": "animation/traffic/1400-0.png",
@@ -22696,13 +25037,13 @@
     },
     {
       "path": "lightmaps/1160.png",
-      "sha256": "93c3c2b6ce1cf50d05a5918f2735a9a78874d51522404ea827856406fb36667b",
-      "bytes": 1363,
+      "sha256": "890ae6e52a264bc8b00909282ea41a576d6cc4d34d0980fc723f92b55f27095d",
+      "bytes": 1375,
       "size": [
         256,
-        196
+        228
       ],
-      "decoded_rgba_bytes": 200704
+      "decoded_rgba_bytes": 233472
     },
     {
       "path": "lightmaps/1161.png",
@@ -22716,43 +25057,43 @@
     },
     {
       "path": "lightmaps/1162.png",
-      "sha256": "2039b264babcfa554abe85f1bd4d4c1437a614d7cb65474262e902688d1a0225",
-      "bytes": 1100,
+      "sha256": "e45d30670803f11ade3db81c6744b935d2ab43740df7538094f7987900d8b591",
+      "bytes": 1108,
       "size": [
         256,
-        228
+        260
       ],
-      "decoded_rgba_bytes": 233472
+      "decoded_rgba_bytes": 266240
     },
     {
       "path": "lightmaps/1163.png",
-      "sha256": "9d9e293ca8c17b25218e68c23e6ca95819bdde92557e9961d9cb66581a17f2ba",
-      "bytes": 1184,
+      "sha256": "6fe8161ed8f05e1c94072a966a01f9d11b0012e085c8ea9efe5119a02f304950",
+      "bytes": 1191,
       "size": [
         256,
-        256
+        288
       ],
-      "decoded_rgba_bytes": 262144
+      "decoded_rgba_bytes": 294912
     },
     {
       "path": "lightmaps/1164.png",
-      "sha256": "7d2520780b62f8e44fc2b8e1c1475467d6d2b495e76476a3c1e814a0cbf15301",
-      "bytes": 1334,
+      "sha256": "581d18c1d8108add0cfe4c7096e71ab147ba7ab5077b4c19b080638055b1abbb",
+      "bytes": 1342,
       "size": [
         256,
-        324
+        356
       ],
-      "decoded_rgba_bytes": 331776
+      "decoded_rgba_bytes": 364544
     },
     {
       "path": "lightmaps/1165.png",
-      "sha256": "f8aeba906b65dd120e29cd432a8f1cedce8637f9bcb0666c62a6cdf1bdda9753",
-      "bytes": 1107,
+      "sha256": "1fc9b271287a93abc0014839ef0551a17937b864ebc759fbf17e2023c945d2b7",
+      "bytes": 1115,
       "size": [
         256,
-        264
+        296
       ],
-      "decoded_rgba_bytes": 270336
+      "decoded_rgba_bytes": 303104
     },
     {
       "path": "lightmaps/1174.png",
@@ -22906,13 +25247,13 @@
     },
     {
       "path": "lightmaps/1189.png",
-      "sha256": "a94506c00fdbe46c736864d6f830f7bf12f5ba92ed696166dee1179788255a2f",
-      "bytes": 2222,
+      "sha256": "d41370eda7dcd98f6e9a85b3a70f2a2f534a7e170df0d19b84b43dc9d3612a81",
+      "bytes": 2244,
       "size": [
         384,
-        392
+        424
       ],
-      "decoded_rgba_bytes": 602112
+      "decoded_rgba_bytes": 651264
     },
     {
       "path": "lightmaps/1190.png",
@@ -22926,13 +25267,13 @@
     },
     {
       "path": "lightmaps/1191.png",
-      "sha256": "1219312160abd09eea0aa3e3f54ac7141ff31e71b3f1ef1b479e146620f0108f",
-      "bytes": 1353,
+      "sha256": "869266e341b3f4143644b042e7dd0990540fff36adec5789da2ad74647d275c2",
+      "bytes": 1345,
       "size": [
         384,
-        316
+        348
       ],
-      "decoded_rgba_bytes": 485376
+      "decoded_rgba_bytes": 534528
     },
     {
       "path": "lightmaps/1192.png",
@@ -22956,23 +25297,23 @@
     },
     {
       "path": "lightmaps/1201.png",
-      "sha256": "dc2c0245117716007d8775107ca85af33a092c7b199002ff7d9050e58ee02a56",
-      "bytes": 1514,
+      "sha256": "285fc947d23e49999aaa3752ece39a608752a35b9419eefdfe4bffe9d82df67b",
+      "bytes": 1530,
       "size": [
         512,
-        344
+        376
       ],
-      "decoded_rgba_bytes": 704512
+      "decoded_rgba_bytes": 770048
     },
     {
       "path": "lightmaps/1202.png",
-      "sha256": "88a58a6bd0a0cac78d876a1f9e25e645a963c199324340ec4eea92e06f0dbaf6",
-      "bytes": 1897,
+      "sha256": "efb533b77c0a11759ebcb5f11444bdadbcedcee449b86d51f00fbe64ece42a5c",
+      "bytes": 1912,
       "size": [
         528,
-        460
+        492
       ],
-      "decoded_rgba_bytes": 971520
+      "decoded_rgba_bytes": 1039104
     },
     {
       "path": "lightmaps/1203.png",
@@ -23016,13 +25357,13 @@
     },
     {
       "path": "lightmaps/1207.png",
-      "sha256": "f486bbc5d8c3b271bb158a4c9aab042113a83d5ad4dee88574dd74741cb216da",
-      "bytes": 1659,
+      "sha256": "b95c6e8caf11d56d9abd25fc07aa5e079a07f850d5d72f39a52d2652a982a1eb",
+      "bytes": 1676,
       "size": [
         512,
-        440
+        472
       ],
-      "decoded_rgba_bytes": 901120
+      "decoded_rgba_bytes": 966656
     },
     {
       "path": "lightmaps/1208.png",
@@ -23136,8 +25477,8 @@
     },
     {
       "path": "lightmaps/1220.png",
-      "sha256": "64431dbba2420f38e6d399be38e954dcc1ab2a85f9fd607088409b6cbd79ab0f",
-      "bytes": 883,
+      "sha256": "e4b4af8c25786a4d4a2e954ad5c5fb30feb40d38e8c839fad7784e1113d7bc60",
+      "bytes": 903,
       "size": [
         128,
         92
@@ -23325,6 +25666,16 @@
       "decoded_rgba_bytes": 233472
     },
     {
+      "path": "lightmaps/1242.png",
+      "sha256": "d4a6a3a74934566deea39bdeb180acdfaf9c0997b68dbefb94d3a134e368a481",
+      "bytes": 972,
+      "size": [
+        288,
+        180
+      ],
+      "decoded_rgba_bytes": 207360
+    },
+    {
       "path": "lightmaps/1243.png",
       "sha256": "882636f5d4165853ac920e9aefd40e29df00b3de286e600d7fd42420b15d182a",
       "bytes": 1043,
@@ -23396,18 +25747,18 @@
     },
     {
       "path": "lightmaps/1250.png",
-      "sha256": "a58d994a73b32ff8fc9f8e33978d1498a96055951e414f22afbe40e528acd2f9",
-      "bytes": 1221,
+      "sha256": "5e9be6650967acc6cd3d7974210dcc2857c2511bd23338df7b6a3be36df5afea",
+      "bytes": 1230,
       "size": [
         384,
-        308
+        340
       ],
-      "decoded_rgba_bytes": 473088
+      "decoded_rgba_bytes": 522240
     },
     {
       "path": "lightmaps/1251.png",
-      "sha256": "f0579a3bab46f906ef86c8f8e0ec99884c78087c36035c6c15ce74bf472fa8fe",
-      "bytes": 2054,
+      "sha256": "73a0a24a922ebe348bec61e93c30a54b53db1725343dd1c53c36e8113581e6f0",
+      "bytes": 2187,
       "size": [
         512,
         784
@@ -23416,8 +25767,8 @@
     },
     {
       "path": "lightmaps/1252.png",
-      "sha256": "171b708d61666f7259e52148044ec61a767673d1a01279c8fc63e946c5fa33c0",
-      "bytes": 1754,
+      "sha256": "1c07f0cf5660392ba309657695656dbc536384872ef156b1faa33b011f1bb99a",
+      "bytes": 1794,
       "size": [
         512,
         728
@@ -23426,8 +25777,8 @@
     },
     {
       "path": "lightmaps/1253.png",
-      "sha256": "ea00e6973eda2943b43b9c795bb5d65795672ffb7bd314b72b2e32d0822d6a43",
-      "bytes": 4233,
+      "sha256": "2db4cca06e97db9d7e4105b2c92fb2a90698baaf3eec0b47d19bc406a8023df5",
+      "bytes": 4264,
       "size": [
         544,
         968
@@ -23436,8 +25787,8 @@
     },
     {
       "path": "lightmaps/1254.png",
-      "sha256": "12b50e6414b866bfa608867d4dad82425d13c5b1ceb54f6b0339621a9b406aed",
-      "bytes": 2291,
+      "sha256": "20fd50aa1f219d33fdb090c4c892bc1cb1ed4b485be7ae08e586924aaa7fd180",
+      "bytes": 2372,
       "size": [
         528,
         956
@@ -23446,8 +25797,8 @@
     },
     {
       "path": "lightmaps/1255.png",
-      "sha256": "3fb59ef7d92faad46bb4cd9d617f9e6f9032c336fca4e657a168d89ef2b6386f",
-      "bytes": 2390,
+      "sha256": "178d8a743468bab1aaa2910be6bbbd174ebd4f1eeccd1585a4a4a5422e3296c9",
+      "bytes": 2534,
       "size": [
         512,
         616
@@ -23503,6 +25854,56 @@
         124
       ],
       "decoded_rgba_bytes": 126976
+    },
+    {
+      "path": "lightmaps/1364.png",
+      "sha256": "39da1443ba74cf45c1dd7c71b534417c3c9c27433e88915d95916e5f4a9f1af9",
+      "bytes": 916,
+      "size": [
+        128,
+        80
+      ],
+      "decoded_rgba_bytes": 40960
+    },
+    {
+      "path": "lightmaps/1365.png",
+      "sha256": "64e6931ecafa87115ef9dfadce94809232ee1d8097554a8a1113456cd92150de",
+      "bytes": 912,
+      "size": [
+        128,
+        52
+      ],
+      "decoded_rgba_bytes": 26624
+    },
+    {
+      "path": "lightmaps/1366.png",
+      "sha256": "ec924a980f7e38b6e58043587a3333c9c08ff0031ad4214eb35b90eb120a014f",
+      "bytes": 919,
+      "size": [
+        128,
+        48
+      ],
+      "decoded_rgba_bytes": 24576
+    },
+    {
+      "path": "lightmaps/1367.png",
+      "sha256": "b6b881adbfa1f631f45ac96f32b076325debe231574f22fca225878ca34e9fab",
+      "bytes": 914,
+      "size": [
+        128,
+        68
+      ],
+      "decoded_rgba_bytes": 34816
+    },
+    {
+      "path": "lightmaps/1368.png",
+      "sha256": "5a50389ac43c26e6a86c1c877a4f092f92761a1d99348a8b5c3e7c57bb05b5d4",
+      "bytes": 914,
+      "size": [
+        128,
+        84
+      ],
+      "decoded_rgba_bytes": 43008
     },
     {
       "path": "lightmaps/1369.png",
@@ -23593,6 +25994,16 @@
         132
       ],
       "decoded_rgba_bytes": 67584
+    },
+    {
+      "path": "lightmaps/1378.png",
+      "sha256": "132a4781af19b4912d9ccc1ec14350b5fd1586fc71e0696daad1d6517524f45f",
+      "bytes": 967,
+      "size": [
+        128,
+        112
+      ],
+      "decoded_rgba_bytes": 57344
     },
     {
       "path": "lightmaps/1385.png",
@@ -24213,6 +26624,16 @@
         360
       ],
       "decoded_rgba_bytes": 368640
+    },
+    {
+      "path": "lightmaps/1495.png",
+      "sha256": "731a38286e0fccf9397a8e1b05883adca5247e22c22d5d97f563cb3f9796263b",
+      "bytes": 910,
+      "size": [
+        128,
+        60
+      ],
+      "decoded_rgba_bytes": 30720
     },
     {
       "path": "lightmaps/monster-beam/1385-0.png",
@@ -29886,13 +32307,13 @@
     },
     {
       "path": "masters/1160.png",
-      "sha256": "7a80ae59c87b093f75bd8caebeda656edf7dc54cc2371606c940ef91661475f0",
-      "bytes": 17398,
+      "sha256": "95ae9db4f95784d7dee8189f837111f132b44726d599bc4f011124476cf12afb",
+      "bytes": 17456,
       "size": [
         256,
-        196
+        228
       ],
-      "decoded_rgba_bytes": 200704
+      "decoded_rgba_bytes": 233472
     },
     {
       "path": "masters/1161.png",
@@ -29906,43 +32327,43 @@
     },
     {
       "path": "masters/1162.png",
-      "sha256": "3422c74be151e6b130d7821bc581e6bcaf04f7f4cc32bf2206912aab5ba7bbed",
-      "bytes": 13907,
+      "sha256": "ca573b4796ef4aea4cc2e36572191ba153428c04c677ab00d626601de347030d",
+      "bytes": 13961,
       "size": [
         256,
-        228
+        260
       ],
-      "decoded_rgba_bytes": 233472
+      "decoded_rgba_bytes": 266240
     },
     {
       "path": "masters/1163.png",
-      "sha256": "f9f36492cd53c125e37606b6acba6f569fd7a832b2ca66013a88c60657fbffc1",
-      "bytes": 22691,
+      "sha256": "c46097c5da07970b700c3d7775aceb541064f04478886f515fe8fd88936f1adb",
+      "bytes": 22747,
       "size": [
         256,
-        256
+        288
       ],
-      "decoded_rgba_bytes": 262144
+      "decoded_rgba_bytes": 294912
     },
     {
       "path": "masters/1164.png",
-      "sha256": "904482fd1e96fbcdb0c2c06550f5bdf4813e796b849638b3faf5df9121b16c8a",
-      "bytes": 30957,
+      "sha256": "e2c71353299749fcb7ea8982ce2b1a6f427f5fc16b4f3d4925bb7338d7c357e9",
+      "bytes": 31019,
       "size": [
         256,
-        324
+        356
       ],
-      "decoded_rgba_bytes": 331776
+      "decoded_rgba_bytes": 364544
     },
     {
       "path": "masters/1165.png",
-      "sha256": "3a66677c2c99ce3d86f20a3d53b02b37d6dc9254f094cd9ec2ec978d0df40f71",
-      "bytes": 18479,
+      "sha256": "913384516ac0792efb6270faf619f5891a9c451cb57824ef135b41ef4ae68593",
+      "bytes": 18530,
       "size": [
         256,
-        264
+        296
       ],
-      "decoded_rgba_bytes": 270336
+      "decoded_rgba_bytes": 303104
     },
     {
       "path": "masters/1166.png",
@@ -30176,13 +32597,13 @@
     },
     {
       "path": "masters/1189.png",
-      "sha256": "9eb045a8585bd1043bef3ad0b2a5a7e63d2778efb3e202695fc8530b37483af5",
-      "bytes": 43959,
+      "sha256": "32ed83868afd09b312d3adada3d6ac3b7fbd952a4bba0d88a8770a33a0f762ff",
+      "bytes": 44046,
       "size": [
         384,
-        392
+        424
       ],
-      "decoded_rgba_bytes": 602112
+      "decoded_rgba_bytes": 651264
     },
     {
       "path": "masters/1190.png",
@@ -30196,13 +32617,13 @@
     },
     {
       "path": "masters/1191.png",
-      "sha256": "5185dfc95f498bf187264f6a04f26c0b7520ff2d714044ac3a9452d47fe2d3d0",
-      "bytes": 40976,
+      "sha256": "5574932028d5fd1c4759dffcaa28d5d07cfc37a85edbf800f907cad25333fe59",
+      "bytes": 41045,
       "size": [
         384,
-        316
+        348
       ],
-      "decoded_rgba_bytes": 485376
+      "decoded_rgba_bytes": 534528
     },
     {
       "path": "masters/1192.png",
@@ -30286,33 +32707,33 @@
     },
     {
       "path": "masters/1200.png",
-      "sha256": "56a8d6ab5c273a93130e11cf79ace6b3e90ea98cc1051a84ec3c8aed8b8280f9",
-      "bytes": 4519,
+      "sha256": "b2ff3e37501910ba6d1667388c1169b4e66453565b4be1ef38bee8124fd47158",
+      "bytes": 4601,
       "size": [
-        144,
-        224
+        208,
+        256
       ],
-      "decoded_rgba_bytes": 129024
+      "decoded_rgba_bytes": 212992
     },
     {
       "path": "masters/1201.png",
-      "sha256": "2a2adf565224dfaa361a91d46251b3e5531af375be29188878214a04c6b920bd",
-      "bytes": 43482,
+      "sha256": "be214c89b80de881e1776ae33f285027f553a5dd5f4869c8c9ce928258324248",
+      "bytes": 43590,
       "size": [
         512,
-        344
+        376
       ],
-      "decoded_rgba_bytes": 704512
+      "decoded_rgba_bytes": 770048
     },
     {
       "path": "masters/1202.png",
-      "sha256": "0cc9f3eaf59e1e4a809cae49d6326f3149e98bd7000e11b9a1063aad93007620",
-      "bytes": 46330,
+      "sha256": "efe69f51f229444b071e0e7edbf9bd186e16b50fdecb3e7e1a04d2a39cb064ae",
+      "bytes": 46426,
       "size": [
         528,
-        460
+        492
       ],
-      "decoded_rgba_bytes": 971520
+      "decoded_rgba_bytes": 1039104
     },
     {
       "path": "masters/1203.png",
@@ -30356,13 +32777,13 @@
     },
     {
       "path": "masters/1207.png",
-      "sha256": "33e904ba4dbf7c4c8ee9c03800d4a22771aaf09165d9923c39632555916d2b02",
-      "bytes": 43842,
+      "sha256": "bf95e6269672130d67e760568293a1bcadc7b6c61009bafd1ee6499cce311ab4",
+      "bytes": 43936,
       "size": [
         512,
-        440
+        472
       ],
-      "decoded_rgba_bytes": 901120
+      "decoded_rgba_bytes": 966656
     },
     {
       "path": "masters/1208.png",
@@ -30786,13 +33207,13 @@
     },
     {
       "path": "masters/1250.png",
-      "sha256": "daa67c16e490e0a51b8013189a8fe8ede1cfe8ff6c37611b6da825fb5a581e62",
-      "bytes": 24725,
+      "sha256": "e1bdb2fa3e11d11901ec9786c6150de026532ec499a337ac0391e7fac700cda2",
+      "bytes": 24794,
       "size": [
         384,
-        308
+        340
       ],
-      "decoded_rgba_bytes": 473088
+      "decoded_rgba_bytes": 522240
     },
     {
       "path": "masters/1251.png",
@@ -45410,8 +47831,8 @@
       "sha256": "3eb39143097f7b7c223cb59fc293c0aac8f643cb686a963664f1c20aaec52b1a"
     }
   },
-  "raster_count": 2622,
-  "compressed_raster_bytes": 11923417,
+  "raster_count": 2780,
+  "compressed_raster_bytes": 19282055,
   "unselected_retained_development_files": [
     "lightmaps/model-1188.png",
     "lightmaps/model-1192.png",
@@ -45419,7 +47840,7 @@
     "masters/model-1192.png"
   ],
   "delivery_rule": "Only manifest-referenced PNGs; rejected model1188/1192 development files are excluded.",
-  "all_rasters_as_rgba_bytes": 309489216,
+  "all_rasters_as_rgba_bytes": 399982144,
   "memory_limit": "The decoded sum is a file inventory, not measured process or GPU residency; aliases and atlases change residency.",
   "private_reference_files_in_pack": false,
   "publication_ready": false,
@@ -45467,5 +47888,13 @@
     "editable_sources": "D:\\OpenSC2K\\Codex\\work\\palette-swaps",
     "pixel_exact": true,
     "clouds": "Shared built-in Visual Enhancements atlases, same as SC2K"
+  },
+  "object_animation_review": {
+    "receipt": "graphics/animation-review.json",
+    "sha256": "3d2138c821539ec16c6d39c8f7f66a6896e1447aa3fe716c6c580623878b5d8b",
+    "objects": 34,
+    "source_frames_per_object": 4,
+    "editable_sources": "D:/OpenSC2K/Codex/work/object-animation-frames",
+    "method": "Explicitly authorized scripted detail animation; existing RS architecture and accepted placement preserved; synchronized lightmaps."
   }
 }
