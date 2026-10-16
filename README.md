@@ -1,40 +1,63 @@
 # Reticulating Splines
 
-Reticulating Splines is a community remaster of
-[OpenSC2K](https://github.com/nicholas-ochoa/OpenSC2K), the open-source remake of
-SimCity 2000 built with Godot. This fork combines Visual Enhancements, replacement
-graphics and audio packs, Quality of Life improvements, centralized localization
-and playable Koop/Competitive Shared/Competitive Region multiplayer on the
-upstream 0.3.0 base.
-Visual effects preserve simulation rules; multiplayer adds shared control and
-municipal ownership/account rules. See [the multiplayer guide](docs/multiplayer.md).
+**SimCity 2000, reimagined. Rediscover the city you remember—with new possibilities.**
+
+[Website](https://rs.realm667.com/) · [Gallery](https://rs.realm667.com/#screenshots) · [FAQ](https://rs.realm667.com/#faq) · [Support the project](https://rs.realm667.com/#support)
+
+Reticulating Splines is an enhanced fork of
+[OpenSC2K](https://github.com/nicholas-ochoa/OpenSC2K), Nicholas Ochoa's independently
+written, open-source reimplementation of SimCity 2000 using Rust and Godot.
+Enjoy familiar graphics, music and sounds with new lighting, weather, modern
+tools and experimental multiplayer in an OpenSC2K-based engine.
+
+- **Bring your original game.** Import assets from your own supported SimCity 2000
+  copy and use them with the project's enhancements. Original game files are not included.
+- **No original copy? No problem.** Optional Reticulating Splines graphics, music
+  and sound packs provide an alternative without original assets or previous
+  SimCity experience. Both approaches use the same engine and feature set.
+- **Prefer the classic presentation?** Leave optional visual enhancements and
+  mods off, and play with your imported original artwork and audio. Enable the
+  additions you want when you are ready.
+
+Visual enhancements change presentation without changing the underlying
+single-player simulation rules. Multiplayer adds its own shared-control,
+ownership and municipal-account rules. Reticulating Splines does not patch or
+run the original SimCity 2000 executable.
+
+**Development status:** the project is in development; multiplayer is experimental.
+The OpenSC2K base supports Windows, macOS and Linux. Reticulating Splines downloads,
+confirmed requirements and installation instructions will be announced with its
+release. For now, see [building from source](#run-reticulating-splines).
 
 The default branch, **`reticulating-splines`**, is the shared development source.
-Upstream changes are reviewed manually from `upstream/main` before integration here.
-The retained `main` and older feature branches are historical references.
-The OpenSC2K project identity and existing user profiles remain compatible;
-Windows exports use **`ReticulatingSplines.exe`**.
+Upstream changes are reviewed manually before integration. The retained `main`
+and older feature branches are historical references. Existing OpenSC2K user
+profiles remain compatible; Windows exports use **`ReticulatingSplines.exe`**.
 
 ## Included features
 
-Settings > General > Language adds German, Spanish, Italian, French and Brazilian
-Portuguese for the base-game interface and original-game text. See the
-[translation sources and coverage](docs/localization-sources.md). Visual and Multiplayer messages are translated in every supported locale, including
-Korean. All translations share [one workspace and workflow](game/assets/localization/README.md).
-The remaining 328 legacy Korean base-UI gaps are listed in the shared template.
+| Area | What you can explore |
+| --- | --- |
+| Building & planning | Eleven map sizes from 16 to 4096 tiles per side, including classic 128 × 128 cities; configurable terrain, per-tile data maps, service coverage, transport overlays and additional zoom levels. Large maps need more memory and preparation time. |
+| Light, weather & life | Day/night cycles, illuminated windows and streets, rain, snow, storms, clouds, fog, seasons, reflective water, waves, forests, decorative traffic and pedestrians. |
+| Multiplayer | Two to eight players over LAN or direct IP, with Co-op, Competitive Shared and Competitive Region modes. |
+| Everyday comfort | Middle-click tool picking, remembered window positions, compact tool flyouts and light/dark interface themes. |
+| Music & sound | Imported original audio, optional replacement packs or your own MP3 folders, with favorites and playback-queue controls in the music box. |
+| Artwork & modding | Original or replacement artwork, separately selectable asset packs and JavaScript mods with game events, an API and a developer console. |
+| Languages | English, German, Spanish, French, Italian, Brazilian Portuguese and Korean; Korean coverage is still being expanded. |
+| Classic presentation | Optional visual effects and mods can remain off while you enjoy the original artwork and soundtrack. |
 
-The [package library](docs/package-library.md) provides separate graphics, sound,
-music, brightmap, HD sprite, city and mod sources, including the Reticulating
-Splines replacement graphics and audio. Original assets can be imported without
-activation, or imported and activated, through the same first-start and Data menu
-dialog. Failed source changes retain the previous source.
+The [package library](docs/package-library.md) manages separate graphics, sound,
+music, brightmap, HD sprite, city and mod sources. Original assets can be imported
+without activation, or imported and activated. Failed source changes retain the
+previous source. See [quality-of-life improvements](docs/quality-of-life.md),
+[scripting](docs/scripting.md) and [mods](docs/mods.md) for details.
 
-[Quality of Life improvements](docs/quality-of-life.md) include compact sidebar
-tool flyouts, middle-button tool picking, remembered window positions and a music
-box with selectable packs and personal music folders. City selection and loading
-show bounded previews; manual single-player saves retain a verified `.bak`
-predecessor. Long tooltips wrap to a readable width. Large terrain previews run
-in the background with progress feedback.
+City selection and loading show bounded previews; manual single-player saves
+retain a verified `.bak` predecessor. Long tooltips wrap to a readable width.
+Large terrain previews run in the background with progress feedback.
+
+### Visual enhancement controls
 
 Open **Settings > Visual Enhancements**. The settings are grouped as follows:
 
@@ -115,38 +138,76 @@ The underlying upstream SC2/SC2X compatibility rules still apply.
 
 ## Multiplayer
 
-Playable Co-op and Competitive Shared are available from the main menu. See the
-[updated multiplayer guide](docs/multiplayer.md) for setup, normal city saves, land
-ownership, chat, scoreboard and disaster assistance. Region supports independent cities, spectating and disaster assistance.
+Experimental multiplayer supports **two to eight players over LAN or direct IP**.
+All participants need the same network build.
 
-## German Translation
+| Mode | How you play |
+| --- | --- |
+| Co-op | Build one city together with a shared treasury and shared decisions. |
+| Competitive Shared | Develop separate territories, budgets and services on the same map. |
+| Competitive Region | Run separate cities and make read-only visits to your neighbors. |
 
-- German menus, settings, tool names, tooltips, city dialogs, budget labels,
-  ordinances and month names.
-- German newspaper templates, original text resources, matched scenario
-  briefings and library text, available from the bundled text catalogs.
-- Terminology and wording from the original German SimCity 2000 and SCURK
-  editions. New OpenSC2K functions use German translations where the original
-  has no corresponding text.
-- Toolbar sizing that accommodates long translated names and the original
-  artwork, plus localized formatted labels and dialog updates.
+Competitive Shared includes land offers, counteroffers and player loans.
+Competitions can be open-ended or use population or net-wealth targets with a
+required time in the lead. In-game chat, named player cursors, standings and
+rematches help you coordinate or compete. Save a match, reconnect, or open a
+supported multiplayer save as a single-player copy.
 
-The central [de.po](game/assets/localization/de.po) catalog includes both the
-interface and original-game text.
-Historical spelling and original newspaper price labels are retained. Displayed
-Pf/DM labels are text; they do not change the city's economy or numeric values.
+See the [multiplayer guide](docs/multiplayer.md) for setup, mode-specific rules,
+save behavior and current limitations.
 
-## Enable German
+## Localization & languages
 
-1. Open **Settings > General > Language**.
-2. Select **Deutsch**. In German, the path is **Einstellungen > Allgemein > Sprache**.
-3. Open the city, newspaper or dialog you want to use. The language preference is
-   local to your installation; cities do not need conversion.
+Choose **Settings > General > Language** to select English, German, Spanish,
+French, Italian, Brazilian Portuguese or Korean. Language selection does not
+require a separate language-specific asset pack or conversion of your cities.
+User-written city names and signs remain as entered.
 
-The bundled German text does **not** require a separate German graphics or data
-pack. Original artwork, sound and music require an import of the supported game;
-replacement packs are separate sources. User-written city names and signs remain
-as entered.
+Where available, wording from original localized SimCity 2000 editions preserves
+familiar terminology, adviser messages, newspaper text and scenario descriptions.
+AI-assisted supplementary translations cover new features and missing text,
+including visual enhancements, multiplayer and quality-of-life additions.
+Korean still has legacy base-game gaps; coverage does not imply complete
+native-speaker editorial review.
+
+See [translation sources and coverage](docs/localization-sources.md) and the
+[central translation workflow](game/assets/localization/README.md).
+
+## Import SimCity 2000
+
+Use your own supported copy to import graphics, sounds, music and game data.
+**Windows 95 Special Edition (1996), using a complete installation, is recommended
+for the most complete import.**
+
+| Original edition | Import coverage |
+| --- | --- |
+| Windows 95, including the 1996 Special Edition | Supported; a complete installation supplies the fullest set of resources. |
+| Windows 3.x | Supported. |
+| Windows Network Edition | Supported. |
+| DOS | Supported. |
+| Classic Macintosh | Supported with edition-specific limitations. |
+| Demos | Partial content, depending on the files provided. |
+
+1. **Prepare your files.** Install a GOG copy first, extract archived files, or
+   mount a disc image. Select the installed files, not the installer or ISO itself.
+2. **Choose your source.** Open **Settings > Import Data > Import SimCity 2000**
+   and select an installed folder, extracted files, a macOS `.app` package or a
+   mounted game CD. For a multi-edition disc, choose its specific edition folder.
+3. **Import your assets.** Choose Graphics, Sounds, Music and/or Game data, then
+   select Import. Review the result for missing or partially imported resources.
+
+Some interface graphics and SCURK resources require a complete Windows
+installation. Macintosh scenarios whose objectives are stored in resource forks
+are not copied; the 1993 Macintosh demo's newspaper grammar is not imported.
+Amiga and console editions are not supported import sources.
+
+**Your source files stay untouched.** The importer reads them without running or
+modifying them. These are supported *data sources*, not a list of old operating
+systems on which Reticulating Splines runs. Original assets are not included with
+the project. Without them, use the available Reticulating Splines replacement packs.
+
+See [the import documentation](docs/media-pack-format.md#import-original-game-files)
+for detailed source requirements and limitations.
 
 ## Screenshots
 
@@ -196,12 +257,9 @@ path to your Godot executable if `godot` is not on PATH. Wait for the native bui
 and resource import to finish before starting the game. Opening
 `game/project.godot` in the Godot editor also imports resources.
 
-To use original game assets, provide your own **SimCity 2000 Special Edition for
-Windows 95 (1996)**. At the import prompt, select that copy's `SIMCITY.EXE`. The
-importer checks the supported version and imports resources locally. You can
-decline the initial import and use the available replacement graphics and audio;
-original data, scenarios and SCURK resources still require their supported import.
-Original game data is not included in the source checkout.
+For original graphics, sound, music and data, follow [Import SimCity 2000](#import-simcity-2000).
+The optional replacement packs are separate sources; original game data is not
+included in the source checkout.
 
 ## Upstream project
 
@@ -227,11 +285,29 @@ building. See [the SC2X format](docs/sc2x-format.md). The original game cannot o
 files. Original `.sc2` cities keep their separate compatibility mode until you choose
 **Upgrade City to SC2X**. Older `.sc2x` files load as version 4 cities and save as a new copy.
 
-## sc2kfix
+<a id="sc2kfix"></a>
 
-Many fixes identified by [sc2kfix](https://github.com/sc2kfix/sc2kfix) have also
-been applied or ported to this codebase. The [sc2kfix MIT notice](LICENSE)
-is retained for adapted work.
+## Classic fixes
+
+Reticulating Splines inherits selected improvements identified by
+[sc2kfix](https://github.com/sc2kfix/sc2kfix) and adopted or reimplemented by
+OpenSC2K. Credit belongs to the sc2kfix contributors and the OpenSC2K team;
+this is **not an integration of the complete sc2kfix plugin**.
+
+- **Clearer finances:** corrected city-value calculations and daily updates,
+  with bond eligibility using the same credit-rating scale as the budget and advisors.
+- **Smoother classic behavior:** more reliable military-base placement, stadium
+  teams released after demolition and power-saving advice only when a power plant exists.
+- **Graphics and city care:** improved SCURK handling, clearer scenario progress,
+  terrain/sign repair tools and support for the sc2kfix save format for 128 × 128 cities.
+- **14 optional sprite corrections:** original-sprite placement, clipped edges,
+  DOS/Macintosh color animations and the Hangar 1 door. These apply only to matching
+  original Windows sprites, not SCURK graphics sets, HD/TrueColor packs or the
+  Reticulating Splines graphics pack.
+
+The sc2kfix `.sc2x` format is distinct from OpenSC2K's extended SC2X format; the
+shared extension does not make them interchangeable. See [SC2X formats](docs/sc2x-format.md).
+The [sc2kfix MIT notice](LICENSE) is retained for adapted work.
 
 ## Development
 
@@ -252,14 +328,32 @@ need `references/SIMCITY2000`; renderer and media tests can also need imported p
 in `ext/`. See [the golden corpus](docs/golden-corpus.md) and
 [CI and local validation](docs/ci.md).
 
-## AI-Assisted Development
+<a id="ai-assisted-development"></a>
 
-Reticulating Splines uses AI-assisted development, including OpenAI Codex.
-AI is used for tasks such as code generation, refactoring, research, documentation, testing, and debugging.
-The fork maintainer directs the work and is responsible for its review and testing.
+## The person behind the project
 
+Reticulating Splines is a personal project by **Daniel / Realm667**, a SimCity 2000
+enthusiast with a vision for familiar cities, richer atmosphere and new ways to
+play together. Daniel brings the ideas and direction; **OpenAI Codex Astra** has
+assisted development of the fork's additions, alongside research, documentation,
+testing and debugging. The maintainer remains responsible for review and testing.
+
+Heartfelt thanks go to **Nicholas Ochoa and the OpenSC2K contributors** for their
+outstanding work. Without that foundation, Reticulating Splines would not be possible.
 See [AI-POLICY.md](AI-POLICY.md) for the project's AI usage and contribution policy.
 
+## Support the project
+
+Daniel has already invested several thousand euros of his own money and countless
+hours into planning, testing and refining Reticulating Splines. AI-assisted
+development makes the project possible, but it comes with substantial costs.
+
+If you enjoy the project or want to help it grow, a voluntary donation helps cover
+those costs and supports continued work on features, fixes and details.
+Any amount is appreciated—thank you for helping build the next chapter.
+
+**[Support Realm667 via PayPal](https://www.paypal.com/donate?hosted_button_id=MCGC2LCJ5FHN6)**
+or read more [on the website](https://rs.realm667.com/#support).
 
 ## License
 
