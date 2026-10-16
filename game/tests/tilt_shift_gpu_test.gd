@@ -35,8 +35,9 @@ func _run() -> void:
 	map.layers.overlay_layer.add_child(marker)
 	var effect := CityTiltShift.new()
 	var options := VisualEnhancementOptions.normalize({})
+	options.tilt_shift_enabled = false
 	effect.update(map, true, options)
-	assert(effect.canvas == null, "Default off must not allocate a screen pass")
+	assert(effect.canvas == null, "Disabled effect must not allocate a screen pass")
 	await RenderingServer.frame_post_draw
 	var original := viewport.get_texture().get_image()
 	options.tilt_shift_enabled = true

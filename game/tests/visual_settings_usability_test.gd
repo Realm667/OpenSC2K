@@ -19,6 +19,8 @@ func _run() -> void:
 	assert(not tab.selected_values().tree_shadows_enabled)
 	tab.show_values(defaults)
 	assert((tab.controls.tree_shadows_enabled as CheckBox).button_pressed)
+	assert((tab.controls.tilt_shift_strength as SpinBox).editable)
+	(tab.controls.tilt_shift_enabled as CheckBox).button_pressed = false
 	assert(not (tab.controls.tilt_shift_strength as SpinBox).editable)
 	(tab.controls.tilt_shift_enabled as CheckBox).button_pressed = true
 	assert((tab.controls.tilt_shift_strength as SpinBox).editable)

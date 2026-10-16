@@ -2,7 +2,7 @@ shader_type canvas_item;
 render_mode unshaded;
 
 uniform sampler2D city_screen : hint_screen_texture, filter_linear, repeat_disable;
-uniform float strength : hint_range(0.0, 1.0) = 0.4;
+uniform float strength : hint_range(0.0, 1.0) = 0.25;
 uniform float edge_size : hint_range(0.05, 0.45) = 0.28;
 uniform float transition : hint_range(0.05, 1.0) = 0.75;
 

@@ -3,8 +3,8 @@ extends RefCounted
 ## Local presentation preferences. No value is written to a city document.
 
 const FIELDS := [
-	["tilt_shift_enabled", "Tilt-shift blur", "bool", false],
-	["tilt_shift_strength", "Blur strength", "number", 0.4, 0.0, 1.0, 0.05],
+	["tilt_shift_enabled", "Tilt-shift blur", "bool", true],
+	["tilt_shift_strength", "Blur strength", "number", 0.25, 0.0, 1.0, 0.05],
 	["tilt_shift_edge", "Blurred edge size", "number", 0.28, 0.05, 0.45, 0.01],
 	["tilt_shift_transition", "Blur transition", "number", 0.75, 0.05, 1.0, 0.05],
 	["tree_shadows_enabled", "Shadows", "bool", true],
