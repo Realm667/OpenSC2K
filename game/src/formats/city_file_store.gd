@@ -94,6 +94,10 @@ static func prepare(
 	if not entries.ok:
 		return PreparedSave.failure(entries.error)
 
+	# Never carry a stale presentation thumbnail into a changed save/autosave.
+	entries.order.erase(CityPreviewStore.ENTRY)
+	entries.members.erase(CityPreviewStore.ENTRY)
+
 	# packed arrays are shared by reference. copy them so that later edits of
 	# the city cannot reach a save that a worker thread writes
 	for name in entries.order:
@@ -189,3 +193,15 @@ class PreparedSave extends RefCounted:
 		result.error = message
 
 		return result
+
+
+static func attach_preview(prepared: PreparedSave, image: Image) -> void:
+	if prepared.entries == null:
+		return
+	# A render failure must not perpetuate a thumbnail of an older city state.
+	prepared.entries.order.erase(CityPreviewStore.ENTRY)
+	prepared.entries.members.erase(CityPreviewStore.ENTRY)
+	if image != null:
+		var bytes := image.save_png_to_buffer()
+		if CityPreviewStore.decode(bytes) != null:
+			prepared.entries.add(CityPreviewStore.ENTRY, bytes)

@@ -10,6 +10,7 @@ static func city_open() -> FileDialog:
 			["*.sc2x", "Extended and sc2kfix cities"],
 			["*.SCN, *.scn", "SimCity 2000 scenarios"],
 		],
+		CityOpenDialog.new(),
 	)
 
 
@@ -59,8 +60,9 @@ static func folder_select() -> FileDialog:
 	return _create(FileDialog.FILE_MODE_OPEN_DIR, [])
 
 
-static func _create(file_mode: FileDialog.FileMode, filters: Array) -> FileDialog:
-	var dialog := FileDialog.new()
+static func _create(file_mode: FileDialog.FileMode, filters: Array, dialog: FileDialog = null) -> FileDialog:
+	if dialog == null:
+		dialog = FileDialog.new()
 	dialog.theme = AppUiTheme.file_dialog()
 	dialog.access = FileDialog.ACCESS_FILESYSTEM
 	dialog.file_mode = file_mode

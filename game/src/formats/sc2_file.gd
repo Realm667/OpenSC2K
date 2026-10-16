@@ -644,10 +644,7 @@ func content_snapshot() -> PackedByteArray:
 
 		return serialized.data if serialized.ok else PackedByteArray()
 
-	var result: Dictionary = NativeCityDocument.content_snapshot(to_native())
-	apply_native_sc2x(result.sc2x)
-
-	return result.snapshot
+	return Sc2xDocument.content_digest(self)
 
 
 func enable_full_resolution_maps() -> bool:

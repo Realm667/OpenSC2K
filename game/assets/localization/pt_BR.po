@@ -29765,3 +29765,35 @@ msgstr "Movimento suave"
 #. Supplementary presentation translation; AI-assisted.
 msgid "Smooth movement of cars, pedestrians, helicopters, airplanes, ships, sailboats and trains in every graphics pack."
 msgstr "Movimento suave de carros, pedestres, helicópteros, aviões, navios, veleiros e trens em todos os pacotes gráficos."
+
+#. City preview; supplementary translation from English, AI-assisted.
+msgid "City preview"
+msgstr "Prévia da cidade"
+
+#. City preview; supplementary translation from English, AI-assisted.
+msgid "Select a city to preview."
+msgstr "Selecione uma cidade para ver a prévia."
+
+#. City preview; supplementary translation from English, AI-assisted.
+msgid "Preparing city preview…"
+msgstr "Preparando a prévia da cidade…"
+
+#. City preview; supplementary translation from English, AI-assisted.
+msgid "Saved city preview"
+msgstr "Prévia salva da cidade"
+
+#. City preview; supplementary translation from English, AI-assisted.
+msgid "City overview"
+msgstr "Visão geral da cidade"
+
+#. City preview; supplementary translation from English, AI-assisted.
+msgid "Preview unavailable. You can still open this city."
+msgstr "Prévia indisponível. Você ainda pode abrir esta cidade."
+
+#. City preview; supplementary translation from English, AI-assisted.
+msgid "Loading city…"
+msgstr "Carregando cidade…"
+
+#. City preview; supplementary translation from English, AI-assisted.
+msgid "Saving city…"
+msgstr "Salvando cidade…"

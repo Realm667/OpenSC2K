@@ -110,6 +110,7 @@ static func build(value: String, _files := false, translucent_menus := true) -> 
 	result.set_type_variation("MainMenuPanel", "PanelContainer")
 	var menu := _copy_style(result, "PanelPadding44_34_44_34", "panel")
 	# the shared glass shader mixes these tints with the blurred city background
+	menu.set_border_width_all(0)
 	menu.bg_color.a = (0.68 if dark else 0.75) if translucent_menus else 1.0
 	result.set_stylebox("panel", "MainMenuPanel", menu)
 
@@ -186,6 +187,19 @@ static func _apply_shared_layout(result: Theme, dark: bool) -> void:
 	result.set_font("font", "SectionHeading", result.get_font("title_font", "Window"))
 	result.set_font_size("font_size", "SectionHeading", 16)
 	result.set_color("font_color", "SectionHeading", result.get_color("ink", "AppPalette"))
+	result.set_type_variation("InformationPanel", "PanelContainer")
+	result.set_stylebox("panel", "InformationPanel", create_box(Color("355265") if dark else Color("dce8ee"), Color.TRANSPARENT, 0, 14, 14))
+	result.set_type_variation("NavigationButton", "Button")
+	result.set_font("font", "NavigationButton", _website_font(500))
+	for state in ["normal", "hover", "pressed", "hover_pressed", "disabled"]:
+		var active: bool = state in ["pressed", "hover_pressed"]
+		var color := (Color("355265") if dark else Color("dce8ee")) if active else Color.TRANSPARENT
+		if state == "hover":
+			color = Color("343e49") if dark else Color("e0e7eb")
+		var box := create_box(color, Color("dcf85e") if dark else Color("52701a"), 0, 12, 7)
+		box.border_width_left = 3 if active else 0
+		result.set_stylebox(state, "NavigationButton", box)
+		result.set_color("font_" + state + "_color" if state != "normal" else "font_color", "NavigationButton", result.get_color("ink", "AppPalette"))
 	result.set_type_variation("UtilityPanel", "PanelContainer")
 	result.set_stylebox("panel", "UtilityPanel", create_box(result.get_color("canvas", "AppPalette"),
 		result.get_color("border", "AppPalette"), 1, 14, 14))
@@ -205,7 +219,7 @@ static func _apply_shared_layout(result: Theme, dark: bool) -> void:
 			result.set_stylebox(state, type_name, box)
 
 
-# Website demo/03 palette. Only presentation changes; scene layouts stay intact.
+# Website demo/04 palette. Only presentation changes; scene layouts stay intact.
 static func _website_theme(dark: bool) -> Theme:
 	var result := ThemeDB.get_default_theme().duplicate() as Theme
 	var surface := (Color("292d33") if dark else Color("edf0f2"))
@@ -214,7 +228,7 @@ static func _website_theme(dark: bool) -> Theme:
 	var ink := (Color("e0e5eb") if dark else Color("252c34"))
 	var accent := Color("dcf85e")
 	var font := _website_font()
-	var heading := _website_font(700)
+	var heading := _website_font(800)
 	result.default_font = font
 	result.default_font_size = 13
 	for type_name in result.get_type_list():

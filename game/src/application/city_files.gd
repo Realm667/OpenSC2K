@@ -23,6 +23,7 @@ var save_task_id := -1
 var load_in_progress := false
 var load_task_id := -1
 var load_serial := 0
+var loading_preview: Image
 
 
 func _init(application: CityApplication) -> void:
@@ -74,7 +75,7 @@ func save_city() -> void:
 	if document_state.current_save_path.is_empty():
 		open_save_dialog()
 	else:
-		_save_copy(document_state.current_save_path)
+		_save_with_preview(document_state.current_save_path)
 
 
 func open_rename_dialog() -> void:
@@ -292,7 +293,7 @@ func save_pending_city_exit() -> void:
 
 		return
 
-	_save_copy(document_state.current_save_path, _continue_pending_city_exit)
+	_save_with_preview(document_state.current_save_path, _continue_pending_city_exit)
 
 
 func on_save_changes_action(action: StringName) -> void:
@@ -346,14 +347,20 @@ func _load_city_in_background(path: String) -> void:
 	if not app.asset_state.assets_ready or load_in_progress:
 		return
 
+	loading_preview = (app.city_dialogs.city_open_dialog as CityOpenDialog).image_for_path(path)
 	load_in_progress = true
 	load_serial += 1
 	var serial := load_serial
+	var preview_job := CityPreviewJob.for_assets(app.asset_state)
 	app.get_tree().create_timer(BUSY_DELAY_SEC).timeout.connect(func() -> void:
 		if load_in_progress and load_serial == serial:
-			app.main_overlays.busy_overlay.show_message("Loading city…"))
+			app.main_overlays.busy_overlay.show_city(path.get_file().get_basename(), loading_preview))
 	load_task_id = WorkerThreadPool.add_task(func() -> void:
 		var read := _read_city(path)
+		read.preview = CityPreviewStore.embedded(path) if loading_preview == null else loading_preview
+		if read.preview == null:
+			preview_job.prepare_graphics_key()
+			read.preview = CityPreviewStore.cached(FileAccess.get_sha256(path), preview_job.graphics_key)
 		_finish_background_load.call_deferred(read))
 
 
@@ -367,6 +374,7 @@ func _finish_background_load(read: ReadCity) -> void:
 		busy.show_message("Loading city…")
 
 	if busy.visible:
+		busy.show_city(read.document.source_path.get_file().get_basename() if read.document != null else "", read.preview)
 		await app.get_tree().process_frame
 		await app.get_tree().process_frame
 
@@ -458,7 +466,7 @@ func on_save_path_selected(path: String) -> void:
 	if app.coop.active():
 		app.coop.save_to(path)
 		return
-	_save_copy(path, _continue_pending_city_exit if pending_city_exit_waiting_for_save else Callable())
+	_save_with_preview(path, _continue_pending_city_exit if pending_city_exit_waiting_for_save else Callable())
 
 
 func on_save_dialog_canceled() -> void:
@@ -532,6 +540,12 @@ func _finish_save(document: Sc2File, prepared: CityFiles.PreparedSave, result: F
 
 		return false
 
+	# Presentation belongs to the saved snapshot; it never participates in dirty state.
+	if prepared.entries != null:
+		document.sc2x_extra_entries.erase(CityPreviewStore.ENTRY)
+		if prepared.entries.members.has(CityPreviewStore.ENTRY):
+			document.sc2x_extra_entries[CityPreviewStore.ENTRY] = prepared.entries.members[CityPreviewStore.ENTRY]
+
 	# the content snapshot is the saved content, even when the city changed meanwhile
 	document.source_path = result.path
 
@@ -574,3 +588,26 @@ class ReadCity extends RefCounted:
 	var error := ""
 	# the content of the document before activation
 	var snapshot := PackedByteArray()
+	var preview: Image
+
+
+func _save_with_preview(path: String, on_saved := Callable()) -> void:
+	if save_in_progress:
+		app.interface.show_error("The city is still being saved.")
+		return
+	var document := document_state.current_document
+	var prepared := CityFiles.prepare(document, path, app.asset_state.reference_root, app.simulation_state.speed_controller)
+	if not prepared.ok:
+		app.interface.show_error(prepared.error)
+		return
+	var preview := CityPreviewJob.for_assets(app.asset_state)
+	preview.document = document.duplicate_document()
+	save_in_progress = true
+	app.main_overlays.busy_overlay.show_message("Saving city…")
+	save_task_id = WorkerThreadPool.add_task(func() -> void:
+		preview.run()
+		CityFiles.attach_preview(prepared, preview.image)
+		var written := CityFiles.write(prepared)
+		if written.ok and preview.image != null:
+			CityPreviewStore.store(FileAccess.get_sha256(written.path), preview.graphics_key, preview.image)
+		_finish_save.call_deferred(document, prepared, written, on_saved))

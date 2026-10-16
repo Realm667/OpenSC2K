@@ -26808,3 +26808,35 @@ msgstr "Flüssige Bewegung"
 #. Supplementary presentation translation; AI-assisted.
 msgid "Smooth movement of cars, pedestrians, helicopters, airplanes, ships, sailboats and trains in every graphics pack."
 msgstr "Flüssige Bewegung von Autos, Fußgängern, Hubschraubern, Flugzeugen, Schiffen, Segelbooten und Zügen in jedem Grafikpaket."
+
+#. City preview; supplementary translation from English, AI-assisted.
+msgid "City preview"
+msgstr "Stadtvorschau"
+
+#. City preview; supplementary translation from English, AI-assisted.
+msgid "Select a city to preview."
+msgstr "Wähle eine Stadt für die Vorschau."
+
+#. City preview; supplementary translation from English, AI-assisted.
+msgid "Preparing city preview…"
+msgstr "Stadtvorschau wird erstellt…"
+
+#. City preview; supplementary translation from English, AI-assisted.
+msgid "Saved city preview"
+msgstr "Gespeicherte Stadtvorschau"
+
+#. City preview; supplementary translation from English, AI-assisted.
+msgid "City overview"
+msgstr "Gesamtansicht der Stadt"
+
+#. City preview; supplementary translation from English, AI-assisted.
+msgid "Preview unavailable. You can still open this city."
+msgstr "Keine Vorschau verfügbar. Du kannst die Stadt trotzdem öffnen."
+
+#. City preview; supplementary translation from English, AI-assisted.
+msgid "Loading city…"
+msgstr "Stadt wird geladen…"
+
+#. City preview; supplementary translation from English, AI-assisted.
+msgid "Saving city…"
+msgstr "Stadt wird gespeichert…"

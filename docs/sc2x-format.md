@@ -48,6 +48,24 @@ save omits it.
 The reader rejects entries in folders, repeated names, a CRC or size mismatch, missing
 required entries, and entries with the wrong size.
 
+## Optional city preview
+
+Reticulating Splines may add a `preview.png` entry when the player saves an
+extended version 4 city. It is a static whole-city image from the same prepared
+save state, at most 768 by 512 pixels and 2 MiB. It contains no simulation state.
+A missing or undecodable image does not prevent loading the city. The UI labels
+an embedded image as a saved preview because it can show an earlier graphics pack.
+The application excludes this entry from its unsaved-city content snapshot;
+archive verification still checks the entry's exact bytes. Other unknown entries
+continue to round-trip unchanged.
+
+Saves without a newly generated preview, including autosaves, drop an older
+`preview.png` rather than carry a stale picture forward. Original SC2/SCN files
+and sc2kfix archives do not receive this entry. The file chooser renders only the
+selected city, using an isolated document and no simulation steps. A local bounded
+cache uses city-file SHA-256, loaded graphics content and renderer-version keys.
+Browsing never rewrites a source file. Cache files are disposable presentation data.
+
 ## Metadata
 
 `metadata.json` is UTF-8 JSON. `game/assets/data/sc2x-metadata.schema.json` is the published

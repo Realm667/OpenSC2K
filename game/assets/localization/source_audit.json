@@ -14,7 +14,9 @@
     "game/src/ui/settings/pack_source_selector.gd",
     "game/src/ui/settings/original_import_prompt.gd",
     "game/src/ui/startup/startup_loading.gd",
-    "game/src/ui/settings/controls_binding_list.gd"
+    "game/src/ui/settings/controls_binding_list.gd",
+    "game/src/ui/shared/city_open_dialog.gd",
+    "game/src/ui/shared/busy_overlay.gd"
   ],
   "non_display_literals": {
     "SimCity 2000 (%s)": "Product and platform proper names; source package identity.",
@@ -58,6 +60,11 @@
     "Misty Lake": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
     "Key of Success": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
     "Standalone Music": "Existing package name used only to identify the legacy standalone soundtrack.",
-    "PrimaryButton": "Godot theme variation, not display text."
+    "PrimaryButton": "Godot theme variation, not display text.",
+    "CityPreview": "Internal scene node name.",
+    "InformationPanel": "Godot theme variation.",
+    "Image": "Internal TextureRect node name.",
+    "PanelPadding8_8_8_8": "Godot theme variation.",
+    "AppPalette": "Godot theme palette name."
   }
 }

@@ -113,7 +113,7 @@ func _run() -> void:
 			return
 
 		if relative_path == "CITIES/ISLAND.SC2":
-			if not _test_save_gate_and_reports(main, loaded_city, status_bar):
+			if not await _test_save_gate_and_reports(main, loaded_city, status_bar):
 				return
 			var patch_point := _test_regional_edits(main, loaded_city)
 			if patch_point.x < 0:
@@ -203,9 +203,11 @@ func _test_save_city(main: Node) -> bool:
 	var source_path := document.source_path
 	var funds := document.misc_i32(0x14)
 	main.city_files.call("on_save_path_selected", absolute_path)
+	await _wait_for_save(main)
 	var first_save := FileAccess.get_file_as_bytes(path)
 	document.set_misc_i32(0x14, funds + 123)
 	main.menus.call("on_file_menu", CityMenuBar.MENU_SAVE_CITY)
+	await _wait_for_save(main)
 	var saved := FileAccess.get_file_as_bytes(path)
 	var expected := document.serialize()
 	var passed: bool = (
@@ -352,6 +354,7 @@ func _run_quick(reference_root: String) -> void:
 	assert(main.tool_state.landscape_editor)
 	var output := ProjectSettings.globalize_path("user://workflow-smoke.sc2x")
 	main.city_files.on_save_path_selected(output)
+	await _wait_for_save(main)
 	var saved := FileAccess.get_file_as_bytes(output)
 	assert(not saved.is_empty() and saved == main.document_state.current_document.serialize().data)
 	var saved_document := Sc2File.load_path(output)
@@ -380,7 +383,7 @@ func _test_save_gate_and_reports(main: CityApplication, loaded_city: CityState, 
 		quit(2)
 
 		return false
-	if not _test_save_city(main):
+	if not await _test_save_city(main):
 		main.queue_free()
 		quit(2)
 
@@ -1088,3 +1091,10 @@ func _test_speed_controls(
 	main.frame.call("select_speed", GameSpeed.Speed.PAUSED)
 
 	return true
+
+
+func _wait_for_save(main: Node) -> void:
+	var started := Time.get_ticks_msec()
+	while main.city_files.save_in_progress:
+		assert(Time.get_ticks_msec() - started < 60000, "City save timed out")
+		await process_frame

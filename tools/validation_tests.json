@@ -1,5 +1,12 @@
 [
   {
+    "id": "city_preview_test",
+    "script": "tests/city_preview_test.gd",
+    "domain": "ui",
+    "lane": "product",
+    "requires": ["ext/graphics/pack.json", "game/tests/fixtures/cities/generated-128.SC2"]
+  },
+  {
     "id": "ocean_neighbor_load_test",
     "script": "tests/ocean_neighbor_load_test.gd",
     "domain": "simulation",

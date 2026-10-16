@@ -7,6 +7,9 @@ const LoadingSpinner = preload("res://src/ui/shared/loading_spinner.gd")
 
 var spinner: Control
 var label: Label
+var city_progress: ProgressOverlay
+var city_preview: TextureRect
+var city_logo: TextureRect
 
 
 func _init(message := "") -> void:
@@ -33,5 +36,53 @@ func _init(message := "") -> void:
 
 
 func show_message(message: String) -> void:
+	if city_progress != null:
+		city_progress.hide()
+	get_child(0).show()
 	label.text = message
 	show()
+
+
+func show_city(title: String, image: Image, detail := "Loading city…", fraction := -1.0) -> void:
+	if city_progress == null:
+		city_progress = preload("res://src/ui/shared/progress_overlay.tscn").instantiate()
+		add_child(city_progress)
+		city_progress.get_node("Shade").color = AppUiTheme.current().get_color("canvas", "AppPalette")
+		var rows: VBoxContainer = city_progress.get_node("Center/Panel/Rows")
+		city_logo = TextureRect.new()
+		city_logo.texture = preload("res://assets/branding/reticulating-splines-logo.png")
+		city_logo.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		city_logo.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		city_logo.texture_filter = Control.TEXTURE_FILTER_LINEAR
+		rows.add_child(city_logo)
+		rows.move_child(city_logo, 0)
+		city_preview = TextureRect.new()
+		city_preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		city_preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		city_preview.texture_filter = Control.TEXTURE_FILTER_LINEAR
+		rows.add_child(city_preview)
+		rows.move_child(city_preview, 1)
+		city_progress.title_label.theme_type_variation = &"SectionHeading"
+		city_progress.title_label.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+		city_progress.title_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		city_progress.get_node("Center/Panel").add_theme_stylebox_override("panel", StyleBoxEmpty.new())
+		resized.connect(_layout_city)
+	city_progress.get_node("Shade").color = AppUiTheme.current().get_color("canvas", "AppPalette")
+	get_child(0).hide()
+	city_preview.texture = ImageTexture.create_from_image(image) if image != null else null
+	city_preview.visible = image != null
+	_layout_city()
+	city_progress.show_progress(title, detail, fraction)
+	show()
+
+
+func _layout_city() -> void:
+	if city_progress == null:
+		return
+	var width := minf(size.x * 0.65, 768)
+	var panel: PanelContainer = city_progress.get_node("Center/Panel")
+	panel.custom_minimum_size.x = width
+	city_logo.custom_minimum_size.y = minf(size.x * 0.3, 420) / 2.4
+	city_logo.custom_minimum_size.x = 0
+	city_preview.custom_minimum_size.y = minf(size.y * 0.4, 380)
+	panel.reset_size()

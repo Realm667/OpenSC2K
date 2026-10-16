@@ -113,6 +113,8 @@ static func digest_entries(prepared: EntriesResult) -> PackedByteArray:
 	context.start(HashingContext.HASH_SHA256)
 
 	for name in prepared.order:
+		if name == CityPreviewStore.ENTRY:
+			continue
 		context.update(name.to_utf8_buffer())
 		var size := PackedByteArray()
 		size.resize(8)

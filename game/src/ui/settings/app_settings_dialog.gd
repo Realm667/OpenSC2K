@@ -132,6 +132,14 @@ func _ready() -> void:
 	tabs = %Tabs
 	visual_tab = VisualEnhancementsTab.new()
 	tabs.add_child(visual_tab)
+	for category in visual_tab.category_buttons:
+		category.theme_type_variation = &"NavigationButton"
+	var introduction := visual_tab.get_child(0)
+	var information := PanelContainer.new()
+	information.theme_type_variation = &"InformationPanel"
+	visual_tab.add_child(information)
+	visual_tab.move_child(information, 0)
+	introduction.reparent(information)
 	visual_tab.changed.connect(_notify_visual_change)
 	visual_tab.reload_requested.connect(func() -> void: brightmaps_reload_requested.emit())
 	visual_tab.export_requested.connect(func() -> void: brightmaps_export_requested.emit())
