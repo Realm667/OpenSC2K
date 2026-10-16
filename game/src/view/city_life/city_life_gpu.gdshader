@@ -21,11 +21,13 @@ varying vec2 world_pixel;
 varying vec2 cloud_ground_grid;
 varying flat vec2 mask_origin;
 varying flat float opacity;
+varying flat float road_shear;
 void vertex() {
 	slot = float(INSTANCE_ID);
 	vec4 rect = texelFetch(parameters, ivec2(int(slot), 0), 0);
 	vec4 world = texelFetch(parameters, ivec2(int(slot), 1), 0);
 	vec4 mask = texelFetch(parameters, ivec2(int(slot), 2), 0);
+	road_shear = texelFetch(parameters, ivec2(int(slot), 3), 0).x;
 	vec2 shift = smooth_movement ? world.zw * (1.0 - interpolation) : round(world.xy) - world.xy;
 	// Extend the lower/right raster edge by one texel. The fragment clips it;
 	// half-scale pixel centers on that edge must still sample the last texel.
@@ -36,6 +38,9 @@ void vertex() {
 	world_pixel = world.xy + shift + sprite_uv * (logical_size + vec2(1.0));
 	source_rect = rect;
 	sprite_pixel = sprite_uv * (logical_size + vec2(1.0));
+	float incline = road_shear * (sprite_pixel.x - floor(logical_size.x * 0.5));
+	VERTEX.y += incline / logical_size.y;
+	world_pixel.y += incline;
 	mask_origin = mask.xy;
 	mask_layer = mask.z;
 	opacity = mask.w;
@@ -54,7 +59,11 @@ void fragment() {
 	vec2 source_uv = (source_rect.xy + pixel + vec2(0.5)) / vec2(textureSize(artwork, 0));
 	vec4 color = texture(artwork, source_uv);
 	if (color.a <= 0.0) discard;
-	vec2 mask_uv = ((world_pixel - sprite_pixel + floor(pixel / artwork_scale)) - mask_origin + vec2(0.5)) / 128.0;
+	vec2 raster_pixel = floor(pixel / artwork_scale);
+	// Masks remain in world space after the sprite and its lamp pixels tilt.
+	vec2 mask_pixel = world_pixel - sprite_pixel + raster_pixel;
+	mask_pixel.y += road_shear * (raster_pixel.x - sprite_pixel.x);
+	vec2 mask_uv = (mask_pixel - mask_origin + vec2(0.5)) / 128.0;
 	if (all(greaterThanEqual(mask_uv, vec2(0.0))) && all(lessThan(mask_uv, vec2(1.0))) && mask_coverage(mask_uv) > 0.0) discard;
 	vec4 light = texture(lamps, source_uv);
 	if (emission_only) {

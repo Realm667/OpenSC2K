@@ -100,9 +100,30 @@ func _run() -> void:
 	cancelled.run()
 	assert(cancelled.image == null)
 	var dialog := FileDialogFactory.city_open()
+	root.gui_embed_subwindows = true
 	root.add_child(dialog)
+	var memory := WindowLayoutMemory.new()
+	root.add_child(memory)
+	await process_frame
 	assert(dialog is CityOpenDialog and dialog.preview_panel != null)
+	dialog.popup_centered_ratio(0.8)
+	for extent in [Vector2i(900, 560), Vector2i(1100, 700), Vector2i(780, 520)]:
+		dialog.size = extent
+		dialog.preview_image.texture = ImageTexture.create_from_image(job.image)
+		dialog.preview_status.text = "Preview unavailable. You can still open this city."
+		for frame in 8:
+			memory._process(0.25)
+			await process_frame
+		var settled := Rect2i(dialog.position, dialog.size)
+		var minimum := dialog.get_contents_minimum_size()
+		for frame in 20:
+			memory._process(0.25)
+			await process_frame
+			assert(Rect2i(dialog.position, dialog.size) == settled, "City chooser must settle after resizing")
+			assert(dialog.get_contents_minimum_size() == minimum, "Preview must not feed a new minimum back into the window")
+	dialog.hide()
 	dialog.queue_free()
+	memory.queue_free()
 	await process_frame
 	print("PASS: bounded city previews, optional SC2X thumbnail, unchanged original saves, cache invalidation and cancellation")
 	quit()

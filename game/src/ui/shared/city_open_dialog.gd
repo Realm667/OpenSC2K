@@ -35,10 +35,13 @@ func _ready() -> void:
 	get_vbox().move_child(_body, index)
 	navigation.reparent(_body)
 	navigation.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	navigation.size_flags_stretch_ratio = 7.0
 	preview_panel = PanelContainer.new()
 	preview_panel.name = "CityPreview"
 	preview_panel.theme_type_variation = &"InformationPanel"
 	preview_panel.custom_minimum_size.x = 240
+	preview_panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	preview_panel.size_flags_stretch_ratio = 3.0
 	_body.add_child(preview_panel)
 	var rows := VBoxContainer.new()
 	preview_panel.add_child(rows)
@@ -65,15 +68,19 @@ func _ready() -> void:
 	preview_status.theme_type_variation = &"HelpLabel"
 	rows.add_child(preview_status)
 	visibility_changed.connect(_visibility_changed)
-	size_changed.connect(_layout_preview)
+	get_parent().get_viewport().size_changed.connect(_layout_preview)
 
 
 func _layout_preview() -> void:
 	if preview_panel != null:
-		# Keep navigation usable at small UI viewports; preview moves below it.
-		_body.vertical = size.x < 760
-		preview_panel.custom_minimum_size = Vector2(0 if _body.vertical else clampf(size.x * 0.3, 240, 420),
+		# The containing viewport is independent of this dialog's minimum size.
+		# Basing the minimum on the resulting dialog width feeds size changes
+		# back into FileDialog's wrapping and the saved-window bounds clamp.
+		_body.vertical = get_parent().get_viewport().get_visible_rect().size.x * 0.8 < 760
+		preview_panel.custom_minimum_size = Vector2(0 if _body.vertical else 240,
 			160 if _body.vertical else 0)
+		preview_panel.size_flags_vertical = Control.SIZE_FILL if _body.vertical else Control.SIZE_EXPAND_FILL
+		preview_panel.size_flags_stretch_ratio = 1.0 if _body.vertical else 3.0
 		preview_image.custom_minimum_size.y = 80 if _body.vertical else 120
 
 

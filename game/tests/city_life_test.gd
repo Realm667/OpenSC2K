@@ -13,6 +13,7 @@ func _run() -> void:
 	_check_network_sections()
 	_check_density(city)
 	_check_occlusion()
+	_check_sloped_atlas()
 	_check_spacing()
 	_check_vehicle_mix()
 	var before := DocumentState.capture(city.document)
@@ -427,6 +428,18 @@ static func _check_network_sections() -> void:
 		else:
 			assert(CityLifePaths.ports(city, tile) > 0, "Missing individual lanes for tile %02x" % id)
 	city.set_building_corners(64, 64, 0)
+	city.set_building_id(64, 64, BuildingTileIds.ROAD_STRAIGHT_1)
+	for terrain in [0, 1, 2, 3, 4]:
+		city.document.find_chunk("XTER").decoded_payload[64 * 128 + 64] = terrain
+		for enter in 4:
+			var exit := (enter + 2) % 4
+			var shear := CityLifePaths.sprite_shear(city, tile, enter, exit)
+			var start := CityLifePaths.point(city, tile, enter, exit, 0.0, false)
+			var finish := CityLifePaths.point(city, tile, enter, exit, 1.0, false)
+			var rise := CityLifePaths.edge_height(city, tile, exit) - CityLifePaths.edge_height(city, tile, enter)
+			assert(is_equal_approx(shear * (finish.x - start.x), -12.0 * rise), "Vehicle baseline must follow the road rise")
+			assert(is_equal_approx(shear, CityLifePaths.sprite_shear(city, tile, exit, enter)), "Opposite traffic follows the same incline")
+	city.document.find_chunk("XTER").decoded_payload[64 * 128 + 64] = 0
 	for flipped in [false, true]:
 		city.set_tile_flag(64, 64, Sc2TileFlags.FLIPPED, flipped)
 		for id in range(BuildingTileIds.SUSPENSION_BRIDGE_1, BuildingTileIds.RAISING_BRIDGE_CLOSED + 1):
@@ -511,3 +524,23 @@ func _check_lazy_occlusion_resource(app: CityApplication) -> void:
 	assert(drawable == image_only and drawable.texture != null and drawable.index_texture == drawable.texture)
 	assert(drawable.image.get_data() == pixels and drawable.texture.get_image().get_data() == pixels,
 		"A mask-only cache hit must become drawable without changing its pixels or flip")
+
+
+static func _check_sloped_atlas() -> void:
+	var sprite := Image.create(5, 3, false, Image.FORMAT_RGBA8)
+	sprite.set_pixel(0, 2, Color.RED)
+	sprite.set_pixel(2, 2, Color.GREEN)
+	sprite.set_pixel(4, 2, Color.BLUE)
+	var lamps := Image.create(5, 3, false, Image.FORMAT_RGBA8)
+	lamps.set_pixel(0, 2, Color.WHITE)
+	var foreground := Image.create(1, 1, false, Image.FORMAT_RGBA8)
+	foreground.fill(Color.WHITE)
+	var atlas := CityLifeAtlas.new()
+	var entries: Array[Dictionary] = [{"sprite": sprite, "lamps": lamps, "origin": Vector2i(20, 20),
+		"shear": 1.0, "opacity": 1.0, "occluders": [{"image": foreground, "origin": Vector2i(24, 24)}]}]
+	atlas.compose(Rect2i(0, 0, 64, 64), entries, true)
+	assert(atlas.image.get_pixel(20, 20) == Color.RED, "The rear wheel must rise with the road")
+	assert(atlas.image.get_pixel(22, 22) == Color.GREEN, "The center anchor must stay on its route")
+	assert(atlas.image.get_pixel(24, 24).a == 0.0, "Foreground masks must still cover inclined vehicles")
+	assert(atlas.emission.get_pixel(20, 20).a > 0.0, "Headlights must tilt with the artwork")
+	assert(sprite.get_pixel(0, 2) == Color.RED and sprite.get_size() == Vector2i(5, 3), "Tilting must not modify shared source artwork")

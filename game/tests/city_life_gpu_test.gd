@@ -53,6 +53,7 @@ func _run() -> void:
 	assert(night.get_pixel(0, 0).a == 0.0, "Night grading must preserve sprite transparency")
 	viewport.queue_free()
 	await process_frame
+	await _check_inclines()
 	await _check_headlight_batches(false)
 	await _check_headlight_batches(true)
 	await _check_headlight_batches(false, 2)
@@ -356,7 +357,7 @@ func _check_instances(hdr: bool, count := 150) -> void:
 		canvas.gpu.render(canvas, entries)
 		assert(canvas.gpu.mask_slots.size() <= CityLifeGpu.MASK_CAPACITY and canvas.gpu.cropped.size() <= CityLifeGpu.MASK_CAPACITY)
 		if phase == 1:
-			assert(canvas.gpu.upload_bytes <= canvas.gpu.groups.size() * CityLifeGpu.GROUP * 80, "Cross-group depth sorting must reuse global mask slots without image uploads")
+			assert(canvas.gpu.upload_bytes <= canvas.gpu.groups.size() * CityLifeGpu.GROUP * 96, "Cross-group depth sorting must reuse global mask slots without image uploads")
 		for zoom in [0.5, 0.75, 1.0, 1.5, 2.0, 3.0]:
 			canvas.scale = Vector2.ONE * zoom
 			reference.scale = canvas.scale
@@ -422,3 +423,44 @@ func _check_instances(hdr: bool, count := 150) -> void:
 	print("PASS: instanced figure pixels, mask invalidation, interpolation and emissions in HDR %s" % hdr)
 	viewport.queue_free()
 	await process_frame
+
+
+func _check_inclines() -> void:
+	var viewport := SubViewport.new()
+	viewport.size = Vector2i(160, 120)
+	viewport.transparent_bg = true
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	root.add_child(viewport)
+	var canvas := CityLifeCanvas.new()
+	canvas.scale = Vector2.ONE * 2
+	canvas.source_bounds = Rect2i(0, 0, 80, 60)
+	viewport.add_child(canvas)
+	var sprites := CityLifeSprites.new()
+	canvas.gpu = CityLifeGpu.new()
+	canvas.gpu.prepare(sprites, canvas.lights)
+	var reference := Sprite2D.new()
+	reference.centered = false
+	reference.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	viewport.add_child(reference)
+	for kind in 3:
+		var sprite := sprites.sprite(false, 0, 1, 0, kind)
+		var figure := CityLifeController.Figure.new()
+		figure.position = Vector2(25, 30)
+		var entries: Array[Dictionary] = [{"figure": figure, "sprite": sprite, "origin": Vector2i(20, 20), "opacity": 1.0, "occluders": []}]
+		for shear in [-0.75, 0.0, 0.75]:
+			entries[0].shear = shear
+			reference.texture = ImageTexture.create_from_image(sprite)
+			reference.transform = Transform2D(Vector2(2, 2 * shear), Vector2(0, 2), Vector2(40, 40 - 2 * shear * floorf(sprite.get_width() * 0.5)))
+			canvas.hide()
+			reference.show()
+			await RenderingServer.frame_post_draw
+			var expected := viewport.get_texture().get_image()
+			canvas.gpu.render(canvas, entries)
+			reference.hide()
+			canvas.show()
+			await RenderingServer.frame_post_draw
+			var actual := viewport.get_texture().get_image()
+			assert(actual.get_data() == expected.get_data(), "Sloped vehicle differs from projected source artwork: kind=%d shear=%s" % [kind, shear])
+	viewport.queue_free()
+	await process_frame
+	print("PASS: cars, trucks and buses follow uphill/downhill projection without replacing their artwork")

@@ -123,6 +123,9 @@ func render(canvas: CityLifeCanvas, entries: Array[Dictionary]) -> void:
 	for group in streams.size() / 2:
 		buffers[group] = streams[group * 2]
 		data[group] = streams[group * 2 + 1]
+		data[group].resize(GROUP * 16)
+		for slot in mini(GROUP, count - group * GROUP):
+			data[group][GROUP * 12 + slot * 4] = entries[group * GROUP + slot].get("shear", 0.0)
 	for index in groups.size():
 		var visible_count := clampi(count - index * GROUP, 0, GROUP)
 		groups[index].multimesh.visible_instance_count = visible_count
@@ -130,8 +133,8 @@ func render(canvas: CityLifeCanvas, entries: Array[Dictionary]) -> void:
 		if not groups[index].visible:
 			continue
 		groups[index].multimesh.buffer = buffers[index]
-		textures[index].update(Image.create_from_data(GROUP, 3, false, Image.FORMAT_RGBAF, data[index].to_byte_array()))
-		upload_bytes += GROUP * (STRIDE + 12) * 4
+		textures[index].update(Image.create_from_data(GROUP, 4, false, Image.FORMAT_RGBAF, data[index].to_byte_array()))
+		upload_bytes += GROUP * (STRIDE + 16) * 4
 
 
 func sync(app: CityApplication, lights: bool, fraction: float) -> void:
@@ -176,9 +179,9 @@ func add_group(parent: Node2D) -> void:
 	buffer.resize(GROUP * STRIDE)
 	buffers.append(buffer)
 	var values := PackedFloat32Array()
-	values.resize(GROUP * 12)
+	values.resize(GROUP * 16)
 	data.append(values)
-	var texture := ImageTexture.create_from_image(Image.create_from_data(GROUP, 3, false, Image.FORMAT_RGBAF, values.to_byte_array()))
+	var texture := ImageTexture.create_from_image(Image.create_from_data(GROUP, 4, false, Image.FORMAT_RGBAF, values.to_byte_array()))
 	textures.append(texture)
 	_ensure_mask_page(0)
 	var shader := ShaderMaterial.new()

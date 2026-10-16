@@ -255,6 +255,8 @@ static func _website_theme(dark: bool) -> Theme:
 	# Montserrat is wider than the former font. Keep all existing menu entries
 	# and metric fields within the base viewport without moving them.
 	result.set_font_size("font_size", "MenuButton", 12)
+	# Keep Montserrat descenders inside each popup row, including fractional UI scales.
+	result.set_constant("v_separation", "PopupMenu", 8)
 	result.set_color("title_color", "Window", ink)
 	result.set_color("title_outline_modulate", "Window", Color.TRANSPARENT)
 	for type_name in ["Panel", "PanelContainer", "AcceptDialog", "PopupPanel", "PopupMenu", "TabContainer"]:

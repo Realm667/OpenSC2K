@@ -14,9 +14,11 @@ var sources: Array[Rect2i] = []
 var capacity := 0
 var source_scale := 1
 var scaled_occluders: Dictionary[int, Image] = {}
+var sloped_art: Dictionary[String, Image] = {}
 
 
 func compose(bounds: Rect2i, entries: Array[Dictionary], night: bool) -> void:
+	entries = _inclined_entries(entries)
 	var wanted_scale := 1
 	for entry in entries:
 		var master: Image = entry.get("master", entry.sprite)
@@ -87,3 +89,31 @@ func compose(bounds: Rect2i, entries: Array[Dictionary], night: bool) -> void:
 	texture.update(image)
 	if night:
 		emission_texture.update(emission)
+
+
+func _inclined_entries(entries: Array[Dictionary]) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	for entry in entries:
+		var shear: float = entry.get("shear", 0.0)
+		if is_zero_approx(shear):
+			result.append(entry)
+			continue
+		var copy := entry.duplicate()
+		var sprite: Image = entry.sprite
+		var padding := ceili(absf(shear) * sprite.get_width())
+		copy.origin = entry.origin - Vector2i(0, padding)
+		for key in ["sprite", "lamps", "master", "master_lamps"]:
+			var source: Image = entry.get(key)
+			if source == null:
+				continue
+			var scale := source.get_width() / sprite.get_width()
+			var cache_key := "%d:%s:%d" % [source.get_instance_id(), shear, scale]
+			if not sloped_art.has(cache_key):
+				var tilted := Image.create(source.get_width(), source.get_height() + padding * scale * 2, false, Image.FORMAT_RGBA8)
+				for x in source.get_width():
+					var offset := roundi(shear * (float(x) / scale - floorf(sprite.get_width() * 0.5)) * scale)
+					tilted.blit_rect(source, Rect2i(x, 0, 1, source.get_height()), Vector2i(x, padding * scale + offset))
+				sloped_art[cache_key] = tilted
+			copy[key] = sloped_art[cache_key]
+		result.append(copy)
+	return result

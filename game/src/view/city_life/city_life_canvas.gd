@@ -137,6 +137,7 @@ func render(app: CityApplication, figures: Array, sprites: CityLifeSprites, prep
 			continue
 		var candidates := _candidates(app, figure.tile, figure.enter)
 		var opacity := figure.opacity()
+		var shear := 0.0 if figure.walking else CityLifePaths.sprite_shear(city, figure.tile, figure.enter, figure.exit)
 		if gpu_enabled:
 			var entry: Dictionary = _gpu_entries.get(figure, {})
 			if entry.is_empty():
@@ -146,10 +147,11 @@ func render(app: CityApplication, figures: Array, sprites: CityLifeSprites, prep
 			entry.origin = origin
 			entry.occluders = candidates
 			entry.opacity = opacity
+			entry.shear = shear
 			entries.append(entry)
 		else:
 			var mask: Image = sprites.lamp_image(sprite, lights, figure.vehicle_kind, figure.direction) if light_active and not figure.walking else null
-			entries.append({"sprite": sprite, "origin": origin, "occluders": candidates, "opacity": opacity, "lamps": mask, "figure": figure,
+			entries.append({"sprite": sprite, "origin": origin, "occluders": candidates, "opacity": opacity, "lamps": mask, "figure": figure, "shear": shear,
 				"master": sprites.master_image(sprite), "master_lamps": sprites.lamp_image(sprite, lights, figure.vehicle_kind, figure.direction, true) if mask != null else null})
 		if cold or lights.prepared_receivers != receivers:
 			preparation_usec += Time.get_ticks_usec() - preparation_started

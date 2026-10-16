@@ -176,6 +176,16 @@ static func edge_height(city: CityState, tile: Vector2i, direction: int) -> floa
 	return city.land_altitude(tile.x, tile.y) + raised + float(((mask >> corners[0]) & 1) + ((mask >> corners[1]) & 1)) * 0.5
 
 
+static func sprite_shear(city: CityState, tile: Vector2i, enter: int, exit: int) -> float:
+	var rise := edge_height(city, tile, exit) - edge_height(city, tile, enter)
+	if is_zero_approx(rise):
+		return 0.0
+	var span := point(city, tile, enter, exit, 1.0, false).x - point(city, tile, enter, exit, 0.0, false).x
+	# Straight sloped roads project onto either isometric axis. Vertical screen
+	# routes have no horizontal baseline to shear (flat diagonal road artwork).
+	return -12.0 * rise / span if absf(span) > 0.01 else 0.0
+
+
 static func point(city: CityState, tile: Vector2i, enter: int, exit: int, progress: float, walking: bool) -> Vector2:
 	var incoming := -Vector2(DIRECTIONS[enter])
 	var outgoing := Vector2(DIRECTIONS[exit])
