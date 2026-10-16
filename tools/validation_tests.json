@@ -1,5 +1,11 @@
 [
   {
+    "id": "city_save_backup_test",
+    "script": "tests/city_save_backup_test.gd",
+    "domain": "formats",
+    "lane": "product"
+  },
+  {
     "id": "city_preview_test",
     "script": "tests/city_preview_test.gd",
     "domain": "ui",

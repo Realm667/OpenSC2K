@@ -112,6 +112,11 @@ static func prepare(
 
 # Compress, write, and check a prepared save. This reads only `prepared`.
 static func write(prepared: PreparedSave) -> FileWriteResult:
+	if prepared.backup_previous:
+		var backup_error := CitySaveBackup.create(ProjectSettings.globalize_path(prepared.path))
+		if not backup_error.is_empty():
+			return FileWriteResult.failure(backup_error)
+
 	if prepared.entries == null:
 		var plain := write_verified(prepared.path, prepared.bytes)
 
@@ -181,6 +186,7 @@ static func is_reference_path(path: String, reference_root: String) -> bool:
 # The checked target and a private copy of the content to write. `snapshot`
 # is the saved-content snapshot of Sc2File.content_snapshot.
 class PreparedSave extends RefCounted:
+	var backup_previous := false
 	var ok := false
 	var error := ""
 	var path := ""

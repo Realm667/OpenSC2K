@@ -212,11 +212,13 @@ func _test_save_city(main: Node) -> bool:
 	var expected := document.serialize()
 	var passed: bool = (
 		not first_save.is_empty() and saved != first_save
+		and FileAccess.get_file_as_bytes(path + ".bak") == first_save
 		and expected.ok and saved == expected.data
 		and not dialog.visible and not main.city_files.call("_city_has_unsaved_changes")
 		and main.document_state.current_save_path == absolute_path
 	)
 	DirAccess.remove_absolute(absolute_path)
+	DirAccess.remove_absolute(absolute_path + ".bak")
 	document.set_misc_i32(0x14, funds)
 	document.source_path = source_path
 	main.document_state.current_save_path = ""

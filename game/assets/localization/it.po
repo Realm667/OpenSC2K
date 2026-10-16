@@ -38108,3 +38108,7 @@ msgstr "Caricamento della città…"
 #. City preview; supplementary translation from English, AI-assisted.
 msgid "Saving city…"
 msgstr "Salvataggio della città…"
+
+#. Manual city-save backup; supplementary Reticulating Splines translation.
+msgid "Cannot create the backup. The city was not saved."
+msgstr "Impossibile creare la copia di sicurezza. La città non è stata salvata."

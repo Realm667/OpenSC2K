@@ -8013,3 +8013,7 @@ msgstr "도시 불러오는 중…"
 #. City preview; supplementary translation from English, AI-assisted.
 msgid "Saving city…"
 msgstr "도시 저장 중…"
+
+#. Manual city-save backup; supplementary Reticulating Splines translation.
+msgid "Cannot create the backup. The city was not saved."
+msgstr "백업을 만들 수 없습니다. 도시가 저장되지 않았습니다."

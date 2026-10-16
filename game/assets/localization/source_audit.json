@@ -16,7 +16,8 @@
     "game/src/ui/startup/startup_loading.gd",
     "game/src/ui/settings/controls_binding_list.gd",
     "game/src/ui/shared/city_open_dialog.gd",
-    "game/src/ui/shared/busy_overlay.gd"
+    "game/src/ui/shared/busy_overlay.gd",
+    "game/src/formats/city_save_backup.gd"
   ],
   "non_display_literals": {
     "SimCity 2000 (%s)": "Product and platform proper names; source package identity.",

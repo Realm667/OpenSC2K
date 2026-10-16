@@ -492,6 +492,7 @@ func _save_copy(path: String, on_saved := Callable()) -> bool:
 		return false
 
 	var prepared := CityFiles.prepare(document, path, app.asset_state.reference_root, app.simulation_state.speed_controller)
+	prepared.backup_previous = true
 
 	if not prepared.ok:
 		app.interface.show_error(prepared.error)
@@ -510,6 +511,7 @@ func _save_in_background(document: Sc2File, path: String, on_saved: Callable) ->
 	await app.get_tree().process_frame
 	await app.get_tree().process_frame
 	var prepared := CityFiles.prepare(document, path, app.asset_state.reference_root, app.simulation_state.speed_controller)
+	prepared.backup_previous = true
 
 	if not prepared.ok:
 		save_in_progress = false
@@ -597,6 +599,7 @@ func _save_with_preview(path: String, on_saved := Callable()) -> void:
 		return
 	var document := document_state.current_document
 	var prepared := CityFiles.prepare(document, path, app.asset_state.reference_root, app.simulation_state.speed_controller)
+	prepared.backup_previous = true
 	if not prepared.ok:
 		app.interface.show_error(prepared.error)
 		return

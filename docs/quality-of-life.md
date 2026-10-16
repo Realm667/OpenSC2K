@@ -132,3 +132,18 @@ resource number, restart or external audio converter is required for MP3s.
 New interface strings are in the central language catalogs and `messages.pot`.
 Language availability follows the application's registered language set. No
 original game assets are included in this feature.
+
+## Manual save backups
+
+Overwriting a single-player city keeps its previous valid file beside it as
+`<filename>.bak`, for example `My City.sc2x.bak`. Each successful backup replaces
+the older backup with the immediate predecessor. The first save creates no backup.
+The backup is staged and verified before the city is overwritten. If it cannot
+be created, saving stops and the current file remains unchanged. An already invalid
+city file does not replace an existing valid backup.
+
+This applies to manual Save, Save As over an existing file, and saving before
+leaving a city. Autosaves retain their existing separate retention policy;
+multiplayer keeps its existing session backup behavior. To recover a backup,
+copy it to a new filename with the original `.sc2`, `.scn`, or `.sc2x` extension
+and open that copy.
