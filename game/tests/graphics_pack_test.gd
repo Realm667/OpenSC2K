@@ -7,6 +7,7 @@ const Pack = preload("res://src/assets/graphics_pack.gd")
 
 
 func _initialize() -> void:
+	_check_two_x_masters()
 	_check_truecolor_pack()
 	_check_visual_palette_swaps()
 	_check_master_registration()
@@ -439,3 +440,55 @@ func _check_truecolor_pack() -> void:
 	manifest.semantic_images["TILE_1364_001.png"] = "semantic.png"
 	_write_manifest(folder, manifest)
 	assert(not Pack.load_root(folder).error.is_empty(), "Mismatched logical masks must be rejected")
+
+
+func _check_two_x_masters() -> void:
+	var palette := Sc2Palette.index_encoding()
+	var decoded := IndexedImageResult.new()
+	decoded.ok = true
+	decoded.palette = palette
+	decoded.width = 80
+	decoded.height = 48
+	decoded.pixels.resize(80 * 48)
+	decoded.pixels.fill(7)
+	var reader := func(_path: Variant) -> IndexedImageResult: return decoded
+	var record := {"id": 1112, "png": "master.png", "logical_size": [40, 24]}
+	var master := MasterSpriteSource.new()
+	assert(master.load_records([record], reader, palette, Callable(), "centered-footprint-v1", JSON.parse_string("2")), master.error)
+	for view in 3:
+		var divisor := 4 >> view
+		var archive: Sc2SpriteArchive = master.large if view == 2 else master.small_medium
+		var id := 112 + view * 500
+		var entry := archive.find_sprite(id)
+		assert(Vector2i(entry.width, entry.height) == Vector2i(40 / divisor, 24 / divisor))
+		assert(archive.visual_registration[id] == Vector3i(32 / divisor, 4 / divisor, 0))
+		assert(archive.high_resolution[id].image.get_size() == Vector2i(80, 48))
+		assert(entry.decode_indices().pixels.count(7) == entry.width * entry.height)
+	assert(not master.load_records([record], reader, palette), "2x pixels must not silently pass a 4x declaration")
+	for bad in [0, 1, 3, 2.5, "2", null, true]:
+		assert(not master.load_records([record], reader, palette, Callable(), "legacy", bad))
+	var person := Image.create(6, 12, false, Image.FORMAT_RGBA8)
+	person.fill(Color8(90, 130, 160))
+	var images := {"person": person}
+	var visual_reader := func(path: String) -> Image: return images.get(path)
+	var rows := [{"key": "person/0/0/0", "png": "person", "logical_size": [3, 6], "master_scale": 2}]
+	var visual := VisualArtwork.load_records(rows, visual_reader)
+	assert(visual.error.is_empty(), visual.error)
+	assert(visual.frames["person/0/0/0"].scale == 2 and visual.city_life_scale == 2)
+	var sprites := CityLifeSprites.new()
+	sprites.set_artwork(visual)
+	var logical := sprites.sprite(true, 0, 0, 0)
+	assert(logical.get_size() == Vector2i(3, 6) and sprites.master_image(logical).get_size() == Vector2i(6, 12))
+	# Source raster changes must not shrink the displayed toolbar icons.
+	for raster_scale in [2, 4]:
+		var toolbar := CityToolbar.new()
+		toolbar.toolbar_art = Image.create(865 * raster_scale, 23 * raster_scale, false, Image.FORMAT_RGBA8)
+		toolbar.toolbar_art.fill_rect(Rect2i(raster_scale, raster_scale, 10 * raster_scale, 12 * raster_scale), Color.WHITE)
+		var icon := toolbar._toolbar_icon(Rect2i(0, 0, 20, 20))
+		assert(icon != null and icon.get_size() == Vector2(10, 12))
+		toolbar.free()
+	# Mask sampling preserves the bottom alignment at every resolution.
+	var mask := Image.create(64, 72, false, Image.FORMAT_RGBA8)
+	mask.set_pixel(1, 71, Color.RED)
+	var sampled := CityNatureArtwork._logical_mask(mask, Vector2i(32, 36), 1, 2)
+	assert(sampled.get_pixel(0, 35) == Color.RED)

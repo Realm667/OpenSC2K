@@ -41,7 +41,7 @@ master remains necessary for the renderer's logical geometry and semantic pixels
 # Explicit animation lists (compatibility)
 
 A `master_sprites` record can provide one to 32 RGBA source frames. The files
-use the same canvas, 4x resolution, registration and placement as its base art.
+use the same canvas, declared master resolution (2x for RS), registration and placement as its base art.
 This is pack-local: original indexed SC2K graphics keep their palette cycling.
 Existing indexed frame lists (including eight-frame traffic) are unchanged.
 

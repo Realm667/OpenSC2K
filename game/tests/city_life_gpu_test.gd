@@ -55,17 +55,19 @@ func _run() -> void:
 	await process_frame
 	await _check_headlight_batches(false)
 	await _check_headlight_batches(true)
+	await _check_headlight_batches(false, 2)
 	await _check_headlight_batches(false, 4)
 	await _check_sparse_artwork(false)
 	await _check_sparse_artwork(true)
 	await _check_instances(false, 540)
 	await _check_instances(true)
-	await _check_hd_subpixel_motion()
+	await _check_hd_subpixel_motion(2)
+	await _check_hd_subpixel_motion(4)
 	print("PASS: GPU city-life colors, transparent background, cloud shadows and environment lighting")
 	quit()
 
 
-func _check_hd_subpixel_motion() -> void:
+func _check_hd_subpixel_motion(raster_scale: int) -> void:
 	var viewport := SubViewport.new()
 	viewport.size = Vector2i(128, 64)
 	viewport.transparent_bg = true
@@ -76,7 +78,15 @@ func _check_hd_subpixel_motion() -> void:
 	canvas.source_bounds = Rect2i(0, 0, 32, 16)
 	viewport.add_child(canvas)
 	var sprites := CityLifeSprites.new()
-	sprites.set_artwork(VisualArtwork.new())
+	var person := Image.create(3 * raster_scale, 6 * raster_scale, false, Image.FORMAT_RGBA8)
+	person.fill(Color.WHITE)
+	var reader := func(_path: String) -> Image: return person
+	var authored := VisualArtwork.load_records([{
+		"key": "person/0/0/0", "png": "person.png",
+		"logical_size": [3, 6], "master_scale": raster_scale,
+	}], reader)
+	assert(authored.error.is_empty(), authored.error)
+	sprites.set_artwork(authored)
 	canvas.gpu = CityLifeGpu.new()
 	canvas.gpu.prepare(sprites, canvas.lights)
 	var sprite := sprites.sprite(false, 0, 1, 0)

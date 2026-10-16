@@ -152,7 +152,7 @@ func set_workspace_images(images: Dictionary) -> void:
 		if id >= 1200 and id <= 1215:
 			var image: Image = images[id]
 			var logical: Vector2i = ScurkGraphics.WORKSPACE_SIZES[id]
-			textures[id] = (HdArtworkTexture.create(image.duplicate(), logical) if image.get_size() == logical * 4
+			textures[id] = (HdArtworkTexture.create(image.duplicate(), logical) if image.get_size() in [logical * 2, logical * 4]
 				else PixelArtTexture.wrap(ImageTexture.create_from_image(image)))
 
 	tool_list.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST

@@ -390,7 +390,7 @@ func _add_group_button(
 
 
 func _toolbar_icon(region: Rect2i) -> Texture2D:
-	var scale := 4 if toolbar_art != null and toolbar_art.get_size() == Vector2i(3460, 92) else 1
+	var scale := toolbar_art.get_width() / 865 if toolbar_art != null and toolbar_art.get_size() in [Vector2i(1730, 46), Vector2i(3460, 92)] else 1
 	region = Rect2i(region.position * scale, region.size * scale)
 	if (
 		toolbar_art == null
@@ -420,8 +420,8 @@ func _toolbar_icon(region: Rect2i) -> Texture2D:
 		return null
 
 	var bounds := Rect2i(minimum, maximum - minimum + Vector2i.ONE)
-	if scale == 4:
-		return HdArtworkTexture.create(image.get_region(bounds), Vector2i(ceili(bounds.size.x / 4.0), ceili(bounds.size.y / 4.0)))
+	if scale > 1:
+		return HdArtworkTexture.create(image.get_region(bounds), Vector2i(ceili(bounds.size.x / float(scale)), ceili(bounds.size.y / float(scale))))
 
 	return PixelArtTexture.wrap(ImageTexture.create_from_image(image.get_region(bounds)))
 

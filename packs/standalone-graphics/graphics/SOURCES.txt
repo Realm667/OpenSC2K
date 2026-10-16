@@ -1,4 +1,4 @@
-Reticulating Splines Remaster graphics — Style A, 4x
+Reticulating Splines Remaster graphics — Style A, 2x
 
 Independent ImageGen artwork plus user-authorized mathematical projection,
 position, palette/lightmap transforms and deterministic textured-ground baking.
@@ -39,3 +39,15 @@ Existing 81 frame sequences retained. The prior vehicle/person palette variants
 are baked to 528 RGBA sources with identical visible pixels. Semantic masks
 retain only material addresses. No SC2000 source files or pixels were changed
 or included. Receipt: truecolor-review.json. Earlier receipts are historical.
+
+2x and building colors, 16 October 2026:
+All 4199 visible artwork/mask PNGs reduced from approved RS 4x sources. The
+16x16 compatibility lookup is unchanged. Material-color ramps retain the pixel
+style without dithering. All logical sizes, anchors and 122 frame sequences
+(125 ms each frame) are unchanged. Lightmaps and semantic masks are aligned.
+Residential buildings use olive/cyan/vanilla accents; commercial buildings cool
+white/gray/anthracite; industry oxide/rust/sand. City Hall, Hospital, Police
+Station, Museum and Llama Dome use white finishes; Prison has dark facades.
+Police Station is #1210; #1202 is oil power and was not whitened.
+Current receipt: graphics/resolution-color-review.json (or this folder).
+Historical migration receipts retain their original dated source dimensions.

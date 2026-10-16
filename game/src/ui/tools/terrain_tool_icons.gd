@@ -38,8 +38,9 @@ static func terrain_action(graphics: CityUiGraphics, role: String) -> Texture2D:
 				if image.get_pixel(x, y).is_equal_approx(background):
 					image.set_pixel(x, y, Color.TRANSPARENT)
 
-		if graphics.terrain.get(207) != null and graphics.terrain[207].get_size() == Vector2i(2176, 76):
-			var texture := HdArtworkTexture.create(image, Vector2i(image.get_width() / 2, image.get_height() / 2))
+		if graphics.terrain.get(207) != null and graphics.terrain[207].get_size() in [Vector2i(1088, 38), Vector2i(2176, 76)]:
+			var raster_scale: int = graphics.terrain[207].get_width() / 544
+			var texture := HdArtworkTexture.create(image, Vector2i(image.get_width() * 2 / raster_scale, image.get_height() * 2 / raster_scale))
 			texture.set_meta("terrain_toolbar", true)
 			return texture
 		image.resize(image.get_width() * 2, image.get_height() * 2, Image.INTERPOLATE_NEAREST)

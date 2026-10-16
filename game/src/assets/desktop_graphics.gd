@@ -204,11 +204,11 @@ func _load(value: Variant, read_png: Callable, _palette: Sc2Palette) -> void:
 
 				var size := native_size(app, kind, ids[i])
 				var master_scale: Variant = record.get("master_scale", 1)
-				if not (master_scale is int or master_scale is float) or (master_scale != 1 and master_scale != 4):
-					error = "Desktop master_scale must be 1 or 4"
+				if not (master_scale is int or master_scale is float) or (master_scale != 1 and master_scale != 2 and master_scale != 4):
+					error = "Unsupported graphics pack format or version"
 					return
-				if master_scale == 4 and record.has("and_png"):
-					error = "Desktop 4x masters use alpha instead of legacy AND/XOR masks"
+				if master_scale > 1 and record.has("and_png"):
+					error = "Unsupported graphics pack format or version"
 					return
 
 				if Vector2i(png.width, png.height) != size * int(master_scale):
@@ -250,7 +250,7 @@ func _load(value: Variant, read_png: Callable, _palette: Sc2Palette) -> void:
 
 					cursors[app][ids[i]] = Cursor.new(PeIconCursorResource.transparent_image(decoded).image, hotspot, decoded)
 				else:
-					var master: Image = image if master_scale == 4 else null
+					var master: Image = image if master_scale > 1 else null
 					if master != null:
 						image = image.duplicate()
 						image.resize(size.x, size.y, Image.INTERPOLATE_LANCZOS)

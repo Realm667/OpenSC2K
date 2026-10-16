@@ -53,7 +53,7 @@ func render(app: CityApplication, figures: Array, sprites: CityLifeSprites, prep
 	var previous_bounds := source_bounds
 	var preparation_usec := 0
 	var source_art := app.asset_state.asset_source.assets.visual_artwork if app.asset_state.asset_source != null else null
-	var raster_scale := 4 if source_art != null else 1
+	var raster_scale := source_art.city_life_scale if source_art != null else 1
 	if lights.raster_scale != raster_scale:
 		lights.set_raster_scale(raster_scale)
 		if road_layer != null:

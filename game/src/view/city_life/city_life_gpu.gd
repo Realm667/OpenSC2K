@@ -39,7 +39,7 @@ func _init() -> void:
 func prepare(sprites: CityLifeSprites, lights: CityLifeLights) -> void:
 	if artwork != null:
 		return
-	artwork_scale = 4 if sprites.authored != null else 1
+	artwork_scale = sprites.authored.city_life_scale if sprites.authored != null else 1
 	var image := Image.create(1024 * artwork_scale, 512 * artwork_scale, false, Image.FORMAT_RGBA8)
 	var lamp_image := Image.create(1024 * artwork_scale, 512 * artwork_scale, false, Image.FORMAT_RGBA8)
 	for walking in [false, true]:

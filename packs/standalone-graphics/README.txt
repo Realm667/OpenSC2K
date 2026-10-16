@@ -1,7 +1,7 @@
-Reticulating Splines Remaster — Style A (4x)
+Reticulating Splines Remaster — Style A (2x)
 
 Development source pack, 14 October 2026. 499 city masters; all smaller city
-views derive from the 4x masters. Original import sets remain separate.
+views derive from the 2x masters. Original import sets remain separate.
 
 Latest review: 228 city masters and two UI sheets corrected from the city review.
 Roads, railways, crossings, grades, ramps, bridges and tunnels share wider
@@ -54,3 +54,15 @@ All 144 buildings now use the centered-footprint-v1 master canvas convention;
 accepted sizes and positions are baked into pixels, with no individual overrides.
 Use the matching game build with master_canvas support. Modding documentation:
 ../../docs/master-canvas-layout.md; per-building sizes and guides: templates/.
+
+2x and building colors, 16 October 2026:
+All 4199 visible artwork/mask PNGs reduced from approved RS 4x sources. The
+16x16 compatibility lookup is unchanged. Material-color ramps retain the pixel
+style without dithering. All logical sizes, anchors and 122 frame sequences
+(125 ms each frame) are unchanged. Lightmaps and semantic masks are aligned.
+Residential buildings use olive/cyan/vanilla accents; commercial buildings cool
+white/gray/anthracite; industry oxide/rust/sand. City Hall, Hospital, Police
+Station, Museum and Llama Dome use white finishes; Prison has dark facades.
+Police Station is #1210; #1202 is oil power and was not whitened.
+Current receipt: graphics/resolution-color-review.json (or this folder).
+Historical migration receipts retain their original dated source dimensions.

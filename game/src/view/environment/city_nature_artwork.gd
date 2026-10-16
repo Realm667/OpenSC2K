@@ -113,7 +113,7 @@ static func _apply_authored(archive: Sc2SpriteArchive, palette: Sc2Palette, auth
 								colors[rgba] = _nearest(palette, pixel)
 							decoded.pixels[y * decoded.width + x] = -1 if pixel.a8 == 0 else colors[rgba]
 					decoded_cache[identity] = decoded
-				var indices := MasterSpriteSource._sample_indices(decoded_cache[identity], size, divisor)
+				var indices := MasterSpriteSource._sample_indices(decoded_cache[identity], size, divisor, frame.scale)
 				entry = Sc2SpriteArchive.entry_from_indices(id, size.x, size.y, indices)
 			else:
 				var base_id := int(parts[1]) - 1000 + view * 500
@@ -123,7 +123,7 @@ static func _apply_authored(archive: Sc2SpriteArchive, palette: Sc2Palette, auth
 				id = FIRST + GROUND_VARIANT * SPAN + base_id
 				entry = Sc2SpriteArchive.entry_from_indices(id, size.x, size.y, ground.decode_indices().pixels)
 				if frame.season_mask != null:
-					archive.visual_nature_masks[base_id] = _logical_mask(frame.season_mask, size, divisor)
+					archive.visual_nature_masks[base_id] = _logical_mask(frame.season_mask, size, divisor, frame.scale)
 					archive.visual_season_artwork[base_id] = frame.season_mask
 			archive.visual_nature[id] = entry
 			var hd := HdSprite.new()
@@ -131,16 +131,16 @@ static func _apply_authored(archive: Sc2SpriteArchive, palette: Sc2Palette, auth
 			hd.height = size.y
 			archive.high_resolution[id] = hd
 			if frame.season_mask != null:
-				archive.visual_nature_masks[id] = _logical_mask(frame.season_mask, size, divisor)
+				archive.visual_nature_masks[id] = _logical_mask(frame.season_mask, size, divisor, frame.scale)
 				archive.visual_season_artwork[id] = frame.season_mask
 
 
-static func _logical_mask(source: Image, size: Vector2i, divisor: int) -> Image:
+static func _logical_mask(source: Image, size: Vector2i, divisor: int, scale := 4) -> Image:
 	var result := Image.create(size.x, size.y, false, Image.FORMAT_RGBA8)
 	for y in size.y:
 		for x in size.x:
-			var sx := mini(source.get_width() - 1, x * divisor * 4 + divisor * 2)
-			var sy := maxi(0, source.get_height() - 1 - (size.y - 1 - y) * divisor * 4)
+			var sx := mini(source.get_width() - 1, x * divisor * scale + divisor * scale / 2)
+			var sy := maxi(0, source.get_height() - 1 - (size.y - 1 - y) * divisor * scale)
 			result.set_pixel(x, y, source.get_pixel(sx, sy))
 	return result
 

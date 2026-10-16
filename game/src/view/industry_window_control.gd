@@ -173,7 +173,7 @@ func set_mode(value: int) -> void:
 func set_icon_strip(value: Image) -> void:
 	icon_strip = null
 	if value != null and not value.is_empty():
-		icon_strip = HdArtworkTexture.create(value, Vector2i(14, 154)) if value.get_size() == Vector2i(56, 616) else ImageTexture.create_from_image(value)
+		icon_strip = HdArtworkTexture.create(value, Vector2i(14, 154)) if value.get_size() in [Vector2i(28, 308), Vector2i(56, 616)] else ImageTexture.create_from_image(value)
 	queue_redraw()
 
 

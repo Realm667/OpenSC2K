@@ -182,7 +182,7 @@ func _load() -> void:
 			_fail("Unsupported graphics pack format or version")
 			return
 		var masters := MasterSpriteSource.new()
-		if not masters.load_records(manifest.master_sprites, _read_png, palette, _read_rgba_png, manifest.get("master_canvas", "legacy")):
+		if not masters.load_records(manifest.master_sprites, _read_png, palette, _read_rgba_png, manifest.get("master_canvas", "legacy"), manifest.get("master_scale", MasterSpriteSource.SCALE)):
 			_fail(masters.error if error.is_empty() else error)
 			return
 		large_sprites = masters.large

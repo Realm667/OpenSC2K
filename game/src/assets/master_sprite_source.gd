@@ -6,7 +6,8 @@ extends RefCounted
 
 @warning_ignore_start("integer_division")
 
-const SCALE := 4
+const SCALE := 4 # Default for existing independent packs.
+var _scale := SCALE
 const MAX_DECODED_BYTES := 512 * 1024 * 1024
 const ROAD_SURFACE_INDEX := 0xa1
 
@@ -16,13 +17,16 @@ var error := ""
 var _animation_bytes := 0
 
 
-func load_records(records: Variant, read_png: Callable, palette: Sc2Palette, read_rgba := Callable(), canvas_layout: Variant = "legacy") -> bool:
+func load_records(records: Variant, read_png: Callable, palette: Sc2Palette, read_rgba := Callable(), canvas_layout: Variant = "legacy", master_scale: Variant = SCALE) -> bool:
 	error = ""
 	large = Sc2SpriteArchive.new()
 	small_medium = Sc2SpriteArchive.new()
 	large.draw_building_ground = true
 	small_medium.draw_building_ground = true
 	_animation_bytes = 0
+	if not (master_scale is int or master_scale is float) or not is_finite(float(master_scale)) or master_scale != int(master_scale) or int(master_scale) not in [2, 4]:
+		return _fail("Unsupported graphics pack format or version")
+	_scale = int(master_scale)
 	if not canvas_layout is String or canvas_layout not in ["legacy", "centered-footprint-v1"]:
 		return _fail("Unsupported graphics pack format or version")
 	if not records is Array or records.is_empty():
@@ -48,7 +52,7 @@ func load_records(records: Variant, read_png: Callable, palette: Sc2Palette, rea
 		for side: Variant in size:
 			if not (side is int or side is float):
 				return _fail("Unsupported graphics pack format or version")
-			if not is_finite(float(side)) or side != int(side) or side < 1 or side > 4096 / SCALE:
+			if not is_finite(float(side)) or side != int(side) or side < 1 or side > 4096 / _scale:
 				return _fail("Unsupported graphics pack format or version")
 		var logical := Vector2i(int(size[0]), int(size[1]))
 		var registration := Vector3i(logical.x, 0, 0)
@@ -88,7 +92,7 @@ func load_records(records: Variant, read_png: Callable, palette: Sc2Palette, rea
 			return _fail("Invalid PNG pixels or palette")
 		if decoded.palette.colors != palette.colors:
 			return _fail("Sprite palette differs from the pack palette: %s" % record.png)
-		if Vector2i(decoded.width, decoded.height) != logical * SCALE:
+		if Vector2i(decoded.width, decoded.height) != logical * _scale:
 			return _fail("Unsupported graphics pack format or version")
 		decoded_bytes += decoded.width * decoded.height * 8
 		if decoded_bytes > MAX_DECODED_BYTES:
@@ -103,7 +107,7 @@ func load_records(records: Variant, read_png: Callable, palette: Sc2Palette, rea
 			if not read_rgba.is_valid():
 				return _fail("Unsupported graphics pack format or version")
 			var full_color: Image = read_rgba.call(record.artwork_rgba)
-			if full_color == null or full_color.get_size() != logical * SCALE:
+			if full_color == null or full_color.get_size() != logical * _scale:
 				return _fail("Unsupported graphics pack format or version")
 			decoded_bytes += full_color.get_width() * full_color.get_height() * 4
 			if decoded_bytes > MAX_DECODED_BYTES:
@@ -114,7 +118,7 @@ func load_records(records: Variant, read_png: Callable, palette: Sc2Palette, rea
 			var light: IndexedImageResult = read_png.call(record.lightmap)
 			if light == null or not light.ok:
 				return _fail("Invalid PNG pixels or palette")
-			if Vector2i(light.width, light.height) != logical * SCALE:
+			if Vector2i(light.width, light.height) != logical * _scale:
 				return _fail("Unsupported graphics pack format or version")
 			# A mask has its own emission colors. Its nontransparent pixels must
 			# belong to the master silhouette; roofs/ground still need art review.
@@ -135,7 +139,7 @@ func load_records(records: Variant, read_png: Callable, palette: Sc2Palette, rea
 		var traffic_mask: IndexedImageResult
 		if record.has("traffic_mask"):
 			traffic_mask = read_png.call(record.traffic_mask)
-			if traffic_mask == null or not traffic_mask.ok or Vector2i(traffic_mask.width, traffic_mask.height) != logical * SCALE:
+			if traffic_mask == null or not traffic_mask.ok or Vector2i(traffic_mask.width, traffic_mask.height) != logical * _scale:
 				return _fail("Invalid traffic mask geometry")
 			var has_road := false
 			for pixel in traffic_mask.pixels.size():
@@ -152,9 +156,9 @@ func load_records(records: Variant, read_png: Callable, palette: Sc2Palette, rea
 			var divisor := 4 >> view
 			var view_size := Vector2i(maxi(1, logical.x / divisor), maxi(1, (logical.y + divisor - 1) / divisor))
 			var view_id := id - 1000 + view * 500
-			var indices := _sample_indices(decoded, view_size, divisor)
+			var indices := _sample_indices(decoded, view_size, divisor, _scale)
 			if traffic_mask != null:
-				var road := _sample_indices(traffic_mask, view_size, divisor)
+				var road := _sample_indices(traffic_mask, view_size, divisor, _scale)
 				for pixel in indices.size():
 					# The native traffic compositor reads this semantic index. Keep
 					# the full-resolution texture unchanged, including its shading.
@@ -272,20 +276,20 @@ func _load_animation(record: Dictionary, master: IndexedImageResult, read_png: C
 	return {"art": strip, "light": lights, "frames": paths.size(), "fps": int(rate)}
 
 
-static func _sample_indices(source: IndexedImageResult, size: Vector2i, divisor: int) -> PackedInt32Array:
+static func _sample_indices(source: IndexedImageResult, size: Vector2i, divisor: int, scale: int = SCALE) -> PackedInt32Array:
 	var pixels := PackedInt32Array()
 	pixels.resize(size.x * size.y)
 	# Keep the bottom baseline, including the extra shared diamond edge. Do not
 	# quantize colors: reserved/animated indices must keep their exact meaning.
 	for y in size.y:
-		var sy := maxi(0, source.height - 1 - (size.y - 1 - y) * divisor * SCALE)
+		var sy := maxi(0, source.height - 1 - (size.y - 1 - y) * divisor * scale)
 		for x in size.x:
-			var sx := mini(source.width - 1, x * divisor * SCALE + divisor * SCALE / 2)
+			var sx := mini(source.width - 1, x * divisor * scale + divisor * scale / 2)
 			var index := source.pixels[sy * source.width + sx]
 			if index < 0:
 				# A point sample can miss an entire cable or wireframe. Retain
 				# supported thin details from this pixel's own bottom-aligned cell.
-				var step := divisor * SCALE
+				var step := divisor * scale
 				index = _covered_index(source, x * step, mini(source.width, (x + 1) * step),
 					maxi(0, sy - step + 1), sy + 1)
 			pixels[y * size.x + x] = index
