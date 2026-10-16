@@ -222,26 +222,15 @@ func _test_signs(map_control: CityMapControl, starter: CityState, center_tile: V
 	var doubled_sign := CityMapSigns.sign_layout(
 		Vector2(200, 160), 80.0, IsometricRenderer.VIEW_LARGE, 2.0
 	)
-	_check(
-		small_sign.panel == Rect2(72, 43, 56, 17)
-		and small_sign.post == Rect2(98, 60, 4, 20),
-		"Small-view sign uses the recovered panel and post geometry",
-	)
-	_check(
-		medium_sign.panel == Rect2(72, 26, 56, 19)
-		and medium_sign.post == Rect2(98, 45, 4, 35),
-		"Medium-view sign uses the recovered panel and post geometry",
-	)
-	_check(
-		large_sign.panel == Rect2(72, 9, 56, 21)
-		and large_sign.post == Rect2(98, 30, 4, 50),
-		"Large-view sign uses the recovered panel and post geometry",
-	)
-	_check(
-		doubled_sign.panel == Rect2(144, 18, 112, 42)
-		and doubled_sign.post == Rect2(196, 60, 8, 100),
-		"Extra-large sign doubles the native large-view geometry",
-	)
+	for layout in [small_sign, medium_sign, large_sign]:
+		_check(layout.face.x == Vector2(1, 0.5), "The board follows the 2:1 ground projection")
+		for corner in [Vector2.ZERO, layout.face_size, Vector2(layout.face_size.x, 0), Vector2(0, layout.face_size.y)]:
+			_check(layout.bounds().has_point(layout.face * corner), "Culling bounds contain every board corner")
+		_check(layout.post.end.y == 80.0 and layout.panel.end.y < 80.0,
+			"The post stays anchored and the board clears the terrain")
+	_check(doubled_sign.panel == Rect2(large_sign.panel.position * 2, large_sign.panel.size * 2)
+		and doubled_sign.post == Rect2(large_sign.post.position * 2, large_sign.post.size * 2),
+		"Sign geometry scales consistently with source coordinates")
 	_check(
 		CityMapSigns.sign_view_index(0.25) == IsometricRenderer.VIEW_SMALL
 		and CityMapSigns.sign_view_index(0.5) == IsometricRenderer.VIEW_MEDIUM
@@ -260,17 +249,15 @@ func _test_signs(map_control: CityMapControl, starter: CityState, center_tile: V
 	var sign_tile_top := IsometricRenderer.tile_polygon(sign_city, center_tile.x, center_tile.y)[0]
 
 	# the post ends at the center of the tile in each native size
-	for zoom_fixture in [
-		[0.25, 152, 12], [0.5, 110, 10], [1.0, 72, 9], [2.0, 72, 9], [3.0, 72, 9], [4.0, 72, 9],
-	]:
-		map_control.zoom_factor = zoom_fixture[0]
+	for zoom in [0.25, 0.5, 1.0, 2.0, 3.0, 4.0]:
+		map_control.zoom_factor = zoom
 		var sign_entries := map_control.sign_source_entries()
 		_check(
 			sign_entries.size() == 1
-			and sign_entries[0].bounds.size.y == zoom_fixture[1]
-			and sign_entries[0].bounds.end.y == int(sign_tile_top.y) + zoom_fixture[2]
+			and sign_entries[0].bounds.has_point(Vector2i(sign_entries[0].anchor))
+			and sign_entries[0].anchor.y > sign_tile_top.y
 			and sign_entries[0].draw_order == 16448,
-			"Sign source bounds match zoom %.2f" % zoom_fixture[0],
+			"Sign source bounds match zoom %.2f" % zoom,
 		)
 
 	var sign_cache_builds := map_control.signs.sign_cache_build_count

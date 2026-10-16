@@ -3,11 +3,12 @@ extends CityMapConstants
 
 @warning_ignore_start("integer_division")
 
-# the width of the light and dark edges, in native pixels
-const BEVEL_WIDTH := 2.0
+const ENAMEL_FONT_HEIGHTS := [7, 9, 11]
 
 var map: CityMapControl
 var _sign_font: SystemFont
+var artwork_density := 1
+var atlas := CitySignAtlas.new()
 var sign_entries: Array[CityMapSigns.Entry] = []
 var sign_entries_city: CityState
 var sign_entries_zoom := -1.0
@@ -101,7 +102,7 @@ func _ensure_sign_entries() -> void:
 	# painter FUN_0044d9a0 moves up half a tile: the center of the tile
 	var anchor_drop := Vector2(0, (configuration.tile_height - configuration.half_height) * divisor)
 	var font := _get_sign_font()
-	var font_size := _em_size(font, SIGN_FONT_HEIGHTS[view_index])
+	var font_size := _em_size(font, ENAMEL_FONT_HEIGHTS[view_index])
 	var positions: Array[Vector2i] = []
 
 	for index in sign_indices:
@@ -129,16 +130,16 @@ func _ensure_sign_entries() -> void:
 		if polygon.size() != 4:
 			continue
 
-		var native_width := roundf(font.get_string_size(
+		var native_width := ceilf(font.get_string_size(
 			label_text, HORIZONTAL_ALIGNMENT_LEFT, -1, roundi(font_size)
 		).x)
 		var anchor := polygon[0] + anchor_drop
+		var source_multiplier := maxf(1.0, 1.0 / map.zoom_factor)
 		var layout := sign_layout(
-			anchor, native_width * divisor,
-			view_index, divisor,
+			anchor, native_width * source_multiplier,
+			view_index, source_multiplier,
 		)
-		# the light pen reaches one native pixel above and left of the panel
-		var bounds: Rect2 = layout.panel.merge(layout.post).grow_individual(divisor, divisor, 0, 0)
+		var bounds := layout.bounds(source_multiplier)
 		var sign_entry := Entry.new()
 		sign_entry.key = map.city.index_of(x, y)
 		sign_entry.anchor = anchor
@@ -169,35 +170,44 @@ func _draw_signs(scale: float, offset: Vector2) -> void:
 	_ensure_sign_entries()
 	var view_index := sign_view_index(map.zoom_factor)
 	var display_multiplier := sign_display_multiplier(map.zoom_factor) * map.map_pixel_ratio
-	var font := _get_sign_font()
-	var font_size := _em_size(font, SIGN_FONT_HEIGHTS[view_index])
-
+	atlas.prepare(map, sign_entries, view_index, artwork_density, _get_sign_font())
 	for entry in sign_entries:
 		if not Rect2(entry.bounds).intersects(map.camera.visible_source_rect()):
 			continue
+		var slot: CitySignAtlas.Slot = atlas.slots.get(entry.label)
+		if slot == null:
+			continue
+		var origin := (offset + entry.anchor * scale).round()
+		map.draw_texture_rect_region(atlas.pages[slot.page].get_texture(),
+			Rect2(origin + slot.bounds.position * display_multiplier,
+				Vector2(slot.region.size) / artwork_density * display_multiplier), slot.region)
+		draw_text(map, entry, slot, origin, display_multiplier, view_index)
 
-		# the panel and post are drawn in whole native pixels from a whole
-		# screen pixel. The text is drawn at its screen size, so it stays sharp
-		var origin := (offset + Vector2(entry.anchor) * scale).round()
-		var screen_font_size := maxi(1, roundi(font_size * display_multiplier))
 
-		if entry.screen_font_size != screen_font_size:
-			entry.screen_font_size = screen_font_size
-			entry.screen_text_width = font.get_string_size(
-				entry.label, HORIZONTAL_ALIGNMENT_LEFT, -1, screen_font_size
-			).x
+func draw_text(canvas: CanvasItem, entry: Entry, slot: CitySignAtlas.Slot, origin: Vector2, multiplier: float, view: int) -> void:
+	var font := _get_sign_font()
+	var native_size := maxi(1, roundi(_em_size(font, ENAMEL_FONT_HEIGHTS[view])))
+	var screen_size := maxi(1, roundi(native_size * multiplier))
+	if entry.screen_font_size != screen_size:
+		entry.screen_font_size = screen_size
+		entry.screen_text_width = font.get_string_size(entry.label, HORIZONTAL_ALIGNMENT_LEFT, -1, screen_size).x
+	# Font hinting can change the advance at another size. Fit that advance
+	# to the board without changing its world-space position or bounds.
+	var fit := slot.text_width * multiplier / maxf(1.0, entry.screen_text_width)
+	var text_origin := origin + (slot.face * Vector2(5, 3)) * multiplier
+	canvas.draw_set_transform_matrix(Transform2D(Vector2(fit, fit * 0.5), Vector2(0, 1), text_origin))
+	canvas.draw_string(font, Vector2(0, font.get_ascent(screen_size)), entry.label,
+		HORIZONTAL_ALIGNMENT_LEFT, -1, screen_size, Color("eee9d3"))
+	canvas.draw_set_transform_matrix(Transform2D.IDENTITY)
 
-		var layout := sign_layout(
-			Vector2.ZERO, ceilf(entry.screen_text_width / display_multiplier), view_index
-		)
-		_draw_raised_sign_part(layout.panel, SIGN_PANEL_FILL, origin, display_multiplier)
-		var text_position := (origin + (layout.panel.position + Vector2(4.0, 2.0)) * display_multiplier).round()
-		text_position.y += font.get_ascent(screen_font_size)
-		map.draw_string(
-			font, text_position, entry.label, HORIZONTAL_ALIGNMENT_LEFT, -1,
-			screen_font_size, SIGN_TEXT_COLOR,
-		)
-		_draw_raised_sign_part(layout.post, SIGN_POST_FILL, origin, display_multiplier)
+
+func set_high_resolution(enabled: bool) -> void:
+	var density := 2 if enabled else 1
+	if artwork_density == density:
+		return
+	artwork_density = density
+	_sign_font = null
+	map.queue_redraw()
 
 
 static func sign_view_index(zoom: float) -> int:
@@ -220,26 +230,16 @@ static func sign_layout(
 	if view_index < Renderer.VIEW_SMALL or view_index > Renderer.VIEW_LARGE:
 		return null
 
-	var multiplier: float = maxf(1.0, display_multiplier)
-	var width: float = roundf(text_width)
-	var font_height: float = float(SIGN_FONT_HEIGHTS[view_index]) * multiplier
-	var panel_bottom: float = (
-		anchor.y - (15.0 * view_index + 20.0) * multiplier
-	)
-	var panel_top: float = panel_bottom - font_height - 5.0 * multiplier
-	var panel_left: float = anchor.x - floorf(width * 0.5) - 8.0 * multiplier
-	var panel_right: float = panel_left + width + 16.0 * multiplier
-
+	var multiplier := maxf(1.0, display_multiplier)
+	var width := ceilf(text_width) + 10.0 * multiplier
+	var height: float = (ENAMEL_FONT_HEIGHTS[view_index] + 6.0) * multiplier
+	var post_height := maxf([12.0, 17.0, 24.0][view_index] * multiplier, width * 0.25 + 4.0 * multiplier)
+	var top := anchor + Vector2(-width * 0.5, -post_height - height - width * 0.25)
 	var layout := Layout.new()
-	layout.panel = Rect2(
-		Vector2(panel_left, panel_top),
-		Vector2(panel_right - panel_left, panel_bottom - panel_top),
-	)
-	layout.post = Rect2(
-		Vector2(anchor.x - 2.0 * multiplier, panel_bottom),
-		Vector2(4.0 * multiplier, anchor.y - panel_bottom),
-	)
-
+	layout.face = Transform2D(Vector2(1, 0.5), Vector2(0, 1), top)
+	layout.face_size = Vector2(width, height)
+	layout.panel = Rect2(top + Vector2(0, -multiplier), Vector2(width + 2 * multiplier, height + width * 0.5 + multiplier))
+	layout.post = Rect2(anchor + Vector2(-multiplier, -post_height), Vector2(2 * multiplier, post_height))
 	return layout
 
 
@@ -254,32 +254,13 @@ static func _em_size(font: Font, cell_height: float) -> float:
 func _get_sign_font() -> Font:
 	if _sign_font == null:
 		_sign_font = SystemFont.new()
-		# the executable asks for "ariel", windows substitutes arial
 		_sign_font.font_names = PackedStringArray(["Arial"])
 		_sign_font.font_weight = 600
+		_sign_font.antialiasing = TextServer.FONT_ANTIALIASING_GRAY
+		_sign_font.subpixel_positioning = TextServer.SUBPIXEL_POSITIONING_DISABLED
+		_sign_font.oversampling = 1.0
 
 	return _sign_font
-
-
-# FUN_004728a0 fills the rectangle and draws a two-pixel light edge along the
-# top and left and a dark edge along the bottom and right. The light pen
-# starts one pixel outside the fill. `part` is in native pixels from `origin`;
-# the edges are drawn at screen resolution with mitered corners
-func _draw_raised_sign_part(part: Rect2, fill: Color, origin: Vector2, multiplier: float) -> void:
-	var start := (origin + (part.position - Vector2.ONE) * multiplier).round()
-	var end := (origin + part.end * multiplier).round()
-	var edge := maxf(1.0, roundf(BEVEL_WIDTH * multiplier))
-	var inner_start := start + Vector2(edge, edge)
-	var inner_end := end - Vector2(edge, edge)
-	map.draw_rect(Rect2(start, end - start), fill)
-	map.draw_colored_polygon(PackedVector2Array([
-		start, Vector2(end.x, start.y), Vector2(inner_end.x, inner_start.y),
-		inner_start, Vector2(inner_start.x, inner_end.y), Vector2(start.x, end.y),
-	]), SIGN_EDGE_LIGHT)
-	map.draw_colored_polygon(PackedVector2Array([
-		end, Vector2(start.x, end.y), Vector2(inner_start.x, inner_end.y),
-		inner_end, Vector2(inner_end.x, inner_start.y), Vector2(end.x, start.y),
-	]), SIGN_EDGE_DARK)
 
 
 class Entry extends RefCounted:
@@ -289,7 +270,6 @@ class Entry extends RefCounted:
 	var text_width: float
 	var bounds: Rect2i
 	var draw_order: int
-	# the text width at the font size of the last draw
 	var screen_font_size := 0
 	var screen_text_width := 0.0
 
@@ -297,3 +277,11 @@ class Entry extends RefCounted:
 class Layout extends RefCounted:
 	var panel: Rect2
 	var post: Rect2
+	var face: Transform2D
+	var face_size: Vector2
+
+
+	func bounds(padding := 1.0) -> Rect2:
+		var rect := panel.merge(post).grow(padding)
+		var start := rect.position.floor()
+		return Rect2(start, rect.end.ceil() - start)

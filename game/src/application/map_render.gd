@@ -33,6 +33,8 @@ func refresh_map(force := true) -> void:
 		app.view_state.overlay_mode == CityViewMode.Mode.CITY and bool(app.view_state.surface_visibility.signs)
 	)
 
+	app.map_view.signs.set_high_resolution(app.asset_state.large_sprites != null and not app.asset_state.large_sprites.high_resolution.is_empty())
+
 	if CityViewMode.is_data(app.view_state.overlay_mode):
 		close_region_cache()
 		app.static_render_state.pending = false

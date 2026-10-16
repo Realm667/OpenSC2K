@@ -1,5 +1,12 @@
 [
   {
+    "id": "enamel_sign_gpu_test",
+    "script": "tests/enamel_sign_gpu_test.gd",
+    "domain": "rendering",
+    "lane": "native",
+    "driver": "scene-batch"
+  },
+  {
     "id": "city_save_backup_test",
     "script": "tests/city_save_backup_test.gd",
     "domain": "formats",
