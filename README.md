@@ -211,27 +211,33 @@ for detailed source requirements and limitations.
 
 ## Screenshots
 
-Real application captures. Click an image to open it at full size.
+Current in-game captures from the [website gallery](https://rs.realm667.com/#screenshots),
+showing imported SimCity 2000 artwork with Reticulating Splines enhancements.
+Click an image to open the full-resolution screenshot.
 
-**Gimmitown at night: brightmaps, street lighting and clouds**
+**Night lighting and a monster disaster in Kraddock**
 
-[![Gimmitown at night: brightmaps, street lighting and clouds](.github/screenshots/visual-enhancements-package/night-city.png)](.github/screenshots/visual-enhancements-package/night-city.png)
+[![Illuminated buildings, streetlights and fires during a monster disaster in Kraddock](.github/screenshots/website/kraddock-night-disaster.jpg)](.github/screenshots/website/kraddock-night-disaster.jpg)
 
-**Winter terrain, clouds and the enhanced water surface**
+**Rain and cloud layers over the city**
 
-[![Winter terrain, clouds and the enhanced water surface](.github/screenshots/visual-enhancements-package/winter-water.png)](.github/screenshots/visual-enhancements-package/winter-water.png)
+[![City overview with rain and cloud layers](.github/screenshots/website/kraddock-rain-clouds.jpg)](.github/screenshots/website/kraddock-rain-clouds.jpg)
 
-**Rain and storm clouds over a developed city**
+**Snowfall and winter scenery**
 
-[![Rain and storm clouds over a developed city](.github/screenshots/visual-enhancements-package/thunderstorm.png)](.github/screenshots/visual-enhancements-package/thunderstorm.png)
+[![Snowfall, snowy terrain and clouds over Kraddock](.github/screenshots/website/kraddock-snow.jpg)](.github/screenshots/website/kraddock-snow.jpg)
 
-**German budget dialog and localized financial labels**
+**Annual budget in the dark interface**
 
-[![German budget dialog and localized financial labels](.github/screenshots/german-translation/budget.png)](.github/screenshots/german-translation/budget.png)
+[![Annual budget with tax rates, service funding and projected finances](.github/screenshots/website/annual-budget.jpg)](.github/screenshots/website/annual-budget.jpg)
 
-**German newspaper using the bundled text catalog**
+**The classic city newspaper**
 
-[![German newspaper using the bundled text catalog](.github/screenshots/german-translation/newspaper.png)](.github/screenshots/german-translation/newspaper.png)
+[![The Times newspaper displayed over the city](.github/screenshots/website/city-newspaper.jpg)](.github/screenshots/website/city-newspaper.jpg)
+
+**Isometric density view**
+
+[![Per-tile density overlay following the city's terrain](.github/screenshots/website/density-view.jpg)](.github/screenshots/website/density-view.jpg)
 
 ## Run Reticulating Splines
 
