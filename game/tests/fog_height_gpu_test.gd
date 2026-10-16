@@ -22,6 +22,8 @@ func _run() -> void:
 	city.set_terrain_id(96, 96, 16)
 	city.set_land_altitude(80, 32, 3)
 	city.set_terrain_id(80, 32, 2) # Raised top and right corners.
+	for point in [Vector2i(127, 64), Vector2i(64, 127), Vector2i(127, 127)]:
+		city.set_land_altitude(point.x, point.y, 3)
 	main.map_view.city_source = CityMapSource.new(CityIsometricRenderer.output_size_for_view(IsometricConstants.VIEW_LARGE, 128))
 	var fog := CityVisualFog.new(main)
 	fog.process(0.0, true, 0.2, Color.WHITE)
@@ -63,6 +65,10 @@ func _run() -> void:
 	var lower := await _sample(viewport, material, Vector2(80, 32.3), 3.2)
 	assert(upper < lower - 0.15 and upper > 0.0 and lower < 1.0, "Slopes lack a smooth height fade")
 	assert(await _sample(viewport, material, Vector2(-40, -40), 0.0) < 0.02, "Fog escaped the actual terrain outline")
+	for point in [Vector2(127.5, 64), Vector2(64, 127.5), Vector2(127.5, 127.5)]:
+		assert(await _sample(viewport, material, point, 1.5) < 0.02, "Fog covers the vertical map cutaway")
+		assert(await _sample(viewport, material, point + Vector2(1, 1), 0.0) < 0.02, "Fog escaped the front map boundary")
+	assert(await _sample(viewport, material, Vector2(127, 64), 3.0) > 0.5, "Clipping removed fog on the edge tile's top")
 	assert(DocumentState.capture(city.document) == before)
 	assert([engine.random.state, engine.lfsr_random.state, engine.game_random.state] == rng)
 

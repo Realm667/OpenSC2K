@@ -139,12 +139,12 @@ vec3 environment_cloud_color(vec3 base) {
 }
 
 // Shared by city art, moving art and the water surface. Emission is applied later.
-vec3 environment_ambient(vec3 base) {
+vec3 environment_ambient_weather(vec3 base, float weather_amount) {
 	if (!environment_enabled) { return base; }
 	float luminance = dot(base, vec3(0.2126, 0.7152, 0.0722));
 	vec3 color = mix(vec3(luminance), base, environment_saturation) * environment_tint;
 	color = lut_four(environment_day_luts, color, environment_day_lut_weights, environment_day_lut_strength);
-	color = environment_custom_color(lut_weather(color * environment_weather));
+	color = mix(environment_custom_color(color), environment_custom_color(lut_weather(color * environment_weather)), weather_amount);
 	// Recover the surface's own color, not a constant grey veil. Black stays
 	// black and existing bright pixels are never darkened by the fill light.
 	float shade = dot(color, vec3(0.2126, 0.7152, 0.0722));
@@ -152,13 +152,20 @@ vec3 environment_ambient(vec3 base) {
 	return mix(color, max(color, fill), environment_ambient_lift * (1.0 - smoothstep(0.12, 0.65, shade)));
 }
 
+vec3 environment_ambient(vec3 base) {
+	return environment_ambient_weather(base, 1.0);
+}
+
 vec3 environment_color_emission(vec3 base, vec2 uv, float emission_amount) {
 	if (!environment_enabled) { return base; }
-	vec3 color = environment_ambient(season_color(base, uv));
-	if (environment_has_emission) {
-		vec4 emission = environment_emission_sample(uv);
-		color = mix(color, emission.rgb, emission.a * environment_night * emission_amount);
-	}
+	vec4 emission = environment_has_emission ? environment_emission_sample(uv) : vec4(0.0);
+	float light = clamp(environment_night * emission_amount, 0.0, 1.0);
+	// Alpha describes the authored light's strength, not susceptibility to rain.
+	// Keep the underlying lit surface free of weather dimming as well; otherwise
+	// partial-strength windows and floodlights darken through the mix below.
+	float weather_amount = emission.a > 0.0 ? 1.0 - light : 1.0;
+	vec3 color = environment_ambient_weather(season_color(base, uv), weather_amount);
+	color = mix(color, emission.rgb, emission.a * light);
 	return color;
 }
 

@@ -424,6 +424,15 @@ void fragment() {
 		}
 
 		if (!dark_underground && power_warning < 0.5 && parcel_border < 0.5) {
+			// Authored waterfall frames use ANIMATION_TAG, not WATERFALL_TAG.
+			// Identify water from the shared mask so every frame gets grading.
+			vec4 natural_mask = environment_has_seasons ? environment_season_sample(center * pixel_size) : vec4(0.0);
+			if (water_enabled && natural_mask.b > 0.2 && natural_mask.b < 0.3) {
+				COLOR.rgb = water_season_color(COLOR.rgb);
+				if (water_reflections_enabled || water_topography || water_waves_enabled) {
+					COLOR.rgb = water_body_tone(COLOR.rgb, 0.0, 0.0);
+				}
+			}
 			COLOR.rgb = environment_color_emission(cloud_shadow(COLOR.rgb, cloud_ground_grid), center * pixel_size, building_emission);
 		}
 

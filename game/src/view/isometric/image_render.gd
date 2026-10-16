@@ -49,7 +49,8 @@ static func create_image(
 
 	var context := CityGpuBuildContext.new()
 	var failure := context.prepare(city, palette, sprites, view_size, CityViewMode.Mode.CITY, true, true, true, 0, false,
-		include_special_overlays, animation_phase, true, artwork_factor > 0)
+		include_special_overlays, animation_phase, true, artwork_factor > 0,
+		CityGpuBuildContext.ALL_HD_EFFECTS if artwork_factor > 0 else 0)
 
 	if failure.is_empty() and include_moving_things:
 		failure = context.set_moving(city, palette, sprites, _moving_commands(city, sprites, view_size, animation_phase))
@@ -272,7 +273,7 @@ static func patch_static_image(
 
 	_patch_revision += 1
 	var failure := _patch_context.prepare(city, palette, sprites, view_size, CityViewMode.Mode.CITY, true, true, true,
-		_patch_revision, false)
+		_patch_revision, false, false, 0, true, false, 0)
 
 	if not failure.is_empty():
 		return PatchResult.rejected(failure)

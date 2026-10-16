@@ -51,18 +51,22 @@ float water_light_lines(vec2 world, float axis, float clock, float rain) {
 	return line * segments * envelope * (axis > 0.0 ? 0.045 : 0.022) * (1.0 + rain * 0.4);
 }
 
+// The same optical transmission is used on top and falling water. Falling
+// faces blend this substrate over their existing palette/frame animation.
+vec4 water_substrate(vec4 bottom, float depth, vec2 world) {
+	float transmission = 0.42 * exp(-depth * 0.48) * bottom.a;
+	float grain = water_field(world * 3.0) * 0.04;
+	float face = 0.48 + 0.64 * bottom.g;
+	vec3 substrate = mix(vec3(0.40, 0.36, 0.25), vec3(0.28, 0.37, 0.39), clamp(depth / 6.0, 0.0, 1.0));
+	return vec4(substrate * (face + grain), transmission);
+}
+
 vec3 water_body(vec3 original, vec4 bottom, float depth, vec2 world, bool show_bottom) {
-	float known = bottom.a;
-	float shallows = exp(-depth * 0.55) * known;
+	float shallows = exp(-depth * 0.55) * bottom.a;
 	vec3 color = water_body_tone(original, shallows, water_field(world));
 	if (show_bottom) {
-		float transmission = 0.42 * exp(-depth * 0.48) * known;
-		// Actual triangle slopes provide the relief. Small fixed grain only
-		// varies the substrate color; it cannot invent underwater heights.
-		float grain = water_field(world * 3.0) * 0.04;
-		float face = 0.48 + 0.64 * bottom.g;
-		vec3 substrate = mix(vec3(0.40, 0.36, 0.25), vec3(0.28, 0.37, 0.39), clamp(depth / 6.0, 0.0, 1.0));
-		color = mix(color, substrate * (face + grain), transmission);
+		vec4 substrate = water_substrate(bottom, depth, world);
+		color = mix(color, substrate.rgb, substrate.a);
 	}
 	return color;
 }

@@ -5,7 +5,7 @@ use super::ids::{
     terrain_tile_ids as terrain, underground_tile_ids as under,
 };
 
-use super::{Builder, Draw, Rect, surface_grid};
+use super::{Builder, Draw, Rect, effects, surface_grid};
 
 // Sprite offsets in each view's artwork.
 const TERRAIN_SPRITES: i32 = 256;
@@ -245,6 +245,13 @@ impl Builder {
 
         if !developed && !composite {
             let ground = self.ground(i, t);
+            if c.effects & effects::WATERFALL != 0 && ground == WATER_SIDE_SPRITE && t == terrain::WATERFALL {
+                // The original waterfall omits a few cap-edge pixels. A real
+                // water diamond below it closes pinholes between adjacent falls
+                // without changing imported artwork or extending the curtains.
+                // The unenhanced reference/export path remains byte-exact.
+                self.add(&mut draws, c.base() + WATER_SPRITE, false, sx, base - c.step())?;
+            }
             self.add(&mut draws, self.nature_ground(c.base() + ground), false, sx, base)?;
             let draw = draws.last_mut().expect("the ground draw was added");
 

@@ -108,7 +108,8 @@ func build_water(bounds: Rect2i, divisor: int, sprites: Sc2SpriteArchive, mode: 
 # gdstyle:ignore=quality/max-parameters
 func prepare(city: CityState, palette: Sc2Palette, sprites: Sc2SpriteArchive, view: int,
 		mode := CityViewMode.Mode.CITY, pipes := true, subways := true, water_mains := true, revision := 0,
-		pack_atlas := true, special_overlays := false, animation_phase := 0, tunnels := true, with_artwork := false) -> String:
+		pack_atlas := true, special_overlays := false, animation_phase := 0, tunnels := true, with_artwork := false,
+		hd_effects := ALL_HD_EFFECTS) -> String:
 	if not error.is_empty():
 		return error
 
@@ -117,7 +118,7 @@ func prepare(city: CityState, palette: Sc2Palette, sprites: Sc2SpriteArchive, vi
 
 	var layout := [city.map_size, city.visible_altitude_levels, city.compass_rotation(),
 		view, mode, pipes, subways, water_mains, palette, sprites, pack_atlas, special_overlays, animation_phase, tunnels,
-		with_artwork, ALL_HD_EFFECTS, sprites.visual_revision]
+		with_artwork, hd_effects, sprites.visual_revision]
 	var configuration := CityIsometricRenderer.view_configuration(view)
 
 	if configuration == null:
@@ -164,7 +165,7 @@ func prepare(city: CityState, palette: Sc2Palette, sprites: Sc2SpriteArchive, vi
 			"building_ground": int(sprites.draw_building_ground),
 			"atlas": int(pack_atlas), "special_overlays": int(special_overlays), "animation_phase": animation_phase,
 			# an HD pack shows every effect on its art
-			"shadow_colors": shadow_colors(palette), "hd_effects": ALL_HD_EFFECTS})
+			"shadow_colors": shadow_colors(palette), "hd_effects": hd_effects})
 		var failure := builder.configure(request, artwork, palette.color(0xa1).to_rgba32())
 		if paged:
 			builder.enable_paged_atlas()

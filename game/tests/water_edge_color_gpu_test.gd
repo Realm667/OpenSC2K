@@ -7,21 +7,25 @@ func _initialize() -> void:
 
 func _run() -> void:
 	var pack := FixtureGraphics.pack()
+	_check_waterfall_cap(pack)
+	await _check_curtain_transparency()
 	var profiles := CityVisualLuts.new()
 	profiles.reload("")
 	for spec in [[0, false, false], [1, true, false], [2, false, false], [2, true, true]]:
 		await _check(pack, profiles, spec[0], spec[1], spec[2])
+	await _check(pack, profiles, 2, false, false, true)
+	await _check(pack, profiles, 2, true, true, true)
 	print("PASS: water sides match surface seasons/LUTs/night, all sizes, mirroring/HDR, shared tone, original off state and unchanged soil")
 	quit()
 
 
-func _check(pack: GraphicsPack, profiles: CityVisualLuts, view: int, flip: bool, hdr: bool) -> void:
+func _check(pack: GraphicsPack, profiles: CityVisualLuts, view: int, flip: bool, hdr: bool, hd := false) -> void:
 	var archive := pack.large_sprites if view == 2 else pack.small_medium_sprites
 	CitySeasonColors.prepare(archive, pack.palette)
 	var id := view * 500 + 284
 	assert(archive.visual_seasons.has(id), "Water-side sprite has no color mask")
 	var entry := archive.find_sprite(id)
-	var pixels: Image = entry.create_image(Sc2Palette.index_encoding()).image
+	var pixels: Image = entry.create_image(Sc2Palette.index_encoding()).image.duplicate()
 	var mask: Image = archive.visual_seasons[id].duplicate()
 	if flip:
 		pixels.flip_x()
@@ -53,11 +57,16 @@ func _check(pack: GraphicsPack, profiles: CityVisualLuts, view: int, flip: bool,
 		var sprite := Sprite2D.new()
 		sprite.centered = false
 		sprite.position.x = column * entry.width
-		sprite.texture = ImageTexture.create_from_image(pixels)
+		var artwork: Image = entry.create_image(pack.palette).image if hd and column != 1 else pixels
+		if hd and column != 1:
+			if flip:
+				artwork.flip_x()
+			sprite.modulate = Color(2.0 / 255.0, 0, 0, 1)
+		sprite.texture = ImageTexture.create_from_image(artwork)
 		var shader := ShaderMaterial.new()
 		shader.shader = load("res://src/view/water/water_surface.gdshader" if column == 1 else "res://src/view/map/palette_cycle.gdshader")
 		shader.set_shader_parameter("animated_palette", ImageTexture.create_from_image(palette))
-		shader.set_shader_parameter("palette_cycle_enabled", true)
+		shader.set_shader_parameter("palette_cycle_enabled", not hd)
 		shader.set_shader_parameter("palette_lookup_all", true)
 		shader.set_shader_parameter("environment_has_seasons", column == 0)
 		shader.set_shader_parameter("environment_season_mask", ImageTexture.create_from_image(mask))
@@ -93,7 +102,9 @@ func _check(pack: GraphicsPack, profiles: CityVisualLuts, view: int, flip: bool,
 			for point in samples:
 				var side := image.get_pixelv(point)
 				var top := image.get_pixelv(point + Vector2i(entry.width, 0))
-				assert(_distance(side, top) < 0.01, "Water side and surface grading diverged")
+				assert(_distance(side, top) < 0.01,
+					"Water side and surface grading diverged view=%s hd=%s hdr=%s season=%s lut=%s point=%s side=%s top=%s"
+					% [view, hd, hdr, season, lut, point, side, top])
 			assert(image.get_region(Rect2i(entry.width * 2, 0, entry.width, entry.height)).get_data()
 				== original.get_region(Rect2i(entry.width * 2, 0, entry.width, entry.height)).get_data(), "Untagged artwork changed")
 	# Shared body tone also works when all environment grading is disabled.
@@ -116,3 +127,74 @@ func _check(pack: GraphicsPack, profiles: CityVisualLuts, view: int, flip: bool,
 
 func _distance(a: Color, b: Color) -> float:
 	return maxf(absf(a.r - b.r), maxf(absf(a.g - b.g), absf(a.b - b.b)))
+
+
+func _check_waterfall_cap(pack: GraphicsPack) -> void:
+	var city := CityState.from_document(EmptyCityTemplate.create(64))
+	for x in range(18, 23):
+		for y in range(18, 23):
+			city.set_land_altitude(x, y, 3)
+			city.set_water_altitude(x, y, 3)
+			city.set_terrain_id(x, y, TerrainTileIds.WATERFALL)
+	var archive := pack.large_sprites
+	var context := CityGpuBuildContext.new()
+	assert(context.prepare(city, Sc2Palette.index_encoding(), archive, 2).is_empty())
+	var left := 32 + 64 * 16
+	var top := 512 + 40 * 8 - 4 * 12
+	var bounds := Rect2i(left - 32, top - 16, 96, 64)
+	var water: Dictionary = context.builder.water_reflections(bounds, CityWaterLayer.blue_indices(pack.palette), {}, {})
+	assert(not water.is_empty())
+	var surface: Image = water.surface
+	# Imported waterfall art has six missing side-edge pixels; the cap underlay
+	# must close them with water at the raised level, never black background.
+	for point in [Vector2i(1, 7), Vector2i(30, 7), Vector2i(0, 8), Vector2i(1, 8), Vector2i(30, 8), Vector2i(31, 8)]:
+		var pixel := surface.get_pixelv(Vector2i(left, top) + point - bounds.position)
+		assert(pixel.a8 == 255 and pixel.r8 == 5, "Waterfall cap has a hole or uses its lower water level")
+
+	var bank: Image = water.seabed
+	var faces := 0
+	for y in surface.get_height():
+		for x in surface.get_width():
+			var face := surface.get_pixel(x, y)
+			if face.a8 == 255 and face.b8 >= 128:
+				faces += 1
+				assert(absf(bank.get_pixel(x, y).r * 31.0 - 3.0) < 0.13,
+					"Falling face used unrelated terrain behind its bank")
+	assert(faces > 0, "Falling faces have no separate transmission mask")
+
+
+func _check_curtain_transparency() -> void:
+	var viewport := SubViewport.new()
+	viewport.size = Vector2i(16, 8)
+	viewport.transparent_bg = true
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	root.add_child(viewport)
+	var surface := Image.create(16, 8, false, Image.FORMAT_RGBA8)
+	surface.fill(Color(5.0 / 255.0, 200.0 / 255.0, 128.0 / 255.0, 1.0))
+	var bed := Image.create(16, 8, false, Image.FORMAT_RGBA8)
+	bed.fill(Color(3.0 / 31.0, 190.0 / 255.0, 0, 1))
+	var sprite := Sprite2D.new()
+	sprite.centered = false
+	sprite.texture = ImageTexture.create_from_image(surface)
+	var material := ShaderMaterial.new()
+	material.shader = preload("res://src/view/water/water_surface.gdshader")
+	material.set_shader_parameter("water_surface", sprite.texture)
+	material.set_shader_parameter("water_seabed", ImageTexture.create_from_image(bed))
+	material.set_shader_parameter("water_has_seabed", true)
+	material.set_shader_parameter("water_enabled", true)
+	material.set_shader_parameter("water_padding", 0.0)
+	sprite.material = material
+	viewport.add_child(sprite)
+	await RenderingServer.frame_post_draw
+	var clear := viewport.get_texture().get_image().get_pixel(8, 4)
+	assert(clear.a > 0.24 and clear.a < 0.28, "Falling water missed shared depth-dependent transmission")
+	material.set_shader_parameter("environment_enabled", true)
+	material.set_shader_parameter("environment_weather", Vector3(0.4, 0.4, 0.4))
+	await RenderingServer.frame_post_draw
+	var rain := viewport.get_texture().get_image().get_pixel(8, 4)
+	assert(absf(clear.a - rain.a) < 0.01 and rain.r < clear.r * 0.5, "Falling bank missed weather or changed optical depth")
+	material.set_shader_parameter("water_topography", false)
+	await RenderingServer.frame_post_draw
+	assert(viewport.get_texture().get_image().get_pixel(8, 4).a == 0.0, "Underwater-terrain toggle left a falling-bank overlay")
+	viewport.queue_free()
+	await process_frame

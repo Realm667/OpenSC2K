@@ -5,6 +5,7 @@ use crate::{Builder, City, Config, Draw, Rect, sprites::Sprite};
 use std::collections::HashMap;
 
 pub struct WaterPixels {
+    /// RGBA: height + 1, palette index, channel axis (bit 7: falling face), coverage.
     pub surface: Vec<u8>,
     pub reflected: Vec<u8>,
     pub emission: Vec<u8>,
@@ -29,12 +30,41 @@ fn cell(city: &City, depth: i64) -> Option<usize> {
 
 fn horizontal_water(draw: &Draw, city: &City, config: Config) -> Option<usize> {
     let offset = draw.sprite - config.base();
-    if !(270..=290).contains(&offset) || offset == 284 || draw.moving || draw.shadow {
+    if !(270..=290).contains(&offset) || draw.moving || draw.shadow {
         return None;
     }
     let i = cell(city, draw.depth)?;
     let t = city.terrain[i];
+    if offset == 284 {
+        let x = i as i32 / city.edge;
+        let y = i as i32 % city.edge;
+        let bottom = config.top() + (x + y) * config.hh() + config.height() - city.water(i) * config.step();
+        // The same sprite also draws stacked map-side walls. Only a real
+        // waterfall at its tile anchor has a receiving top face.
+        if city.surface(x, y) != crate::ids::terrain_tile_ids::WATERFALL || draw.rect.y + draw.rect.h != bottom || city.water(i) >= 31 {
+            return None;
+        }
+    }
     (city.wet(i) || (0x10..=0x1e).contains(&t) || (0x20..=0x45).contains(&t)).then_some(i)
+}
+
+// The waterfall's cap is one altitude level above its foot. Its vertical
+// curtains retain their palette/frame animation and never receive flat mirrors.
+fn receiving_level(draw: &Draw, city: &City, config: Config, i: usize, x: i32, y: i32) -> Option<i32> {
+    if draw.sprite - config.base() != 284 {
+        let cx = i as i32 / city.edge;
+        let cy = i as i32 % city.edge;
+        let raised = config.top() + (cx + cy) * config.hh() + config.height() - (city.water(i) + 1) * config.step();
+        let cap = draw.sprite - config.base() == 270
+            && city.surface(cx, cy) == crate::ids::terrain_tile_ids::WATERFALL
+            && draw.rect.y + draw.rect.h == raised;
+        let level = city.water(i) + i32::from(cap);
+        return (level < 32).then_some(level);
+    }
+    let top = draw.rect.y + draw.rect.h - config.height() - config.step();
+    let across = (x - draw.rect.x) as f32 + 0.5 - config.hw() as f32;
+    let front = (2 * config.hh()) as f32 - across.abs() * 0.5;
+    ((y - top) as f32 + 0.5 <= front).then(|| city.water(i) + 1)
 }
 
 // A display-only channel axis, not simulated water velocity. Open water stays
@@ -194,9 +224,11 @@ impl Builder {
             return Ok(out);
         }
         let mut levels = [false; 32];
+        let mut side_beds = Vec::new();
         for draw in self.collect(bounds)? {
             let sprite = &self.sprites.images[&draw.image];
-            let water = horizontal_water(&draw, &self.city, self.config);
+            let footprint = self.sprites.footprint_draw(&draw);
+            let water = horizontal_water(&footprint, &self.city, self.config);
             let axis = water.map_or(0, |i| water_axis(&self.city, i));
             let clipped = draw.rect.clip(bounds);
             for y in clipped.y..clipped.y + clipped.h {
@@ -208,9 +240,24 @@ impl Builder {
                     let dst = (((y - bounds.y) * bounds.w + x - bounds.x) * 4) as usize;
                     out.surface[dst..dst + 4].fill(0);
                     if let Some(i) = water.filter(|_| water_indices[sprite.rgba[src] as usize] != 0) {
-                        let level = self.city.water(i);
-                        levels[level as usize] = true;
-                        out.surface[dst..dst + 4].copy_from_slice(&[level as u8 + 1, sprite.rgba[src], axis, 255]);
+                        let cap = receiving_level(&footprint, &self.city, self.config, i, x, y);
+                        let side = cap.is_none() && footprint.sprite - self.config.base() == 284;
+                        let Some(level) = cap.or_else(|| side.then(|| self.city.water(i) + 1)) else {
+                            continue;
+                        };
+                        levels[level as usize] |= !side;
+                        out.surface[dst..dst + 4].copy_from_slice(&[
+                            level as u8 + 1,
+                            sprite.rgba[src],
+                            axis | if side { 128 } else { 0 },
+                            255,
+                        ]);
+                        if side {
+                            // The curtain reveals the bank of this cell, not an
+                            // unrelated flat seabed projected behind its face.
+                            let shade = if x < footprint.rect.x + self.config.hw() { 155 } else { 190 };
+                            side_beds.push((dst, [(self.city.land(i) * 255 / 31) as u8, shade, 0, 255]));
+                        }
                     }
                 }
             }
@@ -225,6 +272,11 @@ impl Builder {
         let sources = self.collect(Rect::new(bounds.x, bounds.y - reach, bounds.w, bounds.h + 2 * reach))?;
         seabed_pixels(&mut out.seabed, bounds, &sources, &self.city, self.config);
         self.shore_distances(&mut out.seabed, bounds, water_indices)?;
+        for (dst, bed) in side_beds {
+            if out.surface[dst + 2] & 128 != 0 && out.surface[dst + 3] != 0 {
+                out.seabed[dst..dst + 4].copy_from_slice(&bed);
+            }
+        }
         let mut owners = vec![i64::MIN; bytes / 4];
         for draw in &sources {
             let Some(i) = cell(&self.city, draw.depth) else { continue };
@@ -291,7 +343,11 @@ impl Builder {
                         let x = draw.rect.x + sx;
                         let pixel = ((y - bounds.y) * bounds.w + x - bounds.x) as usize;
                         let dst = pixel * 4;
-                        if out.surface[dst] != level as u8 + 1 || out.surface[dst + 3] == 0 || owners[pixel] > draw.order {
+                        if out.surface[dst] != level as u8 + 1
+                            || out.surface[dst + 2] & 128 != 0
+                            || out.surface[dst + 3] == 0
+                            || owners[pixel] > draw.order
+                        {
                             continue;
                         }
                         let receiver = plane_cell(&self.city, self.config, x, y, level);
@@ -736,7 +792,7 @@ mod tests {
     }
 
     #[test]
-    fn waterfalls_and_blue_building_pixels_are_not_receiving_surfaces() {
+    fn cutaway_walls_and_blue_building_pixels_are_not_receiving_surfaces() {
         let mut builder = fixture(2);
         let mut draw = Draw::new(0, Rect::default());
         draw.depth = 4;
@@ -748,6 +804,34 @@ mod tests {
         builder.city.terrain[4] = 0;
         draw.sprite = 1270;
         assert!(horizontal_water(&draw, &builder.city, builder.config).is_none());
+    }
+
+    #[test]
+    fn waterfall_caps_receive_at_the_raised_level_but_faces_and_cutaways_do_not() {
+        for view in 0..=2 {
+            let mut builder = fixture(view);
+            let c = builder.config;
+            let i = builder.city.index(2, 2);
+            builder.city.terrain[i] = crate::ids::terrain_tile_ids::WATERFALL;
+            builder.city.altitude[i] = 3 | (3 << 5);
+            let bottom = c.top() + 4 * c.hh() + c.height() - 3 * c.step();
+            let mut draw = Draw::new(0, Rect::new(50, bottom - c.height() - c.step(), c.hw() * 2, c.height() + c.step()));
+            draw.sprite = c.base() + 284;
+            draw.depth = i64::from(4 * builder.city.edge + 2);
+            assert_eq!(horizontal_water(&draw, &builder.city, c), Some(i));
+            let x = draw.rect.x + c.hw();
+            assert_eq!(receiving_level(&draw, &builder.city, c, i, x, draw.rect.y + c.hh()), Some(4));
+            assert_eq!(receiving_level(&draw, &builder.city, c, i, x, bottom - 1), None);
+            draw.rect.y += c.step();
+            assert_eq!(horizontal_water(&draw, &builder.city, c), None);
+            // An inferred channel waterfall follows the same rule, without
+            // changing the stored terrain id or saved water altitude.
+            draw.rect.y -= c.step();
+            builder.city.terrain[i] = crate::ids::terrain_tile_ids::CHANNEL_NS;
+            let high = builder.city.index(1, 2);
+            builder.city.altitude[high] = 4 | (4 << 5);
+            assert_eq!(horizontal_water(&draw, &builder.city, c), Some(i));
+        }
     }
 
     #[test]

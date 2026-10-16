@@ -56,7 +56,9 @@ void fragment() {
 		float near_distance = entry - near_surface;
 		float far_distance = end - far_surface;
 		if (near_distance <= 0.0) {
-			height = entry;
+			// Entering below the surface hits a vertical cliff/cutaway wall.
+			// It occludes the land behind, but cannot carry ground fog itself.
+			height = near_distance >= -0.0001 ? entry : -100.0;
 			break;
 		}
 		if (far_distance <= 0.0) {

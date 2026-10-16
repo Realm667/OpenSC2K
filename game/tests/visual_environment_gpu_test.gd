@@ -5,6 +5,8 @@ func _initialize() -> void:
 
 
 func _run() -> void:
+	await _check_emission_weather(false)
+	await _check_emission_weather(true)
 	await _check_building_power()
 	await _check_hd_environment()
 	await _check_terrain_elevation()
@@ -1051,3 +1053,49 @@ func _check_framed_power_warning(hdr: bool) -> void:
 	viewport.queue_free()
 	await process_frame
 	print("PASS: literal power-warning frames retain fullbright and loop independently of palette; HDR=", hdr)
+
+
+func _check_emission_weather(hd: bool) -> void:
+	var viewport := SubViewport.new()
+	viewport.size = Vector2i(16, 8)
+	viewport.transparent_bg = true
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	root.add_child(viewport)
+	var pixels := Image.create(16, 8, false, Image.FORMAT_RGBA8)
+	pixels.fill(Color(0.6, 0.55, 0.4))
+	var mask := Image.create(16, 8, false, Image.FORMAT_RGBA8)
+	mask.fill_rect(Rect2i(0, 0, 4, 8), Color(1.0, 0.75, 0.3, 0.35))
+	mask.fill_rect(Rect2i(4, 0, 4, 8), Color(1.0, 0.75, 0.3, 1.0))
+	var sprite := Sprite2D.new()
+	sprite.centered = false
+	sprite.texture = ImageTexture.create_from_image(pixels)
+	if hd:
+		sprite.modulate = Color(2.0 / 255.0, 0, 0, 1)
+	var material := ShaderMaterial.new()
+	material.shader = preload("res://src/view/map/palette_cycle.gdshader")
+	material.set_shader_parameter("environment_enabled", true)
+	material.set_shader_parameter("environment_tint", Vector3(0.28, 0.34, 0.52))
+	material.set_shader_parameter("environment_emission", ImageTexture.create_from_image(mask))
+	material.set_shader_parameter("environment_has_emission", true)
+	material.set_shader_parameter("environment_night", 1.0)
+	var profiles := CityVisualLuts.new()
+	profiles.reload("")
+	material.set_shader_parameter("environment_weather_luts", profiles.atlases.weather)
+	sprite.material = material
+	viewport.add_child(sprite)
+	await RenderingServer.frame_post_draw
+	var clear := viewport.get_texture().get_image()
+	material.set_shader_parameter("environment_weather", Vector3(0.4, 0.45, 0.5))
+	material.set_shader_parameter("environment_weather_lut_weights_a", Vector4(0, 0, 1, 0))
+	material.set_shader_parameter("environment_weather_lut_strength", 1.0)
+	await RenderingServer.frame_post_draw
+	var rain := viewport.get_texture().get_image()
+	for x in [2, 6]:
+		assert(rain.get_pixel(x, 4).is_equal_approx(clear.get_pixel(x, 4)), "Rain dimmed a full or partial brightmap")
+	assert(rain.get_pixel(12, 4).r < clear.get_pixel(12, 4).r - 0.02, "Rain stopped darkening unlit walls")
+	material.set_shader_parameter("environment_night", 0.0)
+	await RenderingServer.frame_post_draw
+	var unlit := viewport.get_texture().get_image()
+	assert(unlit.get_pixel(2, 4).is_equal_approx(unlit.get_pixel(12, 4)), "Disabled brightmaps still excluded weather")
+	viewport.queue_free()
+	await process_frame
