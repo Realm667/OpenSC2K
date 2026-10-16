@@ -24,7 +24,7 @@ custom_minimum_size = Vector2(960, 0)
 layout_mode = 0
 offset_right = 960.0
 offset_bottom = 540.0
-theme_type_variation = "PanelPadding8_8_8_8"
+theme_type_variation = "FloatingPanel"
 
 [node name="Content" type="VBoxContainer" parent="Center/NewCityDialog"]
 layout_mode = 2

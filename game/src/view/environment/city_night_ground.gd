@@ -51,6 +51,7 @@ var fade_pending := false
 
 
 func _init() -> void:
+	show_behind_parent = true
 	var shader := ShaderMaterial.new()
 	shader.shader = SHADER
 	material = shader

@@ -140,9 +140,13 @@ func sync_upgrade_city_option() -> void:
 	var available := _can_upgrade_city_to_sc2x()
 
 	if available and index < 0:
+		popup.add_separator("", CityMenuBar.MENU_UPGRADE_SEPARATOR)
 		popup.add_item("Upgrade City to SC2X", CityMenuBar.MENU_UPGRADE_SC2X)
 	elif not available and index >= 0:
 		popup.remove_item(index)
+		var separator := popup.get_item_index(CityMenuBar.MENU_UPGRADE_SEPARATOR)
+		if separator >= 0:
+			popup.remove_item(separator)
 
 
 func upgrade_city_to_sc2x(confirmed := false) -> void:

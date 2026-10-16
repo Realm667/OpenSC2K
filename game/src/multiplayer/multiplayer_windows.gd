@@ -163,6 +163,7 @@ func setup() -> void:
 		var scroll := chat_log.get_v_scroll_bar()
 		chat_log.scroll_following = value >= scroll.max_value - scroll.page - 2)
 	chat_body.add_child(chat_log)
+	chat_log.add_theme_font_override("normal_font", AppUiTheme.current().default_font)
 	var chat_color := func() -> void:
 		chat_log.add_theme_color_override("default_color", AppUiTheme.current().get_color("font_color", "TooltipLabel"))
 	chat.theme_changed.connect(chat_color)

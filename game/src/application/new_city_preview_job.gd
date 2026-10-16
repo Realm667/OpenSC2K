@@ -11,6 +11,9 @@ var maximum_size := Vector2i.ZERO
 var visual_options: Dictionary = {}
 var visual_sprites: Sc2SpriteArchive
 var visual_image: Image
+var visual_data: Dictionary = {}
+var _mutex := Mutex.new()
+var _fraction := -1.0
 
 
 func start(
@@ -26,13 +29,6 @@ func start(
 	)
 
 	visual_sprites = MainMenuPresentation.copy_graphics(sprites)
-	if not visual_options.is_empty():
-		CityNatureArtwork.prepare(visual_sprites, palette)
-		visual_sprites.visual_seasons.merge(visual_sprites.visual_nature_masks)
-		visual_sprites.visual_nature_enabled = true
-		visual_sprites.visual_terrain_enabled = true
-		visual_sprites.water_reflections = true
-		visual_sprites.water_indices = CityWaterLayer.blue_indices(palette)
 	return thread.start(_generate.bind(options.copy(), palette, visual_sprites))
 
 
@@ -41,6 +37,13 @@ func _generate(
 	palette: Sc2Palette,
 	sprites: Sc2SpriteArchive,
 ) -> NewCityTerrainSession.PreviewResult:
+	if not visual_options.is_empty():
+		CityNatureArtwork.prepare(visual_sprites, palette)
+		visual_sprites.visual_seasons.merge(visual_sprites.visual_nature_masks)
+		visual_sprites.visual_nature_enabled = true
+		visual_sprites.visual_terrain_enabled = true
+		visual_sprites.water_reflections = true
+		visual_sprites.water_indices = CityWaterLayer.blue_indices(palette)
 	var result := session.generate_preview(options, true)
 
 	if not result.ok:
@@ -52,18 +55,26 @@ func _generate(
 	var encoded := not visual_options.is_empty()
 	var rendered := CityIsometricRenderer.create_image(result.city,
 		Sc2Palette.index_encoding() if encoded else palette, sprites, view_size, 0, false, encoded, false, false,
-		Callable(), maximum_size, 0 if encoded else (1 if result.landscape_artwork else 0))
+		func(value: float) -> void: _progress(value * 0.45), maximum_size, 0 if encoded else (1 if result.landscape_artwork else 0))
 	if rendered.ok and encoded:
 		visual_image = rendered.image
 		if result.landscape_artwork:
 			rendered = CityIsometricRenderer.create_image(result.city, palette, sprites, view_size, 0, false, true, false, false,
-				Callable(), maximum_size, 1)
+				func(value: float) -> void: _progress(0.45 + value * 0.2), maximum_size, 1)
 
 	if not rendered.ok:
 		return NewCityTerrainSession.PreviewResult.failure(rendered.error, "preview")
 
 	result.landscape_image = rendered.image
-	result.minimap_image = CityMinimap.create_image(result.city, palette, "structures")
+	if encoded:
+		var seasons := NewCityPreviewArtwork.seasons(result.city, sprites, view_size, maximum_size, _progress)
+		if seasons == null:
+			return NewCityTerrainSession.PreviewResult.failure(tr("Terrain preview is not available."), "preview")
+		var elevation := CityTerrainElevation.new()
+		elevation.range_for(result.city)
+		visual_data = {"seasons": seasons, "elevation": elevation}
+	result.minimap_image = NewCityPreviewArtwork.minimap(result.city)
+	_progress(1.0)
 
 	return result
 
@@ -82,3 +93,16 @@ static func preview_view_size(edge: int, target: Vector2) -> int:
 # keep twice the dialog size, as `preview_view_size` does
 static func preview_maximum_size(target: Vector2) -> Vector2i:
 	return Vector2i((target * 2.0).ceil())
+
+
+func progress() -> float:
+	_mutex.lock()
+	var value := _fraction
+	_mutex.unlock()
+	return value
+
+
+func _progress(value: float) -> void:
+	_mutex.lock()
+	_fraction = value
+	_mutex.unlock()

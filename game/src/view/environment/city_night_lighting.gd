@@ -106,6 +106,7 @@ func _select_ground(view_size: int) -> void:
 		receiver.fades = fades
 		receiver.texture_budget = int(CityNightGround.MAX_TEXTURE_BYTES / 3.0)
 		app.map_view.add_child(receiver)
+		app.map_view.layers.ground_receivers.append(receiver)
 		ground_views[view_size] = receiver
 	var next: CityNightGround = ground_views[view_size]
 	if ground == next:
@@ -114,6 +115,7 @@ func _select_ground(view_size: int) -> void:
 		next.clock = ground.clock
 		ground.hide()
 	ground = next
+	app.map_view.layers._sync_base_layer()
 	ground.signals.queue_redraw()
 
 

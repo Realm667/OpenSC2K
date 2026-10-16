@@ -26,6 +26,12 @@ func _run() -> void:
 		app.static_render.start_pending_static_render()
 		await process_frame
 	assert(app.map_view.city_source != null)
+	var street_lights := app.visual_environment.night_lighting
+	street_lights._select_ground(CityIsometricRenderer.VIEW_LARGE)
+	app.map_view.layers._sync_base_layer()
+	assert(street_lights.ground.show_behind_parent)
+	assert(street_lights.ground.get_index() < app.map_view.layers.dynamic_canvas.get_index(), "Fire and monsters must occlude road fixtures")
+	assert(street_lights.ground.get_index() > app.map_view.layers.water_layer.get_index(), "Road fixtures remain above terrain and water")
 	var city := app.document_state.city
 	var before := DocumentState.capture(city.document)
 	var engine := app.simulation_state.simulation_engine

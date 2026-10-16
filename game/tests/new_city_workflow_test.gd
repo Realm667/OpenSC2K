@@ -86,11 +86,11 @@ func _run() -> void:
 	main.audio_controller.wave_sound_gate.stop()
 	main.new_city.make_new_city_preview()
 	assert(dialog.generating and dialog.done_button.disabled)
-	assert(dialog._busy_spinner.is_visible_in_tree() and dialog._busy_spinner.is_processing())
+	assert(dialog._busy_overlay.city_progress.is_visible_in_tree() and dialog._busy_overlay.city_progress.bar.indeterminate)
 	while main.new_city_state.preview_job != null:
 		await process_frame
 	assert(not dialog.generating)
-	assert(not dialog._busy_spinner.is_processing())
+	assert(not dialog._busy_overlay.is_visible_in_tree())
 	assert(main.audio_controller.wave_sound_gate.current_sound_id == 529)
 	assert(dialog.candidate_valid and not dialog.done_button.disabled)
 	assert(dialog.visual_preview != null and dialog.landscape_background.texture == null)
@@ -101,6 +101,8 @@ func _run() -> void:
 	assert(NewCityPreviewJob.preview_view_size(128, Vector2(3000, 1800)) == CityIsometricRenderer.VIEW_LARGE)
 	assert(NewCityPreviewJob.preview_view_size(512, Vector2(1920, 1080)) == CityIsometricRenderer.VIEW_SMALL)
 	assert(dialog.visual_preview.presentation.map.city_source.size.x >= dialog.size.x)
+	assert(dialog.visual_preview.presentation.map.layers.environment_parameters.get("nature_terrain_enabled", false), "Enhanced colors are set before the first preview frame")
+	assert(dialog.preview_view.texture.get_width() <= 512, "Terrain overview stays bounded")
 	var candidate: Sc2File = main.new_city_state.session.preview_document
 	var bytes: PackedByteArray = candidate.serialize().data
 	var cursor: int = main.new_city_state.session.preview_process_cursor

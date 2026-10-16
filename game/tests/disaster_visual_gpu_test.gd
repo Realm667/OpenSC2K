@@ -86,9 +86,41 @@ func _run() -> void:
 	await _check_tornado_mask()
 	await _check_quake_blur()
 	await _check_beam_glow()
+	await _check_road_fixture_occlusion()
 	await process_frame
 	print("PASS: GPU disaster effects, tile boundaries, transparent surroundings, foreground occlusion and dust lifetime")
 	quit()
+
+
+func _check_road_fixture_occlusion() -> void:
+	var viewport := SubViewport.new()
+	viewport.size = Vector2i(24, 24)
+	viewport.transparent_bg = true
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	root.add_child(viewport)
+	var map := CityMapControl.new()
+	map.size = Vector2(24, 24)
+	viewport.add_child(map)
+	map.set_process(false)
+	var ground := CityNightGround.new()
+	map.add_child(ground)
+	map.layers.ground_receivers.append(ground)
+	var fixture := ColorRect.new()
+	fixture.color = Color.GREEN
+	fixture.size = Vector2(16, 16)
+	ground.signals.add_child(fixture)
+	var pixels := Image.create(16, 16, false, Image.FORMAT_RGBA8)
+	pixels.fill(Color.RED)
+	var hazard := CityDynamicVisual.new(ImageTexture.create_from_image(pixels), Vector2(8, 0), Vector2(16, 16))
+	map.layers.dynamic_canvas.material = null
+	map.layers.dynamic_canvas.set_visuals([hazard], 1.0, Vector2.ZERO)
+	map.layers._sync_base_layer()
+	await RenderingServer.frame_post_draw
+	var image := viewport.get_texture().get_image()
+	assert(image.get_pixel(3, 3).g > 0.99, "Exposed road fixtures stay visible")
+	assert(image.get_pixel(12, 3).r > 0.99 and image.get_pixel(12, 3).g < 0.01,
+		"Dynamic fire and monster artwork must cover road fixtures and signals")
+	viewport.queue_free()
 
 
 func _check_hazard_blending() -> void:

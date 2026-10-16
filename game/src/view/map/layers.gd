@@ -26,6 +26,7 @@ var _foreground_palette_material: ShaderMaterial
 var _retained_data_mesh: ArrayMesh
 var _retained_data_signature: Array = []
 var environment_parameters: Dictionary = {}
+var ground_receivers: Array[Node2D] = []
 var water_layer: CityWaterLayer
 var _visual_materials: Dictionary = {}
 var _environment := CityEnvironmentParameters.new()
@@ -293,7 +294,10 @@ func _sync_base_nodes() -> void:
 	# Packs and retained sources may arrive after the environment canvases.
 	# Base art must always precede water, moving art and all later overlays.
 	var position := 0
-	for layer: Node in [base_layer, water_layer, dynamic_canvas]:
+	var ordered: Array[Node] = [base_layer, water_layer]
+	ordered.append_array(ground_receivers)
+	ordered.append(dynamic_canvas)
+	for layer: Node in ordered:
 		if layer != null:
 			if layer.get_index() != position:
 				map.move_child(layer, position)

@@ -49,6 +49,7 @@ func _run() -> void:
 	main.document_state.current_save_path = "user://source-city.SC2"
 	main.city_files.sync_upgrade_city_option()
 	check(main.options_menu.get_popup().get_item_index(CityMenuBar.MENU_UPGRADE_SC2X) >= 0, "Original SC2 shows upgrade in Options")
+	check(main.options_menu.get_popup().get_item_index(CityMenuBar.MENU_UPGRADE_SEPARATOR) >= 0, "Available conversion has its own separator")
 	main.tool_state.last_edit_command = EditCommandResult.new()
 	main.menus.on_options_menu(CityMenuBar.MENU_UPGRADE_SC2X)
 	check(main.sc2x_conversion_dialog.visible and document.serialize().data == old_bytes, "Warning appears before irreversible conversion")
@@ -65,6 +66,7 @@ func _run() -> void:
 	check(upgraded != document and upgraded.is_sc2x() and document.serialize().data == old_bytes,
 		"Options upgrades a separate SC2X version 4 city after confirmation")
 	check(main.options_menu.get_popup().get_item_index(CityMenuBar.MENU_UPGRADE_SC2X) < 0, "SC2X hides upgrade")
+	check(main.options_menu.get_popup().get_item_index(CityMenuBar.MENU_UPGRADE_SEPARATOR) < 0, "Unavailable conversion removes its separator")
 	check(main.document_state.current_save_path.is_empty(), "Conversion requires a separate save path")
 	check(main.tool_state.last_edit_command == null, "Old-format undo is cleared")
 	check(main.simulation_state.simulation_engine.get_instance_id() != engine_id

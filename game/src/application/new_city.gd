@@ -95,7 +95,10 @@ func _generate_new_city_preview(advance_seed: bool) -> bool:
 
 
 func poll_new_city_preview() -> void:
-	if app.new_city_state.preview_job == null or app.new_city_state.preview_job.thread.is_alive():
+	if app.new_city_state.preview_job == null:
+		return
+	if app.new_city_state.preview_job.thread.is_alive():
+		app.city_dialogs.new_city_dialog.update_generation_progress(app.new_city_state.preview_job.progress())
 		return
 
 	var job := app.new_city_state.preview_job
@@ -111,7 +114,7 @@ func poll_new_city_preview() -> void:
 		return
 
 	app.new_city_state.session = job.session
-	app.city_dialogs.new_city_dialog.set_visual_preview(generated, app.asset_state.palette, job.visual_sprites, job.view_size, job.visual_options, job.visual_image)
+	app.city_dialogs.new_city_dialog.set_visual_preview(generated, app.asset_state.palette, job.visual_sprites, job.view_size, job.visual_options, job.visual_image, job.visual_data)
 	app.city_dialogs.new_city_dialog.show_preview(generated.landscape_image, generated.minimap_image,
 		tr("Water: %s tiles   Trees: %s tiles   Height: %s–%s")
 		% [

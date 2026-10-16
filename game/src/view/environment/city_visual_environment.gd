@@ -28,6 +28,8 @@ var _whole_water_signature: Array = []
 var remote_weather: Dictionary = {}
 # Detached previews can publish native-size sprites instead of enlarged map pixels.
 var source_coordinate_scale := 1
+# Terrain previews supply bounded masks from their worker.
+var precomputed_preview := false
 
 
 func _init(application: CityApplication) -> void:
@@ -356,6 +358,8 @@ func receive_network_weather(state: Dictionary) -> void:
 
 
 func _sync_whole_water() -> void:
+	if precomputed_preview:
+		return
 	if app.render_caches.region_cache != null or app.map_view.city_source == null or app.render_caches.static_display_city == null or app.map_view.layers.water_layer == null:
 		return
 	var source := app.map_view.city_source
@@ -376,6 +380,8 @@ func _sync_whole_water() -> void:
 
 
 func _sync_whole_masks() -> void:
+	if precomputed_preview:
+		return
 	# CPU cities up to 128 retain the existing whole-image/patch renderer.
 	# Auxiliary masks follow its publication epoch without replacing that path.
 	if app.render_caches.region_cache != null or app.map_view.city_source == null or app.render_caches.static_display_city == null:

@@ -107,6 +107,12 @@ static func build(value: String, _files := false, translucent_menus := true) -> 
 		box.content_margin_bottom = entry[4]
 		result.set_stylebox("panel", entry[0], box)
 
+	result.set_type_variation("FloatingPanel", "PanelPadding8_8_8_8")
+	var floating := _copy_style(result, "PanelPadding8_8_8_8", "panel")
+	floating.shadow_color = Color(0, 0, 0, 0.5 if dark else 0.3)
+	floating.shadow_size = 18
+	floating.shadow_offset = Vector2(0, 6)
+	result.set_stylebox("panel", "FloatingPanel", floating)
 	result.set_type_variation("MainMenuPanel", "PanelContainer")
 	var menu := _copy_style(result, "PanelPadding44_34_44_34", "panel")
 	# the shared glass shader mixes these tints with the blurred city background
@@ -242,6 +248,9 @@ static func _website_theme(dark: bool) -> Theme:
 		for color_name in result.get_color_list(type_name):
 			if color_name.begins_with("font_") and not "outline" in color_name and not "shadow" in color_name:
 				result.set_color(color_name, type_name, (Color("8b929b") if dark else Color("727d89")) if "disabled" in color_name else ink)
+	# RichTextLabel can fall back to embedded engine fonts unless its slots are explicit.
+	for slot in ["normal_font", "bold_font", "italics_font", "bold_italics_font"]:
+		result.set_font(slot, "RichTextLabel", _website_font(700 if "bold" in slot else 400, "italics" in slot))
 	result.set_font("title_font", "Window", heading)
 	# Montserrat is wider than the former font. Keep all existing menu entries
 	# and metric fields within the base viewport without moving them.
@@ -350,6 +359,9 @@ static func _website_theme(dark: bool) -> Theme:
 		window.bg_color = surface
 		window.border_color = surface
 		window.set_corner_radius_all(0)
+		window.shadow_color = Color(0, 0, 0, 0.5 if dark else 0.3)
+		window.shadow_size = 18
+		window.shadow_offset = Vector2(0, 6)
 		result.set_stylebox(state, "Window", window)
 	if not dark:
 		for type_name in ["FileDialog", "OptionButton", "LineEdit", "Tree", "Window", "SpinBox"]:

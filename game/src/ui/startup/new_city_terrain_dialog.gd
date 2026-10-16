@@ -396,6 +396,12 @@ func set_generating(value: bool) -> void:
 	_busy_overlay.visible = value
 	if value:
 		preview_status.text = "Generating…"
+		_busy_overlay.show_city(tr("Generating…"), null, "", -1.0)
+
+
+func update_generation_progress(fraction: float) -> void:
+	if generating and _busy_overlay.city_progress != null:
+		_busy_overlay.city_progress.show_progress(tr("Generating…"), "", fraction)
 
 
 func _visibility_changed() -> void:
@@ -442,7 +448,7 @@ class SetupOptions extends RefCounted:
 	var difficulty := 0
 	var starting_year := 0
 
-func set_visual_preview(result: NewCityTerrainSession.PreviewResult, palette: Sc2Palette, sprites: Sc2SpriteArchive, view_size: int, options: Dictionary, indexed: Image = null) -> void:
+func set_visual_preview(result: NewCityTerrainSession.PreviewResult, palette: Sc2Palette, sprites: Sc2SpriteArchive, view_size: int, options: Dictionary, indexed: Image = null, prepared: Dictionary = {}) -> void:
 	if is_instance_valid(visual_preview):
 		remove_child(visual_preview)
 		visual_preview.queue_free()
@@ -450,4 +456,4 @@ func set_visual_preview(result: NewCityTerrainSession.PreviewResult, palette: Sc
 	visual_preview = NewCityPreviewPresentation.new()
 	add_child(visual_preview)
 	move_child(visual_preview, 1)
-	visual_preview.setup(result, palette, sprites, view_size, options, indexed)
+	visual_preview.setup(result, palette, sprites, view_size, options, indexed, prepared)

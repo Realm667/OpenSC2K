@@ -11,8 +11,10 @@ var render_view := CityIsometricRenderer.VIEW_LARGE
 
 
 func _init(parent: Control, city: CityState, controller: GameSpeedController,
-		palette: Sc2Palette, sprites: Sc2SpriteArchive, options: Dictionary, view_size := CityIsometricRenderer.VIEW_LARGE) -> void:
+		palette: Sc2Palette, sprites: Sc2SpriteArchive, options: Dictionary, view_size := CityIsometricRenderer.VIEW_LARGE, elevation: CityTerrainElevation = null) -> void:
 	render_view = view_size
+	if elevation != null:
+		app.visual_environment.terrain_elevation = elevation
 	app.frame = MenuFrame.new(app)
 	app.static_render = MenuStaticRender.new(app)
 	app.static_render.view_size = view_size

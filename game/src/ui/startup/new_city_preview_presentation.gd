@@ -18,7 +18,7 @@ static func options(saved: Dictionary) -> Dictionary:
 		"lut_path": "", "lut_folder": ""}, true)
 	return VisualEnhancementOptions.normalize(result)
 
-func setup(result: NewCityTerrainSession.PreviewResult, colors: Sc2Palette, sprites: Sc2SpriteArchive, view_size: int, values: Dictionary, indexed: Image = null) -> void:
+func setup(result: NewCityTerrainSession.PreviewResult, colors: Sc2Palette, sprites: Sc2SpriteArchive, view_size: int, values: Dictionary, indexed: Image = null, prepared: Dictionary = {}) -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	clip_contents = true
@@ -27,10 +27,12 @@ func setup(result: NewCityTerrainSession.PreviewResult, colors: Sc2Palette, spri
 	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(backdrop)
-	palette = colors
-	var city := CityState.from_document(result.document.duplicate_document())
+	palette = NewCityPreviewArtwork.preview_palette(colors)
+	# The worker already owns this read-only preview city. Copying all 16M
+	# tiles again on the UI thread stalls large-map publication.
+	var city := result.city
 	var controller := GameSpeedController.new(SimulationEngine.new(city))
-	presentation = MainMenuPresentation.new(self, city, controller, colors, sprites, values, view_size)
+	presentation = MainMenuPresentation.new(self, city, controller, palette, sprites, values, view_size, prepared.get("elevation"))
 	presentation.map.show_behind_parent = false
 	var base := indexed if indexed != null else result.landscape_image
 	presentation.publish(base, ImageTexture.create_from_image(base), city, [])
@@ -42,8 +44,18 @@ func setup(result: NewCityTerrainSession.PreviewResult, colors: Sc2Palette, spri
 		artwork.image = result.landscape_image
 		artwork.texture = ImageTexture.create_from_image(artwork.image)
 		presentation.set_artwork_window(artwork)
+	if prepared.has("seasons"):
+		presentation.app.visual_environment.precomputed_preview = true
+		presentation.map.city_source.seasons = ImageTexture.create_from_image(prepared.seasons)
+		for tile in presentation.map.city_source.tiles:
+			tile.seasons = presentation.map.city_source.seasons
+		presentation.map.layers._tiled_source = null
 	cycle = ImageTexture.create_from_image(palette.animation_image(0))
 	presentation.animate(cycle)
+	# Apply environment uniforms before the first visible frame.
+	var extent := Vector2(presentation.map.city_source.size)
+	var zoom := maxf(size.x / extent.x, size.y / extent.y)
+	presentation.advance(0.0, (size - extent * zoom) * 0.5, zoom)
 
 func _process(delta: float) -> void:
 	if presentation == null or not is_visible_in_tree():

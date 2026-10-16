@@ -165,6 +165,7 @@ func _ready() -> void:
 		_add_group_button(%SpecialTools, tool_button_group, group_index)
 
 	_add_group_button(%ZoomButtons, tool_button_group, CityToolIds.Group.CENTERING)
+	toolbar_buttons[CityToolIds.Group.CENTERING].size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 	brush_controls = %BrushControls
 	brush_size_input = %BrushSizeInput
@@ -578,7 +579,11 @@ func replace_artwork(value: Image) -> void:
 
 func _refresh_artwork_buttons(node: Node) -> void:
 	if node is Button and node.has_meta("toolbar_region"):
-		node.theme_type_variation = "ToolbarArtworkButton"
+		node.theme_type_variation = "ToolbarCategoryButton" if node.get_parent() == %ZoomButtons else "ToolbarArtworkButton"
+		if node.get_parent() == %ZoomButtons:
+			node.expand_icon = true
+			node.add_theme_constant_override("icon_max_width", 28)
+			node.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		node.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		node.icon = _toolbar_icon(node.get_meta("toolbar_region"))
 		node.text = node.tooltip_text.left(1) if node.icon == null else ""
