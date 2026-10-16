@@ -1,5 +1,23 @@
 # CI and nightly builds
 
+## Reticulating Splines fork
+
+The development branch is `reticulating-splines`. The inherited workflows below
+still target `main` and the upstream release infrastructure; a push to the fork's
+development branch does not start them. The daily packaging schedule has been
+removed. Local validation and explicitly prepared distributions are the current
+fork workflow; a source push is not a published binary release.
+
+The inherited Test and nightly-publication jobs are restricted to
+`OpenSC2K/OpenSC2K`. Their private test-asset repository and signing credentials
+are not supplied by this fork. The manual Release workflow also assumes `main`;
+it must be adapted and reviewed before use for a Reticulating Splines release.
+Do not treat an inherited packaging job as evidence that the fork passed its
+original-asset or GPU tests. Public packages must exclude private profiles,
+original game assets and local test outputs, and retain dependency and pack notices.
+
+## Inherited automation
+
 The **CI** GitHub Actions workflow runs on pull requests and pushes to `main`.
 It has two jobs:
 
@@ -67,8 +85,8 @@ which permits only the `main` branch. Both environments hold the read-only deplo
 
 ## Nightly releases
 
-The workflow runs daily at **08:00 UTC** (02:00 CST or 03:00 CDT).
-GitHub can delay scheduled runs. Inactive public repositories can have schedules disabled after 60 days.
+There is no scheduled nightly build. The inherited manual nightly action remains
+restricted to the upstream repository and `main`.
 
 After both jobs pass, the workflow replaces the nightly prerelease. There is only one nightly,
 with the fixed `nightly` tag. The workflow uploads the packages to a draft and verifies the uploaded hashes.

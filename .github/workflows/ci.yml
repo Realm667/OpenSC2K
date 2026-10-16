@@ -4,8 +4,6 @@ on:
   push:
     branches: [main]
   pull_request:
-  schedule:
-    - cron: '0 8 * * *'
   workflow_dispatch:
     inputs:
       publish_nightly:
@@ -36,7 +34,7 @@ jobs:
     with:
       # only the builds that replace the nightly release are signed and notarized
       signing: >-
-        ${{ (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.publish_nightly))
+        ${{ (github.event_name == 'workflow_dispatch' && inputs.publish_nightly)
         && 'optional' || 'none' }}
     secrets: inherit
 
@@ -45,7 +43,7 @@ jobs:
     needs: [test, build]
     if: >-
       github.repository == 'OpenSC2K/OpenSC2K' && github.ref == 'refs/heads/main' &&
-      (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.publish_nightly))
+      (github.event_name == 'workflow_dispatch' && inputs.publish_nightly)
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:

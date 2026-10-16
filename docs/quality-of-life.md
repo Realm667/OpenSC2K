@@ -15,6 +15,11 @@ percentage text changes color at the fill edge. Window panels paint their entire
 rectangular surface, avoiding black corner gaps. Selecting a theme does not alter
 cities or simulation state.
 
+Floating windows use an elevation shadow over the city. Multiplayer chat uses
+the same Montserrat family as the rest of the interface. Long tooltips wrap at
+word boundaries to about 55 average characters per line, measured with the active
+font and limited by the window width.
+
 Start New City uses the neutral button style. Headings use bold Montserrat.
 The in-game Multiplayer menu is disabled outside a session; the main-menu entry
 still opens hosting/joining. About identifies Reticulating Splines, its features,
@@ -32,6 +37,7 @@ availability and a marked selection. Toolbar icons use a cool gray background
 (#717479). Subtool previews retain all Large-set source pixels, independently of
 map zoom, and scale only their displayed footprint. The smaller layer controls
 stay at the bottom of the sidebar. The sidebar does not expand for subtools.
+The three zoom/navigation buttons together match the width of the tool grid.
 
 Choose an entry with the mouse, or use the arrow keys and Enter. Selection,
 Escape or an outside click closes the menu. The outside click is consumed so
@@ -132,6 +138,20 @@ resource number, restart or external audio converter is required for MP3s.
 New interface strings are in the central language catalogs and `messages.pot`.
 Language availability follows the application's registered language set. No
 original game assets are included in this feature.
+
+## City and terrain previews
+
+The city file chooser shows a whole-city preview for the selected file and reuses
+it while loading. Extended SC2X saves can embed a thumbnail; older files use an
+isolated rendering job and a bounded local cache. Browsing does not modify the
+city or advance its simulation. See [preview storage](sc2x-format.md#optional-city-preview).
+
+New City prepares terrain and overview artwork in a worker, with progress feedback
+while the interface remains responsive. Preview images and seasonal masks are
+bounded to the display size, including on 4096-tile maps. The overview uses muted
+greens and cool water colors. Supported visual settings are applied before the
+preview appears, avoiding a flash of unenhanced terrain. This overview does not
+replace the full visual environment of a founded, playable city.
 
 ## Manual save backups
 

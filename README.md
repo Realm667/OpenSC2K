@@ -10,7 +10,7 @@ Visual effects preserve simulation rules; multiplayer adds shared control and
 municipal ownership/account rules. See [the multiplayer guide](docs/multiplayer.md).
 
 The default branch, **`reticulating-splines`**, is the shared development source.
-Original changes are reviewed from `upstream/main` and integrated directly here.
+Upstream changes are reviewed manually from `upstream/main` before integration here.
 The retained `main` and older feature branches are historical references.
 The OpenSC2K project identity and existing user profiles remain compatible;
 Windows exports use **`ReticulatingSplines.exe`**.
@@ -31,7 +31,10 @@ dialog. Failed source changes retain the previous source.
 
 [Quality of Life improvements](docs/quality-of-life.md) include compact sidebar
 tool flyouts, middle-button tool picking, remembered window positions and a music
-box with selectable packs and personal music folders.
+box with selectable packs and personal music folders. City selection and loading
+show bounded previews; manual single-player saves retain a verified `.bak`
+predecessor. Long tooltips wrap to a readable width. Large terrain previews run
+in the background with progress feedback.
 
 Open **Settings > Visual Enhancements**. The settings are grouped as follows:
 
@@ -41,10 +44,11 @@ Open **Settings > Visual Enhancements**. The settings are grouped as follows:
 | Lighting | Building and vehicle brightmaps, street and highway lights, ground illumination, glow, a daytime override and a minimum zoom for detail lights. |
 | Seasons | City-calendar seasons, an independent visual cycle or a fixed season, with adjustable color and transition strength. |
 | Weather & Clouds | Game weather, visual automation or fixed rain, snow and thunderstorms; separate cloud and fog controls, cloud shadows and coverage. Storms include ambient wind, rain and thunder audio; dry thunderstorms omit rain. |
-| Environment | Connected forests, tree variants, subtle ground variation, water reflections, underwater terrain, waves, coastal surf and seasonal water color. |
+| Environment | Connected forests, tree variants, terrain-aware tree shadows, subtle ground variation, water reflections, underwater terrain, waves, coastal surf and seasonal water color. |
 | Traffic & Movement | Decorative individual cars and pedestrians, smoother existing vehicles and transparent aircraft shadows. |
 | Disaster Effects | Extra fire and impact light, dust, crowds, tornado motion and earthquake shake. Volcanic clouds use warm colors; pollution and toxic effects use green. |
 | Animation | Transition blending, linkage to game speed and pause behavior for environment cycles. |
+| Tilt Shift | Adjustable blur at the map edges with a sharp center and interface; enabled at a subtle strength by default. |
 | Custom Graphics | Optional color LUT and brightmap overrides. Standard effects use the included resources. |
 
 The scrolling city in the main menu also uses the visual settings. Each launch
@@ -111,7 +115,7 @@ The underlying upstream SC2/SC2X compatibility rules still apply.
 
 ## Multiplayer
 
-Playable Koop and Competetive Shared are available from the main menu. See the
+Playable Co-op and Competitive Shared are available from the main menu. See the
 [updated multiplayer guide](docs/multiplayer.md) for setup, normal city saves, land
 ownership, chat, scoreboard and disaster assistance. Region supports independent cities, spectating and disaster assistance.
 
@@ -206,7 +210,7 @@ Join the upstream [Discord community](https://discord.gg/k9S6c3AqcX).
 
 ## Base-game features
 
-- Larger cities: 256, 384, and 512 tiles per side, alongside the original 128
+- Larger cities: 256, 384, 512, 640, 1024, 2048 and 4096 tiles per side, alongside the original 128; larger maps need more memory and preparation time
 - Smaller cities: 16, 32 and 64 tiles per side
 - Updated coverage, land value, pollution, crime, and other data maps to be 1:1 resolution with the map, instead of lower resolution
 - Massively increased the amount of MicroSims (XMIC) and movable objects (XTHG) that are available to be used in each city
@@ -242,7 +246,11 @@ their unit tests. See [the native simulation](docs/native-simulation.md),
 tools/validate_project.sh
 ```
 
-The tests use silent audio. Generated city fixtures are committed. Original-data audits need `references/SIMCITY2000`; renderer and media tests can also need imported packs in `ext/`. See [fixture generation](docs/generated-city-fixtures.md).
+The tests use silent audio. Generated city fixtures are committed and checked by
+[the fixture test](game/tests/generated_city_fixtures_test.gd). Original-data audits
+need `references/SIMCITY2000`; renderer and media tests can also need imported packs
+in `ext/`. See [the golden corpus](docs/golden-corpus.md) and
+[CI and local validation](docs/ci.md).
 
 ## AI-Assisted Development
 
@@ -257,7 +265,9 @@ See [AI-POLICY.md](AI-POLICY.md) for the project's AI usage and contribution pol
 
 Project code is under the [MIT license](LICENSE).
 
-Bundled [Rajdhani fonts](game/assets/fonts/rajdhani/OFL.txt) retain their own licenses.
+Bundled fonts, including [Montserrat](game/assets/fonts/montserrat/OFL.txt) and
+[Rajdhani](game/assets/fonts/rajdhani/OFL.txt), retain their own licenses. See
+[third-party notices](THIRD_PARTY_NOTICES.md).
 
 The MIT license does not grant rights to the original game or its assets.
 
