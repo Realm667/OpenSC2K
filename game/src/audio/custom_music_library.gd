@@ -5,6 +5,7 @@ extends RefCounted
 var folder: String
 var tracks: Array[String] = []
 var folders: Array[String] = []
+var _folder_albums: Dictionary = {}
 
 
 func _init(root_folder := "") -> void:
@@ -23,9 +24,24 @@ static func valid_id(id: String) -> bool:
 func refresh() -> void:
 	tracks.clear()
 	folders.clear()
+	_folder_albums.clear()
 	_scan("")
 	tracks.sort()
 	folders.sort()
+	for id in tracks:
+		var album := Mp3Title.read_album(folder.path_join(id))
+		if album.is_empty():
+			continue
+		var relative := id.get_base_dir()
+		if not _folder_albums.has(relative):
+			_folder_albums[relative] = album
+		elif _folder_albums[relative] != album:
+			_folder_albums[relative] = ""
+
+
+func folder_name(relative: String) -> String:
+	var album := str(_folder_albums.get(relative, ""))
+	return album if not album.is_empty() else (folder.get_file() if relative.is_empty() else relative)
 
 
 func _scan(relative: String) -> void:

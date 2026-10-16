@@ -122,7 +122,12 @@ References: [ID3v2.3](https://id3.org/id3v2.3.0) and
 3. Select **Rescan**, or reopen the music box. Choose a folder on the left,
    then double-click a track to play it.
 
-Each real subfolder appears as a collection, including empty folders. The root
+Each real subfolder appears as a collection, including empty folders. Its label
+uses the ID3 album name (TALB/TAL or ID3v1) when tagged tracks agree on one album;
+missing tags do not override that name. Mixed albums, untagged and empty folders
+use the folder name. Tooltips retain the folder path and full album name. IDs and
+favorites still use relative paths, so changing a tag does not change playback.
+The root
 music folder appears when it contains MP3s directly. In the Tracks tab,
 playback continues through the visible collection. Original and personal tracks
 can share the Favorites collection. ID3 titles or fallback filenames are displayed;

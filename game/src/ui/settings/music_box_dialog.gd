@@ -531,14 +531,16 @@ func rescan() -> void:
 		if music_library.sources.has(source):
 			entries.append([_source_name(source), source])
 	if custom_music.tracks.any(func(id: String) -> bool: return id.get_base_dir().is_empty()):
-		entries.append([custom_music.folder.get_file(), "folder:"])
+		entries.append([custom_music.folder_name(""), "folder:"])
 	for entry in entries:
 		collection.add_item(entry[0])
 		collection.set_item_metadata(collection.item_count - 1, entry[1])
+		collection.set_item_tooltip(collection.item_count - 1, entry[0])
 	var folders := custom_music.folders
 	for folder in folders:
-		collection.add_item(folder)
-		collection.set_item_tooltip(collection.item_count - 1, folder)
+		var name := custom_music.folder_name(folder)
+		collection.add_item(name)
+		collection.set_item_tooltip(collection.item_count - 1, name + "\n" + folder if name != folder else folder)
 		collection.set_item_metadata(collection.item_count - 1, "folder:" + folder)
 	for index in collection.item_count:
 		if collection.get_item_metadata(index) == selected:

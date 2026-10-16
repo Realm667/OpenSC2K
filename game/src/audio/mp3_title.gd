@@ -1,39 +1,55 @@
 class_name Mp3Title
 extends RefCounted
-## Read-only, bounded ID3 title reader. Unsupported/corrupt tags use the filename.
-## ID3v2.2 TT2, v2.3/v2.4 TIT2 and ID3v1; see https://id3.org/Developer_Information.
+## Read-only, bounded ID3 title/album reader. Missing titles use the filename.
+## ID3v2.2 TT2/TAL, v2.3/v2.4 TIT2/TALB and ID3v1.
 
 const MAX_TAG_BYTES := 1024 * 1024
 static var _cache: Dictionary = {}
 
 
 static func read(path: String) -> String:
+	return _metadata(path).title
+
+
+static func read_album(path: String) -> String:
+	return _metadata(path).album
+
+
+static func _metadata(path: String) -> Dictionary:
 	var fallback := path.get_file().get_basename()
+	var result := {"title": fallback, "album": ""}
 	if path.get_extension().to_lower() != "mp3" or not FileAccess.file_exists(path):
-		return fallback
+		return result
 	var file := FileAccess.open(path, FileAccess.READ)
 	if file == null:
-		return fallback
+		return result
 	var stamp := [FileAccess.get_modified_time(path), file.get_length()]
 	if _cache.has(path) and _cache[path].stamp == stamp:
-		return _cache[path].title
+		return _cache[path]
 	var title := ""
+	var album := ""
 	var header := file.get_buffer(10)
 	if header.size() == 10 and header.slice(0, 3).get_string_from_ascii() == "ID3":
 		var length := _number(header, 6, 4, true)
 		if length > 0 and length <= file.get_length() - 10:
-			title = _v2(file.get_buffer(mini(length, MAX_TAG_BYTES)), header[3], header[5])
-	if title.is_empty() and file.get_length() >= 128:
+			var bytes := file.get_buffer(mini(length, MAX_TAG_BYTES))
+			title = _v2(bytes, header[3], header[5])
+			album = _v2(bytes, header[3], header[5], ["TALB", "TAL"])
+	if (title.is_empty() or album.is_empty()) and file.get_length() >= 128:
 		file.seek(file.get_length() - 128)
 		var legacy := file.get_buffer(128)
 		if legacy.slice(0, 3).get_string_from_ascii() == "TAG":
-			title = _clean(_latin(legacy.slice(3, 33)))
+			if title.is_empty():
+				title = _clean(_latin(legacy.slice(3, 33)))
+			if album.is_empty():
+				album = _clean(_latin(legacy.slice(63, 93)))
 	if title.is_empty():
 		title = fallback
 	if _cache.size() >= 4096:
 		_cache.clear()
-	_cache[path] = {"stamp": stamp, "title": title}
-	return title
+	result = {"stamp": stamp, "title": title, "album": album}
+	_cache[path] = result
+	return result
 
 
 static func _number(bytes: PackedByteArray, offset: int, count: int, sync := false) -> int:
@@ -56,7 +72,7 @@ static func _unsync(bytes: PackedByteArray) -> PackedByteArray:
 	return result
 
 
-static func _v2(bytes: PackedByteArray, version: int, flags: int) -> String:
+static func _v2(bytes: PackedByteArray, version: int, flags: int, names: Array = ["TIT2", "TT2"]) -> String:
 	if version not in [2, 3, 4] or (version == 2 and flags & 0x40):
 		return ""
 	if version < 4 and flags & 0x80:
@@ -77,7 +93,7 @@ static func _v2(bytes: PackedByteArray, version: int, flags: int) -> String:
 		var frame_flags := bytes[offset + 9] if version >= 3 else 0
 		var body := bytes.slice(offset + header_size, offset + header_size + size)
 		offset += header_size + size
-		if name not in ["TIT2", "TT2"]:
+		if name not in names:
 			continue
 		# Compressed/encrypted text cannot be treated as plain text.
 		if (version == 3 and frame_flags & 0xC0) or (version == 4 and frame_flags & 0x0C):

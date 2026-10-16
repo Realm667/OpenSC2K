@@ -8,6 +8,7 @@ func _initialize() -> void:
 func _run() -> void:
 	_picker()
 	_id3_titles()
+	_album_folders()
 	_favorites_migration()
 	var settings_path := "user://qol-%d.cfg" % OS.get_process_id()
 	var settings := ConfigFile.new()
@@ -171,8 +172,8 @@ func _size_bytes(value: int, count: int, sync := false) -> PackedByteArray:
 	return result
 
 
-func _title_tag(version: int, payload: PackedByteArray) -> PackedByteArray:
-	var frame := ("TT2" if version == 2 else "TIT2").to_ascii_buffer()
+func _title_tag(version: int, payload: PackedByteArray, album := false) -> PackedByteArray:
+	var frame := (("TAL" if version == 2 else "TALB") if album else ("TT2" if version == 2 else "TIT2")).to_ascii_buffer()
 	frame.append_array(_size_bytes(payload.size(), 3 if version == 2 else 4, version == 4))
 	if version >= 3:
 		frame.append_array(PackedByteArray([0, 0]))
@@ -222,7 +223,21 @@ func _id3_titles() -> void:
 		var before := FileAccess.get_sha256(path)
 		assert(Mp3Title.read(path) == (cases[i][1] if not cases[i][1].is_empty() else "Fallback-%d" % i))
 		assert(FileAccess.get_sha256(path) == before)
+		var album_bytes: PackedByteArray = cases[i][0].duplicate()
+		if album_bytes.size() >= 14 and album_bytes.slice(0, 3).get_string_from_ascii() == "ID3":
+			var frame_name := ("TAL" if album_bytes[3] == 2 else "TALB").to_ascii_buffer()
+			for j in frame_name.size():
+				album_bytes[10 + j] = frame_name[j]
+		elif album_bytes.size() == 128 and album_bytes[0] == 84:
+			for j in 30:
+				album_bytes[63 + j] = album_bytes[3 + j]
+		var album_path := folder.path_join("Album-%d.mp3" % i)
+		_write_bytes(album_path, album_bytes)
+		var album_hash := FileAccess.get_sha256(album_path)
+		assert(Mp3Title.read_album(album_path) == cases[i][1])
+		assert(FileAccess.get_sha256(album_path) == album_hash)
 	assert(Mp3Title.read(folder.path_join("Missing.mp3")) == "Missing")
+	assert(Mp3Title.read_album(folder.path_join("Missing.mp3")).is_empty())
 	var long_title := PackedByteArray([3])
 	long_title.append_array("Long title ".repeat(100).to_utf8_buffer())
 	_write_bytes(folder.path_join("Long.mp3"), _title_tag(4, long_title))
@@ -230,15 +245,42 @@ func _id3_titles() -> void:
 	print("PASS: bounded read-only ID3 v1/v2.2/v2.3/v2.4 titles, Unicode and corrupt-tag fallbacks")
 
 
-func _tagged_mp3(path: String, title: String) -> void:
+func _tagged_mp3(path: String, title: String, album := "") -> void:
 	var audio := FileAccess.get_file_as_bytes("res://tests/fixtures/audio/silence.mp3")
 	if audio.slice(0, 3).get_string_from_ascii() == "ID3":
 		audio = audio.slice(10 + Mp3Title._number(audio, 6, 4, true))
 	var payload := PackedByteArray([3])
 	payload.append_array(title.to_utf8_buffer())
 	var tagged := _title_tag(4, payload)
+	if not album.is_empty():
+		var album_payload := PackedByteArray([3])
+		album_payload.append_array(album.to_utf8_buffer())
+		tagged.append_array(_title_tag(4, album_payload, true).slice(10))
+		var length := _size_bytes(tagged.size() - 10, 4, true)
+		for i in 4:
+			tagged[6 + i] = length[i]
 	tagged.append_array(audio)
 	_write_bytes(path, tagged)
+
+
+func _album_folders() -> void:
+	var folder := "user://albums-%d" % OS.get_process_id()
+	for relative in ["same", "mixed", "untagged", "empty", "same/nested"]:
+		assert(DirAccess.make_dir_recursive_absolute(folder.path_join(relative)) == OK)
+	for row in [["same/a.mp3", "Music From SimCity 3000"], ["same/b.mp3", "Music From SimCity 3000"],
+		["same/c.mp3", ""], ["mixed/a.mp3", "One"], ["mixed/b.mp3", "Two"],
+		["untagged/a.mp3", ""], ["root.mp3", "Root Album"], ["same/nested/a.mp3", "서울"]]:
+		_tagged_mp3(folder.path_join(row[0]), "Track", row[1])
+	var catalog := CustomMusicLibrary.new(folder)
+	catalog.refresh()
+	assert(catalog.folder_name("same") == "Music From SimCity 3000")
+	assert(catalog.folder_name("mixed") == "mixed")
+	assert(catalog.folder_name("untagged") == "untagged" and catalog.folder_name("empty") == "empty")
+	assert(catalog.folder_name("") == "Root Album" and catalog.folder_name("same/nested") == "서울")
+	_tagged_mp3(folder.path_join("same/a.mp3"), "Track", "Different album")
+	catalog.refresh()
+	assert(catalog.folder_name("same") == "same", "Rescanning detects changed album tags")
+	print("PASS: album collection labels, mixed/missing tags, nested/root folders and rescan")
 
 
 func _choose_source(box: MusicBoxDialog, source: String) -> void:
@@ -337,7 +379,7 @@ func _custom_music(box: MusicBoxDialog, audio: CityAudioController, activity: Ar
 	var second := "Evening/Nested/Second.mp3"
 	for id in [first, second, "Other/Second.mp3", "Root.mp3", "ignored.ogg"]:
 		assert(DirAccess.copy_absolute(fixture, folder.path_join(id)) == OK)
-	_tagged_mp3(folder.path_join(first), "Abend in Köln — 서울 " + "Long title ".repeat(60))
+	_tagged_mp3(folder.path_join(first), "Abend in Köln — 서울 " + "Long title ".repeat(60), "Music From SimCity 3000")
 	_tagged_mp3(folder.path_join(second), "Same title")
 	_tagged_mp3(folder.path_join("Other/Second.mp3"), "Same title")
 	assert(DirAccess.make_dir_recursive_absolute(folder.path_join("Empty")) == OK)
@@ -358,6 +400,7 @@ func _custom_music(box: MusicBoxDialog, audio: CityAudioController, activity: Ar
 	# A folder is a playable collection, with stable relative paths in metadata.
 	for index in box.collection.item_count:
 		if box.collection.get_item_metadata(index) == "folder:Evening":
+			assert(box.collection.get_item_text(index) == "Music From SimCity 3000")
 			box.collection.select(index)
 	box._refresh_library()
 	assert(box.library.item_count == 1 and box.library.get_item_metadata(0) == first)
