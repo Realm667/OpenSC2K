@@ -37931,14 +37931,9 @@ msgstr "Ultimo controllo non riuscito (%s). %s"
 msgid "Preparing Visual Enhancements"
 msgstr "Preparazione degli effetti visivi"
 
-#. Reticulating Splines UI corrections; supplementary translation, AI-
-#. assisted.
-msgid ""
-"A community remaster of SimCity 2000, built on the open-source OpenSC2K "
-"project with Godot Engine."
-msgstr ""
-"Una rimasterizzazione comunitaria di SimCity 2000 basata sul progetto open "
-"source OpenSC2K con Godot Engine."
+#. Reticulating Splines authorship correction; supplementary translation, AI-assisted.
+msgid "Reticulating Splines is developed by Daniel Gimmer (Realm667), based on OpenSC2K by Nicholas Ochoa."
+msgstr "Reticulating Splines è sviluppato da Daniel Gimmer (Realm667) a partire da OpenSC2K di Nicholas Ochoa."
 
 #. Reticulating Splines UI corrections; supplementary translation, AI-
 #. assisted.
@@ -37958,19 +37953,13 @@ msgstr ""
 "e competitivo. Gli effetti visivi non modificano la simulazione originale "
 "per giocatore singolo."
 
-#. Reticulating Splines UI corrections; supplementary translation, AI-
-#. assisted.
-msgid "Project and contributors"
-msgstr "Progetto e collaboratori"
+#. Reticulating Splines authorship correction; supplementary translation, AI-assisted.
+msgid "Development and acknowledgements"
+msgstr "Sviluppo e ringraziamenti"
 
-#. Reticulating Splines UI corrections; supplementary translation, AI-
-#. assisted.
-msgid ""
-"Thanks to everyone contributing code, artwork, music, translations, research"
-" and testing."
-msgstr ""
-"Grazie a chi contribuisce con codice, grafica, musica, traduzioni, ricerca e"
-" test."
+#. Reticulating Splines authorship correction; supplementary translation, AI-assisted.
+msgid "Development of Reticulating Splines: Daniel Gimmer (Realm667). Thanks to Nicholas Ochoa and the OpenSC2K contributors for the foundation, and to everyone supporting this project with feedback, research and testing."
+msgstr "Sviluppo di Reticulating Splines: Daniel Gimmer (Realm667). Grazie a Nicholas Ochoa e ai collaboratori di OpenSC2K per le fondamenta del progetto e a chi lo sostiene con commenti, ricerche e test."
 
 #. Reticulating Splines UI corrections; supplementary translation, AI-
 #. assisted.

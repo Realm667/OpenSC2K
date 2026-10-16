@@ -4,7 +4,7 @@
 
 [Website](https://rs.realm667.com/) · [Gallery](https://rs.realm667.com/#screenshots) · [FAQ](https://rs.realm667.com/#faq) · [Support the project](https://rs.realm667.com/#support)
 
-Reticulating Splines is an enhanced fork of
+Reticulating Splines is developed by **Daniel Gimmer (Realm667)** as an enhanced fork of
 [OpenSC2K](https://github.com/nicholas-ochoa/OpenSC2K), Nicholas Ochoa's independently
 written, open-source reimplementation of SimCity 2000 using Rust and Godot.
 Enjoy familiar graphics, music and sounds with new lighting, weather, modern
@@ -338,11 +338,12 @@ in `ext/`. See [the golden corpus](docs/golden-corpus.md) and
 
 ## The person behind the project
 
-Reticulating Splines is a personal project by **Daniel / Realm667**, a SimCity 2000
-enthusiast with a vision for familiar cities, richer atmosphere and new ways to
-play together. Daniel brings the ideas and direction; **OpenAI Codex Astra** has
-assisted development of the fork's additions, alongside research, documentation,
-testing and debugging. The maintainer remains responsible for review and testing.
+Reticulating Splines is a personal project developed and maintained by
+**Daniel Gimmer (Realm667)**, based on **OpenSC2K by Nicholas Ochoa**. Daniel is a
+SimCity 2000 enthusiast with a vision for familiar cities, richer atmosphere and
+new ways to play together. **OpenAI Codex Astra** has assisted Daniel with
+development of the fork's additions, research, documentation, testing and
+debugging. Daniel remains responsible for the project's direction, review and testing.
 
 Heartfelt thanks go to **Nicholas Ochoa and the OpenSC2K contributors** for their
 outstanding work. Without that foundation, Reticulating Splines would not be possible.
