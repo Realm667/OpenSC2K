@@ -25,9 +25,12 @@ ownership and municipal-account rules. Reticulating Splines does not patch or
 run the original SimCity 2000 executable.
 
 **Development status:** the project is in development; multiplayer is experimental.
-The OpenSC2K base supports Windows, macOS and Linux. Reticulating Splines downloads,
-confirmed requirements and installation instructions will be announced with its
-release. For now, see [building from source](#run-reticulating-splines).
+The first public preview, **0.3.0-rs.1**, is based on Nicholas Ochoa's OpenSC2K 0.3.0
+with reviewed later upstream fixes. [Download the Windows x64 ZIP](https://github.com/Realm667/Reticulating-Splines/releases/tag/v0.3.0-rs.1),
+extract it to a writable folder and run `ReticulatingSplines.exe`. Replacement
+graphics, music and sounds are included; importing your own supported original
+game is optional. This release supplies Windows x64 binaries. For other
+platforms, see [building from source](#run-reticulating-splines).
 
 The default branch, **`reticulating-splines`**, is the shared development source.
 Upstream changes are reviewed manually before integration. The retained `main`
@@ -365,6 +368,12 @@ or read more [on the website](https://rs.realm667.com/#support).
 ## License
 
 Project code is under the [MIT license](LICENSE).
+
+Daniel Gimmer's replacement graphics, music and sound contributions are under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/): reuse, modification and
+redistribution, including commercial use, with attribution and a record of changes.
+See the [asset scope and credits](game/assets/licenses/Reticulating-Splines-assets.txt).
+Audio entries already documented as CC0 or public domain retain those terms.
 
 Bundled fonts, including [Montserrat](game/assets/fonts/montserrat/OFL.txt) and
 [Rajdhani](game/assets/fonts/rajdhani/OFL.txt), retain their own licenses. See

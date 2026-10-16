@@ -8080,3 +8080,7 @@ msgstr "저장된 플레이어: %d"
 #: game/src/ui/shared/city_open_dialog.gd
 msgid "Player finances are not shown in this preview."
 msgstr "이 미리보기에는 플레이어별 재정이 표시되지 않습니다."
+
+#: src/ui/settings/about_dialog.gd
+msgid "Reticulating Splines — CC BY 4.0"
+msgstr "Reticulating Splines — CC BY 4.0"

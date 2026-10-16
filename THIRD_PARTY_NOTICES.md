@@ -86,3 +86,12 @@ In packages, the license texts are in `licenses/rust`.
   Drumline Percussion by Michael Schorsch.
 - License text: `game/assets/licenses/fluidr3mono/FluidR3Mono-License.txt`
   (in Linux packages: `licenses/fluidr3mono`).
+
+## Reticulating Splines replacement packs
+
+Daniel Gimmer's replacement artwork, music and sound contributions use CC BY 4.0.
+See `game/assets/licenses/Reticulating-Splines-assets.txt` and `CC-BY-4.0.txt`
+(in downloads: `licenses/`; in game: **About > Licenses**).
+Existing CC0/public-domain audio source entries keep their documented terms;
+see `packs/standalone-audio/provenance.json` (in downloads:
+`licenses/reticulating-splines/audio-provenance.json`).

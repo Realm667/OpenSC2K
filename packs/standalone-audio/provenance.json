@@ -19,7 +19,7 @@
       "sha256": "c3ee343615338451aab7f1b596f1f5510ed056a8878ce0741ce33b8756a7f4a0",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/effects/501.wav",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/"
     },
     {
       "id": 502,
@@ -27,7 +27,7 @@
       "sha256": "f07c91caaae61fc8a5ad6134e852cf8cc48fa5ddeba2e2a88bb08e74746bc348",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/effects/502.wav",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/"
     },
     {
       "id": 503,
@@ -46,7 +46,7 @@
       "sha256": "e82192e777a77d0fb949a4f374abc653f8ac0c3042a00d2883ee98337d37ad05",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/effects/504.wav",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/"
     },
     {
       "id": 505,
@@ -54,7 +54,7 @@
       "sha256": "9bf298295f390c83e5f9c67cf916d154a4f63daefdd551f282c99447612b9c07",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/effects/505.wav",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/"
     },
     {
       "id": 506,
@@ -85,7 +85,7 @@
       "sha256": "3387201accd9ca9039b88ccd1192eb17a40a1d7efde99d1cae7eefd7d5d6d78f",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/effects/508.wav",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/"
     },
     {
       "id": 509,
@@ -127,7 +127,7 @@
       "sha256": "f4ff040e7034c15c95331ede7f1559717defb9470419283d8611388ecc2c780b",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/effects/512.wav",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/"
     },
     {
       "id": 513,
@@ -147,7 +147,7 @@
       "sha256": "a8654c2e9d64480a77acc5b408a4b598ef4d138dedbe018b23d8a3301e2f8f58",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/effects/514.wav",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/"
     },
     {
       "id": 515,
@@ -155,7 +155,7 @@
       "sha256": "904ef2ef0533e761adcf747b5ab143c99ea672f147adeadd3e7ffa2d920057be",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/effects/515.wav",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/"
     },
     {
       "id": 516,
@@ -163,7 +163,7 @@
       "sha256": "6f77a478324ba88eed97ffd83d33b83f854be62ae2c9ab8a14e72569befb8bd0",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/effects/516.wav",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/"
     },
     {
       "id": 517,
@@ -259,7 +259,7 @@
       "sha256": "4e8356c4862b2dc5f6f72510d40496a95ff26dee6b70dd29911eb8154590aea3",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/effects/525.wav",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/"
     },
     {
       "id": 526,
@@ -300,7 +300,7 @@
       "sha256": "80b0ce6908fd3ae8ebe2c6d68d7a2c6f8a5f4e5145f1cc2638c9015616de87e6",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/effects/529.wav",
-      "license_status": "Owner-supplied; redistribution license not established by this integration"
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/"
     },
     {
       "id": 10000,
@@ -308,7 +308,7 @@
       "sha256": "07d66a323b8c16a5d3450ba918a0025a472fdc125c53285b06d30eddbc863f97",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10000.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/",
       "source_sha256": "bc88e1ed3e61d764ce81d08032b9f180825e9c1495293086f3c050fac9ccaa10",
       "title": "First Light on the Grid",
       "audio_payload_sha256": "d14ca850e704c9b7d019405c6695239d131c2821ff4b21a3292e9f3d641948c7"
@@ -319,7 +319,7 @@
       "sha256": "b07f39f2281e6fd3679e5baa85bd80f3ee0cacc6475a8dfcb5ada3803f9d3776",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10001.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/",
       "source_sha256": "fd49116bf67039d3d43521816a82e80fa3e88a548250d53c330e94459eb8cc52",
       "title": "Megalopolis After Dark",
       "audio_payload_sha256": "1bb9e768aa22b51d1108dbc2ad8e88902e1a255c1d5c3706ddcaec6c35d3ed88"
@@ -330,7 +330,7 @@
       "sha256": "d4eb22628c7793108c31cb1b644622c978c6d9cc9b9574c66f5862190878c021",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10002.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/",
       "source_sha256": "5ed21e27a2571ddf38ab12d1cf36ad26b2bb1c0753b5bf1036c8ffdef38950a5",
       "title": "Reticulating Splines",
       "audio_payload_sha256": "dc725af97b265b525c7d0c83f70ca99e32f1d8203a4cd41ab96d7c6ca48719a3"
@@ -341,7 +341,7 @@
       "sha256": "5ec4d0bc4a045cd859d34b5445dd581fb67fcaa0ca15043f2fdf10ff96da9e02",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10003.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/",
       "source_sha256": "18cd990f541c95cf6b2a36d124fd6a4b0ed0577e95027a0e46ee4762ed16d764",
       "title": "Welcome to SplineNation",
       "audio_payload_sha256": "f3cb37cd437c7380d026b10c5b5a7cd6f45b56e2b0ba73027ca4c8736834dbc0"
@@ -352,7 +352,7 @@
       "sha256": "5160c5c3d7eaa1a662fcf46ffeffcae70857a2fd63b4b10d3b33ae66eae5a478",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10004.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/",
       "source_sha256": "f532cf2fd4331320678ec56c9245cec9d6d72413706d3ec02a7985e45b758cbb",
       "title": "Industrial Avenue",
       "audio_payload_sha256": "377d1240c6ac2c5952416578c669c895ad2552aea7dc2756d5aff6295116ea0c"
@@ -363,7 +363,7 @@
       "sha256": "117e66214ff7ebb9ff7e0252aa8695ff84c19976122e1cb5ff8e2a31e1cbf829",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10005.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/",
       "source_sha256": "86c7c0231ba578a9c3da8e4498712d20b3b41d695b83c986812cd3b1d66701d6",
       "title": "Lakeside Zoning",
       "audio_payload_sha256": "7a4f130ad92d60c4827b2785ae07772c21f27ae75361d95289ce006256685664"
@@ -374,7 +374,7 @@
       "sha256": "97129e3e2c95cdf47646d5aed80c45643fada7ed4159317517a588ae7f4fd843",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10006.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/",
       "source_sha256": "c66294bd921b566e0c296e56c5ed1086783f7fc15c7d60ed7362683188d7df7d",
       "title": "Citizens Have Opinions",
       "audio_payload_sha256": "59d5b7dd2cd7d0c64396c71651689ac118615fcd82cd11feb9782875bb504233"
@@ -385,7 +385,7 @@
       "sha256": "2b61d732e08406040983c0b2607c8884545f2fa7d12d268cd1bea488d5f2604c",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10007.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/",
       "source_sha256": "71bf8e9096f2942a46329357ef0d71e93d7fb01908329759b56721f0f94d810a",
       "title": "High-Rise Horizons",
       "audio_payload_sha256": "9ebd8e04e69e21a6c19d2bda49e017269cbdcca15794bd4c4babaf0361c8e248"
@@ -396,7 +396,7 @@
       "sha256": "7712ff684f1c06159509ac6dd1fc985a59ed1b319e68be936d19e1cf24b7c30f",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10008.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/",
       "source_sha256": "4d813010c0bab72c3c26ca0f12ef9da35dfc95b54cd44adabf0d8d073d7cbbe1",
       "title": "Reticulated Shuffle",
       "audio_payload_sha256": "2e6e6276399db1c06163a740ddd1d627fd9e644342480c26dc0cd20e158b241c"
@@ -407,7 +407,7 @@
       "sha256": "a65df3f5156f7bb0e778228aec6baefa17584f193cbbf38f22005e3fa393ad63",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10009.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/",
       "source_sha256": "d280280d64cafa5cfd95afc9a8accdb2a8748427a6345cd508c1012069d7d37b",
       "title": "Urban Haze",
       "audio_payload_sha256": "a9141a2c2eb486e8f8e6af3ada5718ea3ba6acade86d5447959cb93d726ca1d7"
@@ -418,7 +418,7 @@
       "sha256": "a0d5352f783a537fca4b4dd949d02ebe6e0b7ed70edf090fba791b9db2a0a239",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10010.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/",
       "source_sha256": "a1c5ecdecbfcb3dcfc63334b3db4d65808f6a9cdc0a87634c84cdfa02d06cc30",
       "title": "A Town Takes Shape",
       "audio_payload_sha256": "150685e35f5512e2270704c42d3627f4a5368197ae731bd7b589c66da60a0a20"
@@ -429,7 +429,7 @@
       "sha256": "dc16fe2ef8bdc2cc0e456fc89b54fafc060ac717f3cf4d1ec9699485b34a067d",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10011.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/",
       "source_sha256": "8880277c3018dcd0f1d33d25b7b9bb1400d752fb71f8a1c2f7345fb7cb6a7dd4",
       "title": "From Town to Metropolis",
       "audio_payload_sha256": "c797d811f01795dcaa6afa12117419c81b18269a390c3958cc7166c23acb2210"
@@ -440,7 +440,7 @@
       "sha256": "986ce793492bea570e098aa3f11ae9ccde016ee3c57948828524c8c9a6c81ad8",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10012.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/",
       "source_sha256": "a6c3476890896177a6980fc0b82e3c8407237591cfd151c04babe7ffc8375862",
       "title": "Rush Hour Rhythm",
       "audio_payload_sha256": "6968d65ea30bfadd4d8cf63fbe9563bd906c452635b59070aa08a344e1643d37"
@@ -451,7 +451,7 @@
       "sha256": "653c8aa256ac4edf0e1c61dc13f9688d707e767b467d60aa2c4c95d9a4541918",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10013.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/",
       "source_sha256": "ad8b55fba0d3c161fd1536e46f96ec6981c1c1d0456f69368ac57388d94393cd",
       "title": "Arcology Dreams",
       "audio_payload_sha256": "3b9d0fe4d665b80662ad196e9977d113c9133e9c6fe0311476712d484d87d867"
@@ -462,7 +462,7 @@
       "sha256": "9e6e7e62953060f5162678131bc3ae86fcb8e68a3423c3e46432e8da9aa4a4c7",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10014.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/",
       "source_sha256": "95e4bdf7585aea7ada8a35d5a39fb851dcc4aa8dfc5333922f5e6aa5bb4d0779",
       "title": "Brick by Brick",
       "audio_payload_sha256": "1b7ed58e370d2e6eb103e10a25042a79e39eafb7ac90c85e148f96581b8242c6"
@@ -473,7 +473,7 @@
       "sha256": "d2a378d4c43b674c20c1f2512d937f173249f56a2d64d53b1ee9578577ba1808",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10015.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/",
       "source_sha256": "b0b8819d525b26cb3a0b4fe376f96bd742c1cbabe003da417121f99c5abcece2",
       "title": "The Mayor's Midnight Blues",
       "audio_payload_sha256": "b760f77e9b6fcd6a4435ed35058ae6ad304633e7ce64a21cf0e6d51e4150a7d1"
@@ -484,7 +484,7 @@
       "sha256": "cfe2a9bbe5d0afc2de205011a485abb3e32c4e8367862c1fa375e512cfe3992d",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10016.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/",
       "source_sha256": "7a4e1e53a4bab14fea89411f28a39ecc67f5c1b78fad770f039f2f001910c182",
       "title": "Llama Boulevard",
       "audio_payload_sha256": "785932346cc4084a0123e1e2c30c59ce29728ab1701cbca9c0851091f48f6360"
@@ -495,7 +495,7 @@
       "sha256": "c43d1015daef2263d9d464da0606062df285acd2dbc1199be07c49e3ce80608f",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10017.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/",
       "source_sha256": "c8692df0f95c6b2e30a1d1fb4413e225e7d4d0d76c97a24c977d3d31d571d870",
       "title": "Still Waters, Sleeping City",
       "audio_payload_sha256": "ea765a5e30d5327f8c8ba115f4dd10d1bfa62a291de31d6538438bb1d935981c"
@@ -506,7 +506,7 @@
       "sha256": "e53b7f32bfd1aec48c16caf9a53d7eb88f96a041319d28c4030d762c6eb950bd",
       "source": "Daniel-approved final audio",
       "source_file": "Sound/music/10018.mp3",
-      "license_status": "Owner-supplied; redistribution license not established by this integration",
+      "license_status": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/",
       "source_sha256": "90421ca8c46dabbeb6e3ee38e255c7be6731407f969fecf7293acf87a379a2f5",
       "title": "Keys to the City",
       "audio_payload_sha256": "76ba5fcd3f22645be256ce7ee070a8569a27db667cc678b541fdfd9173e150d4"
@@ -789,5 +789,12 @@
       ],
       "scope": "Package title metadata only; other ID3 frames and all audio bytes unchanged."
     }
-  ]
+  ],
+  "release_license": {
+    "date": "2026-10-17",
+    "license": "CC-BY-4.0",
+    "attribution": "Reticulating Splines assets — Daniel Gimmer (Realm667)",
+    "url": "https://creativecommons.org/licenses/by/4.0/",
+    "scope": "Owner-supplied recordings; documented CC0/Public Domain recordings retain their existing terms and credits."
+  }
 }

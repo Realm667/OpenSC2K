@@ -68,6 +68,15 @@ func _check_responses() -> void:
 	var newer := Check.read_response(HTTPRequest.RESULT_SUCCESS, 200, PackedStringArray(), _release_body("v1.3.0", page), "1.2.3", 0)
 	assert(newer.status == Check.Status.UPDATE_AVAILABLE and newer.version == "1.3.0" and newer.url == page)
 
+	# Installed RS previews must still discover stable releases. Stable
+	# candidates keep the existing strict parser and latest-release endpoint.
+	for pair in [["v0.3.1", Check.Status.UPDATE_AVAILABLE], ["v0.3.0", Check.Status.UPDATE_AVAILABLE], ["v0.2.9", Check.Status.UP_TO_DATE]]:
+		var preview := Check.read_response(HTTPRequest.RESULT_SUCCESS, 200, PackedStringArray(),
+			_release_body(pair[0], Check.RELEASE_PAGE_PREFIX + pair[0]), "0.3.0-rs.1", 0)
+		assert(preview.status == pair[1], str(pair))
+	var unavailable := Check.read_response(HTTPRequest.RESULT_SUCCESS, 404, PackedStringArray(), PackedByteArray(), "0.3.0-rs.1", 0)
+	assert(unavailable.status == Check.Status.FAILED)
+
 	var same := Check.read_response(HTTPRequest.RESULT_SUCCESS, 200, PackedStringArray(), _release_body("v1.2.3", page), "1.2.3", 0)
 	assert(same.status == Check.Status.UP_TO_DATE)
 

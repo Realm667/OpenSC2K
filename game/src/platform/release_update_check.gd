@@ -75,7 +75,12 @@ static func read_response(
 		HTTPRequest.RESULT_TIMEOUT:
 			transport = "timeout"
 
-	var fields := NativePlatform.read_response(transport, result, response_code, headers, body, current, now)
+	var preview_pattern := RegEx.create_from_string("^(v?[0-9]+\\.[0-9]+\\.[0-9]+)-rs\\.([1-9][0-9]*)$")
+	var preview := preview_pattern.search(current)
+	var current_base := preview.get_string(1) if preview != null else current
+	var fields := NativePlatform.read_response(transport, result, response_code, headers, body, current_base, now)
+	if preview != null and fields.status == Status.UP_TO_DATE and fields.version == normalized_version(current_base):
+		fields.status = Status.UPDATE_AVAILABLE
 	var outcome := Outcome.new()
 	outcome.status = fields.status as Status
 	outcome.version = fields.version

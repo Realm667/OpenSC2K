@@ -29860,3 +29860,7 @@ msgstr "Jogadores salvos: %d"
 #: game/src/ui/shared/city_open_dialog.gd
 msgid "Player finances are not shown in this preview."
 msgstr "As finanças dos jogadores não são exibidas nesta prévia."
+
+#: src/ui/settings/about_dialog.gd
+msgid "Reticulating Splines — CC BY 4.0"
+msgstr "Reticulating Splines — CC BY 4.0"

@@ -6,7 +6,7 @@
   "generation": "OpenAI ImageGen artwork plus independently authored deterministic projection, compositing and UI/traffic drawing tools",
   "references": "Original resources inspected locally for IDs, dimensions, functions, orientations and visual inspiration. No original pixel files are delivered.",
   "license": {
-    "generated_artwork": "No distribution license has been granted or inferred. Daniel must choose the intended asset license before publication.",
+    "generated_artwork": "CC BY 4.0; Daniel Gimmer (Realm667); https://creativecommons.org/licenses/by/4.0/. Applies to licensable rights in the replacement artwork and masks; see graphics/LICENSE-STATUS.txt. Public-domain elements remain unrestricted.",
     "existing_project_code": "Retain the OpenSC2K MIT notice for reused code and existing procedural effects; it does not establish a license for the newly generated artwork."
   },
   "editable_sources": "Original production sources plus corrections/2026-10-13 in D:/OpenSC2K/Codex/standalone-data-pack; ImageGen prompts and exact projection/export tools retained.",
