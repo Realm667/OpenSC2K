@@ -19,6 +19,12 @@ func _run() -> void:
 	assert(not tab.selected_values().tree_shadows_enabled)
 	tab.show_values(defaults)
 	assert((tab.controls.tree_shadows_enabled as CheckBox).button_pressed)
+	assert(not (tab.controls.tilt_shift_strength as SpinBox).editable)
+	(tab.controls.tilt_shift_enabled as CheckBox).button_pressed = true
+	assert((tab.controls.tilt_shift_strength as SpinBox).editable)
+	(tab.controls.tilt_shift_strength as SpinBox).value = 65.0
+	assert(tab.selected_values().tilt_shift_strength == 0.65)
+	tab.show_values(defaults)
 	assert(tab.terrain_strength_slider.value == 50.0)
 	tab.terrain_strength_slider.value = 75.0
 	assert(tab.selected_values().nature_terrain_strength == 0.75)

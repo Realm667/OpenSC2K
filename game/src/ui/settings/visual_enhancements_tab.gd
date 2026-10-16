@@ -23,8 +23,10 @@ const SECTIONS := [
 		["disaster_enabled", "disaster_strength", "disaster_crowds", "disaster_dust", "disaster_lights", "disaster_motion", "disaster_shake"]],
 	["Animation", "Cycle durations use Turtle speed when linked; otherwise they use real time. Weather and clouds always pause with the game. The pause option below controls the other environment cycles.",
 		["disaster_blending", "speed_link", "pause_freezes"]],
+	["Tilt shift", "Blur the top and bottom of the city view while keeping the center and interface sharp.",
+		["tilt_shift_enabled", "tilt_shift_strength", "tilt_shift_edge", "tilt_shift_transition"]],
 ]
-const PERCENT_FIELDS := ["nature_terrain_strength", "day_lut_strength", "night_strength", "season_transition", "season_lut_strength",
+const PERCENT_FIELDS := ["tilt_shift_strength", "tilt_shift_edge", "tilt_shift_transition", "nature_terrain_strength", "day_lut_strength", "night_strength", "season_transition", "season_lut_strength",
 	"season_water_strength", "weather_strength", "weather_lut_strength", "cloud_density", "cloud_shadow_strength",
 	"disaster_strength", "disaster_lights", "disaster_shake"]
 const LABELS := {
@@ -43,6 +45,8 @@ const LABELS := {
 	"lut_path": "Custom color filter (LUT PNG)", "brightmap_folder": "Custom light masks (brightmaps)",
 }
 const HINTS := {
+	"tilt_shift_edge": "Height of each blurred edge as a percentage of the city view. The center stays sharp.",
+	"tilt_shift_transition": "Higher values create a gentler transition between sharp and blurred areas.",
 	"tree_shadows_enabled": "Tree shadows follow flat and sloping ground. Requires enhanced forests. Turning this off also skips shadow geometry preparation.",
 	"nature_forests_enabled": "Varied tree shapes and connected forest edges follow the existing tree density. Empty ground and clearings stay open. Does not change tree counts or the simulation.",
 	"nature_terrain_enabled": "Quiet, continuous variations across natural ground. Terrain height, water and zoning markings stay unchanged.",
@@ -391,6 +395,8 @@ func _update_availability() -> void:
 	var values := selected_values()
 	for key: String in controls:
 		var available := true
+		if key.begins_with("tilt_shift_") and key != "tilt_shift_enabled":
+			available = values.tilt_shift_enabled
 		if key.begins_with("disaster_") and key not in ["disaster_enabled", "disaster_blending"]:
 			available = values.disaster_enabled
 		elif key.begins_with("season_") and key != "season_enabled":

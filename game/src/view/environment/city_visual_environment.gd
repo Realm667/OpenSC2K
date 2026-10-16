@@ -22,6 +22,7 @@ var _city_id := 0
 var weather: CityVisualWeather
 var clouds: CityVisualClouds
 var night_lighting: CityNightLighting
+var tilt_shift := CityTiltShift.new()
 var _whole_mask_signature: Array = []
 var _whole_water_signature: Array = []
 var remote_weather: Dictionary = {}
@@ -283,6 +284,7 @@ func process(delta: float) -> void:
 	night_lighting.process(active, night, options, elapsed * factor, maxf(delta, 0.0))
 	if clouds.layer != null and clouds.layer.visible:
 		app.map_view.layers._apply_environment(clouds.material)
+	tilt_shift.update(app.map_view, active, options)
 	app.preferences.visual_enhancements = saved_options
 
 

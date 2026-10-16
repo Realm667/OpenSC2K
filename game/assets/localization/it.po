@@ -38120,3 +38120,35 @@ msgstr "Ombre"
 #. Supplementary tree shadow setting; AI-assisted translation.
 msgid "Tree shadows follow flat and sloping ground. Requires enhanced forests. Turning this off also skips shadow geometry preparation."
 msgstr "Le ombre degli alberi seguono il terreno pianeggiante e in pendenza. Richiede le foreste migliorate. Disattivando questa opzione si evita anche la preparazione della geometria delle ombre."
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Tilt shift"
+msgstr "Tilt shift"
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Tilt-shift blur"
+msgstr "Sfocatura tilt shift"
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Blur strength"
+msgstr "Intensità della sfocatura"
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Blurred edge size"
+msgstr "Dimensione dei bordi sfocati"
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Blur transition"
+msgstr "Transizione della sfocatura"
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Blur the top and bottom of the city view while keeping the center and interface sharp."
+msgstr "Sfoca i bordi superiore e inferiore della vista della città, mantenendo nitidi il centro e l’interfaccia."
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Height of each blurred edge as a percentage of the city view. The center stays sharp."
+msgstr "Altezza di ogni bordo sfocato come percentuale della vista della città. Il centro rimane nitido."
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Higher values create a gentler transition between sharp and blurred areas."
+msgstr "Valori più alti rendono più graduale la transizione tra le aree nitide e sfocate."

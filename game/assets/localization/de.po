@@ -26852,3 +26852,35 @@ msgstr "Schatten"
 #. Supplementary tree shadow setting; AI-assisted translation.
 msgid "Tree shadows follow flat and sloping ground. Requires enhanced forests. Turning this off also skips shadow geometry preparation."
 msgstr "Baumschatten folgen ebenem und geneigtem Gelände. Benötigt erweiterte Wälder. Ausgeschaltet entfällt auch die Vorbereitung der Schattengeometrie."
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Tilt shift"
+msgstr "Tilt Shift"
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Tilt-shift blur"
+msgstr "Tilt-Shift-Unschärfe"
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Blur strength"
+msgstr "Unschärfestärke"
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Blurred edge size"
+msgstr "Größe der unscharfen Ränder"
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Blur transition"
+msgstr "Weichheit des Übergangs"
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Blur the top and bottom of the city view while keeping the center and interface sharp."
+msgstr "Zeichnet den oberen und unteren Rand der Stadtansicht weich. Die Mitte und die Bedienoberfläche bleiben scharf."
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Height of each blurred edge as a percentage of the city view. The center stays sharp."
+msgstr "Höhe jedes unscharfen Randbereichs in Prozent der Stadtansicht. Die Mitte bleibt scharf."
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Higher values create a gentler transition between sharp and blurred areas."
+msgstr "Höhere Werte sorgen für einen weicheren Übergang zwischen scharfen und unscharfen Bereichen."

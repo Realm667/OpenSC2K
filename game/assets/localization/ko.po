@@ -8025,3 +8025,35 @@ msgstr "그림자"
 #. Supplementary tree shadow setting; AI-assisted translation.
 msgid "Tree shadows follow flat and sloping ground. Requires enhanced forests. Turning this off also skips shadow geometry preparation."
 msgstr "나무 그림자가 평지와 경사면을 따라 표시됩니다. 향상된 숲이 필요합니다. 끄면 그림자 형상 준비 작업도 생략합니다."
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Tilt shift"
+msgstr "틸트 시프트"
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Tilt-shift blur"
+msgstr "틸트 시프트 흐림"
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Blur strength"
+msgstr "흐림 강도"
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Blurred edge size"
+msgstr "흐린 가장자리 크기"
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Blur transition"
+msgstr "흐림 전환"
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Blur the top and bottom of the city view while keeping the center and interface sharp."
+msgstr "도시 화면의 위쪽과 아래쪽을 흐리게 표시하고 중앙과 인터페이스는 선명하게 유지합니다."
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Height of each blurred edge as a percentage of the city view. The center stays sharp."
+msgstr "각 흐린 가장자리의 높이를 도시 화면의 백분율로 지정합니다. 중앙은 선명하게 유지됩니다."
+
+#. Tilt shift; supplementary AI-assisted translation.
+msgid "Higher values create a gentler transition between sharp and blurred areas."
+msgstr "값이 높을수록 선명한 영역과 흐린 영역 사이의 전환이 부드러워집니다."
