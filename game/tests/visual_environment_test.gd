@@ -21,6 +21,8 @@ func _run() -> void:
 	assert(elevation.range_for(other) != Vector2(2, 18), "Changing cities must refresh elevation shading")
 	var defaults := VisualEnhancementOptions.normalize({})
 	assert(defaults.day_seconds == 600.0)
+	assert(defaults.tree_shadows_enabled)
+	assert(not VisualEnhancementOptions.normalize({"tree_shadows_enabled": false}).tree_shadows_enabled)
 	assert(defaults.nature_terrain_strength == 0.5)
 	assert(VisualEnhancementOptions.normalize({"nature_terrain_strength": NAN}).nature_terrain_strength == 0.5)
 	assert(VisualEnhancementOptions.normalize({"nature_terrain_strength": -1.0}).nature_terrain_strength == 0.0)
@@ -43,6 +45,7 @@ func _run() -> void:
 	save.visual_enhancements.night_light_strength = 35.0
 	save.visual_enhancements.night_daytime_enabled = true
 	save.visual_enhancements.disaster_blending = false
+	save.visual_enhancements.tree_shadows_enabled = false
 	assert(AppSettingsStore.save_values(0.5, 0.5, false, path, save) == OK)
 	assert(AppSettingsStore.load_values(path).visual_enhancements == save.visual_enhancements)
 	assert(AppSettingsStore.save_values(0.4, 0.4, false, path) == OK)

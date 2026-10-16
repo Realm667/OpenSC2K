@@ -33,6 +33,7 @@ const float TERRAIN_ARTWORK_TAG = 53.0;
 const float TERRAIN_INDEXED_TAG = 54.0;
 const float PARCEL_BORDER_TAG = 55.0;
 const float TREE_SHADOW_TAG = 56.0;
+uniform bool tree_shadows_enabled = true;
 varying flat float tree_shadow;
 varying flat float parcel_border;
 const vec3 GRID_COLOR = vec3(0.22, 0.19, 0.10);
@@ -260,6 +261,7 @@ void fragment() {
 	vec2 footprint = fwidth(texel);
 
 	if (tree_shadow > 0.5) {
+		if (!tree_shadows_enabled) discard;
 		float edge = 1.0 - smoothstep(0.55, 1.0, length(UV));
 		float daylight = environment_enabled ? (1.0 - environment_night * 0.85) : 1.0;
 		float weather = environment_enabled ? clamp(dot(environment_weather, vec3(0.3333)), 0.45, 1.0) : 1.0;

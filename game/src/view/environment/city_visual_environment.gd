@@ -148,8 +148,10 @@ func _configure_nature(options: Dictionary, refresh := true) -> void:
 		if options.nature_forests_enabled or options.nature_terrain_enabled:
 			CityNatureArtwork.prepare(archive, app.asset_state.palette, _authored_visuals())
 			archive.visual_seasons.merge(archive.visual_nature_masks, true)
-		if archive.visual_nature_enabled != options.nature_forests_enabled or archive.visual_terrain_enabled != options.nature_terrain_enabled:
+		if archive.visual_nature_enabled != options.nature_forests_enabled or archive.visual_terrain_enabled != options.nature_terrain_enabled \
+				or archive.visual_tree_shadows_enabled != options.tree_shadows_enabled:
 			archive.visual_nature_enabled = options.nature_forests_enabled
+			archive.visual_tree_shadows_enabled = options.tree_shadows_enabled
 			archive.visual_terrain_enabled = options.nature_terrain_enabled
 			archive.visual_revision += 1
 			changed = true
@@ -245,6 +247,7 @@ func process(delta: float) -> void:
 		"terrain_elevation_range": terrain_elevation.range_for(city),
 		"nature_terrain_strength": options.nature_terrain_strength,
 		"nature_forests_enabled": active and options.nature_forests_enabled,
+		"tree_shadows_enabled": active and options.tree_shadows_enabled,
 		"nature_ground": CityNatureArtwork.ground_texture(),
 		"nature_canvas_to_grid": _nature_projection(),
 		"water_enabled": active and VisualEnhancementOptions.water_pass_enabled(options),

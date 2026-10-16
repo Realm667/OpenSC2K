@@ -140,6 +140,17 @@ fn forests_keep_density_clearings_and_local_cache_invalidation() {
                 .any(|color| (color[0] * 255.0).round() == f32::from(tree_shadows::TAG)),
             "enhanced forest ground must receive projected shadows in every view"
         );
+        b.config.tree_shadows = false;
+        let unshadowed = b.region(full).unwrap();
+        assert_eq!(unshadowed.draws.len(), original.draws.len());
+        assert!(
+            unshadowed
+                .colors
+                .iter()
+                .all(|color| (color[0] * 255.0).round() != f32::from(tree_shadows::TAG))
+        );
+        assert!(unshadowed.vertices.len() < original.vertices.len());
+        b.config.tree_shadows = true;
         let total = b.builds;
         let atlas_revision = b.atlas.revision;
         let again = b.region(full).unwrap();
@@ -247,6 +258,7 @@ fn fixture(edge: i32, view: i32) -> Builder {
             specials: false,
             individual_traffic: false,
             natural_forests: false,
+            tree_shadows: true,
             natural_terrain: false,
             phase: 0,
             effects: 0,

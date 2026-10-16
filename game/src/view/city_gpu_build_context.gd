@@ -159,6 +159,7 @@ func prepare(city: CityState, palette: Sc2Palette, sprites: Sc2SpriteArchive, vi
 		request.merge({"view": view, "underground_mode": int(mode == CityViewMode.Mode.UNDERGROUND),
 			"individual_traffic": int(sprites.visual_city_life_traffic and not special_overlays),
 			"natural_forests": int(sprites.visual_nature_enabled and mode == CityViewMode.Mode.CITY),
+			"tree_shadows": int(sprites.visual_tree_shadows_enabled),
 			"natural_terrain": int(sprites.visual_terrain_enabled and mode == CityViewMode.Mode.CITY),
 			"pipes": int(pipes), "subways": int(subways), "mains": int(water_mains), "tunnels": int(tunnels),
 			"redraw_ground": int(sprites.redraw_small_highway_ground), "atlas_edge": atlas_edge,

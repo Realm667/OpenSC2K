@@ -690,6 +690,7 @@ mod tests {
             specials: false,
             individual_traffic: false,
             natural_forests: false,
+            tree_shadows: true,
             natural_terrain: false,
             phase: 0,
             effects: 0,

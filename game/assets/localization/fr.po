@@ -38664,3 +38664,11 @@ msgstr "Enregistrement de la ville…"
 #. Manual city-save backup; supplementary Reticulating Splines translation.
 msgid "Cannot create the backup. The city was not saved."
 msgstr "Impossible de créer la sauvegarde de secours. La ville n’a pas été enregistrée."
+
+#. Supplementary tree shadow setting; AI-assisted translation.
+msgid "Shadows"
+msgstr "Ombres"
+
+#. Supplementary tree shadow setting; AI-assisted translation.
+msgid "Tree shadows follow flat and sloping ground. Requires enhanced forests. Turning this off also skips shadow geometry preparation."
+msgstr "Les ombres des arbres suivent les terrains plats et en pente. Nécessite les forêts améliorées. Désactiver cette option supprime aussi la préparation de la géométrie des ombres."

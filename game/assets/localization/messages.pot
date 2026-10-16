@@ -8351,3 +8351,11 @@ msgstr ""
 #. Manual city-save backup; supplementary Reticulating Splines translation.
 msgid "Cannot create the backup. The city was not saved."
 msgstr ""
+
+#. Supplementary tree shadow setting; AI-assisted translation.
+msgid "Shadows"
+msgstr ""
+
+#. Supplementary tree shadow setting; AI-assisted translation.
+msgid "Tree shadows follow flat and sloping ground. Requires enhanced forests. Turning this off also skips shadow geometry preparation."
+msgstr ""

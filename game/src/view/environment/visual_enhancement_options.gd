@@ -3,6 +3,7 @@ extends RefCounted
 ## Local presentation preferences. No value is written to a city document.
 
 const FIELDS := [
+	["tree_shadows_enabled", "Shadows", "bool", true],
 	["nature_forests_enabled", "Connected forests and tree variants", "bool", true],
 	["nature_terrain_enabled", "Subtle terrain variation", "bool", true],
 	["nature_terrain_strength", "Terrain overlay strength", "number", 0.5, 0.0, 1.0, 0.05],

@@ -15,6 +15,10 @@ func _run() -> void:
 	var tab := dialog.visual_tab
 	_check_cloud_settings(tab)
 	var defaults := VisualEnhancementOptions.normalize({})
+	(tab.controls.tree_shadows_enabled as CheckBox).button_pressed = false
+	assert(not tab.selected_values().tree_shadows_enabled)
+	tab.show_values(defaults)
+	assert((tab.controls.tree_shadows_enabled as CheckBox).button_pressed)
 	assert(tab.terrain_strength_slider.value == 50.0)
 	tab.terrain_strength_slider.value = 75.0
 	assert(tab.selected_values().nature_terrain_strength == 0.75)

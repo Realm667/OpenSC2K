@@ -393,6 +393,7 @@ impl NativeCityRegionBuilder {
                 specials: int(&request, "special_overlays", 0) != 0,
                 individual_traffic: int(&request, "individual_traffic", 0) != 0,
                 natural_forests: int(&request, "natural_forests", 0) != 0,
+                tree_shadows: int(&request, "tree_shadows", 1) != 0,
                 natural_terrain: int(&request, "natural_terrain", 0) != 0,
                 phase: int(&request, "animation_phase", 0) as i32,
                 effects: int(&request, "hd_effects", 0) as i32,

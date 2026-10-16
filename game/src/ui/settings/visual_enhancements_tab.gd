@@ -16,7 +16,7 @@ const SECTIONS := [
 	["Weather & Clouds", "Weather and clouds have separate switches. Fog is part of Clouds. Fixed weather can show snow in any season.",
 		["weather_enabled", "weather_mode", "weather_fixed", "weather_seconds", "weather_transition", "weather_strength", "weather_lut_strength", "cloud_enabled", "cloud_mode", "cloud_density", "cloud_shadow_strength", "cloud_speed"]],
 	["Environment", "Forests, subtle terrain variation and water appearance. Seasonal water colors require Seasons.",
-		["nature_forests_enabled", "nature_terrain_enabled", "nature_terrain_strength", "water_reflections", "water_waves_enabled", "water_topography", "season_water_strength"]],
+		["nature_forests_enabled", "tree_shadows_enabled", "nature_terrain_enabled", "nature_terrain_strength", "water_reflections", "water_waves_enabled", "water_topography", "season_water_strength"]],
 	["Traffic & Movement", "Decorative cars and pedestrians, plus smoother movement for existing vehicles.",
 		["life_cars_enabled", "life_car_amount", "life_people_enabled", "life_people_amount", "traffic_vehicles_enabled", "traffic_shadows_enabled"]],
 	["Disaster Effects", "Extra effects for disasters and demolition. These settings do not change disaster frequency, damage or emergency response.",
@@ -43,6 +43,7 @@ const LABELS := {
 	"lut_path": "Custom color filter (LUT PNG)", "brightmap_folder": "Custom light masks (brightmaps)",
 }
 const HINTS := {
+	"tree_shadows_enabled": "Tree shadows follow flat and sloping ground. Requires enhanced forests. Turning this off also skips shadow geometry preparation.",
 	"nature_forests_enabled": "Varied tree shapes and connected forest edges follow the existing tree density. Empty ground and clearings stay open. Does not change tree counts or the simulation.",
 	"nature_terrain_enabled": "Quiet, continuous variations across natural ground. Terrain height, water and zoning markings stay unchanged.",
 	"nature_terrain_strength": "Blend the terrain variation over the original ground. 0% shows the original colors; 100% applies the full variation. Seasons still apply.",

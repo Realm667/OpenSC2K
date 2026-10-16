@@ -170,6 +170,10 @@ func _check_tree_shadow() -> void:
 	var on := viewport.get_texture().get_image()
 	assert(on.get_pixel(16,16).r < off.get_pixel(16,16).r-0.1,"Tree shadows must darken the actual ground")
 	assert(on.get_pixel(0,0).is_equal_approx(off.get_pixel(0,0)),"Outside the canopy must stay transparent")
+	material.set_shader_parameter("tree_shadows_enabled",false)
+	await RenderingServer.frame_post_draw
+	assert(viewport.get_texture().get_image().get_data()==off.get_data(),"Shadows off must restore exact ground pixels")
+	material.set_shader_parameter("tree_shadows_enabled",true)
 	material.set_shader_parameter("environment_enabled",true)
 	material.set_shader_parameter("environment_night",1.0)
 	await RenderingServer.frame_post_draw

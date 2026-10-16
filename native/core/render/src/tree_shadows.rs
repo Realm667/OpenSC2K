@@ -79,7 +79,8 @@ fn canopy_uv(point: [f32; 3], crown: [f32; 3], radius: f32) -> [f32; 2] {
 
 pub fn append(builder: &Builder, out: &mut Region, draw: &Draw, bounds: Rect) {
     let city = &builder.city;
-    if !builder.config.natural_forests
+    if !builder.config.tree_shadows
+        || !builder.config.natural_forests
         || builder.config.underground
         || draw.moving
         || draw.depth < 0

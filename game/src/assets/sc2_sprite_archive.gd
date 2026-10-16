@@ -10,6 +10,7 @@ var visual_season_artwork: Dictionary[int, Image] = {}
 var visual_nature: Dictionary[int, SpriteEntry] = {}
 var visual_nature_masks: Dictionary[int, Image] = {}
 var visual_nature_enabled := false
+var visual_tree_shadows_enabled := true
 var visual_terrain_enabled := false
 var visual_revision := 0
 var water_reflections := false

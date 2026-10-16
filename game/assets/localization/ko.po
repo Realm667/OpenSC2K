@@ -8017,3 +8017,11 @@ msgstr "도시 저장 중…"
 #. Manual city-save backup; supplementary Reticulating Splines translation.
 msgid "Cannot create the backup. The city was not saved."
 msgstr "백업을 만들 수 없습니다. 도시가 저장되지 않았습니다."
+
+#. Supplementary tree shadow setting; AI-assisted translation.
+msgid "Shadows"
+msgstr "그림자"
+
+#. Supplementary tree shadow setting; AI-assisted translation.
+msgid "Tree shadows follow flat and sloping ground. Requires enhanced forests. Turning this off also skips shadow geometry preparation."
+msgstr "나무 그림자가 평지와 경사면을 따라 표시됩니다. 향상된 숲이 필요합니다. 끄면 그림자 형상 준비 작업도 생략합니다."

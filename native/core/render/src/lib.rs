@@ -240,6 +240,7 @@ pub struct Config {
     pub individual_traffic: bool,
     /// Display-only natural terrain and woodland variants.
     pub natural_forests: bool,
+    pub tree_shadows: bool,
     pub natural_terrain: bool,
     /// The animation phase of special overlays.
     pub phase: i32,
