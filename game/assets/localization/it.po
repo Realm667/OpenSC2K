@@ -38068,3 +38068,11 @@ msgstr ""
 msgid "Credits from the imported SimCity 2000 for Windows 95 installation:"
 msgstr ""
 "Riconoscimenti dall’installazione importata di SimCity 2000 per Windows 95:"
+
+#. Supplementary presentation translation; AI-assisted.
+msgid "Smooth movement"
+msgstr "Movimento fluido"
+
+#. Supplementary presentation translation; AI-assisted.
+msgid "Smooth movement of cars, pedestrians, helicopters, airplanes, ships, sailboats and trains in every graphics pack."
+msgstr "Movimento fluido di auto, pedoni, elicotteri, aerei, navi, barche a vela e treni con ogni pacchetto grafico."

@@ -153,9 +153,8 @@ impl NativeVisualRaster {
                 position
             };
             let mut visual = entry.get("origin").unwrap().to::<Vector2i>().to_vector2();
-            if scale > 1 {
-                visual += position - position.round();
-            }
+            // Movement precision is independent of the selected artwork resolution.
+            visual += position - position.round();
             let destination = visual - origin.to_vector2();
             let slot = index % group_size;
             let at = slot * 8;

@@ -7973,3 +7973,11 @@ msgstr "원작 제작진 정보를 사용할 수 없습니다. 지원되는 게�
 #. Reticulating Splines About; supplementary translation, AI-assisted.
 msgid "Credits from the imported SimCity 2000 for Windows 95 installation:"
 msgstr "가져온 Windows 95용 SimCity 2000 설치본의 제작진 정보:"
+
+#. Supplementary presentation translation; AI-assisted.
+msgid "Smooth movement"
+msgstr "부드러운 이동"
+
+#. Supplementary presentation translation; AI-assisted.
+msgid "Smooth movement of cars, pedestrians, helicopters, airplanes, ships, sailboats and trains in every graphics pack."
+msgstr "모든 그래픽 팩에서 자동차, 보행자, 헬리콥터, 비행기, 선박, 범선과 기차가 부드럽게 움직입니다."

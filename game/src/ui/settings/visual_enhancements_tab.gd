@@ -38,6 +38,7 @@ const LABELS := {
 	"season_seconds": "Year cycle duration", "season_transition": "Season blend duration", "season_lut_strength": "Season color strength",
 	"weather_seconds": "Weather change interval", "weather_transition": "Weather blend duration",
 	"weather_strength": "Weather intensity", "weather_lut_strength": "Weather color strength",
+	"traffic_vehicles_enabled": "Smooth movement",
 	"life_car_amount": "Car density", "life_people_amount": "Pedestrian density",
 	"lut_path": "Custom color filter (LUT PNG)", "brightmap_folder": "Custom light masks (brightmaps)",
 }
@@ -51,7 +52,7 @@ const HINTS := {
 	"night_glow": "Soft colored light around visible brightmaps. Zero keeps only the sharp original lights.",
 	"night_ground": "Street lamps, warm road lighting, cosmetic junction signals and selected shop approaches. Signals do not control traffic. Zero disables these lights.",
 	"detail_lights_min_zoom": "Show street, junction and vehicle lights at this zoom or closer. Below it, their light rendering and preparation stop. Building lights remain available.",
-	"traffic_vehicles_enabled": "Smooth movement of helicopters, airplanes, ships, sailboats and trains.",
+	"traffic_vehicles_enabled": "Smooth movement of cars, pedestrians, helicopters, airplanes, ships, sailboats and trains in every graphics pack.",
 	"water_waves_enabled": "Moving waves and breaking surf along the terrain shoreline. Turn off for a still water surface.",
 	"disaster_enabled": "Enable additional presentation effects. Turning this off restores the original disaster visuals; disasters still occur.",
 	"disaster_strength": "Intensity of added visual effects. At 0%, added crowds, dust and lighting are off. Tornado smoothing and camera shake remain separate.",

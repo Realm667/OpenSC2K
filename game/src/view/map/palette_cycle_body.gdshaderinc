@@ -32,6 +32,8 @@ const float PIPE_FLOW_TAG = 52.0;
 const float TERRAIN_ARTWORK_TAG = 53.0;
 const float TERRAIN_INDEXED_TAG = 54.0;
 const float PARCEL_BORDER_TAG = 55.0;
+const float TREE_SHADOW_TAG = 56.0;
+varying flat float tree_shadow;
 varying flat float parcel_border;
 const vec3 GRID_COLOR = vec3(0.22, 0.19, 0.10);
 const float GRID_OPACITY = 0.36;
@@ -101,6 +103,7 @@ void vertex() {
 	building_emission = float(tag < 128.0 || tag == 255.0);
 	if (building_emission < 0.5) { tag -= 128.0; }
 	parcel_border = float(tag == PARCEL_BORDER_TAG);
+	tree_shadow = float(tag == TREE_SHADOW_TAG);
 	terrain_elevation = (tag == TERRAIN_ARTWORK_TAG || tag == TERRAIN_INDEXED_TAG) ? bytes.g : -1.0;
 	artwork_kind = 0.0;
 	power_warning = 0.0;
@@ -256,7 +259,12 @@ void fragment() {
 	vec2 texel = UV / pixel_size;
 	vec2 footprint = fwidth(texel);
 
-	if (artwork_kind < 0.5) {
+	if (tree_shadow > 0.5) {
+		float edge = 1.0 - smoothstep(0.55, 1.0, length(UV));
+		float daylight = environment_enabled ? (1.0 - environment_night * 0.85) : 1.0;
+		float weather = environment_enabled ? clamp(dot(environment_weather, vec3(0.3333)), 0.45, 1.0) : 1.0;
+		COLOR = vec4(vec3(0.0), 0.24 * edge * daylight * weather * float(nature_forests_enabled));
+	} else if (artwork_kind < 0.5) {
 
 #ifdef USE_PAGED_ATLAS
 		vec4 base_color = region_page_sample(region_atlas_pages, UV);
@@ -441,6 +449,7 @@ void fragment() {
 			COLOR.rgb = mix(COLOR.rgb, phase, 0.3);
 		}
 	}
+
 	if (terrain_elevation >= 0.0 && environment_has_seasons) {
 		float soil = environment_season_sample(UV).g;
 		COLOR.rgb = terrain_elevation_color(COLOR.rgb, soil * clamp(nature_terrain_strength * 2.0, 0.0, 1.0));

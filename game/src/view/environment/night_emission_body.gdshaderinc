@@ -13,10 +13,10 @@ void vertex() {
 	if (building_emission < 0.5) tag -= 128.0;
 	animation = vec3(1.0, 8.0, 0.0);
 	if (tag == 64.0 || tag == 65.0 || (tag == 50.0 && bytes.g > 1.0)) animation = vec3(bytes.g, tag == 65.0 ? 5.0 : 8.0, bytes.b * 256.0 + bytes.a);
-	grid = float(tag == 48.0 || tag == 52.0);
+	grid = float(tag == 48.0 || tag == 52.0 || tag == 56.0);
 }
 void fragment() {
-	// Grid/pipe overlays have special UVs and must not erase the building mask.
+	// Grid/pipe/shadow overlays have special UVs and must not erase the building mask.
 	if (grid > 0.5) discard;
 	float frame = mod(floor(artwork_animation_seconds * animation.y), max(animation.x, 1.0));
 #ifdef USE_PAGED_ATLAS

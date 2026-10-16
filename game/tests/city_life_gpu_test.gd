@@ -61,13 +61,16 @@ func _run() -> void:
 	await _check_sparse_artwork(true)
 	await _check_instances(false, 540)
 	await _check_instances(true)
+	await _check_hd_subpixel_motion(1)
 	await _check_hd_subpixel_motion(2)
 	await _check_hd_subpixel_motion(4)
+	await _check_hd_subpixel_motion(1, true)
+	await _check_hd_subpixel_motion(2, true)
 	print("PASS: GPU city-life colors, transparent background, cloud shadows and environment lighting")
 	quit()
 
 
-func _check_hd_subpixel_motion(raster_scale: int) -> void:
+func _check_hd_subpixel_motion(raster_scale: int, walking := false) -> void:
 	var viewport := SubViewport.new()
 	viewport.size = Vector2i(128, 64)
 	viewport.transparent_bg = true
@@ -78,18 +81,19 @@ func _check_hd_subpixel_motion(raster_scale: int) -> void:
 	canvas.source_bounds = Rect2i(0, 0, 32, 16)
 	viewport.add_child(canvas)
 	var sprites := CityLifeSprites.new()
-	var person := Image.create(3 * raster_scale, 6 * raster_scale, false, Image.FORMAT_RGBA8)
-	person.fill(Color.WHITE)
-	var reader := func(_path: String) -> Image: return person
-	var authored := VisualArtwork.load_records([{
-		"key": "person/0/0/0", "png": "person.png",
-		"logical_size": [3, 6], "master_scale": raster_scale,
-	}], reader)
-	assert(authored.error.is_empty(), authored.error)
-	sprites.set_artwork(authored)
+	if raster_scale > 1:
+		var person := Image.create(3 * raster_scale, 6 * raster_scale, false, Image.FORMAT_RGBA8)
+		person.fill(Color.WHITE)
+		var reader := func(_path: String) -> Image: return person
+		var authored := VisualArtwork.load_records([{
+			"key": "person/0/0/0", "png": "person.png",
+			"logical_size": [3, 6], "master_scale": raster_scale,
+		}], reader)
+		assert(authored.error.is_empty(), authored.error)
+		sprites.set_artwork(authored)
 	canvas.gpu = CityLifeGpu.new()
 	canvas.gpu.prepare(sprites, canvas.lights)
-	var sprite := sprites.sprite(false, 0, 1, 0)
+	var sprite := sprites.sprite(walking, 0, 0 if walking else 1, 0)
 	var figure := CityLifeController.Figure.new()
 	figure.position = Vector2(12.25, 7)
 	figure.previous_position = figure.position - Vector2.RIGHT
@@ -114,6 +118,15 @@ func _check_hd_subpixel_motion(raster_scale: int) -> void:
 		if previous >= 0:
 			assert(absf(center - previous - 1.0) < 0.05, "HD vehicle did not advance one high-resolution pixel per quarter step")
 		previous = center
+	# The same control disables interpolation and restores native-pixel placement.
+	var shader := canvas.gpu.groups[0].material as ShaderMaterial
+	shader.set_shader_parameter("smooth_movement", false)
+	shader.set_shader_parameter("interpolation", 0.0)
+	await RenderingServer.frame_post_draw
+	var disabled := viewport.get_texture().get_image().get_data()
+	shader.set_shader_parameter("interpolation", 0.5)
+	await RenderingServer.frame_post_draw
+	assert(viewport.get_texture().get_image().get_data() == disabled, "Disabled smoothing still interpolated figures")
 	viewport.queue_free()
 	await process_frame
 

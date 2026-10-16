@@ -279,7 +279,7 @@ func _check_shadow_receivers() -> void:
 	var shadow := host.moving_sprites._dynamic_occluder_image(null, 1, Vector2i.ZERO, Vector2i(12, 4), start, false, 1, null, -1, PackedInt32Array(), true)
 	for i in ids.size():
 		assert(ordinary.get_pixel(i, 1).a > 0.0)
-		assert((shadow.get_pixel(i, 1).a > 0.0) == (i >= 4), "Shadow receiver masking lost a surface or foreground structure")
+		assert((shadow.get_pixel(i, 1).a > 0.0) == (i in [4, 5, 7, 8]), "Shadow receiver masking lost a surface or foreground structure")
 	host.free()
 
 

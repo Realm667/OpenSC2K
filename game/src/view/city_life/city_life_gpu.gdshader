@@ -9,6 +9,7 @@ uniform sampler2DArray masks : filter_nearest, repeat_disable;
 uniform sampler2DArray masks_second : filter_nearest, repeat_disable;
 uniform sampler2DArray masks_third : filter_nearest, repeat_disable;
 uniform float interpolation = 1.0;
+uniform bool smooth_movement = true;
 uniform float artwork_scale = 1.0;
 uniform bool emission_only = false;
 uniform bool vehicle_has_emission = false;
@@ -25,8 +26,7 @@ void vertex() {
 	vec4 rect = texelFetch(parameters, ivec2(int(slot), 0), 0);
 	vec4 world = texelFetch(parameters, ivec2(int(slot), 1), 0);
 	vec4 mask = texelFetch(parameters, ivec2(int(slot), 2), 0);
-	vec2 shift = world.zw * (1.0 - interpolation);
-	if (artwork_scale <= 1.0) shift = round(shift);
+	vec2 shift = smooth_movement ? world.zw * (1.0 - interpolation) : round(world.xy) - world.xy;
 	// Extend the lower/right raster edge by one texel. The fragment clips it;
 	// half-scale pixel centers on that edge must still sample the last texel.
 	vec2 logical_size = rect.zw / artwork_scale;

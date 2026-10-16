@@ -95,6 +95,16 @@ fn forests_keep_density_clearings_and_local_cache_invalidation() {
     for view in 0..3 {
         let mut b = fixture(16, view);
         b.config.natural_forests = true;
+        let (w, h) = (32 / b.config.divisor(), 16 / b.config.divisor() + 1);
+        b.sprites.images.insert(
+            ((view * 500 + 256) * 2) as u64,
+            Sprite {
+                w,
+                h,
+                rgba: vec![255; (w * h * 4) as usize],
+                la: vec![255; (w * h * 2) as usize],
+            },
+        );
         for id in 6..=12 {
             let original = b.sprites.images[&((view * 500 + id) as u64 * 2)].clone();
             for variant in 0..128 {
@@ -123,6 +133,13 @@ fn forests_keep_density_clearings_and_local_cache_invalidation() {
         b.city.buildings[clearing] = 0;
         let full = Rect::new(0, 0, 4096, 4096);
         let original = b.region(full).unwrap();
+        assert!(
+            original
+                .colors
+                .iter()
+                .any(|color| (color[0] * 255.0).round() == f32::from(tree_shadows::TAG)),
+            "enhanced forest ground must receive projected shadows in every view"
+        );
         let total = b.builds;
         let atlas_revision = b.atlas.revision;
         let again = b.region(full).unwrap();

@@ -214,7 +214,7 @@ func sync_view(app: CityApplication) -> void:
 	(material as ShaderMaterial).set_shader_parameter("vehicle_has_emission", allowed and _emission_active)
 	if road_layer != null:
 		road_layer.visible = allowed and app.visual_environment.night > 0.0
-		(road_layer as CityLifeHeadlights).set_interpolation(interpolation)
+		(road_layer as CityLifeHeadlights).set_interpolation(interpolation if app.preferences.visual_enhancements.traffic_vehicles_enabled else 1.0)
 	if road_layer != null and (app.visual_environment.night if allowed else 0.0) != _light_night:
 		_light_night = app.visual_environment.night if allowed else 0.0
 		(road_layer as CityLifeHeadlights).set_night(_light_night)

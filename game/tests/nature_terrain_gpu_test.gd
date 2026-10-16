@@ -132,8 +132,57 @@ func _run() -> void:
 	viewport.queue_free()
 	await process_frame
 	print("PASS: native GPU terrain masks, quiet patches, stationary texture, all tree species and terrain in four seasons, field edges and exact off state")
+	await _check_tree_shadow()
 	quit()
 
 
 func _color_distance(a: Color, b: Color) -> float:
 	return maxf(absf(a.r - b.r), maxf(absf(a.g - b.g), absf(a.b - b.b)))
+
+
+func _check_tree_shadow() -> void:
+	var viewport := SubViewport.new()
+	viewport.size = Vector2i(32,32)
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	root.add_child(viewport)
+	var ground := ColorRect.new()
+	ground.size = Vector2(32,32)
+	ground.color = Color(0.6,0.5,0.3)
+	viewport.add_child(ground)
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = PackedVector2Array([Vector2(0,0),Vector2(32,0),Vector2(32,32),Vector2(0,32)])
+	arrays[Mesh.ARRAY_TEX_UV] = PackedVector2Array([Vector2(-1,-1),Vector2(1,-1),Vector2(1,1),Vector2(-1,1)])
+	arrays[Mesh.ARRAY_COLOR] = PackedColorArray([Color8(56,0,0),Color8(56,0,0),Color8(56,0,0),Color8(56,0,0)])
+	arrays[Mesh.ARRAY_INDEX] = PackedInt32Array([0,1,2,0,2,3])
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays)
+	var node := MeshInstance2D.new()
+	node.mesh=mesh
+	var material := ShaderMaterial.new()
+	material.shader=preload("res://src/view/map/palette_cycle.gdshader")
+	node.material=material
+	viewport.add_child(node)
+	await RenderingServer.frame_post_draw
+	var off := viewport.get_texture().get_image()
+	material.set_shader_parameter("nature_forests_enabled",true)
+	await RenderingServer.frame_post_draw
+	var on := viewport.get_texture().get_image()
+	assert(on.get_pixel(16,16).r < off.get_pixel(16,16).r-0.1,"Tree shadows must darken the actual ground")
+	assert(on.get_pixel(0,0).is_equal_approx(off.get_pixel(0,0)),"Outside the canopy must stay transparent")
+	material.set_shader_parameter("environment_enabled",true)
+	material.set_shader_parameter("environment_night",1.0)
+	await RenderingServer.frame_post_draw
+	var night := viewport.get_texture().get_image()
+	assert(night.get_pixel(16,16).r > on.get_pixel(16,16).r,"Sun shadows must recede at night")
+	material.shader=preload("res://src/view/environment/night_emission.gdshader")
+	var white := Image.create(1,1,false,Image.FORMAT_RGBA8)
+	white.fill(Color.WHITE)
+	node.texture=ImageTexture.create_from_image(white)
+	material.set_shader_parameter("emission",node.texture)
+	material.set_shader_parameter("has_emission",true)
+	await RenderingServer.frame_post_draw
+	assert(viewport.get_texture().get_image().get_data()==off.get_data(),"Shadow geometry must not contribute or erase brightmap emission")
+	viewport.queue_free()
+	await process_frame
+	print("PASS: projected tree-shadow shading, night attenuation, clear canopy edges and emission exclusion")

@@ -141,8 +141,10 @@ func sync(app: CityApplication, lights: bool, fraction: float) -> void:
 		app.map_view.layers._apply_environment(shader)
 		shader.set_shader_parameter("vehicle_has_emission", lights)
 		shader.set_shader_parameter("interpolation", blend)
+		shader.set_shader_parameter("smooth_movement", bool(app.preferences.visual_enhancements.traffic_vehicles_enabled))
 	for copy in emissions:
 		(copy.material as ShaderMaterial).set_shader_parameter("interpolation", blend)
+		(copy.material as ShaderMaterial).set_shader_parameter("smooth_movement", bool(app.preferences.visual_enhancements.traffic_vehicles_enabled))
 
 
 func sync_emission(parent: Node2D) -> void:

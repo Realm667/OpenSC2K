@@ -29757,3 +29757,11 @@ msgstr ""
 #. Reticulating Splines About; supplementary translation, AI-assisted.
 msgid "Credits from the imported SimCity 2000 for Windows 95 installation:"
 msgstr "Créditos da instalação importada de SimCity 2000 para Windows 95:"
+
+#. Supplementary presentation translation; AI-assisted.
+msgid "Smooth movement"
+msgstr "Movimento suave"
+
+#. Supplementary presentation translation; AI-assisted.
+msgid "Smooth movement of cars, pedestrians, helicopters, airplanes, ships, sailboats and trains in every graphics pack."
+msgstr "Movimento suave de carros, pedestres, helicópteros, aviões, navios, veleiros e trens em todos os pacotes gráficos."

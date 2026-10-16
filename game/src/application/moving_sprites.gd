@@ -352,13 +352,8 @@ func _dynamic_occluder_image(
 	# Bounding boxes include transparent pixels. Combine all later silhouettes
 	# to find the foreground that actually covers the sprite.
 	var train_height := _train_support_height(train_support_orders) if is_train else -1
-	var shadow_height := -1
-	if aircraft_shadow:
-		var city := app.document_state.city
-		var tile := IsometricFloatingOcclusion.depth_tile(draw_order, city.map_size)
-		shadow_height = city.object_altitude(tile.x, tile.y)
 	for command in static_occlusion_candidates(bounds):
-		if shadow_height >= 0 and _shadow_receiver(command, shadow_height):
+		if aircraft_shadow and _shadow_receiver(command):
 			continue
 		if is_train and bool(command.train_ignore):
 			continue
@@ -455,7 +450,7 @@ func _ground_below_train(command: CityStaticCommand, height: int) -> bool:
 	return top <= height
 
 
-func _shadow_receiver(command: CityStaticCommand, height: int) -> bool:
+func _shadow_receiver(command: CityStaticCommand) -> bool:
 	var id := posmod(command.sprite_id, 500)
 	# Ground and surface transport receive the shadow across tile boundaries.
 	# Never remove trees, structures, raised decks or cliff faces from the mask.
@@ -466,11 +461,10 @@ func _shadow_receiver(command: CityStaticCommand, height: int) -> bool:
 	var crossing := id in [BuildingTileIds.ROAD_RAIL_CROSSING_1, BuildingTileIds.ROAD_RAIL_CROSSING_2]
 	if not (ground or water or zone or road or crossing):
 		return false
-	var city := app.document_state.city
-	var tile := IsometricFloatingOcclusion.depth_tile(command.depth_order, city.map_size)
-	var flat := id == 256 or city.terrain_id(tile.x, tile.y) == TerrainTileIds.FLAT
-	var top := city.object_altitude(tile.x, tile.y) if water else city.land_altitude(tile.x, tile.y) + (0 if flat else 1)
-	return top <= height
+	# A shadow darkens the visible surface. Testing an entire ramp against the
+	# aircraft's current integer tile height clips it at each completed step.
+	# Hills receive shadows too; separate cliff/structure draws still occlude.
+	return true
 
 
 static func _occluder_region(mask: RenderCaches.OccluderMask, bounds: Rect2i, factor: int) -> Image:

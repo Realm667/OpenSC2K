@@ -3,7 +3,7 @@ extends SceneTree
 @warning_ignore_start("integer_division")
 
 func _initialize() -> void:
-	for scale_value in [1, 4]:
+	for scale_value in [1, 2, 4]:
 		for diagonal in [false, true]:
 			for slope in [0.0, 3.0, -7.0]:
 				_check_pixels(scale_value, diagonal, slope)
@@ -165,7 +165,7 @@ func _check_world_cache() -> void:
 
 
 func _check_figure_buffers() -> void:
-	for scale_value in [1, 4]:
+	for scale_value in [1, 2, 4]:
 		var entries: Array = []
 		var rectangles := {}
 		var origins := PackedVector2Array()
@@ -193,9 +193,7 @@ func _check_figure_buffers() -> void:
 			entries.append({"sprite": sprite, "origin": point, "opacity": opacity, "figure": figure})
 			origins.append(Vector2(index * 32, -index))
 			layers.append(index % 7)
-			var visual := Vector2(point)
-			if scale_value > 1:
-				visual += figure.position - figure.position.round()
+			var visual: Vector2 = figure.position
 			var destination := visual - Vector2(origin)
 			var at := slot * 8
 			buffer[at] = rect.size.x / scale_value

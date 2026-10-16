@@ -21,7 +21,7 @@ var previous_world: Dictionary[int, Vector2] = {}
 
 func set_interpolation(value: float) -> void:
 	for group in groups:
-		(group.material as ShaderMaterial).set_shader_parameter("interpolation", value if raster_scale > 1 else 1.0)
+		(group.material as ShaderMaterial).set_shader_parameter("interpolation", value)
 
 
 func set_night(value: float) -> void:
