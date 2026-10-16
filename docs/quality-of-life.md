@@ -3,12 +3,20 @@
 The interface uses shared dialog margins, control spacing, headings and keyboard
 focus styles in both themes. Utility windows follow theme changes immediately.
 
+The dark theme follows the Reticulating Splines website: anthracite surfaces,
+dark inset controls, lime selection/focus markers and primary actions, and petrol
+secondary actions. Montserrat uses the existing Korean fallback; its OFL license
+is included in exports. The light theme and saved transparency preference remain
+available. Menu order, dialog sections, tool positions and input behavior stay
+unchanged. The centered startup logo and existing progress system share the dark
+palette. Selecting a theme does not alter cities or simulation state.
+
 ## Tool flyouts
 
-Tool groups use a compact two-column sidebar. Click a group to select its last
-used tool and open the available subtools beside the sidebar. Holding the button
-also opens this menu. Groups with only one offered tool select it directly.
-The group button shows the last selected tool; the menu retains names, prices,
+Tool groups use a compact three-column sidebar. Click a group to select its last
+used tool. Hold the button for 450 ms to open the available subtools beside the
+sidebar. Groups with only one offered tool select it directly.
+The group button keeps its category icon; the menu retains names, prices,
 availability and a marked selection. The sidebar does not expand for subtools.
 
 Choose an entry with the mouse, or use the arrow keys and Enter. Selection,

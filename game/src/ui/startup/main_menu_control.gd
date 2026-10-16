@@ -74,6 +74,8 @@ func _process(delta: float) -> void:
 func show_menu(can_continue: bool) -> void:
 	if continue_button != null:
 		continue_button.visible = can_continue
+		continue_button.theme_type_variation = "PrimaryButton"
+	new_city_button.theme_type_variation = "SecondaryButton" if can_continue else "PrimaryButton"
 
 	# let the panel shrink when continue city is hidden
 	var panel := new_city_button.get_parent().get_parent() as PanelContainer

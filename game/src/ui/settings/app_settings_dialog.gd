@@ -83,6 +83,7 @@ func _ready() -> void:
 	theme = AppUiTheme.current()
 
 	get_ok_button().text = "Close"
+	get_ok_button().theme_type_variation = "PrimaryButton"
 	get_label().visible = false
 	background_audio_check = %BackgroundAudioCheck
 	check_for_updates_check = %CheckForUpdatesCheck

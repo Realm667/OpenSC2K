@@ -111,6 +111,7 @@ func _init(application: CityApplication) -> void:
 	transport_panel.add_child(transport)
 	button(transport, "Previous", func() -> void: step(-1))
 	play_button = button(transport, "Play / Pause", _toggle_pause)
+	play_button.theme_type_variation = "PrimaryButton"
 	button(transport, "Next", func() -> void: step(1))
 	progress = ProgressBar.new()
 	progress.show_percentage = false

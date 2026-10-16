@@ -12,9 +12,9 @@ func _ready() -> void:
 	get_window().title = "Reticulating Splines"
 	overlay = preload("res://src/ui/shared/progress_overlay.tscn").instantiate()
 	add_child(overlay)
-	overlay.theme = AppUiTheme.current()
+	overlay.theme = AppUiTheme.build("dark")
 	# Cover the scene while it is instantiated, with a fully opaque startup surface.
-	overlay.get_node("Shade").color = Color(0.035, 0.047, 0.059, 1)
+	overlay.get_node("Shade").color = Color("292d33")
 	logo = TextureRect.new()
 	logo.texture = preload("res://assets/branding/reticulating-splines-logo.png")
 	logo.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -27,6 +27,7 @@ func _ready() -> void:
 	# The standard overlay centers the entire panel. Here the logo is centered,
 	# and its progress panel has an independent position immediately below it.
 	progress_panel = overlay.get_node("Center/Panel")
+	progress_panel.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
 	progress_panel.reparent(overlay)
 	# Autowrapped text can briefly report a tall minimum before receiving its width.
 	progress_panel.minimum_size_changed.connect(progress_panel.reset_size)
