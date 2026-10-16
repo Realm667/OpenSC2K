@@ -73,6 +73,7 @@ func _run() -> void:
 	assert(nested_layer.custom_viewport == viewport, "Nested tooltips must sample the containing viewport")
 	_assert_sharp_labels(nested_effect.get("_surface"))
 	await _test_panel(app)
+	await _test_wrapping()
 	var layer_ref: WeakRef = weakref(layer)
 	var nested_ref: WeakRef = weakref(nested_layer)
 	var app_ref: WeakRef = weakref(app)
@@ -164,3 +165,34 @@ func _count_copies(node: Node) -> int:
 	for child in node.get_children():
 		count += _count_copies(child)
 	return count
+
+
+func _test_wrapping() -> void:
+	for width in [360, 960]:
+		for scale_factor in [1.0, 2.0]:
+			var viewport := SubViewport.new()
+			viewport.size = Vector2i(width, 720)
+			viewport.gui_embed_subwindows = true
+			root.add_child(viewport)
+			viewport.add_child(AppTooltips.new())
+			var popup := PopupPanel.new()
+			popup.theme = AppUiTheme.current()
+			popup.theme_type_variation = &"TooltipPanel"
+			popup.content_scale_factor = scale_factor
+			var label := Label.new()
+			label.theme_type_variation = &"TooltipLabel"
+			label.text = "Baumschatten folgen ebenem und geneigtem Gelände. Benötigt erweiterte Wälder. Ausgeschaltet entfällt auch die Vorbereitung der Schattengeometrie.\n" + "LongUnbrokenPath".repeat(6)
+			popup.add_child(label)
+			viewport.add_child(popup)
+			popup.popup()
+			for frame in 5:
+				await process_frame
+			assert(label.get_line_count() > 2, "Long descriptions and unbroken words must wrap")
+			assert(popup.size.x <= width, "Scaled tooltip must fit its containing viewport")
+			assert(label.get_visible_line_count() == label.get_line_count(), "All wrapped text must remain visible")
+			var surface: PanelContainer = _popup_effect(popup).get("_surface")
+			assert(surface.size.x * scale_factor <= width, "Frosted copy must use the same constrained width")
+			for child in surface.get_children():
+				if child is Label:
+					assert(child.get_line_count() == label.get_line_count(), "Backdrop copy must preserve every wrapped line")
+			viewport.free()
