@@ -7,6 +7,8 @@ var preview_panel: PanelContainer
 var preview_image: TextureRect
 var preview_name: Label
 var preview_status: Label
+var preview_details: Label
+var displayed_details: Dictionary = {}
 var selected_path := ""
 var displayed_path := ""
 var displayed_image: Image
@@ -43,8 +45,14 @@ func _ready() -> void:
 	preview_panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	preview_panel.size_flags_stretch_ratio = 3.0
 	_body.add_child(preview_panel)
+	var scroll := ScrollContainer.new()
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	preview_panel.add_child(scroll)
 	var rows := VBoxContainer.new()
-	preview_panel.add_child(rows)
+	rows.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	rows.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	rows.add_theme_constant_override("separation", 8)
+	scroll.add_child(rows)
 	var heading := Label.new()
 	heading.text = "City preview"
 	heading.theme_type_variation = &"SectionHeading"
@@ -62,6 +70,10 @@ func _ready() -> void:
 	preview_name.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	preview_name.theme_type_variation = &"SectionHeading"
 	rows.add_child(preview_name)
+	preview_details = Label.new()
+	preview_details.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	preview_details.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	rows.add_child(preview_details)
 	preview_status = Label.new()
 	preview_status.text = "Select a city to preview."
 	preview_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -95,9 +107,16 @@ func _visibility_changed() -> void:
 func _process(_delta: float) -> void:
 	if preview_panel == null:
 		return
+	if visible and job != null and _job_path == selected_path and not job.cancelled():
+		var details := job.details()
+		if details != displayed_details:
+			displayed_details = details
+			_update_details()
 	if job != null and job.finished():
 		job.join()
 		if visible and _job_path == selected_path and not job.cancelled():
+			displayed_details = job.details()
+			_update_details()
 			displayed_path = _job_path
 			displayed_image = job.image
 			preview_image.texture = ImageTexture.create_from_image(job.image) if job.image != null else null
@@ -112,6 +131,8 @@ func _process(_delta: float) -> void:
 		displayed_image = null
 		displayed_path = ""
 		preview_image.texture = null
+		displayed_details = {}
+		preview_details.text = ""
 		preview_name.text = path.get_file().get_basename() if _is_city(path) else ""
 		preview_status.text = "Preparing city preview…" if _is_city(path) else "Select a city to preview."
 		if job != null:
@@ -121,6 +142,47 @@ func _process(_delta: float) -> void:
 		job.path = selected_path
 		_job_path = selected_path
 		job.start()
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED and preview_details != null:
+		_update_details()
+
+
+func _update_details() -> void:
+	var info := displayed_details
+	if info.is_empty():
+		preview_details.text = ""
+		return
+	if not str(info.get("city_name", "")).is_empty():
+		preview_name.text = info.city_name
+	var lines := PackedStringArray()
+	if info.multiplayer:
+		var mode := ""
+		match info.get("mode", "unknown"):
+			"coop":
+				mode = tr("Co-op")
+			"shared":
+				mode = tr("Competitive Shared")
+			"region":
+				mode = tr("Competitive Region")
+		lines.append(tr("Multiplayer") + (" · " + mode if not mode.is_empty() else ""))
+	else:
+		lines.append(tr("Single-player city"))
+	lines.append(tr("Terrain: %d × %d tiles") % [info.map_size, info.map_size])
+	if info.has("year"):
+		lines.append(tr("Year: %d") % info.year)
+	if info.has("population"):
+		lines.append(tr("Population: %s") % DisplayNumberFormat.format(info.population))
+	if info.has("funds"):
+		lines.append(tr("City funds: %s") % ("$" + DisplayNumberFormat.format(info.funds)))
+	if info.has("bank_debt"):
+		lines.append(tr("Bank debt: %s") % ("$" + DisplayNumberFormat.format(info.bank_debt)))
+	if info.has("players"):
+		lines.append(tr("Saved players: %d") % info.players)
+	if info.get("separate_finances", false):
+		lines.append(tr("Player finances are not shown in this preview."))
+	preview_details.text = "\n".join(lines)
 
 
 func image_for_path(path: String) -> Image:

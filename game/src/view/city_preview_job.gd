@@ -15,6 +15,7 @@ var saved_preview := false
 var _mutex := Mutex.new()
 var _cancelled := false
 var _fraction := 0.0
+var _details: Dictionary = {}
 
 
 static var _fingerprints: Dictionary[String, String] = {}
@@ -120,8 +121,12 @@ func join() -> void:
 
 func run() -> void:
 	var digest := ""
+	if cancelled():
+		return
 	if not path.is_empty():
-		image = CityPreviewStore.embedded(path)
+		var archive := CityPreviewInfo.archive(path)
+		_set_details(CityPreviewInfo.from_archive(archive))
+		image = CityPreviewStore.decode(archive.get("data", {}).get(CityPreviewStore.ENTRY, PackedByteArray()))
 		if image != null:
 			saved_preview = true
 			return
@@ -129,12 +134,23 @@ func run() -> void:
 		if file == null or file.get_length() > Sc2xDocument.MAX_ARCHIVE_BYTES:
 			return
 		file.close()
+		# Legacy formats need their reader; native SC2X details need no terrain.
+		if archive.is_empty():
+			document = Sc2File.load_path(path)
+			_set_details(CityPreviewInfo.from_document(document))
+		if cancelled() or palette == null or sprites == null:
+			return
 		prepare_graphics_key()
 		digest = FileAccess.get_sha256(path)
 		image = CityPreviewStore.cached(digest, graphics_key)
 		if image != null or cancelled():
 			return
-		document = Sc2File.load_path(path)
+		if details().get("map_size", 0) > 512:
+			return
+		if document == null:
+			document = Sc2File.load_path(path)
+	else:
+		_set_details(CityPreviewInfo.from_document(document))
 	if cancelled() or document == null or not document.is_valid() or palette == null or sprites == null:
 		return
 	var city := CityState.from_document(document)
@@ -147,6 +163,19 @@ func run() -> void:
 			image = null
 		elif image != null:
 			CityPreviewStore.store(digest, graphics_key, image)
+
+
+func details() -> Dictionary:
+	_mutex.lock()
+	var value := _details.duplicate()
+	_mutex.unlock()
+	return value
+
+
+func _set_details(value: Dictionary) -> void:
+	_mutex.lock()
+	_details = value
+	_mutex.unlock()
 
 
 func render(city: CityState) -> Image:

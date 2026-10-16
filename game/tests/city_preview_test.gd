@@ -10,6 +10,7 @@ func _run() -> void:
 	var preview := Image.create(96, 64, false, Image.FORMAT_RGBA8)
 	preview.fill(Color.CORNFLOWER_BLUE)
 	var png := preview.save_png_to_buffer()
+	_test_saved_details(png)
 	assert(CityPreviewStore.decode(png).get_data() == preview.get_data())
 	assert(CityPreviewStore.decode(PackedByteArray([1, 2, 3])) == null)
 	var oversized := png.duplicate()
@@ -36,6 +37,7 @@ func _run() -> void:
 	reader.path = output
 	reader.run()
 	assert(reader.saved_preview and reader.image != null, "Embedded image needs no graphics pack")
+	assert(reader.details().city_name == "Preview test" and reader.details().map_size == 16)
 	CityFileStore.attach_preview(prepared, null)
 	assert(CityFileStore.write(prepared).ok)
 	assert(CityPreviewStore.embedded(output) == null)
@@ -53,6 +55,13 @@ func _run() -> void:
 	assert(CityFileStore.write(legacy).ok)
 	assert(CityPreviewStore.embedded(legacy_path) == null)
 	assert(Sc2File.load_path(legacy_path).serialize().data == original_bytes)
+	var legacy_reader := CityPreviewJob.new()
+	var legacy_digest := FileAccess.get_sha256(legacy_path)
+	legacy_reader.path = legacy_path
+	legacy_reader.run()
+	assert(not legacy_reader.details().multiplayer and legacy_reader.details().map_size == 128,
+		"Legacy details do not require a graphics pack or a thumbnail")
+	assert(FileAccess.get_sha256(legacy_path) == legacy_digest, "Reading legacy details leaves the file byte-exact")
 	DirAccess.remove_absolute(legacy_path)
 	prepared = CityFileStore.prepare(original, output.get_basename() + ".sc2", "")
 	CityFileStore.attach_preview(prepared, preview)
@@ -80,6 +89,14 @@ func _run() -> void:
 	var same := CityPreviewJob.for_assets(assets)
 	same.prepare_graphics_key()
 	assert(same.graphics_key == job.graphics_key)
+	var fixture_path := "res://tests/fixtures/cities/generated-128.SC2"
+	var fixture_digest := FileAccess.get_sha256(fixture_path)
+	CityPreviewStore.store(fixture_digest, same.graphics_key, preview)
+	same.path = fixture_path
+	same.run()
+	assert(same.image.get_data() == preview.get_data() and same.details().map_size == 128,
+		"Cached images must retain freshly read saved values")
+	DirAccess.remove_absolute(CityPreviewStore.cache_path(fixture_digest, same.graphics_key))
 	print("PREVIEW 128: ", Time.get_ticks_msec() - started, " ms; ", job.image.get_size())
 	var large := CityPreviewJob.for_assets(assets)
 	large.document = EmptyCityTemplate.create(512)
@@ -99,6 +116,7 @@ func _run() -> void:
 	cancelled.cancel()
 	cancelled.run()
 	assert(cancelled.image == null)
+	assert(cancelled.details().is_empty())
 	var dialog := FileDialogFactory.city_open()
 	root.gui_embed_subwindows = true
 	root.add_child(dialog)
@@ -107,6 +125,18 @@ func _run() -> void:
 	await process_frame
 	assert(dialog is CityOpenDialog and dialog.preview_panel != null)
 	dialog.popup_centered_ratio(0.8)
+	dialog.set_process(false)
+	dialog.current_path = ProjectSettings.globalize_path(fixture_path)
+	dialog.selected_path = dialog.current_path
+	dialog._job_path = dialog.current_path
+	dialog.job = CityPreviewJob.new()
+	dialog.job.path = dialog.current_path
+	dialog.job.start()
+	while not dialog.job.finished():
+		await process_frame
+	dialog._process(0.0)
+	assert(dialog.displayed_details.map_size == 128 and not dialog.preview_details.text.is_empty(),
+		"Completed workers publish their final details before being released")
 	for extent in [Vector2i(900, 560), Vector2i(1100, 700), Vector2i(780, 520)]:
 		dialog.size = extent
 		dialog.preview_image.texture = ImageTexture.create_from_image(job.image)
@@ -121,9 +151,95 @@ func _run() -> void:
 			await process_frame
 			assert(Rect2i(dialog.position, dialog.size) == settled, "City chooser must settle after resizing")
 			assert(dialog.get_contents_minimum_size() == minimum, "Preview must not feed a new minimum back into the window")
+	# Dynamic details must translate again, while user city names stay literal.
+	dialog.set_process(false)
+	dialog.displayed_details = {"city_name": "[b]Player city[/b]", "map_size": 4096, "multiplayer": false, "funds": -2500, "year": 2042}
+	for locale in ["de", "es", "fr", "it", "ko", "pt_BR", "en"]:
+		AppLocalization.select(locale)
+		dialog._update_details()
+		assert(dialog.preview_details.text.contains(dialog.tr("Year: %d") % 2042))
+		assert(dialog.preview_name.text == "[b]Player city[/b]")
+	dialog.selected_path = "previous.sc2"
+	dialog.displayed_path = "previous.sc2"
+	dialog.current_path = OS.get_temp_dir().path_join("not-a-city.txt")
+	dialog._process(0.0)
+	assert(dialog.displayed_details.is_empty() and dialog.preview_details.text.is_empty(),
+		"Selection changes clear the previous city's details")
 	dialog.hide()
 	dialog.queue_free()
 	memory.queue_free()
 	await process_frame
 	print("PASS: bounded city previews, optional SC2X thumbnail, unchanged original saves, cache invalidation and cancellation")
 	quit()
+
+
+func _test_saved_details(png: PackedByteArray) -> void:
+	var source := Sc2xDocument.create_empty(16, "Multiplayer").document
+	var misc := source.find_chunk("MISC")
+	var bytes := misc.decoded_payload.duplicate()
+	for field in [[Sc2MiscLayout.START_YEAR, 1900], [Sc2MiscLayout.CITY_DAYS, 601],
+		[Sc2MiscLayout.FUNDS, -2500], [Sc2MiscLayout.BONDS, 3],
+		[Sc2MiscLayout.NORMAL_POPULATION, 1234], [Sc2MiscLayout.ARCOLOGY_POPULATION, 2000]]:
+		BinaryData.write_u32_be(bytes, field[0], field[1])
+	assert(misc.set_decoded_payload(bytes))
+	var before := source.serialize().data
+	var info := CityPreviewInfo.from_document(source)
+	assert(not info.multiplayer, "The filename/city name does not determine multiplayer")
+	assert(info.year == 1902 and info.funds == -2500 and info.bank_debt == 30000 and info.population == 3234)
+	assert(source.serialize().data == before, "Inspecting details cannot mutate city or random state")
+	var metadata := source.sc2x_metadata.copy()
+	metadata.map_size = 4096
+	var members := {Sc2xDocument.METADATA_ENTRY: metadata.to_bytes(), "MISC.bin": bytes,
+		CityPreviewStore.ENTRY: png}
+	var path := OS.get_temp_dir().path_join("preview-details-%d.sc2x" % OS.get_process_id())
+	for mode in ["single", "coop", "shared", "region", "invalid", "oversized"]:
+		members.erase(CityPreviewInfo.MULTIPLAYER_ENTRY)
+		if mode != "single":
+			var session := {"version": 1, "members": {"private-token-a": {}, "private-token-b": {}}}
+			if mode in ["shared", "region"]:
+				session.shared = {"mode": mode}
+			members[CityPreviewInfo.MULTIPLAYER_ENTRY] = JSON.stringify(session).to_utf8_buffer()
+			if mode == "invalid":
+				members[CityPreviewInfo.MULTIPLAYER_ENTRY] = "invalid".to_utf8_buffer()
+			elif mode == "oversized":
+				var large := PackedByteArray()
+				large.resize(CityPreviewInfo.MAX_MULTIPLAYER_BYTES + 1)
+				members[CityPreviewInfo.MULTIPLAYER_ENTRY] = large
+		_write_header_archive(path, members)
+		var digest := FileAccess.get_sha256(path)
+		var job := CityPreviewJob.new()
+		job.path = path
+		job.run()
+		info = job.details()
+		assert(info.map_size == 4096 and info.year == 1902)
+		assert(info.multiplayer == (mode != "single"))
+		assert(info.has("funds") == (mode in ["single", "coop"]), "Never present the root budget as combined player finances")
+		if mode in ["coop", "shared", "region"]:
+			assert(info.mode == mode and info.players == 2)
+		elif mode in ["invalid", "oversized"]:
+			assert(info.mode == "unknown" and not info.has("players"))
+		assert(not str(info).contains("private-token"))
+		assert(job.image != null and job.document == null, "4096 terrain is not decoded for header details")
+		assert(FileAccess.get_sha256(path) == digest)
+	members.erase(CityPreviewStore.ENTRY)
+	members.erase(CityPreviewInfo.MULTIPLAYER_ENTRY)
+	members["MISC.bin"] = PackedByteArray([1, 2, 3])
+	_write_header_archive(path, members)
+	var partial := CityPreviewJob.new()
+	partial.path = path
+	partial.run()
+	assert(partial.details().map_size == 4096 and not partial.details().has("funds"), "Missing values are not invented as zero")
+	assert(partial.image == null and partial.document == null)
+	DirAccess.remove_absolute(path)
+
+
+func _write_header_archive(path: String, members: Dictionary) -> void:
+	# Header-only fixture: intentionally no terrain planes. Inspecting a header
+	# does not certify that the full city can be loaded by the normal reader.
+	var zip := ZIPPacker.new()
+	assert(zip.open(path) == OK)
+	for name: String in members:
+		assert(zip.start_file(name) == OK)
+		assert(zip.write_file(members[name]) == OK)
+		assert(zip.close_file() == OK)
+	assert(zip.close() == OK)

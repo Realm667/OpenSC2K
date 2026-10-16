@@ -151,6 +151,18 @@ it while loading. Extended SC2X saves can embed a thumbnail; older files use an
 isolated rendering job and a bounded local cache. Browsing does not modify the
 city or advance its simulation. See [preview storage](sc2x-format.md#optional-city-preview).
 
+The preview also shows saved city details: single-player or multiplayer mode,
+terrain dimensions, year, population, city funds and bank debt. Multiplayer
+checkpoints can identify Co-op, Competitive Shared or Competitive Region and
+the number of saved players. Separate competitive player finances and populations
+are not presented as a combined city budget or population. Missing values are
+omitted; bank debt refers to municipal bonds, not loans between players.
+The native SC2X header is read independently of the thumbnail and terrain, so
+large maps can show their details without constructing a simulation. Oversized
+multiplayer checkpoints still identify multiplayer without decoding embedded
+cities; their mode and player count can be unavailable. The information panel
+scrolls at small window sizes without increasing the chooser's minimum size.
+
 New City prepares terrain and overview artwork in a worker, with progress feedback
 while the interface remains responsive. Preview images and seasonal masks are
 bounded to the display size, including on 4096-tile maps. The overview uses muted

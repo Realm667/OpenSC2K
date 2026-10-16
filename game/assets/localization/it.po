@@ -38141,3 +38141,33 @@ msgstr "Altezza di ogni bordo sfocato come percentuale della vista della città.
 #. Tilt shift; supplementary AI-assisted translation.
 msgid "Higher values create a gentler transition between sharp and blurred areas."
 msgstr "Valori più alti rendono più graduale la transizione tra le aree nitide e sfocate."
+
+#. Saved city details; supplementary translation from English.
+#: game/src/ui/shared/city_open_dialog.gd
+msgid "Terrain: %d × %d tiles"
+msgstr "Terreno: %d × %d caselle"
+
+#. Saved city details; supplementary translation from English.
+#: game/src/ui/shared/city_open_dialog.gd
+msgid "Year: %d"
+msgstr "Anno: %d"
+
+#. Saved city details; supplementary translation from English.
+#: game/src/ui/shared/city_open_dialog.gd
+msgid "City funds: %s"
+msgstr "Fondi della città: %s"
+
+#. Saved city details; supplementary translation from English.
+#: game/src/ui/shared/city_open_dialog.gd
+msgid "Bank debt: %s"
+msgstr "Debito bancario: %s"
+
+#. Saved city details; supplementary translation from English.
+#: game/src/ui/shared/city_open_dialog.gd
+msgid "Saved players: %d"
+msgstr "Giocatori salvati: %d"
+
+#. Saved city details; supplementary translation from English.
+#: game/src/ui/shared/city_open_dialog.gd
+msgid "Player finances are not shown in this preview."
+msgstr "Le finanze dei giocatori non sono mostrate in questa anteprima."

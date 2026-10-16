@@ -8050,3 +8050,33 @@ msgstr "각 흐린 가장자리의 높이를 도시 화면의 백분율로 지�
 #. Tilt shift; supplementary AI-assisted translation.
 msgid "Higher values create a gentler transition between sharp and blurred areas."
 msgstr "값이 높을수록 선명한 영역과 흐린 영역 사이의 전환이 부드러워집니다."
+
+#. Saved city details; supplementary translation from English.
+#: game/src/ui/shared/city_open_dialog.gd
+msgid "Terrain: %d × %d tiles"
+msgstr "지형: %d × %d 타일"
+
+#. Saved city details; supplementary translation from English.
+#: game/src/ui/shared/city_open_dialog.gd
+msgid "Year: %d"
+msgstr "연도: %d"
+
+#. Saved city details; supplementary translation from English.
+#: game/src/ui/shared/city_open_dialog.gd
+msgid "City funds: %s"
+msgstr "도시 자금: %s"
+
+#. Saved city details; supplementary translation from English.
+#: game/src/ui/shared/city_open_dialog.gd
+msgid "Bank debt: %s"
+msgstr "은행 부채: %s"
+
+#. Saved city details; supplementary translation from English.
+#: game/src/ui/shared/city_open_dialog.gd
+msgid "Saved players: %d"
+msgstr "저장된 플레이어: %d"
+
+#. Saved city details; supplementary translation from English.
+#: game/src/ui/shared/city_open_dialog.gd
+msgid "Player finances are not shown in this preview."
+msgstr "이 미리보기에는 플레이어별 재정이 표시되지 않습니다."

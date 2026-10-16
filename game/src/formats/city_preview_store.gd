@@ -30,10 +30,16 @@ static func _big_u32(bytes: PackedByteArray, offset: int) -> int:
 
 
 static func embedded(path: String) -> Image:
+	var archive := read_members(path, {ENTRY: MAX_BYTES})
+	return decode(archive.get("data", {}).get(ENTRY, PackedByteArray()))
+
+
+static func read_members(path: String, limits: Dictionary) -> Dictionary:
+	# Read only small presentation/header members, never the dense terrain planes.
 	# ZIPReader has no bounded read API. Check the central-directory size first.
 	var file := FileAccess.open(path, FileAccess.READ)
 	if file == null or file.get_length() < 22 or file.get_length() > Sc2xDocument.MAX_ARCHIVE_BYTES:
-		return null
+		return {}
 	var tail_size := mini(file.get_length(), 65557)
 	file.seek(file.get_length() - tail_size)
 	var tail := file.get_buffer(tail_size)
@@ -43,40 +49,44 @@ static func embedded(path: String) -> Image:
 			end = offset
 			break
 	if end < 0 or tail.decode_u16(end + 4) != 0 or tail.decode_u16(end + 6) != 0:
-		return null
+		return {}
 	var count := tail.decode_u16(end + 10)
 	var directory_size := tail.decode_u32(end + 12)
 	var directory_offset := tail.decode_u32(end + 16)
 	if count > 4096 or directory_size > 1024 * 1024 or directory_offset + directory_size > file.get_length() - 22:
-		return null
+		return {}
 	file.seek(directory_offset)
 	var directory := file.get_buffer(directory_size)
 	file.close()
 	var cursor := 0
-	var preview_size := -1
-	var extended := false
+	var sizes := {}
+	var allowed := {}
 	for _index in count:
 		if cursor + 46 > directory.size() or directory.decode_u32(cursor) != 0x02014b50:
-			return null
+			return {}
 		var name_size := directory.decode_u16(cursor + 28)
 		var next := cursor + 46 + name_size + directory.decode_u16(cursor + 30) + directory.decode_u16(cursor + 32)
 		if next > directory.size():
-			return null
+			return {}
 		var name := directory.slice(cursor + 46, cursor + 46 + name_size).get_string_from_utf8()
-		extended = extended or name == Sc2xDocument.METADATA_ENTRY
-		if name == ENTRY:
-			if preview_size >= 0 or directory.decode_u32(cursor + 20) > MAX_BYTES:
-				return null
-			preview_size = directory.decode_u32(cursor + 24)
+		if sizes.has(name):
+			return {}
+		sizes[name] = directory.decode_u32(cursor + 24)
+		if limits.has(name) and sizes[name] <= limits[name] and directory.decode_u32(cursor + 20) <= limits[name]:
+			allowed[name] = sizes[name]
 		cursor = next
-	if not extended or preview_size < 33 or preview_size > MAX_BYTES:
-		return null
+	if not sizes.has(Sc2xDocument.METADATA_ENTRY):
+		return {}
 	var reader := ZIPReader.new()
 	if reader.open(path) != OK:
-		return null
-	var bytes := reader.read_file(ENTRY)
+		return {}
+	var data := {}
+	for name: String in allowed:
+		var bytes := reader.read_file(name)
+		if bytes.size() == allowed[name]:
+			data[name] = bytes
 	reader.close()
-	return decode(bytes) if bytes.size() == preview_size else null
+	return {"sizes": sizes, "data": data}
 
 
 static func cache_root() -> String:
