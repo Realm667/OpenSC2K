@@ -510,7 +510,6 @@ func set_landscape_editor(enabled: bool) -> void:
 	view_mode_buttons[CityViewMode.Mode.UNDERGROUND].visible = not enabled
 	view_mode_buttons[CityViewMode.Mode.HEIGHT].visible = enabled
 	data_view_input.visible = not enabled
-	%LandscapeSpacer.visible = enabled
 	for key in view_visibility_checks:
 		view_visibility_checks[key].visible = key in ["water", "trees"] if enabled else key not in ["water_mains", "pipes", "subways", "tunnels"]
 
@@ -579,7 +578,7 @@ func replace_artwork(value: Image) -> void:
 
 func _refresh_artwork_buttons(node: Node) -> void:
 	if node is Button and node.has_meta("toolbar_region"):
-		node.theme_type_variation = "ArtworkButton"
+		node.theme_type_variation = "ToolbarArtworkButton"
 		node.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		node.icon = _toolbar_icon(node.get_meta("toolbar_region"))
 		node.text = node.tooltip_text.left(1) if node.icon == null else ""
@@ -614,7 +613,7 @@ func _build_landscape_tools() -> void:
 				(native_icon.get_height() / 2), Image.INTERPOLATE_NEAREST)
 			button.icon = PixelArtTexture.wrap(ImageTexture.create_from_image(native_icon))
 		button.text = button.tooltip_text if button.icon == null else ""
-		button.theme_type_variation = "ArtworkButton"
+		button.theme_type_variation = "ToolbarArtworkButton"
 		button.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		button.pressed.connect(func() -> void:
 			group_requested.emit(group)

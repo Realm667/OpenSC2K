@@ -37,6 +37,7 @@ func build() -> void:
 
 	add_theme_constant_override("separation", 4)
 	heading = Label.new()
+	heading.theme_type_variation = &"SectionHeading"
 	heading.text = "Selected Group"
 	heading.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	heading.clip_text = true

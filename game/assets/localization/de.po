@@ -26637,3 +26637,166 @@ msgstr "Reticulating Splines %s ist verfügbar. Du hast Version %s.\n\nLade die 
 #. Reticulating Splines release dialog; supplementary translation.
 msgid "Reticulating Splines %s is the latest release."
 msgstr "Reticulating Splines %s ist die neueste Version."
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid "About Reticulating Splines"
+msgstr "Über Reticulating Splines"
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid "Open Autosave Folder"
+msgstr "Ordner der automatischen Sicherungen öffnen"
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid "Last checked %s."
+msgstr "Zuletzt geprüft: %s."
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid "Last check failed %s. %s"
+msgstr "Letzte Prüfung fehlgeschlagen (%s). %s"
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid "Preparing Visual Enhancements"
+msgstr "Grafikeffekte werden vorbereitet"
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid ""
+"A community remaster of SimCity 2000, built on the open-source OpenSC2K "
+"project with Godot Engine."
+msgstr ""
+"Ein Community-Remaster von SimCity 2000 auf Grundlage des quelloffenen "
+"Projekts OpenSC2K mit der Godot Engine."
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid "What Reticulating Splines adds"
+msgstr "Was Reticulating Splines ergänzt"
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid ""
+"New graphics and audio, day and night, seasons and weather, a modern "
+"interface, a music box for your own music, and cooperative and competitive "
+"multiplayer. Visual effects do not change the original single-player "
+"simulation."
+msgstr ""
+"Neue Grafiken und Audioinhalte, Tag und Nacht, Jahreszeiten und Wetter, eine"
+" moderne Oberfläche, eine Musikbox für eigene Musik sowie kooperativer und "
+"kompetitiver Multiplayer. Grafikeffekte verändern die ursprüngliche "
+"Einzelspieler-Simulation nicht."
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid "Project and contributors"
+msgstr "Projekt und Mitwirkende"
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid ""
+"Thanks to everyone contributing code, artwork, music, translations, research"
+" and testing."
+msgstr ""
+"Danke an alle, die mit Code, Grafiken, Musik, Übersetzungen, Recherche und "
+"Tests beitragen."
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid ""
+"Based on OpenSC2K under the MIT License, including fixes and research from "
+"sc2kfix. Built with Godot and Rust. Interface typography: Montserrat, with "
+"Pretendard for Korean."
+msgstr ""
+"Basiert auf OpenSC2K unter der MIT-Lizenz, einschließlich Korrekturen und "
+"Forschung von sc2kfix. Entwickelt mit Godot und Rust. Oberflächenschrift: "
+"Montserrat, mit Pretendard für Koreanisch."
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid ""
+"See Licenses and credits for the full license texts, third-party notices and"
+" imported original-game credits. License texts are reproduced in their "
+"original language."
+msgstr ""
+"Unter „Lizenzen und Mitwirkende“ stehen die vollständigen Lizenztexte, "
+"Hinweise zu Drittkomponenten und importierte Originalspiel-Credits. "
+"Lizenztexte werden in ihrer Originalsprache wiedergegeben."
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid "Independent and unofficial"
+msgstr "Unabhängig und inoffiziell"
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid ""
+"Reticulating Splines is not affiliated with or endorsed by Electronic Arts "
+"or Maxis. SimCity 2000 and its original graphics, texts, sounds and music "
+"belong to their respective rights holders and are not covered by the "
+"project's MIT License. Import your own supported game installation to use "
+"the original assets."
+msgstr ""
+"Reticulating Splines ist weder mit Electronic Arts oder Maxis verbunden noch"
+" von ihnen autorisiert. SimCity 2000 und seine Originalgrafiken, Texte, "
+"Sounds und Musik gehören den jeweiligen Rechteinhabern und fallen nicht "
+"unter die MIT-Lizenz des Projekts. Importiere deine eigene unterstützte "
+"Spielinstallation, um die Originalinhalte zu nutzen."
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid "Project information"
+msgstr "Projektinformationen"
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid "Licenses and credits"
+msgstr "Lizenzen und Mitwirkende"
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid "Weather recordings — CC0"
+msgstr "Wetteraufnahmen — CC0"
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid "Godot Engine — dependency notices"
+msgstr "Godot Engine — Hinweise zu Abhängigkeiten"
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid "FluidSynth — included library notices"
+msgstr "FluidSynth — Hinweise zu enthaltenen Bibliotheken"
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid "Rust crates and ported code — MIT, 0BSD"
+msgstr "Rust-Crates und portierter Code — MIT, 0BSD"
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid "Research and original game"
+msgstr "Recherche und Originalspiel"
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid "Original SimCity 2000 credits"
+msgstr "Mitwirkende am Original SimCity 2000"
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid ""
+"These credits recognize the creators of the original SimCity 2000, not "
+"contributors to Reticulating Splines. Their inclusion does not imply "
+"affiliation or endorsement."
+msgstr ""
+"Diese Credits würdigen die Urheber des ursprünglichen SimCity 2000, nicht "
+"Mitwirkende an Reticulating Splines. Ihre Nennung bedeutet keine Verbindung "
+"oder Unterstützung."
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid ""
+"The original credits are unavailable. Import a complete supported game "
+"installation to view them."
+msgstr ""
+"Die Original-Credits sind nicht verfügbar. Importiere eine vollständige "
+"unterstützte Spielinstallation, um sie anzuzeigen."
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid "Credits from the imported SimCity 2000 for Windows 95 installation:"
+msgstr ""
+"Credits aus der importierten Installation von SimCity 2000 für Windows 95:"

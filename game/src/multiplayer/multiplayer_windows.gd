@@ -81,6 +81,7 @@ func setup() -> void:
 	var row := coop.app.city_menu_bar.newspaper_menu.get_parent()
 	menu = MenuButton.new()
 	menu.text = "Multiplayer"
+	menu.disabled = true
 	row.add_child(menu)
 	row.move_child(menu, coop.app.city_menu_bar.newspaper_menu.get_index() + 1)
 	var popup := menu.get_popup()
@@ -297,6 +298,7 @@ func open_scoreboard() -> void:
 
 
 func update_state(value: Dictionary) -> void:
+	menu.disabled = not coop.active()
 	if not coop.session.hosting:
 		seats.window.hide()
 	if state.get("view_owner") != value.get("view_owner"):
@@ -546,6 +548,7 @@ func open_annual_budget() -> void:
 		coop.app.budget.open_budget_dialog(BudgetPhase.funding_values(coop.app.document_state.city), true)
 
 func close() -> void:
+	menu.disabled = true
 	start_lobby.window.hide()
 	goal_hud.panel.hide()
 	goal_hud.home.hide()

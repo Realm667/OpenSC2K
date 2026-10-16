@@ -8,13 +8,13 @@ func _initialize() -> void:
 
 func _run() -> void:
 	var path := "user://theme-test-%d.cfg" % OS.get_process_id()
-	assert(AppSettingsStore.load_values(path).ui_theme == "light")
+	assert(AppSettingsStore.load_values(path).ui_theme == "dark")
 	assert(not AppSettingsStore.load_values(path).dark_underground)
-	assert(AppSettingsStore.normalize_theme("invalid") == "light")
+	assert(AppSettingsStore.normalize_theme("invalid") == "dark")
 	var config := ConfigFile.new()
 	config.set_value("general", "ui_theme", "invalid")
 	assert(config.save(path) == OK)
-	assert(AppSettingsStore.load_values(path).ui_theme == "light")
+	assert(AppSettingsStore.load_values(path).ui_theme == "dark")
 	OS.set_environment("OPENSC2K_ASSET_SOURCE", "original")
 	OS.set_environment("OPENSC2K_GRAPHICS_PACK", ProjectSettings.globalize_path("user://missing-test-art"))
 	var main := _create_main(path)

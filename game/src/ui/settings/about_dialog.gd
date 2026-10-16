@@ -8,6 +8,7 @@ var project_text: RichTextLabel
 var license_picker: OptionButton
 var license_text: RichTextLabel
 var license_documents: Array[String] = []
+var license_sources: Array[String] = []
 var original_credits_index := -1
 var source_credits := ""
 
@@ -19,17 +20,8 @@ func _ready() -> void:
 	$Content/Version.text = tr("Version %s") % ProjectSettings.get_setting("application/config/version")
 	artwork = $Content/Tabs/About/Scene/Artwork
 	project_text = $Content/Tabs/About/Summary
-	var body_font := SystemFont.new()
-	body_font.font_names = PackedStringArray(["Arial", "Liberation Sans", "Noto Sans"])
-	body_font.font_weight = 400
-	var heading_font := SystemFont.new()
-	heading_font.font_names = body_font.font_names
-	heading_font.font_weight = 600
-	project_text.add_theme_font_override("normal_font", body_font)
-	project_text.add_theme_font_override("bold_font", heading_font)
 	license_picker = $Content/Tabs/Licenses/LicensePicker
 	license_text = $Content/Tabs/Licenses/LicenseText
-	license_text.add_theme_font_override("normal_font", body_font)
 	license_picker.item_selected.connect(_select_license)
 	project_text.meta_clicked.connect(_open_link)
 	license_text.meta_clicked.connect(_open_link)
@@ -37,6 +29,7 @@ func _ready() -> void:
 	visibility_changed.connect(_update_animation)
 	$Content/Tabs.tab_changed.connect(_on_tab_changed)
 	_build_licenses()
+	_refresh_project()
 
 
 func set_assets(assets: OriginalGameAssets) -> void:
@@ -71,6 +64,7 @@ func _build_licenses() -> void:
 	for license_name in engine_licenses:
 		engine_notices += str(license_name) + "\n" + str(engine_licenses[license_name]) + "\n\n"
 	_add_license("Godot Engine — dependency notices", engine_notices)
+	_add_license("Montserrat — SIL OFL 1.1", FileAccess.get_file_as_string("res://assets/fonts/montserrat/OFL.txt"))
 	_add_license("Rajdhani — SIL OFL 1.1", FileAccess.get_file_as_string("res://assets/fonts/rajdhani/OFL.txt"))
 	_add_license("Anton — SIL OFL 1.1", FileAccess.get_file_as_string("res://assets/fonts/anton/OFL.txt"))
 	_add_license("UnifrakturMaguntia — SIL OFL 1.1", FileAccess.get_file_as_string("res://assets/fonts/unifrakturmaguntia/OFL.txt"))
@@ -139,23 +133,18 @@ func _license_files(folder: String, names: Array) -> String:
 
 
 func _original_credits_document(credits: String) -> String:
-	var introduction := """ORIGINAL SIMCITY 2000 CREDITS
-
-""" + (
-		"These credits recognize the people who created the original SimCity 2000. They describe their work on "
-		+ "that game, not contributions to OpenSC2K. Their inclusion does not imply affiliation or endorsement."
-		+ "\n\n"
-	)
+	var introduction := tr("Original SimCity 2000 credits") + "\n\n" + tr("These credits recognize the creators of the original SimCity 2000, not contributors to Reticulating Splines. Their inclusion does not imply affiliation or endorsement.") + "\n\n"
 	if credits.is_empty():
-		return introduction + "The original credits are unavailable. Import a complete supported game installation to view them."
-	return introduction + "Credits from the imported SimCity 2000 for Windows 95 installation:\n\n" + credits.replace(
+		return introduction + tr("The original credits are unavailable. Import a complete supported game installation to view them.")
+	return introduction + tr("Credits from the imported SimCity 2000 for Windows 95 installation:") + "\n\n" + credits.replace(
 		"\r\n",
 		"\n",
 	).strip_edges()
 
 
 func _add_license(label: String, text: String) -> void:
-	license_picker.add_item(label)
+	license_sources.append(label)
+	license_picker.add_item(tr(label))
 	license_documents.append(text)
 
 
@@ -182,6 +171,21 @@ func _fit_to_viewport() -> void:
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready() and original_credits_index >= 0:
+		_refresh_project()
 		license_documents[original_credits_index] = _original_credits_document(OriginalTextLocalization.text(128, source_credits))
 		if license_picker.selected == original_credits_index:
 			_select_license(original_credits_index)
+
+
+func _refresh_project() -> void:
+	for index in license_sources.size():
+		license_picker.set_item_text(index, tr(license_sources[index]))
+	$Content/Tabs.set_tab_title(0, tr("Project information"))
+	$Content/Tabs.set_tab_title(1, tr("Licenses and credits"))
+	$Content/Version.text = tr("Version %s") % ProjectSettings.get_setting("application/config/version")
+	project_text.text = "[b]Reticulating Splines[/b]\n" + tr("A community remaster of SimCity 2000, built on the open-source OpenSC2K project with Godot Engine.")
+	project_text.text += "\n\n[b]" + tr("What Reticulating Splines adds") + "[/b]\n" + tr("New graphics and audio, day and night, seasons and weather, a modern interface, a music box for your own music, and cooperative and competitive multiplayer. Visual effects do not change the original single-player simulation.")
+	project_text.text += "\n\n[b]" + tr("Project and contributors") + "[/b]\n[url=https://github.com/Realm667/Reticulating-Splines]Reticulating Splines · GitHub[/url]\n" + tr("Thanks to everyone contributing code, artwork, music, translations, research and testing.")
+	project_text.text += "\n\n[b]OpenSC2K[/b]\nCopyright © 2026 Nicholas Ochoa\n[url=https://github.com/nicholas-ochoa/OpenSC2K]OpenSC2K · GitHub[/url]\n" + tr("Based on OpenSC2K under the MIT License, including fixes and research from sc2kfix. Built with Godot and Rust. Interface typography: Montserrat, with Pretendard for Korean.")
+	project_text.text += "\n[url=https://github.com/sc2kfix/sc2kfix]sc2kfix · GitHub[/url]\n\n" + tr("See Licenses and credits for the full license texts, third-party notices and imported original-game credits. License texts are reproduced in their original language.")
+	project_text.text += "\n\n[b]" + tr("Independent and unofficial") + "[/b]\n" + tr("Reticulating Splines is not affiliated with or endorsed by Electronic Arts or Maxis. SimCity 2000 and its original graphics, texts, sounds and music belong to their respective rights holders and are not covered by the project's MIT License. Import your own supported game installation to use the original assets.")

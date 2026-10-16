@@ -11,6 +11,10 @@ func _initialize() -> void:
 
 func _run() -> void:
 	_check_versions()
+	AppLocalization.select("de")
+	var translated := Check.status_text(1790345100, "GitHub has no published Reticulating Splines release.", 0)
+	assert(translated.contains("2026-09-25 14:05") and not translated.contains("Last check") and not translated.contains("GitHub has no"))
+	AppLocalization.select("en")
 	_check_responses()
 	var path := "user://update_check_%d.cfg" % OS.get_process_id()
 	_check_store(path)

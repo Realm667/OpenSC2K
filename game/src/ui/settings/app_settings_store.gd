@@ -36,7 +36,7 @@ static func load_values(
 	result.sprite_corrections = bool(config.get_value("graphics", "sc2kfix_sprite_corrections", false))
 	result.hd_graphics = bool(config.get_value("graphics", "hd_graphics", true))
 	result.recent_autosaves = bool(config.get_value("general", "recent_autosaves", true))
-	result.ui_theme = normalize_theme(config.get_value("general", "ui_theme", "light"))
+	result.ui_theme = normalize_theme(config.get_value("general", "ui_theme", "dark"))
 	result.ui_language = AppLocalization.normalize(config.get_value("general", "ui_language", AppLocalization.DEFAULT))
 	result.translucent_menus = bool(config.get_value("general", "translucent_menus", true))
 	result.ui_scale = AppUiScale.normalize(config.get_value("general", "ui_scale", AppUiScale.DEFAULT))
@@ -93,7 +93,7 @@ static func load_values(
 
 
 static func normalize_theme(value: Variant) -> String:
-	return "dark" if str(value) == "dark" else "light"
+	return "light" if str(value) == "light" else "dark"
 
 
 static func normalize_renderer(value: Variant) -> String:
@@ -409,7 +409,7 @@ static func save_update_state(
 class Values extends RefCounted:
 	var visual_enhancements := VisualEnhancementOptions.normalize({})
 	var default_mayor_name := "Mayor"
-	var ui_theme := "light"
+	var ui_theme := "dark"
 	var ui_language := AppLocalization.DEFAULT
 	var ui_scale := AppUiScale.DEFAULT
 	var translucent_menus := true

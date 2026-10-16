@@ -6,10 +6,21 @@ focus styles in both themes. Utility windows follow theme changes immediately.
 The dark theme follows the Reticulating Splines website: anthracite surfaces,
 dark inset controls, lime selection/focus markers and primary actions, and petrol
 secondary actions. Montserrat uses the existing Korean fallback; its OFL license
-is included in exports. The light theme and saved transparency preference remain
-available. Menu order, dialog sections, tool positions and input behavior stay
-unchanged. The centered startup logo and existing progress system share the dark
-palette. Selecting a theme does not alter cities or simulation state.
+is included in exports and the About licenses. Dark is the default for new or
+invalid preferences; an explicitly saved light theme is retained. The Bright
+variant uses the same typography and components with pale surfaces, dark text,
+and lime/petrol accents. Saved transparency preferences remain available.
+The centered startup logo and existing progress system share the dark palette;
+percentage text changes color at the fill edge. Window panels paint their entire
+rectangular surface, avoiding black corner gaps. Selecting a theme does not alter
+cities or simulation state.
+
+Start New City uses the neutral button style. Headings use bold Montserrat.
+The in-game Multiplayer menu is disabled outside a session; the main-menu entry
+still opens hosting/joining. About identifies Reticulating Splines, its features,
+project link, upstream OpenSC2K attribution, dependencies and original-asset
+rights. Project text, credits navigation and update status translate live;
+third-party license documents retain their original wording.
 
 ## Tool flyouts
 
@@ -17,7 +28,10 @@ Tool groups use a compact three-column sidebar. Click a group to select its last
 used tool. Hold the button for 450 ms to open the available subtools beside the
 sidebar. Groups with only one offered tool select it directly.
 The group button keeps its category icon; the menu retains names, prices,
-availability and a marked selection. The sidebar does not expand for subtools.
+availability and a marked selection. Toolbar icons use a cool gray background
+(#717479). Subtool previews retain all Large-set source pixels, independently of
+map zoom, and scale only their displayed footprint. The smaller layer controls
+stay at the bottom of the sidebar. The sidebar does not expand for subtools.
 
 Choose an entry with the mouse, or use the arrow keys and Enter. Selection,
 Escape or an outside click closes the menu. The outside click is consumed so
@@ -43,7 +57,7 @@ city does not reopen a budget decision or other modal prompt.
 
 ## Music box
 
-Windows → Music box distinguishes **SC2000 original music**, **Reticulating
+Options → Music box distinguishes **SC2000 original music**, **Reticulating
 Splines**, other selected replacement packs, and personal music folders. Original music
 requires a loaded imported SC2000 data pack and available imported music files.
 The sibling music pack from that import remains selectable when a replacement
@@ -94,7 +108,7 @@ References: [ID3v2.3](https://id3.org/id3v2.3.0) and
 
 ### Add your own MP3 music
 
-1. Open **Windows → Music box → Open music folder**. This creates and opens the
+1. Open **Options → Music box → Open music folder**. This creates and opens the
    `music` folder in the game's user data directory. In a portable installation
    it is `data/music` beside the executable.
 2. Create your own subfolders, for example `music/Evening`, and put MP3 files

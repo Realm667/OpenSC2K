@@ -1,7 +1,7 @@
 class_name AppUiTheme
 extends RefCounted
 
-static var selected := "light"
+static var selected := "dark"
 static var translucent_menus := true
 static var _current: Theme
 static var _files: Theme
@@ -20,7 +20,7 @@ static func file_dialog() -> Theme:
 
 
 static func select(value: String, translucent := true) -> void:
-	selected = "dark" if value == "dark" else "light"
+	selected = "light" if value == "light" else "dark"
 	translucent_menus = translucent
 	# keep resource identities so hidden windows and retained editors update too
 	if _current != null:

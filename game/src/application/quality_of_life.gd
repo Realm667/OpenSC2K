@@ -18,7 +18,7 @@ func _ready() -> void:
 	memory.save_failed.connect(app.interface.show_error)
 	# Observe the whole application, including windows added later.
 	app.add_child(memory)
-	app.city_menu_bar.windows_menu_requested.connect(_menu)
+	app.city_menu_bar.options_menu_requested.connect(_menu)
 	music_box = MusicBoxDialog.new(app)
 	app.add_child(music_box)
 

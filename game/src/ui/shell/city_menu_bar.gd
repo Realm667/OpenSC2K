@@ -140,6 +140,7 @@ func _ready() -> void:
 		options_menu.get_popup().set_item_as_checkable(option_index, true)
 
 	options_menu.get_popup().add_separator()
+	options_menu.get_popup().add_item("Music box", MENU_MUSIC_BOX)
 	options_menu.get_popup().add_item("Settings", MENU_SETTINGS)
 	options_menu.disabled = true
 
@@ -387,8 +388,6 @@ func set_scenario_available(available: bool) -> void:
 	popup.add_separator()
 	popup.add_item("Console", MENU_CONSOLE)
 	popup.add_item("Debug", 7)
-	popup.add_separator()
-	popup.add_item("Music box", MENU_MUSIC_BOX)
 	refresh_shortcut_hints(bindings)
 
 

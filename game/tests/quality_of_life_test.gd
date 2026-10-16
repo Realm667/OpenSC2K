@@ -37,9 +37,11 @@ func _run() -> void:
 	for scenario_available in [false, true, false]:
 		app.city_menu_bar.set_scenario_available(scenario_available)
 		assert(window_menu.get_item_index(0x8400) < 0)
-		assert(window_menu.get_item_index(ApplicationQualityOfLife.MENU_MUSIC_BOX) >= 0)
-	window_menu.id_pressed.emit(ApplicationQualityOfLife.MENU_MUSIC_BOX)
-	assert(qol.music_box.visible, "The real Windows menu must open the music box after loading a city")
+		assert(window_menu.get_item_index(ApplicationQualityOfLife.MENU_MUSIC_BOX) < 0)
+	var options := app.city_menu_bar.options_menu.get_popup()
+	assert(options.get_item_index(CityMenuBar.MENU_MUSIC_BOX) + 1 == options.get_item_index(CityMenuBar.MENU_SETTINGS))
+	options.id_pressed.emit(ApplicationQualityOfLife.MENU_MUSIC_BOX)
+	assert(qol.music_box.visible, "The real Options menu must open the music box after loading a city")
 	qol.music_box.hide()
 	app.reports.on_windows_menu(4)
 	await process_frame

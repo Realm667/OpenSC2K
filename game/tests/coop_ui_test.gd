@@ -22,6 +22,7 @@ func run() -> void:
 	await process_frame
 	await process_frame
 	check(main.asset_state.assets_ready, "assets loaded")
+	check(main.coop.menu_button.disabled, "Multiplayer menu is disabled outside a session")
 	var view := Rect2(100, 50, 500, 300)
 	check(ApplicationMultiplayer.remote_gain(Vector2(200, 100), view) == 1.0, "visible remote sound has full gain")
 	check(ApplicationMultiplayer.remote_gain(Vector2(700, 100), view) > ApplicationMultiplayer.remote_gain(Vector2(1000, 100), view), "remote sound falls off smoothly outside view")
@@ -45,6 +46,7 @@ func run() -> void:
 	main.coop.host_document(Sc2xDocument.create_empty(128, "UI test").document)
 	await process_frame
 	check(main.coop.active() and main.coop.mirrored, "host activates a playable city")
+	check(not main.coop.menu_button.disabled, "Multiplayer menu enables for an active session")
 	check(not main.main_menu.visible and not main.coop.panel.visible, "city gets input ownership")
 	check(main.document_state.city != main.coop.session.world.city, "host display is isolated from authoritative model")
 	check(main.simulation_state.frame_simulation == null, "display has no independent simulation worker")
@@ -150,6 +152,7 @@ func run() -> void:
 	guest.stop()
 	guest.queue_free()
 	main.coop.leave()
+	check(main.coop.menu_button.disabled, "Multiplayer menu disables after leaving")
 	await process_frame
 	check(not main.city_menu_bar.debug_menu.disabled and not main.city_menu_bar.windows_menu.get_popup().is_item_disabled(0), "leaving multiplayer restores local administrative menus")
 	check(not main.coop.active() and main.main_menu.visible, "leave returns to singleplayer menu")

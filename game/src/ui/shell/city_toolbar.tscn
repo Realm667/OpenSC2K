@@ -11,7 +11,7 @@ resource_local_to_scene = true
 
 [node name="CityToolbar" type="PanelContainer"]
 material = SubResource("ShaderMaterial_glass")
-custom_minimum_size = Vector2(195, 0)
+custom_minimum_size = Vector2(180, 0)
 size_flags_horizontal = 0
 script = ExtResource("1_3va6y")
 theme_type_variation = "CityToolbarPanel"
@@ -116,14 +116,13 @@ text = "Z"
 icon_alignment = 1
 metadata/toolbar_region = Rect2i(486, 0, 23, 23)
 
-[node name="ChildPaletteDivider" type="HSeparator" parent="Margin/Column"]
-layout_mode = 2
-
 [node name="LandscapeSpacer" type="Control" parent="Margin/Column"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="ChildPaletteDivider" type="HSeparator" parent="Margin/Column"]
+layout_mode = 2
 
 [node name="BrushControls" type="VBoxContainer" parent="Margin/Column"]
 unique_name_in_owner = true
@@ -167,6 +166,8 @@ layout_mode = 2
 [node name="ViewLayersHeading" type="Label" parent="Margin/Column"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
+theme_type_variation = &"SectionHeading"
 text = "Visible Layers"
 horizontal_alignment = 1
 
@@ -177,6 +178,7 @@ theme_override_constants/separation = 0
 [node name="CityView" type="CheckBox" parent="Margin/Column/ViewModes"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 tooltip_text = "Show the city isometric view."
 button_pressed = true
 button_group = SubResource("ButtonGroup_06b3w")
@@ -185,6 +187,7 @@ text = "City"
 [node name="UndergroundView" type="CheckBox" parent="Margin/Column/ViewModes"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 tooltip_text = "Show the underground isometric view."
 button_group = SubResource("ButtonGroup_06b3w")
 text = "Underground"
@@ -193,6 +196,7 @@ text = "Underground"
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 tooltip_text = "Show terrain height and transparent water."
 button_group = SubResource("ButtonGroup_06b3w")
 text = "Height Map"
@@ -200,6 +204,7 @@ text = "Height Map"
 [node name="DataViewInput" type="OptionButton" parent="Margin/Column"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 tooltip_text = "Replace structures with current tile values."
 fit_to_longest_item = false
 text_overrun_behavior = 3
@@ -213,6 +218,7 @@ columns = 1
 [node name="BuildingsVisible" type="CheckBox" parent="Margin/Column/Layers"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 tooltip_text = "Show or hide buildings in the city view."
 button_pressed = true
 text = "Buildings"
@@ -220,6 +226,7 @@ text = "Buildings"
 [node name="NetworksVisible" type="CheckBox" parent="Margin/Column/Layers"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 tooltip_text = "Show or hide networks in the city view."
 button_pressed = true
 text = "Networks"
@@ -227,6 +234,7 @@ text = "Networks"
 [node name="WaterVisible" type="CheckBox" parent="Margin/Column/Layers"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 tooltip_text = "Show or hide water in the city view."
 button_pressed = true
 text = "Water"
@@ -234,6 +242,7 @@ text = "Water"
 [node name="TreesVisible" type="CheckBox" parent="Margin/Column/Layers"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 tooltip_text = "Show or hide trees in the city view."
 button_pressed = true
 text = "Trees"
@@ -241,6 +250,7 @@ text = "Trees"
 [node name="SignsVisible" type="CheckBox" parent="Margin/Column/Layers"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 tooltip_text = "Show or hide signs in the city view."
 button_pressed = true
 text = "Signs"
@@ -248,6 +258,7 @@ text = "Signs"
 [node name="VehiclesVisible" type="CheckBox" parent="Margin/Column/Layers"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 tooltip_text = "Show or hide airplanes, helicopters, ships, boats and trains. Hidden vehicles make no sound and cannot crash."
 button_pressed = true
 text = "Vehicles"
@@ -255,6 +266,7 @@ text = "Vehicles"
 [node name="WaterMainsVisible" type="CheckBox" parent="Margin/Column/Layers"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 tooltip_text = "Show or hide water mains in the underground view."
 button_pressed = true
 text = "Water mains"
@@ -262,6 +274,7 @@ text = "Water mains"
 [node name="PipesVisible" type="CheckBox" parent="Margin/Column/Layers"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 tooltip_text = "Show or hide pipes beneath buildings in the underground view."
 button_pressed = true
 text = "Pipes"
@@ -269,6 +282,7 @@ text = "Pipes"
 [node name="SubwaysVisible" type="CheckBox" parent="Margin/Column/Layers"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 tooltip_text = "Show or hide subways in the underground view."
 button_pressed = true
 text = "Subways"
@@ -276,6 +290,7 @@ text = "Subways"
 [node name="TunnelsVisible" type="CheckBox" parent="Margin/Column/Layers"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 tooltip_text = "Show or hide road tunnels in the underground view."
 button_pressed = true
 text = "Tunnels"

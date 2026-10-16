@@ -16,6 +16,13 @@ func _run() -> void:
 	await preload("res://tests/support/app_fixture.gd").wait_for_visuals(main)
 	var toolbar := main.get("city_toolbar") as CityToolbar
 	var map := main.get("map_view") as CityMapControl
+	# A small map zoom must not discard pixels from the Large-set tool preview.
+	var school_id := 1000 + BuildingSites.tile_for_tool(CityToolIds.Group.EDUCATION, 0)
+	var school: Sc2SpriteArchive.SpriteEntry = main.asset_state.large_sprites.find_sprite(school_id)
+	var preview := main.camera_input.tool_button_icon(CityToolIds.Group.EDUCATION, 0) as HdArtworkTexture
+	assert(preview != null)
+	assert(preview.source.diffuse_texture.get_size() == Vector2(school.width, school.height))
+	assert(preview.logical_size.x <= 48 and preview.logical_size.y <= 44)
 	# The selected subtool must never replace or resize its category artwork.
 	for group in toolbar.toolbar_buttons.size():
 		var expected := toolbar.group_icon(group)

@@ -7824,3 +7824,152 @@ msgstr "Reticulating Splines %s 버전을 사용할 수 있습니다. 현재 버
 #. Reticulating Splines release dialog; supplementary translation.
 msgid "Reticulating Splines %s is the latest release."
 msgstr "Reticulating Splines %s은(는) 최신 버전입니다."
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid "About Reticulating Splines"
+msgstr "Reticulating Splines 정보"
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid "Open Autosave Folder"
+msgstr "자동 저장 폴더 열기"
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid "Last checked %s."
+msgstr "마지막 확인: %s."
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid "Last check failed %s. %s"
+msgstr "마지막 확인 실패 (%s). %s"
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid "Preparing Visual Enhancements"
+msgstr "시각 효과 준비 중"
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid ""
+"A community remaster of SimCity 2000, built on the open-source OpenSC2K "
+"project with Godot Engine."
+msgstr "오픈 소스 OpenSC2K 프로젝트와 Godot 엔진을 기반으로 한 SimCity 2000 커뮤니티 리마스터입니다."
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid "What Reticulating Splines adds"
+msgstr "Reticulating Splines의 추가 기능"
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid ""
+"New graphics and audio, day and night, seasons and weather, a modern "
+"interface, a music box for your own music, and cooperative and competitive "
+"multiplayer. Visual effects do not change the original single-player "
+"simulation."
+msgstr ""
+"새로운 그래픽과 오디오, 낮과 밤, 계절과 날씨, 현대적인 인터페이스, 개인 음악용 뮤직박스, 협동 및 경쟁 멀티플레이를 제공합니다. "
+"시각 효과는 원래의 싱글플레이 시뮬레이션을 변경하지 않습니다."
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid "Project and contributors"
+msgstr "프로젝트와 기여자"
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid ""
+"Thanks to everyone contributing code, artwork, music, translations, research"
+" and testing."
+msgstr "코드, 그래픽, 음악, 번역, 연구 및 테스트에 기여하는 모든 분께 감사드립니다."
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid ""
+"Based on OpenSC2K under the MIT License, including fixes and research from "
+"sc2kfix. Built with Godot and Rust. Interface typography: Montserrat, with "
+"Pretendard for Korean."
+msgstr ""
+"MIT 라이선스의 OpenSC2K를 기반으로 하며 sc2kfix의 수정 사항과 연구를 포함합니다. Godot과 Rust로 개발되었습니다."
+" 인터페이스 글꼴은 Montserrat이며 한국어에는 Pretendard를 사용합니다."
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid ""
+"See Licenses and credits for the full license texts, third-party notices and"
+" imported original-game credits. License texts are reproduced in their "
+"original language."
+msgstr ""
+"전체 라이선스, 타사 고지 및 가져온 원작 제작진 정보는 라이선스 및 크레딧에서 확인할 수 있습니다. 라이선스 문서는 원문 언어로 "
+"제공됩니다."
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid "Independent and unofficial"
+msgstr "독립적인 비공식 프로젝트"
+
+#. Reticulating Splines UI corrections; supplementary translation, AI-
+#. assisted.
+msgid ""
+"Reticulating Splines is not affiliated with or endorsed by Electronic Arts "
+"or Maxis. SimCity 2000 and its original graphics, texts, sounds and music "
+"belong to their respective rights holders and are not covered by the "
+"project's MIT License. Import your own supported game installation to use "
+"the original assets."
+msgstr ""
+"Reticulating Splines는 Electronic Arts 또는 Maxis와 제휴하거나 승인을 받은 프로젝트가 아닙니다. "
+"SimCity 2000과 원본 그래픽, 텍스트, 사운드 및 음악의 권리는 각 권리자에게 있으며 프로젝트의 MIT 라이선스에 포함되지 "
+"않습니다. 원본 자산을 사용하려면 소유한 게임의 지원되는 설치본을 가져오세요."
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid "Project information"
+msgstr "프로젝트 정보"
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid "Licenses and credits"
+msgstr "라이선스 및 크레딧"
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid "Weather recordings — CC0"
+msgstr "날씨 녹음 — CC0"
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid "Godot Engine — dependency notices"
+msgstr "Godot Engine — 종속 구성 요소 고지"
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid "FluidSynth — included library notices"
+msgstr "FluidSynth — 포함된 라이브러리 고지"
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid "Rust crates and ported code — MIT, 0BSD"
+msgstr "Rust 크레이트 및 이식 코드 — MIT, 0BSD"
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid "Research and original game"
+msgstr "연구 및 원작 게임"
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid "Original SimCity 2000 credits"
+msgstr "원작 SimCity 2000 제작진"
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid ""
+"These credits recognize the creators of the original SimCity 2000, not "
+"contributors to Reticulating Splines. Their inclusion does not imply "
+"affiliation or endorsement."
+msgstr ""
+"이 제작진 정보는 Reticulating Splines 기여자가 아닌 원작 SimCity 2000 제작자를 소개합니다. 이를 포함한다고 "
+"해서 제휴나 승인을 의미하지는 않습니다."
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid ""
+"The original credits are unavailable. Import a complete supported game "
+"installation to view them."
+msgstr "원작 제작진 정보를 사용할 수 없습니다. 지원되는 게임의 전체 설치본을 가져오면 볼 수 있습니다."
+
+#. Reticulating Splines About; supplementary translation, AI-assisted.
+msgid "Credits from the imported SimCity 2000 for Windows 95 installation:"
+msgstr "가져온 Windows 95용 SimCity 2000 설치본의 제작진 정보:"

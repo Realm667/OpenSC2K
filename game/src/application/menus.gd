@@ -96,6 +96,8 @@ func on_speed_menu(id: int) -> void:
 
 
 func on_options_menu(id: int) -> void:
+	if id == CityMenuBar.MENU_MUSIC_BOX:
+		return # ApplicationQualityOfLife opens the music box.
 	if app.coop.active() and id not in [CityMenuBar.MENU_SETTINGS, MENU_AUTO_GOTO, MENU_SOUND_EFFECTS, MENU_MUSIC]:
 		if id == MENU_AUTO_BUDGET:
 			app.coop.session.request({"kind": "budget", "values": Array(BudgetPhase.funding_values(app.document_state.city)), "auto": not app.document_state.city.auto_budget_enabled()})

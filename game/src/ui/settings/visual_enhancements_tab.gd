@@ -116,7 +116,11 @@ func _ready() -> void:
 	body.add_child(navigation_scroll)
 	var navigation := VBoxContainer.new()
 	navigation.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	navigation_scroll.add_child(navigation)
+	var navigation_margin := MarginContainer.new()
+	navigation_margin.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	navigation_margin.add_theme_constant_override("margin_right", 10)
+	navigation_scroll.add_child(navigation_margin)
+	navigation_margin.add_child(navigation)
 	body.add_child(VSeparator.new())
 	page_scroll = ScrollContainer.new()
 	page_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -138,6 +142,7 @@ func _ready() -> void:
 		pages.append(page)
 		var heading := Label.new()
 		heading.text = section[0]
+		heading.theme_type_variation = &"SectionHeading"
 		heading.add_theme_font_size_override("font_size", get_theme_font_size("font_size") + 3)
 		page.add_child(heading)
 		page.add_child(_help(section[1]))
@@ -145,6 +150,7 @@ func _ready() -> void:
 		for key: String in section[2]:
 			if key in ["weather_enabled", "cloud_enabled"]:
 				var subgroup := Label.new()
+				subgroup.theme_type_variation = &"SectionHeading"
 				subgroup.text = {"weather_enabled": "Weather", "cloud_enabled": "Clouds & Fog"}[key]
 				page.add_child(subgroup)
 			_add_field(page, fields[key])

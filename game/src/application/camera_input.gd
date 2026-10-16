@@ -238,14 +238,12 @@ func _tool_button_icon(group_index: int, subtool_index: int) -> Texture2D:
 
 	var scale := minf(1.0, minf(48.0 / image.get_width(), 44.0 / image.get_height()))
 
-	if scale < 1.0:
-		image.resize(
-			maxi(1, roundi(image.get_width() * scale)),
-			maxi(1, roundi(image.get_height() * scale)),
-			Image.INTERPOLATE_NEAREST,
-		)
-
-	return ImageTexture.create_from_image(image)
+	# Preserve every Large-set pixel; scale only the UI footprint.
+	var logical_size := Vector2i(maxi(1, roundi(image.get_width() * scale)),
+		maxi(1, roundi(image.get_height() * scale)))
+	var texture := HdArtworkTexture.create(image, logical_size)
+	texture.source.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	return texture
 
 
 # A tool icon with HD art, at the size of the indexed icon. The icon has

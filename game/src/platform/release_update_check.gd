@@ -96,7 +96,12 @@ static func wait_text(seconds: int) -> String:
 
 # summary of the last check in local time, for example "Last checked 2026-09-25 14:05."
 static func status_text(checked_at: int, error: String, bias_minutes := int(Time.get_time_zone_from_system().bias)) -> String:
-	return NativePlatform.status_text(checked_at, error, bias_minutes)
+	if checked_at <= 0:
+		return ""
+	var stamp := Time.get_datetime_string_from_unix_time(checked_at + bias_minutes * 60).replace("T", " ").substr(0, 16)
+	if error.is_empty():
+		return TranslationServer.translate("Last checked %s.") % stamp
+	return TranslationServer.translate("Last check failed %s. %s") % [stamp, AppLocalization.message(error)]
 
 
 static func header_value(headers: PackedStringArray, header_name: String) -> String:

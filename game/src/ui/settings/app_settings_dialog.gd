@@ -66,6 +66,8 @@ var renderer_selector: OptionButton
 var background_audio_check: CheckBox
 var check_for_updates_check: CheckBox
 var check_updates_now_button: Button
+var last_update_check := 0
+var last_update_error := ""
 var update_status_label: Label
 var controls_list: ControlsBindingList
 var mods_panel: ModsSettingsPanel
@@ -333,8 +335,15 @@ func set_update_check_running(running: bool) -> void:
 	check_updates_now_button.text = "Checking..." if running else "Check now"
 
 
-# show the result of the last update check, or nothing before the first check
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+		set_update_status(last_update_check, last_update_error)
+
+
+# Show the result of the last update check, or nothing before the first check.
 func set_update_status(checked_at: int, error: String) -> void:
+	last_update_check = checked_at
+	last_update_error = error
 	update_status_label.visible = checked_at > 0
 	update_status_label.text = ReleaseUpdateCheck.status_text(checked_at, error)
 	update_status_label.theme_type_variation = &"HelpLabel" if error.is_empty() else &"ErrorLabel"

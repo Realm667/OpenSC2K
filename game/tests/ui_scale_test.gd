@@ -201,9 +201,9 @@ func _check_pixel_art() -> void:
 		var icon := dark.get_icon(pair[0], pair[1])
 		assert(icon is DPITexture, "%s %s" % pair)
 
-	var tinted := dark.get_icon("unchecked", "CheckBox").get_image()
-	var center := tinted.get_pixel(8, 8)
 	var expected := Color("9aa4b0")
+	var tinted := AppUiThemeDefinitions._tinted_icon(ThemeDB.get_default_theme().get_icon("unchecked", "CheckBox"), expected).get_image()
+	var center := tinted.get_pixel(8, 8)
 	assert(Vector4(center.r, center.g, center.b, center.a).distance_to(Vector4(expected.r, expected.g, expected.b, 1.0)) < 0.02,
 		"The tint keeps its color and full opacity")
 

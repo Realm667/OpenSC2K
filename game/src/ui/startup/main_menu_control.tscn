@@ -104,7 +104,7 @@ text = "Settings"
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
-text = "About OpenSC2K"
+text = "About Reticulating Splines"
 
 [node name="Exit" type="Button" parent="Center/Panel/Content"]
 custom_minimum_size = Vector2(0, 42)

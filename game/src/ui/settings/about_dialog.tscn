@@ -2,44 +2,25 @@
 
 [ext_resource type="Script" path="res://src/ui/settings/about_dialog.gd" id="1_about"]
 [ext_resource type="Script" path="res://src/ui/settings/about_artwork.gd" id="2_artwork"]
-[ext_resource type="FontFile" path="res://assets/fonts/rajdhani/Rajdhani-Light.ttf" id="3_light"]
-[ext_resource type="FontFile" path="res://assets/fonts/rajdhani/Rajdhani-Bold.ttf" id="4_bold"]
+[ext_resource type="Texture2D" path="res://assets/branding/reticulating-splines-logo.png" id="3_logo"]
 [ext_resource type="PackedScene" path="res://src/ui/shared/frosted_dialog_backdrop.tscn" id="5_glass"]
-
-[sub_resource type="FontVariation" id="FontVariation_title"]
-base_font = ExtResource("4_bold")
-variation_embolden = -0.2
 
 [node name="AboutDialog" type="AcceptDialog"]
 visible = true
-title = "About OpenSC2K"
+title = "About Reticulating Splines"
 size = Vector2i(760, 550)
 min_size = Vector2i(380, 200)
 exclusive = true
-dialog_text = "OpenSC2K is an open-source reimplementation of SimCity 2000 for Windows 95."
 script = ExtResource("1_about")
 
 [node name="Content" type="VBoxContainer" parent="."]
 
-[node name="GameTitle" type="HBoxContainer" parent="Content"]
-auto_translate_mode = 2
+[node name="GameTitle" type="TextureRect" parent="Content"]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
-alignment = 1
-theme_override_constants/separation = 0
-
-[node name="Open" type="Label" parent="Content/GameTitle"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("3_light")
-theme_override_font_sizes/font_size = 64
-text = "Open"
-vertical_alignment = 2
-
-[node name="SC2K" type="Label" parent="Content/GameTitle"]
-layout_mode = 2
-theme_override_fonts/font = SubResource("FontVariation_title")
-theme_override_font_sizes/font_size = 70
-text = "SC2K"
-vertical_alignment = 2
+texture = ExtResource("3_logo")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Version" type="Label" parent="Content"]
 layout_mode = 2
@@ -76,7 +57,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
 selection_enabled = true
-text = "[b]OpenSC2K[/b]\nAn open-source reimplementation and modernization of SimCity 2000.\n\n[b]Copyright © 2026 Nicholas Ochoa[/b]\n\nOpenSC2K code is available under the MIT License. See Licenses and Credits for full license terms and third-party notices.\n\nOpenSC2K incorporates fixes and implementation details adapted from the [url=https://github.com/sc2kfix/sc2kfix]sc2kfix project[/url], licensed under the [url=https://github.com/sc2kfix/sc2kfix/blob/main/LICENSE]MIT License[/url].\n\nBuilt with Godot Engine.\nTitle typography: Rajdhani by Indian Type Foundry.\n\n[b]This project is unofficial and independent.[/b]\nNot affiliated with, sponsored by, or endorsed by Electronic Arts or Maxis.\n\nSimCity and SimCity 2000 are trademarks of their respective owners. Original game assets remain the property of their respective owners."
+
 
 [node name="Licenses" type="VBoxContainer" parent="Content/Tabs"]
 layout_mode = 2

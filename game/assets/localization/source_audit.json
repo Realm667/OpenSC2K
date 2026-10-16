@@ -57,6 +57,7 @@
     "The Construction: HAPPYLAND": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
     "Misty Lake": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
     "Key of Success": "Soundtrack proper name; intentionally identical across locales, like user file and playlist names.",
-    "Standalone Music": "Existing package name used only to identify the legacy standalone soundtrack."
+    "Standalone Music": "Existing package name used only to identify the legacy standalone soundtrack.",
+    "PrimaryButton": "Godot theme variation, not display text."
   }
 }
