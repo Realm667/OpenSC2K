@@ -38484,14 +38484,9 @@ msgstr "Échec de la dernière vérification (%s). %s"
 msgid "Preparing Visual Enhancements"
 msgstr "Préparation des effets visuels"
 
-#. Reticulating Splines UI corrections; supplementary translation, AI-
-#. assisted.
-msgid ""
-"A community remaster of SimCity 2000, built on the open-source OpenSC2K "
-"project with Godot Engine."
-msgstr ""
-"Une remastérisation communautaire de SimCity 2000 basée sur le projet libre "
-"OpenSC2K et le moteur Godot."
+#. Reticulating Splines authorship correction; supplementary translation, AI-assisted.
+msgid "Reticulating Splines is developed by Daniel Gimmer (Realm667), based on OpenSC2K by Nicholas Ochoa."
+msgstr "Reticulating Splines est développé par Daniel Gimmer (Realm667) à partir d’OpenSC2K, créé par Nicholas Ochoa."
 
 #. Reticulating Splines UI corrections; supplementary translation, AI-
 #. assisted.
@@ -38511,19 +38506,13 @@ msgstr ""
 "multijoueurs coopératif et compétitif. Les effets visuels ne modifient pas "
 "la simulation originale en solo."
 
-#. Reticulating Splines UI corrections; supplementary translation, AI-
-#. assisted.
-msgid "Project and contributors"
-msgstr "Projet et contributions"
+#. Reticulating Splines authorship correction; supplementary translation, AI-assisted.
+msgid "Development and acknowledgements"
+msgstr "Développement et remerciements"
 
-#. Reticulating Splines UI corrections; supplementary translation, AI-
-#. assisted.
-msgid ""
-"Thanks to everyone contributing code, artwork, music, translations, research"
-" and testing."
-msgstr ""
-"Merci à toutes les personnes qui contribuent au code, aux graphismes, à la "
-"musique, aux traductions, aux recherches et aux tests."
+#. Reticulating Splines authorship correction; supplementary translation, AI-assisted.
+msgid "Development of Reticulating Splines: Daniel Gimmer (Realm667). Thanks to Nicholas Ochoa and the OpenSC2K contributors for the foundation, and to everyone supporting this project with feedback, research and testing."
+msgstr "Développement de Reticulating Splines : Daniel Gimmer (Realm667). Merci à Nicholas Ochoa et aux contributeurs d’OpenSC2K pour les fondations du projet, ainsi qu’à toutes les personnes qui le soutiennent par leurs retours, leurs recherches et leurs tests."
 
 #. Reticulating Splines UI corrections; supplementary translation, AI-
 #. assisted.

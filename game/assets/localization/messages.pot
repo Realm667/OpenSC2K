@@ -8195,11 +8195,8 @@ msgstr ""
 msgid "Preparing Visual Enhancements"
 msgstr ""
 
-#. Reticulating Splines UI corrections; supplementary translation, AI-
-#. assisted.
-msgid ""
-"A community remaster of SimCity 2000, built on the open-source OpenSC2K "
-"project with Godot Engine."
+#. Reticulating Splines authorship correction; supplementary translation, AI-assisted.
+msgid "Reticulating Splines is developed by Daniel Gimmer (Realm667), based on OpenSC2K by Nicholas Ochoa."
 msgstr ""
 
 #. Reticulating Splines UI corrections; supplementary translation, AI-
@@ -8216,16 +8213,12 @@ msgid ""
 "simulation."
 msgstr ""
 
-#. Reticulating Splines UI corrections; supplementary translation, AI-
-#. assisted.
-msgid "Project and contributors"
+#. Reticulating Splines authorship correction; supplementary translation, AI-assisted.
+msgid "Development and acknowledgements"
 msgstr ""
 
-#. Reticulating Splines UI corrections; supplementary translation, AI-
-#. assisted.
-msgid ""
-"Thanks to everyone contributing code, artwork, music, translations, research"
-" and testing."
+#. Reticulating Splines authorship correction; supplementary translation, AI-assisted.
+msgid "Development of Reticulating Splines: Daniel Gimmer (Realm667). Thanks to Nicholas Ochoa and the OpenSC2K contributors for the foundation, and to everyone supporting this project with feedback, research and testing."
 msgstr ""
 
 #. Reticulating Splines UI corrections; supplementary translation, AI-

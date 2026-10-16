@@ -7850,12 +7850,9 @@ msgstr "마지막 확인 실패 (%s). %s"
 msgid "Preparing Visual Enhancements"
 msgstr "시각 효과 준비 중"
 
-#. Reticulating Splines UI corrections; supplementary translation, AI-
-#. assisted.
-msgid ""
-"A community remaster of SimCity 2000, built on the open-source OpenSC2K "
-"project with Godot Engine."
-msgstr "오픈 소스 OpenSC2K 프로젝트와 Godot 엔진을 기반으로 한 SimCity 2000 커뮤니티 리마스터입니다."
+#. Reticulating Splines authorship correction; supplementary translation, AI-assisted.
+msgid "Reticulating Splines is developed by Daniel Gimmer (Realm667), based on OpenSC2K by Nicholas Ochoa."
+msgstr "Reticulating Splines는 Nicholas Ochoa가 만든 OpenSC2K를 기반으로 Daniel Gimmer(Realm667)가 개발하고 있습니다."
 
 #. Reticulating Splines UI corrections; supplementary translation, AI-
 #. assisted.
@@ -7873,17 +7870,13 @@ msgstr ""
 "새로운 그래픽과 오디오, 낮과 밤, 계절과 날씨, 현대적인 인터페이스, 개인 음악용 뮤직박스, 협동 및 경쟁 멀티플레이를 제공합니다. "
 "시각 효과는 원래의 싱글플레이 시뮬레이션을 변경하지 않습니다."
 
-#. Reticulating Splines UI corrections; supplementary translation, AI-
-#. assisted.
-msgid "Project and contributors"
-msgstr "프로젝트와 기여자"
+#. Reticulating Splines authorship correction; supplementary translation, AI-assisted.
+msgid "Development and acknowledgements"
+msgstr "개발 및 감사의 말"
 
-#. Reticulating Splines UI corrections; supplementary translation, AI-
-#. assisted.
-msgid ""
-"Thanks to everyone contributing code, artwork, music, translations, research"
-" and testing."
-msgstr "코드, 그래픽, 음악, 번역, 연구 및 테스트에 기여하는 모든 분께 감사드립니다."
+#. Reticulating Splines authorship correction; supplementary translation, AI-assisted.
+msgid "Development of Reticulating Splines: Daniel Gimmer (Realm667). Thanks to Nicholas Ochoa and the OpenSC2K contributors for the foundation, and to everyone supporting this project with feedback, research and testing."
+msgstr "Reticulating Splines 개발: Daniel Gimmer(Realm667). 프로젝트의 기반을 마련한 Nicholas Ochoa와 OpenSC2K 기여자 여러분, 그리고 의견, 연구 및 테스트로 이 프로젝트를 지원해 주시는 모든 분께 감사드립니다."
 
 #. Reticulating Splines UI corrections; supplementary translation, AI-
 #. assisted.
