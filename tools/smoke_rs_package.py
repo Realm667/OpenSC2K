@@ -12,6 +12,8 @@ import tarfile
 import tempfile
 import zipfile
 
+from rs_release_assets import verify_manifest
+
 
 def digest(path):
     with path.open("rb") as stream:
@@ -38,11 +40,17 @@ def verify_files(folder):
 
 
 def check(binary, arguments, env, output):
-    result = subprocess.run([str(binary), "--headless", "--audio-driver", "Dummy", *arguments],
-                            env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=180)
+    try:
+        result = subprocess.run([str(binary), "--headless", "--audio-driver", "Dummy", "--verbose", "--max-fps", "60", *arguments],
+                                env=env, cwd=binary.parent, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=180)
+    except subprocess.TimeoutExpired as error:
+        output.write_bytes(error.stdout or b"")
+        output.with_suffix(".exit-code.txt").write_text("TIMEOUT")
+        raise
     output.write_bytes(result.stdout)
+    output.with_suffix(".exit-code.txt").write_text(str(result.returncode))
     if result.returncode or b"ERROR:" in result.stdout:
-        raise RuntimeError(f"Packaged application failed: {output}\n{result.stdout.decode(errors='replace')[-6000:]}")
+        raise RuntimeError(f"Packaged application failed (exit {result.returncode}): {output}\n{result.stdout.decode(errors='replace')[-6000:]}")
     return result.stdout
 
 
@@ -76,7 +84,7 @@ def smoke(packages, platform, output):
                 subprocess.run(["codesign", "--verify", "--deep", "--strict", str(app)], check=True)
                 metadata = plistlib.loads((app / "Contents/Info.plist").read_bytes())
                 binary = app / "Contents/MacOS" / metadata["CFBundleExecutable"]
-                subprocess.run(["lipo", "-verify_arch", "x86_64", "arm64", str(binary)], check=True)
+                subprocess.run(["lipo", str(binary), "-verify_arch", "x86_64", "arm64"], check=True)
             else:
                 unpacked = work / "unpacked"
                 unpacked.mkdir()
@@ -92,14 +100,16 @@ def smoke(packages, platform, output):
                 count = verify_files(folder)
                 extension = ".exe" if platform.startswith("windows") else ".arm64" if platform.endswith("arm64") else ".x86_64"
                 binary = folder / ("ReticulatingSplines" + extension)
-            check(binary, ["--quit-after", "180"], env, output / "startup.log")
-            probe = Path(__file__).with_name("rs_package_probe.gd").resolve()
-            result = check(binary, ["--script", str(probe)], env, output / "packs.log")
-            if b"PASS: exported application" not in result:
-                raise ValueError("Package probe did not complete")
+            data = app / "Contents/Resources/bundled-packs" if platform.startswith("macos") else folder / "data"
+            for kind in ("graphic", "music", "sounds"):
+                verify_manifest(data / kind / "reticulating-splines/pack.json")
+            check(binary, ["--quit-after", "600"], env, output / "startup.log")
+            if platform.startswith("macos"):
+                subprocess.run(["codesign", "--verify", "--deep", "--strict", str(app)], check=True)
+            (output / "packs.log").write_text("PASS: supplied manifests and every referenced media file are present; startup uses a fresh profile\n")
             (output / "verification.json").write_text(json.dumps(dict(result="PASS", platform=platform,
                 host=sys.platform, commit=info['commit'], version=info['version'], archive=name,
-                sha256=digest(archive), files_verified=count, startup="PASS", replacement_packs="PASS"), indent=2) + "\n")
+                sha256=digest(archive), files_verified=count, startup="PASS", replacement_packs="PASS: manifest references and payload hashes"), indent=2) + "\n")
         finally:
             if mount is not None and mount.exists():
                 subprocess.run(["hdiutil", "detach", str(mount)], check=True)

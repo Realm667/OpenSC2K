@@ -6,7 +6,7 @@ The workflow adapts the upstream `package.yml`, `build_native.py`, `build_deskto
 
 Windows and Linux packages use a writable `data` directory next to the executable. On macOS the replacement packs and their licenses are inside the signed application under `Contents/Resources`; personal cities and settings stay in the existing Godot user profile. Existing personal and legacy packs take precedence over bundled defaults. The fork keeps the existing OpenSC2K profile name for compatibility.
 
-Each archive has a SHA-256 entry in `SHA256SUMS.txt` and its build commit is recorded in `build-info.json`. Every completed archive is extracted or mounted and verified before a native startup and replacement-pack probe. macOS is tested on separate Intel and Apple Silicon runners. Tests use Dummy audio and disposable runners/profiles. Startup checks do not replace graphical playtesting or prove compatibility with every Linux distribution.
+Each archive has a SHA-256 entry in `SHA256SUMS.txt` and its build commit is recorded in `build-info.json`. Every completed archive is extracted or mounted and verified before a native startup and replacement-pack manifest/reference check. macOS is tested on separate Intel and Apple Silicon runners. Tests use Dummy audio and disposable runners/profiles. Startup checks do not replace graphical playtesting or prove compatibility with every Linux distribution.
 
 ## macOS signing
 
