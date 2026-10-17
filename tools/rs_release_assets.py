@@ -71,6 +71,8 @@ def install(source, folder, platform, source_zip):
     shutil.copy2(source_zip, public / "FluidSynth-corresponding-source.zip")
     text = (source / "THIRD_PARTY_NOTICES.md").read_text(encoding="utf-8")
     (public / "THIRD_PARTY_NOTICES.md").write_text(text.replace("OpenSC2K-<version>-fluidsynth-source.zip", "FluidSynth-corresponding-source.zip"), encoding="utf-8")
+    if macos:
+        (folder / "THIRD_PARTY_NOTICES.md").write_text(text.replace("OpenSC2K-<version>-fluidsynth-source.zip", "ReticulatingSplines.app/Contents/Resources/FluidSynth-corresponding-source.zip"), encoding="utf-8")
     instructions = ("Drag ReticulatingSplines.app into Applications. Your cities and settings are stored in your user profile.\n"
                     "This preview is ad-hoc signed unless build-info.json confirms notarization. macOS may require explicit approval in Privacy & Security.\n"
                     if macos else "Extract the entire archive to a writable folder and run ReticulatingSplines. Your cities and settings are stored in data/.\n")

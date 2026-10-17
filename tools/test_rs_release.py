@@ -84,6 +84,8 @@ class PublicPayloadTest(unittest.TestCase):
                 self.assertNotIn("secret", provenance)
                 self.assertEqual((public / "FluidSynth-corresponding-source.zip").read_bytes(), b"source")
                 self.assertTrue((public / "licenses/CC-BY-4.0.txt").exists())
+                if platform.startswith("macos"):
+                    self.assertIn("ReticulatingSplines.app/Contents/Resources/FluidSynth-corresponding-source.zip", (folder / "THIRD_PARTY_NOTICES.md").read_text())
 
 
 if __name__ == "__main__":
