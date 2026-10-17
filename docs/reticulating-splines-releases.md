@@ -17,3 +17,7 @@ Each archive has a SHA-256 entry in `SHA256SUMS.txt` and its build commit is rec
 After the authorized build and its native smoke jobs pass, download `rs-desktop-packages`, verify its recorded commit and hashes, and publish an explicitly approved tag/version with the matching archives, checksums and build metadata. Keep prior release tags and assets unchanged. Clearly label non-notarized macOS previews and the tested platforms in the release notes. Run applicable project validation and retain unchanged evidence instead of repeating unrelated checks.
 
 This workflow and the fork-specific packaging adaptation were implemented with Codex assistance.
+
+## Reusing native build artifacts
+
+For packaging-only corrections, `native_run` may name an earlier run of this repository's RS workflow. The package job requires all five native jobs to have succeeded and compares the native source, game tree and native/FluidSynth build recipes with that run's exact commit. Only export-preset differences are exempt from the game-tree comparison. A mismatch fails before artifact reuse. Leave the input empty to compile all libraries normally. Artifact reuse changes neither the published source commit nor the required package smoke checks.

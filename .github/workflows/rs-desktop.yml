@@ -4,6 +4,10 @@ run-name: RS desktop builds (${{ github.ref_name }})
 on:
   workflow_dispatch:
     inputs:
+      native_run:
+        description: Optional previous RS workflow run; accepted only after all native jobs pass and build inputs match
+        type: string
+        default: ''
       signing:
         description: macOS signing (none = ad-hoc preview; required = Developer ID and notarization)
         type: choice
@@ -12,9 +16,11 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   native:
+    if: inputs.native_run == ''
     name: Build native libraries (${{ matrix.platform }})
     strategy:
       matrix:
@@ -71,6 +77,7 @@ jobs:
   build:
     name: Build desktop packages
     needs: native
+    if: ${{ !cancelled() && (needs.native.result == 'success' || inputs.native_run != '') }}
     runs-on: macos-15
     # notarization usually takes a few minutes, but Apple can queue a submission longer
     timeout-minutes: 60
@@ -84,10 +91,18 @@ jobs:
           python-version: '3.13'
       - name: Install Godot and export templates
         run: bash tools/setup_godot_ci.sh
+      - name: Verify reusable native build inputs
+        if: inputs.native_run != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NATIVE_RUN: ${{ inputs.native_run }}
+        run: python tools/verify_rs_native_reuse.py --repository "$GITHUB_REPOSITORY" --run "$NATIVE_RUN"
       - name: Collect native libraries
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           pattern: native-*
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.native_run || github.run_id }}
           path: local/native
           merge-multiple: true
       - name: Prepare macOS signing

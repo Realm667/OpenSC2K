@@ -2,6 +2,8 @@
 import json
 from pathlib import Path
 import tempfile
+import subprocess
+import verify_rs_native_reuse as reuse
 import unittest
 from unittest.mock import patch
 
@@ -86,6 +88,33 @@ class PublicPayloadTest(unittest.TestCase):
                 self.assertTrue((public / "licenses/CC-BY-4.0.txt").exists())
                 if platform.startswith("macos"):
                     self.assertIn("ReticulatingSplines.app/Contents/Resources/FluidSynth-corresponding-source.zip", (folder / "THIRD_PARTY_NOTICES.md").read_text())
+
+
+class NativeReuseTest(unittest.TestCase):
+    def test_packaging_only_changes_can_reuse_but_native_or_game_changes_cannot(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            def git(*args):
+                return subprocess.check_output(["git", *args], cwd=root, text=True).strip()
+            git("init", "-b", "main")
+            git("config", "user.name", "Package test")
+            git("config", "user.email", "test@example.invalid")
+            (root / "native").mkdir()
+            (root / "native/lib.rs").write_text("original")
+            git("add", ".")
+            git("commit", "-m", "Original")
+            base = git("rev-parse", "HEAD")
+            (root / "README.md").write_text("Release instructions")
+            (root / "game").mkdir()
+            (root / "game/export_presets.cfg").write_text("New bundle identity")
+            git("add", ".")
+            git("commit", "-m", "Packaging")
+            reuse.matching_sources(base, repository=root)
+            (root / "native/lib.rs").write_text("changed")
+            git("add", ".")
+            git("commit", "-m", "Native change")
+            with self.assertRaisesRegex(ValueError, "inputs changed"):
+                reuse.matching_sources(base, repository=root)
 
 
 if __name__ == "__main__":
