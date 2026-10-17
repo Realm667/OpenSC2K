@@ -110,6 +110,7 @@ func _run() -> void:
 		assert(selector.item_count >= 2)
 	assert(FileAccess.get_file_as_string(base.path_join("cities/collection/My city.sc2")) == "untouched city")
 	_test_source_choices(base.path_join("dedup"))
+	_test_application_packs(base.path_join("app-packs"))
 	prompt.free()
 	dialog.free()
 	print("PASS: pack discovery, invalid sources, category independence, preferences, import choices and seven UI languages")
@@ -134,3 +135,18 @@ func _test_source_choices(base: String) -> void:
 		_write(base.path_join(folder).path_join("pack.json"), JSON.stringify(manifest))
 	rows = PackLibrary.selection_entries("graphics", "", base)
 	assert(rows.size() == 4, "Bundled migration copies collapse; unrelated custom packs with the same name remain selectable")
+
+
+func _test_application_packs(base: String) -> void:
+	var profile := base.path_join("profile")
+	var supplied := base.path_join("App.app/Contents/Resources/bundled-packs")
+	var relative := "graphic/reticulating-splines"
+	_write(supplied.path_join(relative + "/pack.json"), '{"format":"opensc2k-graphics"}')
+	assert(PackLibrary.bundled_folder("graphics", profile, supplied) == supplied.path_join(relative), "Fresh profiles find read-only application packs")
+	assert(not DirAccess.dir_exists_absolute(profile), "Discovery must not copy assets or create user files")
+	var legacy := profile.path_join("packs/standalone-graphics/graphics")
+	_write(legacy.path_join("pack.json"), '{"format":"opensc2k-graphics"}')
+	assert(PackLibrary.bundled_folder("graphics", profile, supplied) == legacy, "Keep existing legacy packs")
+	_write(profile.path_join(relative + "/pack.json"), '{"format":"opensc2k-graphics"}')
+	assert(PackLibrary.bundled_folder("graphics", profile, supplied) == profile.path_join(relative), "Personal installed packs take precedence")
+	assert(PackLibrary.bundled_folder("sound", profile, supplied) == profile.path_join("packs/standalone-audio/sound"), "Missing application packs keep the existing fallback")

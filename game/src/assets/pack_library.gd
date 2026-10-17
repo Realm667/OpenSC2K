@@ -18,12 +18,26 @@ static func is_music_package(folder: String) -> bool:
 	return _read_json(folder.path_join("pack.json")).get("format") == "opensc2k-music"
 
 
-static func bundled_folder(kind: String) -> String:
-	var structured := AppPaths.path(str(FOLDERS[kind]) + "/reticulating-splines")
+static func application_pack_root() -> String:
+	if OS.has_feature("template") and OS.has_feature("macos"):
+		return OS.get_executable_path().get_base_dir().path_join("../Resources/bundled-packs").simplify_path()
+	return ""
+
+
+static func bundled_folder(kind: String, root := AppPaths.root(), application_root := application_pack_root()) -> String:
+	var relative := str(FOLDERS[kind]) + "/reticulating-splines"
+	var structured := root.path_join(relative)
 	if FileAccess.file_exists(structured.path_join("pack.json")):
 		return structured
 	var legacy := "standalone-graphics/graphics" if kind == "graphics" else "standalone-audio/" + kind
-	return AppPaths.path("packs/" + legacy)
+	var previous := root.path_join("packs/" + legacy)
+	if FileAccess.file_exists(previous.path_join("pack.json")):
+		return previous
+	if not application_root.is_empty():
+		var supplied := application_root.path_join(relative)
+		if FileAccess.file_exists(supplied.path_join("pack.json")):
+			return supplied
+	return previous
 
 
 static func default_folder(kind: String) -> String:
@@ -75,6 +89,10 @@ static func scan(kind: String, selected := "", root := AppPaths.root()) -> Array
 			_scan_legacy(result, seen, kind, source, 0)
 	if kind == "brightmaps" and FileAccess.file_exists(root.path_join("brightmaps-standard/catalog.json")):
 		_append(result, seen, kind, root.path_join("brightmaps-standard"))
+	if kind in ["graphics", "sound", "music"]:
+		var supplied := bundled_folder(kind, root)
+		if FileAccess.file_exists(supplied.path_join("pack.json")):
+			_append(result, seen, kind, supplied)
 	if not selected.is_empty():
 		_append(result, seen, kind, selected)
 	result.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:

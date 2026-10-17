@@ -25,6 +25,7 @@ import time
 import zipfile
 
 import build_fluidsynth
+import rs_release_assets
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -321,12 +322,16 @@ def make_disk_image(folder, volume, image):
     subprocess.run(['hdiutil', 'verify', str(image)], check=True)
 
 
-def build(output, label, godot, native, platforms=None, require_notarization=False):
+def build(output, label, godot, native, platforms=None, require_notarization=False, reticulating_splines=False):
     if sys.platform != 'darwin':
         raise ValueError('Desktop packaging requires macOS to create and sign the app and DMG')
     if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9.+-]{0,79}', label):
         raise ValueError('Invalid package label')
     selected = selected_packages(platforms)
+    product = 'ReticulatingSplines' if reticulating_splines else 'OpenSC2K'
+    display = 'Reticulating Splines' if reticulating_splines else 'OpenSC2K'
+    if reticulating_splines:
+        selected = [(platform, preset, binary.replace('OpenSC2K', product)) for platform, preset, binary in selected]
     macos = any(platform.startswith('macos') for platform, _, _ in selected)
     identity, notary = signing_identity(), notary_arguments()
     if macos:
@@ -342,7 +347,7 @@ def build(output, label, godot, native, platforms=None, require_notarization=Fal
         source.mkdir()
         archive = work / 'source.tar'
         with archive.open('wb') as stream:
-            subprocess.run(['git', 'archive', commit, 'game', 'LICENSE', 'THIRD_PARTY_NOTICES.md', 'docs/install.md'],
+            subprocess.run(['git', 'archive', commit, 'game', 'LICENSE', 'THIRD_PARTY_NOTICES.md', 'docs/install.md', *(['packs'] if reticulating_splines else [])],
                            cwd=ROOT, stdout=stream, check=True)
         with tarfile.open(archive) as stream:
             stream.extractall(source, filter='data')
@@ -357,8 +362,9 @@ def build(output, label, godot, native, platforms=None, require_notarization=Fal
         (project / 'project.godot').write_text(settings + '\n[editor]\n\nimport/use_multiple_threads=false\n')
         checked_godot(godot, project, '--editor', '--import')
         packages = []
+        source_zip = write_fluidsynth_source(output / f'{product}-{label}-fluidsynth-source.zip', work)
         for platform, preset, binary in selected:
-            name = f'OpenSC2K-{label}-{platform}'
+            name = f'{product}-{label}-{platform}'
             folder = work / name
             folder.mkdir()
             checked_godot(godot, project, '--export-release', preset, str(folder / binary))
@@ -367,17 +373,22 @@ def build(output, label, godot, native, platforms=None, require_notarization=Fal
             install_notices(source, folder, platform)
             install_soundfont(soundfont, folder, platform)
             for module in NATIVE_MODULES:
-                expected_library = NATIVE_PLATFORMS[platform][2].format(module)
+                expected_library = NATIVE_PLATFORMS[platform][2].format(module).replace('OpenSC2K.app', product + '.app')
                 assert (folder / expected_library).is_file(), f'{platform} lacks native {module}'
-            assert (folder / FLUIDSYNTH[platform][1]).is_file(), f'{platform} lacks FluidSynth'
-            (folder / 'VERSION.txt').write_text(f'OpenSC2K {version}\nBuild: {label}\nCommit: {commit}\nGodot: {engine}\n')
+            assert (folder / FLUIDSYNTH[platform][1].replace('OpenSC2K.app', product + '.app')).is_file(), f'{platform} lacks FluidSynth'
+            (folder / 'VERSION.txt').write_text(f'{display} {version}\nBuild: {label}\nCommit: {commit}\nGodot: {engine}\n')
+            if reticulating_splines:
+                rs_release_assets.install(source, folder, platform, source_zip)
+                if not platform.startswith('macos'):
+                    rs_release_assets.inventory(folder)
             if platform.startswith('windows'):
                 package = output / (name + '.zip')
                 write_zip(package, folder, name)
                 # the data folder beside the executable selects portable mode
-                portable = output / (name + '-portable.zip')
-                write_zip(portable, folder, name + '-portable', 'data/')
-                packages.append(portable)
+                if not reticulating_splines:
+                    portable = output / (name + '-portable.zip')
+                    write_zip(portable, folder, name + '-portable', 'data/')
+                    packages.append(portable)
             elif platform.startswith('linux'):
                 (folder / binary).chmod(0o755)
                 package = output / (name + '.tar.gz')
@@ -386,18 +397,31 @@ def build(output, label, godot, native, platforms=None, require_notarization=Fal
                 with tarfile.open(package) as stream:
                     assert stream.getmember(f'{name}/{binary}').mode & 0o111
             else:
-                add_app_icon(folder / binary, identity=identity)
+                if reticulating_splines:
+                    # Preserve the exported RS icon; the upstream Assets.car depicts OpenSC2K.
+                    app = folder / binary
+                    info_path = app / 'Contents/Info.plist'
+                    info = plistlib.loads(info_path.read_bytes())
+                    info.update(CFBundleName=display, CFBundleDisplayName=display,
+                                CFBundleIdentifier='net.realm667.reticulating-splines')
+                    info_path.write_bytes(plistlib.dumps(info))
+                    shutil.copy2(folder / 'VERSION.txt', app / 'Contents/Resources/VERSION.txt')
+                    sign_app(app, identity)
+                else:
+                    add_app_icon(folder / binary, identity=identity)
                 if notary is not None:
                     notarize(folder / binary, notary)
+                if reticulating_splines:
+                    rs_release_assets.inventory(folder)
                 (folder / 'Applications').symlink_to('/Applications')
                 package = output / (name + '.dmg')
-                make_disk_image(folder, f'OpenSC2K {label}', package)
+                make_disk_image(folder, f'{display} {label}', package)
                 if identity != AD_HOC:
                     subprocess.run(['codesign', '--force', '--timestamp', '--sign', identity, str(package)], check=True)
                 if notary is not None:
                     notarize(package, notary)
             packages.append(package)
-        packages.append(write_fluidsynth_source(output / f'OpenSC2K-{label}-fluidsynth-source.zip', work))
+        packages.append(source_zip)
     hashes = {path.name: sha256(path) for path in packages}
     (output / 'SHA256SUMS.txt').write_text(''.join(f'{value}  {name}\n' for name, value in sorted(hashes.items())))
     signing = None
@@ -417,11 +441,13 @@ def main():
                         help='Folder with each native extension and platform, as tools/build_native.py --package writes it')
     parser.add_argument('--platform', action='append', default=[],
                         help='Build only this platform, such as macos or windows-x64. Repeat for more')
+    parser.add_argument('--reticulating-splines', action='store_true',
+                        help='Ship RS branding, replacement packs and their public licenses')
     parser.add_argument('--require-notarization', action='store_true',
                         help='Fail unless the macOS app can be signed with a Developer ID and notarized')
     args = parser.parse_args()
     build(args.output.resolve(), args.label, args.godot, args.native.resolve(), args.platform,
-          args.require_notarization)
+          args.require_notarization, args.reticulating_splines)
 
 
 if __name__ == '__main__':
