@@ -142,6 +142,7 @@ jobs:
   smoke:
     name: Start packaged application (${{ matrix.platform }} / ${{ matrix.runner }})
     needs: build
+    if: ${{ !cancelled() && needs.build.result == 'success' }}
     strategy:
       fail-fast: false
       matrix:
